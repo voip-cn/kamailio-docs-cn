@@ -1,0 +1,966 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>xmpp Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15764936" title="xmpp Module" />
+    <link rel="next" href="#idp16968432" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="xmpp Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15764936"></a>xmpp Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andreea</span> <span class="surname">Spirea</span></h3>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Andreea</span> <span class="surname">Spirea</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16968432">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18033392">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16048664">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16049016">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16050608">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp16052408">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16052776">3.1. <code class="varname">backend(string)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16055104">3.2. <code class="varname">domain_separator</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16057856">3.3. <code class="varname">gateway_domain</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15775880">3.4. <code class="varname">xmpp_domain</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15778536">3.5. <code class="varname">xmpp_host</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15781128">3.6. <code class="varname">xmpp_port</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15783720">3.7. <code class="varname">xmpp_password</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15786968">3.8. <code class="varname">outbound_proxy</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15789608">3.9. <code class="varname">gwmap</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15866528">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15866896">4.1. 
+		<code class="function">xmpp_send_message()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15869200">5. Configuration</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp16053944">Set <code class="varname">backend</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp16056680">Set <code class="varname">domain_separator</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp16059392">Set <code class="varname">gateway_domain</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15777360">Set <code class="varname">xmpp_domain</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15779952">Set <code class="varname">xmpp_host</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15782560">Set <code class="varname">xmpp_port</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15785792">Set <code class="varname">xmpp_password</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15788408">Set <code class="varname">outbound_proxy</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15864768">Set <code class="varname">gwmap</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15867952"><code class="function">xmpp_send_message()</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16968432"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18033392">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16048664">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16049016">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16050608">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp16052408">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16052776">3.1. <code class="varname">backend(string)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16055104">3.2. <code class="varname">domain_separator</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16057856">3.3. <code class="varname">gateway_domain</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15775880">3.4. <code class="varname">xmpp_domain</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15778536">3.5. <code class="varname">xmpp_host</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15781128">3.6. <code class="varname">xmpp_port</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15783720">3.7. <code class="varname">xmpp_password</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15786968">3.8. <code class="varname">outbound_proxy</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15789608">3.9. <code class="varname">gwmap</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15866528">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15866896">4.1. 
+		<code class="function">xmpp_send_message()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15869200">5. Configuration</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18033392"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module is a gateway between Kamailio and a XMPP/Jabber server.
+		It enables the exchange of instant messages between
+		SIP clients and XMPP(jabber) clients.
+	</p>
+          <p>
+		The module can be used in two different modes:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="bold"><strong>XMPP Component Mode</strong></span>. In this mode,
+				Kamailio connects to an XMPP server using the standardized XMPP
+				component interface, extending your XMPP services. The connection
+				is done over TCP/IP with authorization.</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="bold"><strong>XMPP Server</strong></span>. In this mode, the
+				Kamailio XMPP module is a stand-alone XMPP server connector, with
+				no requirement for another XMPP server in the system. This server
+				uses XMPP S2S (Server to Server) connections to connect to other
+				XMPP servers or receive connections from other servers. NOTE: this
+				is limited implementation of a XMPP server, it does not support SRV
+				or TLS so far. Also, in this mode it cannot get XMPP clients
+				connected, only XMPP servers (in other words, you cannot use it to
+				replace an XMPP full server implementation). This mode is in beta
+				stage for the moment.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		In the component mode, you need a local XMPP server (recommended Jabberd2).
+		The XMPP module will connect by using TCP/IP connection to the local jabber
+		server. The documentation and the source for Jabberd server are located at
+		the following link:
+		<a class="ulink" href="javascript:if(confirm('http://jabberd.jabberstudio.org/2/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://jabberd.jabberstudio.org/2/#download'" tppabs="http://jabberd.jabberstudio.org/2/#download">http://jabberd.jabberstudio.org/2/#download</a>
+	</p>
+          <p>
+		After you have a running XMPP server, what you need to do is set the following
+		parameters in the Kamailio configuration file:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				gateway_domain, xmpp_domain (which can be the same as gateway_domain)
+				and xmpp_host, which are explained in the Exported Parameters section;
+			</p>
+              </li>
+              <li class="listitem">
+                <p>listen = your ip;</p>
+              </li>
+              <li class="listitem">
+                <p>alias=Kamailio SIP domain and alias=gateway domain;</p>
+              </li>
+              <li class="listitem">
+                <p>in the following section of the configuration file, change to your gateway domain:</p>
+              </li>
+            </ul>
+          </div>
+          <pre class="programlisting"> <span class="emphasis"><em>	 ### ---8&lt;--- cut here ---8&lt;--- ###
+	if ($rd =="sip-xmpp.kamailio.org") {
+		if (!t_newtran()) {
+			sl_reply_error();
+	...........	</em></span></pre>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				You can also define a password for the XMPP Component connection
+				to the Jabber server, which must be the same as the xmpp_password parameter.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		A use case, for the component-mode, would look like this:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>Kamailio is hosting the sip-server.kamailio.org SIP domain</p>
+              </li>
+              <li class="listitem">
+                <p>The gateway SIP domain is sip-xmpp.kamailio.org</p>
+              </li>
+              <li class="listitem">
+                <p>The XMPP server is hosting the XMPP domain xmpp.kamailio.org</p>
+              </li>
+              <li class="listitem">
+                <p>The Component is hosting the XMPP domain xmpp-sip.kamailio.org</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		In the XMPP stand-alone server mode, the XMPP module is a minimal XMPP/Jabber server.
+		In this mode, another Jabber server is not needed. The gateway will connect to other
+		XMPP servers basaed on the JID domain and by using the standardized XMPP S2S protocol.
+	</p>
+          <p>
+		If you want to change to server-mode, you have to change the "backend" parameter,
+		as shown in the Exported Parameters section, from "component" to "server".
+	</p>
+          <p>A use case, for the server-mode, would look like this: </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>Kamailio is hosting the SIP domain sip-server.kamailio.org </p>
+              </li>
+              <li class="listitem">
+                <p>The gateway is hosting the SIP domain sip-xmpp.kamailio.org;</p>
+              </li>
+              <li class="listitem">
+                <p>The "XMPP server" is running on xmpp-sip.kamailio.org.</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		Unless 'gwmap' parameter is set, in both modes (server or component), the
+		destination address must have the same pattern:
+	</p>
+          <p>
+		<span class="quote">‚Äú<span class="quote">sip:username&lt;delim&gt;jabber_server@gateway_domain</span>‚Äù</span>
+	</p>
+          <p>
+		From a jabber client's point of view, the destination will look like:
+	</p>
+          <p>
+		<span class="quote">‚Äú<span class="quote">sip_username&lt;delim&gt;sip_domain@xmpp_domain</span>‚Äù</span>
+	</p>
+          <p>
+		'delim' is a character that can be set via 'domain_separator' parameter.
+	</p>
+          <p>
+		If 'gwmap' parameter is used, then the addresses are not enconding the domains
+		in the username part. They are going to be straight 'username@domain' always.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16048664"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16049016"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>requires 'tm' module</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16050608"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>expat</em></span> - used for parsing/building XML. Linux package: libexpat1-devel
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16052408"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†backend(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16052776"></a>3.1.¬†<code class="varname">backend(string)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The mode you are using the module; it can be either "component" or "server".
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "component".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp16053944"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">backend</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "backend", "server")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†domain_separator (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16055104"></a>3.2.¬†<code class="varname">domain_separator</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			In the destination address we need an extra character as a domain separator, apart from @.
+			The address of the XMPP(jabber) client looks like this:
+				"sip:username&lt;domain_separator&gt;jabber_server@gateway_sip_domain".
+			The address of a SIP client has the following pattern :
+			"sip_username&lt;domain_separator&gt;sip_domain@gateway_xmpp_domain";
+			A common used character in XMPP transports is "%".
+
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "*".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp16056680"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">domain_separator</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "domain_separator", "%")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†gateway_domain (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16057856"></a>3.3.¬†<code class="varname">gateway_domain</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The domain of the SIP-to-XMPP gateway - it has to be in DNS or SIP UA has to
+			use outbound proxy to SIP-to-XMPP gateway IP address. It has to be used
+			as domain in the the destination address of the messages sent by SIP users
+			to XMPP users:
+			"sip:username&lt;delim&gt;jabber_server@gateway_domain".
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "sip-xmpp.example.org".
+		</em></span>
+	</p>
+            <div class="example">
+              <a id="idp16059392"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">gateway_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "gateway_domain", "sip-xmpp.kamailio.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†xmpp_domain (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15775880"></a>3.4.¬†<code class="varname">xmpp_domain</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The XMPP domain of the component or the server, depending on the mode.
+			It can be the same as the gateway_domain. For a server DNS name, you have
+			to add _xmpp-server._tcp SRV records in your DNS zone to enable connections
+			from other XMPP servers.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "sip-xmpp.example.org".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15777360"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">xmpp_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "xmpp_domain", "xmpp-sip.kamailio.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†xmpp_host (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15778536"></a>3.5.¬†<code class="varname">xmpp_host</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The IP address or the hostname for the local XMPP/Jabber server to
+			connect to when the backend is set to "component". For server mode,
+			this is the IP address the XMPP module binds to listen for
+			connections coming from other XMPP servers.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "xmpp.example.org".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15779952"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">xmpp_host</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "xmpp_host", "xmpp.kamailio.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†xmpp_port (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15781128"></a>3.6.¬†<code class="varname">xmpp_port</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			In component mode, this is the port the XMPP server component interface
+			listens to. In server mode, this is the port the module listens to.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "5347", if backend is set to "component" and "5269",
+			if backend is set to "server".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15782560"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">xmpp_port</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "xmpp_port", 5269)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†xmpp_password (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15783720"></a>3.7.¬†<code class="varname">xmpp_password</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>	The password of the local XMPP server.</p>
+            <p>
+			<span class="emphasis"><em>
+				This is the password for the component interface on the XMPP server,
+				when connecting as a component. Default password is "secret".
+				When connecting to jabberd2, 
+				you need to make sure this is the password configured in the file
+				"c2s.xml". This is how the default configuration for the jabberd2
+				looks like:
+			</em></span>
+			</p>
+            <pre class="programlisting">			&lt;router&gt;
+	............... 
+	&lt;!-- Username/password to authenticate as --&amp;gt;
+    &lt;user&gt;jabberd&lt;/user&gt;;          &lt;!-- default: jabberd --&gt;;
+    &lt;pass&gt;secret&lt;/pass&gt;;           &lt;!-- default: secret --&gt;;</pre>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp15785792"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">xmpp_password</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "xmpp_password", "secret")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.¬†outbound_proxy (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15786968"></a>3.8.¬†<code class="varname">outbound_proxy</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The SIP address used as next hop when sending the message. Very
+		useful when using Kamailio with a domain name not in DNS, or
+		when using a separate Kamailio instance for XMPP processing. If
+		not set, the message will be sent to the address in destination
+		URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15788408"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">outbound_proxy</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "outbound_proxy", "sip:kamailio.org;transport=tcp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.¬†gwmap (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15789608"></a>3.9.¬†<code class="varname">gwmap</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set the mappings between SIP and XMPP domains. This parameter can
+		be set many times, adding more SIP-XMPP domain mappings. Its value
+		has to be a list of tokens like 'sipdomain=xmppdomain', separated
+		by ';' (e.g., 'sipdomain1=xmppdomain1;sipdomain2=xmppdomain2'.
+		</p>
+            <p>
+		When this parameter is set, the URI encoding based on 'domain_separator'
+		is no longer enabled. The module will use only addresses in the format
+		'username@domain'. If the source or destination address does not match
+		a domain in gwmap, then the domain value is preserved when sending to
+		the other protocol.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15864768"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">gwmap</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ modparam("xmpp", "gwmap", "sip.kamailio.org=xmpp.kamailio.org;abc.com=xyz.com")
+ modparam("xmpp", "gwmap", "kamailio.net")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		Based on the above parameter values, if there is a SIP message from
+		'sip:alice@sip.kamailio.org' going to 'sip:bob@abc.com', the XMPP
+		message to be sent is from 'alice@xmpp.kamailio.org' to
+		'bob@xyz.com'.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15866528"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† xmpp_send_message()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15866896"></a>4.1.¬†
+		<code class="function">xmpp_send_message()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Converts SIP messages to XMPP(jabber) messages, in order to be relayed
+			to a XMPP(jabber) client.
+		</p>
+            <div class="example">
+              <a id="idp15867952"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†<code class="function">xmpp_send_message()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xmpp_send_message();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Configuration">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15869200"></a>5.¬†Configuration</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Next is presented a sample configuration file one can use to implement a
+		standalone SIP-to-XMPP gateway. You can run an instance of Kamailio on a
+		separate machine or on different port with the following config, and have
+		the main SIP server configured to forward all SIP requests for XMPP world
+		to it.
+		</p>
+          <pre class="programlisting">....
+#
+# $Id$
+#
+# simple quick-start config script for XMPP GW
+#
+# make sure in your main SIP server that you send
+# only the adequate SIP MESSAGES to XMPP GW
+#
+#
+# ----------- global configuration parameters ------------------------
+
+debug=9            # debug level (cmd line: -dddddddddd)
+fork=no
+log_stderror=yes    # (cmd line: -E)
+
+/* Uncomment these lines to enter debugging mode 
+fork=no
+log_stderror=yes
+*/
+
+check_via=no	# (cmd. line: -v)
+dns=no          # (cmd. line: -r)
+rev_dns=no      # (cmd. line: -R)
+children=4
+
+listen=udp:10.10.10.10:5076
+alias=sip-xmpp.kamailio.org
+
+# ------------------ module loading ----------------------------------
+
+mpath="/usr/local/lib/kamailio/modules/"
+loadmodule "sl.so"
+loadmodule "tm.so"
+loadmodule "rr.so"
+loadmodule "maxfwd.so"
+loadmodule "textops.so"
+loadmodule "mi_fifo.so"
+
+
+# XMPP
+loadmodule "xmpp.so"
+
+modparam("xmpp", "domain_separator", "*")
+modparam("xmpp", "gateway_domain", "sip-xmpp.kamailio.org")
+modparam("xmpp", "xmpp_domain", "xmpp-sip.kamailio.org")
+modparam("xmpp", "xmpp_host", "xmpp.kamailio.org")
+
+modparam("xmpp", "backend", "server")
+# modparam("xmpp", "backend", "component")
+
+# ----------------- setting module-specific parameters ---------------
+
+# -- mi_fifo params --
+
+modparam("mi_fifo", "fifo_name", "/tmp/kamailio_fifo_xmpp")
+
+# -- usrloc params --
+
+# -- rr params --
+# add value to ;lr param to make some broken UAs happy
+modparam("rr", "enable_full_lr", 1)
+
+# -------------------------  request routing logic -------------------
+
+# main routing logic
+
+route{
+
+	# initial sanity checks -- messages with
+	# max_forwards==0, or excessively long requests
+	if (!mf_process_maxfwd_header("10")) {
+		sl_send_reply("483","Too Many Hops");
+		exit;
+	};
+
+	if (msg:len &gt;=  2048 ) {
+		sl_send_reply("513", "Message too big");
+		exit;
+	};
+
+	### absorb retransmissions ###
+	if (!t_newtran()) {
+		sl_reply_error();
+		return;
+	}
+	if (method == "MESSAGE") {
+		log("*** xmpp-handled MESSAGE message.\n");
+		if (xmpp_send_message()) {
+			t_reply("200", "Accepted");
+		} else {
+			t_reply("404", "Not found");
+		}
+		return;
+	}
+		
+	log("*** xmpp: unhandled message type\n");
+	t_reply("503", "Service unavailable");
+	return;
+}
+
+
+....</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

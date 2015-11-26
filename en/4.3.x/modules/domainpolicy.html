@@ -1,0 +1,1184 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Domain Policy Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4235736" title="Domain Policy Module" />
+    <link rel="next" href="#idp3456024" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Domain Policy Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4235736"></a>Domain Policy Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Otmar</span> <span class="surname">Lendl</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:otmar.lendl@enum.at">otmar.lendl@enum.at</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Klaus</span> <span class="surname">Darilion</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:klaus.darilion@enum.at">klaus.darilion@enum.at</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Otmar</span> <span class="surname">Lendl</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:otmar.lendl@enum.at">otmar.lendl@enum.at</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Klaus</span> <span class="surname">Darilion</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:klaus.darilion@enum.at">klaus.darilion@enum.at</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2002, 2003, 2006 Juha Heinanen, Otmar Lendl, Klaus Darilion</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3456024">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2096848">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1103056">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2560216">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2537328">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1820232">3.2. <code class="varname">dp_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2642632">3.3. <code class="varname">dp_col_rule</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm17144">3.4. <code class="varname">dp_col_type</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14816">3.5. <code class="varname">dp_col_att</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm12584">3.6. <code class="varname">dp_col_val</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10384">3.7. <code class="varname">port_override_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm8104">3.8. <code class="varname">transport_override_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm5912">3.9. <code class="varname">domain_replacement_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3736">3.10. <code class="varname">domain_prefix_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm1512">3.11. <code class="varname">domain_suffix_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp67168">3.12. <code class="varname">send_socket_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp69736">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp70104">4.1. <code class="function">dp_can_connect()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79576">4.2. <code class="function">dp_apply_policy()</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp132296">5. <acronym class="acronym">RPC</acronym> Commands</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp133112">6. Usage Scenarios</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp133800">6.1. TLS Based Federation</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp138880">6.2. SIP Hub based Federation</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp143520">6.3. Walled Garden Federation</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp148736">7. Known Limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2480040">Setting db_url parameter</a></dt>
+          <dt>1.2. <a href="#idp2730888">Setting dp_table parameter</a></dt>
+          <dt>1.3. <a href="#idm20552">Setting dp_col_rule parameter</a></dt>
+          <dt>1.4. <a href="#idm15736">Setting dp_col_rule parameter</a></dt>
+          <dt>1.5. <a href="#idm13512">Setting dp_col_att parameter</a></dt>
+          <dt>1.6. <a href="#idm11344">Setting dp_col_val parameter</a></dt>
+          <dt>1.7. <a href="#idm9096">Setting port_override_avp parameter</a></dt>
+          <dt>1.8. <a href="#idm6880">Setting transport_override_avp parameter</a></dt>
+          <dt>1.9. <a href="#idm4704">Setting domain_replacement_avp parameter</a></dt>
+          <dt>1.10. <a href="#idm2504">Setting domain_prefix_avp parameter</a></dt>
+          <dt>1.11. <a href="#idp66216">Setting domain_suffix_avp parameter</a></dt>
+          <dt>1.12. <a href="#idp68664">Setting send_socket_avp parameter</a></dt>
+          <dt>1.13. <a href="#idp78216">dp_can_connect usage</a></dt>
+          <dt>1.14. <a href="#idp131296">dp_apply_policy usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3456024"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2096848">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1103056">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2560216">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2537328">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1820232">3.2. <code class="varname">dp_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2642632">3.3. <code class="varname">dp_col_rule</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm17144">3.4. <code class="varname">dp_col_type</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14816">3.5. <code class="varname">dp_col_att</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm12584">3.6. <code class="varname">dp_col_val</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10384">3.7. <code class="varname">port_override_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm8104">3.8. <code class="varname">transport_override_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm5912">3.9. <code class="varname">domain_replacement_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3736">3.10. <code class="varname">domain_prefix_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm1512">3.11. <code class="varname">domain_suffix_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp67168">3.12. <code class="varname">send_socket_avp</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp69736">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp70104">4.1. <code class="function">dp_can_connect()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79576">4.2. <code class="function">dp_apply_policy()</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp132296">5. <acronym class="acronym">RPC</acronym> Commands</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp133112">6. Usage Scenarios</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp133800">6.1. TLS Based Federation</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp138880">6.2. SIP Hub based Federation</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp143520">6.3. Walled Garden Federation</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp148736">7. Known Limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2096848"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+            <span class="emphasis">
+              <em>
+		This modules is considered obsolete. The drafts mentioned here
+		has expired. If you use this module, please send a note to the
+		sr-dev mailing list.
+	</em>
+            </span>
+          </p>
+          <p>
+		The Domain Policy module implements draft-lendl-domain-policy-ddds-02 in
+		combination with draft-lendl-speermint-federations-02 and 
+		draft-lendl-speermint-technical-policy-00. These IETF drafts
+		define <acronym class="acronym">DNS</acronym> records with which a domain can
+		announce its federation memberships. A local database can be
+		used to map policy rules to routing policy decisions.
+		This database can also contain rules concerning destination
+		domains independently of draft-lendl-domain-policy-ddds-02.
+	</p>
+          <p>
+		This module requires a database. No caching is implemented.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1103056"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module depends on the following modules (in the other words the 
+		listed modules must be loaded before this module):
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>database</em></span> -- Any database module</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2560216"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2537328"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is <acronym class="acronym">URL</acronym> of the database to be used.
+		</p>
+            <p>
+		Default value is 
+			<span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>
+		</p>
+            <div class="example">
+              <a id="idp2480040"></a>
+              <p class="title">
+                <strong>Example 1.1. Setting db_url parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "db_url", "postgres://proxy:frog23@db.sip-router.org/sipdb")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. dp_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1820232"></a>3.2. <code class="varname">dp_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of table containing the local support domain policy setup.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domainpolicy</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp2730888"></a>
+              <p class="title">
+                <strong>Example 1.2. Setting dp_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "dp_table", "supportedpolicies")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. dp_col_rule (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2642632"></a>3.3. <code class="varname">dp_col_rule</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing the domain policy rule name which is equal
+		to the URI as published in the domain policy NAPTRs.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">rule</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm20552"></a>
+              <p class="title">
+                <strong>Example 1.3. Setting dp_col_rule parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "dp_col_rule", "rules")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. dp_col_type (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm17144"></a>3.4. <code class="varname">dp_col_type</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing the domain policy rule type.
+		In the case of federation names, this is "fed". For standard
+		referrals according to draft-lendl-speermint-technical-policy-00,
+		this is "std". For direct domain lookups, this is "dom".
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">type</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm15736"></a>
+              <p class="title">
+                <strong>Example 1.4. Setting dp_col_rule parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "dp_col_type", "type")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. dp_col_att (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14816"></a>3.5. <code class="varname">dp_col_att</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing the AVP's name. If the rule stored in this
+		row triggers, than dp_can_connect() will add an AVP with that name.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">att</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm13512"></a>
+              <p class="title">
+                <strong>Example 1.5. Setting dp_col_att parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "dp_col_att", "attribute")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. dp_col_val (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm12584"></a>3.6. <code class="varname">dp_col_val</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing the value for AVPs created by dp_can_connect().
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">val</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm11344"></a>
+              <p class="title">
+                <strong>Example 1.6. Setting dp_col_val parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domainpolicy", "dp_col_val", "values")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. port_override_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10384"></a>3.7. <code class="varname">port_override_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter defines the name of the AVP where dp_apply_policy() will look
+		for an override port number. 
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">portoverride</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm9096"></a>
+              <p class="title">
+                <strong>Example 1.7. Setting port_override_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "port_override_avp", "portoverride")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. transport_override_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm8104"></a>3.8. <code class="varname">transport_override_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the AVP which contains the override transport setting. 
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">transportoverride</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm6880"></a>
+              <p class="title">
+                <strong>Example 1.8. Setting transport_override_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "transport_override_avp", "transportoverride")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. domain_replacement_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm5912"></a>3.9. <code class="varname">domain_replacement_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the AVP which contains a domain replacement. 
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domainreplacement</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm4704"></a>
+              <p class="title">
+                <strong>Example 1.9. Setting domain_replacement_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "domain_replacement_avp", "domainreplacement")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. domain_prefix_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3736"></a>3.10. <code class="varname">domain_prefix_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the AVP which contains a domain prefix. 
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domainprefix</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm2504"></a>
+              <p class="title">
+                <strong>Example 1.10. Setting domain_prefix_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "domain_prefix_avp", "domainprefix")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. domain_suffix_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm1512"></a>3.11. <code class="varname">domain_suffix_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the AVP which contains a domain suffix. 
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domainsuffix</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp66216"></a>
+              <p class="title">
+                <strong>Example 1.11. Setting domain_suffix_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "domain_suffix_avp", "domainsuffix")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. send_socket_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp67168"></a>3.12. <code class="varname">send_socket_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the AVP which contains a send_socket. The format of the
+		send socket (the payload of this AVP) must be in the format
+		[proto:]ip_address[:port]. The function dp_apply_policy will 
+		look for this AVP and if defined, it will force the send socket
+		to its value (similar to the force_send_socket core function).
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">sendsocket</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp68664"></a>
+              <p class="title">
+                <strong>Example 1.12. Setting send_socket_avp parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># string named AVP
+modparam("domainpolicy", "send_socket_avp", "sendsocket")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp69736"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. dp_can_connect()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp70104"></a>4.1. <code class="function">dp_can_connect()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks the interconnection policy of the caller. It uses the domain in the 
+		request URI to perform the DP-DDDS algorithm according to draft-lendl-domain-policy-ddds-02 
+		to retrieve the domain's policy announcements. 
+		As of this version, only records conforming to draft-lendl-speermint-federations-02
+		and draft-lendl-speermint-technical-policy-00 are supported. 
+		</p>
+            <p>
+		Non-terminal NAPTR records will cause recursion to the replacement domain. dp_can_connect()
+		will thus look for policy rules in the referenced domain. Furthermore, an AVP for
+		"domainreplacement" (containing the new domain) will be added to the call. This
+		will redirect SRV/A record lookups to the new domain.
+		</p>
+            <p>
+		In order to simplify direct domain-based peerings all destination domains are
+		treated as if they contain a top priority "D2P+SIP:dom" rule with the domain itself as the 
+		value of the rule. Thus any database row with type = 'dom' and rule = 'example.com'
+		will override any dynamic DNS-discovered rules.
+		</p>
+            <p>
+		For NAPTRs with service-type "D2P+SIP:fed", the federation IDs 
+		(as extracted from the regexp field) are used to retrieve
+		policy records from a local local database (basically: "SELECT dp_col_att, dp_col_val FROM 
+		dp_table WHERE dp_col_rule = '[federationID]' AND type = 'fed'). If records are found (and all other
+		records with the same order value are fulfillable) then AVPs will be created from
+		the dp_col_att and dp_col_val columns.
+		</p>
+            <p>
+		For NAPTRs with service-type "D2P+SIP:std", the same procedure is performed. This time,
+		the database lookup searched for type = 'std', though.
+		</p>
+            <p>
+		"D2P+SIP:fed" and "D2P+SIP:std" can be mixed freely. If two rules with the same
+		"order" match and try to set the same AVP, then the behaviour is undefined.
+		</p>
+            <p>
+		The dp_col_att column specifies the AVP's name. If the AVP start with "s:" or "i:", the 
+		corresponding AVP type (string named or integer named) will be generated. If the excat specifier 
+		is omited, the AVP type will be guessed.
+		</p>
+            <p>
+		The dp_col_val column will always be interpreted as string. Thus, the AVP's value
+		is always string based.
+		</p>
+            <p>
+		dp_can_connect returns:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-2</em></span>: on errors during the evaluation. (DNS, DB, ...)
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-1</em></span>: D2P+SIP records were found, but the policy is not fullfillable.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>1</em></span>: D2P+SIP records were found and a call is possible
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>2</em></span>: No D2P+SIP records were found. The destination domain does
+			not announce a policy for incoming SIP calls.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp78216"></a>
+              <p class="title">
+                <strong>Example 1.13. dp_can_connect usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+dp_can_connect();
+switch(retcode) {
+	case -2:
+		xlog("L_INFO","Errors during the DP evaluation\n");
+		sl_send_reply("404", "We can't connect you.");
+		break;
+	case -1:
+		xlog("L_INFO","We can't connect to that domain\n");
+		sl_send_reply("404", "We can't connect you.");
+		break;
+	case 1:
+		xlog("L_INFO","We found matching policy records\n");
+		avp_print();
+		dp_apply_policy();
+		t_relay();
+		break;
+	case 2:
+		xlog("L_INFO","No DP records found\n");
+		t_relay();
+		break;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. dp_apply_policy()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79576"></a>4.2. <code class="function">dp_apply_policy()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function sets the destination URI according to the policy returned
+		from the <code class="function">dp_can_connect()</code> function.
+		Parameter exchange between <code class="function">dp_can_connect()</code>
+		and <code class="function">dp_apply_policy()</code> is done via AVPs.
+		The AVPs can be configured in the module's parameter section.
+		</p>
+            <p>
+		Note: The name of the AVPs must correspond with the names in the 
+		<span class="emphasis"><em>att</em></span> column in the domainpolicy table.
+		</p>
+            <p>
+		Setting the following AVPs in <code class="function">dp_can_connect()</code>
+		(or by any other means)
+		cause the following actions in <code class="function">dp_apply_policy()</code>:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>port_override_avp</em></span>: If this AVP is set, the port
+			in the destination URI is set to this port. 
+			Setting an override port disables NAPTR and
+			SRV lookups according to RFC 3263.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>transport_override_avp</em></span>: If this AVP is set, the transport
+			parameter in the destination URI is set to the specified transport ("udp", "tcp",
+			"tls").
+			Setting an override transport also disables NAPTR lookups, but retains 
+			an SRV lookup according to RFC 3263.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain_replacement_avp</em></span>: If this AVP is set, the domain
+			in the destination URI will be replaced by this domain. 
+		</p>
+                  <p>
+			A non-terminal NAPTR and thus a referral to a new domain implicitly
+			sets <span class="emphasis"><em>domain_replacement_avp</em></span> to the new domain.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain_prefix_avp</em></span>: If this AVP is set, the domain
+			in the destination URI will be prefixed with this "subdomain".  
+			E.g. if the domain in the request URI is 
+			"example.com" and the domain_prefix_avp contains "inbound", the domain 
+			in the destinaton URI is set to "inbound.example.com".
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain_suffix_avp</em></span>: If this AVP is set, the domain
+			in the destination URI will have the content of the AVP appended to it.
+			E.g. if the domain in the request URI is 
+			"example.com" and the domain_suffix_avp contains "myroot.com", the domain 
+			in the destination URI is set to "example.com.myroot.com".
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>send_socket_avp</em></span>: If this AVP is set, the sending socket
+			will be forced to the socket in the AVP. The payload format of this AVP must 
+			be [proto:]ip_address[:port].
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		If both prefix/suffix and domain replacements are used, then the replacement is
+		performed first and the prefix/suffix are applied to the new domain.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp131296"></a>
+              <p class="title">
+                <strong>Example 1.14. dp_apply_policy usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (dp_apply_policy()) {
+	t_relay();
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp132296"></a>5. <acronym class="acronym">RPC</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="6. Usage Scenarios">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp133112"></a>6. Usage Scenarios</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This section describes how this module can be use to implement 
+	selective VoIP peerings.
+	</p>
+          <div class="section" title="6.1. TLS Based Federation">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp133800"></a>6.1. TLS Based Federation</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	This example shows how a secure peering fabric can be configured based on
+	TLS and Domain Policies.
+	</p>
+            <p>
+	Let's assume that an organization called "TLSFED.org" acts as an umbrella for
+	VoIP providers who want to peer with each other but don't want to run
+	open SIP proxies. TLSFED.org's secretary acts as an X.509 Certification Authority
+	that signs the TLS keys of all member's SIP proxies. Each member should automatically
+	allow incoming calls from other members. On the other hand, the configuration for
+	this federation must not interfere with a member's participation in other VoIP
+	peering fabrics. All this can be achieved by the following configuration for
+	a participating VoIP operation called example.com:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Incoming SIP configuration</em></span>
+		</p>
+                  <p>
+			Calls from other members are expected to use TLS and authenticate
+			using a client-CERT. To implement this, we cannot share a TCP/TLS port
+			with other incoming connections. Thus we need to use tls_server_domain[] to
+			dedicate a TCP port for this federation. 
+		</p>
+                  <pre class="programlisting">tls_server_domain[1.2.3.4:5066] {
+ tls_certificate   = "/path/to/tlsfed/example-com.key"
+ tls_private_key   = "/path/to/tlsfed/example-com.crt"
+ tls_ca_list       = "/path/to/tlsfed/ca.pem"
+ tls_method        = tlsv1
+ tls_verify_client = 1
+ tls_require_cleint_certificate = 1
+}</pre>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Outgoing SIP configuration</em></span>
+		</p>
+                  <p>
+			Calls to other members must also use the proper client cert. 
+			Therefore, a TLS client domain must be configured. We use the 
+			federation name as TLS client domain identifier. Therefore, the 
+			content of the "tls_client_domain_avp" must be set to this identifier 
+			(e.g. by putting it as rule into the domainpolicy table).
+		</p>
+                  <pre class="programlisting">tls_client_domain["tlsfed"] {
+ tls_certificate   = "/path/to/tlsfed/example-com.key"
+ tls_private_key   = "/path/to/tlsfed/example-com.crt"
+ tls_ca_list       = "/path/to/tlsfed/ca.pem"
+ tls_method        = tlsv1
+ tls_verify_server = 1
+}</pre>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.2. SIP Hub based Federation">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp138880"></a>6.2. SIP Hub based Federation</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	This example shows how a peering fabric based on a central SIP hub can be configured.
+	</p>
+            <p>
+	Let's assume that an organization called "HUBFED.org" acts as an umbrella for
+	VoIP providers who want to peer with each other but don't want to run
+	open SIP proxies. Instead, HUBFED.org operates a central SIP proxy which will
+	relay calls between all participating members. Each member thus only needs to
+	allow incoming calls from that central hub (which could be done by firewalling).
+	All this can be achieved by the following configuration for
+	a participating VoIP operation called example.com:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>DNS configuration</em></span>
+		</p>
+                  <p>
+			The destination network announces its membership in this
+			federation.
+		</p>
+                  <pre class="programlisting">$ORIGIN destination.example.org
+@ IN NAPTR 10 50   "U"  "D2P+SIP:fed" (
+                 "!^.*$!http://HUBFED.org/!" . )</pre>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Outgoing SIP configuration</em></span>
+		</p>
+                  <p>
+			Calls to other members need to be redirected to the central proxy.
+			The domainpolicy table just needs to list the federation and link
+			it to the central proxy's domain name:
+		</p>
+                  <pre class="programlisting">mysql&gt; select * from domainpolicy;
++----+--------------------+------+-------------------+----------------+
+| id | rule               | type | att               | val            |
++----+--------------------+------+-------------------+----------------+
+| 1  | http://HUBFED.org/ | fed  | domainreplacement | sip.HUBFED.org |
++----+--------------------+------+-------------------+----------------+</pre>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.3. Walled Garden Federation">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp143520"></a>6.3. Walled Garden Federation</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	This example assumes that a set of SIP providers have established
+	a secure Layer 3 network between their proxies. It does not
+	matter whether this network is build by means of IPsec, a private
+	Layer 2 network, or by simple firewalling. We will use the 10.x
+	network (for the walled garden net) and "http://l3fed.org/" 
+	(as federation identifier) in this example.
+	</p>
+            <p>
+	A member of this federation (e.g. example.com) can not announce its
+	SIP proxy's 10.x address in the standard SRV / A records of his domain,
+	as this address is only meaningful for other members of this federation.
+	In order to facilite different IP address resolution paths within the 
+	federation vs. outside the federation, all members of "http://l3fed.org/"
+	agree to prefix the destination domains with "l3fed" before the
+	SRV (or A) lookup.
+	</p>
+            <p>
+	Here is the configuration for example.com:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>DNS configuration</em></span>
+		</p>
+                  <p>
+			The destination network announces its membership in this
+			federation.
+		</p>
+                  <pre class="programlisting">$ORIGIN example.com
+@ IN NAPTR 10 50   "U"  "D2P+SIP:fed" (
+                 "!^.*$!http://l3fed.org/!" . )
+_sip._udp      IN SRV 10 10 5060 publicsip.example.com.
+_sip._udp.l3fe IN SRV 10 10 5060 l3fedsip.example.com.
+
+publicsip      IN A   193.XXX.YYY.ZZZ 
+l3fedsip       IN A   10.0.0.42</pre>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Outgoing SIP configuration</em></span>
+		</p>
+                  <p>
+			The domainpolicy table just needs to link the federation identifier
+			to the agreed apon prefix:
+		</p>
+                  <pre class="programlisting">mysql&gt; select * from domainpolicy;
++----+-------------------+------+--------------+-------+
+| id | rule              | type | att          | val   |
++----+-------------------+------+--------------+-------+
+| 1  | http://l3fed.org/ | fed  | domainprefix | l3fed |
++----+-------------------+------+--------------+-------+</pre>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="7. Known Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp148736"></a>7. Known Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

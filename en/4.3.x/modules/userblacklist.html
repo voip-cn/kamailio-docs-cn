@@ -1,0 +1,1392 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>userblacklist Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15533456" title="userblacklist Module" />
+    <link rel="next" href="#idp2536976" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="userblacklist Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15533456"></a>userblacklist Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Henning</span> <span class="surname">Westerholt</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:henning.westerholt@1und1.de">henning.westerholt@1und1.de</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Pawel</span> <span class="surname">Kuzak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:pawel.kuzak@1und1.de">pawel.kuzak@1und1.de</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 1&amp;1 Internet AG</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2536976">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2410840">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1691496">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1784392">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2679520">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2491136">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.p.use_domain">3.1. <code class="varname">use_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.p.match_mode">3.2. <code class="varname">match_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.p.db_url">3.3. <code class="varname">db_url</code> (String)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp129552">3.4. <code class="varname">userblacklist_table</code> (String)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp132208">3.5. <code class="varname">userblacklist_id_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp134088">3.6. <code class="varname">userblacklist_username_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm16608">3.7. <code class="varname">userblacklist_domain_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14680">3.8. <code class="varname">userblacklist_prefix_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm12752">3.9. <code class="varname">userblacklist_whitelist_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10808">3.10. <code class="varname">globalblacklist_table</code> (String)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm8064">3.11. <code class="varname">globalblacklist_id_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6184">3.12. <code class="varname">globalblacklist_prefix_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm4256">3.13. <code class="varname">globalblacklist_whitelist_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm2272">3.14. <code class="varname">globalblacklist_description_col</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp64968">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.f.check_user_blacklist">4.1. 
+		<code class="function">check_user_blacklist
+		(string user, string domain, string number, string table)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.f.check_user_whitelist">4.2. 
+		<code class="function">check_user_whitelist
+		(string user, string domain, string number, string table)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.f.check_blacklist">4.3. 
+		<code class="function">check_blacklist ([string table])</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#userblacklist.f.check_whitelist">4.4. 
+		<code class="function">check_whitelist (string table)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp76600">5. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp77112">5.1. 
+				<code class="function">reload_blacklist</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79440">5.2. 
+				<code class="function">dump_blacklist</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp81848">5.3. 
+				<code class="function">check_blacklist prefix</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp20704">5.4. 
+				<code class="function">check_whitelist prefix</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp23536">5.5. 
+				<code class="function">check_userblacklist user [domain] prefix</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp26368">5.6. 
+				<code class="function">check_userwhitelist user [domain] prefix</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp29280">6. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp29632">6.1. Database setup</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2573664">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp142488">Set <code class="varname">match_mode</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp145176">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp131016">Set <code class="varname">userblacklist_table</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp132928">Set <code class="varname">userblacklist_id_col</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm17784">Set <code class="varname">userblacklist_username_col</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm15848">Set <code class="varname">userblacklist_domain_col</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm13920">Set <code class="varname">userblacklist_prefix_col</code> parameter</a></dt>
+          <dt>1.9. <a href="#idm11984">Set <code class="varname">userblacklist_whitelist_col</code> parameter</a></dt>
+          <dt>1.10. <a href="#idm9240">Set <code class="varname">globalblacklist_table</code> parameter</a></dt>
+          <dt>1.11. <a href="#idm7344">Set <code class="varname">globalblacklist_id_col</code> parameter</a></dt>
+          <dt>1.12. <a href="#idm5424">Set <code class="varname">globalblacklist_prefix_col</code> parameter</a></dt>
+          <dt>1.13. <a href="#idm3488">Set <code class="varname">globalblacklist_whitelist_col</code> parameter</a></dt>
+          <dt>1.14. <a href="#idm1528">Set <code class="varname">globalblacklist_description_col</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp66976"><code class="function">check_user_blacklist</code> usage</a></dt>
+          <dt>1.16. <a href="#idp69920"><code class="function">check_user_blacklist</code> usage</a></dt>
+          <dt>1.17. <a href="#idp72624"><code class="function">check_blacklist</code> usage</a></dt>
+          <dt>1.18. <a href="#idp75248"><code class="function">check_whitelist</code> usage</a></dt>
+          <dt>1.19. <a href="#idp78208"><code class="function">reload_blacklist</code> usage</a></dt>
+          <dt>1.20. <a href="#idp80584"><code class="function">dump_blacklist</code> usage</a></dt>
+          <dt>1.21. <a href="#idp83400"><code class="function">check_blacklist</code> usage</a></dt>
+          <dt>1.22. <a href="#idp22264"><code class="function">check_whitelist</code> usage</a></dt>
+          <dt>1.23. <a href="#idp25112"><code class="function">check_userblacklist</code> usage</a></dt>
+          <dt>1.24. <a href="#idp27944"><code class="function">check_userwhitelist</code> usage</a></dt>
+          <dt>1.25. <a href="#idp31544">Example database content - globalblacklist table</a></dt>
+          <dt>1.26. <a href="#idp33680">Example database content - userblacklist table</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2536976"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2410840">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1691496">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1784392">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2679520">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2491136">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.p.use_domain">3.1. <code class="varname">use_domain</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.p.match_mode">3.2. <code class="varname">match_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.p.db_url">3.3. <code class="varname">db_url</code> (String)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp129552">3.4. <code class="varname">userblacklist_table</code> (String)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp132208">3.5. <code class="varname">userblacklist_id_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp134088">3.6. <code class="varname">userblacklist_username_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm16608">3.7. <code class="varname">userblacklist_domain_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14680">3.8. <code class="varname">userblacklist_prefix_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm12752">3.9. <code class="varname">userblacklist_whitelist_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10808">3.10. <code class="varname">globalblacklist_table</code> (String)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm8064">3.11. <code class="varname">globalblacklist_id_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6184">3.12. <code class="varname">globalblacklist_prefix_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm4256">3.13. <code class="varname">globalblacklist_whitelist_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm2272">3.14. <code class="varname">globalblacklist_description_col</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp64968">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.f.check_user_blacklist">4.1. 
+		<code class="function">check_user_blacklist
+		(string user, string domain, string number, string table)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.f.check_user_whitelist">4.2. 
+		<code class="function">check_user_whitelist
+		(string user, string domain, string number, string table)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.f.check_blacklist">4.3. 
+		<code class="function">check_blacklist ([string table])</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#userblacklist.f.check_whitelist">4.4. 
+		<code class="function">check_whitelist (string table)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp76600">5. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp77112">5.1. 
+				<code class="function">reload_blacklist</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79440">5.2. 
+				<code class="function">dump_blacklist</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp81848">5.3. 
+				<code class="function">check_blacklist prefix</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp20704">5.4. 
+				<code class="function">check_whitelist prefix</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp23536">5.5. 
+				<code class="function">check_userblacklist user [domain] prefix</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp26368">5.6. 
+				<code class="function">check_userwhitelist user [domain] prefix</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp29280">6. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp29632">6.1. Database setup</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2410840"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The userblacklist module allows Kamailio to handle blacklists
+	on a per user basis. This information is stored in a database
+	table, which is queried to decide if the number (more exactly,
+	the request URI user) is blacklisted or not.
+	</p>
+          <p>
+	An additional functionality that this module provides is the ability
+	to handle global blacklists. This lists are loaded on startup into
+	memory, thus providing a better performance than the userblacklist
+	case. These global blacklists are useful to allow only calls to certain 
+	international destinations, i.e. block all not whitelisted numbers.
+	They could also be used to prevent the blacklisting of important	
+	numbers, as whitelisting is supported too. This is useful for example
+	to prevent the customer from blocking emergency call number or service
+	hotlines.
+	</p>
+          <p>
+	The module exports four functions, <code class="function">check_blacklist</code>,
+	<code class="function">check_whitelist</code>,
+	<code class="function">check_user_blacklist</code> and <code class="function">check_user_whitelist</code>
+	for usage in the configuration file. Furthermore it provides a MI function to
+	reload the global blacklist cache.
+	</p>
+          <p>
+	Please note that only numerical strings for matching are supported at the
+	moment (the used library supports this already, but its not yet implemented
+	in the module). Non-digits on the beginning of the matched string are skipped,
+	any later non-digits will stop the matching on this position.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1691496"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1784392"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The module depends on the following modules (in the other words 
+			the listed modules must be loaded before this module):
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>database</em></span> 
+				-- Any db_* database module</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2679520"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed 
+			before running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>none</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2491136"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. use_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.p.use_domain"></a>3.1. <code class="varname">use_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to non-zero value, the domain column in the
+			userblacklist table is used.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp2573664"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "use_domain", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. match_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.p.match_mode"></a>3.2. <code class="varname">match_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of individual characters that are used for matching. 
+		Valid values are 10 or 128. When you specifiy 10, only digits will be used for matching, 
+		this operation mode is equivalent to the old behaviour. When configured with 128, 
+		all standard ASCII chars are available for matching. Please be aware that memory 
+		requirements for storing the routing tree in shared memory will also
+		increase by a factor of 12.8.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp142488"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">match_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "match_mode", 128)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. db_url (String)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.p.db_url"></a>3.3. <code class="varname">db_url</code> (String)</h3>
+                </div>
+              </div>
+            </div>
+            <p>URL to the database containing the data.</p>
+            <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>.</em></span>
+    </p>
+            <div class="example">
+              <a id="idp145176"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. userblacklist_table (String)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp129552"></a>3.4. <code class="varname">userblacklist_table</code> (String)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Name of the userblacklist table for the userblacklist module.</p>
+            <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">userblacklist</span>”</span>.</em></span>
+    </p>
+            <div class="example">
+              <a id="idp131016"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">userblacklist_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_table", "userblacklist")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. userblacklist_id_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp132208"></a>3.5. <code class="varname">userblacklist_id_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>unique ID</p>
+            <div class="example">
+              <a id="idp132928"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">userblacklist_id_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_id_col", "id")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. userblacklist_username_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp134088"></a>3.6. <code class="varname">userblacklist_username_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The user that is used for the blacklist lookup.</p>
+            <div class="example">
+              <a id="idm17784"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">userblacklist_username_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_username_col", "username")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. userblacklist_domain_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm16608"></a>3.7. <code class="varname">userblacklist_domain_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The domain that is used for the blacklist lookup.</p>
+            <div class="example">
+              <a id="idm15848"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">userblacklist_domain_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_domain_col", "domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. userblacklist_prefix_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14680"></a>3.8. <code class="varname">userblacklist_prefix_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The prefix that is matched for the blacklist.</p>
+            <div class="example">
+              <a id="idm13920"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">userblacklist_prefix_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_prefix_col", "prefix")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. userblacklist_whitelist_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm12752"></a>3.9. <code class="varname">userblacklist_whitelist_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Specify if this a blacklist (0) or a whitelist (1) entry.</p>
+            <div class="example">
+              <a id="idm11984"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">userblacklist_whitelist_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "userblacklist_whitelist_col", "whitelist")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. globalblacklist_table (String)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10808"></a>3.10. <code class="varname">globalblacklist_table</code> (String)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Name of the globalblacklist table for the userblacklist module.
+    Please note that this table is used when the check_blacklist
+	function is called with no parameters.</p>
+            <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">globalblacklist</span>”</span>.</em></span>
+    </p>
+            <div class="example">
+              <a id="idm9240"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">globalblacklist_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "globalblacklist_table", "globalblacklist")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. globalblacklist_id_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm8064"></a>3.11. <code class="varname">globalblacklist_id_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>unique ID</p>
+            <div class="example">
+              <a id="idm7344"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">globalblacklist_id_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "globalblacklist_id_col", "id")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. globalblacklist_prefix_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6184"></a>3.12. <code class="varname">globalblacklist_prefix_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The prefix that is matched for the blacklist.</p>
+            <div class="example">
+              <a id="idm5424"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">globalblacklist_prefix_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "globalblacklist_prefix_col", "prefix")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. globalblacklist_whitelist_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm4256"></a>3.13. <code class="varname">globalblacklist_whitelist_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Specify if this a blacklist (0) or a whitelist (1) entry.</p>
+            <div class="example">
+              <a id="idm3488"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">globalblacklist_whitelist_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "globalblacklist_whitelist_col", "whitelist")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. globalblacklist_description_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm2272"></a>3.14. <code class="varname">globalblacklist_description_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>A comment for the entry.</p>
+            <div class="example">
+              <a id="idm1528"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">globalblacklist_description_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("userblacklist", "globalblacklist_description_col", "description")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp64968"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  check_user_blacklist (string user, string domain, string number, string table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.f.check_user_blacklist"></a>4.1. 
+		<code class="function">check_user_blacklist
+		(string user, string domain, string number, string table)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Finds the longest prefix that matches the request URI user (or the number
+		parameter) for the given user and domain name in the database.
+		If a match is found and it is not set to whitelist, false is returned.
+		Otherwise, true is returned. Pseudo-variables or AVPs can be used for
+		the user, domain and number parameters. The number and table variables
+		are optional, the defaults are used if they are omitted. The number
+		parameter can be used to check for example against the from URI user.
+	    </p>
+            <div class="example">
+              <a id="idp66976"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">check_user_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$avp(i:80) = $rU;
+# rewrite the R-URI
+if (!check_user_blacklist("$avp(i:80)", "$avp(i:82)")) {
+	sl_send_reply("403", "Forbidden");
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  check_user_whitelist (string user, string domain, string number, string table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.f.check_user_whitelist"></a>4.2. 
+		<code class="function">check_user_whitelist
+		(string user, string domain, string number, string table)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Finds the longest prefix that matches the request URI user (or the number
+		parameter) for the given user and domain name in the database.
+		If a match is found and it is set to whitelist, true is returned.
+		Otherwise, false is returned. Pseudo-variables or AVPs can be used for
+		the user, domain and number parameters. The number and table variables
+		are optional, the defaults are used if they are omitted. The number
+		parameter can be used to check for example against the from URI user.
+	    </p>
+            <div class="example">
+              <a id="idp69920"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">check_user_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$avp(i:80) = $rU;
+# rewrite the R-URI
+if (!check_user_whitelist("$avp(i:80)", "$avp(i:82)")) {
+	# process request
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  check_blacklist ([string table])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.f.check_blacklist"></a>4.3. 
+		<code class="function">check_blacklist ([string table])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Finds the longest prefix that matches the request URI for the
+		given table. If a match is found and it is not set to whitelist,
+		false is returned. Otherwise, true is returned. If no table is given, 
+		then globalblacklist_table is used.
+	    </p>
+            <div class="example">
+              <a id="idp72624"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">check_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!check_blacklist("globalblacklist")) {
+	sl_send_reply("403", "Forbidden");
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  check_whitelist (string table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="userblacklist.f.check_whitelist"></a>4.4. 
+		<code class="function">check_whitelist (string table)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Finds the longest prefix that matches the request URI for the
+		given table. If a match is found and it is set to whitelist,
+		true is returned. Otherwise, false is returned.
+	    </p>
+            <div class="example">
+              <a id="idp75248"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">check_whitelist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!check_whitelist("globalblacklist")) {
+	sl_send_reply("403", "Forbidden");
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp76600"></a>5. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  reload_blacklist">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp77112"></a>5.1. 
+				<code class="function">reload_blacklist</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Reload the internal global blacklist cache. This is necessary after
+				the database tables for the global blacklist have been changed.
+			</p>
+            <div class="example">
+              <a id="idp78208"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">reload_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo reload_blacklist
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  dump_blacklist">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79440"></a>5.2. 
+				<code class="function">dump_blacklist</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Dumps the default, in memory, global_blacklist content to stdout.
+				Note that a reload_blacklist should be issued before, 
+				in order to see the latest content of the database.
+			</p>
+            <div class="example">
+              <a id="idp80584"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">dump_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo reload_blacklist
+					kamctl fifo dump_blacklist
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.  check_blacklist prefix">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp81848"></a>5.3. 
+				<code class="function">check_blacklist prefix</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Searches in the default, in memory, global list. 
+				Finds the longest prefix that matches the given prefix parameter. 
+				Returns true if the prefix is found and the whitelist is <span class="emphasis"><em>not</em></span> set. 
+				Returns false otherwise - either prefix found and whitelist set or prefix not found. 
+				Note that a reload_blacklist should be issued before, 
+				in order to check through the latest content of the database.
+			</p>
+            <div class="example">
+              <a id="idp83400"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">check_blacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo reload_blacklist
+					kamctl fifo check_blacklist prefix
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.  check_whitelist prefix">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp20704"></a>5.4. 
+				<code class="function">check_whitelist prefix</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Searches in the default, in memory, global list. 
+				Finds the longest prefix that matches the given prefix parameter. 
+				Returns true if the prefix is found and the whitelist is set. 
+				Returns false otherwise - either prefix found and whitelist 
+				<span class="emphasis"><em>not</em></span> set or prefix not found. 
+				Note that a reload_blacklist should be issued before, 
+				in order to check through the latest content of the database.
+			</p>
+            <div class="example">
+              <a id="idp22264"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">check_whitelist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo reload_blacklist
+					kamctl fifo check_whitelist prefix
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.  check_userblacklist user [domain] prefix">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp23536"></a>5.5. 
+				<code class="function">check_userblacklist user [domain] prefix</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Searches in the default user list table.
+				Finds the longest prefix for the given user@domain that matches the given prefix parameter. 
+				Returns true if the prefix is found and the whitelist is <span class="emphasis"><em>not</em></span> set. 
+				Returns false otherwise - either prefix found and whitelist set or prefix not found. 
+				Note that the domain parameter is optional. 
+				If not given, the second parameter is the considered to be the prefix. 
+			</p>
+            <div class="example">
+              <a id="idp25112"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">check_userblacklist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo check_userblacklist user [domain] prefix
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6.  check_userwhitelist user [domain] prefix">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp26368"></a>5.6. 
+				<code class="function">check_userwhitelist user [domain] prefix</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Searches in the default user list table.
+				Finds the longest prefix for the given user@domain that matches the given prefix parameter. 
+				Returns true if the prefix is found and the whitelist is set. 
+				Returns false otherwise - either prefix found and whitelist 
+				<span class="emphasis"><em>not</em></span> set or prefix not found. 
+				Note that the domain parameter is optional. 
+				If not given, the second parameter is the considered to be the prefix. 
+			</p>
+            <div class="example">
+              <a id="idp27944"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">check_userwhitelist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					kamctl fifo check_userwhitelist user [domain] prefix
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp29280"></a>6. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. Database setup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp29632"></a>6.1. Database setup</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Before running Kamailio with the userblacklist module,
+			you have to setup the database table where the module will
+			read the blacklist data. For that, if the table was not created
+			by the installation script or you choose to install everything
+			by yourself you can use the <span class="emphasis"><em>userblacklist-create.sql</em></span>
+			<acronym class="acronym">SQL</acronym> script in the database directories in the 
+			kamailio/scripts folder as template. 
+			Database and table name can be set with module parameters so they 
+			can be changed, but the name of the columns must be as they are 
+			in the <acronym class="acronym">SQL</acronym> script.
+			You can also find the complete database documentation on the
+			project webpage, http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html.
+		</p>
+            <div class="example">
+              <a id="idp31544"></a>
+              <p class="title">
+                <strong>Example 1.25. Example database content - globalblacklist table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+-----------+-----------+
+| id | prefix    | whitelist |
++----+-----------+-----------+
+|  1 |           |         0 |
+|  2 | 1         |         1 |
+|  3 | 123456    |         0 |
+|  4 | 123455787 |         0 |
++----+-----------+-----------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		This table will setup a global blacklist for all numbers, only allowing calls
+		starting with <span class="quote">“<span class="quote">1</span>”</span>. Numbers that starts with <span class="quote">“<span class="quote">123456</span>”</span>
+		and <span class="quote">“<span class="quote">123455787</span>”</span> are also blacklisted, because the longest prefix
+		will be matched.
+	</p>
+            <div class="example">
+              <a id="idp33680"></a>
+              <p class="title">
+                <strong>Example 1.26. Example database content - userblacklist table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+----------------+-------------+-----------+-----------+
+| id | username       | domain      | prefix    | whitelist |
++----+----------------+-------------+-----------+-----------+
+| 23 | 49721123456788 |             | 1234      |         0 |
+| 22 | 49721123456788 |             | 123456788 |         1 |
+| 21 | 49721123456789 |             | 12345     |         0 |
+| 20 | 494675231      |             | 499034133 |         1 |
+| 19 | 494675231      | test        | 499034132 |         0 |
+| 18 | 494675453      | test.domain | 49901     |         0 |
+| 17 | 494675454      |             | 49900     |         0 |
++----+----------------+-------------+-----------+-----------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		This table will setup user specific blacklists for certain usernames. For example
+		for user <span class="quote">“<span class="quote">49721123456788</span>”</span> the prefix <span class="quote">“<span class="quote">1234</span>”</span> will be not
+		allowed, but the number <span class="quote">“<span class="quote">123456788</span>”</span> is allowed. Additionally a domain
+		could be specified that is used for username matching if the <span class="quote">“<span class="quote">use_domain</span>”</span>
+		parameter is set.
+	</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,316 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SQlite Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11222432" title="SQlite Module" />
+    <link rel="next" href="#idp18723696" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SQlite Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11222432"></a>SQlite Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Timo</span> <span class="surname">Teräs</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Timo</span> <span class="surname">Teräs</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Timo Teräs</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18723696">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17516096">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16828576">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17137392">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17847112">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17881952">3. Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17197392">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18041992">5. Usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17998968"><code class="function">loading the module</code> usage</a></dt>
+          <dt>1.2. <a href="#idp18305280"><code class="function">db_url module parameter</code> usage</a></dt>
+          <dt>1.3. <a href="#idp18307968"><code class="function">DBURL define</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18723696"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17516096">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16828576">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17137392">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17847112">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17881952">3. Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17197392">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18041992">5. Usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17516096"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The module is an implementation of the internal DB API v1 connector
+		for SQlite 3 file.</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16828576"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17137392"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17847112"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SQlite 3 library</em></span> - e.g., libsqlite3-0
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SQlite 3 devel library</em></span> - to compile
+				the module e.g. libsqlite3-dev
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SQlite 3 utilities</em></span> - for kamdbctl
+				e.g. sqlite3
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17881952"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		NONE
+		</p>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17197392"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		NONE
+		</p>
+        </div>
+        <div class="section" title="5. Usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18041992"></a>5. Usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			To use the module, first you have to load it in the Kamailio
+			configuration file.
+		</p>
+          <div class="example">
+            <a id="idp17998968"></a>
+            <p class="title">
+              <strong>Example 1.1. <code class="function">loading the module</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+loadmodule "db_sqlite.so"
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+			Then set the db_url (or similar) parameter of modules that have to
+			use the SQLite database to driver part 'sqlite://', followed by the
+			path to database file. For example:
+		</p>
+          <div class="example">
+            <a id="idp18305280"></a>
+            <p class="title">
+              <strong>Example 1.2. <code class="function">db_url module parameter</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("auth_db", "db_url", "sqlite:///etc/kamailio/kamailio.db")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+			In the default config file, defined token DBURL can be updated like:
+		</p>
+          <div class="example">
+            <a id="idp18307968"></a>
+            <p class="title">
+              <strong>Example 1.3. <code class="function">DBURL define</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+#!define DBURL "sqlite:///etc/kamailio/kamailio.db"
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

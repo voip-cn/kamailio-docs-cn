@@ -1,0 +1,583 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>DB Cassandra Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4247920" title="DB Cassandra Module" />
+    <link rel="next" href="#idp1497864" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="DB Cassandra Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4247920"></a>DB Cassandra Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca</span> <span class="surname">Vamanu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:anca.vamanu@1and1.ro">anca.vamanu@1and1.ro</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Boudewyn</span> <span class="surname">Ligthart</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:bligthart@btlnet.co.uk">bligthart@btlnet.co.uk</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca</span> <span class="surname">Vamanu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:anca.vamanu@1and1.ro">anca.vamanu@1and1.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 1&amp;1 Internet AG</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1497864">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2623800">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1570056">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1702976">2.1. SIP Router Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1697392">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2679208">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1746120">3.1. <code class="varname">schema_path</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp185000">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp185672">5. Installation</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp187720">6. Table schema</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp263272">7. Limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp183744">Set <code class="varname">schema_path</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1497864"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2623800">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1570056">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1702976">2.1. SIP Router Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1697392">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2679208">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1746120">3.1. <code class="varname">schema_path</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp185000">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp185672">5. Installation</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp187720">6. Table schema</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp263272">7. Limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2623800"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Db_cassandra is one of the Kamailio database modules. It does
+		not export any functions executable from the configuration scripts,
+		but it exports a subset of functions using the database API, and thus,
+		other modules can use it as a database driver, instead of, for
+		example, the Mysql module.
+	</p>
+          <p>
+		The storage backend is a <span class="emphasis"><em>Cassandra</em></span> cluster and
+		this module provides an SQL interface to be used by other modules for
+		storing and retrieving data. Because Cassandra is a NoSQL distributed
+		system, there are limitations on the operations that can be performed.
+		The limitations concern the indexes on which queries are performed, as
+		it is only possible to have simple conditions (equality comparison only) 
+		and only two indexing levels.  These issues will be explained in an example 
+		below.
+	</p>
+          <p>
+		Cassandra DB is especially suited for storing large amounts of data or data
+		that requires distribution, redundancy or replication. One usage example is
+		a distributed location system in a platform that has a cluster of SIP Router
+		servers, with several proxies and registration servers accessing the same location
+		database. This was actually the main use case we had in mind when implementing
+		this module. Please NOTE that it has only been tested with the
+		<span class="emphasis"><em>usrloc</em></span>, <span class="emphasis"><em>auth_db</em></span> and <span class="emphasis"><em>domain</em></span> modules.
+	</p>
+          <p>
+		You can find a configuration file example for this usage in the module - kamailio_cassa.cfg.
+	</p>
+          <p>
+		Because the module has to do the translation from SQL to Cassandra NoSQL
+		queries, the schemas for the tables must be known by the module.
+		You will find the schemas for location, subscriber and version tables in
+		utils/kamctl/dbcassandra directory. You have to provide the path to the 
+		directory containing the table definitions by setting the module parameter
+		schema_path.
+	</p>
+          <p>
+		There is no need to configure a table metadata in Cassandra cluster.
+		You only need to define a keyspace with the name of the database and for each table
+		a column family inside that keyspace with the name of the table. The comparator
+		and validators should be either UTF8Type or ASCIIType.
+		Example:
+	</p>
+          <pre class="programlisting">   ...
+   create keyspace kamailio;
+   use kamailio;
+   create column family 'location' with comparator='UTF8Type' and 
+default_validation_class='UTF8Type' and key_validation_class='UTF8Type';
+   ...</pre>
+          <p>
+		Special attention was given to performance in Cassandra. Therefore, the
+		implementation uses only the native row indexing in Cassandra and no secondary
+		indexes, because they are costly. Instead, we simulate a secondary index by 
+		using the column names and putting information in them, which is very efficient.
+		Also, for deleting expired records, we let Cassandra take care of this with
+		its own mechanism (by setting the TTL for columns).
+	</p>
+          <p>
+ 		The module supports raw queries. However these queries must follow the
+		CQL (Cassandra Query Language) syntax. The queries can be issued 
+		in the script by means of the AVPOPS module. Keep in mind that when passing back
+		the results from the database only the first row is used to set the AVP variables.
+		(default AVPOPS behaviour)
+
+		The script lines below can be used as an example for issuing the query towards 
+		an cassandra instance.(This example will work once the column family `location` 
+		is configured correctly in the cassandra keyspace)
+	</p>
+          <pre class="programlisting">   ...
+   $var(dballowed)="select * from location where key = 'userx' limit 1;";
+   avp_db_query("$var(dballowed)");
+   xlog("L_INFO","Got result here: [$avp(i:1)] [$avp(i:2)] [$avp(i:3)].\n");
+   ...</pre>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1570056"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. SIP Router Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1702976"></a>2.1. SIP Router Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other SIP Router modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1697392"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		SIP Router with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Thrift library</em></span>
+				(tested with version 0.6.1 and version 0.7.0).
+				You can download it from http://archive.apache.org/dist/thrift .
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p> The implementation was tested with Cassandra version 1.0.1
+			and version 1.1.6. I used the sourced from DataStax Community
+			Edition (http://www.datastax.com/download/community).
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2679208"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. schema_path (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1746120"></a>3.1. <code class="varname">schema_path</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The directory where the files with the table schemas are located.
+			This directory has to contain the subdirectories corresponding to the
+			database name (name of the directory = name of the database). 
+			These directories, in turn, contain the files with the table schemas.
+			See the schemas in utils/kamctl/dbcassandra directory.
+		</p>
+            <div class="example">
+              <a id="idp183744"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">schema_path</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">   ...
+   modparam("db_cassandra", "schema_path",
+               "/usr/local/kamailio/etc/kamctl/dbcassandra")
+   ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp185000"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		NONE
+		</p>
+        </div>
+        <div class="section" title="5. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp185672"></a>5. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Because the db_cassandra module dependes on an external library, it is not
+		compiled and installed by default. You can use one of these options:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			- edit the "Makefile" and remove "db_cassandra" from "excluded_modules"
+			list. Then follow the standard procedure to install SIP Router:
+			"make all; make install".
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			- from command line, run: 'make all include_modules="db_cassandra";
+			make install include_modules="db_cassandra"'.
+			</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="6. Table schema">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp187720"></a>6. Table schema</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module must know the table schema for the tables that will be used.
+		You must configure the path to the schema directory by setting the 
+		<span class="emphasis"><em>schema_path</em></span> parameter. 
+		</p>
+          <p>
+		A table schema document has the following structure:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			First row: <span class="emphasis"><em>the name and type of the columns</em></span> in the form name(type)
+			separated by spaces. The possible types are: string, int, double and timestamp.
+			</p>
+                <p>
+			The<span class="emphasis"><em>timestamp</em></span> type has a special meaning. Only one column of this type can
+			be defined for a table, and it should contain the expiry time for that record.
+			If defined this value will be used to compute the <span class="emphasis"><em>ttl</em></span> for the columns
+			and Cassandra will automatically delete the columns when they expire. Because we want the 
+			ttl to have meaning for the entire record, we must ensure that when the ttl is updated, it 
+			is updated for all columns for that record. In other words, to update the expiration time 
+			of a record, an insert operation must be performed from the point of view of the db_cassandra 
+			module ("insert" in Cassandra means "replace if exists or insert new record otherwise"). So, if 
+			you define a table with a timestamp column, the update operations on that table that also 
+			update the timestamp must update all columns. So, these update operations must in fact be insert
+			operations.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			Second row: <span class="emphasis"><em>the columns that form the row key</em></span> separated by space.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			Third row: <span class="emphasis"><em>the columns that form the secondary key</em></span> separated by space.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+          <p>
+			Below you can see the schema for the <span class="emphasis"><em>location</em></span>
+			table (when use_domain not set):
+		</p>
+          <p>
+	</p>
+          <pre class="programlisting">   ...
+   callid(string) cflags(int) contact(string) cseq(int) <span class="emphasis"><em>expires(timestamp)</em></span> flags(int) last_modified(int) methods(int) path(string) q(double) received(string) socket(string) user_agent(string) username(string) ruid(string) instance(string) reg_id(int)
+   <span class="emphasis"><em>username</em></span>
+   <span class="emphasis"><em>contact</em></span>
+   ...</pre>
+          <p>
+		Observe first that the <span class="emphasis"><em>row key is the username</em></span> and
+		the <span class="emphasis"><em>secondary index is the contact</em></span>. 
+		We have also defined a timestamp column - <span class="emphasis"><em>expires</em></span>.
+	</p>
+          <p>
+		If you need to use the domain part of the AOR also (you have set use_domain
+		parameter for usrloc in the script), you should include the domain column in
+		the list of columns and in the primary key. The schema will then look like this:
+	</p>
+          <pre class="programlisting">   ...
+   callid(string) cflags(int) contact(string) cseq(int) domain(string) <span class="emphasis"><em>expires(timestamp)</em></span> flags(int) last_modified(int) methods(int) path(string) q(double) received(string) socket(string) user_agent(string) username(string) ruid(string) instance(string) reg_id(int)
+   <span class="emphasis"><em>username domain</em></span>
+   <span class="emphasis"><em>contact</em></span>
+   ...</pre>
+          <p>
+		Notice that a key (primary or secondary) can be composed from more columns,
+		in which case you have to specify them separated by space.
+	</p>
+          <p>
+		To understand why the schema looks like this, we must first see which
+		queries are performed on the location table. 
+		(The 'callid' condition was ignored as it doesn't really have a well defined role in the SIP RFC).
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				When Invite received, lookup location: select where <span class="emphasis"><em>username='..'</em></span>.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				When Register received, update registration:
+				update where <span class="emphasis"><em>username='..'</em></span> and <span class="emphasis"><em>contact='..'</em></span>.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		So, the relation between these keys is the following:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		The unique key for a table is actually the combination of row key + secondary key.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		A row defined by a row key will contain more records with different secondary keys.
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		The timestamp column that leaves the Cassandra cluster to deal with deleting the expired
+		records. For this to work right we needed to modify a bit the behavior of usrloc module and
+		replace update sql query performed at re-registration with an insert sql query (so that all
+		columns are updated and the new timestamp is set for all columns).
+		This behavior is enabled by setting a parameter in the usrloc module
+		<span class="emphasis"><em>db_update_as_insert</em></span>:
+	</p>
+          <p>
+	</p>
+          <pre class="programlisting">   ...
+   modparam("usrloc", "db_update_as_insert", 1)
+   ...</pre>
+          <p>
+		Also you should disable in usrloc module the timer routine that checks for expired records.
+		You can do this by setting the timer interval to 0.
+		<span class="emphasis"><em>timer_interval</em></span>:
+	</p>
+          <p>
+	</p>
+          <pre class="programlisting">   ...
+   modparam("usrloc", "timer_interval", 0)
+   ...</pre>
+          <p>
+		The alternative would have been to define an index on the expire column and 
+		run a external job to periodically delete the expired records. However,
+		obviously, this would be more costly.
+	</p>
+        </div>
+        <div class="section" title="7. Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp263272"></a>7. Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The module can be used only when the queries use only one index, which is also the
+			unique key, or have two indexes that form the unique key like in the usrloc usage.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2600 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>permissions Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15532576" title="permissions Module" />
+    <link rel="next" href="#idp3417624" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="permissions Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15532576"></a>permissions Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Miklos</span> <span class="surname">Tirpak</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Miklos</span> <span class="surname">Tirpak</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 Miklos Tirpak</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006-2008 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3417624">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2766104">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sec-call-routing">1.1. Call Routing</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sec-registration-permissions">1.2. Registration Permissions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sec-uri-permissions">1.3. URI Permissions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sec-address-permissions">1.4. Address Permissions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sec-trusted-requests">1.5. Trusted Requests</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp79912">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp80288">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp81904">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp83640">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.default_allow_file">3.1. <code class="varname">default_allow_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.default_deny_file">3.2. <code class="varname">default_deny_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.check_all_branches">3.3. <code class="varname">check_all_branches</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.allow_suffix">3.4. <code class="varname">allow_suffix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.deny_suffix">3.5. <code class="varname">deny_suffix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.db_url">3.6. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.address_table">3.7. <code class="varname">address_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.grp_col">3.8. <code class="varname">grp_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.ip_addr_col">3.9. <code class="varname">ip_addr_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.mask_col">3.10. <code class="varname">mask_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.port_col">3.11. <code class="varname">port_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.db_mode">3.12. <code class="varname">db_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.trusted_table">3.13. <code class="varname">trusted_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.source_col">3.14. <code class="varname">source_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.proto_col">3.15. <code class="varname">proto_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.from_col">3.16. <code class="varname">from_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.tag_col">3.17. <code class="varname">tag_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.peer_tag_avp">3.18. <code class="varname">peer_tag_avp</code> (AVP string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.p.peer_tag_mode">3.19. <code class="varname">peer_tag_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1913416">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_routing">4.1. 
+		<code class="function">allow_routing()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_routing_basename">4.2. 
+		<code class="function">allow_routing(basename)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_routing_fileargs">4.3. 
+		<code class="function">allow_routing(allow_file,deny_file)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_register">4.4. 
+		<code class="function">allow_register(basename)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_register_fileargs">4.5. 
+		<code class="function">allow_register(allow_file, deny_file)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_uri">4.6. 
+		<code class="function">allow_uri(basename, pvar)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_address">4.7. 
+		<code class="function">allow_address(group_id, ip_addr_pvar, port_pvar)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_source_address">4.8. 
+		<code class="function">allow_source_address([group_id])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_source_address_group">4.9. 
+		<code class="function">allow_source_address_group()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_address_group">4.10. 
+		<code class="function">allow_address_group(addr, port)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.f.allow_trusted">4.11. 
+		<code class="function">allow_trusted([src_ip_pvar, proto_pvar])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1962080">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.address_reload">5.1. 
+		<code class="function">address_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.address_dump">5.2. 
+		<code class="function">address_dump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.subnet_dump">5.3. 
+		<code class="function">subnet_dump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.trusted_reload">5.4. 
+		<code class="function">trusted_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.trusted_dump">5.5. 
+		<code class="function">trusted_dump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.m.allow_uri">5.6. 
+		<code class="function">allow_uri</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1974872">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.addressReload">6.1. 
+		<code class="function">addressReload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.addressDump">6.2. 
+		<code class="function">addressDump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.subnetDump">6.3. 
+		<code class="function">subnetDump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.testUri">6.4. 
+		<code class="function">testUri basename uri contact</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.trustedReload">6.5. 
+		<code class="function">trustedReload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#permissions.r.trustedDump">6.6. 
+		<code class="function">trustedDump</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp85712">Set <code class="varname">default_allow_file</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp88720">Set <code class="varname">default_deny_file</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp91976">Set <code class="varname">check_all_branches</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp23560">Set <code class="varname">allow_suffix</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp27576">Set <code class="varname">deny_suffix</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp30696">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp34216">Set <code class="varname">address_table</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp36984">Set <code class="varname">grp_col</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp39736">Set <code class="varname">ip_addr_col</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp42560">Set <code class="varname">mask_col</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp1884520">Set <code class="varname">port_col</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp1887400">Set <code class="varname">db_mode</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp1890520">Set <code class="varname">trusted_table</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp1893520">Set <code class="varname">source_col</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp1898848">Set <code class="varname">proto_col</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp1901640">Set <code class="varname">from_col</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp1904936">Set <code class="varname">tag_col</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp1908120">Set <code class="varname">peer_tag_avp</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp1912160">Set <code class="varname">peer_tag_mode</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp1916072"><code class="function">allow_routing</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1921024"><code class="function">allow_routing(basename)</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1926488"><code class="function">allow_routing(allow_file, deny_file)</code> usage</a></dt>
+          <dt>1.23. <a href="#idp1931552"><code class="function">allow_register(basename)</code> usage</a></dt>
+          <dt>1.24. <a href="#idp1937192"><code class="function">allow_register(allow_file, deny_file)</code> usage</a></dt>
+          <dt>1.25. <a href="#idp1942984"><code class="function">allow_uri(basename, pvar)</code> usage</a></dt>
+          <dt>1.26. <a href="#idp1946952"><code class="function">allow_address()</code> usage</a></dt>
+          <dt>1.27. <a href="#idp1950288"><code class="function">allow_source_address(group_id)</code> usage</a></dt>
+          <dt>1.28. <a href="#idp1953320"><code class="function">allow_source_address_group()</code> usage</a></dt>
+          <dt>1.29. <a href="#idp1956312"><code class="function">allow_source_address_group()</code> usage</a></dt>
+          <dt>1.30. <a href="#idp1960720"><code class="function">allow_trusted()</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3417624"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2766104">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sec-call-routing">1.1. Call Routing</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sec-registration-permissions">1.2. Registration Permissions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sec-uri-permissions">1.3. URI Permissions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sec-address-permissions">1.4. Address Permissions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sec-trusted-requests">1.5. Trusted Requests</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp79912">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp80288">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp81904">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp83640">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.default_allow_file">3.1. <code class="varname">default_allow_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.default_deny_file">3.2. <code class="varname">default_deny_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.check_all_branches">3.3. <code class="varname">check_all_branches</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.allow_suffix">3.4. <code class="varname">allow_suffix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.deny_suffix">3.5. <code class="varname">deny_suffix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.db_url">3.6. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.address_table">3.7. <code class="varname">address_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.grp_col">3.8. <code class="varname">grp_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.ip_addr_col">3.9. <code class="varname">ip_addr_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.mask_col">3.10. <code class="varname">mask_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.port_col">3.11. <code class="varname">port_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.db_mode">3.12. <code class="varname">db_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.trusted_table">3.13. <code class="varname">trusted_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.source_col">3.14. <code class="varname">source_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.proto_col">3.15. <code class="varname">proto_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.from_col">3.16. <code class="varname">from_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.tag_col">3.17. <code class="varname">tag_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.peer_tag_avp">3.18. <code class="varname">peer_tag_avp</code> (AVP string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.p.peer_tag_mode">3.19. <code class="varname">peer_tag_mode</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1913416">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_routing">4.1. 
+		<code class="function">allow_routing()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_routing_basename">4.2. 
+		<code class="function">allow_routing(basename)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_routing_fileargs">4.3. 
+		<code class="function">allow_routing(allow_file,deny_file)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_register">4.4. 
+		<code class="function">allow_register(basename)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_register_fileargs">4.5. 
+		<code class="function">allow_register(allow_file, deny_file)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_uri">4.6. 
+		<code class="function">allow_uri(basename, pvar)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_address">4.7. 
+		<code class="function">allow_address(group_id, ip_addr_pvar, port_pvar)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_source_address">4.8. 
+		<code class="function">allow_source_address([group_id])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_source_address_group">4.9. 
+		<code class="function">allow_source_address_group()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_address_group">4.10. 
+		<code class="function">allow_address_group(addr, port)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.f.allow_trusted">4.11. 
+		<code class="function">allow_trusted([src_ip_pvar, proto_pvar])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1962080">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.address_reload">5.1. 
+		<code class="function">address_reload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.address_dump">5.2. 
+		<code class="function">address_dump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.subnet_dump">5.3. 
+		<code class="function">subnet_dump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.trusted_reload">5.4. 
+		<code class="function">trusted_reload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.trusted_dump">5.5. 
+		<code class="function">trusted_dump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.m.allow_uri">5.6. 
+		<code class="function">allow_uri</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1974872">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.addressReload">6.1. 
+		<code class="function">addressReload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.addressDump">6.2. 
+		<code class="function">addressDump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.subnetDump">6.3. 
+		<code class="function">subnetDump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.testUri">6.4. 
+		<code class="function">testUri basename uri contact</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.trustedReload">6.5. 
+		<code class="function">trustedReload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#permissions.r.trustedDump">6.6. 
+		<code class="function">trustedDump</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2766104"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The Permissions module provides functions for handling
+		IP based access control lists (ACL) in a number of ways.
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                          Call Routing
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                          Registration permissions
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                          URI permissions
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                          Address permissions
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                          Trusted Requests
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		The Address permissions and Trusted request handling supports
+		using a database to load ACLs into RAM for fast processing.
+	</p>
+          <div class="section" title="1.1. Call Routing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sec-call-routing"></a>1.1. Call Routing</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module can be used to determine if a call has appropriate 
+		permission to be established. Permission rules are stored in 
+		plaintext configuration files similar to
+		<code class="filename">hosts.allow</code> and <code class="filename">hosts.deny</code> files used by tcpd.
+		</p>
+            <p>
+		When <code class="function">allow_routing</code> function is 
+		called it tries to find a rule that matches selected fields of the 
+		message.
+		</p>
+            <p>
+		Kamailio is a forking proxy and therefore a single message can be sent 
+		to different destinations simultaneously. When checking permissions 
+		all the destinations must be checked and if one of them fails, the 
+		forwarding will fail.
+		</p>
+            <p>
+		The matching algorithm is as follows, first match wins:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			Create a set of pairs of form (From, R-URI of branch 1), 
+			(From, R-URI of branch 2), etc.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Routing will be allowed when all pairs match an entry in the 
+			allow file.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Otherwise routing will be denied when one of pairs matches an 
+			entry in the deny file.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Otherwise, routing will be allowed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		A non-existing permission control file is treated as if it were an 
+		empty file. Thus, permission control can be turned off by providing 
+		no permission control files.
+		</p>
+            <p>
+		From header field and Request-URIs are always compared with regular 
+		expressions! For the syntax see the sample file: 
+		<code class="filename">config/permissions.allow</code>.
+		</p>
+          </div>
+          <div class="section" title="1.2. Registration Permissions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sec-registration-permissions"></a>1.2. Registration Permissions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		In addition to call routing it is also possible to check REGISTER 
+		messages and decide--based on the configuration files--whether the 
+		message should be allowed and the registration accepted or not.
+		</p>
+            <p>
+		Main purpose of the function is to prevent registration of "prohibited" 
+		IP addresses. One example, when a malicious user registers a contact 
+		containing IP address of a PSTN gateway, he might be able to bypass 
+		authorization checks performed by the SIP proxy. That is undesirable 
+		and therefore attempts to register IP address of a PSTN gateway should 
+		be rejected. Files <code class="filename">config/register.allow</code> and <code class="filename">config/register.deny</code> contain an example 
+		configuration.
+		</p>
+            <p>
+		The function for registration checking is called <code class="function">allow_register</code> and the algorithm is very 
+		similar to the algorithm described in 
+		<a class="xref" href="#sec-call-routing" title="1.1. Call Routing">Section 1.1, “Call Routing”</a>. The only difference is in the way 
+		how pairs are created.
+		</p>
+            <p>
+		Instead of the From header field the function uses the To header field because 
+		th To header field in REGISTER messages contains the URI of the person 
+		being registered. Instead of the Request-URI of branches the function 
+		uses the Contact header field.
+		</p>
+            <p>
+		Thus, the pairs used in matching will look like this: (To, Contact 1), 
+		(To, Contact 2), (To, Contact 3), and so on..
+		</p>
+            <p>
+		The algorithm of matching is the same as described in 
+		<a class="xref" href="#sec-call-routing" title="1.1. Call Routing">Section 1.1, “Call Routing”</a>.
+		</p>
+          </div>
+          <div class="section" title="1.3. URI Permissions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sec-uri-permissions"></a>1.3. URI Permissions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module can be used to determine if a request to a destionation
+		is allowed, based on an URI stored in a pvar. Permission rules are
+		stored in plaintext configuration files similar to
+		<code class="filename">hosts.allow</code> and
+		<code class="filename">hosts.deny</code> used by tcpd.
+		</p>
+            <p>
+		When the <code class="function">allow_uri</code>
+		function is called, it tries to find a rule that matches
+		selected fields of the message.
+		The matching algorithm is as follows, where the first match wins:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			Create a pair &lt;From URI, URI stored in pvar&gt;.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Request will be allowed when the pair matches
+			an entry in the allow file.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Request will be denied when the pair
+			matches an entry in the	deny file.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			Otherwise, request will be allowed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		A non-existing permission control file is treated as if it were an 
+		empty file. Thus, permission control can be turned off by providing 
+		no permission control files.
+		</p>
+            <p>
+		The From URI and the URI stored in pvar are always compared with regular 
+		expressions! For the syntax see the sample file: 
+		<code class="filename">config/permissions.allow</code>.
+		</p>
+          </div>
+          <div class="section" title="1.4. Address Permissions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sec-address-permissions"></a>1.4. Address Permissions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module can be used to determine if an address (IP
+		address and port or DNS domain name) matches any of the
+		addresses stored in a cached Kamailio database table.
+		IP addresses in the database table can be subnet addresses.
+		Port 0 in cached database table matches any port. The
+		address and port to be matched can be either taken from
+		the request (allow_source_address) or given as pvar
+		arguments (allow_address).
+		</p>
+            <p>
+		Addresses stored in the database table can be grouped
+		together into one or more groups specified by a group
+		identifier (positive integer value, i.e., equal or greater than 1).
+		The group identifier is given as an argument to the allow_address() and
+		allow_source_address() functions.
+		One group can contain all of the three types of addresses: exact 
+		IP address, subnet IP address or DNS domain name.
+		</p>
+            <p>
+		When the argument is an IP addess, it is tried to be matched with the 
+		records from that group that are of type exact IP or subnet. If the 
+		argument is not an IP it is tried to be matched
+		with the records that are DNS domain names. No DNS lookup is performed,
+		only strict matching.
+		</p>
+            <p>
+		As a side effect of matching the address, non-NULL tag 
+		(see tag_col module parameter) is added as value to
+		peer_tag AVP if peer_tag_avp module parameter has been defined.
+		</p>
+          </div>
+          <div class="section" title="1.5. Trusted Requests">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sec-trusted-requests"></a>1.5. Trusted Requests</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module can be used to determine if an incoming
+		request can be trusted without authentication.
+		</p>
+            <p>
+		When the <code class="function">allow_trusted</code>
+		function is called, it tries to find a rule that matches
+		the request.  Rules contain the following fields:
+		&lt;source address, transport protocol, regular
+		expression&gt;.
+		</p>
+            <p>
+		A requests is accepted if there exists a rule, where 
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			source address is equal to the source address of
+			the request or the source address given in pvar,
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			transport protocol is either "ANY" or equal to
+			the transport protocol of request or the transport
+			protocol given in pvar, and
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			regular expression is either empty (NULL in
+			database) or matches the From URI of request.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Otherwise the request is rejected.
+		</p>
+            <p>
+		As a side effect of accepting the request, the peer's
+	non-NULL tag (see tag_col module parameter) is added as value to
+	peer_tag AVP if the peer_tag_avp module parameter has been defined.
+		</p>
+            <p>
+		Rules are stored in a database table specified by the module
+		parameters.  There is a module parameter called
+	        <code class="varname">db_mode</code> that
+		determines if the rules are cached into memory for faster
+		matching or if the database is consulted for each invocation
+		of the allow_trusted() function call.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp79912"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp80288"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp81904"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp83640"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. default_allow_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.default_allow_file"></a>3.1. <code class="varname">default_allow_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default allow file used by the functions with no parameters. If you 
+		don't specify a full pathname then the directory in which is the main 
+		config file is located will be used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">permissions.allow</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp85712"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">default_allow_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "default_allow_file", "/etc/permissions.allow")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. default_deny_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.default_deny_file"></a>3.2. <code class="varname">default_deny_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default file containing deny rules. The file is used by functions
+		with no parameters. If you don't specify a full pathname then the 
+		directory in which the main config file is located will be used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">permissions.deny</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp88720"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">default_deny_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "default_deny_file", "/etc/permissions.deny")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. check_all_branches (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.check_all_branches"></a>3.3. <code class="varname">check_all_branches</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set then allow_routing functions will check Request-URI of all 
+		branches (default). If disabled then only Request-URI of the first 
+		branch will be checked.
+		</p>
+            <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Warning</h3>
+              <p>
+		Do not disable this parameter unless you really know what you 
+		are doing.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp91976"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">check_all_branches</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "check_all_branches", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. allow_suffix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.allow_suffix"></a>3.4. <code class="varname">allow_suffix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Suffix to be appended to basename to create filename of the allow 
+		file when version with one parameter of either 
+		<code class="function">allow_routing</code> or
+		<code class="function">allow_register</code> is used.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			Including leading dot.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">.allow</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp23560"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">allow_suffix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "allow_suffix", ".allow")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. deny_suffix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.deny_suffix"></a>3.5. <code class="varname">deny_suffix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Suffix to be appended to basename to create filename of the deny file 
+		when version with one parameter of either 
+		<code class="function">allow_routing</code> or
+		<code class="function">allow_register</code> is used.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			Including leading dot.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">.deny</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp27576"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">deny_suffix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "deny_suffix", ".deny")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.db_url"></a>3.6. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is URL of the database to be used to store rules used by 
+		<code class="function">allow_trusted</code> function.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp30696"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. address_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.address_table"></a>3.7. <code class="varname">address_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the database table containing IP subnets and DNS domain names used by
+		<code class="function">allow_address</code> and
+                <code class="function">allow_source_address</code>
+                functions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">address</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp34216"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">address_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "address_table", "addr")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. grp_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.grp_col"></a>3.8. <code class="varname">grp_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of address table column containing the group
+		identifier of the address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">grp</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp36984"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">grp_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "grp_col", "group_id")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. ip_addr_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.ip_addr_col"></a>3.9. <code class="varname">ip_addr_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of address table column containing the IP address
+		part of the address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">ip_addr</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp39736"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">ip_addr_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "ip_addr_col", "ip_address")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. mask_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.mask_col"></a>3.10. <code class="varname">mask_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of address table column containing the network mask of
+		the address.  Possible values are 0-32 for IPv4 and 0-128 for
+		IPv6 addresses.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">mask</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp42560"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">mask_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "mask_col", "subnet_length")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. port_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.port_col"></a>3.11. <code class="varname">port_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of address table column containing the port
+		part of the address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">port</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1884520"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">port_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "port_col", "prt")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. db_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.db_mode"></a>3.12. <code class="varname">db_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Database mode. 0 means non-caching, 1 means caching.
+		Valid only for the <code class="function">allow_trusted</code> function.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (non-caching).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1887400"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "db_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. trusted_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.trusted_table"></a>3.13. <code class="varname">trusted_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of database table containing the matching rules used by
+		the <code class="function">allow_trusted</code> function.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">trusted</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1890520"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">trusted_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "trusted_table", "pbx")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. source_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.source_col"></a>3.14. <code class="varname">source_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column in the <span class="quote">“<span class="quote">trusted</span>”</span> table containing the source IP
+		address that is matched against source IP address of
+		received request.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">src_ip</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1893520"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">source_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "source_col", "source_ip_address")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. proto_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.proto_col"></a>3.15. <code class="varname">proto_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column in the <span class="quote">“<span class="quote">trusted</span>”</span> table containing the transport
+		protocol that is matched against transport protocol of
+		the received request.  Possible values that can be stored in
+		proto_col are <span class="quote">“<span class="quote">any</span>”</span>, <span class="quote">“<span class="quote">udp</span>”</span>,
+		<span class="quote">“<span class="quote">tcp</span>”</span>, <span class="quote">“<span class="quote">tls</span>”</span>,
+		<span class="quote">“<span class="quote">sctp</span>”</span>, <span class="quote">“<span class="quote">ws</span>”</span>, <span class="quote">“<span class="quote">wss</span>”</span>, 
+		and <span class="quote">“<span class="quote">none</span>”</span>.  Value
+		<span class="quote">“<span class="quote">any</span>”</span> matches always and value
+		<span class="quote">“<span class="quote">none</span>”</span> never.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">proto</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1898848"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">proto_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "proto_col", "transport")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. from_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.from_col"></a>3.16. <code class="varname">from_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the column trusted table containing a regular
+		expression that is matched against the From URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">from_pattern</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1901640"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">from_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "from_col", "regexp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. tag_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.tag_col"></a>3.17. <code class="varname">tag_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the column in the <span class="quote">“<span class="quote">address</span>”</span> or 
+		<span class="quote">“<span class="quote">trusted</span>”</span> table containing a string
+		that is added as value to peer_tag AVP if peer_tag AVP
+        	has been defined and if the address or peer matches.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">tag</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1904936"></a>
+              <p class="title">
+                <strong>Example 1.17. Set <code class="varname">tag_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "tag_col", "peer_tag")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. peer_tag_avp (AVP string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.peer_tag_avp"></a>3.18. <code class="varname">peer_tag_avp</code> (AVP string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If defined, the AVP will be
+                set as a side effect of <code class="function">allow_trusted</code>
+		call to not NULL tag column value of the matching peer.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">undefined</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1908120"></a>
+              <p class="title">
+                <strong>Example 1.18. Set <code class="varname">peer_tag_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "peer_tag_avp", "$avp(i:707)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. peer_tag_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.p.peer_tag_mode"></a>3.19. <code class="varname">peer_tag_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tag mode for <code class="function">allow_trusted</code>.
+		<span class="quote">“<span class="quote">0</span>”</span> sets only the tag of the first match. 
+		<span class="quote">“<span class="quote">1</span>”</span> adds the tags of all matches to the avp. In addition
+		the return value of <code class="function">allow_trusted</code>
+		is the number of matches. This parameter is not used for address table matching functions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1912160"></a>
+              <p class="title">
+                <strong>Example 1.19. Set <code class="varname">peer_tag_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("permissions", "peer_tag_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1913416"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  allow_routing()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_routing"></a>4.1. 
+		<code class="function">allow_routing()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if all pairs constructed as described in <a class="xref" href="#sec-call-routing" title="1.1. Call Routing">Section 1.1, “Call Routing”</a> have appropriate permissions according to 
+		the configuration files. This function uses default configuration 
+		files specified in <code class="varname">default_allow_file</code> and
+		<code class="varname">default_deny_file</code>.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1916072"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">allow_routing</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (allow_routing()) {
+	t_relay();
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  allow_routing(basename)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_routing_basename"></a>4.2. 
+		<code class="function">allow_routing(basename)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if all pairs constructed as described in <a class="xref" href="#sec-call-routing" title="1.1. Call Routing">Section 1.1, “Call Routing”</a> have appropriate permissions according 
+		to the configuration files given as parameters.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>basename</em></span> - Basename from which allow 
+			and deny filenames will be created by appending contents of
+			<code class="varname">allow_suffix</code> and <code class="varname">deny_suffix</code>
+			parameters.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1921024"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">allow_routing(basename)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (allow_routing("basename")) {
+	t_relay();
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  allow_routing(allow_file,deny_file)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_routing_fileargs"></a>4.3. 
+		<code class="function">allow_routing(allow_file,deny_file)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if all pairs constructed as described in 
+		<a class="xref" href="#sec-call-routing" title="1.1. Call Routing">Section 1.1, “Call Routing”</a> have appropriate permissions 
+		according to the configuration files given as parameters.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>allow_file</em></span> - File containing allow rules.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>deny_file</em></span> - File containing deny rules.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1926488"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">allow_routing(allow_file, deny_file)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (allow_routing("rules.allow", "rules.deny")) {
+	t_relay();
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  allow_register(basename)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_register"></a>4.4. 
+		<code class="function">allow_register(basename)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns true if all pairs constructed as described in <a class="xref" href="#sec-registration-permissions" title="1.2. Registration Permissions">Section 1.2, “Registration Permissions”</a> have appropriate permissions 
+		according to the configuration files given as parameters.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>basename</em></span> - Basename from which allow 
+			and deny filenames will be created by appending contents of
+			<code class="varname">allow_suffix</code> and <code class="varname">deny_suffix</code>
+			parameters.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1931552"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">allow_register(basename)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="REGISTER") {
+	if (allow_register("register")) {
+		save("location");
+		exit;
+	} else {
+		sl_send_reply("403", "Forbidden");
+	};
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  allow_register(allow_file, deny_file)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_register_fileargs"></a>4.5. 
+		<code class="function">allow_register(allow_file, deny_file)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns true if all pairs constructed as described in 
+		<a class="xref" href="#sec-registration-permissions" title="1.2. Registration Permissions">Section 1.2, “Registration Permissions”</a> have appropriate 
+		permissions according to the configuration files given as parameters.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>allow_file</em></span> - File containing allow rules.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>deny_file</em></span> - File containing deny rules.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1937192"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">allow_register(allow_file, deny_file)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="REGISTER") {
+	if (allow_register("register.allow", "register.deny")) {
+		save("location");
+		exit;
+	} else {
+		sl_send_reply("403", "Forbidden");
+	};
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  allow_uri(basename, pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_uri"></a>4.6. 
+		<code class="function">allow_uri(basename, pvar)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the pair constructed as described in <a class="xref" href="#sec-uri-permissions" title="1.3. URI Permissions">Section 1.3, “URI Permissions”</a> have appropriate permissions 
+		according to the configuration files specified by the parameter.
+		</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>basename</em></span> - Basename from which allow 
+			and deny filenames will be created by appending contents of
+			<code class="varname">allow_suffix</code> and <code class="varname">deny_suffix</code>
+			parameters.
+			</p>
+                  <p>
+			If the parameter doesn't contain full pathname then the function 
+			expects the file to be located in the same directory as the main 
+			configuration file of the server.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>pvar</em></span> - Any
+			pseudo-variable defined in Kamailio.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1942984"></a>
+              <p class="title">
+                <strong>Example 1.25. <code class="function">allow_uri(basename, pvar)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (allow_uri("basename", "$rt")) {  // Check Refer-To URI
+	t_relay();
+};
+if (allow_uri("basename", "$avp(i:705)") {  // Check URI stored in $avp(i:705)
+	t_relay();
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  allow_address(group_id, ip_addr_pvar, port_pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_address"></a>4.7. 
+		<code class="function">allow_address(group_id, ip_addr_pvar, port_pvar)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the address and port given as values of pvar
+		arguments belonging to a group given as group_id argument
+		matches an IP subnet or a DNS domain name found in cached
+		address table.
+		</p>
+            <p>
+		When matching is done if the argument is an IP address, it is 
+		matched with the records from that group that are of type exact
+		IP or subnet. If the argument is not an IP it is tried to be matched
+		with the records that are DNS domain names. No DNS lookup is performed,
+		only strict matching.
+		Cached address table entry containing port value <span class="quote">“<span class="quote">0</span>”</span>
+		matches any port. The <span class="quote">“<span class="quote">group_id</span>”</span> argument can be an integer
+		string or a pseudo variable. 
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1946952"></a>
+              <p class="title">
+                <strong>Example 1.26. <code class="function">allow_address()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+// Check if source address/port is in group 1
+if (!allow_address("1", "$si", "$sp")) {
+	sl_send_reply("403", "Forbidden");
+};
+// Check address/port stored in AVPs src_adr/src_port is in group 2
+$avp(dst_adr) = "sipdomain.com";
+$avp(dst_port) = "0";
+if (!allow_address("2", "$avp(dst_adr)", "$avp(dst_port)") {
+	sl_send_reply("403", "Forbidden");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  allow_source_address([group_id])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_source_address"></a>4.8. 
+		<code class="function">allow_source_address([group_id])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Equal to <span class="quote">“<span class="quote">allow_address(group_id, "$si", "$sp")</span>”</span>. If 'group_id' is
+		missing, the function is equal to allow_address("1", "$si", "$sp").
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1950288"></a>
+              <p class="title">
+                <strong>Example 1.27. <code class="function">allow_source_address(group_id)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+// Check source address/port of request
+if (!allow_source_address("1")) {
+	sl_send_reply("403", "Forbidden");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  allow_source_address_group()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_source_address_group"></a>4.9. 
+		<code class="function">allow_source_address_group()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks if source address/port is found in cached address or
+		subnet table in any group. If yes, returns that group.
+		If not returns -1.  Port value 0 in cached address and
+		group table matches any port.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1953320"></a>
+              <p class="title">
+                <strong>Example 1.28. <code class="function">allow_source_address_group()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+$var(group) = allow_source_address_group();
+if ($var(group) != -1) {
+   # do something with $var(group)
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.  allow_address_group(addr, port)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_address_group"></a>4.10. 
+		<code class="function">allow_address_group(addr, port)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks if address/port is found in cached address or
+		subnet table in any group. If yes, returns that group.
+		If not returns -1.  Port value 0 in cached address and
+		group table matches any port. The parameters can be pseudo-variables.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1956312"></a>
+              <p class="title">
+                <strong>Example 1.29. <code class="function">allow_source_address_group()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+$var(group) = allow_address_group("1.2.3.4", "5060");
+if ($var(group) != -1) {
+   # do something with $var(group)
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.  allow_trusted([src_ip_pvar, proto_pvar])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.f.allow_trusted"></a>4.11. 
+		<code class="function">allow_trusted([src_ip_pvar, proto_pvar])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks based either on request's source address and transport
+		protocol or source address and transport protocol given
+		in pvar arguments, and From URI of request
+		if request can be trusted without
+		authentication.  Returns <span class="quote">“<span class="quote">1</span>”</span> if a match is found
+		as described in <a class="xref" href="#sec-trusted-requests" title="1.5. Trusted Requests">Section 1.5, “Trusted Requests”</a>
+		and <span class="quote">“<span class="quote">-1</span>”</span> otherwise.  If a match is found
+		and <code class="varname">peer_tag_avp</code> has been defined, adds a
+                non-NULL tag column value of the
+		matching peer to AVP peer_tag_avp.
+		</p>
+            <p>
+		Source address and transport protocol given in pvar
+		arguments must be in string format.  Valid transport
+		protocol values are (ignoring case) "any", "udp, "tcp", "tls",
+		"ws", "wss" and "sctp".
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1960720"></a>
+              <p class="title">
+                <strong>Example 1.30. <code class="function">allow_trusted()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (allow_trusted()) {
+	t_relay();
+};
+...
+if (allow_trusted("$si", "$proto")) {
+	t_relay();
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1962080"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  address_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.address_reload"></a>5.1. 
+		<code class="function">address_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to re-read the contents of
+			address database table into cache memory. 
+			The in-cache memory entries are
+			for performance reasons stored in two
+                        different tables:  address table and
+			subnet table depending on the value of
+			the mask field (32 or smaller).
+
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="5.2.  address_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.address_dump"></a>5.2. 
+		<code class="function">address_dump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes permissions module to dump
+                   contents of cache memory address table.
+
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="5.3.  subnet_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.subnet_dump"></a>5.3. 
+		<code class="function">subnet_dump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes permissions module to dump
+                   contents of cache memory subnet table.
+
+				</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="5.4.  trusted_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.trusted_reload"></a>5.4. 
+		<code class="function">trusted_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to re-read the contents of
+			trusted table into cache memory.
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="5.5.  trusted_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.trusted_dump"></a>5.5. 
+		<code class="function">trusted_dump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to dump the 
+			contents of trusted table from cache memory.
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="5.6.  allow_uri">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.m.allow_uri"></a>5.6. 
+		<code class="function">allow_uri</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tests if (URI, Contact) pair is allowed according to
+		the allow/deny files.  The files must already have been
+		 loaded by Kamailio.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>basename</em></span> -
+			Basename from which allow and deny filenames will be created by
+		appending contents of <code class="varname">allow_suffix</code> and <code class="varname">deny_suffix</code>
+		parameters.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>URI</em></span> - URI to be tested
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Contact</em></span> - Contact
+						to be tested
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1974872"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  addressReload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.addressReload"></a>6.1. 
+		<code class="function">addressReload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to re-read the contents of
+			address database table into cache
+			memory.  In cache memory the entries are
+			for performance reasons stored in two
+                        different tables:  address table and
+			subnet table depending on the value of
+			the mask field (32 or smaller).
+
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="6.2.  addressDump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.addressDump"></a>6.2. 
+		<code class="function">addressDump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to dump
+                   	the contents of cache memory address table.
+			(Not the subnet table).
+
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="6.3.  subnetDump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.subnetDump"></a>6.3. 
+		<code class="function">subnetDump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes permissions module to dump
+                	contents of cache memory subnet table.
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="6.4.  testUri basename uri contact">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.testUri"></a>6.4. 
+		<code class="function">testUri basename uri contact</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Tests if the (URI, Contact) pair is allowed according to
+			allow/deny files.  The files must already have been
+		 	loaded by Kamailio.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>basename</em></span> -
+				Basename from which allow and deny filenames will be created by
+				appending contents of the allow_suffix and deny_suffix
+				parameters.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>URI</em></span> - URI to be tested
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Contact</em></span> - Contact to be tested
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.5.  trustedReload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.trustedReload"></a>6.5. 
+		<code class="function">trustedReload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to re-read the contents of
+			the trusted database table into cache memory.
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+          <div class="section" title="6.6.  trustedDump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="permissions.r.trustedDump"></a>6.6. 
+		<code class="function">trustedDump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Causes the permissions module to dump contents of the trusted
+			database table from cache memory.
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

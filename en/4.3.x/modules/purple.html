@@ -1,0 +1,710 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Purple Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp104" title="Purple Module" />
+    <link rel="next" href="#idp2685376" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Purple Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp104"></a>Purple Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Eric</span> <span class="surname">Ptak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Atos Worldline<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:eric.ptak@atosorigin.com">eric.ptak@atosorigin.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Eric</span> <span class="surname">Ptak</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:eric.ptak@atosorigin.com">eric.ptak@atosorigin.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 Atos Worldline</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2685376">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3332520">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1787744">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1420168">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2722328">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2914712">3. Database</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp185088">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp185456">4.1. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp188072">4.2. <code class="varname">db_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp190392">4.3. <code class="varname">httpProxy_host</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp192736">4.4. <code class="varname">httpProxy_port</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp251568">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp251936">5.1. 
+		<code class="function">purple_send_message()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp254568">5.2. 
+		<code class="function">purple_handle_publish()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp257120">5.3. 
+		<code class="function">purple_handle_subscribe()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1783632">Database table description</a></dt>
+          <dt>1.2. <a href="#idp182656">Database sample records</a></dt>
+          <dt>1.3. <a href="#idp183976">MySQL create script</a></dt>
+          <dt>1.4. <a href="#idp186872">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp189224">Set <code class="varname">db_table</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp191552">Set <code class="varname">httpProxy_host</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp193896">Set <code class="varname">httpProxy_port</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp253184"><code class="function">purple_send_message</code> usage</a></dt>
+          <dt>1.9. <a href="#idp255816"><code class="function">purple_handle_publish</code> usage</a></dt>
+          <dt>1.10. <a href="#idp258368"><code class="function">purple_handle_subscribe</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2685376"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3332520">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1787744">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1420168">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2722328">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2914712">3. Database</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp185088">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp185456">4.1. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp188072">4.2. <code class="varname">db_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp190392">4.3. <code class="varname">httpProxy_host</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp192736">4.4. <code class="varname">httpProxy_port</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp251568">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp251936">5.1. 
+		<code class="function">purple_send_message()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp254568">5.2. 
+		<code class="function">purple_handle_publish()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp257120">5.3. 
+		<code class="function">purple_handle_subscribe()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3332520"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Purple module is a multi-protocol instant-messaging gateway module
+		which use <span class="emphasis"><em>libpurple</em></span>, the library that Pidgin 
+		(ex-gaim) is based on.
+	</p>
+          <p>
+		This plugin was written as a  proof of concept gateway between
+		SIP and MSN/Live networks. As libpurple is written to code
+		multi-protocol graphic IM clients, it provides a high level API in
+		order to manipulate accounts, contacts, contacts lists,
+		conversations and more.
+	</p>
+          <p>
+		This module provides a multi-protocol IM/Presence client running
+		inside Kamailio with an account for each protocol used by each
+		SIP user. libpurple is designed for a graphic client for
+		only one user.
+	</p>
+          <p>
+		It's no really adapted to a production environment with a huge user
+		count but can be used in order to demonstrate the concept or in a
+		SOHO environment.
+	</p>
+          <p>
+		By default, there's some undefined symbol errors with libpurple
+		shared object when using it inside Kamailio. To solve it, you have to
+		force preload of the library by setting up LD_PRELOAD environment
+		variable.
+	</p>
+          <p>
+		Before starting Kamailio use (adapt the path to your environment):
+	</p>
+          <pre class="programlisting">		export LD_PRELOAD=$LD_PRELOAD:/usr/local/lib/libpurple.so</pre>
+          <p>
+		Limitations: doesn't implement authorization requests from external
+		accounts to SIP.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1787744"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1420168"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence*</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pua</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database driver module (db_mysql, ...)</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2722328"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libpurple, e.g. from pidgin 2.5.2</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Database">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2914712"></a>3. Database</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The database is used to map SIP URIs with external accounts (eg. MSN).
+		</p>
+          <div class="example">
+            <a id="idp1783632"></a>
+            <p class="title">
+              <strong>Example 1.1. Database table description</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
++----------+------------------+------+-----+---------+----------------+
+| Field    | Type             | Null | Key | Default | Extra          |
++----------+------------------+------+-----+---------+----------------+
+| id       | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| sip_user | varchar(128)     | NO   |     | NULL    |                |
+| ext_user | varchar(128)     | NO   |     | NULL    |                |
+| ext_prot | varchar(16)      | NO   |     | NULL    |                |
+| ext_pass | varchar(64)      | YES  |     | NULL    |                |
++----------+------------------+------+-----+---------+----------------+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		The meaning of columns:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>sip_user</em></span>: user's SIP URI.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>ext_user</em></span>: user's external account login.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>ext_prot</em></span>: purple plugin id to use, except
+				for gtalk.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>ext_pass</em></span>: user's external account password.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="example">
+            <a id="idp182656"></a>
+            <p class="title">
+              <strong>Example 1.2. Database sample records</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
++----+------------------+-----------------+----------------+----------+
+| id | sip_user         | ext_user        | ext_prot       | ext_pass |
++----+------------------+-----------------+----------------+----------+
+|  1 | sip:alice@domain | alice@live.com  | prpl-msn-pecan | password |
+|  2 | sip:bob@domain   | bob@live.com    | prpl-msn-pecan | password |
+|  3 | sip:alice@domain | alice@gmail.com | gtalk          | password |
+|  4 | sip:bob@domain   | bob@gmail.com   | gtalk          | password |
++----+------------------+-----------------+----------------+----------+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp183976"></a>
+            <p class="title">
+              <strong>Example 1.3. MySQL create script</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+CREATE TABLE purplemap (
+  id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  sip_user VARCHAR(128) NOT NULL,
+  ext_user VARCHAR(128) NOT NULL,
+  ext_prot VARCHAR(16) NOT NULL,
+  ext_pass VARCHAR(64)
+);
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp185088"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp185456"></a>4.1. <code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The URL to connect to database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp186872"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("purple", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. db_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp188072"></a>4.2. <code class="varname">db_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Database table name.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is purplemap.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp189224"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("purple", "db_table", "purplemap")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. httpProxy_host (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp190392"></a>4.3. <code class="varname">httpProxy_host</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Address of HTTP proxy.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp191552"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">httpProxy_host</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("purple", "httpProxy_host", "10.26.52.12")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. httpProxy_port (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp192736"></a>4.4. <code class="varname">httpProxy_port</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Port of HTTP proxy.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp193896"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">httpProxy_port</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("purple", "httpProxy_port", 3128)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp251568"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  purple_send_message()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp251936"></a>5.1. 
+		<code class="function">purple_send_message()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Send message to a purple destination.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp253184"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">purple_send_message</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_method("MESSAGE")) {
+    xlog("MESSAGE $ru from [$fu] to [$tu]\n");
+    if (uri !~ "sip:.+@.+;proto=.+") {
+        purple_send_message();
+        sl_send_reply("202", "Accepted");
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  purple_handle_publish()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp254568"></a>5.2. 
+		<code class="function">purple_handle_publish()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Handle PUBLISH to a purple destination.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp255816"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">purple_handle_publish</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_method("PUBLISH")) {
+    xlog("PUBLISH $ru from [$fu] to [$tu]\n");
+    if (uri !~ "sip:.+@.+;proto=.+")
+        purple_handle_publish();
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.  purple_handle_subscribe()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp257120"></a>5.3. 
+		<code class="function">purple_handle_subscribe()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Handle SUBSCRIBE to a purple destination.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp258368"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">purple_handle_subscribe</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_method("SUBSCRIBE")) {
+    xlog("SUBSCRIBE $ru from [$fu] to [$tu]\n");
+    if ($hdr(Event) == "presence")
+        purple_handle_subscribe("$ruri", "$hdr(Expires)");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

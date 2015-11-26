@@ -1,0 +1,941 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence_XML Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15460328" title="Presence_XML Module" />
+    <link rel="next" href="#idp18803640" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence_XML Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15460328"></a>Presence_XML Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18803640">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17787672">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16643648">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17986488">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18009864">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18319880">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15757832">3.1. <code class="varname">db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15747000">3.2. <code class="varname">xcap_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15749592">3.3. <code class="varname">disable_presence</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15752256">3.4. <code class="varname">disable_winfo</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15754928">3.5. <code class="varname">disable_bla</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15757560">3.6. <code class="varname">force_active</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15444696">3.7. <code class="varname">integrated_xcap_server</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15448192">3.8. <code class="varname">xcap_server</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15450392">3.9. <code class="varname">passive_mode</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15453192">3.10. <code class="varname">xcapauth_userdel_reason</code>(str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15456592">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15525440">4.1. 
+		<code class="function">pres_check_basic(presentity_uri, status)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15530224">4.2. 
+		<code class="function">pres_check_activities(presentity_uri, activity)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15536168">5. Installation</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15537400">6. Exported pseudo-variables</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17871912">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15745384">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15748480">Set <code class="varname">xcap_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15751080">Set <code class="varname">disable_presence</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15753752">Set <code class="varname">disable_winfo</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15756392">Set <code class="varname">disable_bla</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15443520">Set <code class="varname">force_active</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15447032">Set <code class="varname">integrated_xcap_server</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15449144">Set <code class="varname">xcap_server</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15452016">Set <code class="varname">passive_mode</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15455264">Set <code class="varname">xcapauth_userdel_reason</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15528856"><code class="function">pres_check_basic</code> usage</a></dt>
+          <dt>1.12. <a href="#idp15534680"><code class="function">pres_check_activities</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18803640"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17787672">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16643648">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17986488">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18009864">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18319880">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15757832">3.1. <code class="varname">db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15747000">3.2. <code class="varname">xcap_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15749592">3.3. <code class="varname">disable_presence</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15752256">3.4. <code class="varname">disable_winfo</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15754928">3.5. <code class="varname">disable_bla</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15757560">3.6. <code class="varname">force_active</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15444696">3.7. <code class="varname">integrated_xcap_server</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15448192">3.8. <code class="varname">xcap_server</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15450392">3.9. <code class="varname">passive_mode</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15453192">3.10. <code class="varname">xcapauth_userdel_reason</code>(str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15456592">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15525440">4.1. 
+		<code class="function">pres_check_basic(presentity_uri, status)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15530224">4.2. 
+		<code class="function">pres_check_activities(presentity_uri, activity)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15536168">5. Installation</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15537400">6. Exported pseudo-variables</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17787672"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+		The module does specific handling for notify-subscribe events using xml
+		bodies. It is used with the general event handling module, presence.
+		It constructs and adds 3 events to it:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>presence - SIMPLE status presence: RFC 3856</p>
+              </li>
+              <li class="listitem">
+                <p>presence.winfo - SIMPLE watcher info: RFC 3857</p>
+              </li>
+              <li class="listitem">
+                <p>dialog;sla (or dialog;ma) - Bridged Line Appearances
+				(BLA) (or Multiple Line Appearances (MLA)):
+				draft-anil-sipping-bla</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+	You can control which events are enabled via module parameters.
+	</p>
+          <p>
+	This module takes the XCAP permission rule documents from xcap_table.
+
+	The presence permission rules are interpreted according to the specifications
+	in RFC 4745 and RFC 5025.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16643648"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17986488"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xcap_client</em></span>.
+			</p>
+                  <p>
+			Only compulsory if not using an integrated xcap server 
+			(if 'integrated_xcap_server' parameter is not set).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18009864"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18319880"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15757832"></a>3.1.¬†<code class="varname">db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The database URL.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">‚Äú<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>‚Äù</span>.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15745384"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†xcap_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15747000"></a>3.2.¬†<code class="varname">xcap_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the database table where XCAP documents are stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">‚Äú<span class="quote">xcap</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15748480"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">xcap_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "xcap_table", "xcaps")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†disable_presence(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15749592"></a>3.3.¬†<code class="varname">disable_presence</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set this parameter to disable the handling of the "presence" event.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value: <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15751080"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">disable_presence</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "disable_presence", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†disable_winfo(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15752256"></a>3.4.¬†<code class="varname">disable_winfo</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set this parameter to disable the handling of the "presence.winfo" event.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value: <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15753752"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">disable_winfo</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "disable_winfo", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†disable_bla(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15754928"></a>3.5.¬†<code class="varname">disable_bla</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set this parameter to disable the handling of the "dialog;sla" event.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value: <span class="quote">‚Äú<span class="quote">1</span>‚Äù</span> (0 - enabled, 1 - disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15756392"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">disable_bla</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "disable_bla", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†force_active (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15757560"></a>3.6.¬†<code class="varname">force_active</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is used for permissions when handling Subscribe messages.
+		If set to 1, subscription state is considered active and the presentity
+		is not queried for permissions (should be set to 1 if not using an XCAP 
+		server). 
+		Otherwise, the XCAP server is queried and the subscription states is
+		according to user defined permission rules. If no rules are defined for
+		a certain watcher, the subscriptions remains in pending state and the
+		Notify sent will have no body.
+		</p>
+            <p>
+		Note: When switching from one value to another, the watchers table must
+		be emptied.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15443520"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">force_active</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "force_active", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†integrated_xcap_server (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15444696"></a>3.7.¬†<code class="varname">integrated_xcap_server</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is a flag for the type of XCAP servers
+		used. If the XCAP server is integrated with Kamailio presence_xml
+		module and access the same database tables directly, like the embedded
+		XCAP server implemented in xcap_server module, the parameter should be
+		set to a positive value. Apart from updating in xcap table,
+		if the integrated server is not running on the same Kamailio instance,
+		it must send an MI command refershWatchers
+		[pres_uri] [event] when a user modifies a rules document, to 
+		instruct the presence_xml module to update states from the database
+		and, if needed, send NOTIFY updates.
+		</p>
+            <p>
+		Otherwise, it uses xcap_client module to fetch documents 
+		from the XCAP servers with HTTP requests.</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15447032"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">integrated_xcap_server</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "integrated_xcap_server", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.¬†xcap_server (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15448192"></a>3.8.¬†<code class="varname">xcap_server</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The address of the xcap servers used for storage.
+		This parameter is compulsory if the integrated_xcap_server parameter
+		is not set. It can be set more that once, to construct an address
+		list of trusted XCAP servers.</p>
+            <div class="example">
+              <a id="idp15449144"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">xcap_server</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "xcap_server", "xcap_server.example.org")
+modparam("presence_xml", "xcap_server", "xcap_server.ag.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.¬†passive_mode(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15450392"></a>3.9.¬†<code class="varname">passive_mode</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, module acts in passive mode - no bind to presence module,
+		no connection to database. Useful when needing only to use $xml(...)
+		pseudoc-variable.
+		</p>
+            <p>
+			<span class="emphasis"><em>Default value: <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (0 - active mode,
+				1 - passive mode).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15452016"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">passive_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "passive_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.¬†xcapauth_userdel_reason(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15453192"></a>3.10.¬†<code class="varname">xcapauth_userdel_reason</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter represents the reason that will be included in the
+		Subscription-State header of the Notify when a rule is no longer found
+		in the XCAP pres-auth document for a user that was previously allowed.
+		The Subscription state in this case switches to "terminated". Because
+		it is not clear which reason is most appropriate in this case from
+		the ones defined by the RFC 3265, this parameter offers the possibility
+		for the admin to decide which one he wishes to use.
+		</p>
+            <p>
+			<span class="emphasis"><em>Default value: <span class="quote">‚Äú<span class="quote">probation</span>‚Äù</span> </em></span> . Since 
+			probation also accepts a retry-after parameter to specify after at
+			least how may seconds the client should reattempt to resubscribe,
+			you can include this in the parameter also.
+		</p>
+            <div class="example">
+              <a id="idp15455264"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">xcapauth_userdel_reason</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_xml", "xcapauth_userdel_reason", "probation;retry-after=30")
+modparam("presence_xml", "xcapauth_userdel_reason", "rejected")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15456592"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† pres_check_basic(presentity_uri, status)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15525440"></a>4.1.¬†
+		<code class="function">pres_check_basic(presentity_uri, status)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks the /presence/tuple/status/basic nodes in the presentity for
+		<span class="emphasis"><em>presentity_uri</em></span> against the value in status.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> 1 - if a match is found</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -1 - if a match is not found</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp15528856"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†<code class="function">pres_check_basic</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (pres_check_basic("$ru", "open")) {
+        ...
+    } else {
+        if (is_method("MESSAGE"))
+            m_store();
+    else
+        send_reply("404", "Not Found");
+    }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† pres_check_activities(presentity_uri, activity)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15530224"></a>4.2.¬†
+		<code class="function">pres_check_activities(presentity_uri, activity)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks whether a /presence/person/activities/<span class="emphasis"><em>activity</em></span>
+		node exists in the presentity for <span class="emphasis"><em>presentity_uri</em></span>.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> 1 - if a match is found</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -1 - if a match is not found</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -2 - if /presence/person or /presence/person/activity do not exist</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp15534680"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="function">pres_check_activities</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (pres_check_basic("$ru", "open")) {
+	pres_check_activities("$ru", "unknown");
+	if ($retcode || $retcode == -2 || !is_method("INVITE"))
+            t_relay();
+	else
+            send_reply("486", "Busy Here");
+    } else {
+        ...
+    }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15536168"></a>5.¬†Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module requires one table in Kamailio database: <span class="quote">‚Äú<span class="quote">xcap</span>‚Äù</span>. The SQL 
+	syntax to create it can be found in presence-create.sql     
+	script in the database directories in the kamailio/scripts folder.
+	You can also find the complete database documentation on the
+	project webpage, http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html.
+	</p>
+        </div>
+        <div class="section" title="6.¬†Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15537400"></a>6.¬†Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>$xml(name=&gt;spec)</em></span>
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17871912"></a>Chapter¬†2.¬†Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	The module exports no function to be used in other Kamailio modules.
+	</p>
+      </div>
+    </div>
+  </body>
+</html>

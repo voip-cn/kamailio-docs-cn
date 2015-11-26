@@ -1,0 +1,1249 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ims_auth Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15456496" title="ims_auth Module" />
+    <link rel="next" href="#idp2514056" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="ims_auth Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15456496"></a>ims_auth Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Dragos Vingarzan</span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG Fokus<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:Dragos.Vingarzan@fokus.fraunhofer.de">Dragos.Vingarzan@fokus.fraunhofer.de</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jason</span> <span class="surname">Penton</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jason.penton@smilecoms.com">jason.penton@smilecoms.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:richard.good@smilecoms.com">richard.good@smilecoms.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2514056">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3469552">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1693968">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2029880">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2781576">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2915600">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2557512">3.1. <code class="varname">name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1789120">3.2. <code class="varname">auth_data_hash_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1179296">3.3. <code class="varname">auth_vector_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp140912">3.4. <code class="varname">auth_data_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp143256">3.5. <code class="varname">av_request_at_once</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp145320">3.6. <code class="varname">av_request_at_sync</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp147224">3.7. <code class="varname">registration_default_algorithm</code>
+      (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp151960">3.8. <code class="varname">registration_qop</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp154304">3.9. <code class="varname">cxdx_forced_peer</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm16168">3.10. <code class="varname">cxdx_dest_realm</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13792">3.11. <code class="varname">max_nonce_reuse</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11432">3.12. <code class="varname">add_authinfo_hdr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9080">3.13. <code class="varname">ignore_failed_auth</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6360">3.14. <code class="varname">av_check_only_impu</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm3360">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm2992">4.1. <code class="function">ims_www_authorize(realm,
+      table)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79272">4.2. <code class="function">ims_www_authenticate(realm)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp80320">4.3. <code class="function">ims_www_challenge(route_block,
+      realm)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp87888">4.4. <code class="function">ims_www_challenge(route_block, realm,
+      algorithm)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp91888">4.5. <code class="function">ims_proxy_challenge(route_block, realm,
+      table)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28184">4.6. <code class="function">ims_proxy_authenticate(realm,
+      table)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp29352">5. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp29720">5.1. MAR Timeouts (mar_timeouts)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp30440">5.2. Average MAR Response Time (mar_avg_response_time)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2612872"><code class="varname">name</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idp1990952"><code class="varname">auth_data_hash_size</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp139800"><code class="varname">auth_vector_timeout</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp142152"><code class="varname">password_column</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp144216"><code class="varname">av_request_at_once</code> parameter usage</a></dt>
+          <dt>1.6. <a href="#idp146120"><code class="varname">av_request_at_sync</code> parameter usage</a></dt>
+          <dt>1.7. <a href="#idp150840"><code class="varname">registration_default_algorithm</code> parameter
+        usage</a></dt>
+          <dt>1.8. <a href="#idp153192"><code class="varname">registration_qop</code> parameter usage</a></dt>
+          <dt>1.9. <a href="#idm17288"><code class="varname">cxdx_forced_peer</code> parameter usage</a></dt>
+          <dt>1.10. <a href="#idm14912"><code class="varname">cxdx_dest_realm</code> parameter usage</a></dt>
+          <dt>1.11. <a href="#idm12536"><code class="varname">max_nonce_reuse</code> parameter usage</a></dt>
+          <dt>1.12. <a href="#idm10184"><code class="varname">add_authinfo_hdr</code> parameter usage</a></dt>
+          <dt>1.13. <a href="#idm7464"><code class="varname">ignore_failed_auth</code> parameter usage</a></dt>
+          <dt>1.14. <a href="#idm4544"><code class="varname">av_check_only_impu</code> parameter usage</a></dt>
+          <dt>1.15. <a href="#idp77960"><code class="function">www_authorize</code>
+        usage</a></dt>
+          <dt>1.16. <a href="#idp85912">ims_www_challenge usage</a></dt>
+          <dt>1.17. <a href="#idp90176">ims_www_challenge usage</a></dt>
+          <dt>1.18. <a href="#idp26224">proxy_authorize usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2514056"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3469552">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1693968">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2029880">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2781576">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2915600">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2557512">3.1. <code class="varname">name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1789120">3.2. <code class="varname">auth_data_hash_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1179296">3.3. <code class="varname">auth_vector_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp140912">3.4. <code class="varname">auth_data_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp143256">3.5. <code class="varname">av_request_at_once</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp145320">3.6. <code class="varname">av_request_at_sync</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp147224">3.7. <code class="varname">registration_default_algorithm</code>
+      (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp151960">3.8. <code class="varname">registration_qop</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp154304">3.9. <code class="varname">cxdx_forced_peer</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm16168">3.10. <code class="varname">cxdx_dest_realm</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13792">3.11. <code class="varname">max_nonce_reuse</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11432">3.12. <code class="varname">add_authinfo_hdr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9080">3.13. <code class="varname">ignore_failed_auth</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6360">3.14. <code class="varname">av_check_only_impu</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm3360">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm2992">4.1. <code class="function">ims_www_authorize(realm,
+      table)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79272">4.2. <code class="function">ims_www_authenticate(realm)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp80320">4.3. <code class="function">ims_www_challenge(route_block,
+      realm)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp87888">4.4. <code class="function">ims_www_challenge(route_block, realm,
+      algorithm)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp91888">4.5. <code class="function">ims_proxy_challenge(route_block, realm,
+      table)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28184">4.6. <code class="function">ims_proxy_authenticate(realm,
+      table)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp29352">5. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp29720">5.1. MAR Timeouts (mar_timeouts)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp30440">5.2. Average MAR Response Time (mar_avg_response_time)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3469552"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module contains all authentication related functions for an IMS
+    environment. The module does not depend on the base Kamailio auth modules
+    as other auth modules do. Instead ims_auth is dependent on the CDP (C
+    Diameter Peer) modules for communicating with HSS as specified in 3GPP
+    specs.</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1693968"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2029880"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The Following mouldes must be loaded before this module:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>TM - Transaction Manager</p>
+                </li>
+                <li class="listitem">
+                  <p>CDP - C Diameter Peer</p>
+                </li>
+                <li class="listitem">
+                  <p>CDP_AVP - CDP AVP Applications</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2781576"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>This modules requires the internal IMS library.</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2915600"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2557512"></a>3.1.¬†<code class="varname">name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the name of the SCSCF as identified in communication with
+      the HSS (Server-Name AVP of MAR).</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 'sip:scscf.ims.smilecoms.com:6060'.
+      </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp2612872"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†<code class="varname">name</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "name", "sip:scscf3.ims.smilecoms.com:6060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†auth_data_hash_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1789120"></a>3.2.¬†<code class="varname">auth_data_hash_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the size of the hash table used to store auth vectors
+      (AV). Default value is fine for most people. Use the parameter if you
+      really need to change it.</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">1024</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idp1990952"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†<code class="varname">auth_data_hash_size</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "auth_data_hash_size", 1024)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†auth_vector_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1179296"></a>3.3.¬†<code class="varname">auth_vector_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the time, in seconds, that a SENTauth vector is valid for.
+      If there is no response ...</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">60</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idp139800"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†<code class="varname">auth_vector_timeout</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "auth_vector_timeout", "domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†auth_data_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp140912"></a>3.4.¬†<code class="varname">auth_data_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Time, in seconds, an used auth vector is valid for.</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">60</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idp142152"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†<code class="varname">password_column</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "auth_data_timeout", 60)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†av_request_at_once (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp143256"></a>3.5.¬†<code class="varname">av_request_at_once</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>How many auth vectors to request in MAR.</p>
+            <p>Default value is 1</p>
+            <div class="example">
+              <a id="idp144216"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="varname">av_request_at_once</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "av_request_at_once", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†av_request_at_sync (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp145320"></a>3.6.¬†<code class="varname">av_request_at_sync</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>How many auth vectors to request at sync. Default value is
+      1.</p>
+            <div class="example">
+              <a id="idp146120"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†<code class="varname">av_request_at_sync</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "av_request_at_sync", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†registration_default_algorithm (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp147224"></a>3.7.¬†<code class="varname">registration_default_algorithm</code>
+      (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The default authentication algorithm to use for registration if
+      one is not specified.</p>
+            <p>Options are: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>AKAV1-MD5</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>AKAV2-MD5</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>MD5</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>HSS-Selected - HSS will decide on auth algorithm</p>
+                </li>
+              </ul>
+            </div>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">AKAv1-MD5</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idp150840"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†<code class="varname">registration_default_algorithm</code> parameter
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "registration_default_algorithm", "HSS-Selected")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.¬†registration_qop (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp151960"></a>3.8.¬†<code class="varname">registration_qop</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The QOP options to put in the authorisation challenges.</p>
+            <p>Default value of this parameter is
+      <span class="quote">‚Äú<span class="quote">auth,auth-int</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idp153192"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="varname">registration_qop</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "registration_qop", "auth-int")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.¬†cxdx_forced_peer (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp154304"></a>3.9.¬†<code class="varname">cxdx_forced_peer</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>FQDN of Diameter Peer (HSS) to use for communication (MAR). If you
+      use this, the routing defined in your diameter xml configuration file
+      (CDP) will be ignored and as a result you will lose the benefits of load
+      balancing and failover. </p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote"></span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idm17288"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="varname">cxdx_forced_peer</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "cxdx_forced_peer", "hss.ims.smilecoms.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.¬†cxdx_dest_realm (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm16168"></a>3.10.¬†<code class="varname">cxdx_dest_realm</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Destination realm to be used in Diameter messags to HSS</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">ims.smilecoms.com</span>‚Äù</span>.</p>
+            <div class="example">
+              <a id="idm14912"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†<code class="varname">cxdx_dest_realm</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "cxdx_dest_realm", "ims.smilecoms.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.¬†max_nonce_reuse (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13792"></a>3.11.¬†<code class="varname">max_nonce_reuse</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Defines, how many times a nonce can be reused (provided nc is
+      incremented)</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (don't allow reuse).</p>
+            <div class="example">
+              <a id="idm12536"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†<code class="varname">max_nonce_reuse</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "max_nonce_reuse", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.¬†add_authinfo_hdr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11432"></a>3.12.¬†<code class="varname">add_authinfo_hdr</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Should an Authentication-Info header be added on 200 OK
+      responses?</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">1</span>‚Äù</span> (add Authentication-Info
+      header).</p>
+            <div class="example">
+              <a id="idm10184"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="varname">add_authinfo_hdr</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "add_authinfo_hdr", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.¬†ignore_failed_auth (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9080"></a>3.13.¬†<code class="varname">ignore_failed_auth</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Ignore invalid passwords (only IMPI/IMPU is checked).</p>
+            <p>It should be used only for testing, e.g. load balancing with SIPP
+      where we don't want to worry about auth.</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (don't ingnore the failed
+      authentication).</p>
+            <div class="example">
+              <a id="idm7464"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†<code class="varname">ignore_failed_auth</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "ignore_failed_auth", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.¬†av_check_only_impu (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6360"></a>3.14.¬†<code class="varname">av_check_only_impu</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>When storing the authentication vectors for an account, use either
+      IMPI/IMPU (=0, default) or IMPU (=1).</p>
+            <p>In case the IMPI is different from the IMPU, this option needs to
+      be enabled to allow registration from classic "SIP-clients", such as
+      Snom phones and others, as they do not send an authentication username
+      in the first REGISTER.</p>
+            <p>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (store authentication vectors
+      based on IMPI/IMPU).</p>
+            <div class="example">
+              <a id="idm4544"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†<code class="varname">av_check_only_impu</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_auth", "av_check_only_impu", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm3360"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†ims_www_authorize(realm, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm2992"></a>4.1.¬†<code class="function">ims_www_authorize(realm,
+      table)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function verifies credentials according to <a class="ulink" href="javascript:if(confirm('http://www.ietf.org/rfc/rfc2617.txt  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ietf.org/rfc/rfc2617.txt'" tppabs="http://www.ietf.org/rfc/rfc2617.txt">RFC2617</a>. If the
+      credentials are verified successfully then the function will succeed and
+      mark the credentials as authorized (marked credentials can be later used
+      by some other functions). If the function was unable to verify the
+      credentials for some reason then it will fail and the script should call
+      <code class="function">www_challenge</code> which will challenge
+      the user again.</p>
+            <p>Negative codes may be interpreted as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-1 (generic error)</em></span> - some generic error
+          occurred and no reply was sent out;</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-2 (invalid password)</em></span> - valid user, but
+          wrong password;</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-3 (invalid user)</em></span> - authentication user
+          does not exist.</p>
+                </li>
+              </ul>
+            </div>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - Realm is a opaque string that the
+          user agent should present to the user so he can decide what username
+          and password to use. Usually this is domain of the host the server
+          is running on.</p>
+                  <p>It must not be empty string <span class="quote">‚Äú<span class="quote"></span>‚Äù</span>. In case of REGISTER
+          requests To header field domain (e.g., variable $td) can be used
+          (because this header field represents the user being registered),
+          for all other messages From header field domain can be used (e.g.,
+          variable $fd).</p>
+                  <p>The string may contain pseudo variables.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>table</em></span> - Table to be used to lookup
+          usernames and passwords (usually subscribers table).</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp77960"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">www_authorize</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!www_authorize("kamailio.org", "subscriber")) {
+	www_challenge(""REG_MAR_REPLY"", "kamailio.org", "1");
+};         
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†ims_www_authenticate(realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79272"></a>4.2.¬†<code class="function">ims_www_authenticate(realm)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>It is the same function as www_authenticate(realm, table). This
+      name is kept for backward compatibility, since it was named this way
+      first time by it actually does user authentication.</p>
+          </div>
+          <div class="section" title="4.3.¬†ims_www_challenge(route_block, realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp80320"></a>4.3.¬†<code class="function">ims_www_challenge(route_block,
+      realm)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Name alias: proxy_authorize(realm, table)</p>
+            <p>The function verifies credentials according to <a class="ulink" href="javascript:if(confirm('http://www.ietf.org/rfc/rfc2617.txt  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ietf.org/rfc/rfc2617.txt'" tppabs="http://www.ietf.org/rfc/rfc2617.txt">RFC2617</a>. If the
+      credentials are verified successfully then the function will succeed and
+      mark the credentials as authorized (marked credentials can be later used
+      by some other functions). If the function was unable to verify the
+      credentials for some reason then it will fail and the script should call
+      <code class="function">proxy_challenge</code> which will
+      challenge the user again.</p>
+            <p>Negative return codes have the same meaning as for
+      www_authenticate().</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>Route block to resume after async MAR Diameter reply.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - Realm is a opaque string that the
+          user agent should present to the user so he can decide what username
+          and password to use. Usually this is domain of the host the server
+          is running on.</p>
+                  <p>It must not be empty string <span class="quote">‚Äú<span class="quote"></span>‚Äù</span>. Apart of a static
+          strinh, typical value is From header field domain (e.g., variable
+          $fd).</p>
+                  <p>If an empty string <span class="quote">‚Äú<span class="quote"></span>‚Äù</span> is used then the server will
+          generate it from the request. From header field domain will be used
+          as realm.</p>
+                  <p>The string may contain pseudo variables.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp85912"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†ims_www_challenge usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!proxy_authorize("$fd", "subscriber)) {
+	proxy_challenge(""REG_MAR_REPLY","$fd");  # Realm will be autogenerated
+};
+...
+            ...
+route[REG_MAR_REPLY]
+{
+     #this is async so to know status we have to check the reply avp
+     xlog("L_DBG","maa_return code is $avp(s:maa_return_code)\n");   
+
+     switch ($avp(s:maa_return_code)){
+             case 1: #success
+                     xlog("L_DBG", "MAR success - 401/407 response sent from module\n");
+                     break;
+             case -1: #failure
+                     xlog("L_ERR", "MAR failure - error response sent from module\n");
+                     break;
+             case -2: #error
+                     xlog("L_ERR", "MAR error - sending error response now\n");
+                     t_reply("500", "MAR failed");
+                     break;
+             default:
+                     xlog("L_ERR", "Unknown return code from MAR, value is [$avp(s:uaa_return_code)]\n");
+                     t_reply("500", "Unknown response code from MAR");
+                     break;
+     }
+     exit;           
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†ims_www_challenge(route_block, realm, algorithm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp87888"></a>4.4.¬†<code class="function">ims_www_challenge(route_block, realm,
+      algorithm)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Same as 4.3 except here there is the addiional option to specify
+      the authorisation algorithm</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>algorithm</em></span> - The algorithm to be used when
+          challenging the client. Can be AKAv1-MD5, AKAv2-MD5, MD5, or
+          HSS-Selected. If left as an empty string, the default algorithm will
+          be chosen according to the parameter registration_default_algorithm
+          (see section 3.7)</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp90176"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†ims_www_challenge usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ if (!ims_www_authenticate(NETWORKNAME)) {
+                #user has not been authenticated. Lets send a challenge via 401 Unauthorized
+                if ($? == -2) {
+                        t_reply("403", "Authentication Failed");
+                        exit;
+                } else if ($? == -3) {
+                        t_reply("400", "Bad Request");
+                        exit;
+                } else if ($? == -9) {
+                        xlog("L_DBG", "Authentication re-sync requested\n");
+                        ims_www_resync_auth("REG_RESYNC_REPLY", "$td");
+                        exit;
+                } else {
+                        xlog("L_DBG","About to challenge! auth_ims\n"); 
+                        ims_www_challenge("REG_MAR_REPLY", "$td", "MD5");
+                        exit;
+                }
+        }</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†ims_proxy_challenge(route_block, realm, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp91888"></a>4.5.¬†<code class="function">ims_proxy_challenge(route_block, realm,
+      table)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Name alias: proxy_authorize(realm, table)</p>
+            <p>The function verifies credentials according to <a class="ulink" href="javascript:if(confirm('http://www.ietf.org/rfc/rfc2617.txt  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ietf.org/rfc/rfc2617.txt'" tppabs="http://www.ietf.org/rfc/rfc2617.txt">RFC2617</a>. If the
+      credentials are verified successfully then the function will succeed and
+      mark the credentials as authorized (marked credentials can be later used
+      by some other functions). If the function was unable to verify the
+      credentials for some reason then it will fail and the script should call
+      <code class="function">proxy_challenge</code> which will
+      challenge the user again.</p>
+            <p>Negative return codes have the same meaning as for
+      www_authenticate().</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>Route block to resume after async MAR Diameter reply.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - Realm is a opaque string that the
+          user agent should present to the user so he can decide what username
+          and password to use. Usually this is domain of the host the server
+          is running on.</p>
+                  <p>It must not be empty string <span class="quote">‚Äú<span class="quote"></span>‚Äù</span>. Apart of a static
+          strinh, typical value is From header field domain (e.g., variable
+          $fd).</p>
+                  <p>If an empty string <span class="quote">‚Äú<span class="quote"></span>‚Äù</span> is used then the server will
+          generate it from the request. From header field domain will be used
+          as realm.</p>
+                  <p>The string may contain pseudo variables.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>table</em></span> - Table to be used to lookup
+          usernames and passwords (usually subscribers table).</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp26224"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†proxy_authorize usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!proxy_authorize("$fd", "subscriber)) {
+	proxy_challenge("REG_MAR_REPLY","$fd", "1");  # Realm will be autogenerated
+};
+...
+route[REG_MAR_REPLY]
+{
+     #this is async so to know status we have to check the reply avp
+     xlog("L_DBG","maa_return code is $avp(s:maa_return_code)\n");   
+
+     switch ($avp(s:maa_return_code)){
+             case 1: #success
+                     xlog("L_DBG", "MAR success - 401/407 response sent from module\n");
+                     break;
+             case -1: #failure
+                     xlog("L_ERR", "MAR failure - error response sent from module\n");
+                     break;
+             case -2: #error
+                     xlog("L_ERR", "MAR error - sending error response now\n");
+                     t_reply("500", "MAR failed");
+                     break;
+             default:
+                     xlog("L_ERR", "Unknown return code from MAR, value is [$avp(s:uaa_return_code)]\n");
+                     t_reply("500", "Unknown response code from MAR");
+                     break;
+     }
+     exit;           
+}            
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†ims_proxy_authenticate(realm, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28184"></a>4.6.¬†<code class="function">ims_proxy_authenticate(realm,
+      table)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>It is same function as proxy_authenticate(realm, table). This name
+      is kept for backward compatibility, since it was named this way first
+      time but it actually does user authentication.</p>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp29352"></a>5.¬†Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†MAR Timeouts (mar_timeouts)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp29720"></a>5.1.¬†MAR Timeouts (mar_timeouts)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of timeouts on sending a MAR. i.e. no response to
+      MAR.</p>
+          </div>
+          <div class="section" title="5.2.¬†Average MAR Response Time (mar_avg_response_time)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp30440"></a>5.2.¬†Average MAR Response Time (mar_avg_response_time)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The average response time in milliseconds for MAR-MAA
+      transaction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

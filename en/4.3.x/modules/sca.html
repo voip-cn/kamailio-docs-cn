@@ -1,0 +1,1446 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>sca Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4380560" title="sca Module" />
+    <link rel="next" href="#idp2744320" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="sca Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4380560"></a>sca Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrew</span> <span class="surname">Mortensen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">University of Pennsylvania<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 Andrew Mortensen, admorten@isc.upenn.edu</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2744320">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2140328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp965112">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2347976">2.1. Modules</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2541784">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2752000">3.1. <code class="varname">hash_table_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp152496">3.2. <code class="varname">call_info_max_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2492176">3.3. <code class="varname">line_seize_max_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13664">3.4. <code class="varname">purge_expired_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10544">3.5. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm8048">3.6. <code class="varname">subs_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp120928">3.7. <code class="varname">db_update_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp123448">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp123816">4.1. 
+		<code class="function">sca_handle_subscribe()</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp129104">4.2. 
+                <code class="function">sca_call_info_update()</code>
+            </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp23664">5. Exported RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp24016">5.1. <code class="varname">sca.all_subscriptions</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp26264">5.2. <code class="varname">sca.all_appearances</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28624">5.3. <code class="varname">sca.seize_appearance</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp32768">5.4. <code class="varname">sca.update_appearance</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp60128">5.5. <code class="varname">sca.release_appearance</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp64216">6. Sample kamailio.cfg with SCA</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp151272">Set <code class="varname">hash_table_size</code>:</a></dt>
+          <dt>1.2. <a href="#idp153712">Set <code class="varname">call_info_max_expires</code>:</a></dt>
+          <dt>1.3. <a href="#idm14816">Set <code class="varname">line_seize_max_expires</code>:</a></dt>
+          <dt>1.4. <a href="#idm11752">Set <code class="varname">purge_expired_interval</code>:</a></dt>
+          <dt>1.5. <a href="#idm9248">Set <code class="varname">db_url</code> parameter:</a></dt>
+          <dt>1.6. <a href="#idp119752">Set <code class="varname">subs_table</code> parameter:</a></dt>
+          <dt>1.7. <a href="#idp122192">Set <code class="varname">db_update_interval</code>:</a></dt>
+          <dt>1.8. <a href="#idp127800"><code class="function">sca_handle_subscribe</code> usage:</a></dt>
+          <dt>1.9. <a href="#idp21968"><code class="function">sca_call_info_update</code> usage:</a></dt>
+          <dt>1.10. <a href="#idp64936">kamailio.cfg</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2744320"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2140328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp965112">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2347976">2.1. Modules</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2541784">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2752000">3.1. <code class="varname">hash_table_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp152496">3.2. <code class="varname">call_info_max_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2492176">3.3. <code class="varname">line_seize_max_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13664">3.4. <code class="varname">purge_expired_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10544">3.5. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm8048">3.6. <code class="varname">subs_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp120928">3.7. <code class="varname">db_update_interval</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp123448">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp123816">4.1. 
+		<code class="function">sca_handle_subscribe()</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp129104">4.2. 
+                <code class="function">sca_call_info_update()</code>
+            </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp23664">5. Exported RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp24016">5.1. <code class="varname">sca.all_subscriptions</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp26264">5.2. <code class="varname">sca.all_appearances</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28624">5.3. <code class="varname">sca.seize_appearance</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp32768">5.4. <code class="varname">sca.update_appearance</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp60128">5.5. <code class="varname">sca.release_appearance</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp64216">6. Sample kamailio.cfg with SCA</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2140328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The sca module implements Shared Call Appearances. It handles
+		SUBSCRIBE messages for call-info and line-seize events, and
+		sends call-info NOTIFYs to line subscribers to implement line
+		bridging. The module implements SCA as defined in Broadworks
+		SIP Access Side Extensions Interface Specifications, Release
+		13.0, version 1, sections 2, 3 and 4.
+	</p>
+          <p>
+		SCA group members receive call state notifications when other
+		group members participate in calls. An SCA caller can place a
+		call on hold, and the call may be retrieved from hold by
+		another member of the group.
+	</p>
+          <p>
+		Subscribers to SCA call-info events SUBSCRIBE to their
+		address-of-record (AoR), asking the application server to
+		send call-info NOTIFYs with line state information as lines
+		in the subscriber group are used.
+	</p>
+          <p>
+		For example, when an SCA subscriber takes the phone off hook,
+		it sends a line-seize SUBSCRIBE to the application server.
+		The application server acknowledges the request, and sends to
+		the subscriber a line-seize NOTIFY with the appearance index
+		of the line claimed for the subscriber. The application also
+		sends call-info NOTIFYs to the other SCA subscribers to the
+		AoR, letting them know that an appearance within the group has
+		gone off hook. Subscribers update their display appropriately.
+	</p>
+          <p>
+		Subscribers to an SCA address-of-record will receive call-info
+		NOTIFYs when a member of the group seizes a line (seized);
+		receives a 180 ringing response from the remote party (ringing);
+		receives a 183 progressing response from the remote party
+		(progressing); when the remote party answers the call (active);
+		when either party in the call places the call on hold (held);
+		and when an SCA line goes back on hook (idle).
+	</p>
+          <p>
+		The call-info subscriber information is stored in memory and
+		is periodically written to the database. Call state information
+		is stored in memory. A future release may periodically write
+		call state to the database, as well. The database is purely
+		for restoring subscriptions after a restart of the application
+		server. Subscriber information is also flushed to the database
+		when the service is stopped.
+	</p>
+          <p>
+		At the time of this writing, Polycom and Cisco handsets are
+		known to implement the call-info and line-seize event packages
+		defined in the document, which may be found freely on the web.
+	</p>
+          <p>
+		To date, this module has only been tested with Polycom
+		Soundpoint 550s and 650s running Polycom SIP 3.3.4.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp965112"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2347976"></a>2.1. Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>a database module</em></span>
+		    </p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>sl</em></span>
+		    </p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>tm</em></span>
+		    </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2541784"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. hash_table_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2752000"></a>3.1. <code class="varname">hash_table_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Size, as a power of two, of the shared memory hash table
+		containing the call-info subscriptions and the appearance
+		state. A larger power of two means better performance
+		(fewer collisions, making for fewer subscriber URI comparisons)
+		at the expense of increased shared memory use.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 9 (2 ^ 9 == 512).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp151272"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">hash_table_size</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# create shared memory hash table with 2^8 (256) slots
+modparam( "sca", "hash_table_size", 8 )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. call_info_max_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp152496"></a>3.2. <code class="varname">call_info_max_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum allowed call-info subscription time in seconds.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 3600 (1 hour).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp153712"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">call_info_max_expires</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam( "sca", "call_info_max_expires", 1800 )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. line_seize_max_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2492176"></a>3.3. <code class="varname">line_seize_max_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum allowed line-seize subscription time in seconds.
+            </p>
+            <p>
+                <span class="emphasis"><em>
+		    Default value is 15 (15 seconds).
+                </em></span>
+            </p>
+            <p>
+		A maximum line-seize subscription time of 15 seconds is
+		recommended in the SIP Access Side Extensions document.
+		This interval is purposely short to prevent a client from
+		seizing an appearance without making a call for extended
+		periods of time.
+	    </p>
+            <div class="example">
+              <a id="idm14816"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">line_seize_max_expires</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...             
+modparam( "sca", "line_seize_max_expires", 30 )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. purge_expired_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13664"></a>3.4. <code class="varname">purge_expired_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The period of time in seconds between purges of expired
+		call-info and line-seize subscriptions.
+            </p>
+            <p>
+                <span class="emphasis"><em>
+		    Default value is 120 (2 minutes).
+                </em></span>
+            </p>
+            <p>
+		On finding an expired subscription, the module removes the
+		subscription from the shared memory hash table, and sends a
+		NOTIFY with Subscription-State "terminated;expired" header
+		value to the subscriber. It also NOTIFYs other members of
+		the group, in the event that the expired subscription was
+		a line-seize.
+	    </p>
+            <div class="example">
+              <a id="idm11752"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">purge_expired_interval</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...             
+modparam( "sca", "purge_expired_interval", 60 )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10544"></a>3.5. <code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		URL of database to which subscribers will be written.
+	    </p>
+            <p>
+		<span class="emphasis"><em>Default value is mysql://kamailio:kamailiorw@localhost/kamailio</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm9248"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">db_url</code> parameter:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam( "sca", "db_url", "mysql://kamailio:kamailiorw@localhost/kamailio" )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. subs_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm8048"></a>3.6. <code class="varname">subs_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the database table where call-info subscriptions
+		are written.
+            </p>
+            <p>
+                <span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">sca_subscriptions</span>”</span>.
+                </em></span>
+            </p>
+            <div class="example">
+              <a id="idp119752"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">subs_table</code> parameter:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...             
+modparam( "sca", "subs_table", "call_info_subscriptions" )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. db_update_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp120928"></a>3.7. <code class="varname">db_update_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Period in seconds between writes of call-info subscriber
+		information to the database. 
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 300 (5 minutes).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp122192"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">db_update_interval</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam( "sca", "db_update_interval", 120 )
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp123448"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sca_handle_subscribe()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp123816"></a>4.1. 
+		<code class="function">sca_handle_subscribe()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function handling call-info and line-seize SUBSCRIBE
+		requests. It stores or updates the subscriptions in shared
+		memory, and sends NOTIFYs to the subscriber and other
+		members of the group as needed.
+	    </p>
+            <p>
+		For example, a line-seize SUBSCRIBE will cause the module to
+		reserve an appearance index for the subscriber; send a
+		line-seize NOTIFY to the subscriber indicating which appearance
+		index it must use; and send call-info NOTIFYs to other
+		subscribers to the address-of-record letting them know the
+		appearance is off hook.
+	    </p>
+            <p>
+		This function can be used from the REQUEST_ROUTE.
+	    </p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>1 - successful</em></span>
+		    </p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-1 - failed, error logged</em></span>
+		    </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+            <div class="example">
+              <a id="idp127800"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">sca_handle_subscribe</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( is_method( "SUBSCRIBE" )) {
+    if ( $hdr(Event) == "call-info" || $hdr(Event) == "line-seize" ) {
+	sca_handle_subscribe();
+	exit;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  sca_call_info_update()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp129104"></a>4.2. 
+                <code class="function">sca_call_info_update()</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The sca_call_info_update function updates call state for
+		SCA appearances. If a request or response packet contains
+		a Call-Info header, the function extracts call state from
+		the header and sends NOTIFYs to subscribers if needed. If
+		no Call-Info header is included in the packet, the module
+		looks up the To and From URIs to see if either are SCA
+		addresses-of-record. If either the To or From URI are SCA
+		AoRs, the function looks up the appearance by dialog and
+		updates call state as needed, sending NOTIFYs to members of
+		the group if the call state has changed.
+            </p>
+            <p>
+		The sca_call_info_update function updates call state for
+		INVITE, CANCEL, BYE, PRACK and REFER requests and responses.
+	    </p>
+            <p>
+                This function can be used from the REQUEST_ROUTE, REPLY_ROUTE,
+		and FAILURE_ROUTE.
+            </p>
+            <p>
+                <span class="emphasis"><em>Return code:</em></span>
+                </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                        <span class="emphasis"><em>1 - successful</em></span>
+                    </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                        <span class="emphasis"><em>-1 - failed, error logged</em></span>
+                    </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+            </p>
+            <div class="example">
+              <a id="idp21968"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">sca_call_info_update</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...             
+route
+{
+...
+    sca_call_info_update();
+...
+}
+
+onreply_route[REPLY_ROUTE]
+{
+...
+    if ( status =~ "[456][0-9][0-9]" ) {
+	# don't update SCA state here, since there may be
+	# failure route processing (e.g., call forwarding).
+	# update state in failure route instead.
+	break;
+    }
+
+    sca_call_info_update();
+...
+}
+
+failure_route[FAILURE_ROUTE]
+{
+...
+    sca_call_info_update();
+...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp23664"></a>5. Exported RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. sca.all_subscriptions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp24016"></a>5.1. <code class="varname">sca.all_subscriptions</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		List all current call-info and line-seize subscriptions.
+	    </p>
+            <p>
+		Name: <span class="emphasis"><em>sca.all_subscriptions</em></span>
+	    </p>
+            <p>
+		Parameters: <span class="emphasis"><em>none</em></span>
+	    </p>
+            <p>
+		Example:
+	    </p>
+            <pre class="programlisting">	    kamcmd sca.all_subscriptions</pre>
+          </div>
+          <div class="section" title="5.2. sca.all_appearances">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp26264"></a>5.2. <code class="varname">sca.all_appearances</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		List all SCA appearances with non-idle state.
+            </p>
+            <p>
+                Name: <span class="emphasis"><em>sca.all_appearances</em></span>
+            </p>
+            <p>
+                Parameters: <span class="emphasis"><em>none</em></span>
+            </p>
+            <p>
+                Example:
+            </p>
+            <pre class="programlisting">            kamcmd sca.all_appearances</pre>
+          </div>
+          <div class="section" title="5.3. sca.seize_appearance">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28624"></a>5.3. <code class="varname">sca.seize_appearance</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Seize an appearance index for a specific contact within an
+		SCA group, and notify other members of the group that the
+		appearance is off hook. Useful for testing SCA signaling.
+            </p>
+            <p>
+                Name: <span class="emphasis"><em>sca.seize_appearance</em></span>
+            </p>
+            <p>
+                Parameters: <span class="emphasis"><em>2</em></span>
+            </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>SCA Address-of-Record</em></span>
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>SCA Contact URI</em></span>
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+            </p>
+            <pre class="programlisting">	    # seize next available appearance of sip:215@voice.example.com
+	    # for contact sip:215@10.0.1.2
+            kamcmd sca.seize_appearance sip:215@voice.example.com sip:215@10.0.1.2</pre>
+          </div>
+          <div class="section" title="5.4. sca.update_appearance">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp32768"></a>5.4. <code class="varname">sca.update_appearance</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Update the state of an in-use appearance index, and notify
+		other members of the group. Useful for testing SCA signaling.
+            </p>
+            <p>
+                Name: <span class="emphasis"><em>sca.update_appearance</em></span>
+            </p>
+            <p>
+                Parameters: <span class="emphasis"><em>3 or 4</em></span>
+            </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>SCA Address-of-Record</em></span>
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>Index of In-Use Appearance</em></span>
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>Appearance State</em></span> 
+		    (seized, ringing, progressing, active, held, held-private)
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>Appearance Display Info</em></span> (Optional)
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+            </p>
+            <pre class="programlisting">	    # update in-use appearance index 3 of sip:215@voice.example.com
+	    # state held.
+            kamcmd sca.update_appearance sip:215@voice.example.com 3 held</pre>
+          </div>
+          <div class="section" title="5.5. sca.release_appearance">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp60128"></a>5.5. <code class="varname">sca.release_appearance</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set a non-idle appearance index to idle and NOTIFY
+		members of the group.
+            </p>
+            <p>
+                Name: <span class="emphasis"><em>sca.release_appearance</em></span>
+            </p>
+            <p>
+                Parameters: <span class="emphasis"><em>2</em></span>
+            </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>SCA Address-of-Record</em></span>
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>Appearance Index</em></span>
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+            </p>
+            <pre class="programlisting">	    # release appearance of sip:215@voice.example.com with
+	    # appearance index 3
+            kamcmd sca.release_appearance sip:215@voice.example.com 3</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Sample kamailio.cfg with SCA">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp64216"></a>6. Sample kamailio.cfg with SCA</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The following is a basic kamailio.cfg providing Shared Call
+	    Appearances to local subscribers. It has been tested with
+	    Polycom handsets.
+	</p>
+          <div class="example">
+            <a id="idp64936"></a>
+            <p class="title">
+              <strong>Example 1.10. kamailio.cfg</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">##
+#!KAMAILIO
+#
+# example kamailio.cfg with Shared Call Appearances (SCA)
+
+#!define WITH_AUTH
+#!define WITH_MYSQL
+#!define WITH_SCA
+
+####### Defined Values #########
+
+#!ifdef WITH_MYSQL
+# - database URL - used to connect to database server by modules such
+#       as: auth_db, acc, usrloc, a.s.o.
+#!ifndef DBURL
+#!define DBURL "mysql://kamailio:kamailiorw@localhost/kamailio"
+#!endif
+#!endif
+
+####### Global Parameters #########
+
+#!ifdef WITH_DEBUG
+debug=4
+log_stderror=yes
+#!else
+debug=2
+log_stderror=no
+#!endif
+
+memdbg=5
+memlog=5
+
+log_facility=LOG_LOCAL0
+
+fork=yes
+children=4
+
+listen=udp:10.0.0.10:5060
+port=5060
+
+####### Modules Section ########
+
+# set paths to location of modules (to sources or installation folders)
+#!ifdef WITH_SRCPATH
+mpath="modules_k:modules"
+#!else
+mpath="/usr/local/kamailio/lib64/kamailio/modules_k/:/usr/local/kamailio/lib64/kamailio/modules/"
+#!endif
+
+#!ifdef WITH_MYSQL
+loadmodule "db_mysql.so"
+#!endif
+
+loadmodule "tm.so"
+loadmodule "sl.so"
+loadmodule "rr.so"
+loadmodule "pv.so"
+loadmodule "maxfwd.so"
+loadmodule "usrloc.so"
+loadmodule "registrar.so"
+loadmodule "textops.so"
+loadmodule "siputils.so"
+loadmodule "xlog.so"
+loadmodule "sanity.so"
+loadmodule "ctl.so"
+loadmodule "cfg_rpc.so"
+
+#!ifdef WITH_AUTH
+loadmodule "auth.so"
+loadmodule "auth_db.so"
+#!ifdef WITH_IPAUTH
+loadmodule "permissions.so"
+#!endif
+#!endif
+
+#!ifdef WITH_SCA
+loadmodule "sca.so"
+#!endif
+
+
+# ----------------- setting module-specific parameters ---------------
+
+
+# ----- tm params -----
+# auto-discard branches from previous serial forking leg
+modparam("tm", "failure_reply_mode", 3)
+# default retransmission timeout: 30sec
+modparam("tm", "fr_timer", 30000)
+# default invite retransmission timeout after 1xx: 120sec
+modparam("tm", "fr_inv_timer", 120000)
+
+
+# ----- rr params -----
+# add value to ;lr param to cope with most of the UAs
+modparam("rr", "enable_full_lr", 1)
+# do not append from tag to the RR (no need for this script)
+modparam("rr", "append_fromtag", 0)
+
+
+# ----- registrar params -----
+modparam("registrar", "method_filtering", 1)
+/* uncomment the next line to disable parallel forking via location */
+# modparam("registrar", "append_branches", 0)
+/* uncomment the next line not to allow more than 10 contacts per AOR */
+#modparam("registrar", "max_contacts", 10)
+# max value for expires of registrations
+modparam("registrar", "max_expires", 3600)
+# set it to 1 to enable GRUU
+modparam("registrar", "gruu_enabled", 0)
+
+
+# ----- usrloc params -----
+/* enable DB persistency for location entries */
+#!ifdef WITH_USRLOCDB
+modparam("usrloc", "db_url", DBURL)
+modparam("usrloc", "db_mode", 2)
+modparam("usrloc", "use_domain", 0)
+#!endif
+
+
+# ----- auth_db params -----
+#!ifdef WITH_AUTH
+modparam("auth_db", "db_url", DBURL)
+modparam("auth_db", "calculate_ha1", yes)
+modparam("auth_db", "password_column", "password")
+modparam("auth_db", "load_credentials", "")
+
+# ----- permissions params -----
+#!ifdef WITH_IPAUTH
+modparam("permissions", "db_url", DBURL)
+modparam("permissions", "db_mode", 1)
+#!endif
+
+#!endif
+
+# ----- sca params -----
+#!ifdef WITH_SCA
+modparam("sca", "call_info_max_expires", 300)
+modparam("sca", "db_url", DBURL)
+#!endif
+
+
+####### Routing Logic ########
+
+# Main SIP request routing logic
+# - processing of any incoming SIP request starts with this route
+# - note: this is the same as route { ... }
+request_route {
+
+	# per request initial checks
+	route(REQINIT);
+
+	# CANCEL processing
+	if (is_method("CANCEL"))
+	{
+		if (t_check_trans()) {
+			route(SCA);
+			t_relay();
+		}
+		exit;
+	}
+
+	# handle requests within SIP dialogs
+	route(WITHINDLG);
+
+	### only initial requests (no To tag)
+
+	t_check_trans();
+
+	# authentication
+	route(AUTH);
+
+	# record routing for dialog forming requests (in case they are routed)
+	# - remove preloaded route headers
+	remove_hf("Route");
+	if (is_method("INVITE|SUBSCRIBE"))
+		record_route();
+
+	# dispatch requests to foreign domains
+	route(SIPOUT);
+
+	# handle registrations
+	route(REGISTRAR);
+
+	if ($rU==$null)
+	{
+		# request with no Username in RURI
+		sl_send_reply("484","Address Incomplete");
+		exit;
+	}
+
+	# user location service
+	route(LOCATION);
+
+	route(RELAY);
+}
+
+
+route[RELAY] {
+
+	# enable additional event routes for forwarded requests
+	if (is_method("INVITE|BYE|SUBSCRIBE|PRACK|REFER|UPDATE")) {
+		if(!t_is_set("onreply_route")) t_on_reply("MANAGE_REPLY");
+	}
+	if (is_method("INVITE")) {
+		if(!t_is_set("failure_route")) t_on_failure("MANAGE_FAILURE");
+	}
+
+	route(SCA);
+
+	if (!t_relay()) {
+		sl_reply_error();
+	}
+	exit;
+}
+
+# Per SIP request initial checks
+route[REQINIT] {
+	if (!mf_process_maxfwd_header("10")) {
+		sl_send_reply("483","Too Many Hops");
+		exit;
+	}
+
+	if(!sanity_check("1511", "7"))
+	{
+		xlog("Malformed SIP message from $si:$sp\n");
+		exit;
+	}
+}
+
+# Handle requests within SIP dialogs
+route[WITHINDLG] {
+	if (has_totag()) {
+		# sequential request withing a dialog should
+		# take the path determined by record-routing
+		if (loose_route()) {
+			if ( is_method("NOTIFY") ) {
+				# Add Record-Route for in-dialog NOTIFY as per RFC 6665.
+				record_route();
+			}
+			route(RELAY);
+		} else {
+			if (is_method("SUBSCRIBE") &amp;&amp; uri == myself) {
+				# in-dialog subscribe requests
+				route(SCA);
+				exit;
+			}
+			if ( is_method("ACK") ) {
+				if ( t_check_trans() ) {
+					# no loose-route, but stateful ACK;
+					# must be an ACK after a 487
+					# or e.g. 404 from upstream server
+					t_relay();
+					exit;
+				} else {
+					# ACK without matching transaction ... ignore and discard
+					exit;
+				}
+			}
+			sl_send_reply("404","Not here");
+		}
+		exit;
+	}
+}
+
+# Handle SIP registrations
+route[REGISTRAR] {
+	if (is_method("REGISTER"))
+	{
+		if (!save("location"))
+			sl_reply_error();
+
+		exit;
+	}
+}
+
+# USER location service
+route[LOCATION] {
+	$avp(oexten) = $rU;
+	if (!lookup("location")) {
+		$var(rc) = $rc;
+		t_newtran();
+		switch ($var(rc)) {
+			case -1:
+			case -3:
+				send_reply("404", "Not Found");
+				exit;
+			case -2:
+				send_reply("405", "Method Not Allowed");
+				exit;
+		}
+	}
+}
+
+# Authentication route
+route[AUTH] {
+#!ifdef WITH_AUTH
+
+#!ifdef WITH_IPAUTH
+	if((!is_method("REGISTER")) &amp;&amp; allow_source_address())
+	{
+		# source IP allowed
+		return;
+	}
+#!endif
+
+	if (is_method("REGISTER") || from_uri==myself)
+	{
+		# authenticate requests
+		if (!auth_check("$fd", "subscriber", "1")) {
+			auth_challenge("$fd", "0");
+			exit;
+		}
+		# user authenticated - remove auth header
+		if(!is_method("REGISTER|PUBLISH"))
+			consume_credentials();
+	}
+	# if caller is not local subscriber, then check if it calls
+	# a local destination, otherwise deny, not an open relay here
+	if (from_uri!=myself &amp;&amp; uri!=myself)
+	{
+		sl_send_reply("403","Not relaying");
+		exit;
+	}
+
+#!endif
+	return;
+}
+
+# Shared Call Appearances handling
+route[SCA] {
+#!ifdef WITH_SCA
+	if(is_method("SUBSCRIBE")) {
+		if ($hdr(Event) == "call-info" || $hdr(Event) == "line-seize") {
+			xdbg("SCA: $hdr(Event) SUBSCRIBE $ru from $si:$sp");
+			sca_handle_subscribe();
+			exit;
+		}
+
+		return;
+	}
+
+	if (!is_method("BYE|CANCEL|INVITE|PRACK|REFER")) {
+		return;
+	}
+
+	# this updates appearance state and NOTIFYs SCA subscribers as
+	# necessary. it also removes the Call-Info header, if found.
+	sca_call_info_update();
+#!endif
+
+	return;
+}
+
+# Routing to foreign domains
+route[SIPOUT] {
+	if (!uri==myself)
+	{
+		append_hf("P-hint: outbound\r\n");
+		route(RELAY);
+	}
+}
+
+# XMLRPC routing
+#!ifdef WITH_XMLRPC
+route[XMLRPC] {
+	# allow XMLRPC from localhost
+	if ((method=="POST" || method=="GET")
+			&amp;&amp; (src_ip==127.0.0.1)) {
+		# close connection only for xmlrpclib user agents (there is a bug in
+		# xmlrpclib: it waits for EOF before interpreting the response).
+		if ($hdr(User-Agent) =~ "xmlrpclib")
+			set_reply_close();
+		set_reply_no_connect();
+		dispatch_rpc();
+		exit;
+	}
+	send_reply("403", "Forbidden");
+	exit;
+}
+#!endif
+
+# manage incoming replies
+onreply_route[MANAGE_REPLY] {
+	xdbg("incoming reply\n");
+
+	if (status =~ "[456][0-9][0-9]") {
+		# don't update SCA state here, since there may be
+		# failure route processing (e.g., call forwarding).
+		# update state in failure route instead.
+	    return;
+	}
+
+	route(SCA);
+}
+
+# manage failure routing cases
+failure_route[MANAGE_FAILURE] {
+	if (t_is_canceled()) {
+		exit;
+	}
+
+	route(SCA);
+}
+</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

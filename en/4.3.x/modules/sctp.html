@@ -1,0 +1,1224 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SCTP Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp133544" title="SCTP Module" />
+    <link rel="next" href="#idp7327216" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SCTP Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp133544"></a>SCTP Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp7327216">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp6839704">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6544464">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6787968">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6199408">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp6995792">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_socket_rcvbuf">3.1. <code class="varname">sctp_socket_rcvbuf</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_socket_sndbuf">3.2. <code class="varname">sctp_socket_sndbuf</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_autoclose">3.3. <code class="varname">sctp_autoclose</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_send_ttl">3.4. <code class="varname">sctp_send_ttl</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_send_retries">3.5. <code class="varname">sctp_send_retries</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_assoc_tracking">3.6. <code class="varname">sctp_assoc_tracking</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_assoc_reuse">3.7. <code class="varname">sctp_assoc_reuse</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_max_assocs">3.8. <code class="varname">sctp_max_assocs</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_srto_initial">3.9. <code class="varname">sctp_srto_initial</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_srto_max">3.10. <code class="varname">sctp_srto_max</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_srto_min">3.11. <code class="varname">sctp_srto_min</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_asocmaxrxt">3.12. <code class="varname">sctp_asocmaxrxt</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_init_max_attempts">3.13. <code class="varname">sctp_init_max_attempts</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_init_max_timeo">3.14. <code class="varname">sctp_init_max_timeo</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_hbinterval">3.15. <code class="varname">sctp_hbinterval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_pathmaxrxt">3.16. <code class="varname">sctp_pathmaxrxt</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_sack_delay">3.17. <code class="varname">sctp_sack_delay</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_sack_freq">3.18. <code class="varname">sctp_sack_freq</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.p.sctp_max_burst">3.19. <code class="varname">sctp_max_burst</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4442464">4. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.r.sctp.info">4.1. <code class="varname">sctp.info</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sctp.r.sctp.">4.2. <code class="varname">sctp.options</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp6963464">Set <code class="varname">sctp_socket_rcvbuf</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4394112">Set <code class="varname">sctp_socket_sndbuf</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp4546752">Set <code class="varname">sctp_autoclose</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp4549424">Set <code class="varname">sctp_send_ttl</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp4552760">Set <code class="varname">sctp_send_retries</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp4400144">Set <code class="varname">sctp_assoc_tracking</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp4403432">Set <code class="varname">sctp_assoc_reuse</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp4407096">Set <code class="varname">sctp_max_assocs</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp4409960">Set <code class="varname">sctp_srto_initial</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp4479928">Set <code class="varname">sctp_srto_max</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp4483368">Set <code class="varname">sctp_srto_min</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp4486256">Set <code class="varname">sctp_asocmaxrxt</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp4489008">Set <code class="varname">sctp_init_max_attempts</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp4491800">Set <code class="varname">sctp_init_max_timeo</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp4494656">Set <code class="varname">sctp_hbinterval</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp4497504">Set <code class="varname">sctp_pathmaxrxt</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp4435104">Set <code class="varname">sctp_sack_delay</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp4438376">Set <code class="varname">sctp_sack_freq</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp4441216">Set <code class="varname">sctp_max_burst</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp4443728">Use <code class="varname">sctp.info</code> with kamcmd</a></dt>
+          <dt>1.21. <a href="#idp4445768">Use <code class="varname">sctp.options</code> with kamcmd</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp7327216"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp6839704">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6544464">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6787968">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6199408">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp6995792">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_socket_rcvbuf">3.1. <code class="varname">sctp_socket_rcvbuf</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_socket_sndbuf">3.2. <code class="varname">sctp_socket_sndbuf</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_autoclose">3.3. <code class="varname">sctp_autoclose</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_send_ttl">3.4. <code class="varname">sctp_send_ttl</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_send_retries">3.5. <code class="varname">sctp_send_retries</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_assoc_tracking">3.6. <code class="varname">sctp_assoc_tracking</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_assoc_reuse">3.7. <code class="varname">sctp_assoc_reuse</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_max_assocs">3.8. <code class="varname">sctp_max_assocs</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_srto_initial">3.9. <code class="varname">sctp_srto_initial</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_srto_max">3.10. <code class="varname">sctp_srto_max</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_srto_min">3.11. <code class="varname">sctp_srto_min</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_asocmaxrxt">3.12. <code class="varname">sctp_asocmaxrxt</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_init_max_attempts">3.13. <code class="varname">sctp_init_max_attempts</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_init_max_timeo">3.14. <code class="varname">sctp_init_max_timeo</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_hbinterval">3.15. <code class="varname">sctp_hbinterval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_pathmaxrxt">3.16. <code class="varname">sctp_pathmaxrxt</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_sack_delay">3.17. <code class="varname">sctp_sack_delay</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_sack_freq">3.18. <code class="varname">sctp_sack_freq</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.p.sctp_max_burst">3.19. <code class="varname">sctp_max_burst</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4442464">4. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.r.sctp.info">4.1. <code class="varname">sctp.info</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sctp.r.sctp.">4.2. <code class="varname">sctp.options</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6839704"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides SCTP transport layer for Kamailio. SCTP is an
+		acronym for Stream Control Transmission Protocol, read more about it
+		at: <a class="ulink" href="javascript:if(confirm('http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol'" tppabs="http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol">
+			http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol</a>
+	</p>
+          <p>
+		The module itself implements the callbacks required by the core to
+		receive and send SIP messages over SCTP sockets.
+	</p>
+          <p>
+		The core Makefile variable SCTP must be set to 1 (which is by default set
+		to 1 in Makefile.defs) and sources compiled with -DUSE_SCTP (automatically
+		set when SCTP=1). In other words, if core Makefiles are not changed and
+		SCTP variable is not overwritten from command line, then the SCTP 
+		support in core is enabled.
+	</p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6544464"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6787968"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6199408"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libsctp</em></span> - SCTP user space library available
+				on Linux. To compile the module, libsctp-dev is required as well.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6995792"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽sctp_socket_rcvbuf (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_socket_rcvbuf"></a>3.1.聽<code class="varname">sctp_socket_rcvbuf</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			 Size for the sctp socket receive buffer.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is automatically set based on OS limits.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp6963464"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">sctp_socket_rcvbuf</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_socket_rcvbuf", 14096)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽sctp_socket_sndbuf (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_socket_sndbuf"></a>3.2.聽<code class="varname">sctp_socket_sndbuf</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			 Size for the sctp socket send buffer.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is automatically set based on OS limits.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4394112"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set <code class="varname">sctp_socket_sndbuf</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_socket_sndbuf", 14096)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽sctp_autoclose (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_autoclose"></a>3.3.聽<code class="varname">sctp_autoclose</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of seconds before autoclosing an idle association.
+			Can be changed at runtime, but it will affect only new associations.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 180 (seconds).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4546752"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set <code class="varname">sctp_autoclose</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# kamcmd cfg.set_now_int sctp autoclose 120
+...
+modparam("sctp", "sctp_autoclose", 300)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽sctp_send_ttl (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_send_ttl"></a>3.4.聽<code class="varname">sctp_send_ttl</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of milliseconds before an unsent message/chunk is dropped.
+			Can be changed at runtime.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 32000 (miliseconds - 32 seconds).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4549424"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set <code class="varname">sctp_send_ttl</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# kamcmd cfg.set_now_int sctp send_ttl 180000
+...
+modparam("sctp", "sctp_send_ttl", 10000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.聽sctp_send_retries (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_send_retries"></a>3.5.聽<code class="varname">sctp_send_retries</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			How many times to attempt re-sending a message on a re-opened
+			association, if the sctp stack did give up sending it (it's not
+			related to sctp protocol level retransmission). Useful to improve
+			reliability with peers that reboot/restart or fail over to another
+			machine.
+		</p>
+            <p>
+			WARNING: use with care and low values (e.g. 1-3) to avoid
+			"multiplying" traffic to unresponding hosts.
+		</p>
+            <p>
+			Can be changed at runtime. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4552760"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Set <code class="varname">sctp_send_retries</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_send_retries", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.聽sctp_assoc_tracking (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_assoc_tracking"></a>3.6.聽<code class="varname">sctp_assoc_tracking</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Controls whether or not sctp associations are tracked inside
+			Kamailio. Turning it off would result in less memory being used
+			and slightly better performance, but it will also disable some other
+			features that depend on it (e.g. sctp_assoc_reuse).
+		</p>
+            <p>
+			Can be changed at runtime (sercmd sctp assoc_tracking 0), but changes
+			will be allowed only if all the other features that depend on it are
+			turned off (for example it can be turned off only if first
+			sctp_assoc_reuse was turned off).
+		</p>
+            <p>
+			Note: turning sctp_assoc_tracking on/off will delete all the tracking
+			information for all the currently tracked associations and might
+			introduce a small temporary delay in the sctp processing if lots
+			of associations were tracked.
+		</p>
+            <p>
+			Config options depending on sctp_assoc_tracking being on:
+			sctp_assoc_reuse. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1 (enabled, 0 - disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4400144"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Set <code class="varname">sctp_assoc_tracking</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_assoc_tracking", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.聽sctp_assoc_reuse (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_assoc_reuse"></a>3.7.聽<code class="varname">sctp_assoc_reuse</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Controls sctp association reuse. For now only association reuse
+			for replies is affected by it. Default is on. Depends on
+			sctp_assoc_tracking being on.
+		</p>
+            <p>
+			Note that even if turned off, if the port in via corresponds to
+			the source port of the association the request was sent on or if
+			rport is turned on (force_rport() or via containing a rport
+			option), the association will be automatically reused by the
+			sctp stack. Can be changed at runtime (sctp assoc_reuse), but it
+			can be turned on only if sctp_assoc_tracking is on. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1 (enabled, 0 - disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4403432"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Set <code class="varname">sctp_assoc_reuse</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_assoc_reuse", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.聽sctp_max_assocs (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_max_assocs"></a>3.8.聽<code class="varname">sctp_max_assocs</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum number of allowed open sctp associations. -1 means
+			maximum allowed by the OS. Default: -1. Can be changed at
+			runtime (e.g.: kamcmd cfg.set_now_int sctp max_assocs 10 ). When
+			the maximum associations number is exceeded and a new associations
+			is opened by a remote host, the association will be immediately
+			closed. However it is possible that some sip packets get through
+			(especially if they are sent early, as part of the 4-way handshake).
+		</p>
+            <p>
+			When Kamailio tries to open a new association and the max_assocs
+			is exceeded the exact behaviour depends on whether or not
+			sctp_assoc_tracking is on. If on, the send triggering the active
+			open will gracefully fail, before actually opening the new
+			association and no packet will be sent. However if
+			sctp_assoc_tracking is off, the association will first be opened
+			and then immediately closed. In general this means that the initial
+			sip packet will be sent (as part of the 4-way handshake). 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is -1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4407096"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽Set <code class="varname">sctp_max_assocs</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_max_assocs", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.聽sctp_srto_initial (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_srto_initial"></a>3.9.聽<code class="varname">sctp_srto_initial</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Initial value of the retransmission timeout (in miliseconds),
+			used in RTO calculations.
+		</p>
+            <p>
+			Can be changed at runtime (sctp srto_initial) but it will affect
+			only new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4409960"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽Set <code class="varname">sctp_srto_initial</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_srto_initial", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.聽sctp_srto_max (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_srto_max"></a>3.10.聽<code class="varname">sctp_srto_max</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum value of the retransmission timeout (RTO) in milliseconds.
+		</p>
+            <p>
+			WARNING: values lower then the sctp sack_delay will cause lots
+			of retransmissions and connection instability (see sctp_srto_min
+			for more details).
+		</p>
+            <p>
+			Can be changed at runtime (sctp srto_max) but it will affect only
+			new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4479928"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽Set <code class="varname">sctp_srto_max</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_srto_max", 2000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.聽sctp_srto_min (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_srto_min"></a>3.11.聽<code class="varname">sctp_srto_min</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Minimum value of the retransmission timeout (RTO) in milliseconds.
+		</p>
+            <p>
+			WARNING: values lower then the sctp sack_delay of any peer might
+			cause retransmissions and possible interoperability problems.
+			According to the standard the sack_delay should be between 200
+			and 500 ms, so avoid trying values lower then 500 ms unless you
+			control all the possible sctp peers and you do make sure their
+			sack_delay is higher or their sack_freq is 1.
+		</p>
+            <p>
+			Can be changed at runtime (sctp srto_min) but it will affect only
+			new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4483368"></a>
+              <p class="title">
+                <strong>Example聽1.11.聽Set <code class="varname">sctp_srto_min</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_srto_min", 800)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.聽sctp_asocmaxrxt (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_asocmaxrxt"></a>3.12.聽<code class="varname">sctp_asocmaxrxt</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum retransmissions attempts per association. It should be
+			set to sctp_pathmaxrxt * no. of expected paths.
+		</p>
+            <p>
+			Can be changed at runtime (sctp asocmaxrxt) but it will affect
+			only new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4486256"></a>
+              <p class="title">
+                <strong>Example聽1.12.聽Set <code class="varname">sctp_asocmaxrxt</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_asocmaxrxt", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.聽sctp_init_max_attempts (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_init_max_attempts"></a>3.13.聽<code class="varname">sctp_init_max_attempts</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum INIT retransmission attempts.
+		</p>
+            <p>
+			Can be changed at runtime (sctp init_max_attempts). 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4489008"></a>
+              <p class="title">
+                <strong>Example聽1.13.聽Set <code class="varname">sctp_init_max_attempts</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_init_max_attempts", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.聽sctp_init_max_timeo (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_init_max_timeo"></a>3.14.聽<code class="varname">sctp_init_max_timeo</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum INIT retransmission timeout (RTO max for INIT) in
+			miliseconds.
+		</p>
+            <p>
+			Can be changed at runtime (sctp init_max_timeo). 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4491800"></a>
+              <p class="title">
+                <strong>Example聽1.14.聽Set <code class="varname">sctp_init_max_timeo</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_init_max_timeo", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15.聽sctp_hbinterval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_hbinterval"></a>3.15.聽<code class="varname">sctp_hbinterval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			SCTP heartbeat interval. Setting it to -1 will disable the
+			heartbeats.
+		</p>
+            <p>
+			Can be changed at runtime (sctp hbinterval) but it will affect only
+			new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4494656"></a>
+              <p class="title">
+                <strong>Example聽1.15.聽Set <code class="varname">sctp_hbinterval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_hbinterval", 2000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16.聽sctp_pathmaxrxt (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_pathmaxrxt"></a>3.16.聽<code class="varname">sctp_pathmaxrxt</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum retransmission attempts per path (see also
+			sctp_asocmaxrxt).
+		</p>
+            <p>
+			Can be changed at runtime (sctp pathmaxrxt) but it will affect
+			only new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4497504"></a>
+              <p class="title">
+                <strong>Example聽1.16.聽Set <code class="varname">sctp_pathmaxrxt</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_pathmaxrxt", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17.聽sctp_sack_delay (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_sack_delay"></a>3.17.聽<code class="varname">sctp_sack_delay</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Delay until an ACK is generated after receiving a packet (in
+			miliseconds).
+		</p>
+            <p>
+			WARNING: a value higher then srto_min can cause a lot of
+			retransmissions (and strange problems). A value higher then
+			srto_max will result in very high connections instability.
+			According to the standard the sack_delay value should be between
+			200 and 500 ms.
+		</p>
+            <p>
+			Can be changed at runtime (sctp sack_delay) but it will affect
+			only new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4435104"></a>
+              <p class="title">
+                <strong>Example聽1.17.聽Set <code class="varname">sctp_sack_delay</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_sack_delay", 400)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18.聽sctp_sack_freq (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_sack_freq"></a>3.18.聽<code class="varname">sctp_sack_freq</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of packets received before an ACK is sent (without waiting
+			for the sack_delay to expire). Default: OS specific.
+		</p>
+            <p>
+			Note: on linux with lksctp up to and including 1.0.9 is not
+			possible to set this value (having it in the config will produce
+			a warning on startup).
+		</p>
+            <p>
+			Can be changed at runtime (sctp sack_freq) but it will affect only
+			new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4438376"></a>
+              <p class="title">
+                <strong>Example聽1.18.聽Set <code class="varname">sctp_sack_freq</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_sack_freq", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19.聽sctp_max_burst (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.p.sctp_max_burst"></a>3.19.聽<code class="varname">sctp_max_burst</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Maximum burst of packets that can be emitted by an association.
+		</p>
+            <p>
+			Can be changed at runtime (sctp max_burst) but it will affect only
+			new associations. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is OS specific.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4441216"></a>
+              <p class="title">
+                <strong>Example聽1.19.聽Set <code class="varname">sctp_max_burst</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sctp", "sctp_max_burst", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4442464"></a>4.聽RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽sctp.info">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.r.sctp.info"></a>4.1.聽<code class="varname">sctp.info</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Print information about SCTP transport.
+		</p>
+            <div class="example">
+              <a id="idp4443728"></a>
+              <p class="title">
+                <strong>Example聽1.20.聽Use <code class="varname">sctp.info</code> with kamcmd</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamcmd sctp.info
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.聽sctp.options">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sctp.r.sctp."></a>4.2.聽<code class="varname">sctp.options</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Print the options of SCTP sockets. It can take an optional
+			parameter that specifies the listen address of SCTP socket.
+		</p>
+            <div class="example">
+              <a id="idp4445768"></a>
+              <p class="title">
+                <strong>Example聽1.21.聽Use <code class="varname">sctp.options</code> with kamcmd</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamcmd sctp.options
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

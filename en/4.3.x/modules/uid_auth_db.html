@@ -1,0 +1,707 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UID Auth DB Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#uid_auth_db" title="UID Auth DB Module" />
+    <link rel="next" href="#idp1432" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UID Auth DB Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="uid_auth_db"></a>UID Auth DB Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG Fokus<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jan@iptel.org">jan@iptel.org</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jakob</span> <span class="surname">Schlyter</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jakob@schlyter.se">jakob@schlyter.se</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2002, 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1432">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#uid_auth_db.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#uid_auth_db.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#auth_db.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_db.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#user_column">3.2. <code class="varname">user_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain_column">3.3. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#password_column">3.4. <code class="varname">password_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rpid_column">3.5. <code class="varname">rpid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#calculate_ha1">3.6. <code class="varname">calculate_ha1</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#plain_password_column">3.7. <code class="varname">plain_password_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#password_column_2">3.8. <code class="varname">password_column_2</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#use_rpid">3.9. <code class="varname">use_rpid</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#auth_db.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#www_authorize">4.1. <code class="function">www_authorize(realm, table)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#proxy_authorize">4.2. <code class="function">proxy_authorize(realm, table)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1155264"><code class="varname">db_url</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idp2171216"><code class="varname">user_column</code> usage</a></dt>
+          <dt>1.3. <a href="#idp2072680"><code class="varname">domain_column</code> usage</a></dt>
+          <dt>1.4. <a href="#idm17192"><code class="varname">password_column</code> usage</a></dt>
+          <dt>1.5. <a href="#idp176352"><code class="varname">rpid_column</code> usage</a></dt>
+          <dt>1.6. <a href="#idp181056"><code class="varname">calculate_ha1</code>usage</a></dt>
+          <dt>1.7. <a href="#idp183304"><code class="varname">plain_password_column</code> usage</a></dt>
+          <dt>1.8. <a href="#idp186096"><code class="varname">password_column_2</code> usage</a></dt>
+          <dt>1.9. <a href="#idm60376"><code class="varname">use_rpid</code>usage</a></dt>
+          <dt>1.10. <a href="#idp1427872"><code class="function">www_authorize</code> usage</a></dt>
+          <dt>1.11. <a href="#idp747296">proxy_authorize usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1432"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#uid_auth_db.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#uid_auth_db.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#auth_db.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_db.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#user_column">3.2. <code class="varname">user_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain_column">3.3. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#password_column">3.4. <code class="varname">password_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rpid_column">3.5. <code class="varname">rpid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#calculate_ha1">3.6. <code class="varname">calculate_ha1</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#plain_password_column">3.7. <code class="varname">plain_password_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#password_column_2">3.8. <code class="varname">password_column_2</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#use_rpid">3.9. <code class="varname">use_rpid</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#auth_db.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#www_authorize">4.1. <code class="function">www_authorize(realm, table)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#proxy_authorize">4.2. <code class="function">proxy_authorize(realm, table)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_auth_db.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    This module contains all authentication related functions that need
+	    the access to the database. This module should be used together
+	    with auth module, it cannot be used independently because it
+	    depends on the module. Select this module if you want to use
+	    database to store authentication information like subscriber
+	    usernames and passwords. If you want to use radius authentication,
+	    then use auth_radius instead.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_auth_db.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The module depends on the following modules (in the other words the listed modules
+	    must be loaded before this module):
+	    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p title="auth"><strong>auth. </strong>
+			    Generic authentication functions.
+			</p>
+              </li>
+              <li class="listitem">
+                <p title="database"><strong>database. </strong>
+			    Any database module (currently mysql, postgres, dbtext)
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_db.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_db.db_url"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This is URL of the database to be used. Value of the parameter
+	    depends on the database module used. For example for mysql and
+	    postgres modules this is something like
+	    mysql://username:password@host:port/database. For dbtext module
+	    (which stores data in plaintext files) it is directory in which the
+	    database resides.
+	</p>
+            <p>
+	    Default value is "mysql://serro:47serro11@localhost/ser".
+	</p>
+            <div class="example">
+              <a id="idp1155264"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="varname">db_url</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "db_url", "mysql://foo:bar@foobar.org/ser")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. user_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="user_column"></a>3.2. <code class="varname">user_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This is the name of the column holding usernames. Default value is
+	    fine for most people. Use the parameter if you really need to
+	    change it.
+	</p>
+            <p>
+	    Default value is "username".
+	</p>
+            <div class="example">
+              <a id="idp2171216"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">user_column</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "user_column", "user")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain_column"></a>3.3. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This is the name of the column holding domains of users. Default
+	    value is fine for most people. Use the parameter if you really need
+	    to change it.
+	</p>
+            <p>
+	    Default value is "domain".
+	</p>
+            <div class="example">
+              <a id="idp2072680"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">domain_column</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "domain_column", "domain")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. password_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="password_column"></a>3.4. <code class="varname">password_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This is the name of the column holding passwords. Passwords can be
+	    either stored as plain text or pre-calculated HA1 strings. HA1
+	    strings are MD5 hashes of username, password, and realm. HA1
+	    strings are more safe because the server doesn't need to know
+	    plaintext passwords and they cannot be obtained from HA1 strings.
+	</p>
+            <p>
+	    Default value is "ha1".
+	</p>
+            <div class="example">
+              <a id="idm17192"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">password_column</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "password_column", "password")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. rpid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rpid_column"></a>3.5. <code class="varname">rpid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This is the name of the column holding information for the
+	    Remote-Party-ID header field. Default value is fine for most
+	    people. Use the parameter if you really need to change it.
+	</p>
+            <p>
+	    Default value is "rpid".
+	</p>
+            <div class="example">
+              <a id="idp176352"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="varname">rpid_column</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "rpid_column", "remote_party_id")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. calculate_ha1 (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="calculate_ha1"></a>3.6. <code class="varname">calculate_ha1</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This parameter tells server whether it should read plaintext
+	    password from the database or HA1 string. If the parameter is set to
+	    1 then the server will assume that the column pointed to by
+	    <code class="varname">plain_password_column</code> contains plaintext passwords and
+	    it will calculate HA1 strings on the fly.
+	</p>
+            <p>
+	    If the parameter is set to 0 then the server assumes that the
+	    database contains HA1 strings directly and will not calculate
+	    them. In this case it will use value of <code class="varname">password_column</code>
+		as name of column with HA1 password.
+		If username parameter of credentials contains also @domain
+	    (some user agents put domain in username parameter), then column
+	    pointed to by <code class="varname">password_column_2</code> parameter will
+	    be used instead. This column should also contain HA1 strings but
+	    they should be calculated including the domain in the username
+	    parameter (as opposed to <code class="varname">password_column</code> which
+	    (when containing HA1 strings) should always contains HA1 strings
+	    calculated without domain in username.
+	</p>
+            <p>
+	    This ensures that the authentication will always work when using
+	    pre-calculated HA1 string, not depending on the presence of the
+	    domain in username.
+	</p>
+            <p>
+	    Default value of this parameter is 0.
+	</p>
+            <div class="example">
+              <a id="idp181056"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="varname">calculate_ha1</code>usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "calculate_ha1", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. plain_password_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="plain_password_column"></a>3.7. <code class="varname">plain_password_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter holds the name of column holding plain text password.
+		This column is used when calculate_ha1 is set.
+	</p>
+            <p>
+	    Default value is "password".
+	</p>
+            <div class="example">
+              <a id="idp183304"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="varname">plain_password_column</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "plain_password_column", "password")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. password_column_2 (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="password_column_2"></a>3.8. <code class="varname">password_column_2</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    As described in the previous section this parameter contains name
+	    of column holding pre-calculated HA1 string that were calculated
+	    including the domain in the username. This parameter is used only
+	    when <code class="varname">calculate_ha1</code> is set to 0 and user agent
+	    send a credentials containing the domain in the username.
+	</p>
+            <p>
+	    Default value of the parameter is ha1b.
+	</p>
+            <div class="example">
+              <a id="idp186096"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="varname">password_column_2</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "password_column_2", "ha1_2")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. use_rpid (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="use_rpid"></a>3.9. <code class="varname">use_rpid</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    This parameter specifies whether the server should fetch a value
+	    for the Remote-Party-ID header field from the database.
+	</p>
+            <p>
+	    If the parameter is set to 1 the server expects to find a value for
+	    this header in the column specified by the
+	    <code class="varname">rpid_column</code> parameter.
+	</p>
+            <p>
+	    Default value of this parameter is 0.
+	</p>
+            <div class="example">
+              <a id="idm60376"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="varname">use_rpid</code>usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("auth_db", "use_rpid", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_db.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. www_authorize(realm, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="www_authorize"></a>4.1. <code class="function">www_authorize(realm, table)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The function verifies credentials according to RFC2617. If the
+	    credentials are verified successfully then the function will
+	    succeed and mark the credentials as authorized (marked credentials
+	    can be later used by some other functions). If the function was
+	    unable to verify the credentials for some reason then it will fail
+	    and the script should call <code class="function">www_challenge</code> which
+	    will challenge the user again.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p title="realm"><strong>realm. </strong>
+			Realm is a opaque string that the user agent should
+			present to the user so he can decide what username and
+			password to use. Usually this is domain of the host the
+			server is running on. If an empty string "" is used
+			then the server will generate it from the request. In
+			case of REGISTER requests To header field domain will
+			be used (because this header field represents a user
+			being registered), for all other messages From header
+			field domain will be used.
+		    </p>
+                </li>
+                <li class="listitem">
+                  <p title="table"><strong>table. </strong>
+			Table to be used to lookup usernames and passwords
+			(usually subscribers table).
+		    </p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1427872"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">www_authorize</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (www_authorize("iptel.org", "subscriber")) {
+    www_challenge("iptel.org", "1");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. proxy_authorize(realm, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="proxy_authorize"></a>4.2. <code class="function">proxy_authorize(realm, table)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The function verifies credentials according to RFC2617. If the
+	    credentials are verified successfully then the function will
+	    succeed and mark the credentials as authorized (marked credentials
+	    can be later used by some other functions). If the function was
+	    unable to verify the credentials for some reason then it will fail
+	    and the script should call <code class="function">proxy_challenge</code>
+	    which will challenge the user again.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>realm</em></span> - Realm is a opaque string that
+		    the user agent should present to the user so he can decide
+		    what username and password to use. Usually this is domain
+		    of the host the server is running on.
+		</p>
+                  <p>
+		    If an empty string "" is used then the server will generate
+		    it from the request. From header field domain will be used
+		    as realm.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>table</em></span> - Table to be used to lookup
+		    usernames and passwords (usually subscribers table).
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp747296"></a>
+              <p class="title">
+                <strong>Example 1.11. proxy_authorize usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!proxy_authorize("", "subscriber)) {
+    proxy_challenge("", "1");  # Realm will be autogenerated
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

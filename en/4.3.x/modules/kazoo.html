@@ -1,0 +1,1837 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>KAZOO Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4472" title="KAZOO Module" />
+    <link rel="next" href="#idp1508832" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="KAZOO Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4472"></a>KAZOO Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author">
+                  <span class="firstname">2600hz Inc.</span>
+                </h3>
+                <code class="email">&lt;<a class="email" href="mailto:engineering@2600hz.com">engineering@2600hz.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Luis</span> <span class="surname">Azedo</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:luis@2600hz.com">luis@2600hz.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010, 2014 2600hz</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1508832">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2521672">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1449040">2. How it works</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2707000">2.1. event routes</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2375856">2.2. aknowledge messages</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm15648">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm15272">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13576">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm10656">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10288">4.1. amqp related</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm9912">4.1.1. <code class="varname">node_hostname</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm7456">4.1.2. <code class="varname">amqp_consumer_processes</code>(int)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm5056">4.1.3. <code class="varname">amqp_consumer_event_key</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm2384">4.1.4. <code class="varname">amqp_consumer_event_subkey</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp70168">4.1.5. <code class="varname">amqp_max_channels</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp72584">4.1.6. <code class="varname">amqp_connection</code>(str)</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp74776">4.2. execution control</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp76896">4.2.1. <code class="varname">amqp_consumer_loop_count</code>(int)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp79192">4.2.2. <code class="varname">amqp_internal_loop_count</code>(int)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp81584">4.2.3. <code class="varname">amqp_consumer_ack_loop_count</code>(int)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp83880">4.2.4. <code class="varname">consume_messages_on_reconnect</code>(int)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp86360">4.2.5. <code class="varname">single_consumer_on_reconnect</code>(int)</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp20584">4.3. timers</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp21280">4.3.1. <code class="varname">amqp_consumer_ack_timeout</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp23760">4.3.2. <code class="varname">amqp_interprocess_timeout</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp26264">4.3.3. <code class="varname">amqp_waitframe_tiemout</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp28728">4.3.4. <code class="varname">amqp_query_timeout</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp31232">4.3.5. <code class="varname">amqp_query_timeout_avp</code>(str)</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp33920">4.4. presence related</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp34296">4.4.1. <code class="varname">db_url</code>(str)</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp37272">4.4.2. <code class="varname">presentity_table</code>(str)</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp40112">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp40480">5.1. amqp related</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp40856">5.1.1. 
+        <code class="function">kazoo_publish(exchange, routing_key, json_payload)</code>
+        </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1887256">5.1.2. 
+        <code class="function">kazoo_query(exchange, routing_key, json_payload [, target_var])</code>
+        </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1890568">5.1.3. 
+        <code class="function">kazoo_subscribe(exchange, exchange_type, queue, routing_key)</code>
+        </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1893384">5.1.4. 
+        <code class="function">kazoo_subscribe(json_description)</code>
+        </a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1901688">5.2. presence related</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1902064">5.2.1. 
+        <code class="function">kazoo_pua_publish(json_payload)</code>
+        </a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1904944">5.3. other</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1905312">5.3.1. 
+        <code class="function">kazoo_encode(to_encode, target_var)</code>
+        </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1907952">5.3.2. 
+        <code class="function">kazoo_json(json_payload, field, target_var)</code>
+        </a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1910832">6. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1913040">7. Transformations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2506184">define the event route</a></dt>
+          <dt>1.2. <a href="#idm8592">Set <code class="varname">node_hostname</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm6208">Set <code class="varname">amqp_consumer_processes</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm3560">Set <code class="varname">amqp_consumer_event_key</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp68992">Set <code class="varname">amqp_consumer_event_subkey</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp71408">Set <code class="varname">amqp_max_channels</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp73408">Set <code class="varname">amqp_connection</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp78032">Set <code class="varname">amqp_consumer_loop_count</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp80424">Set <code class="varname">amqp_internal_loop_count</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp82760">Set <code class="varname">amqp_consumer_ack_loop_count</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp85240">Set <code class="varname">consume_messages_on_reconnect</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp87784">Set <code class="varname">single_consumer_on_reconnect</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp22536">Set <code class="varname">amqp_consumer_ack_timeout</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp25040">Set <code class="varname">amqp_interprocess_timeout</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp27512">Set <code class="varname">amqp_waitframe_timeout</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp29992">Set <code class="varname">amqp_query_timeout</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp32552">&gt;Set <code class="varname">amqp_query_timeout_avp</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp36072">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp38752">Set <code class="varname">presentity_table</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp42224"><code class="function">kazoo_publish</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1888800"><code class="function">kazoo_query</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1891992"><code class="function">kazoo_subscribe</code> usage</a></dt>
+          <dt>1.23. <a href="#idp1900048"><code class="function">kazoo_subscribe</code> usage</a></dt>
+          <dt>1.24. <a href="#idp1903408"><code class="function">kazoo_pua_publish</code> usage</a></dt>
+          <dt>1.25. <a href="#idp1906656"><code class="function">kazoo_encode</code> usage</a></dt>
+          <dt>1.26. <a href="#idp1909320"><code class="function">kazoo_json</code> usage</a></dt>
+          <dt>1.27. <a href="#idp1914304"><code class="function">kz.json</code> usage</a></dt>
+          <dt>1.28. <a href="#idp1916216"><code class="function">kz.encode</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1508832"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2521672">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1449040">2. How it works</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2707000">2.1. event routes</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2375856">2.2. aknowledge messages</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm15648">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm15272">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13576">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm10656">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10288">4.1. amqp related</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm9912">4.1.1. <code class="varname">node_hostname</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm7456">4.1.2. <code class="varname">amqp_consumer_processes</code>(int)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm5056">4.1.3. <code class="varname">amqp_consumer_event_key</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm2384">4.1.4. <code class="varname">amqp_consumer_event_subkey</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp70168">4.1.5. <code class="varname">amqp_max_channels</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp72584">4.1.6. <code class="varname">amqp_connection</code>(str)</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp74776">4.2. execution control</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp76896">4.2.1. <code class="varname">amqp_consumer_loop_count</code>(int)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp79192">4.2.2. <code class="varname">amqp_internal_loop_count</code>(int)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp81584">4.2.3. <code class="varname">amqp_consumer_ack_loop_count</code>(int)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp83880">4.2.4. <code class="varname">consume_messages_on_reconnect</code>(int)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp86360">4.2.5. <code class="varname">single_consumer_on_reconnect</code>(int)</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp20584">4.3. timers</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp21280">4.3.1. <code class="varname">amqp_consumer_ack_timeout</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp23760">4.3.2. <code class="varname">amqp_interprocess_timeout</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp26264">4.3.3. <code class="varname">amqp_waitframe_tiemout</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp28728">4.3.4. <code class="varname">amqp_query_timeout</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp31232">4.3.5. <code class="varname">amqp_query_timeout_avp</code>(str)</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp33920">4.4. presence related</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp34296">4.4.1. <code class="varname">db_url</code>(str)</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp37272">4.4.2. <code class="varname">presentity_table</code>(str)</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp40112">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp40480">5.1. amqp related</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp40856">5.1.1. 
+        <code class="function">kazoo_publish(exchange, routing_key, json_payload)</code>
+        </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1887256">5.1.2. 
+        <code class="function">kazoo_query(exchange, routing_key, json_payload [, target_var])</code>
+        </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1890568">5.1.3. 
+        <code class="function">kazoo_subscribe(exchange, exchange_type, queue, routing_key)</code>
+        </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1893384">5.1.4. 
+        <code class="function">kazoo_subscribe(json_description)</code>
+        </a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1901688">5.2. presence related</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1902064">5.2.1. 
+        <code class="function">kazoo_pua_publish(json_payload)</code>
+        </a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1904944">5.3. other</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1905312">5.3.1. 
+        <code class="function">kazoo_encode(to_encode, target_var)</code>
+        </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1907952">5.3.2. 
+        <code class="function">kazoo_json(json_payload, field, target_var)</code>
+        </a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1910832">6. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1913040">7. Transformations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2521672"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> The Kazoo is a general purpose AMQP connector (tested with rabbitmq-server). It exposes publish/consume capabilities into Kamailio.
+    </p>
+          <p>
+From a high-level, the purpose of the module might be for things like:
+</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+Integrate to an AMQP application to make real-time routing decisions (instead of using, say, a SQL database)
+</p>
+              </li>
+              <li class="listitem">
+                <p>
+Provide a real-time integration into your program, instead of your database, so you can overlay additional logic in your preferred language while also utilizing a message bus
+</p>
+              </li>
+              <li class="listitem">
+                <p>
+Utilize messaging to have a distributed messaging layer, such that machines processing requests/responses/events can go up/down or share the workload and your Kamailio node will still be happy
+</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+</p>
+          <p>
+supported operations are:
+</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+publish json payloads to rabbitmq
+</p>
+              </li>
+              <li class="listitem">
+                <p>
+publish json payloads to rabbitmq and wait for correlated response message
+</p>
+              </li>
+              <li class="listitem">
+                <p>
+subscribe to an exchange with a routing key
+</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+</p>
+          <p>
+The Kazoo module also has support to publish updates to presence module thru the kazoo_pua_publish function
+</p>
+        </div>
+        <div class="section" title="2. How it works">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1449040"></a>2. How it works</h2>
+              </div>
+            </div>
+          </div>
+          <p>  
+The module works with a main forked process that does the communication with rabbitmq for issuing publishes, waiting for replies and consuming messages. When it consumes a message it defers the process to a worker process so that it doesn't block this main process.
+</p>
+          <div class="section" title="2.1. event routes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2707000"></a>2.1. event routes</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+The worker process issues an event-route where we can act on the received payload. The name of the event-route is composed by values extracted from the payload.
+    </p>
+            <p>
+    Kazoo module will try to execute the event route from most significant to less significant. 
+    define the event route like event_route[kazoo:consumer-event[-payload_key_value[-payload_subkey_value]]]
+    </p>
+            <p>
+    we can set the key/subkey pair on a subscription base. check the payload on subscribe.
+    </p>
+            <div class="example">
+              <a id="idp2506184"></a>
+              <p class="title">
+                <strong>Example 1.1. define the event route</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_event_key", "Event-Category")
+modparam("kazoo", "amqp_consumer_event_subkey", "Event-Name")
+...
+
+event_route[kazoo:consumer-event-presence-update]
+{
+# presence is the value extracted from Event-Category field in json payload 
+# update is the value extracted from Event-Name field in json payload 
+xlog("L_INFO", "received $(kzE{kz.json,Event-Package}) update for $(kzE{kz.json,From})");
+...
+}
+
+event_route[kazoo:consumer-event-presence]
+{
+# presence is the value extracted from Event-Category field in json payload 
+xlog("L_INFO", "received $(kzE{kz.json,Event-Package}) update for $(kzE{kz.json,From})");
+...
+}
+
+event_route[kazoo:consumer-event-event-category-event-name]
+{
+# event-category is the name of the amqp_consumer_event_key parameter
+# event-name is the name of the amqp_consumer_event_subkey parameter
+# this event route is executed if we can't find the previous 
+...
+}
+
+event_route[kazoo:consumer-event-event-category]
+{
+# event-category is the name of the amqp_consumer_event_key parameter
+# this event route is executed if we can't find the previous 
+...
+}
+
+event_route[kazoo:consumer-event]
+{
+# this event route is executed if we can't find the previous 
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. aknowledge messages">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2375856"></a>2.2. aknowledge messages</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Consumed messages have the option of being acknowledge in two ways:
+</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+immediately when received 
+</p>
+                </li>
+                <li class="listitem">
+                  <p>
+after processing by the worker 
+</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+
+    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm15648"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm15272"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The following modules must be loaded before this module:
+            </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                <span class="emphasis"><em>none</em></span>.
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13576"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                <span class="emphasis"><em>librabbitmq</em></span>.
+            </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                <span class="emphasis"><em>libjson</em></span>.
+            </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                <span class="emphasis"><em>libuuid</em></span>.
+            </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm10656"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. amqp related">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10288"></a>4.1. amqp related</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="4.1.1. node_hostname(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm9912"></a>4.1.1. <code class="varname">node_hostname</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The name of this host to register in rabbitmq.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is NULL. you must set this parameter value for the module to work</em></span>
+        </p>
+              <div class="example">
+                <a id="idm8592"></a>
+                <p class="title">
+                  <strong>Example 1.2. Set <code class="varname">node_hostname</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "node_hostname", "sipproxy.mydomain.com")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.1.2. amqp_consumer_processes(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm7456"></a>4.1.2. <code class="varname">amqp_consumer_processes</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The number of worker processes to handle messages consumption.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 4.</em></span>
+        </p>
+              <div class="example">
+                <a id="idm6208"></a>
+                <p class="title">
+                  <strong>Example 1.3. Set <code class="varname">amqp_consumer_processes</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_processes", 10)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.1.3. amqp_consumer_event_key(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm5056"></a>4.1.3. <code class="varname">amqp_consumer_event_key</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The default name of the field in json payload to compose the event name 1st part
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">Event-Category</span>”</span>.</em></span>
+        </p>
+              <div class="example">
+                <a id="idm3560"></a>
+                <p class="title">
+                  <strong>Example 1.4. Set <code class="varname">amqp_consumer_event_key</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_event_key", "My-JSON-Field-Name")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.1.4. amqp_consumer_event_subkey(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm2384"></a>4.1.4. <code class="varname">amqp_consumer_event_subkey</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The default name of the field in json payload to compose the event name 2nd part
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">Event-Name</span>”</span>.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp68992"></a>
+                <p class="title">
+                  <strong>Example 1.5. Set <code class="varname">amqp_consumer_event_subkey</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_event_subkey", "My-JSON-SubField-Name")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.1.5. amqp_max_channels(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp70168"></a>4.1.5. <code class="varname">amqp_max_channels</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The number of pre allocated channels for the connection.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 50.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp71408"></a>
+                <p class="title">
+                  <strong>Example 1.6. Set <code class="varname">amqp_max_channels</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_max_channels", 100)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.1.6. amqp_connection(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp72584"></a>4.1.6. <code class="varname">amqp_connection</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The connection url to rabbitmq. can be set multiple times for failover.
+        </p>
+              <div class="example">
+                <a id="idp73408"></a>
+                <p class="title">
+                  <strong>Example 1.7. Set <code class="varname">amqp_connection</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_connection", "amqp://guest:guest@localhost:5672")
+modparam("kazoo", "amqp_connection", "kazoo://guest:guest@otherhost:5672")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="4.2. execution control">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp74776"></a>4.2. execution control</h3>
+                </div>
+              </div>
+            </div>
+            <p>execution control of main loop can be controlled by changing the parameter values in this section.</p>
+            <p>The main loop has 3 sub-loops were it listen for actions to execute with a timeout. These group of parameters allow to set the maximum number of times the sub-loop is executed if it doesn't timeout.</p>
+            <p>On busy systems, we may have a condition where a sub-loop never times out because it always has data to process. The purpose of these parameters is to set a maximum number of times it executes before it handles control to the next sub-loop.</p>
+            <pre class="programlisting">...
+while(true) // main  loop
+ while(ACK or timeout)  // acknowledge from worker process
+ while(SEND or timeout) // anything to send ?
+ while(CONSUME or timeout) // any data on consumed exchanges ?
+...</pre>
+            <div class="section" title="4.2.1. amqp_consumer_loop_count(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp76896"></a>4.2.1. <code class="varname">amqp_consumer_loop_count</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The consumer loop count.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 10.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp78032"></a>
+                <p class="title">
+                  <strong>Example 1.8. Set <code class="varname">amqp_consumer_loop_count</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_loop_count", 3)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.2.2. amqp_internal_loop_count(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp79192"></a>4.2.2. <code class="varname">amqp_internal_loop_count</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The internal listen for commands loop count.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 5.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp80424"></a>
+                <p class="title">
+                  <strong>Example 1.9. Set <code class="varname">amqp_internal_loop_count</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_internal_loop_count", 1)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.2.3. amqp_consumer_ack_loop_count(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp81584"></a>4.2.3. <code class="varname">amqp_consumer_ack_loop_count</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The work ack loop count.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 20.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp82760"></a>
+                <p class="title">
+                  <strong>Example 1.10. Set <code class="varname">amqp_consumer_ack_loop_count</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_ack_loop_count", 5)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.2.4. consume_messages_on_reconnect(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp83880"></a>4.2.4. <code class="varname">consume_messages_on_reconnect</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        This parameter indicates if the module ignores the loop counters on reconnect and consumes all the pending messages ready to be consumed.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 1.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp85240"></a>
+                <p class="title">
+                  <strong>Example 1.11. Set <code class="varname">consume_messages_on_reconnect</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "consume_messages_on_reconnect", 0)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.2.5. single_consumer_on_reconnect(int)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp86360"></a>4.2.5. <code class="varname">single_consumer_on_reconnect</code>(int)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        When the main loop receives a message from rabbitmq it will defer the execution to a worker in a round-robin manner. this parameter allows to use the same worker when kazoo reconnects to rabbitmq.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 1.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp87784"></a>
+                <p class="title">
+                  <strong>Example 1.12. Set <code class="varname">single_consumer_on_reconnect</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "single_consumer_on_reconnect", 0)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="4.3. timers">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp20584"></a>4.3. timers</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+    each functional parameter related to timers come with 2 reflected parameters. name_sec and name_micro 
+    </p>
+            <div class="section" title="4.3.1. amqp_consumer_ack_timeout(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp21280"></a>4.3.1. <code class="varname">amqp_consumer_ack_timeout</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        Timeout when checking for aknowledge from workers.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 100000 micro.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp22536"></a>
+                <p class="title">
+                  <strong>Example 1.13. Set <code class="varname">amqp_consumer_ack_timeout</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_consumer_ack_timeout_sec", 1)
+modparam("kazoo", "amqp_consumer_ack_timeout_micro", 200000)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.3.2. amqp_interprocess_timeout(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp23760"></a>4.3.2. <code class="varname">amqp_interprocess_timeout</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        Timeout when checking for commands (publish/query) for sending to rabbitmq.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 100000 micro.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp25040"></a>
+                <p class="title">
+                  <strong>Example 1.14. Set <code class="varname">amqp_interprocess_timeout</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_interprocess_timeout_sec", 1)
+modparam("kazoo", "amqp_interprocess_timeout_micro", 200000)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.3.3. amqp_waitframe_tiemout(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp26264"></a>4.3.3. <code class="varname">amqp_waitframe_tiemout</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        Timeout when checking for messages from rabbitmq.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 100000 micro.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp27512"></a>
+                <p class="title">
+                  <strong>Example 1.15. Set <code class="varname">amqp_waitframe_timeout</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_waitframe_timeout_sec", 1)
+modparam("kazoo", "amqp_waitframe_timeout_micro", 200000)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.3.4. amqp_query_timeout(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp28728"></a>4.3.4. <code class="varname">amqp_query_timeout</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        Timeout when checking for reply messages from rabbitmq for kazoo_query commands.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is 2 sec.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp29992"></a>
+                <p class="title">
+                  <strong>Example 1.16. Set <code class="varname">amqp_query_timeout</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_query_timeout_sec", 1)
+modparam("kazoo", "amqp_query_timeout_micro", 200000)
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.3.5. amqp_query_timeout_avp(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp31232"></a>4.3.5. <code class="varname">amqp_query_timeout_avp</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        avp holding the value in seconds for Timeout when checking for reply messages from rabbitmq for kazoo_query commands.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is NULL (no value).</em></span>
+        </p>
+              <div class="example">
+                <a id="idp32552"></a>
+                <p class="title">
+                  <strong>Example 1.17. &gt;Set <code class="varname">amqp_query_timeout_avp</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "amqp_query_timeout_avp", "$var(kz_timeout)")
+
+route[SOME_ROUTE]
+{
+    $var(kz_timeout) = 12;
+    kazoo_query(exchange, routingkey, payload);
+}    
+
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="4.4. presence related">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp33920"></a>4.4. presence related</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="4.4.1. db_url(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp34296"></a>4.4.1. <code class="varname">db_url</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The database for the presentity table.
+        </p>
+              <p>If set, the kazoo_ppua_publish function will update the presentity status in the database.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp36072"></a>
+                <p class="title">
+                  <strong>Example 1.18. Set <code class="varname">db_url</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "db_url", "mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="4.4.2. presentity_table(str)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp37272"></a>4.4.2. <code class="varname">presentity_table</code>(str)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The name of the presentity table in the database.
+        </p>
+              <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">presentity</span>”</span>.</em></span>
+        </p>
+              <div class="example">
+                <a id="idp38752"></a>
+                <p class="title">
+                  <strong>Example 1.19. Set <code class="varname">presentity_table</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("kazoo", "presentity_table", "my_presentity_table")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp40112"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. amqp related">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp40480"></a>5.1. amqp related</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="5.1.1.  kazoo_publish(exchange, routing_key, json_payload)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp40856"></a>5.1.1. 
+        <code class="function">kazoo_publish(exchange, routing_key, json_payload)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function publishes a json payload to rabbitmq. The routing_key parameter should be encoded.
+        </p>
+              <p>
+        This function can be used from ANY ROUTE.
+        </p>
+              <div class="example">
+                <a id="idp42224"></a>
+                <p class="title">
+                  <strong>Example 1.20. <code class="function">kazoo_publish</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+$var(amqp_payload_request) = "{'Event-Category' : 'directory', 'Event-Name' : 'reg_success', 'Contact' : '" + $var(fs_contact) + "', 'Call-ID' : '" + $ci + "', 'Realm' : '" + $fd +"', 'Username' : '" + $fU + "', 'From-User' : '" + $fU + "', 'From-Host' : '" + $fd + "', 'To-User' : '" + $tU +"', 'To-Host' : '" + $td + "', 'User-Agent' : '" + $ua +"' ," + $var(register_contants)+ " }";
+$var(amqp_routing_key) = "registration.success." + $(fd{kz.encode}) + "." + $fU;
+kazoo_publish("callmgr", $var(amqp_routing_key), $var(amqp_payload_request)); 
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="5.1.2.  kazoo_query(exchange, routing_key, json_payload [, target_var])">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1887256"></a>5.1.2. 
+        <code class="function">kazoo_query(exchange, routing_key, json_payload [, target_var])</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function publishes a json payload to rabbitmq, waits for a correlated messageand puts the result in target_var. The routing_key parameter should be encoded.
+        target_var is optional as the function also puts the result in pseudo-variable $kzR.
+        </p>
+              <p>
+        This function can be used from ANY ROUTE.
+        </p>
+              <div class="example">
+                <a id="idp1888800"></a>
+                <p class="title">
+                  <strong>Example 1.21. <code class="function">kazoo_query</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+$var(amqp_payload_request) = "{'Event-Category' : 'call_event' , 'Event-Name' : 'query_user_channels_req', 'Realm' : '" + $fd + "', 'Username' : '" + $fU + "', 'Active-Only' : false }";
+kazoo_encode("$ci", "$var(callid_encoded)");
+$var(amqp_routing_key) = "call.status_req.$var(callid_encoded)";
+if(kazoo_query("callevt", $var(amqp_routing_key), $var(amqp_payload_request), "$var(amqp_result)")) {
+   kazoo_json("$var(amqp_result)", "Channels[0].switch_url", "$du");
+   if($du != $null) {
+       xlog("L_INFO", "$ci|log|user channels found redirecting call to $du");
+       return;
+   }
+}
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="5.1.3.  kazoo_subscribe(exchange, exchange_type, queue, routing_key)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1890568"></a>5.1.3. 
+        <code class="function">kazoo_subscribe(exchange, exchange_type, queue, routing_key)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function subscribes to exchange/type on queue with routing_key. The routing_key parameter should be encoded.
+        </p>
+              <p>
+        This function  must be called from event_route[kazoo:mod-init].
+        </p>
+              <div class="example">
+                <a id="idp1891992"></a>
+                <p class="title">
+                  <strong>Example 1.22. <code class="function">kazoo_subscribe</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+event_route[kazoo:mod-init]
+{
+   kazoo_subscribe("dialoginfo", "direct", "BLF-QUEUE-MY_HOSTNAME", "BLF-MY_HOSTNAME");
+}
+
+event_route[kazoo:consumer-event]
+{
+    xlog("L_INFO","Received json payload : $kzE");
+}
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="5.1.4.  kazoo_subscribe(json_description)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1893384"></a>5.1.4. 
+        <code class="function">kazoo_subscribe(json_description)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function takes additional parameters to the subscribe function.
+        </p>
+              <p>        
+        </p>
+              <div class="itemizedlist" title="json payload fields description">
+                <p class="title">
+                  <strong>json payload fields description</strong>
+                </p>
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p>exchange : str, required</p>
+                  </li>
+                  <li class="listitem">
+                    <p>type : str, required</p>
+                  </li>
+                  <li class="listitem">
+                    <p>queue : str, required</p>
+                  </li>
+                  <li class="listitem">
+                    <p>routing : str, required</p>
+                  </li>
+                  <li class="listitem">
+                    <p>auto_delete : int, default 1</p>
+                  </li>
+                  <li class="listitem">
+                    <p>durable : int, default 0</p>
+                  </li>
+                  <li class="listitem">
+                    <p>no_ack : int, default 1</p>
+                  </li>
+                  <li class="listitem">
+                    <p>wait_for_consumer_ack : int, default 0</p>
+                  </li>
+                  <li class="listitem">
+                    <p>event_key : str, no default</p>
+                  </li>
+                  <li class="listitem">
+                    <p>event_subkey : str, no default</p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+        </p>
+              <p>
+        This function  must be called from event_route[kazoo:mod-init].
+        </p>
+              <div class="example">
+                <a id="idp1900048"></a>
+                <p class="title">
+                  <strong>Example 1.23. <code class="function">kazoo_subscribe</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+event_route[kazoo:mod-init]
+{
+    $var(payload) = "{ 'exchange' : 'dialoginfo' , 'type' : 'direct', 'queue' : 'BLF-QUEUE-MY_HOSTNAME', 'routing' : 'BLF-MY_HOSTNAME', 'auto_delete' : 0, 'durable' : 1, 'no_ack' : 0, 'wait_for_consumer_ack' : 1 }";
+    kazoo_subscribe("$var(payload)");
+}
+
+event_route[kazoo:consumer-event]
+{
+    xlog("L_INFO","Received json payload : $kzE");
+}
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="5.2. presence related">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1901688"></a>5.2. presence related</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="5.2.1.  kazoo_pua_publish(json_payload)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1902064"></a>5.2.1. 
+        <code class="function">kazoo_pua_publish(json_payload)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function build presentity state from json_payload and updates presentity table.
+        </p>
+              <p>
+        This function can be used from ANY ROUTE.
+        </p>
+              <div class="example">
+                <a id="idp1903408"></a>
+                <p class="title">
+                  <strong>Example 1.24. <code class="function">kazoo_pua_publish</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+event_route[kazoo:consumer-event-presence-update]
+{
+    xlog("L_INFO", "received $(kzE{kz.json,Event-Package}) update for $(kzE{kz.json,From})");
+    kazoo_pua_publish($kzE);
+    pres_refresh_watchers("$(kzE{kz.json,From})", "$(kzE{kz.json,Event-Package})", 1);
+}    
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="5.3. other">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1904944"></a>5.3. other</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="5.3.1.  kazoo_encode(to_encode, target_var)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1905312"></a>5.3.1. 
+        <code class="function">kazoo_encode(to_encode, target_var)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function encodes the 1st parameter for amqp and puts the result in the 2nd parameter.
+        </p>
+              <p>
+        This function can be used from ANY ROUTE.
+        </p>
+              <div class="example">
+                <a id="idp1906656"></a>
+                <p class="title">
+                  <strong>Example 1.25. <code class="function">kazoo_encode</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+kazoo_encode("$ci", "$var(callid_encoded)");
+$var(amqp_routing_key) = "call.status_req.$var(callid_encoded)";
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="5.3.2.  kazoo_json(json_payload, field, target_var)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1907952"></a>5.3.2. 
+        <code class="function">kazoo_json(json_payload, field, target_var)</code>
+        </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+        The function extracts the value from a json payload and puts the result in the 3rd parameter.
+        It can use nested values for the query part.
+        </p>
+              <p>
+        This function can be used from ANY ROUTE.
+        </p>
+              <div class="example">
+                <a id="idp1909320"></a>
+                <p class="title">
+                  <strong>Example 1.26. <code class="function">kazoo_json</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+kazoo_json("$var(amqp_result)", "Channels[0].switch_url", "$du");
+if($du != $null) {
+  xlog("L_INFO", "$ci|log|user channels found redirecting call to $du");
+  return;
+}
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+        </div>
+        <div class="section" title="6. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1910832"></a>6. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                <span class="emphasis"><em>$kzR</em></span>
+                Contains the payload result of kazoo_query execution.
+            </p>
+              </li>
+              <li class="listitem">
+                <p>
+                <span class="emphasis"><em>$kzE</em></span>
+                Contains the payload of a consumed message
+            </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="7. Transformations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1913040"></a>7. Transformations</h2>
+              </div>
+            </div>
+          </div>
+          <p>The prefix for kazoo transformations is kz.</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                <span class="emphasis"><em>json</em></span>
+            </p>
+                <div class="example">
+                  <a id="idp1914304"></a>
+                  <p class="title">
+                    <strong>Example 1.27. <code class="function">kz.json</code> usage</strong>
+                  </p>
+                  <div class="example-contents">
+                    <pre class="programlisting">...
+#kazoo_json("$var(amqp_result)", "Channels[0].switch_url", "$du");
+$du = $kzR{kz.json,Channels[0].switch_url};
+if($du != $null) {
+  xlog("L_INFO", "$ci|log|user channels found redirecting call to $du");
+  return;
+}
+...</pre>
+                  </div>
+                </div>
+                <br class="example-break" />
+              </li>
+              <li class="listitem">
+                <p>
+                <span class="emphasis"><em>encode</em></span>
+            </p>
+                <div class="example">
+                  <a id="idp1916216"></a>
+                  <p class="title">
+                    <strong>Example 1.28. <code class="function">kz.encode</code> usage</strong>
+                  </p>
+                  <div class="example-contents">
+                    <pre class="programlisting">...
+#kazoo_encode("$ci", "$var(callid_encoded)");
+#$var(amqp_routing_key) = "call.status_req.$var(callid_encoded)";
+$var(amqp_routing_key) = "call.status_req." + $(ci{kz.encode})
+...</pre>
+                  </div>
+                </div>
+                <br class="example-break" />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

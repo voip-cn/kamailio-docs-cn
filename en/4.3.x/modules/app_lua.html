@@ -1,0 +1,862 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>app_lua Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp208" title="app_lua Module" />
+    <link rel="next" href="#idp2017560" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="app_lua Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp208"></a>app_lua Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 Daniel-Constantin Mierla (asipto.com)</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2017560">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2595600">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1623112">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1211632">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2701056">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2590640">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.p.load">3.1. <code class="varname">load</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.p.register">3.2. <code class="varname">register</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.p.reload">3.3. <code class="varname">reload</code> (boolean)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp96912">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.f.lua_dotfile">4.1. 
+		<code class="function">lua_dofile(path)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.f.lua_dostring">4.2. 
+		<code class="function">lua_dostring(script)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.f.lua_run">4.3. 
+		<code class="function">lua_run(function, params)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.f.lua_runstring">4.4. 
+		<code class="function">lua_runstring(script)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp107480">5. Exported RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.r.list">5.1. 
+            <code class="function">app_lua.list</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_lua.r.reload">5.2. 
+            <code class="function">app_lua.reload</code>
+            </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp113760">6. Example of usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2118440">Set <code class="varname">load</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp21128">Set <code class="varname">register</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp23856">Set <code class="varname">reload</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp98456"><code class="function">lua_dofile</code> usage</a></dt>
+          <dt>1.5. <a href="#idp100840"><code class="function">lua_dostring</code> usage</a></dt>
+          <dt>1.6. <a href="#idp103552"><code class="function">lua_run</code> usage</a></dt>
+          <dt>1.7. <a href="#idp106080"><code class="function">lua_runstring</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2017560"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2595600">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1623112">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1211632">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2701056">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2590640">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.p.load">3.1. <code class="varname">load</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.p.register">3.2. <code class="varname">register</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.p.reload">3.3. <code class="varname">reload</code> (boolean)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp96912">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.f.lua_dotfile">4.1. 
+		<code class="function">lua_dofile(path)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.f.lua_dostring">4.2. 
+		<code class="function">lua_dostring(script)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.f.lua_run">4.3. 
+		<code class="function">lua_run(function, params)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.f.lua_runstring">4.4. 
+		<code class="function">lua_runstring(script)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp107480">5. Exported RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.r.list">5.1. 
+            <code class="function">app_lua.list</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_lua.r.reload">5.2. 
+            <code class="function">app_lua.reload</code>
+            </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp113760">6. Example of usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2595600"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module allows executing Lua scripts from config file. It exports
+		a set of functions to Lua in order to access the current processed
+		SIP message. These functions are within Lua module 'sr'.
+	</p>
+          <p>
+		Lua (http://www.lua.org) is a fast and easy to embed scripting
+		language. Exported API from SIP router to Lua is documented in the
+		dokuwiki.
+	</p>
+          <p>
+		The module has two Lua contexts:
+    	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>first</em></span> is used for functions lua_dofile()
+			and lua_dostring().
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    <span class="emphasis"><em>second</em></span> is used for function lua_run()
+			and parameter 'load'. Therefore lua_run() cannot execute functions
+			from scripts loaded via lua_dofile() in config. This is kind of
+			caching mode, avoiding reading file every time, but you must be sure
+			you do not have someting that is executed by default and requires
+			access to SIP message.
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1623112"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1211632"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2701056"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>liblua5.1-dev</em></span> - Lua devel library.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2590640"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. load (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.p.load"></a>3.1. <code class="varname">load</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the path to the Lua script to be loaded at startup. Then you
+			can use lua_run(function, params) to execute a function from the
+			script at runtime.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">null</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp2118440"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">load</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_lua", "load", "/usr/local/etc/kamailio/lua/myscript.lua")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. register (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.p.register"></a>3.2. <code class="varname">register</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Use this function to register optional SIP Router submodules
+			to Lua. Available submodules are:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>alias_db</em></span> - register functions from
+				alias_db module under 'sr.alias_db'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>auth</em></span> - register functions from auth module
+				under 'sr.auth'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>auth_db</em></span> - register functions from auth_db
+				module under 'sr.auth_db'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>dispatcher</em></span> - register functions from
+				dispatcher module under 'sr.dispatcher'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>maxfwd</em></span> - register functions from maxfwd
+				module under 'sr.maxfwd'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>msilo</em></span> - register functions from
+				msilo module under 'sr.msilo'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span> - register functions from
+				presence module under 'sr.presence'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence_xml</em></span> - register functions from
+				presence_xml module under 'sr.presence_xml'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pua_usrloc</em></span> - register functions from
+				pua_usrloc module under 'sr.pua_usrloc'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>registrar</em></span> - register functions from
+				registrar module under 'sr.registrar'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>rls</em></span> - register functions from
+				rls module under 'sr.rls'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>rr</em></span> - register functions from rr module
+				under 'sr.rr'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sanity</em></span> - register functions from sanity
+				module under 'sr.sanity'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sdpops</em></span> - register functions from
+				sdpops module under 'sr.sdpops'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>siputils</em></span> - register functions from
+				siputils module under 'sr.siputils'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span> - register functions from sl module
+				under 'sr.sl'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sqlops</em></span> - register functions from sqlops
+				module under 'sr.sqlops'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>textops</em></span> - register functions from
+				textops module under 'sr.textops'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span> - register functions from tm module
+				under 'sr.tm'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xhttp</em></span> - register functions from xhttp
+				module under 'sr.xhttp'.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			Note that 'sr', 'sr.hdr' and 'sr.pv' modules are always registered
+			to Lua.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">null</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp21128"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">register</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_lua", "register", "sl")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. reload (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.p.reload"></a>3.3. <code class="varname">reload</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If reload is 1 enables the ability to reload the
+			scripts using the RPC app_lua.reload command.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0 (off)</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp23856"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">reload</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_lua", "reload", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp96912"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  lua_dofile(path)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.f.lua_dotfile"></a>4.1. 
+		<code class="function">lua_dofile(path)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the Lua script stored in 'path'. The parameter can be
+		a string with pseudo-variables evaluated at runtime.
+	    </p>
+            <div class="example">
+              <a id="idp98456"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">lua_dofile</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lua_dofile("/usr/local/etc/kamailio/lua/myscript.lua");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  lua_dostring(script)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.f.lua_dostring"></a>4.2. 
+		<code class="function">lua_dostring(script)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the Lua script stored in parameter. The parameter can be
+		a string with pseudo-variables.
+	    </p>
+            <div class="example">
+              <a id="idp100840"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">lua_dostring</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!lua_dostring("sr.log([[err]], [[----------- Hello World from $fU\n]])"))
+{
+    xdbg("SCRIPT: failed to execute lua script!\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  lua_run(function, params)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.f.lua_run"></a>4.3. 
+		<code class="function">lua_run(function, params)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the Lua function 'func' giving params as parameters. There
+		can be up to 3 string parameters. The function must exist in the
+		script loaded at startup via parameter 'load'. Parameters can be
+		strings with pseudo-variables that are evaluated at runtime.
+	    </p>
+            <div class="example">
+              <a id="idp103552"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">lua_run</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!lua_run("sr_append_fu_to_reply"))
+{
+    xdbg("SCRIPT: failed to execute lua function!\n");
+}
+...
+lua_run("lua_funcx", "$rU", "2");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  lua_runstring(script)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.f.lua_runstring"></a>4.4. 
+		<code class="function">lua_runstring(script)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the Lua script stored in parameter. The parameter can be
+		a string with pseudo-variables. The script is executed in Lua context
+		specific to loaded Lua files at startup.
+	    </p>
+            <div class="example">
+              <a id="idp106080"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">lua_runstring</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!lua_runstring("sr.log([[err]], [[----------- Hello World from $fU\n]])"))
+{
+    xdbg("SCRIPT: failed to execute lua script!\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp107480"></a>5. Exported RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  app_lua.list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.r.list"></a>5.1. 
+            <code class="function">app_lua.list</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Lists the id and path for every script loaded by
+            the load parameter.
+            </p>
+            <p>
+            Name: <span class="emphasis"><em>app_lua.list</em></span>
+            </p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+            Example:
+            </p>
+            <pre class="programlisting">                kamcmd app_lua.lists</pre>
+          </div>
+          <div class="section" title="5.2.  app_lua.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_lua.r.reload"></a>5.2. 
+            <code class="function">app_lua.reload</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Marks the need to reload the selected script.
+            The actual reload is done by every working process when the next
+            call to lua_run function is executed.
+            If no parameter is added all the scripts are selected to be reloaded.
+            </p>
+            <p>
+            Name: <span class="emphasis"><em>app_lua.reload</em></span>
+            </p>
+            <p>Parameters: <span class="emphasis"><em>id</em></span></p>
+            <p>
+            Example:
+            </p>
+            <pre class="programlisting">                kamcmd app_lua.reload 0</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Example of usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp113760"></a>6. Example of usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Create your Lua script and stored on file system,
+		say: '/usr/local/etc/kamailio/lua/myscript.lua'.
+    </p>
+          <pre class="programlisting">...
+function sr_append_fu_to_reply()
+	sr.hdr.append_to_reply("P-From: " .. sr.pv.get("$fu") .. "\r\n");
+end
+...</pre>
+          <p>
+		Load the script via parameter 'load' and execute function
+		via lua_run(...).
+    </p>
+          <pre class="programlisting">...
+modparam("app_lua", "load", "/usr/local/etc/kamailio/lua/myscript.lua")
+...
+route {
+    ...
+    if(!lua_run("sr_append_fu_to_reply"))
+    {
+        xdbg("SCRIPT: failed to execute lua function!\n");
+    }
+    ...
+}
+...</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

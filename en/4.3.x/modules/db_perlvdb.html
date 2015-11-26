@@ -1,0 +1,699 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Perl Virtual Database Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4298824" title="Perl Virtual Database Module" />
+    <link rel="next" href="#idp3084800" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Perl Virtual Database Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4298824"></a>Perl Virtual Database Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Collax GmbH<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Collax GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3084800">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2358696">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp140248">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3246944">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2939472">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm4248360">3. Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2030744">4. Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp227480">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1157584">1. Introduction</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1941152">2. Base class Kamailio::VDB</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1363856">3. Data types</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp141704">3.1. Kamailio::VDB::Value</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1427312">3.2. Kamailio::VDB::Pair</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2502584">3.3. Kamailio::VDB::ReqCond</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3377600">3.4. Kamailio::VDB::Column</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3378968">3.5. Kamailio::VDB::Result</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3379856">4. Adapters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3381296">4.1. Function parameters</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2331264">5. VTabs</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3084800"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2358696">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp140248">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3246944">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2939472">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm4248360">3. Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2030744">4. Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2358696"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The Perl Virtual Database (VDB) provides a virtualization framework
+		for Kamailio's database access. It does not handle a particular
+		database engine itself but lets the user relay database requests
+		to arbitrary Perl functions.
+	</p>
+          <p>
+		This module cannot be used "out of the box". The user has to supply
+		functionality dedicated to the client module. See below for options.
+	</p>
+          <p>
+		The module can be used in all current Kamailio modules that need
+		database access. Relaying of insert, update, query and delete
+		operations is supported.
+	</p>
+          <p>
+		Modules can be configured to use the perlvdb module as
+		database backend using the db_url_parameter:
+	</p>
+          <pre class="programlisting">modparam("acc", "db_url", "perlvdb:Kamailio::VDB::Adapter::AccountingSIPtrace")</pre>
+          <p>
+		This configuration options tells acc module that it should use the
+		perlvdb module which will in turn use the Perl class
+		Kamailio::VDB::Adapter::AccountingSIPtrace
+		to relay the database requests.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp140248"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3246944"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following  modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>perl</em></span> -- Perl module</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2939472"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span> (Besides the ones mentioned in the perl
+				module documentation).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm4248360"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			<span class="emphasis"><em>None</em></span>.
+		</p>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2030744"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			<span class="emphasis"><em>None</em></span>.
+		</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp227480"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1157584">1. Introduction</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1941152">2. Base class Kamailio::VDB</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1363856">3. Data types</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp141704">3.1. Kamailio::VDB::Value</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1427312">3.2. Kamailio::VDB::Pair</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2502584">3.3. Kamailio::VDB::ReqCond</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3377600">3.4. Kamailio::VDB::Column</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3378968">3.5. Kamailio::VDB::Result</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3379856">4. Adapters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3381296">4.1. Function parameters</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2331264">5. VTabs</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Introduction">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1157584"></a>1. Introduction</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Kamailio uses a database API for requests of numerous different
+		types of data. Four primary operations are supported:
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>query</p>
+              </li>
+              <li class="listitem">
+                <p>insert</p>
+              </li>
+              <li class="listitem">
+                <p>update</p>
+              </li>
+              <li class="listitem">
+                <p>delete</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+          <p>
+			This module relays these database requests to user implemented
+			Perl functions.
+		</p>
+        </div>
+        <div class="section" title="2. Base class Kamailio::VDB">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1941152"></a>2. Base class Kamailio::VDB</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			A client module has to be configured to use the perlvdb module in conjunction
+			with a Perl class to provide the functions. The configured class needs to
+			inherit from the base class <code class="literal">Kamailio::VDB</code>.
+		</p>
+          <p>
+			Derived classes have to implement the necessary
+			functions "query", "insert", "update" and/or "delete". The client module
+			specifies the necessary functions.
+			To find out which functions are called from a module, its processes may
+			be evaluated with the <code class="literal">Kamailio::VDB::Adapter::Describe</code> class which will
+			log incoming requests (without actually providing any real functionality).
+		</p>
+          <p>
+			While users can directly implement their desired functionality in a class
+			derived from Kamailio::VDB, it is advisable to split the implementation into
+			an Adapter that transforms the relational structured parameters into pure
+			Perl function arguments, and add a virtual table (VTab) to provide the
+			relaying to an underlying technology.
+		</p>
+        </div>
+        <div class="section" title="3. Data types">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1363856"></a>3. Data types</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Before introducing the higher level concepts of this module, the used
+			datatypes will briefly be explained.
+			The Kamailio Perl library includes some data types that have to be used
+			in this module:
+		</p>
+          <div class="section" title="3.1. Kamailio::VDB::Value">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp141704"></a>3.1. Kamailio::VDB::Value</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			A value includes a data type flag and a value. Valid data types are
+			DB_INT, DB_DOUBLE, DB_STRING, DB_STR, DB_DATETIME, DB_BLOB, DB_BITMAP.
+			A new variable may be created with </p>
+            <pre class="programlisting">my $val = new Kamailio::VDB::Value(DB_STRING, "foobar");</pre>
+            <p>
+			Value objects contain the type() and data() methods to get or set the type
+			and data attributes.
+		</p>
+          </div>
+          <div class="section" title="3.2. Kamailio::VDB::Pair">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1427312"></a>3.2. Kamailio::VDB::Pair</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The Pair class is derived from the Value class and additionally contains a
+			column name (key).
+			A new variable may be created with </p>
+            <pre class="programlisting">my $pair = new Kamailio::VDB::Pair("foo", DB_STRING, "bar");</pre>
+            <p>
+			where foo is the key and bar is the value.
+			Additonally to the methods of the Value class, it contains a key() method to
+			get or set the key attribute.
+		</p>
+          </div>
+          <div class="section" title="3.3. Kamailio::VDB::ReqCond">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2502584"></a>3.3. Kamailio::VDB::ReqCond</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The ReqCond class is used for select condition and is derived from the Pair
+			class. It contains an addtional operator attribute.
+			A new variable may be created with </p>
+            <pre class="programlisting">my $cond = new Kamailio::VDB::ReqCond("foo", "&gt;", DB_INT, 5);</pre>
+            <p>
+			where foo is the key, "greater" is the operator and 5 is the value to compare.
+			Additonally to the methods of the Pair class, it contains an op() method to
+			get or set the operator attribute.
+		</p>
+          </div>
+          <div class="section" title="3.4. Kamailio::VDB::Column">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3377600"></a>3.4. Kamailio::VDB::Column</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This class represents a column definition or database schema. It contains an
+			array for the column names and an array for the column types. Both arrays need
+			to have the same length.
+			A new variable may be created with </p>
+            <pre class="programlisting">my @types = { DB_INT, DB_STRING };
+my @names = { "id", "vals" };
+my $cols = new Kamailio::VDB::Column(\@types, \@names);</pre>
+            <p>
+			The class contains the methods type() and name() to get or set the type and name
+			arrays.
+		</p>
+          </div>
+          <div class="section" title="3.5. Kamailio::VDB::Result">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3378968"></a>3.5. Kamailio::VDB::Result</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The Result class represents a query result. It contains a schema (class Column)
+			and an array of rows, where each row is an array of Values. The object methods
+			coldefs() and rows() may be used to get and set the object attributes.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4. Adapters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3379856"></a>4. Adapters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Adapters should be used to turn the relational structured database request into
+			pure Perl function arguments. The alias_db function alias_db_lookup for example 
+			takes a user/host pair, and turns it into another user/host pair. The Alias
+			adapter turns the ReqCond array into two separate scalars that are used as parameters
+			for a VTab call.
+		</p>
+          <p>
+			Adapter classes have to inherit from the Kamailio::VDB base class and may provide
+			one or more functions with the names insert, update, replace, query and/or delete,
+			depending on the module which is to be used with the adapter. While modules such as
+			alias_db only require a query function, others -- such as siptrace -- depend
+			on inserts only.
+		</p>
+          <div class="section" title="4.1. Function parameters">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3381296"></a>4.1. Function parameters</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The implemented functions need to deal with the correct data types. The
+				parameter and return types are listed in this section.
+			</p>
+            <p>
+				<span class="emphasis"><em>insert()</em></span> is passed an array of Kamailio::VDB::Pair objects.
+				It should return an integer value.
+			</p>
+            <p>
+				<span class="emphasis"><em>replace()</em></span> is passed an array of Kamailio::VDB::Pair objects.
+				This function is currently not used by any publicly available modules.
+				It should return an integer value.
+			</p>
+            <p>
+				<span class="emphasis"><em>delete()</em></span> is passed an array of Kamailio::VDB::ReqCond objects.
+				It should return an integer value.
+			</p>
+            <p>
+				<span class="emphasis"><em>update()</em></span> is passed an array of Kamailio::VDB::ReqCond objects
+				(which rows to update) and an array of Kamailio::VDB::Pair objects
+				(new data).
+				It should return an integer value.
+			</p>
+            <p>
+				<span class="emphasis"><em>query()</em></span> is passed an array of Kamailio::VDB::ReqCond objects
+				(which rows to select), an array of strings (which column names to return)
+				and a single string by which column to sort.
+				It should return an object of type Kamailio::VDB::Result.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="5. VTabs">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2331264"></a>5. VTabs</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			VTabs (virtual tables) provide a particular implementation for an adapter. The Alias
+			adapter e.g. calls a function with two parameters (user, host) and expects a hash to
+			be returned with the two elements username and domain, or undef (when no result
+			is found).
+			A sample VTab implementation for the Alias adapter demonstrates this technique with
+			a Perl hash that contains the alias data.
+		</p>
+          <p>
+			The standard Adapter/VTab pattern lets the user choose between three options on how to
+			implement VTabs:
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>Single function</em></span>. When a function is used
+				as a virtual table, it is passed the operation name (insert, replace, update,
+				query, delete) as its first parameter. The function may be implemented
+				in the main namespace.</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>Package/class</em></span>. The defined class needs
+				to have an init() function. It will be called during the first call of that
+				VTab.
+				Addtionally, the package has
+				to define the necessary functions insert, replace, update, delete and/or query.
+				These functions will be called in a function context (first parameter is the
+				class name).
+				</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>Object</em></span>. The defined class needs
+				to have a new() function which will return a reference to the newly
+				created object. This object needs to define the necessary functions insert,
+				replace, update, delete and/or query.
+				These functions will be called in a method context (first parameter is
+				a reference to the object).
+				</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

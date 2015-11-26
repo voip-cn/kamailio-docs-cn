@@ -1,0 +1,1401 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence User Agent Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11213656" title="Presence User Agent Module" />
+    <link rel="next" href="#idp18924304" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence User Agent Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11213656"></a>Presence User Agent Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18924304">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18417960">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15519680">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17181016">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17245912">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18091392">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17964248">3.1. <code class="varname">hash_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15438408">3.2. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18353944">3.3. <code class="varname">db_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18356504">3.4. <code class="varname">min_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18359080">3.5. <code class="varname">default_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15442824">3.6. <code class="varname">update_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15445640">3.7. <code class="varname">outbound_proxy</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15448224">3.8. <code class="varname">dlginfo_increase_version</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15451336">3.9. <code class="varname">reginfo_increase_version</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15454448">3.10. <code class="varname">db_mode</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15525936">3.11. <code class="varname">db_table_lock_write</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15528512">3.12. <code class="varname">check_remote_contact</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15531528">3.13. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15533992">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15534360">4.1. 
+		<code class="function">pua_update_contact()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15539320">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15539688">5.1. 
+		<code class="function">pua_cleanup</code>
+	  </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15542536">6. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17191360">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16145176">1. 
+				<code class="function">bind_pua(pua_api_t* api)</code>
+				</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18367120">2. 
+			<code class="function">send_publish</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17011184">3. 
+			<code class="function">send_subscribe</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17194296">4. 
+			<code class="function">is_dialog</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17422896">5. 
+			<code class="function">register_puacb</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16297752">6. 
+			<code class="function">add_event</code>
+		</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17999312">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp18352560">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp18355344">Set <code class="varname">db_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp18357976">Set <code class="varname">min_expires</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15441656">Set <code class="varname">default_expires</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15444472">Set <code class="varname">update_period</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15447032">Set <code class="varname">outbound_proxy</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15450184">Set <code class="varname">dlginfo_increase_version</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15453296">Set <code class="varname">reginfo_increase_version</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15456088">Set <code class="varname">db_mode</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15527344">Set <code class="varname">db_table_lock_write</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp15530376">Set <code class="varname">check_remote_contact</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp15532752">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp15538008"><code class="function">pua_update_contact</code> usage</a></dt>
+          <dt>2.1. <a href="#idp16964496"><code class="function">pua_api</code> structure</a></dt>
+          <dt>2.2. <a href="#idp18592288"><code class="function">pua_is_dialog </code>usage example</a></dt>
+          <dt>2.3. <a href="#idp16295792"><code class="function">register_puacb </code>usage example</a></dt>
+          <dt>2.4. <a href="#idp16454648"><code class="function">add_event </code>usage example</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18924304"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18417960">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15519680">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17181016">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17245912">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18091392">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17964248">3.1. <code class="varname">hash_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15438408">3.2. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18353944">3.3. <code class="varname">db_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18356504">3.4. <code class="varname">min_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18359080">3.5. <code class="varname">default_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15442824">3.6. <code class="varname">update_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15445640">3.7. <code class="varname">outbound_proxy</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15448224">3.8. <code class="varname">dlginfo_increase_version</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15451336">3.9. <code class="varname">reginfo_increase_version</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15454448">3.10. <code class="varname">db_mode</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15525936">3.11. <code class="varname">db_table_lock_write</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15528512">3.12. <code class="varname">check_remote_contact</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15531528">3.13. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15533992">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15534360">4.1. 
+		<code class="function">pua_update_contact()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15539320">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15539688">5.1. 
+		<code class="function">pua_cleanup</code>
+	  </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15542536">6. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18417960"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module offer the functionality of a presence user agent client,
+		sending SUBSCRIBE and PUBLISH SIP  messages. It's a core part of Kamailio's 
+		SIP presence package, implementing SIMPLE and various shared line appearance
+		implementations.
+	</p>
+          <p>
+		 It can be used with the following modules: pua_mi, pua_usrloc,
+		 pua_bla, pua_dialoginfo, pua_reginfo and pua_xmpp.
+		 The <span class="emphasis"><em>pua_mi</em></span> module offer the possibility to publish any kind of information
+		 or subscribing to a resource through the manager interface.
+		 The <span class="emphasis"><em>pua_usrloc</em></span> module calls a function exported by pua modules to publish
+		 elementary presence information, such as basic status "open" or "closed",
+		 for clients that do not implement client-to-server presence.
+		 Through <span class="emphasis"><em>pua_bla</em></span> , BRIDGED LINE APPEARANCE features are added to Kamailio
+		 The <span class="emphasis"><em>pua_xmpp</em></span> module represents a gateway between SIP and XMPP, so that 
+		 jabber and SIP clients can exchange presence information. 
+		 The <span class="emphasis"><em>pua_reginfo</em></span> modules presents registration information from the usrloc module
+		 using the reginfo event package.
+	</p>
+          <p>
+		The module supports 2 modes of operation. In the first a cache is used to store
+		the presentity list and writes to database on timer to be able to recover upon
+		restart. The presence is kept in-memory	during run-time. The second is a database
+		only mode where the presentity list is stored purely in a database, allowing
+		both scalability and resilience.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15519680"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17181016"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database modules</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17245912"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18091392"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. hash_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17964248"></a>3.1. <code class="varname">hash_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The size of the hash table used for storing SUBSCRIBE and 
+		PUBLISH information. 
+        	This parameter will be used as the power of 2 when computing table size.
+        	</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">9</span>”</span>.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17999312"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "hash_size", 11)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15438408"></a>3.2. <code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Database url.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">&gt;mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18352560"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "db_url" "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. db_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18353944"></a>3.3. <code class="varname">db_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the database table.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">pua</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18355344"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "db_table", "pua")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. min_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18356504"></a>3.4. <code class="varname">min_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The inferior expires limit for both Publish and Subscribe.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18357976"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">min_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "min_expires", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. default_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18359080"></a>3.5. <code class="varname">default_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The default expires value used in case this information is not provisioned.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">3600</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15441656"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">default_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "default_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. update_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15442824"></a>3.6. <code class="varname">update_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The interval at which the information in database and hash table
+		should be updated. In the case of the hash table updating means 
+		deleting expired messages. 
+		Setting a value less than or equal to zero, disables updates.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">100</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15444472"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">update_period</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "update_period", 100)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. outbound_proxy (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15445640"></a>3.7. <code class="varname">outbound_proxy</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		SIP URI of outbound proxy to be used when sending
+		PUBLISH requests if no outbound proxy is given in
+                outbound_proxy field of struct publ_info.
+		</p>
+            <p>
+		<span class="emphasis"><em>By default, no outbound proxy has been defined.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15447032"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">outbound_proxy</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "outbound_proxy", "sip:outbound.example.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. dlginfo_increase_version (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15448224"></a>3.8. <code class="varname">dlginfo_increase_version</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When sending PUBLISH messages for Event: dialog, the body contains an
+		XML document according to RFC 4235. This XML document contains a 
+		version attribute to easily detect changes in the dialog state.
+		By setting this parameter, the pua module parses the XML document and
+		sets the version attribute to the proper value. If the receiver of
+		the PUBLISH does not care about the version parameter (e.g. like
+		Kamailio presence_dialoginfo module) it makes no sense to waste 
+		CPU resources for parsing the XML body and the parameter should be 
+		set to 0.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15450184"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">dlginfo_increase_version</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "dlginfo_increase_version", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. reginfo_increase_version (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15451336"></a>3.9. <code class="varname">reginfo_increase_version</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When sending PUBLISH messages for Event: reg, the body contains an
+		XML document according to RFC 4235(?). This XML document contains a 
+		version attribute to easily detect changes in the registration state.
+		By setting this parameter, the pua module parses the XML document and
+		sets the version attribute to the proper value. If the receiver of
+		the PUBLISH does not care about the version parameter (e.g. like
+		Kamailio presence_reginfo module) it makes no sense to waste 
+		CPU resources for parsing the XML body and the parameter should be 
+		set to 0.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15453296"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">reginfo_increase_version</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "reginfo_increase_version", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. db_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15454448"></a>3.10. <code class="varname">db_mode</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module supports 2 modes of operation, high speed memory
+		based storage (mode 0), and database only (mode 2) where all 
+		data is stored in a database, allowing scalability at the expense of speed.
+		Mode 1 is reserved.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15456088"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "db_mode", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. db_table_lock_write (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15525936"></a>3.11. <code class="varname">db_table_lock_write</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable (=1) or disable (=0) the Locks for table during an transaction.
+		Locking only the "current" table causes problems with a MySQL-Databases
+		in "DB-Only" mode.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 1 (Write Lock for the Tables).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15527344"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">db_table_lock_write</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "db_table_lock_write", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. check_remote_contact (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15528512"></a>3.12. <code class="varname">check_remote_contact</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When sending a SUBSCRIBE check that the remote contact matches the
+		one in the stored dialog or not. If the remote contact is checked
+		and does not match the one in the stored dialog then the dialog is
+		not matched. Checking the remote contact can cause problems when
+		using modules like RLS and should not be required in order to
+		properly match the dialog anyway. Set this parameter to 0 to
+		disable checking of remote contact for SUBSCRIBE dialog matching.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15530376"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">check_remote_contact</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "check_remote_contact", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15531528"></a>3.13. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rows to be loaded in one step from database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 500.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15532752"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua", "fetch_rows", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15533992"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  pua_update_contact()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15534360"></a>4.1. 
+		<code class="function">pua_update_contact()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The remote target can be updated by the Contact of a subsequent in
+		dialog request. In the PUA watcher case (sending a SUBSCRIBE messages),
+		this means that the remote target for the following Subscribe messages
+		can be updated at any time by the contact of a Notify message. 
+		If this function is called on request route on receiving a Notify
+		message, it will try to update the stored remote target.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> 1 - if success</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -1 - if error</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp15538008"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">pua_update_contact</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(method=="NOTIFY")
+    pua_update_contact();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15539320"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  pua_cleanup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15539688"></a>5.1. 
+		<code class="function">pua_cleanup</code>
+	  </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manually triggers the cleanup functions for the pua table.
+		Useful if you have set <code class="varname">update_period</code> to zero or less.
+	  </p>
+            <p>
+		Name: <span class="emphasis"><em>pua_cleanup</em></span>
+	  </p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+	  </p>
+            <pre class="programlisting">		:pua_cleanup:fifo_reply
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15542536"></a>6. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module requires one table in the Kamailio database: pua. The SQL 
+	syntax to create it can be found in presence_xml-create.sql     
+	script in the database directories in the kamailio/scripts folder.
+	You can also find the complete database documentation on the
+	project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17191360"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16145176">1. 
+				<code class="function">bind_pua(pua_api_t* api)</code>
+				</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18367120">2. 
+			<code class="function">send_publish</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17011184">3. 
+			<code class="function">send_subscribe</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17194296">4. 
+			<code class="function">is_dialog</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17422896">5. 
+			<code class="function">register_puacb</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16297752">6. 
+			<code class="function">add_event</code>
+		</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+		The module provides the following functions that can be used
+		by other Kamailio modules.
+   </p>
+        <div class="section" title="1.  bind_pua(pua_api_t* api)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16145176"></a>1. 
+				<code class="function">bind_pua(pua_api_t* api)</code>
+				</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+				This function binds the pua modules and fills the structure 
+				with the two exported functions.
+			</p>
+          <div class="example">
+            <a id="idp16964496"></a>
+            <p class="title">
+              <strong>Example 2.1. <code class="function">pua_api</code> structure</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+typedef struct pua_api {
+	send_subscribe_t send_subscribe;
+	send_publish_t send_publish;
+	query_dialog_t is_dialog;
+	register_puacb_t register_puacb;
+	add_pua_event_t add_event;
+} pua_api_t;
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2.  send_publish">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18367120"></a>2. 
+			<code class="function">send_publish</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+				</p>
+          <pre class="programlisting">...
+typedef int (*send_publish_t)(publ_info_t* publ);
+...</pre>
+          <p>
+		</p>
+          <p>
+		    This function receives as a parameter a structure with Publish 
+			required information and sends a Publish message.
+		</p>
+          <p>
+		The structure received as a parameter:
+		</p>
+          <pre class="programlisting">...
+typedef struct publ_info
+
+  str id;             /*  (optional )a value unique for one combination
+                          of pres_uri and flag */
+  str* pres_uri;      /*  the presentity uri */	
+  str* body;          /*  the body of the Publish message; 
+                          can be NULL in case of an update expires*/ 	
+  int  expires;       /*  the expires value that will be used in
+                          Publish Expires header*/	
+  int flag;           /*  it can be : INSERT_TYPE or UPDATE_TYPE
+                          if missing it will be established according 
+                          to the result of the search in hash table*/ 	
+  int source_flag;    /*  flag identifying the resource ;
+                          supported values: UL_PUBLISH, MI_PUBLISH,
+                          BLA_PUBLISH, XMPP_PUBLISH*/
+  int event;          /*  the event flag;
+                          supported values: PRESENCE_EVENT, BLA_EVENT,
+                          MWI_EVENT */
+  str content_type;   /*  the content_type of the body if present
+                          (optional if the same as the default value
+                          for that event)*/
+  str* etag;          /*  (optional) the value of the etag the request
+                          should match */
+  str* outbound_proxy;/*  outbound_proxy to use when sending the 
+                          Publish request */
+  str* extra_headers  /*  (optional) extra_headers that should be added
+                          to Publish msg*/
+}publ_info_t;
+...</pre>
+        </div>
+        <div class="section" title="3.  send_subscribe">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17011184"></a>3. 
+			<code class="function">send_subscribe</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+				</p>
+          <pre class="programlisting">...
+typedef int (*send_subscribe_t)(subs_info_t* subs);
+...</pre>
+          <p>
+		</p>
+          <p>
+			This function receives as a parameter a structure with Subscribe 
+			required information and sends a Subscribe message.
+		</p>
+          <p>
+			The structure received as a parameter:
+			</p>
+          <pre class="programlisting">...
+typedef struct subs_info
+
+  str id;              /*  an id value unique for one combination
+                           of pres_uri and flag */
+  str* pres_uri;       /*  the presentity uri */	
+  str* watcher_uri;    /*  the watcher uri */
+  str* contact;        /*  the uri that will be used in
+                           Contact header*/  
+  str* remote_target;  /*  the uri that will be used as R-URI
+                           for the Subscribe message(not compulsory;
+                           if not set the value of the pres_uri field
+                           is used) */
+  str* outbound_proxy; /*  the outbound_proxy to use when sending the 
+                           Subscribe request*/
+  int event;           /*  the event flag; supported value: 
+                           PRESENCE_EVENT, BLA_EVENT, PWINFO_EVENT*/ 
+  int expires;         /*  the expires value that will be used in
+                           Subscribe Expires header */	
+  int flag;            /*  it can be : INSERT_TYPE or UPDATE_TYPE
+                           not compulsory */	
+  int source_flag;     /*  flag identifying the resource ;
+                           supported values:  MI_SUBSCRIBE, 
+                           BLA_SUBSCRIBE, XMPP_SUBSCRIBE,
+                           XMPP_INITIAL_SUBS */
+}subs_info_t;
+...</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="4.  is_dialog">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17194296"></a>4. 
+			<code class="function">is_dialog</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+				</p>
+          <pre class="programlisting">...
+typedef int  (*query_dialog_t)(ua_pres_t* presentity);
+...</pre>
+          <p>
+		</p>
+          <p>
+			This function checks is the parameter corresponds to a stored
+			Subscribe initiated dialog. 
+		</p>
+          <div class="example">
+            <a id="idp18592288"></a>
+            <p class="title">
+              <strong>Example 2.2. <code class="function">pua_is_dialog </code>usage example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...	
+	if(pua_is_dialog(dialog) &lt; 0)
+	{
+		LM_ERR("querying dialog\n");
+		goto error;
+	}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="5.  register_puacb">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17422896"></a>5. 
+			<code class="function">register_puacb</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+				</p>
+          <pre class="programlisting">...
+typedef int (*register_puacb_t)(int types, pua_cb f, void* param );
+...</pre>
+          <p>
+		</p>
+          <p>
+			This function registers a callback to be called on receiving the reply message
+			for a sent Publish or Subscribe request.
+			The type parameter should be set the same as the source_flag for that request.
+			The function registered as callback for pua should be of type pua_cb , which is:
+			typedef void (pua_cb)(ua_pres_t* hentity, struct msg_start * fl);
+			The parameters are the dialog structure for that request and the first line of the
+			reply message.
+		</p>
+          <div class="example">
+            <a id="idp16295792"></a>
+            <p class="title">
+              <strong>Example 2.3. <code class="function">register_puacb </code>usage example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+	if(pua.register_puacb(XMPP_SUBSCRIBE, Sipreply2Xmpp, NULL) &amp; 0)
+	{
+		LM_ERR("Could not register callback\n");
+		return -1;
+	}
+...</pre>
+              <p>
+			The callback function type:
+						</p>
+              <pre class="programlisting">...
+typedef int (pua_cb)(ua_pres_t* hentity, struct sip_msg*);
+...</pre>
+              <p>
+		</p>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="6.  add_event">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16297752"></a>6. 
+			<code class="function">add_event</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+				</p>
+          <pre class="programlisting">...
+typedef int (*add_pua_event_t)(int ev_flag, char* name, 
+   char* content_type,evs_process_body_t* process_body);
+
+- ev_flag     : an event flag defined as a macro in pua module		
+- name        : the event name to be used in Event request headers
+- content_type: the default content_type for Publish body for 
+                that event (NULL if winfo event)
+- process_body: function that processes the received body before 
+                using it to construct the PUBLISH request
+                (NULL if winfo event)
+...</pre>
+          <p>
+		</p>
+          <p>
+			This function allows registering new events to the pua module.
+			Now there are 4 events supported by the pua module: presence, 
+			presence;winfo, message-summary, dialog;sla, application/reginfo+xml. 
+			These events are registered from within the pua module.
+        </p>
+          <p>
+			Filed type for process_body: 
+				</p>
+          <pre class="programlisting">...
+typedef int (evs_process_body_t)(struct publ_info* publ, 
+  str** final_body, int ver, str* tuple);
+- publ      : the structure received as a parameter in send_publish 
+              function ( initial body found in publ-&gt;body)
+- final_body: the pointer where the result(final_body) should be stored 
+- ver       : a counter for the sent Publish requests
+              (used for winfo events)
+- tuple     : a unique identifier for the resource;
+              if an initial Publish it should be returned as a result
+              and it will be stored  for that record, otherwise it will
+              be given as a parameter;    
+...</pre>
+          <p>
+		</p>
+          <div class="example">
+            <a id="idp16454648"></a>
+            <p class="title">
+              <strong>Example 2.4. <code class="function">add_event </code>usage example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+	if(pua.add_event((PRESENCE_EVENT, "presence", "application/pidf+xml", 
+				pres_process_body) &amp; 0)
+	{
+		LM_ERR("Could not register new event\n");
+		return -1;
+	}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

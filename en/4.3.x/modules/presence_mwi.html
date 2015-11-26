@@ -1,0 +1,239 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence_MWI Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4262808" title="Presence_MWI Module" />
+    <link rel="next" href="#idp1790448" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence_MWI Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4262808"></a>Presence_MWI Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1790448">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3377192">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2047416">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3403632">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1650896">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3200440">3. Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1320736">4. Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1790448"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3377192">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2047416">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3403632">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1650896">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3200440">3. Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1320736">4. Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3377192"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+	      The module does specific handling for notify-subscribe
+	      message-summary (message waiting indication) events
+	      as specified in RFC 3842.
+	      It is used with the general event handling module,
+   	      presence. It constructs and adds message-summary event to
+  	      it.
+	    </p>
+          <p>
+ 	      The module does not currently implement any authorization
+	      rules.  It assumes that publish requests are only issued by
+	      a voicemail application and subscribe requests only by
+	      the owner of voicemail box. Authorization can thus
+	      be easily done by Kamailio configuration file before
+	      calling handle_publish() and handle_subscribe()
+	      functions.
+	    </p>
+          <p>
+	      The module implements a simple check of content type
+	      <span class="quote">“<span class="quote">application/simple-message-summary:</span>”</span>  Content must start
+	      with <span class="quote">“<span class="quote">Messages-Waiting</span>”</span> status line followed by zero or
+	      more lines that consist of tabs and printable ASCII
+	      characters.
+	    </p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2047416"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3403632"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1650896"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		None.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3200440"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		  None.
+		</p>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1320736"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	        None to be used in configuration file.
+	      </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

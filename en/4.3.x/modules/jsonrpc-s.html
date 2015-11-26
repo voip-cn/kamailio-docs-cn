@@ -1,0 +1,868 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>JSONRPC-S Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4472" title="JSONRPC-S Module" />
+    <link rel="next" href="#idp941160" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="JSONRPC-S Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4472"></a>JSONRPC-S Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2014 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp941160">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3417296">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1760312">1.1. Limitations</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2753088">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1420896">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1749760">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2648232">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.pretty_format">3.1. <code class="varname">pretty_format</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.transport">3.2. <code class="varname">transport</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.fifo_name">3.3. <code class="varname">fifo_name</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.fifo_mode">3.4. <code class="varname">fifo_mode</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.fifo_group">3.5. <code class="varname">fifo_group</code> (int or str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.fifo_user">3.6. <code class="varname">fifo_user</code> (int or str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.p.fifo_reply_dir">3.7. <code class="varname">fifo_reply_dir</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm10640">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.f.jsonrpc_dispatch">4.1. 
+		<code class="function">jsonrpc_dispatch()</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#jsonrpc-s.f.jsonrpc_exec">4.2. 
+		<code class="function">jsonrpc_exec(cmd)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm4440">5. JSONRPC Transports</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3592">5.1. JSONRPC Over HTTP</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm2184">5.2. JSONRPC Over FIFO</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm20712">Set <code class="varname">pretty_format</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3015872">Set <code class="varname">transport</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3018480">Set <code class="varname">fifo_name</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp3021048">Set <code class="varname">fifo_mode</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm17312">Set <code class="varname">fifo_group</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm14688">Set <code class="varname">fifo_user</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm11912">Set <code class="varname">fifo_reply_dir</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm9136"><code class="function">jsonrpc_dispatch</code> usage</a></dt>
+          <dt>1.9. <a href="#idm5784"><code class="function">jsonrpc_exec</code> usage</a></dt>
+          <dt>1.10. <a href="#idp68848">JSONRPC Over Fifo Command</a></dt>
+          <dt>1.11. <a href="#idp70112">JSONRPC Over Fifo Command From Termina</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp941160"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3417296">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1760312">1.1. Limitations</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2753088">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1420896">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1749760">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2648232">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.pretty_format">3.1. <code class="varname">pretty_format</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.transport">3.2. <code class="varname">transport</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.fifo_name">3.3. <code class="varname">fifo_name</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.fifo_mode">3.4. <code class="varname">fifo_mode</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.fifo_group">3.5. <code class="varname">fifo_group</code> (int or str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.fifo_user">3.6. <code class="varname">fifo_user</code> (int or str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.p.fifo_reply_dir">3.7. <code class="varname">fifo_reply_dir</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm10640">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.f.jsonrpc_dispatch">4.1. 
+		<code class="function">jsonrpc_dispatch()</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#jsonrpc-s.f.jsonrpc_exec">4.2. 
+		<code class="function">jsonrpc_exec(cmd)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm4440">5. JSONRPC Transports</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3592">5.1. JSONRPC Over HTTP</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm2184">5.2. JSONRPC Over FIFO</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3417296"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides a JSON-RPC v2 server over HTTP implementation,
+		tailored for the needs of Kamailio. It implements the Kamailio
+		RPC interface over JSON-RPC.
+	</p>
+          <p>
+		The specification for JSON-RPC is available at:
+		<a class="ulink" href="javascript:if(confirm('http://www.jsonrpc.org/specification  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.jsonrpc.org/specification'" tppabs="http://www.jsonrpc.org/specification">http://www.jsonrpc.org/specification</a>.
+	</p>
+          <p>
+		The JSONRPC-S module uses the xHTTP module to handle HTTP/S requests.
+		Read the documentation of the xHTTP module for more details.
+	</p>
+          <div class="section" title="1.1.¬†Limitations">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1760312"></a>1.1.¬†Limitations</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		This module does not implement asynchronous RPC commands.
+		It is unlikely that asynchronous RPC commands will be executed
+		from an JSON-RPC over HTTP client.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		This module does not accept parameters embedded in a structure
+		(see the RPC documentation for more info about how parameters can be
+		passed to RPC).
+	</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2753088"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1420896"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xhttp</em></span> - xHTTP.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1749760"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2648232"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†pretty_format (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.pretty_format"></a>3.1.¬†<code class="varname">pretty_format</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Pretty format for JSON-RPC response document. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is '0'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm20712"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">pretty_format</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "pretty_format", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†transport (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.transport"></a>3.2.¬†<code class="varname">transport</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Control what transports are enabled. The value can be:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>0</em></span> - all transports that can be enabled.
+				For http, the xhttp module must be loaded. For FIFO, the
+				fifo_name parameter must be set.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>1</em></span> - only HTTP transport
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>2</em></span> - only FIFO transport
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is '0'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3015872"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">transport</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "transport", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†fifo_name (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.fifo_name"></a>3.3.¬†<code class="varname">fifo_name</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the FIFO file to be created for listening and 
+		reading external commands. If the given path is not absolute,
+		the fifo file is created relative to run_dir (global parameter).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NONE.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3018480"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">fifo_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "fifo_name", "/tmp/kamailio_jsonrpc_fifo")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†fifo_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.fifo_mode"></a>3.4.¬†<code class="varname">fifo_mode</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Permission to be used for creating the listening FIFO file. It 
+		follows the UNIX conventions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0660 (rw-rw----).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3021048"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">fifo_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "fifo_mode", 0600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†fifo_group (int or str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.fifo_group"></a>3.5.¬†<code class="varname">fifo_group</code> (int or str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		System Group to be used for creating the listening FIFO file.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one (process group).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm17312"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">fifo_group</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "fifo_group", 0)
+modparam("jsonrpc-s", "fifo_group", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†fifo_user (int or str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.fifo_user"></a>3.6.¬†<code class="varname">fifo_user</code> (int or str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		System User to be used for creating the listening FIFO file.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one (process user).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm14688"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">fifo_user</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "fifo_user", 0)
+modparam("jsonrpc-s", "fifo_user", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†fifo_reply_dir (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.p.fifo_reply_dir"></a>3.7.¬†<code class="varname">fifo_reply_dir</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Directory to be used for creating the reply FIFO files.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">/tmp/</span>‚Äù</span>
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm11912"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">fifo_reply_dir</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("jsonrpc-s", "fifo_reply_dir", "/home/kamailio/tmp/")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm10640"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† jsonrpc_dispatch()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.f.jsonrpc_dispatch"></a>4.1.¬†
+		<code class="function">jsonrpc_dispatch()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handle the JSONRPC request and generate a response.
+	    </p>
+            <div class="example">
+              <a id="idm9136"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">jsonrpc_dispatch</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+#!KAMAILIO
+
+memdbg=5
+memlog=5
+
+debug=3
+log_stderror=yes
+
+fork=yes
+children=2
+
+tcp_accept_no_cl=yes
+
+mpath="modules/"
+
+loadmodule "sl.so"
+loadmodule "pv.so"
+loadmodule "xhttp.so"
+loadmodule "jsonrpc-s.so"
+
+request_route {
+	send_reply("404", "not found");
+	exit;
+}
+
+event_route[xhttp:request] {
+    if(src_ip!=127.0.0.1) {
+        xhttp_reply("403", "Forbidden", "text/html",
+            "&lt;html&gt;&lt;body&gt;Not allowed from $si&lt;/body&gt;&lt;/html&gt;");
+        exit;
+	}
+	if ($hu =~ "^/RPC") {
+		jsonrpc_dispatch();
+	} else {
+        xhttp_reply("200", "OK", "text/html",
+            "&lt;html&gt;&lt;body&gt;Wrong URL $hu&lt;/body&gt;&lt;/html&gt;");
+    }
+    return;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† jsonrpc_exec(cmd)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="jsonrpc-s.f.jsonrpc_exec"></a>4.2.¬†
+		<code class="function">jsonrpc_exec(cmd)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Execute a JSON-RPC command given as a parameter.
+		</p>
+            <p>
+			The parameter has to be a valid full JSON-RPC document. It can
+			be a dynamic string with variables. The result of the command
+			can be accessed via $jsonrpl(key) pseudo variables.
+	    </p>
+            <div class="example">
+              <a id="idm5784"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="function">jsonrpc_exec</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+jsonrpc_exec({"jsonrpc": "2.0", "method": "dispatcher.reload", "id": 1}');
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†JSONRPC Transports">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm4440"></a>5.¬†JSONRPC Transports</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	JSONRPC specifications do not enforce a specific transport to carry the
+	JSON documents. Very common is JSONRPC over HTTP or HTTPS, and they are
+	supported by Kamailio. In addition, Kamailio supports receiving JSON
+	documents via a local FIFO file. 
+	</p>
+          <div class="section" title="5.1.¬†JSONRPC Over HTTP">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3592"></a>5.1.¬†JSONRPC Over HTTP</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			It requires that XHTTP module is loaded. HTTPS can be used if
+			you enable TLS for Kamailio. The JSONRPC requests have to be
+			sent to the TCP or TLS ports of Kamailio.
+		</p>
+            <p>
+			The 'transport' parameter has to be 0 or 1.
+		</p>
+            <p>
+			The format of the JSON document must follow the JSONRPC
+			specifications.
+		</p>
+          </div>
+          <div class="section" title="5.2.¬†JSONRPC Over FIFO">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm2184"></a>5.2.¬†JSONRPC Over FIFO</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This module can retrive JSONRPC requests via a local FIFO file. To
+			enable this feature, 'fifo_name' parameter must be set and
+			'transport' parameter has to be 0 or 2.
+		</p>
+            <p>
+			The format of the JSON document must follow the JSONRPC
+			specifications plus an additional field named 'reply_name'. The
+			value for this field must be the name of the FIFO file were to
+			write the JSONRPC response. The reply FIFO file is created in the
+			folder specified by 'fifo_reply_dir'. Next is an example showing
+			a JSONRPC command to be sent via FIFO transport.
+		</p>
+            <div class="example">
+              <a id="idp68848"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†JSONRPC Over Fifo Command</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+{
+ "jsonrpc": "2.0",
+  "method": "core.psx",
+  "reply_name": "kamailio_jsonrpc_reply_fifo",
+  "id": 1
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			Next is an example of how to test it from a terminal, assuming that
+			the parameter 'fifo_name' is set to '/tmp/kamailio_jsonrpc_fifo'.
+		</p>
+            <div class="example">
+              <a id="idp70112"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†JSONRPC Over Fifo Command From Termina</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mkfifo /tmp/kamailio_jsonrpc_reply_fifo
+cat /tmp/kamailio_jsonrpc_reply_fifo &amp;
+echo '{"jsonrpc": "2.0", "method": "core.psx", \
+          "reply_name": "kamailio_jsonrpc_reply_fifo", "id": 1}' \
+     &gt; /tmp/kamailio_jsonrpc_fifo
+rm /tmp/kamailio_jsonrpc_reply_fifo</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

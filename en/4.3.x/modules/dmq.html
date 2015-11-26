@@ -1,0 +1,999 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Distributed Message Queue Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp3872" title="Distributed Message Queue Module" />
+    <link rel="next" href="#idp3410264" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Distributed Message Queue Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp3872"></a>Distributed Message Queue Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Marius Ovidiu</span> <span class="surname">Bucur</span></h3>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Charles</span> <span class="surname">Chance</span></h3>
+                <div class="affiliation">Sipcentric Ltd.</div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Olle E.</span> <span class="surname">Johansson</span></h3>
+                <div class="affiliation">Edvina AB</div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Marius Ovidiu</span> <span class="surname">Bucur</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Charles</span> <span class="surname">Chance</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Marius Bucur</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Charles Chance, Sipcentric Ltd.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2015 Olle E. Johansson, Edvina AB</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3410264">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2264328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1783136">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2456256">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2511424">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2615696">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.p.server_address">3.1. <code class="varname">server_address</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.p.notification_address">3.2. <code class="varname">notification_address</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.p.multi_notify">3.3. <code class="varname">multi_notify</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.p.num_workers">3.4. <code class="varname">num_workers</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.p.ping_interval">3.5. <code class="varname">ping_interval</code>(int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm12808">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.f.dmq_handle_message">4.1. 
+                <code class="function">dmq_handle_message()</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.f.dmq_send_message">4.2. 
+               	<code class="function">dmq_send_message(peer, node, body, content_type)</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.f.dmq_bcast_message">4.3. 
+                <code class="function">dmq_bcast_message(peer, body, content_type)</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.f.dmq_t_replicate">4.4. 
+                <code class="function">dmq_t_replicate([skip_loop_test])</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dmq.f.dmq_is_from_node">4.5. 
+                <code class="function">dmq_is_from_node()</code>
+                </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2554808">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3513280">1. 
+		<code class="function">dmq_load_api(dmq_api_t* api)</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2539504">2. 
+                <code class="function">register_dmq_peer(dmq_peer_t* peer)</code>
+                </a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1285760">3. 
+                <code class="function">bcast_message(dmq_peer_t* peer, str* body, dmq_node_t* except,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1718672">4. 
+                <code class="function">send_message(dmq_peer_t* peer, str* body, dmq_node_t* node,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3348344">Example of a KDMQ message</a></dt>
+          <dt>1.2. <a href="#idp290856">Set <code class="varname">server_address</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3049968">Set <code class="varname">notification_address</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp3053248">Set <code class="varname">multi_notify</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm16952">Set <code class="varname">num_workers</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm14080">Set <code class="varname">ping_interval</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm10880"><code class="function">dmq_handle_message</code> usage</a></dt>
+          <dt>1.8. <a href="#idm4752"><code class="function">dmq_send_message</code> usage</a></dt>
+          <dt>1.9. <a href="#idp75768"><code class="function">dmq_bcast_message</code> usage</a></dt>
+          <dt>1.10. <a href="#idp80120"><code class="function">dmq_t_replicate</code> usage</a></dt>
+          <dt>1.11. <a href="#idp82856"><code class="function">dmq_is_from_node</code> usage</a></dt>
+          <dt>2.1. <a href="#idp2129232"><code class="function">dmq_api_t</code> structure</a></dt>
+          <dt>2.2. <a href="#idp307736"><code class="function">register_dmq_peer</code> usage</a></dt>
+          <dt>2.3. <a href="#idp3496120"><code class="function">bcast_message</code> usage</a></dt>
+          <dt>2.4. <a href="#idp2917616"><code class="function">send_message</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3410264"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2264328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1783136">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2456256">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2511424">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2615696">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.p.server_address">3.1. <code class="varname">server_address</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.p.notification_address">3.2. <code class="varname">notification_address</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.p.multi_notify">3.3. <code class="varname">multi_notify</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.p.num_workers">3.4. <code class="varname">num_workers</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.p.ping_interval">3.5. <code class="varname">ping_interval</code>(int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm12808">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.f.dmq_handle_message">4.1. 
+                <code class="function">dmq_handle_message()</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.f.dmq_send_message">4.2. 
+               	<code class="function">dmq_send_message(peer, node, body, content_type)</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.f.dmq_bcast_message">4.3. 
+                <code class="function">dmq_bcast_message(peer, body, content_type)</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.f.dmq_t_replicate">4.4. 
+                <code class="function">dmq_t_replicate([skip_loop_test])</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dmq.f.dmq_is_from_node">4.5. 
+                <code class="function">dmq_is_from_node()</code>
+                </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2264328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The DMQ module implements a distributed message queue on top of Kamailio in order to enable the 
+	passing/replication of data between multiple instances. The DMQ "nodes" within the system are grouped 
+	in a logical entity called the DMQ "bus" and are able to communicate with each other by 
+	sending/receiving messages (either by broadcast or directly to a specific node). The system 
+	transparently deals with node discovery, consistency, retransmissions, etc.
+	</p>
+          <p>
+	Other entities ("peers") are then able to utlize the DMQ bus to pass messages between themselves. 
+	Peers are grouped by name in order to ensure the correct messages are passed to the relevant peers. 
+	This grouping of peers can be compared to a topic in a typical pub/sub system.
+	</p>
+          <p>
+	DMQ sends SIP requests using the <span class="emphasis"><em>KDMQ</em></span> request method, that is private 
+	to Kamailio.
+	</p>
+          <div class="example">
+            <a id="idp3348344"></a>
+            <p class="title">
+              <strong>Example 1.1. Example of a KDMQ message</strong>
+            </p>
+            <div class="example-contents">
+              <p>
+		This message is for basic DMQ bus handling. Other messages are produced
+		by other modules, like the <span class="emphasis"><em>htable</em></span> module.
+		</p>
+              <pre class="programlisting">KDMQ sip:notification_peer@192.168.40.15:5090 SIP/2.0
+Via: SIP/2.0/UDP 192.168.40.15;branch=z9hG4bK55e5.423d95110000
+To: &lt;sip:notification_peer@192.168.40.15:5090&gt;
+From: &lt;sip:notification_peer@192.168.40.15:5060&gt;;tag=2cdb7a33a7f21abb98fd3a44968e3ffd-5b01
+CSeq: 10 KDMQ
+Call-ID: 1fe138e07b5d0a7a-50419@192.168.40.15
+Content-Length: 116
+User-Agent: kamailio (4.3.0 (x86_64/linneaus))
+Max-Forwards: 1
+Content-Type: text/plain
+
+sip:192.168.40.16:5060;status=active
+sip:192.168.40.15:5060;status=disabled
+sip:192.168.40.17:5060;status=active</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1783136"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2456256"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2511424"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>
+				The DMQ module itself has no external dependencies. However, each peer will need 
+				to use its own (de)serialization mechanism. Some examples are libtpl, protobuf.
+				</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2615696"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. server_address(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.p.server_address"></a>3.1. <code class="varname">server_address</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The local server address. This is the interface over which the DMQ engine will send/receive messages.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp290856"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">server_address</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dmq", "server_address", "sip:10.0.0.20:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. notification_address(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.p.notification_address"></a>3.2. <code class="varname">notification_address</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The address of another DMQ node from which the local node should retrieve initial information about all other nodes.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3049968"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">notification_address</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dmq", "notification_address", "sip:10.0.0.21:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. multi_notify(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.p.multi_notify"></a>3.3. <code class="varname">multi_notify</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enables the ability to resolve multiple IPv4/IPv6 addresses for 
+		a single notification address.
+		</p>
+            <p>
+		A value of zero resolves to the first IP address found. 
+		A non-zero value resolves to all IP addresses associated with the host. 
+		This includes addresses from DNS SRV records, A and AAAA records.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3053248"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">multi_notify</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dmq", "multi_notify", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. num_workers(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.p.num_workers"></a>3.4. <code class="varname">num_workers</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                The number of worker threads for sending/receiving messages.
+                </p>
+            <p>
+                <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">2</span>”</span>.</em></span>
+                </p>
+            <div class="example">
+              <a id="idm16952"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">num_workers</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dmq", "num_threads", 4)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. ping_interval(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.p.ping_interval"></a>3.5. <code class="varname">ping_interval</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                The number of seconds between node pings (for checking status of other nodes).
+                </p>
+            <p>
+                <span class="emphasis"><em>Minimum value is <span class="quote">“<span class="quote">60</span>”</span> (default).</em></span>
+                </p>
+            <div class="example">
+              <a id="idm14080"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">ping_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dmq", "ping_interval", 90)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm12808"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  dmq_handle_message()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.f.dmq_handle_message"></a>4.1. 
+                <code class="function">dmq_handle_message()</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Handles a DMQ message by passing it to the appropriate local peer (module). 
+		The peer is identified by the user part of the To header.
+                </p>
+            <p>
+                This function can be used from REQUEST_ROUTE.
+                </p>
+            <div class="example">
+              <a id="idm10880"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">dmq_handle_message</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        if(is_method("KDMQ"))
+        {
+                dmq_handle_message();
+        }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  dmq_send_message(peer, node, body, content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.f.dmq_send_message"></a>4.2. 
+               	<code class="function">dmq_send_message(peer, node, body, content_type)</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Sends a DMQ message directly from config file to a single node.
+                </p>
+            <p>Meaning of parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+               	        	<span class="emphasis"><em>peer</em></span> - name of peer that should handle the message.
+                        	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+                       		<span class="emphasis"><em>node</em></span> - the node to which the message should be sent.
+	                        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+	                        <span class="emphasis"><em>body</em></span> - the message body.
+	                        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+	                        <span class="emphasis"><em>content_type</em></span> - the MIME type of the message body.
+	                        </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                This function can be used from any route.
+                </p>
+            <div class="example">
+              <a id="idm4752"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">dmq_send_message</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	dmq_send_message("peer_name", "sip:10.0.0.21:5060", "Message body...", "text/plain");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  dmq_bcast_message(peer, body, content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.f.dmq_bcast_message"></a>4.3. 
+                <code class="function">dmq_bcast_message(peer, body, content_type)</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Broadcasts a DMQ message from config file to all active nodes (except self).
+                </p>
+            <p>Meaning of parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                                <span class="emphasis"><em>peer</em></span> - name of peer that should handle the message.
+                                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                                <span class="emphasis"><em>body</em></span> - the message body.
+                                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                                <span class="emphasis"><em>content_type</em></span> - the MIME type of the message body.
+                                </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                This function can be used from any route.
+                </p>
+            <div class="example">
+              <a id="idp75768"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">dmq_bcast_message</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        dmq_bcast_message("peer_name", "Message body...", "text/plain");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  dmq_t_replicate([skip_loop_test])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.f.dmq_t_replicate"></a>4.4. 
+                <code class="function">dmq_t_replicate([skip_loop_test])</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replicates the current SIP message to all active nodes (except self). Useful for replicating 
+		REGISTER, PUBLISH etc. in a clustered environment.
+                </p>
+            <p>Meaning of parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>skip_loop_test</em></span> - by default, DMQ checks the source IP of the
+				message prior to replication, to ensure it has not been sent by another DMQ node
+				(to avoid infinite loops). If this optional parameter is set to "1", the loop test
+				is not performed. This makes sense, from a performance perspective, if you have
+				already performed the necessary checks in the config script (see dmq_is_from_node()).
+                                </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                This function can be used from REQUEST_ROUTE only.
+                </p>
+            <div class="example">
+              <a id="idp80120"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">dmq_t_replicate</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        dmq_t_replicate();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  dmq_is_from_node()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dmq.f.dmq_is_from_node"></a>4.5. 
+                <code class="function">dmq_is_from_node()</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Checks whether the current message has been sent by another DMQ node in the cluster.
+                </p>
+            <p>
+                This function can be used from REQUEST_ROUTE only.
+                </p>
+            <div class="example">
+              <a id="idp82856"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">dmq_is_from_node</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	# Example REGISTER block
+        if (dmq_is_from_node()) {
+		# Already authenticated, just save contact...
+	} else {
+		# Authenticate, save contact etc.
+		# Assuming all successful...
+		dmq_t_replicate("1"); # Already checked source, don't perform loop test again
+	}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2554808"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3513280">1. 
+		<code class="function">dmq_load_api(dmq_api_t* api)</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2539504">2. 
+                <code class="function">register_dmq_peer(dmq_peer_t* peer)</code>
+                </a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1285760">3. 
+                <code class="function">bcast_message(dmq_peer_t* peer, str* body, dmq_node_t* except,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1718672">4. 
+                <code class="function">send_message(dmq_peer_t* peer, str* body, dmq_node_t* node,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+	The module provides the following functions that can be used
+	in other Kamailio modules.
+	</p>
+        <div class="section" title="1.  dmq_load_api(dmq_api_t* api)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3513280"></a>1. 
+		<code class="function">dmq_load_api(dmq_api_t* api)</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This function binds the DMQ module and fills the structure 
+		with the exported functions below.
+		</p>
+          <div class="example">
+            <a id="idp2129232"></a>
+            <p class="title">
+              <strong>Example 2.1. <code class="function">dmq_api_t</code> structure</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+typedef struct dmq_api {
+	register_dmq_peer_t register_dmq_peer;
+	bcast_message_t bcast_message;
+	send_message_t send_message;
+} dmq_api_t;
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2.  register_dmq_peer(dmq_peer_t* peer)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2539504"></a>2. 
+                <code class="function">register_dmq_peer(dmq_peer_t* peer)</code>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <p>
+                Registers an entity as a DMQ peer which permits receiving/sending 
+                messages between nodes which support the same peer.
+                </p>
+          <div class="example">
+            <a id="idp307736"></a>
+            <p class="title">
+              <strong>Example 2.2. <code class="function">register_dmq_peer</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+	Example to follow.
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="3.  bcast_message(dmq_peer_t* peer, str* body, dmq_node_t* except, dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1285760"></a>3. 
+                <code class="function">bcast_message(dmq_peer_t* peer, str* body, dmq_node_t* except,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <p>
+                Broadcast a DMQ message to all nodes in the DMQ bus excluding self, 
+		inactive nodes and "except" if specified.
+                </p>
+          <div class="example">
+            <a id="idp3496120"></a>
+            <p class="title">
+              <strong>Example 2.3. <code class="function">bcast_message</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+        Example to follow.
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="4.  send_message(dmq_peer_t* peer, str* body, dmq_node_t* node, dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1718672"></a>4. 
+                <code class="function">send_message(dmq_peer_t* peer, str* body, dmq_node_t* node,
+                dmq_resp_cback_t* resp_cback, int max_forwards, str* content_type)</code>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <p>
+                Send a DMQ message to a single node.
+                </p>
+          <div class="example">
+            <a id="idp2917616"></a>
+            <p class="title">
+              <strong>Example 2.4. <code class="function">send_message</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+        Example to follow.
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

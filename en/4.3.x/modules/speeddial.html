@@ -1,0 +1,812 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SpeedDial Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15476464" title="SpeedDial Module" />
+    <link rel="next" href="#idp18593032" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SpeedDial Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15476464"></a>SpeedDial Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18593032">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17506328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17118576">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17110896">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17025496">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17425488">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17970080">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18062528">3.2. <code class="varname">user_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15454328">3.3. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15441632">3.4. <code class="varname">sd_user_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15444264">3.5. <code class="varname">sd_domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15446912">3.6. <code class="varname">new_uri_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15449584">3.7. <code class="varname">domain_prefix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15452088">3.8. <code class="varname">use_domain</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15638080">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15638448">4.1. 
+		<code class="function">sd_lookup(table [, owner])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15643000">5. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15643352">5.1. Kamailio config file</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17215592">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15508096">Set <code class="varname">user_column</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15455784">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15443080">Set <code class="varname">sd_user_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15445728">Set <code class="varname">sd_domain_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15448400">Set <code class="varname">new_uri_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15450912">Set <code class="varname">domain_prefix</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15636840">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15641528"><code class="function">sd_lookup</code> usage</a></dt>
+          <dt>1.10. <a href="#idp15643976">Kamailio config script - sample speeddial usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18593032"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17506328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17118576">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17110896">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17025496">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17425488">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17970080">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18062528">3.2. <code class="varname">user_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15454328">3.3. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15441632">3.4. <code class="varname">sd_user_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15444264">3.5. <code class="varname">sd_domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15446912">3.6. <code class="varname">new_uri_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15449584">3.7. <code class="varname">domain_prefix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15452088">3.8. <code class="varname">use_domain</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15638080">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15638448">4.1. 
+		<code class="function">sd_lookup(table [, owner])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15643000">5. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15643352">5.1. Kamailio config file</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17506328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides on-server speed dial facilities. An user can store
+		records consisting of pairs short numbers (2 digits) and SIP addresses
+		into a table of Kamailio. Then it can dial the two digits whenever it
+		wants to call the SIP address associated with them.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17118576"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17110896"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database module (mysql, dbtext, ...)</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17025496"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17425488"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17970080"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The URL of database where the table containing speed dial records.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is DEFAULT_RODB_URL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17215592"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "db_url", "mysql://openser:xxx@localhost/openser")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. user_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18062528"></a>3.2. <code class="varname">user_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of column storing the user name of the owner of the speed dial
+		record.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15508096"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">user_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "user_column", "userid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15454328"></a>3.3. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of column storing the domain of the owner of the speed dial
+		record.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is  <span class="quote">“<span class="quote">domain</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15455784"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "domain_column", "userdomain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. sd_user_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15441632"></a>3.4. <code class="varname">sd_user_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column storing the user part of the short dial address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is  <span class="quote">“<span class="quote">sd_username</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15443080"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">sd_user_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "sd_user_column", "short_user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. sd_domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15444264"></a>3.5. <code class="varname">sd_domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column storing the domain of the short dial address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is  <span class="quote">“<span class="quote">sd_domain</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15445728"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">sd_domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "sd_domain_column", "short_domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. new_uri_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15446912"></a>3.6. <code class="varname">new_uri_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column containing the URI that will be use to replace
+		the short dial URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">new_uri</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15448400"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">new_uri_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "new_uri_column", "real_uri")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. domain_prefix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15449584"></a>3.7. <code class="varname">domain_prefix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If the domain of the owner (From URI) starts with the value of this parameter, then
+		it is stripped before performing the lookup of the short number.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15450912"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">domain_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "domain_prefix", "tel.")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. use_domain (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15452088"></a>3.8. <code class="varname">use_domain</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter specifies wheter or not to use the domain when searching a
+		speed dial record (0 - no domain, 1 - use domain from From URI,
+		2 - use both domains, from From URI and from request URI).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15636840"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("speeddial", "use_domain", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15638080"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sd_lookup(table [, owner])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15638448"></a>4.1. 
+		<code class="function">sd_lookup(table [, owner])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function lookups the short dial number from R-URI in 'table' and replaces the R-URI with associated address.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>table</em></span> - The name of the table storing the
+			speed dial records.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>owner</em></span> - The SIP URI of the owner of
+			short dialing codes. If not pressent, URI of From header is used.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15641528"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">sd_lookup</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# 'speed_dial' is the default table name created by openser db script
+if(uri=~"sip:[0-9]{2}@.*")
+	sd_lookup("speed_dial");
+# use auth username
+if(uri=~"sip:[0-9]{2}@.*")
+	sd_lookup("speed_dial", "sip:$au@$fd");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15643000"></a>5. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. Kamailio config file">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15643352"></a>5.1. Kamailio config file</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Next picture displays a sample usage of speeddial.
+		</p>
+            <div class="example">
+              <a id="idp15643976"></a>
+              <p class="title">
+                <strong>Example 1.10. Kamailio config script - sample speeddial usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+#
+# $Id$
+#
+# sample config script to use speeddial module
+#
+
+# ----------- global configuration parameters ------------------------
+
+check_via=no	# (cmd. line: -v)
+dns=no          # (cmd. line: -r)
+rev_dns=no      # (cmd. line: -R)
+
+# ------------------ module loading ----------------------------------
+
+loadmodule "/usr/local/lib/kamailio/modules/sl.so"
+loadmodule "/usr/local/lib/kamailio/modules/tm.so"
+loadmodule "/usr/local/lib/kamailio/modules/rr.so"
+loadmodule "/usr/local/lib/kamailio/modules/maxfwd.so"
+loadmodule "/usr/local/lib/kamailio/modules/usrloc.so"
+loadmodule "/usr/local/lib/kamailio/modules/registrar.so"
+loadmodule "/usr/local/lib/kamailio/modules/textops.so"
+loadmodule "/usr/local/lib/kamailio/modules/mysql.so"
+loadmodule "/usr/local/lib/kamailio/modules/speeddial.so"
+loadmodule "/usr/local/lib/kamailio/modules/mi_fifo.so"
+
+# ----------------- setting module-specific parameters ---------------
+
+# -- mi_fifo params --
+
+modparam("mi_fifo", "fifo_name", "/tmp/openser_fifo")
+
+# -- usrloc params --
+
+modparam("usrloc", "db_mode",   0)
+
+# -- rr params --
+# add value to ;lr param to make some broken UAs happy
+modparam("rr", "enable_full_lr", 1)
+
+# -------------------------  request routing logic -------------------
+
+# main routing logic
+route{
+
+	# initial sanity checks 
+	if (!mf_process_maxfwd_header("10"))
+	{
+		sl_send_reply("483","Too Many Hops");
+		exit;
+	};
+	if (msg:len &gt;=  max_len )
+	{
+		sl_send_reply("513", "Message too big");
+		exit;
+	};
+
+	if (!method=="REGISTER") record_route();
+
+	if (loose_route())
+	{
+		if (!t_relay())
+		{
+			sl_reply_error();
+		};
+		exit;
+	};
+
+	if (!uri==myself)
+	{
+		if (!t_relay())
+		{
+			sl_reply_error();
+		};
+		exit;
+	};
+
+	if (uri==myself)
+	{
+		if (method=="REGISTER")
+		{
+			save("location");
+			exit;
+		};
+
+		if(uri=~"sip:[0-9]{2}@.*")
+			sd_lookup("speeddial");
+
+		lookup("aliases");
+		if (!uri==myself)
+		{
+			if (!t_relay())
+			{
+				sl_reply_error();
+			};
+			exit;
+		};
+
+		if (!lookup("location"))
+		{
+			sl_send_reply("404", "Not Found");
+			exit;
+		};
+	};
+
+	if (!t_relay())
+	{
+		sl_reply_error();
+	};
+}
+
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

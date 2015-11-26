@@ -1,0 +1,1310 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The AVP module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#avp" title="The AVP module" />
+    <link rel="next" href="#idp39984" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The AVP module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="avp"></a>The AVP module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG Fokus<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jiri@iptel.org">jiri@iptel.org</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Michal</span> <span class="surname">Matyska</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptel<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:michal@iptel.org">michal@iptel.org</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004, 2005, 2006 FhG FOKUS, iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp39984">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp40304">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#avp.functions">2. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.set_iattr">2.1. <code class="function">set_iattr(attribute,value)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.flags2attr">2.2. <code class="function">flags2attr("$avp")</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.set_sattr">2.3. <code class="function">set_sattr(attribute,value)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.print_aattr">2.4. <code class="function">print_attr($attribute)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr2uri">2.5. <code class="function">attr2uri($attribute[,uri-part])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_exists">2.6. <code class="function">attr_exists(attribute)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_equals">2.7. <code class="function">attr_equals(attribute, value)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_equals_xl">2.8. <code class="function">attr_equals_xl(attribute, xl_format)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.dump_attrs">2.9. <code class="function">dump_attrs()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.xlset_attr">2.10. <code class="function">xlset_attr($attribute, xl_format)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlfix_attr">2.11. <code class="function">xlfix_attr($attribute)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.insert_attr_hf_1">2.12. <code class="function">insert_attr_hf(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.insert_attr_hf_2">2.13. <code class="function">insert_attr_hf(header_name, $avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.append_attr_hf_1">2.14. <code class="function">append_attr_hf(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.append_attr_hf_2">2.15. <code class="function">append_attr_hf(header_name, $avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.replace_attr_hf_1">2.16. <code class="function">replace_attr_hf(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.replace_attr_hf_2">2.17. <code class="function">replace_attr_hf(header_name, $avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_to_reply_1">2.18. <code class="function">attr_to_reply(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_to_reply_2">2.19. <code class="function">attr_to_reply(header_name, $avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.attr_destination">2.20. <code class="function">attr_destination($avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.xlset_destination">2.21. <code class="function">xlset_destination(xl_format)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.subst_attr">2.22. <code class="function">subst_attr($avp_name, subst_re)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.del_attr">2.23. <code class="function">del_attr($avp_name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.hdr_body2attrs">2.24. <code class="function">hdr_body2attrs(headername, prefix)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.f.hdr_body2attrs2">2.25. <code class="function">hdr_body2attrs2(headername, prefix)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#avp.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp.p.xlbuf_size">3.1. <code class="varname">xlbuf_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2393336"><code class="function">set_iattr</code> usage</a></dt>
+          <dt>1.2. <a href="#idp2551848"><code class="function">flags2attr</code> usage</a></dt>
+          <dt>1.3. <a href="#idp253976"><code class="function">set_sattr</code> usage</a></dt>
+          <dt>1.4. <a href="#idm26616"><code class="function">attr_exists</code> usage</a></dt>
+          <dt>1.5. <a href="#idm19232"><code class="function">attr_equals_xl</code> usage</a></dt>
+          <dt>1.6. <a href="#idp68728"><code class="function">insert_attr_hf</code> usage</a></dt>
+          <dt>1.7. <a href="#idp1475344"><code class="function">attr_to_reply</code> usage</a></dt>
+          <dt>1.8. <a href="#idp1478824"><code class="function">attr_destination</code> usage</a></dt>
+          <dt>1.9. <a href="#idp1482688"><code class="function">xlset_destination</code> usage</a></dt>
+          <dt>1.10. <a href="#idp1487312"><code class="function">subst_attr</code> usage</a></dt>
+          <dt>1.11. <a href="#idp1490824"><code class="function">del_attr</code> usage</a></dt>
+          <dt>1.12. <a href="#idp1499336"><code class="function">hdr_body2attrs</code> and <code class="function">hdr_body2attrs2</code> usage</a></dt>
+          <dt>1.13. <a href="#idp2660984">Set <code class="varname">xlbuf_size</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp39984"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp40304">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#avp.functions">2. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.set_iattr">2.1. <code class="function">set_iattr(attribute,value)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.flags2attr">2.2. <code class="function">flags2attr("$avp")</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.set_sattr">2.3. <code class="function">set_sattr(attribute,value)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.print_aattr">2.4. <code class="function">print_attr($attribute)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr2uri">2.5. <code class="function">attr2uri($attribute[,uri-part])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_exists">2.6. <code class="function">attr_exists(attribute)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_equals">2.7. <code class="function">attr_equals(attribute, value)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_equals_xl">2.8. <code class="function">attr_equals_xl(attribute, xl_format)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.dump_attrs">2.9. <code class="function">dump_attrs()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.xlset_attr">2.10. <code class="function">xlset_attr($attribute, xl_format)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlfix_attr">2.11. <code class="function">xlfix_attr($attribute)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.insert_attr_hf_1">2.12. <code class="function">insert_attr_hf(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.insert_attr_hf_2">2.13. <code class="function">insert_attr_hf(header_name, $avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.append_attr_hf_1">2.14. <code class="function">append_attr_hf(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.append_attr_hf_2">2.15. <code class="function">append_attr_hf(header_name, $avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.replace_attr_hf_1">2.16. <code class="function">replace_attr_hf(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.replace_attr_hf_2">2.17. <code class="function">replace_attr_hf(header_name, $avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_to_reply_1">2.18. <code class="function">attr_to_reply(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_to_reply_2">2.19. <code class="function">attr_to_reply(header_name, $avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.attr_destination">2.20. <code class="function">attr_destination($avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.xlset_destination">2.21. <code class="function">xlset_destination(xl_format)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.subst_attr">2.22. <code class="function">subst_attr($avp_name, subst_re)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.del_attr">2.23. <code class="function">del_attr($avp_name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.hdr_body2attrs">2.24. <code class="function">hdr_body2attrs(headername, prefix)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.f.hdr_body2attrs2">2.25. <code class="function">hdr_body2attrs2(headername, prefix)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#avp.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#avp.p.xlbuf_size">3.1. <code class="varname">xlbuf_size</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp40304"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    This module contains several functions that can be used to
+	    manipulate the contents of AVPs (Attribute-Value pairs). The AVPs
+	    are variables attached to the SIP message being processed. Each
+	    variable has its name and value. AVPs can be used to store
+	    arbitrary data or as a means of inter-module communication.
+	</p>
+          <p>
+	    You may also want to check the <span class="emphasis"><em>avpops</em></span> module which is more flexible
+	    and contains more functions. In future Kamailio releases the avp module
+	    will be probably deprecated in favor of avpops module.
+	</p>
+        </div>
+        <div class="section" title="2. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="avp.functions"></a>2. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. set_iattr(attribute,value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.set_iattr"></a>2.1. <code class="function">set_iattr(attribute,value)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Create an AVP of type integer.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>attribute</em></span> - The name of the AVP to
+		    be created.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>value</em></span> - Integer value of the AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp2393336"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">set_iattr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_iattr("fr_inv_timer", "60")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. flags2attr(&quot;$avp&quot;)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.flags2attr"></a>2.2. <code class="function">flags2attr("$avp")</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Store the current state of Kamailio flags into the specified AVP.
+	</p>
+            <div class="example">
+              <a id="idp2551848"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">flags2attr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+flags2attr("$msg_flags")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3. set_sattr(attribute,value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.set_sattr"></a>2.3. <code class="function">set_sattr(attribute,value)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Create an AVP of type string.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>attribute</em></span> - The name of the
+		    AVP to be created.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>value</em></span> - String value of the AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp253976"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">set_sattr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_sattr("called_number", "1234")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.4. print_attr($attribute)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.print_aattr"></a>2.4. <code class="function">print_attr($attribute)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Print the value of an AVP to syslog.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>attribute</em></span> - The name of the AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.5. attr2uri($attribute[,uri-part])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr2uri"></a>2.5. <code class="function">attr2uri($attribute[,uri-part])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Rewrite the whole Request-URI of the message being processed with
+		the value of an AVP, or if an <code class="varname">uri-part</code> is specified,
+		rewrite only that specific part.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$attribute</em></span> - The name of the AVP.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>uri-part</em></span> - The name of the part of the uri
+			 that will be rewritten.  The supported values are: "prefix",
+			 "uri", "username", "user",  "usernamepassword", "userpass",
+			 "domain", "host", "domainport", "hostport", "port", "strip",
+			 "strip_tail". "prefix" will add the AVP as a prefix to the 
+			 username (equivalent to prefix("string")), "strip" and 
+			 "strip_tail" expect a number in the AVP and they will remove the
+			 specified number of characters from the beginning, respective the
+			  end of the username part of the uri. The rest of the uri-part
+			  values names are self-explaining.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.6. attr_exists(attribute)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_exists"></a>2.6. <code class="function">attr_exists(attribute)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Test for the existence of AVP with given name. The function returns
+	    1 if given AVP exists and -1 if not.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>attribute</em></span> - The name of the
+		    AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idm26616"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">attr_exists</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (attr_exists("saved_ruri")) {
+    attr2uri("saved_uri");
+} else {
+    rewriteuri("sip:a@iptel.org");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.7. attr_equals(attribute, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_equals"></a>2.7. <code class="function">attr_equals(attribute, value)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Test whether an AVP with given name and value exists. The function
+	    returns 1 if the AVP with given name and value exists and -1 if
+	    not. The value of the AVP is compared string-wise. The comparison
+	    is case sensitive.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>attribute</em></span> - The name of the
+		    AVP.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>value</em></span> - The AVP value to look for.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.8. attr_equals_xl(attribute, xl_format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_equals_xl"></a>2.8. <code class="function">attr_equals_xl(attribute, xl_format)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Test whether an AVP with given name and value exists. The function
+		returns 1 if the AVP with given name and value exists and -1 if
+	    not. The value of the AVP is compared string-wise to the result of
+		xprint formatting call. The comparison is case sensitive.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>attribute</em></span> - The name of the
+		    AVP.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>xl_format</em></span> - The xprint formatting string,
+		    result of which is looked for in AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>Note: You must ensure, that the xprint module is loaded to be able to use this function.</p>
+            <div class="example">
+              <a id="idm19232"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">attr_equals_xl</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (attr_equals_xl("my_avp", "%ct")) {
+  # my_avp has value equal to current Contact header field
+} else {
+  # my_avp was different
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.9. dump_attrs()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.dump_attrs"></a>2.9. <code class="function">dump_attrs()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Dumps all AVPs in user lists to the debug output (with level INFO).
+	</p>
+            <p>The function does not require any parameters.</p>
+          </div>
+          <div class="section" title="2.10. xlset_attr($attribute, xl_format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.xlset_attr"></a>2.10. <code class="function">xlset_attr($attribute, xl_format)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Creates new AVP identified by <span class="emphasis"><em>attribute</em></span> and assigns the result string of xprint formatting rules as its value.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$attribute</em></span> - The name of the
+		    AVP.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>xl_format</em></span> - String used for xprint formatting.
+		    For detailed info see documentation of xprint module.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>Note: You must ensure, that the xprint module is loaded to be able to use this function.</p>
+          </div>
+          <div class="section" title="2.11. xlfix_attr($attribute)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlfix_attr"></a>2.11. <code class="function">xlfix_attr($attribute)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Fixes an xl formatted <span class="emphasis"><em>attribute</em></span>  value to pure
+		string.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$attribute</em></span> - The name of the
+		    AVP.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.12. insert_attr_hf(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.insert_attr_hf_1"></a>2.12. <code class="function">insert_attr_hf(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Inserts new header into the request, which is beeing forwarded. The AVP name is the name of the header field.
+		If you need to insert header with name which differs from the AVP name use <code class="function">insert_attr_hf(header_name, $avp_name)</code> instead.
+	</p>
+            <p>
+		Inserting means putting the header to the beginning of the request, before any others.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span>
+		- The name of the header field which is inserted into forwarded
+		request as well as name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.13. insert_attr_hf(header_name, $avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.insert_attr_hf_2"></a>2.13. <code class="function">insert_attr_hf(header_name, $avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Inserts new header into the request, which is beeing forwarded. 
+	</p>
+            <p>
+		Inserting means putting the header to the beginning of the request, before any others.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>header_name</em></span>
+		- The name of the header field which is inserted into forwarded
+		request.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- The name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp68728"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">insert_attr_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_sattr("my_route","&lt;sip:user@host:port;lr&gt;");
+insert_attr_hf("Route", "$my_route");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.14. append_attr_hf(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.append_attr_hf_1"></a>2.14. <code class="function">append_attr_hf(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Appends new header into the request, which is beeing forwarded. The AVP name is the name of the header field.
+		If you need to append header with name which differs from the AVP name use <code class="function">append_attr_hf(header_name, $avp_name)</code> instead.
+	</p>
+            <p>
+		Appending means putting the header to the end of the request, after any others.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span>
+		- The name of the header field which is appended into forwarded
+		request as well as name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.15. append_attr_hf(header_name, $avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.append_attr_hf_2"></a>2.15. <code class="function">append_attr_hf(header_name, $avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Appends new header into the request, which is beeing forwarded. 
+	</p>
+            <p>
+		Appending means putting the header to the end of the request, after any others.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>header_name</em></span>
+		- The name of the header field which is appended into forwarded
+		request.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- The name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.16. replace_attr_hf(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.replace_attr_hf_1"></a>2.16. <code class="function">replace_attr_hf(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces header in the request, which is beeing forwarded. The AVP name is the same as the name of the header field.
+		If you need to replace header with name which differs from the AVP name use <code class="function">replace_attr_hf(header_name, $avp_name)</code> instead.
+	</p>
+            <p>
+		Replacing means removing all the headers with specified name and appending new one at the end, with the value from AVP.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span>
+		- The name of the header field which is replaced in forwarded
+		request as well as name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.17. replace_attr_hf(header_name, $avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.replace_attr_hf_2"></a>2.17. <code class="function">replace_attr_hf(header_name, $avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces header in the request, which is beeing forwarded. 
+	</p>
+            <p>
+		Replacing means removing all the headers with specified name and appending new one at the end, with the value from AVP.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>header_name</em></span>
+		- The name of the header field which is replaced in forwarded
+		request.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- The name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.18. attr_to_reply(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_to_reply_1"></a>2.18. <code class="function">attr_to_reply(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Appends new header into the reply at the request time processing. The AVP name is the name of the header field.
+		If you need to append header with name which differs from the AVP name use <code class="function">attr_to_reply(header_name, $avp_name)</code> instead.
+	</p>
+            <p>
+		If you need to append headers during reply processing you can use insert_attr_hf and append_attr_hf. This function stores data and waits for the reply being created.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span>
+		- The name of the header field which is appended into 
+		reply as well as name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.19. attr_to_reply(header_name, $avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_to_reply_2"></a>2.19. <code class="function">attr_to_reply(header_name, $avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Appends new header into the reply at the request time processing. 
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>header_name</em></span>
+		- The name of the header field which is appended into
+		reply.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- The name of AVP which's value is put as the header field
+		value.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1475344"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">attr_to_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlset_attr("$my_route","&lt;sip:%Hf:5080;lr&gt;";
+attr_to_reply("P-Hint-Route", "my_route");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.20. attr_destination($avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.attr_destination"></a>2.20. <code class="function">attr_destination($avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the destination of the forwarded request to the value of AVP, 
+		which must be either a SIP URI or a string in nameaddr format
+		(e.g. "Foo Bar" &lt;sip:uri&gt;).
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- The name of AVP which's value is used for further request forwarding.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1478824"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">attr_destination</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlset_attr("$my_route","&lt;sip:%&lt;next_host&gt;:%&lt;next_port&gt;;myparam=a123;lr&gt;");
+insert_attr_hf("Route", "$my_route");
+attr_destination("$my_route");
+t_relay();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.21. xlset_destination(xl_format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.xlset_destination"></a>2.21. <code class="function">xlset_destination(xl_format)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the destination of the forwarded request to the value of result of xprint formatted string. Either SIP URI or nameaddr format is allowed.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>xl_format</em></span>
+		- xprint module formatting string, the result is used for request forwarding.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>Note: You must ensure, that the xprint module is loaded to be able to use this function.</p>
+            <div class="example">
+              <a id="idp1482688"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">xlset_destination</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlset_destination("%&lt;next_host&gt;:%&lt;next_port&gt;");
+t_relay();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.22. subst_attr($avp_name, subst_re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.subst_attr"></a>2.22. <code class="function">subst_attr($avp_name, subst_re)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value of the AVP identified by <span class="emphasis"><em>$avp_name</em></span>
+		name is matched and substitued according to the
+		<span class="emphasis"><em>subst_re</em></span> sed like expression.
+		Result of the substitution is then stored in the original AVP.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- Name of the AVP which will be used for the substitution.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>subst_re</em></span>
+		- SED like match&amp;replace regullar expression.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1487312"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">subst_attr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+subst_attr("$uri","/tel:[0-9]*/sip:\1@foo.bar;user=phone/");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.23. del_attr($avp_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.del_attr"></a>2.23. <code class="function">del_attr($avp_name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The AVP identified by <span class="emphasis"><em>$avp_name</em></span> name is deleted.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>$avp_name</em></span>
+		- Name of the AVP which will be deleted.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1490824"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">del_attr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+failure_route[1] {
+	if (status=~4[0-9][0-9]) {
+		if (attr_exists("backup_gw") {
+			append_branch;
+			attr_destination("backup_gw");
+			del_attr("backup_gw");
+			t_relay();
+		}
+	}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.24. hdr_body2attrs(headername, prefix)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.hdr_body2attrs"></a>2.24. <code class="function">hdr_body2attrs(headername, prefix)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function parses a header body content scans for fld1=val1,fld2=val2,... and creates bunch of avps prefixfld1:= val1, prefixfld2:= val2, .... 
+		If possible stores values as integers.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>headername</em></span>
+		- The header name, which will be scanned for the name=value pairs.
+		</p>
+                  <p>If you want to create only AVPs with integer value use "/i" postfix to the header name.</p>
+                  <p>If you want to create only AVPs with string  value use "/s" postfix to the header name.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix</em></span>
+		- The prefix, which is added before the name parsed from the header body.
+		</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.25. hdr_body2attrs2(headername, prefix)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.f.hdr_body2attrs2"></a>2.25. <code class="function">hdr_body2attrs2(headername, prefix)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function parses a header body content scans for fld1=val1,val2;fld2=val3,... and creates bunch of avps prefixfld1#1:= val1, prefixfld1#2:= val2, prefixfld2:=val3 .... 
+		If possible stores values as integers.
+	</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>headername</em></span>
+		- The header name, which will be scanned for the name=value pairs.
+		</p>
+                  <p>If you want to create only AVPs with integer value use "/i" postfix to the header name.</p>
+                  <p>If you want to create only AVPs with string  value use "/s" postfix to the header name.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix</em></span>
+		- The prefix, which is added before the name parsed from the header body.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1499336"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">hdr_body2attrs</code> and <code class="function">hdr_body2attrs2</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">if (method=="BYE") {
+	# QoS reporting
+	if (search("^User-Agent: AVM FRITZ!Box Fon*")) {
+		hdr_body2attrs2("X-RTP-Stat/i", "QoS_");
+		xplog("L_INFO", "QoS: %Ts, %fu, %tu, %ci, %{User-Agent}, %{X-RTP-Stat}\n");
+	} else if (search("^User-Agent: Sipura/*")) {
+		hdr_body2attrs("P-RTP-Stat/i", "QoS_");
+		xplog("L_INFO", "QoS: %Ts, %fu, %tu, %ci, %{User-Agent}, %{P-RTP-Stat}\n");
+	}
+}
+# AVP QoS_xx now contain the values from appropriate header
+# e.g. QoS_JI is jitter</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="avp.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. xlbuf_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp.p.xlbuf_size"></a>3.1. <code class="varname">xlbuf_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Defines size of internal buffer for all xprint formatting calls. If you
+don't use xprint formatting calls, you can set it to 0 to preserve some memory, if
+you get errors while formatting due to buffer size, you can enlarge it.
+	</p>
+            <p>
+        Default value is 256.
+    </p>
+            <div class="example">
+              <a id="idp2660984"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">xlbuf_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avp", "xlbuf_size", 1024)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

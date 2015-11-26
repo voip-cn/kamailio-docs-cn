@@ -1,0 +1,1177 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Pseudo-Variables Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4361760" title="Pseudo-Variables Module" />
+    <link rel="next" href="#idp3070440" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Pseudo-Variables Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4361760"></a>Pseudo-Variables Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:daniel@asipto.com">daniel@asipto.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:daniel@asipto.com">daniel@asipto.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008-2011 Daniel-Constantin Mierla (asipto.com)</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Juha Heinanen</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Olle E. Johansson, Edvina AB</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3070440">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1490328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2920008">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2507152">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1570608">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1422912">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2608016">3.1. <code class="varname">shvset</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp50312">3.2. <code class="varname">varset</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13064">3.3. <code class="varname">avp_aliases</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm10680">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10312">4.1. <code class="function">pv_isset(pvar)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6896">4.2. <code class="function">pv_unset(pvar)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3488">4.3. 
+				<code class="function">is_int(pvar)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp137256">4.4. 
+				<code class="function">typeof(pvar, vtype)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp139864">4.5. 
+				<code class="function">not_empty(pvar)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pv.f.xavp_params_explode">4.6. 
+				<code class="function">xavp_params_explode(sparams, xname)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pv.f.sbranch_set_ruri">4.7. 
+				<code class="function">sbranch_set_ruri()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pv.f.sbranch_append">4.8. 
+				<code class="function">sbranch_append()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pv.f.sbranch_reset">4.9. 
+				<code class="function">sbranch_reset()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pv.f.pv_xavp_print">4.10. 
+				<code class="function">pv_xavp_print()</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp81328">5. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp81840">5.1. <code class="function">shv_set</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp87168">5.2. <code class="function">shv_get</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp90800">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp91176">6.1. <code class="function">pv.shvSet</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp20848">6.2. <code class="function">pv.shvGet</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp161152"><code class="varname">shvset</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idm14216"><code class="varname">varset</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idm11872"><code class="varname">avp_aliases</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idm8112"><code class="function">pv_isset</code> usage</a></dt>
+          <dt>1.5. <a href="#idm4688"><code class="function">pv_unset</code> usage</a></dt>
+          <dt>1.6. <a href="#idm2152"><code class="function">is_int()</code> usage</a></dt>
+          <dt>1.7. <a href="#idp138608"><code class="function">typeof()</code> usage</a></dt>
+          <dt>1.8. <a href="#idp141176"><code class="function">not_empty()</code> usage</a></dt>
+          <dt>1.9. <a href="#idp150664"><code class="function">xavp_params_explode</code> usage</a></dt>
+          <dt>1.10. <a href="#idp153896"><code class="function">sbranch_set_ruri()</code> usage</a></dt>
+          <dt>1.11. <a href="#idp74600"><code class="function">sbranch_append()</code> usage</a></dt>
+          <dt>1.12. <a href="#idp77384"><code class="function">sbranch_append()</code> usage</a></dt>
+          <dt>1.13. <a href="#idp80040"><code class="function">pv_xavp_print()</code> usage</a></dt>
+          <dt>1.14. <a href="#idp86008"><code class="function">shv_set</code> usage</a></dt>
+          <dt>1.15. <a href="#idp89496"><code class="function">shv_get</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3070440"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1490328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2920008">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2507152">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1570608">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1422912">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2608016">3.1. <code class="varname">shvset</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp50312">3.2. <code class="varname">varset</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13064">3.3. <code class="varname">avp_aliases</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm10680">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10312">4.1. <code class="function">pv_isset(pvar)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6896">4.2. <code class="function">pv_unset(pvar)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3488">4.3. 
+				<code class="function">is_int(pvar)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp137256">4.4. 
+				<code class="function">typeof(pvar, vtype)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp139864">4.5. 
+				<code class="function">not_empty(pvar)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pv.f.xavp_params_explode">4.6. 
+				<code class="function">xavp_params_explode(sparams, xname)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pv.f.sbranch_set_ruri">4.7. 
+				<code class="function">sbranch_set_ruri()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pv.f.sbranch_append">4.8. 
+				<code class="function">sbranch_append()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pv.f.sbranch_reset">4.9. 
+				<code class="function">sbranch_reset()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pv.f.pv_xavp_print">4.10. 
+				<code class="function">pv_xavp_print()</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp81328">5. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp81840">5.1. <code class="function">shv_set</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp87168">5.2. <code class="function">shv_get</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp90800">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp91176">6.1. <code class="function">pv.shvSet</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp20848">6.2. <code class="function">pv.shvGet</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1490328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module collects the core pseudo-variables that can be used in
+		configuration file. They are listed in Dokuwiki:
+		<a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>,
+		in Pseudo-Variables section
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2920008"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2507152"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1570608"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1422912"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. shvset (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2608016"></a>3.1. <code class="varname">shvset</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set the value of a shared variable ($shv(name)). The parameter
+		can be set many times.
+		</p>
+            <p>
+		The value of the parameter has the format:
+		_name_ '=' _type_ ':' _value_
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name</p>
+                </li>
+                <li class="listitem">
+                  <p>_type_: type of the value</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">i</span>”</span>: integer value </p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">s</span>”</span>: string value </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>_value_: value to be set</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp161152"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="varname">shvset</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pv", "shvset", "debug=i:1")
+modparam("pv", "shvset", "pstngw=s:sip:10.10.10.10")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. varset (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp50312"></a>3.2. <code class="varname">varset</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set the value of a script variable ($var(name)). The parameter
+		can be set many times.
+		</p>
+            <p>
+		The value of the parameter has the format:
+		_name_ '=' _type_ ':' _value_
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name</p>
+                </li>
+                <li class="listitem">
+                  <p>_type_: type of the value</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">i</span>”</span>: integer value </p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">s</span>”</span>: string value </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>_value_: value to be set</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idm14216"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">varset</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pv", "varset", "init=i:1")
+modparam("pv", "varset", "gw=s:sip:11.11.11.11;transport=tcp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. avp_aliases (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13064"></a>3.3. <code class="varname">avp_aliases</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Define aliases for PV AVP names.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm11872"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">avp_aliases</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pv","avp_aliases","email=s:email_addr;tmp=i:100")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm10680"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. pv_isset(pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10312"></a>4.1. <code class="function">pv_isset(pvar)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return true if a PV value is different than 'null'.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pvar</em></span> - pvar identifier.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm8112"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">pv_isset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(pv_isset("$avp(s:x)"))
+{
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. pv_unset(pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6896"></a>4.2. <code class="function">pv_unset(pvar)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Unset the value of the PV (e.g., delete AVP, set to null).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pvar</em></span> - pvar identifier.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm4688"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">pv_unset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pv_unset("$avp(s:x)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  is_int(pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3488"></a>4.3. 
+				<code class="function">is_int(pvar)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Function checks if pvar argument contains integer value
+			and returns 1 if it does and -1 otherwise.
+			</p>
+            <p>
+			Function can be used from all kinds of routes.
+			</p>
+            <div class="example">
+              <a id="idm2152"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">is_int()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_int("$var(foo)")) {
+    xlog("L_INFO", "variable foo contains integer value\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  typeof(pvar, vtype)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp137256"></a>4.4. 
+				<code class="function">typeof(pvar, vtype)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if the type of pseudo-variable matches the second
+			parameter. The second parameter can be: 'int' - type is integer;
+			'str' - type is string; 'null' - type is null.
+			</p>
+            <p>
+			Function can be used from ANYROUTE.
+			</p>
+            <div class="example">
+              <a id="idp138608"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">typeof()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (typeof("$var(foo)", "str")) {
+    xdbg("variable foo is a string\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  not_empty(pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp139864"></a>4.5. 
+				<code class="function">not_empty(pvar)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if the pseudo-variables has the type string and
+			is not empty value.
+			</p>
+            <p>
+			Function can be used from all kinds of routes.
+			</p>
+            <div class="example">
+              <a id="idp141176"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">not_empty()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (not_empty("$var(foo)")) {
+    append_hf("X-Foo: $var(foo)\r\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  xavp_params_explode(sparams, xname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pv.f.xavp_params_explode"></a>4.6. 
+				<code class="function">xavp_params_explode(sparams, xname)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Convert a parameters string in xavp atributes.
+			</p>
+            <p>
+				The first parameter has to be a string in the format of SIP header
+				parameters (name1=value1;...;nameN=valueN). The second parameter
+				is the name of the root xavp to hold the pairs (nameX,valueX).
+			</p>
+            <p>
+				The values are stored as string type.
+			</p>
+            <p>
+			Function can be used from ANY ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp150664"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">xavp_params_explode</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xavp_params_explode("a=b;c=d;e=d", "x");
+# results in:
+#    $xavp(x=&gt;a) = "b";
+#    $xavp(x=&gt;c) = "d";
+#    $xavp(x=&gt;e) = "f";
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  sbranch_set_ruri()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pv.f.sbranch_set_ruri"></a>4.7. 
+				<code class="function">sbranch_set_ruri()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Use the attributes from static branch ($sbranch(key) variable) to
+				set request URI and the other fields of the branch associated with
+				request URI (destination URI, path, ...).
+			</p>
+            <p>
+				Content of the static branch is not reset after this function is
+				executed. It has to be done explicitely with sbranch_reset().
+			</p>
+            <p>
+			Function can be used from REQUEST_ROUTE, BRANCH_ROUTE or FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp153896"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">sbranch_set_ruri()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sbranch_reset();
+$sbranch(uri) = "sip:127.0.0.1:5080";
+$sbranch(dst_uri) =  "sip:127.0.0.1:5090";
+$sbranch(path) =  "sip:127.0.0.1:5090, sip:127.0.0.1:5094";
+$sbranch(send_socket) =  "udp:127.0.0.1:5060";
+sbranch_set_ruri();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  sbranch_append()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pv.f.sbranch_append"></a>4.8. 
+				<code class="function">sbranch_append()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Use the attributes from static branch ($sbranch(key) variable) to
+				append a new branch to destination set. It is an alternative to
+				append_branch() that allows setting each attribute specific to
+				the branch.
+			</p>
+            <p>
+				Content of the static branch is not reset after this function is
+				executed. It has to be done explicitely with sbranch_reset().
+			</p>
+            <p>
+			Function can be used from REQUEST_ROUTE, BRANCH_ROUTE or FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp74600"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">sbranch_append()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sbranch_reset();
+$sbranch(uri) = "sip:127.0.0.1:5080";
+$sbranch(dst_uri) =  "sip:127.0.0.1:5090";
+$sbranch(send_socket) =  "udp:127.0.0.1:5060";
+sbranch_append();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  sbranch_reset()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pv.f.sbranch_reset"></a>4.9. 
+				<code class="function">sbranch_reset()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Reset the content of static branch ($sbranch(key) variable.
+			</p>
+            <p>
+			Function can be used from REQUEST_ROUTE, BRANCH_ROUTE or FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp77384"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">sbranch_append()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sbranch_reset();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.  pv_xavp_print()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pv.f.pv_xavp_print"></a>4.10. 
+				<code class="function">pv_xavp_print()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Print all XAVPs to the syslog using INFO log level.
+			</p>
+            <p>
+			Function can be used from ANY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp80040"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">pv_xavp_print()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pv_xavp_print();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp81328"></a>5. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. shv_set">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp81840"></a>5.1. <code class="function">shv_set</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Set the value of a shared variable ($shv(name)).
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name</p>
+                </li>
+                <li class="listitem">
+                  <p>_type_: type of the value</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">int</span>”</span>: integer value </p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">str</span>”</span>: string value </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>_value_: value to be set</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:shv_set:_reply_fifo_file_
+		_name_
+		_type_
+		_value_
+		_empty_line_</pre>
+            <div class="example">
+              <a id="idp86008"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">shv_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo shv_set debug int 0
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. shv_get">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp87168"></a>5.2. <code class="function">shv_get</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Get the value of a shared variable ($shv(name)).
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name. If this parameter
+			is missing, all shared variables are returned.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:shv_get:_reply_fifo_file_
+		_name_
+		_empty_line_</pre>
+            <div class="example">
+              <a id="idp89496"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">shv_get</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo shv_get debug
+$ kamctl fifo shv_get
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp90800"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. pv.shvSet">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp91176"></a>6.1. <code class="function">pv.shvSet</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Set the value of a shared variable ($shv(name)).
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name</p>
+                </li>
+                <li class="listitem">
+                  <p>_type_: type of the value</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">int</span>”</span>: integer value </p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">str</span>”</span>: string value </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>_value_: value to be set</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.2. pv.shvGet">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp20848"></a>6.2. <code class="function">pv.shvGet</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Get the value of a shared variable ($shv(name)).
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_name_: shared variable name</p>
+                </li>
+              </ul>
+            </div>
+            <p>If no name is given, all shared variables are listed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

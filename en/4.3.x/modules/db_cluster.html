@@ -1,0 +1,485 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>DB_CLUSTER Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4247920" title="DB_CLUSTER Module" />
+    <link rel="next" href="#idp3183672" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="DB_CLUSTER Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4247920"></a>DB_CLUSTER Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3183672">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2327576">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp4392">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1831760">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2557032">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2689992">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_cluster.p.connection">3.1. <code class="varname">connection</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_cluster.p.cluster">3.2. <code class="varname">cluster</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_cluster.p.inactive_interval">3.3. <code class="varname">inactive_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_cluster.p.max_query_length">3.4. <code class="varname">max_query_length</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp186736">4. Usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2681352">Set <code class="varname">connection</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp218896">Set <code class="varname">cluster</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp182704">Set <code class="varname">inactive_interval</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp185480">Set <code class="varname">max_query_length</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp188912">Sample of usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3183672"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2327576">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp4392">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1831760">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2557032">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2689992">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#db_cluster.p.connection">3.1. <code class="varname">connection</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_cluster.p.cluster">3.2. <code class="varname">cluster</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_cluster.p.inactive_interval">3.3. <code class="varname">inactive_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_cluster.p.max_query_length">3.4. <code class="varname">max_query_length</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp186736">4. Usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2327576"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides a generic database clustering system. It can be
+		used as a middle layer between modules and database connectors.
+	</p>
+          <p>
+		Via clustering, database operations can be executed across multiple
+		servers, based on policies such as parallel write, serial or round
+		robin write and read.
+	</p>
+          <p>
+		The following database commands are considered to be write operations:
+		INSERT, DELETE, UPDATE, REPLACE, INSERT-DELAYED, INSERT-UPDATE. The
+		read operations are done for database commands: QUERY and RAW-QUERY.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4392"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1831760"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>db connector</em></span> - database connectors.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2557032"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2689992"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. connection (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_cluster.p.connection"></a>3.1. <code class="varname">connection</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specify the connection to a real database system. The format is
+			'conid=&gt;DBURL' - providing a connection id and the database
+			URL used by the database driver used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2681352"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">connection</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_cluster", "connection",
+             "con1=&gt;mysql://kamailio:kamailiorw@localhost/kamailio1")
+modparam("db_cluster", "connection",
+             "con2=&gt;mysql://kamailio:kamailiorw@localhost/kamailio2")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. cluster (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_cluster.p.cluster"></a>3.2. <code class="varname">cluster</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specify the cluster definition. The format is
+			'clsid=&gt;conid1=def1;conid2=def2' - providing a cluster id and the list of
+			database connections to be used. For each connection you have to provide
+			a usage definition. The usage definition is a 4-char long string,
+			specifying priority and command mode for read and write operations to be
+			performed on that connection.
+		</p>
+            <p>
+			The priority is a digit between 0 and 9, where a higher value means higher priority.
+			Priority 0 means that the connection is not going to be used in that cluster.
+		</p>
+            <p>
+			Command mode is a character among s, r and p. s is for doing serial
+			operations (try first and if fails, try next); r is for doing round
+			robin operations; p - is for doing parallel operations (this is valid
+			only for write operations).
+		</p>
+            <p>
+		</p>
+            <p>
+			The first two characters is priority and mode for read, followed by
+			two characters for priority and mode for write operations. "p" is 
+			only used for write operations.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp218896"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">cluster</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_cluster", "cluster", "cls1=&gt;con1=9s8p;con2=9s8p")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. inactive_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_cluster.p.inactive_interval"></a>3.3. <code class="varname">inactive_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			How long (seconds) a connection is considered inactive after a DB
+			operations failed on it.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 300 (5 min).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp182704"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">inactive_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_cluster", "inactive_interval", 180)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. max_query_length (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_cluster.p.max_query_length"></a>3.4. <code class="varname">max_query_length</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		How long (seconds) a failed db operation needs to last before
+		deactivating the connection for inactive_interval seconds. This
+		prevents disabling of connections that reply fast with error
+		codes, thus being active (e.g., due to primary key insert errors).
+		In such cases, the database server is active.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp185480"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">max_query_length</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_cluster", "max_query_length", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp186736"></a>4. Usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Practically, all the modules that want to use a cluster, have to set
+			their db_url parameter to "cluster://clusterid".
+		</p>
+          <p>
+			Following rules apply when doing DB commands: the connecions with highest
+			priority are chosen first and the operations are performed according
+			to the command mode. Note that for same priority, only one command mode
+			is used (the one from the first connection with that priority found
+			in the definition of the cluster). If the DB command is not successful,
+			next set of connections based on priority is selected and the command is
+			tried again. When the command is successful, no other try is made.
+		</p>
+          <p>
+			For parallel operations, a command is considered successful if it
+			succeeded on one connection from a group with same priority.
+		</p>
+          <p>
+			Next example shows how to set a cluster with two connections to MySQL
+			to be used for parallel writing from acc and round-robin reading by
+			sqlops.
+		</p>
+          <div class="example">
+            <a id="idp188912"></a>
+            <p class="title">
+              <strong>Example 1.5. Sample of usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("db_cluster", "connection",
+             "c1=&gt;mysql://kamailio:kamailiorw@localhost/kamailio1")
+modparam("db_cluster", "connection",
+             "c2=&gt;mysql://kamailio:kamailiorw@localhost/kamailio2")
+modparam("db_cluster", "cluster", "k1=&gt;c1=9r9p;c2=9r9p")
+
+modparam("acc", "db_url", "cluster://k1")
+
+modparam("sqlops", "sqlcon", "ca=&gt;cluster://k1")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

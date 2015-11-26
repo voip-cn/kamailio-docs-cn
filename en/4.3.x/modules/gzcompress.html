@@ -1,0 +1,492 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>GZCompress Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11450560" title="GZCompress Module" />
+    <link rel="next" href="#idp17965952" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="GZCompress Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11450560"></a>GZCompress Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17965952">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp19256640">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp19498336">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16046560">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17826272">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18322744">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#gzcompress.p.header_name">3.1. <code class="varname">header_name</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#gzcompress.p.header_value">3.2. <code class="varname">header_value</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#gzcompress.p.sanity_checks">3.3. <code class="varname">sanity_checks</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp16007328">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16008008">5. Config File</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17535168">Set <code class="varname">header_name</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp16042400">Set <code class="varname">header_value</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp16003440">Set <code class="varname">sanity_checks</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp16008840">Enable body compression</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17965952"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp19256640">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp19498336">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16046560">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17826272">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18322744">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#gzcompress.p.header_name">3.1. <code class="varname">header_name</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#gzcompress.p.header_value">3.2. <code class="varname">header_value</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#gzcompress.p.sanity_checks">3.3. <code class="varname">sanity_checks</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp16007328">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16008008">5. Config File</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19256640"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module is able to detect compressed body in received SIP message
+		and decompress it as well as compress the body for outgoing SIP
+		message. It works also for received HTTP request and replied HTTP
+		response (Kamailio cannot work in HTTP proxy mode).
+	</p>
+          <p>
+		The decision of whether to do compression or decompression is made
+		by detecting a special SIP header (default 'Content-Encoding') that
+		matches a given value - both header name and value can be set via
+		module parameters. If a SIP message is received with clear body and
+		you want to compress the body for outgoing, add the header in config
+		file. The header can be added to the local generated replies as well.
+	</p>
+          <p>
+		In other words, if the header is present in incoming SIP message, its
+		body is decompressed. If the header is present in outgoing SIP message,
+		its body is compressed. Therefore inside configuration file, the body
+		is in original format(e.g., plain text). In this way, the existing
+		functions to handle content of the body work as usual (e.g., to strip
+		codecs in sdp via sdpops or do substitutions via textops).
+	</p>
+          <p>
+		The functions used to compress and decompress are from zlib
+		library (http://zlib.net).
+	</p>
+          <p>
+		NOTE: for the moment the module cannot be used with topoh module,
+		overlapping in core event callbacks (will be fixed soon).
+	</p>
+          <p>
+		The immediate benefit of compressing the body is to reduce the size
+		of the SIP message, increasing the chances to stay under MTU for UDP
+		packts. From observation, the compressed body is in between 50% to 67%
+		smaller than the original size (e.g., a body of 431 bytes was
+		compressed to 230).
+	</p>
+          <p>
+		An use case can be when having peering traffic between two Kamailio
+		servers. Before relaying to the other Kamailio,  use
+		in config file: append_hf("Content-Encoding: deflate\r\n").
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19498336"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16046560"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17826272"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>zlib</em></span> compression library (http://zlib.net).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18322744"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. header_name (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="gzcompress.p.header_name"></a>3.1. <code class="varname">header_name</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of the header that indicates compression or decompression has
+			to be done.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "Content-Encoding".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17535168"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">header_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("gzcompress", "header_name", "Encoded")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. header_value (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="gzcompress.p.header_value"></a>3.2. <code class="varname">header_value</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Value of the header that indicates compression or decompression has
+			to be done.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "deflate".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp16042400"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">header_value</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("gzcompress", "header_value", "gzip")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. sanity_checks (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="gzcompress.p.sanity_checks"></a>3.3. <code class="varname">sanity_checks</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to 1, gzcompress module will bind to sanity module in order
+			to perform sanity checks over received SIP request. Default
+			sanity checks are done. It is useful to check if received request
+			is well formated before proceeding to encoding/decoding.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (do not bind to sanity module).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp16003440"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">sanity_checks</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("gzcompress", "sanity_checks", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16007328"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			None.
+		</p>
+        </div>
+        <div class="section" title="5. Config File">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16008008"></a>5. Config File</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Next example shows how to enable compression for forwarded requests,
+		as well as replying with compressed body for HTTP requests. For SIP,
+		the request is recevied and forwarded to itself once, just for the
+		sake of showing a simple example.
+	</p>
+          <div class="example">
+            <a id="idp16008840"></a>
+            <p class="title">
+              <strong>Example 1.4. Enable body compression</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+
+#!KAMAILIO
+
+debug=3
+memdbg=5
+memlog=5
+
+children=2
+
+log_stderror=yes
+listen=udp:127.0.0.1:5060
+listen=tcp:127.0.0.1:5060
+
+tcp_accept_no_cl=yes
+http_reply_parse=yes
+
+mpath="modules/"
+
+loadmodule "sl.so"
+loadmodule "pv.so"
+loadmodule "xlog.so"
+loadmodule "corex.so"
+loadmodule "textops.so"
+loadmodule "xhttp.so"
+loadmodule "gzcompress.so"
+
+modparam("gzcompress", "header_value", "deflate")
+
+request_route {
+	xlog("received sip request from $si:$sp\r\n");
+
+	if(src_port==5060) {
+		remove_hf("Content-Encoding");
+		$du = "sip:127.0.0.1:9";
+	} else {
+		append_hf("Content-Encoding: deflate\r\n");
+		$du = "sip:127.0.0.1:5060";
+	}
+	forward();
+	exit;
+}
+
+event_route[xhttp:request] {
+	xlog("received http request from $si:$sp\r\n");
+	append_to_reply("Content-Encoding: deflate\r\n");
+    xhttp_reply("200", "OK", "text/html",
+        "&lt;html&gt;&lt;body&gt;OK - [$si:$sp]&lt;/body&gt;&lt;/html&gt;");
+}
+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

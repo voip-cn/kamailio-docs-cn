@@ -1,0 +1,609 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>QOS Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11068144" title="QOS Module" />
+    <link rel="next" href="#idp17367096" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="QOS Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11068144"></a>QOS Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">SOMA Networks, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 SOMA Networks, Inc.</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17367096">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#qos.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18004344">2. How it works</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17421720">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17167960">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15508624">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15648792">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#qos.p.qos_flag">4.1. <code class="varname">qos_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15535848">5. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15536576">6. Statistics</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15537296">7. MI Commands</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15538096">8. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15538808">9. Installation and Running</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp15874192">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18353448">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16777496">1.1. 
+		<code class="function">register_qoscb (qos, type, cb, param)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15652288">Set <code class="varname">qos_flag</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17367096"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#qos.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18004344">2. How it works</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17421720">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17167960">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15508624">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15648792">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#qos.p.qos_flag">4.1. <code class="varname">qos_flag</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15535848">5. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15536576">6. Statistics</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15537296">7. MI Commands</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15538096">8. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15538808">9. Installation and Running</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="qos.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The qos module provides a way to keep track of
+		per dialog SDP session(s).</p>
+        </div>
+        <div class="section" title="2. How it works">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18004344"></a>2. How it works</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The <span class="emphasis"><em>qos</em></span> module uses the
+	<span class="emphasis"><em>dialog</em></span> module to be notified of any new or
+	updated dialogs.  It will then look for and extract
+	the <acronym class="acronym">SDP</acronym> session (if present) from SIP requests
+	and replies and keep track of it for the entire life of a dialog.
+	</p>
+          <p>
+	All of this happens with a properly configured dialog
+	and qos module and setting the dialog flag and the qos flag at
+	the time any INVITE SIP message is seen.  There is no
+	config script function call required to set the SDP session
+	tracking mechanism.  See the dialog module users guide for
+	more information.
+	</p>
+          <p>
+	A dialog can have one or more SDP sessions active in one
+	of the following states:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>pending</em></span> - only one endpoint of the
+	SDP session is known.
+	</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>negotiated</em></span> - both endpoints of the
+	SDP session are known.
+	</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+	An SDP session can be established in one of the following scenarios:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>INVITE/200ok</em></span> - typical "INVITE" and
+	"200 OK" SDP exchange.
+	</p>
+              </li>
+              <li class="listitem">
+                <p>
+	<span class="emphasis"><em>200ok/ACK</em></span> - "200 OK" and  "ACK" SDP
+	exchange (for calls starting with an empty INVITE).
+	</p>
+              </li>
+              <li class="listitem">
+                <p>
+	<span class="emphasis"><em>183/PRACK</em></span> - early media via "183
+	Session Progress" and "PRACK" (see RFC 3959 for more information)
+	<span class="emphasis"><em>- not implemented yet</em></span>.
+	</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17421720"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17167960"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded
+		before this module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>dialog</em></span> - dialog module and
+		its dependencies (tm).
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15508624"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The following libraries or applications must be installed before
+	running Kamailio with this module loaded:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>None</em></span>.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	</p>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15648792"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. qos_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="qos.p.qos_flag"></a>4.1. <code class="varname">qos_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The module will not do anything to any message unless
+		instructed to do so via the config script. You must set the
+		<code class="varname">qos_flag</code> value in the <code class="function">setflag()</code>
+		call of the INVITE you want the qos module to process. But
+		before you can do that, you need to tell the qos module which
+		flag value you are assigning to qos.</p>
+            <p>In most cases when ever you set the dialog flag
+		you will want to set the qos flag. If the dialog flag
+		is not set and the qos flag is set, it will not have
+		any effect.</p>
+            <p>
+              <span class="emphasis">
+                <em>This parameter must be set or the module will
+		not load.</em>
+              </span>
+            </p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">Not set!</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15652288"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">qos_flag</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialog", "dlg_flag", 5)
+modparam("qos", "qos_flag", 7)
+...
+route {
+  ...
+  if (method=="INVITE") {
+    setflag(5); # set the dialog flag
+    setflag(7); # Set the qos flag
+  }
+  ...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15535848"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>There are no exported functions that could be used in scripts.
+	</p>
+        </div>
+        <div class="section" title="6. Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15536576"></a>6. Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <p>There are no exported statistics for the qos module.</p>
+        </div>
+        <div class="section" title="7. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15537296"></a>7. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>There are no exported MI functions for the qos module.
+	Check the dialog MI functions for a way to inspect the internals
+	of a dialog.
+	</p>
+        </div>
+        <div class="section" title="8. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15538096"></a>8. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <p>There are no exported pseudo-variables for the qos module.
+	</p>
+        </div>
+        <div class="section" title="9. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15538808"></a>9. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <p>Just load the module and remember to set the flag.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp15874192"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18353448">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16777496">1.1. 
+		<code class="function">register_qoscb (qos, type, cb, param)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18353448"></a>1. Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.  register_qoscb (qos, type, cb, param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16777496"></a>1.1. 
+		<code class="function">register_qoscb (qos, type, cb, param)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Register a new callback to the qos.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct qos_ctx_st* qos</em></span> - qos to 
+			register callback to. If maybe NULL only for QOSCB_CREATED callback
+			type, which is not a per qos type.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>int type</em></span> - types of callbacks; more
+			types may be register for the same callback function; only 
+			QOSCB_CREATED must be register alone. Possible types:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>QOSCB_CREATED</em></span> - called when a new 
+				qos context is created - it's a global type (not associated to 
+				any qos).
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>QOSCB_ADD_SDP</em></span> - called when a new SDP
+				was added to the qos context - it's a per qos type.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>QOSCB_UPDATE_SDP</em></span> - called when an
+				existing SDP is updated - it's a per qos type.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>QOSCB_REMOVE_SDP</em></span> - called when an 
+				existing SDP is removed - it's a per qos type.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>QOSCB_TERMINATED</em></span> - called when the 
+				qos is terminated.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>qos_cb cb</em></span> - callback function to be 
+			called. Prototype is: <span class="quote">“<span class="quote">void (qos_cb) 
+			(struct qos_ctx_st *qos, int type, struct qos_cb_params *params);
+			</span>”</span>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>void *param</em></span> - parameter to be passed to
+			the callback function.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1295 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ratelimit Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4416368" title="ratelimit Module" />
+    <link rel="next" href="#idp7264384" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="ratelimit Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4416368"></a>ratelimit Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan Vasile</span> <span class="surname">Harjoc</span></h3>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Hendrik</span> <span class="surname">Scholz</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan Vasile</span> <span class="surname">Harjoc</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Hendrik</span> <span class="surname">Scholz</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2006 Freenet Cityline GmbH</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2008-2010 VoIP Embedded Inc.</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp7264384">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp5990280">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6436072">2. Use Cases</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp4397168">3. Static Rate Limiting Algorithms</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4397888">3.1. Tail Drop Algorithm (TAILDROP)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4399480">3.2. Random Early Detection Algorithm (RED)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7101920">3.3. Network Algorithm (NETWORK)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4401032">3.4. Dynamic Rate Limiting Algorithms</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4402608">3.5. Feedback Algorithm (FEEDBACK)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4404584">4. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4404936">4.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4406528">4.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4408272">5. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4408640">5.1. <code class="varname">timer_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4411400">5.2. <code class="varname">queue</code> (integer:string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4489896">5.3. <code class="varname">pipe</code> (integer:string:integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp5930408">6. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7097520">6.1. 
+		<code class="function">rl_check([pvar])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6174400">6.2. 
+		<code class="function">rl_check_pipe([pipe_no])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4499928">7. Exported RPC Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4500280">7.1. 
+		<code class="function">rl.stats</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4502752">7.2. 
+		<code class="function">rl.set_pipe</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4506928">7.3. 
+		<code class="function">rl.get_pipes</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6842680">7.4. 
+		<code class="function">rl.set_queue</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4549848">7.5. 
+		<code class="function">rl.get_queues</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4552264">7.6. 
+		<code class="function">rl.set_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4556384">7.7. 
+		<code class="function">rl.get_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4558848">7.8. 
+		<code class="function">rl.push_load</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4562080">7.9. 
+		<code class="function">rl.set_dbg</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4565360">8. Known limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp4410280">Set <code class="varname">timer_interval</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4488536">Set <code class="varname">queue</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp4491280">Set <code class="varname">pipe</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp4494936"><code class="function">rl_check</code> usage</a></dt>
+          <dt>1.5. <a href="#idp4498368"><code class="function">rl_check_pipe</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp7264384"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp5990280">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6436072">2. Use Cases</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp4397168">3. Static Rate Limiting Algorithms</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4397888">3.1. Tail Drop Algorithm (TAILDROP)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4399480">3.2. Random Early Detection Algorithm (RED)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7101920">3.3. Network Algorithm (NETWORK)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4401032">3.4. Dynamic Rate Limiting Algorithms</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4402608">3.5. Feedback Algorithm (FEEDBACK)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4404584">4. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4404936">4.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4406528">4.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4408272">5. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4408640">5.1. <code class="varname">timer_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4411400">5.2. <code class="varname">queue</code> (integer:string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4489896">5.3. <code class="varname">pipe</code> (integer:string:integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp5930408">6. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7097520">6.1. 
+		<code class="function">rl_check([pvar])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6174400">6.2. 
+		<code class="function">rl_check_pipe([pipe_no])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4499928">7. Exported RPC Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4500280">7.1. 
+		<code class="function">rl.stats</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4502752">7.2. 
+		<code class="function">rl.set_pipe</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4506928">7.3. 
+		<code class="function">rl.get_pipes</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6842680">7.4. 
+		<code class="function">rl.set_queue</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4549848">7.5. 
+		<code class="function">rl.get_queues</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4552264">7.6. 
+		<code class="function">rl.set_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4556384">7.7. 
+		<code class="function">rl.get_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4558848">7.8. 
+		<code class="function">rl.push_load</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4562080">7.9. 
+		<code class="function">rl.set_dbg</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4565360">8. Known limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp5990280"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module implements rate limiting for SIP requests. In contrast to
+		the PIKE module this limits the flow based on a per SIP request type
+		basis and not per source IP. The MI interface can be used to
+		change tunables while running Kamailio.
+	</p>
+          <p>
+		The module implements the pipe/queue policy from BSD's ipfw manual,
+		with some simplifications. In principle, each specified method is
+		associated with its own queue and a number of queues are connected
+		to a certain pipe (see the queue and pipe params).
+	</p>
+          <p>
+		Please also take a look at the <span class="quote">‚Äú<span class="quote">pipelimit</span>‚Äù</span> module,
+		that implements the pipe policy with database support. Note that it 
+		doesn't implement the queues that exist in this module.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Use Cases">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6436072"></a>2.¬†Use Cases</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Limiting the rate messages are processed on a system directly
+		influences the load. The ratelimit module can be used to protect a
+		single host or to protect an Kamailio cluster when run on the dispatching
+		box in front.
+	</p>
+          <p>
+		A sample configuration snippet might look like this:
+	</p>
+          <pre class="programlisting">...
+	if (is_method("INVITE|REGISTER|SUBSCRIBE") {
+		if (!rl_check()) {
+			append_to_reply("Retry-After: 5\r\n");
+			sl_send_reply("503","Limiting");
+			exit;
+		};
+	};
+...</pre>
+          <p>
+		Upon every incoming request listed above <code class="function">rl_check</code>
+		is invoked. It returns an OK code if the current per request load is below the
+		configured threshold. If the load is exceeded the function returns an
+		error and an administrator can discard requests with a stateless
+		response.
+	</p>
+        </div>
+        <div class="section" title="3.¬†Static Rate Limiting Algorithms">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4397168"></a>3.¬†Static Rate Limiting Algorithms</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The ratelimit module supports two different statc algorithms
+		to be used by rl_check to determine whether a message should be
+		blocked or not.
+	</p>
+          <div class="section" title="3.1.¬†Tail Drop Algorithm (TAILDROP)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4397888"></a>3.1.¬†Tail Drop Algorithm (TAILDROP)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is a trivial algorithm that imposes some risks when used in
+		conjunction with long timer intervals. At the start of each interval
+		an internal counter is reset and incremented for each incoming
+		message. Once the counter hits the configured limit rl_check returns
+		an error.
+		</p>
+            <p>
+		The downside of this algorithm is that it can lead to SIP client
+		synchronization. During a relatively long interval only the first
+		requests (i.e. REGISTERs) would make it through. Following messages
+		(i.e. RE-REGISTERs) will all hit the SIP proxy at the same time when a
+		common Expire timer expired. Other requests will be retransmitted
+		after a given time, the same on all devices with the same firmware/by
+		the same vendor.
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†Random Early Detection Algorithm (RED)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4399480"></a>3.2.¬†Random Early Detection Algorithm (RED)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The Random Early Detection Algorithm tries to circumvent the synchronization
+		problem imposed by the tail drop algorithm by measuring the average load and
+		adapting the drop rate dynamically. When running with the RED algorithm
+		(enabled by default) Kamailio will return errors to the Kamailio
+		routing engine every n'th packet trying to evenly spread the measured
+		load of the last timer interval onto the current interval. As a
+		negative side effect Kamailio might drop messages although the limit might
+		not be reached within the interval. Decrease the timer interval if you
+		encounter this.
+		</p>
+          </div>
+          <div class="section" title="3.3.¬†Network Algorithm (NETWORK)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7101920"></a>3.3.¬†Network Algorithm (NETWORK)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This algorithm relies on information provided by network interfaces.
+		The total amount of bytes waiting to be consumed on all the network
+		interfaces is retrieved once every timer_interval seconds.
+		If the returned amount exceeds the limit specified in the modparam,
+		rl_check returns an error. 
+		</p>
+          </div>
+          <div class="section" title="3.4.¬†Dynamic Rate Limiting Algorithms">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4401032"></a>3.4.¬†Dynamic Rate Limiting Algorithms</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When running Kamailio on different machines, one has to adjust the drop
+		rates for the static algorithms to maintain a sub 100% load average or
+		packets will start getting dropped in the network stack.  While this is not
+		in itself difficult, it isn't neither accurate nor trivial: another
+		server taking a notable fraction of the CPU time will require re-tuning
+		the parameters.
+		</p>
+            <p>
+		While tuning the drop rates from the outside based on a certain factor
+		is possible, having the algorithm run inside ratelimit permits tuning
+		the rates based on internal server parameters and is somewhat more
+		flexible (or it will be when support for external load factors - as
+		opposed to cpu load - is added).
+		</p>
+          </div>
+          <div class="section" title="3.5.¬†Feedback Algorithm (FEEDBACK)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4402608"></a>3.5.¬†Feedback Algorithm (FEEDBACK)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Using the PID Controller model
+		(see <a class="ulink" href="javascript:if(confirm('http://en.wikipedia.org/wiki/PID_controller  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://en.wikipedia.org/wiki/PID_controller'" tppabs="http://en.wikipedia.org/wiki/PID_controller">Wikipedia page</a>),
+		the drop rate is adjusted dynamically based on the load factor so that
+		the load factor always drifts towards the specified limit (or setpoint,
+		in PID terms).
+		</p>
+            <p>
+		As reading the CPU load average is relatively expensive (opening /proc/stat,
+		parsing it, etc), this only happens once every timer_interval seconds and
+		consequently the FEEDBACK value is only at these intervals recomputed. This
+		in turn makes it difficult for the drop rate to adjust quickly.  Worst case
+		scenarios are request rates going up/down instantly by thousands - it takes
+		up to 20 seconds for the controller to adapt to the new request rate.
+		</p>
+            <p>
+		Generally though, as real life request rates drift by less, adapting should
+		happen much faster.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4404584"></a>4.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4404936"></a>4.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SL: Stateless request handling</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="4.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4406528"></a>4.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4408272"></a>5.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†timer_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4408640"></a>5.1.¬†<code class="varname">timer_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The initial length of a timer interval in seconds. All amounts of
+		messages have to be divided by this timer to get a messages per second
+		value.
+		</p>
+            <p>
+		IMPORTANT: A too small value may lead to performance penalties due to
+		timer process overloading.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 10.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4410280"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">timer_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ratelimit", "timer_interval", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬†queue (integer:string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4411400"></a>5.2.¬†<code class="varname">queue</code> (integer:string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The format of the queue parameter is "pipe_no:method". For each defined
+		method, the algorithm defined by pipe number "pipe_no" will be used.
+		</p>
+            <p>
+		To specify a queue that accepts all methods, use <span class="quote">‚Äú<span class="quote">*</span>‚Äù</span> instead of METHOD.
+		As queues are matched against request methods, you will usually want to have
+		this as the last queue added or other queues with specific methods will never
+		match.  At this time, glob or regexp patterns are not supported.
+		</p>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp4488536"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">queue</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# assign pipe no 0 to method REGISTER
+# assign pipe no 3 to method INVITE
+# assign pipe no 2 to all other methods
+modparam("ratelimit", "queue", "0:REGISTER")
+modparam("ratelimit", "queue", "3:INVITE")
+modparam("ratelimit", "queue", "2:*")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬†pipe (integer:string:integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4489896"></a>5.3.¬†<code class="varname">pipe</code> (integer:string:integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The format of the pipe param is "pipe_no:algorithm:limit".  For each defined
+		pipe, the given algorithm with the given limit will be used.
+		</p>
+            <p>
+		A pipe is characterised by its algorithm and limit (bandwidth, in ipfw terms).
+		When specifying a limit, the unit depends on the algorithm used and doesn't
+		need to be spedified also (eg, for TAILDROP or RED, limit means packets/sec,
+		whereas with the FEEDBACK algorithm, it means [CPU] load factor).
+		</p>
+            <div class="example">
+              <a id="idp4491280"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">pipe</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# define pipe 0 with a limit of 200 pkts/sec using TAILDROP algorithm
+# define pipe 1 with a limit of 100 pkts/sec using RED algorithm
+# define pipe 2 with a limit of 50 pkts/sec using TAILDROP algorithm
+# define pipe 3 with a limit of load factor 80 using FEEDBACK algorithm
+# define pipe 4 with a limit of 10000 pending bytes in the rx_queue
+#                                     using NETWORK algorithm
+modparam("ratelimit", "pipe", "0:TAILDROP:200")
+modparam("ratelimit", "pipe", "1:RED:100")
+modparam("ratelimit", "pipe", "2:TAILDROP:50")
+modparam("ratelimit", "pipe", "3:FEEDBACK:80")
+modparam("ratelimit", "pipe", "4:NETWORK:10000")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp5930408"></a>6.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† rl_check([pvar])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7097520"></a>6.1.¬†
+		<code class="function">rl_check([pvar])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check the current request against the matched ratelimit algorithm.  If no
+		parameter is provided, the queue will be matched based on method type, and
+		then the pipe will be identified based on the matched queue.  If a pipe number
+		is provided as a parameter, then the given pipe number will be used for
+		identifying the ratelimit algorithm.
+		The pipe number must be provided via a pseudovariable.  It is recommended to
+		provide the pipe number via an integer pseudovariable.
+		</p>
+            <p>The method will return an error code if the limit for the matched
+		algorithm is reached.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pvar</em></span> - the pseudovariable holding the pipe id to
+						    be used by ratelimit.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4494936"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†<code class="function">rl_check</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	# perform queue/pipe match for current method
+	if (!rl_check()) {
+		append_to_reply("Retry-After: 5\r\n");
+		sl_send_reply("503","Limiting");
+		exit;
+	};
+...
+	# use pipe no 1 for the current method
+	# set int pvar to 1
+	$var(p) = 1;
+	if (!rl_check("$var(p)")) {
+		append_to_reply("Retry-After: 5\r\n");
+		sl_send_reply("503","Limiting");
+		exit;
+	};
+...
+	# use pipe no 1 for the current method
+	# set str pvar to 1
+	$var(p) = "1";
+	if (!rl_check("$var(p)") {
+		append_to_reply("Retry-After: 5\r\n");
+		sl_send_reply("503","Limiting");
+		exit; 
+	};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.¬† rl_check_pipe([pipe_no])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6174400"></a>6.2.¬†
+		<code class="function">rl_check_pipe([pipe_no])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check the current request against the matched ratelimit algorithm.  If no
+		parameter is provided, the queue will be matched based on method type, and
+		then the pipe will be identified based on the matched queue.  If a pipe number
+		is provided as a parameter, then the given pipe number will be used for
+		identifying the ratelimit algorithm.
+		</p>
+            <p>The method will return an error code if the limit for the matched
+		algorithm is reached.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_no</em></span> - the pipe id to be used by ratelimit.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4498368"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="function">rl_check_pipe</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	# perform queue/pipe match for current method
+	if (!rl_check_pipe()) {
+		append_to_reply("Retry-After: 5\r\n");
+		sl_send_reply("503","Limiting");
+		exit;
+	};
+...
+	# use pipe no 1 for the current method
+	if (!rl_check_pipe("1") {
+		append_to_reply("Retry-After: 5\r\n");
+		sl_send_reply("503","Limiting");
+		exit; 
+	};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†Exported RPC Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4499928"></a>7.¬†Exported RPC Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬† rl.stats">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4500280"></a>7.1.¬†
+		<code class="function">rl.stats</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists the parameters and variables in the ratelimit module.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.stats</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.stats</pre>
+          </div>
+          <div class="section" title="7.2.¬† rl.set_pipe">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4502752"></a>7.2.¬†
+		<code class="function">rl.set_pipe</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the pipe parameters for the given pipe id.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.set_pipe</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_id</em></span> - pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_algorithm</em></span> - the
+			algorithm assigned to the given pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_limit</em></span> - the limit
+			assigned to the given pipe id.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.set_pipe 2 RED 10</pre>
+          </div>
+          <div class="section" title="7.3.¬† rl.get_pipes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4506928"></a>7.3.¬†
+		<code class="function">rl.get_pipes</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use pipes.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.get_pipes</em></span>
+		</p>
+            <p>Parameters:<span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.get_pipes</pre>
+          </div>
+          <div class="section" title="7.4.¬† rl.set_queue">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6842680"></a>7.4.¬†
+		<code class="function">rl.set_queue</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the queue parameters for the given queue id.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.set_queue</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>queue_id</em></span> - queue id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>queue_method</em></span> - the method
+			assigned to the given queue id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_id</em></span> - the pipe id
+			assigned to the given queue id.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.set_queue 3 INVITE 2</pre>
+          </div>
+          <div class="section" title="7.5.¬† rl.get_queues">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4549848"></a>7.5.¬†
+		<code class="function">rl.get_queues</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use queues.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.get_queues</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.get_queues</pre>
+          </div>
+          <div class="section" title="7.6.¬† rl.set_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4552264"></a>7.6.¬†
+		<code class="function">rl.set_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the PID Controller parameters for the Feedback Algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.set_pid</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ki</em></span> - the integral parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kp</em></span> - the proportional parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kd</em></span> - the derivative parameter.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.set_pid 0.5 0.5 0.5</pre>
+          </div>
+          <div class="section" title="7.7.¬† rl.get_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4556384"></a>7.7.¬†
+		<code class="function">rl.get_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use PID Controller parameters.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.get_pid</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.get_pid</pre>
+          </div>
+          <div class="section" title="7.8.¬† rl.push_load">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4558848"></a>7.8.¬†
+		<code class="function">rl.push_load</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Force the value of the load parameter. This method is useful
+		for testing the Feedback algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.push_load</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>load</em></span> - the forced value of load
+			(it must be greater then 0.0 and smaller then 1.0).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.push_load 0.85</pre>
+          </div>
+          <div class="section" title="7.9.¬† rl.set_dbg">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4562080"></a>7.9.¬†
+		<code class="function">rl.set_dbg</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function will enable/disable a WARNING debug log exposing the
+		internal counters for each pipe (useful in monitoring the ratelimit internals).
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>rl.set_dbg</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>dbg</em></span> - the debug value (0 means disable and
+			1 means enable).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">		kamcmd rl.set_dbg 1</pre>
+          </div>
+        </div>
+        <div class="section" title="8.¬†Known limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4565360"></a>8.¬†Known limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The pipes and queues are stored as static vectors, so no more than
+	MAX_PIPES/MAX_QUEUES can be added without recompilation.
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>MAX_PIPES</em></span> - 16
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>MAX_QUEUES</em></span> - 10
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

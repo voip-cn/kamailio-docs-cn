@@ -1,0 +1,760 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>janssonrpc-c Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4246768" title="janssonrpc-c Module" />
+    <link rel="next" href="#idp2891832" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="janssonrpc-c Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4246768"></a>janssonrpc-c Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Joe</span> <span class="surname">Hillenbrand</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:joe@flowroute.com">joe@flowroute.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Matthew</span> <span class="surname">Williams</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:matthew@flowroute.com">matthew@flowroute.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Flowroute LLC (flowroute.com)</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2891832">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3167336">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2956672">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3372728">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2354256">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2347192">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1830224">3.1. <code class="varname">min_srv_ttl</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2646664">3.2. <code class="varname">result_pv</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2536392">3.3. <code class="varname">server</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp224272">3.4. <code class="varname">retry_codes</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp227608">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp227976">4.1. 
+				<code class="function">janssonrpc_notification(conn, method, parameters)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp175448">4.2. 
+				<code class="function">janssonrpc_request(conn, method, params[, options]])</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp185000">4.3. 
+				Error Handling
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2460176">Set <code class="varname">min_srv_ttl</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp2730200">Set <code class="varname">result_pv</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp222784">Set <code class="varname">server</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp226336">Set <code class="varname">retry_codes</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp231704"><code class="function">janssonrpc_notification</code> usage</a></dt>
+          <dt>1.6. <a href="#idp183656"><code class="function">janssonrpc_request</code> usage</a></dt>
+          <dt>1.7. <a href="#idp3006912">route example with internal_error handling</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2891832"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3167336">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2956672">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3372728">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2354256">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2347192">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1830224">3.1. <code class="varname">min_srv_ttl</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2646664">3.2. <code class="varname">result_pv</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2536392">3.3. <code class="varname">server</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp224272">3.4. <code class="varname">retry_codes</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp227608">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp227976">4.1. 
+				<code class="function">janssonrpc_notification(conn, method, parameters)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp175448">4.2. 
+				<code class="function">janssonrpc_request(conn, method, params[, options]])</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp185000">4.3. 
+				Error Handling
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3167336"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This module provides access to JSON-RPC 2.0 services (operating over TCP/Netstrings)
+			in accordance with http://www.jsonrpc.org/specification. It uses JANSSON library for
+			JSON document management.
+		</p>
+          <p>
+			It uses t_suspend() and t_continue() from the TM module.
+		</p>
+          <p>
+			Note that after invoking an asyncronous operation, the processing
+			will continue later, in another application process. Therefore, do not
+			rely on variables stored in private memory, use shared memory if you
+			want to get values after the processing is resumend (e.g., $shv(...)
+			or htable $sht(...)).
+		</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2956672"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3372728"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following modules must be loaded before this module:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>jansson</em></span> - jansson json handling.
+					</li>
+                <li class="listitem"><span class="emphasis"><em>tm</em></span> - transaction management.
+					</li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2354256"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed before running
+				Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>jansson (http://www.digip.org/jansson/)</em></span>, tested with: 2.2+
+					</li>
+                <li class="listitem">
+                  <p>
+							<span class="emphasis"><em>libevent 2.0.5+ (http://libevent.org/)</em></span>, tested with: 2.0.16
+						</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2347192"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. min_srv_ttl (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1830224"></a>3.1. <code class="varname">min_srv_ttl</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The minimum acceptable TTL in seconds for SRV DNS entries. This means that TTLs from the DNS will be ignored if they are lower than this value. It cannot be set lower than 1 second.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default is 5 seconds.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2460176"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">min_srv_ttl</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("janssonrpc-c", "min_srv_ttl", 30)
+...</pre>
+                <p>
+				This will set any SRV TTL lower than 30 seconds to 30 seconds.
+			</p>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. result_pv (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2646664"></a>3.2. <code class="varname">result_pv</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The PV spec where to store the result of a call to janssonrpc_request(). It can be any writtable PV.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">$var(jsrpc_result)</span>”</span>.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2730200"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">result_pv</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("janssonrpc-c", "result_pv", "$var(result)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. server (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2536392"></a>3.3. <code class="varname">server</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The server providing the remote jsonrpc service. Format can be "conn=example;addr=localhost;port=9999;priority=10;weight=20" or "conn=bar;srv=_sip._tcp.example.net".
+			</p>
+            <p>
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>conn</em></span> - name for a collection of servers (required).
+					</li>
+                <li class="listitem"><span class="emphasis"><em>srv</em></span> - DNS SRV domain name (optional).
+					</li>
+                <li class="listitem"><span class="emphasis"><em>addr</em></span> - host address (required, except when using srv).
+					</li>
+                <li class="listitem"><span class="emphasis"><em>port</em></span> - host port (required, except when using srv).
+					</li>
+                <li class="listitem"><span class="emphasis"><em>priority</em></span> - server are grouped by priority. Servers with higher priority (lower number) are used first. Default is 0. (optional when using addr, invalid otherwise).
+					</li>
+                <li class="listitem"><span class="emphasis"><em>weight</em></span> - functions the same as a DNS SRV weight. Requests are distributed between servers of the same priority proportional to their weight. Default is 1. (optional when using addr, invalid otherwise).
+					</li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="example">
+              <a id="idp222784"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">server</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("janssonrpc-c", "server", "conn=tests;srv=_test1._tcp.example.net");
+modparam("janssonrpc-c", "server", "conn=tests;srv=_test2._tcp.example.net");
+modparam("janssonrpc-c", "server", "conn=local;addr=localhost;port=8080;priority=10;weight=10");
+modparam("janssonrpc-c", "server", "conn=user_db;addr=rpc.prod.exmaple.net;port=5060;priority=10;weight=10");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. retry_codes (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp224272"></a>3.4. <code class="varname">retry_codes</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				A comma delimited list of error codes or error code ranges to automatically schedule a request retry if received.
+			</p>
+            <p>
+				This will only be used if there is no route specified for the request.
+			</p>
+            <p>
+				An error code can be any interger, but is typically a negative number.
+			</p>
+            <p>
+				An error code range is delimited by "<span class="emphasis"><em>..</em></span>" . For example, "-32099..-32000".
+			</p>
+            <p>
+				Spaces are ignored.
+			</p>
+            <div class="example">
+              <a id="idp226336"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">retry_codes</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("janssonrpc-s", "retry_codes", "-32603, -32000..-32099");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp227608"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  janssonrpc_notification(conn, method, parameters)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp227976"></a>4.1. 
+				<code class="function">janssonrpc_notification(conn, method, parameters)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>conn</em></span> - name for a collection of servers (required)
+					</li>
+                <li class="listitem"><span class="emphasis"><em>method</em></span> - jsonrpc method (required)
+					</li>
+                <li class="listitem"><span class="emphasis"><em>params</em></span> - jsonrpc request params (required)
+						Use $null or empty string to not send any parameters in the jsonrpc notification.
+					</li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+				Unlike janssonrpc_request (below), notifications do not receive a response.
+				Script processing continues in the usual fashion as soon as the notification
+				has been sent.
+			</p>
+            <p>
+				If no servers can be reached, a message is sent to the logs.
+			</p>
+            <p>
+				The 'method' and 'params' can be a static string or dynamic string value with
+				config variables.
+			</p>
+            <div class="example">
+              <a id="idp231704"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">janssonrpc_notification</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+janssonrpc_notification("user_db", "update_user", '{"id": 1234, "name": "Daniel"}');
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  janssonrpc_request(conn, method, params[, options]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp175448"></a>4.2. 
+				<code class="function">janssonrpc_request(conn, method, params[, options]])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The conn, method, params, and options can be a static string or
+				a dynamic string value with config variables.
+			</p>
+            <p>
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>conn</em></span> - name for a collection of servers (required)
+					</li>
+                <li class="listitem"><span class="emphasis"><em>method</em></span> - jsonrpc method (required)
+					</li>
+                <li class="listitem"><span class="emphasis"><em>params</em></span> - jsonrpc request params (required)
+						Use $null or empty string to not send any parameters in the jsonrpc request.
+					</li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>options</em>
+                    </span>
+                  </p>
+                  <p>
+							Options for the janssonrpc_request function. Format can be "route=RESPONSE;retry=2;timeout=100".
+							All these parameters are optional.
+						</p>
+                  <p>
+							</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem"><span class="emphasis"><em>retry</em></span> - number of times you retry a failed request. 
+									-1 means retry forever. Default is 0.
+									Request will be retried if they either timeout or fail to send.
+									Retries untilize exponential back off between successive retries,
+									up to 60 seconds. The equation for time between retries is:
+									<p>
+									time = n^2 * timeout (for time &lt; 60 seconds)
+									</p>
+									 where n is the number of times a request has been tried.
+								</li>
+                      <li class="listitem"><span class="emphasis"><em>timeout</em></span> - request timeout in milliseconds. Default is 500.
+								</li>
+                      <li class="listitem"><span class="emphasis"><em>route</em></span> - resume script execution at this route.
+								</li>
+                    </ul>
+                  </div>
+                  <p>
+						</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+				When a response is received, processing continues for the SIP request in the route specified.
+			</p>
+            <p>
+				If no route is specified, then any errors are logged and successes are ignored.
+				The function will also not interupt script execution.
+			</p>
+            <p>
+				Since the SIP request handling is resumed in another process,
+				the config file execution is lost. Only shared variables ($shv, $avp, etc)
+				should be used for any value that will be needed when the script is resumed.
+			</p>
+            <p>
+				The result is stored in the pseudo-variable specified in the module parameter 'result_pv'.
+				This pseudo-variable is set <span class="emphasis"><em>after</em></span> the response is received.
+			</p>
+            <div class="example">
+              <a id="idp183656"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">janssonrpc_request</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+janssonrpc_request("user_db", "get_user", '{"id": 1234}', "route=RESPONSE;retry=1");
+	...
+
+route[RESPONSE] {
+	xlog("Result received: $var(result)");
+	...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  Error Handling">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp185000"></a>4.3. 
+				Error Handling
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				When a route is specified as part of the janssonrpc_request() function,
+				a JSON object is stored in the result pseudo-variable (see 'Parameters').
+			</p>
+            <p>
+				The JSON object can be accessed using the jansson_get() function
+				from the jansson module and is of the form:
+				</p>
+            <pre class="programlisting">...
+{
+  "result" : {...},
+  "error": {...},
+  "internal_error": { "code": ..., "message": ..., "data": ... }
+}
+...</pre>
+            <p>
+			</p>
+            <p>
+				'result' or 'error' come from the server and should follow the
+				JSONRPC specification.  Keep in mind a server's 'error' might
+				not follow the JSONRPC specification and not include a 'code'
+				and/or 'message', so be sure to check that they are there
+				before trying to use them.
+			</p>
+            <p>
+				When 'internal_error' is present, that means there was a
+				problem with sending or receiving the request. 'internal_error'
+				contains a 'code' which is an integer representing the type of
+				error, a 'message' which is the error in string form, and
+				possibly 'data' which is usually the failed request, which is
+				optional and can be useful for debugging.
+			</p>
+            <p>
+				Here are the possible values for internal error codes:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>-1</em></span>: "Failed to build request"</li>
+                <li class="listitem"><span class="emphasis"><em>-5</em></span>: "Failed to send request"</li>
+                <li class="listitem"><span class="emphasis"><em>-10</em></span>: "JSON parse error"</li>
+                <li class="listitem"><span class="emphasis"><em>-11</em></span>: "Failed to convert response to a pseudo-variable"</li>
+                <li class="listitem"><span class="emphasis"><em>-20</em></span>: "Bad response from server"</li>
+                <li class="listitem"><span class="emphasis"><em>-50</em></span>: "Request retry failed"</li>
+                <li class="listitem"><span class="emphasis"><em>-75</em></span>: "Request dropped for server disconnection"</li>
+                <li class="listitem"><span class="emphasis"><em>-100</em></span>: "Message timeout"</li>
+                <li class="listitem"><span class="emphasis"><em>-1000</em></span>: "There is a bug". Please report these errors to the module maintainers.</li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="example">
+              <a id="idp3006912"></a>
+              <p class="title">
+                <strong>Example 1.7. route example with internal_error handling</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+route {
+	janssonrpc_request("user_db", "get_user", '{"id": 1234}', "route=RESPONSE;retry=1");
+}
+
+route[RESPONSE] {
+	if(jansson_get($var(jsrpc_result), "internal_error", "$var(internal)")) {
+		route(INTERNAL);
+	} else if(jansson_get($var(jsrpc_result), "error", "$var(error)")) {
+		route(ERROR);
+	} else if(jansson_get($var(jsrpc_result), "result", "$var(result)")) {
+		route(RESULT);
+	}
+    t_reply("200", "OK");
+}
+
+route[RESULT] {
+	xlog("result is $var(result)\n");
+	xlog("success\n");
+}
+
+route[ERROR] {
+	xlog("There was an error\n");
+	if(jansson_get($var(error), "code", "$var(c)")) {
+		xlog("code is $var(c)\n");
+	}
+
+	if(jansson_get($var(error), "message", "$var(r)")) {
+		xlog("error is $var(r)\n");
+	}
+
+	if(jansson_get($var(error), "data", "$var(d)")) {
+		xlog("data is $var(d)\n");
+	}
+}
+
+route[INTERNAL] {
+	xlog("There was an internal error\n");
+
+	jansson_get($var(internal), "code", "$var(c)");
+	xlog("code is $var(c)\n");
+
+	jansson_get($var(internal), "message", "$var(r)");
+	xlog("error is $var(r)\n");
+
+	if(jansson_get($var(internal), "data", "$var(d)")) {
+		xlog("request is $var(d)\n");
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

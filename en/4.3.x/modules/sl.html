@@ -1,0 +1,1092 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The SL Module - Statless request handling</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#sl" title="The SL Module - Statless request handling" />
+    <link rel="next" href="#idp71776" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The SL Module - Statless request handling">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="sl"></a>The SL Module - Statless request handling</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp71776">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#sl.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#sl.parameters">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#default_code">2.1. <code class="varname">default_code</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#default_reason">2.2. <code class="varname">default_reason</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#bind_tm">2.3. <code class="varname">bind_tm</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#sl.functions">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl_send_reply">3.1. 
+	    <code class="function">sl_send_reply(code, reason)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#send_reply">3.2. 
+		<code class="function">send_reply(code, reason)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl_reply_error">3.3. 
+	    <code class="function">sl_reply_error()</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl_forward_reply">3.4. 
+		<code class="function">sl_forward _reply([ code, [ reason ] ])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#sl.stats">4. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.1xx_replies">4.1. <code class="varname">1xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.200_replies">4.2. <code class="varname">200_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.202_replies">4.3. <code class="varname">202_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.2xx_replies">4.4. <code class="varname">2xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.300_replies">4.5. <code class="varname">300_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.301_replies">4.6. <code class="varname">301_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.302_replies">4.7. <code class="varname">302_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.3xx_replies">4.8. <code class="varname">3xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.400_replies">4.9. <code class="varname">400_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.401_replies">4.10. <code class="varname">401_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.403_replies">4.11. <code class="varname">403_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.404_replies">4.12. <code class="varname">404_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.407_replies">4.13. <code class="varname">407_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.408_replies">4.14. <code class="varname">408_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.483_replies">4.15. <code class="varname">483_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.4xx_replies">4.16. <code class="varname">4xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.500_replies">4.17. <code class="varname">500_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.5xx_replies">4.18. <code class="varname">5xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.6xx_replies">4.19. <code class="varname">6xx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.xxx_replies">4.20. <code class="varname">xxx_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.sent_replies">4.21. <code class="varname">sent_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.sent_err_replies">4.22. <code class="varname">sent_err_replies</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.failures">4.23. <code class="varname">failures</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sl.stats.received_ACKs">4.24. <code class="varname">received_ACKs</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2347416">default_code example</a></dt>
+          <dt>1.2. <a href="#idp2132760">default_reason example</a></dt>
+          <dt>1.3. <a href="#idp2208744">bind_tm example</a></dt>
+          <dt>1.4. <a href="#idp1406544"><code class="function">sl_send_reply</code> usage</a></dt>
+          <dt>1.5. <a href="#idp3003200"><code class="function">send_reply</code> usage</a></dt>
+          <dt>1.6. <a href="#idp3005760"><code class="function">sl_reply_error</code> usage</a></dt>
+          <dt>1.7. <a href="#idp518672"><code class="function">send_reply</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp71776"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#sl.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#sl.parameters">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#default_code">2.1. <code class="varname">default_code</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#default_reason">2.2. <code class="varname">default_reason</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#bind_tm">2.3. <code class="varname">bind_tm</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#sl.functions">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sl_send_reply">3.1. 
+	    <code class="function">sl_send_reply(code, reason)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#send_reply">3.2. 
+		<code class="function">send_reply(code, reason)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl_reply_error">3.3. 
+	    <code class="function">sl_reply_error()</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl_forward_reply">3.4. 
+		<code class="function">sl_forward _reply([ code, [ reason ] ])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#sl.stats">4. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.1xx_replies">4.1. <code class="varname">1xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.200_replies">4.2. <code class="varname">200_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.202_replies">4.3. <code class="varname">202_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.2xx_replies">4.4. <code class="varname">2xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.300_replies">4.5. <code class="varname">300_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.301_replies">4.6. <code class="varname">301_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.302_replies">4.7. <code class="varname">302_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.3xx_replies">4.8. <code class="varname">3xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.400_replies">4.9. <code class="varname">400_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.401_replies">4.10. <code class="varname">401_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.403_replies">4.11. <code class="varname">403_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.404_replies">4.12. <code class="varname">404_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.407_replies">4.13. <code class="varname">407_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.408_replies">4.14. <code class="varname">408_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.483_replies">4.15. <code class="varname">483_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.4xx_replies">4.16. <code class="varname">4xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.500_replies">4.17. <code class="varname">500_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.5xx_replies">4.18. <code class="varname">5xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.6xx_replies">4.19. <code class="varname">6xx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.xxx_replies">4.20. <code class="varname">xxx_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.sent_replies">4.21. <code class="varname">sent_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.sent_err_replies">4.22. <code class="varname">sent_err_replies</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.failures">4.23. <code class="varname">failures</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sl.stats.received_ACKs">4.24. <code class="varname">received_ACKs</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sl.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The <acronym class="acronym">SL</acronym> module allows the SIP server to act as a stateless
+	    UA server and generate replies to SIP requests without keeping
+	    state. That is beneficial in many scenarios, in which you wish not
+	    to burden server's memory and scale well.
+	</p>
+          <p>
+	    The <acronym class="acronym">SL</acronym> module needs to filter ACKs sent after a
+	    local stateless reply to an INVITE was generated. To recognize such
+	    ACKs, ser adds a special "signature" in to-tags. This signature is
+	    sought for in incoming ACKs, and if included, the ACKs are
+	    absorbed.
+	</p>
+          <p>
+	    To speed up the filtering process, the module uses a timeout
+	    mechanism. When a reply is sent, a timer us set. As long as the
+	    timer is valid, the incoming ACK requests will be checked using TO
+	    tag value. Once the timer expires, all the ACK messages are let 
+	    through - a long time passed till it sent a reply, so it does not 
+	    expect any ACK that have to be blocked.
+	</p>
+          <p>
+	    The ACK filtering may fail in some rare cases. If you think these
+	    matter to you, better use stateful processing (<acronym class="acronym">TM</acronym> 
+	    module) for INVITE processing. Particularly, the problem happens when a UA
+	    sends an INVITE which already has a to-tag in it (e.g., a
+	    re-INVITE) and the server want to reply to it. Then, it will keep the
+	    current to-tag, which will be mirrored in ACK. SER will not see
+	    its signature and forward the ACK downstream. Caused harm is not
+	    bad--just a useless ACK is forwarded.
+	</p>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sl.parameters"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. default_code (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="default_code"></a>2.1. <code class="varname">default_code</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default reply status code.
+		</p>
+            <p>
+		Default value is 500.
+		</p>
+            <div class="example">
+              <a id="idp2347416"></a>
+              <p class="title">
+                <strong>Example 1.1. default_code example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sl", "default_code", 505)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. default_reason (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="default_reason"></a>2.2. <code class="varname">default_reason</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default reply reason phrase.
+		</p>
+            <p>
+		Default value is 'Internal Server Error'.
+		</p>
+            <div class="example">
+              <a id="idp2132760"></a>
+              <p class="title">
+                <strong>Example 1.2. default_reason example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sl", "default_reason", "Server Error")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3. bind_tm (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="bind_tm"></a>2.3. <code class="varname">bind_tm</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Controls if SL module should attempt to bind to TM module in order
+		to send stateful reply when the transaction is created.
+		</p>
+            <p>
+		Default value is 1 (enabled).
+		</p>
+            <div class="example">
+              <a id="idp2208744"></a>
+              <p class="title">
+                <strong>Example 1.3. bind_tm example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sl", "bind_tm", 0)  # feature disabled
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sl.functions"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.  sl_send_reply(code, reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl_send_reply"></a>3.1. 
+	    <code class="function">sl_send_reply(code, reason)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    For the current request, a reply is sent back having the given code
+	    and text reason. The reply is sent stateless, totally independent
+	    of the Transaction module and with no retransmission for the
+	    INVITE's replies.
+	</p>
+            <p>
+		If the code is in the range 300-399 (redirect reply), the current
+		destination set is appended to the reply as Contact headers.
+		The destination set contains the request URI (R-URI), if it is
+		modified compared to the received one, plus the branches added to the
+		request (e.g., after an append_branch() or lookup("location")).
+		If the R-URI was changed but it is not desired to be part of the
+		destination set, it can be reverted using the function revert_uri().
+	</p>
+            <p>
+		Custom headers to the reply can be added using append_to_reply()
+		function from textops module.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>code</em></span> - Return code.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reason</em></span> - Reason phrase.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1406544"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">sl_send_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sl_send_reply("404", "Not found");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.  send_reply(code, reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="send_reply"></a>3.2. 
+		<code class="function">send_reply(code, reason)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		For the current request, a reply is sent back having the given code 
+		and text reason. The reply is sent stateful or stateless, depending of 
+		the <acronym class="acronym">TM</acronym> module: if a transaction exists for the current
+		request, then the reply is sent statefully, otherwise stateless.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>code</em></span> - Return code.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reason</em></span> - Reason phrase.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+			It can be used on ONREPLY_ROUTE executed by tm module (upon a
+			t_on_reply() callback).
+		</p>
+            <div class="example">
+              <a id="idp3003200"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">send_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+send_reply("404", "Not found");
+...
+send_reply("403", "Invalid user - $fU");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.  sl_reply_error()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl_reply_error"></a>3.3. 
+	    <code class="function">sl_reply_error()</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Sends back an error reply describing the nature of the last
+	    internal error.  Usually this function should be used after a
+	    script function that returned an error code.
+	</p>
+            <div class="example">
+              <a id="idp3005760"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">sl_reply_error</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sl_reply_error();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.  sl_forward _reply([ code, [ reason ] ])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl_forward_reply"></a>3.4. 
+		<code class="function">sl_forward _reply([ code, [ reason ] ])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Forward statelessy the current received SIP reply, with the option to
+		change the status code and reason text. The new code has to be in the same
+		class. The received reply is forwarded as well by core when the config
+		execution ended, unless it is dropped from config.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>code</em></span> - Status code.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reason</em></span> - Reason phrase.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp518672"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">send_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(status=="408")
+    sl_forward_reply("404", "Not found");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sl.stats"></a>4. Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. 1xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.1xx_replies"></a>4.1. <code class="varname">1xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 1xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.2. 200_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.200_replies"></a>4.2. <code class="varname">200_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 201 replies.
+		</p>
+          </div>
+          <div class="section" title="4.3. 202_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.202_replies"></a>4.3. <code class="varname">202_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 202 replies.
+		</p>
+          </div>
+          <div class="section" title="4.4. 2xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.2xx_replies"></a>4.4. <code class="varname">2xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 2xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.5. 300_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.300_replies"></a>4.5. <code class="varname">300_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 300 replies.
+		</p>
+          </div>
+          <div class="section" title="4.6. 301_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.301_replies"></a>4.6. <code class="varname">301_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 301 replies.
+		</p>
+          </div>
+          <div class="section" title="4.7. 302_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.302_replies"></a>4.7. <code class="varname">302_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 302 replies.
+		</p>
+          </div>
+          <div class="section" title="4.8. 3xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.3xx_replies"></a>4.8. <code class="varname">3xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 3xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.9. 400_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.400_replies"></a>4.9. <code class="varname">400_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 400 replies.
+		</p>
+          </div>
+          <div class="section" title="4.10. 401_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.401_replies"></a>4.10. <code class="varname">401_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 401 replies.
+		</p>
+          </div>
+          <div class="section" title="4.11. 403_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.403_replies"></a>4.11. <code class="varname">403_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 403 replies.
+		</p>
+          </div>
+          <div class="section" title="4.12. 404_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.404_replies"></a>4.12. <code class="varname">404_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 404 replies.
+		</p>
+          </div>
+          <div class="section" title="4.13. 407_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.407_replies"></a>4.13. <code class="varname">407_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 407 replies.
+		</p>
+          </div>
+          <div class="section" title="4.14. 408_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.408_replies"></a>4.14. <code class="varname">408_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 408 replies.
+		</p>
+          </div>
+          <div class="section" title="4.15. 483_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.483_replies"></a>4.15. <code class="varname">483_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 483 replies.
+		</p>
+          </div>
+          <div class="section" title="4.16. 4xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.4xx_replies"></a>4.16. <code class="varname">4xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 4xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.17. 500_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.500_replies"></a>4.17. <code class="varname">500_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 500 replies.
+		</p>
+          </div>
+          <div class="section" title="4.18. 5xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.5xx_replies"></a>4.18. <code class="varname">5xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 5xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.19. 6xx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.6xx_replies"></a>4.19. <code class="varname">6xx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of 6xx replies.
+		</p>
+          </div>
+          <div class="section" title="4.20. xxx_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.xxx_replies"></a>4.20. <code class="varname">xxx_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of replies whose code don't match any above.
+		</p>
+          </div>
+          <div class="section" title="4.21. sent_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.sent_replies"></a>4.21. <code class="varname">sent_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of all sent replies.
+		</p>
+          </div>
+          <div class="section" title="4.22. sent_err_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.sent_err_replies"></a>4.22. <code class="varname">sent_err_replies</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of sent error replies.
+		</p>
+          </div>
+          <div class="section" title="4.23. failures">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.failures"></a>4.23. <code class="varname">failures</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of failures.
+		</p>
+          </div>
+          <div class="section" title="4.24. received_ACKs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sl.stats.received_ACKs"></a>4.24. <code class="varname">received_ACKs</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of received ACKs filtered by SL module.
+		</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

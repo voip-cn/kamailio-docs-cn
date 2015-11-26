@@ -1,0 +1,1075 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Textopsx Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#textopsx" title="Textopsx Module" />
+    <link rel="next" href="#idp45224" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Textopsx Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="textopsx"></a>Textopsx Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp45224">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#textops.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#textopsx.functions">2. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.msg_apply_changes">2.1. 
+		<code class="function">msg_apply_changes()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.change_reply_status">2.2. 
+	    <code class="function">change_reply_status(code, reason)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.remove_body">2.3. 
+		<code class="function">remove_body()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.keep_hf">2.4. 
+		<code class="function">keep_hf(regexp)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.fnmatch">2.5. 
+		<code class="function">fnmatch(value, expr [, flags])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.append_hf_value">2.6. 
+	    <code class="function">append_hf_value(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.insert_hf_value">2.7. 
+	    <code class="function">insert_hf_value(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.remove_hf_value">2.8. 
+	    <code class="function">remove_hf_value(hf_par)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.remove_hf_value2">2.9. 
+	    <code class="function">remove_hf_value2(hf_par)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.assign_hf_value">2.10. 
+	    <code class="function">assign_hf_value(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.assign_hf_value2">2.11. 
+	    <code class="function">assign_hf_value2(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.include_hf_value">2.12. 
+	    <code class="function">include_hf_value(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.exclude_hf_value">2.13. 
+	    <code class="function">exclude_hf_value(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.f.hf_value_exists">2.14. 
+	    <code class="function">hf_value_exists(hf, hvalue)</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#textopsx.selects">3. Selects</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.sel.hf_value">3.1. @hf_value</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.sel.hf_value2">3.2. @hf_value2</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textopsx.sel.hf_value_exists">3.3. @hf_value_exists</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp27168"><code class="function">msg_apply_changes()</code> usage</a></dt>
+          <dt>1.2. <a href="#idp2319752"><code class="function">change_reply_status</code> usage</a></dt>
+          <dt>1.3. <a href="#idm17608"><code class="function">remove_body()</code> usage</a></dt>
+          <dt>1.4. <a href="#idm14768"><code class="function">keep_hf()</code> usage</a></dt>
+          <dt>1.5. <a href="#idm11672"><code class="function">fnmatch()</code> usage</a></dt>
+          <dt>1.6. <a href="#idm7472"><code class="function">append_hf_value</code> usage</a></dt>
+          <dt>1.7. <a href="#idm2624"><code class="function">insert_hf_value</code> usage</a></dt>
+          <dt>1.8. <a href="#idp49480"><code class="function">remove_hf_value</code> usage</a></dt>
+          <dt>1.9. <a href="#idp53272"><code class="function">remove_hf_value2</code> usage</a></dt>
+          <dt>1.10. <a href="#idp57728"><code class="function">assign_hf_value</code> usage</a></dt>
+          <dt>1.11. <a href="#idp62272"><code class="function">assign_hf_value2</code> usage</a></dt>
+          <dt>1.12. <a href="#idp87424"><code class="function">include_hf_value</code> usage</a></dt>
+          <dt>1.13. <a href="#idp91432"><code class="function">exclude_hf_value</code> usage</a></dt>
+          <dt>1.14. <a href="#idp95760"><code class="function">hf_value_exists</code> usage</a></dt>
+          <dt>1.15. <a href="#idp1436496"><code class="function">@hf_value select</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp45224"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#textops.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#textopsx.functions">2. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.msg_apply_changes">2.1. 
+		<code class="function">msg_apply_changes()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.change_reply_status">2.2. 
+	    <code class="function">change_reply_status(code, reason)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.remove_body">2.3. 
+		<code class="function">remove_body()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.keep_hf">2.4. 
+		<code class="function">keep_hf(regexp)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.fnmatch">2.5. 
+		<code class="function">fnmatch(value, expr [, flags])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.append_hf_value">2.6. 
+	    <code class="function">append_hf_value(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.insert_hf_value">2.7. 
+	    <code class="function">insert_hf_value(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.remove_hf_value">2.8. 
+	    <code class="function">remove_hf_value(hf_par)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.remove_hf_value2">2.9. 
+	    <code class="function">remove_hf_value2(hf_par)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.assign_hf_value">2.10. 
+	    <code class="function">assign_hf_value(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.assign_hf_value2">2.11. 
+	    <code class="function">assign_hf_value2(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.include_hf_value">2.12. 
+	    <code class="function">include_hf_value(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.exclude_hf_value">2.13. 
+	    <code class="function">exclude_hf_value(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.f.hf_value_exists">2.14. 
+	    <code class="function">hf_value_exists(hf, hvalue)</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#textopsx.selects">3. Selects</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.sel.hf_value">3.1. @hf_value</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.sel.hf_value2">3.2. @hf_value2</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textopsx.sel.hf_value_exists">3.3. @hf_value_exists</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="textops.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module implements functions for SIP message text operations 
+		in routing block configurations.
+		It adds new features similar to the textops module (textops eXtentions).
+	</p>
+        </div>
+        <div class="section" title="2. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="textopsx.functions"></a>2. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.  msg_apply_changes()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.msg_apply_changes"></a>2.1. 
+		<code class="function">msg_apply_changes()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Use this function to apply changes performed on SIP message content. Be
+		careful when using this function;  due to special handling of changes
+		to the SIP message buffer so far, using this function might change
+		the behaviour of your config.  Do test your config properly!
+		</p>
+            <p>
+		The function returns true (1) on success. If it is failure before the
+		new content is build, the function returns false (-1), the old content
+		is still in place. If parsing of the new content is failing, the
+		function stops executions of the config file (the internal structure
+		is no longer valid for config processing, like it happens when a
+		broken message is received from network).
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE or ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp27168"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">msg_apply_changes()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_hf("My-Header: yes\r\n");
+if(msg_apply_changes())
+{
+    # msg buffer has a new content
+    if(is_present_hf("My-Header"))
+    {
+        # will get here always
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2.  change_reply_status(code, reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.change_reply_status"></a>2.2. 
+	    <code class="function">change_reply_status(code, reason)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Intercept a SIP reply (in an onreply_route) and change its status code 
+		and reason phrase prior to forwarding it.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>code</em></span> - Status code.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reason</em></span> - Reason phrase.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp2319752"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">change_reply_status</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+onreply_route {
+    if (@status == "603") {
+        change_reply_status(404, "Not Found");
+        exit;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3.  remove_body()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.remove_body"></a>2.3. 
+		<code class="function">remove_body()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Use this function to remove the body of SIP requests or replies.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm17608"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">remove_body()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+remove_body();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.4.  keep_hf(regexp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.keep_hf"></a>2.4. 
+		<code class="function">keep_hf(regexp)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Remove headers that don't match the regular expression regexp.
+			Several header are ignored always (thus not removed): Via, From,
+			To, Call-ID, CSeq, Content-Length, Content-Type, Max-Forwards,
+			Contact, Route, Record-Route -- these can be removed one by one
+			with remove_hf().
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm14768"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">keep_hf()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+keep_hf("User-Agent");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.5.  fnmatch(value, expr [, flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.fnmatch"></a>2.5. 
+		<code class="function">fnmatch(value, expr [, flags])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Match the value against the expr using shell-style pattern
+			for file name matching (see man page for C function fnmatch()).
+			It is known to be faster and use less-memory than regular expressions.
+		</p>
+            <p>
+			Parameter 'flags' is optional and can be 'i' to do case insensitive
+			matching.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm11672"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">fnmatch()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(fnmatch("$rU", "123*"))
+{
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.6.  append_hf_value(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.append_hf_value"></a>2.6. 
+	    <code class="function">append_hf_value(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Append new header value after an existing header, if no index acquired append at the end of
+		list. Note that a header may consist of comma delimited list of values.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - Header field to be appended. Format: HFNAME [ [IDX] ].
+		If index is not specified new header is inserted at the end of message.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - Value to be added, config var formatting supported.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idm7472"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">append_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_hf_value("foo", "gogo;stamp=$Ts")   # add new header
+append_hf_value("foo[1]", "gogo")  # add new value behind first value
+append_hf_value("foo[-1]", "$var(Bar)") # try add value to the last header, if not exists add new header
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.7.  insert_hf_value(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.insert_hf_value"></a>2.7. 
+	    <code class="function">insert_hf_value(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Insert new header value before an existing header, if no index acquired insert before first
+		hf header. Note that a header may consist of comma delimited list of values.
+		To insert value behing last value use <code class="function">appenf_hf_value</code>.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - Header field to be appended. Format: HFNAME [ [IDX] ].
+		If index is not specified new header is inserted at the top of message.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - Value to be added, config var formatting supported.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idm2624"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">insert_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+insert_hf_value("foo[2]", "gogo")
+insert_hf_value("foo", "$avp(foo)")   # add new header at the top of list
+insert_hf_value("foo[1]", "gogo") # try add to the first header
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.8.  remove_hf_value(hf_par)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.remove_hf_value"></a>2.8. 
+	    <code class="function">remove_hf_value(hf_par)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove the header value from existing header, Note that a header may consist of comma delimited list of values.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_par</em></span> - Header field/param to be removed. Format: HFNAME [ [IDX] ] [. PARAM ]
+		If asterisk is specified as index then all values are affected.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp49480"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">remove_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+remove_hf_value("foo")  # remove foo[1]
+remove_hf_value("foo[*]")  # remove all foo's headers
+remove_hf_value("foo[-1]") # last foo
+remove_hf_value("foo.bar")  # delete parameter
+remove_hf_value("foo[*].bar") # for each foo delete bar parameters
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.9.  remove_hf_value2(hf_par)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.remove_hf_value2"></a>2.9. 
+	    <code class="function">remove_hf_value2(hf_par)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove specified header or parameter. It is expected header in Authorization format (comma delimiters are not treated as multi-value delimiters).
+
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_par</em></span> - Header/param to be removed. Format: HFNAME [ [IDX] ] [. PARAM ]
+		If asterisk is specified as index then all values are affected.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp53272"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">remove_hf_value2</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+remove_hf_value2("foo")  # remove foo[1]
+remove_hf_value2("foo[*]")  # remove all foo's headers, the same as remove_hf_header("foo[*]");
+remove_hf_value2("foo[-1]") # last foo
+remove_hf_value2("foo.bar")  # delete parameter
+remove_hf_value2("foo[*].bar") # for each foo delete bar parameters
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.10.  assign_hf_value(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.assign_hf_value"></a>2.10. 
+	    <code class="function">assign_hf_value(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Assign value to specified header value / param.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_para</em></span> - Header field value / param to be appended.
+				Format: HFNAME [ [IDX] ] [. PARAM]
+		If asterisk is specified as index then all values are affected.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - Value to be assigned, config var
+				formatting supported. If value is empty then no equal sign apears in param.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp57728"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">assign_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+assign_hf_value("foo", "gogo")  # foo[1]
+assign_hf_value("foo[-1]", "gogo")  # foo[last_foo]
+
+assign_hf_value("foo.bar", "")
+assign_hf_value("foo[3].bar", "")
+assign_hf_value("foo[*]", "")  # remove all foo's, empty value remains
+assign_hf_value("foo[*].bar", "")  # set empty value (ex. lr)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.11.  assign_hf_value2(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.assign_hf_value2"></a>2.11. 
+	    <code class="function">assign_hf_value2(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Assign value to specified header. It is expected header in Authorization format (comma delimiters are not treated as multi-value delimiters).
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_para</em></span> - Header field value / param to be appended. Format: HFNAME [ [IDX] ] [. PARAM]
+		If asterisk is specified as index then all values are affected.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - Value to be assigned, config var formatting supported.
+				If value is empty then no equal sign apears in param.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp62272"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">assign_hf_value2</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+assign_hf_value2("Authorization.integrity-protected", "\"yes\"")
+assign_hf_value2("foo[-1]", "gogo")  # foo[last_foo]
+assign_hf_value2("foo[*].bar", "")  # set empty value (ex. lr)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.12.  include_hf_value(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.include_hf_value"></a>2.12. 
+	    <code class="function">include_hf_value(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Add value in set if not exists, eg. "Supported: path,100rel".
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - Header field name to be affected.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - config var formatting supported.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp87424"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">include_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+include_hf_value("Supported", "path");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.13.  exclude_hf_value(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.exclude_hf_value"></a>2.13. 
+	    <code class="function">exclude_hf_value(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove value from set if exists, eg. "Supported: path,100rel".
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - Header field name to be affected.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - config formatting supported.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp91432"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">exclude_hf_value</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+exclude_hf_value("Supported", "100rel");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.14.  hf_value_exists(hf, hvalue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.f.hf_value_exists"></a>2.14. 
+	    <code class="function">hf_value_exists(hf, hvalue)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if value exists in set. Alternate select <span class="emphasis"><em>@hf_value_exists.HF.VALUE</em></span>
+		may be used. It returns one or zero.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - Header field name to be affected. Underscores are treated as dashes.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hvalue</em></span> - config var formatting supported.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp95760"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">hf_value_exists</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (hf_value_exists("Supported", "100rel")) {
+
+}
+
+if (@hf_value_exists.supported.path == "1") {
+
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Selects">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="textopsx.selects"></a>3. Selects</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. @hf_value">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.sel.hf_value"></a>3.1. @hf_value</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Get value of required header-value or param. Note that functions called 'value2'
+		works with Authorization-like headers where comma is not treated as value delimiter. Formats:
+		@hf_value.HFNAME[IDX]    # idx value, negative value counts from bottom
+		@hf_value.HFNAME.PARAM_NAME
+		@hf_value.HFNAME[IDX].PARAM_NAME
+		@hf_value.HFNAME.p.PARAM_NAME  # or .param., useful if requred called "uri", "p", "param"
+		@hf_value.HFNAME[IDX].p.PARAM_NAME # dtto
+		@hf_value.HFNAME[IDX].uri # (&lt; &amp; &gt; excluded)
+		@hf_value.HFNAME[*]     # return comma delimited list of all values (combines headers)
+		@hf_value.HFNAME        # the same as above [*] but may be parsed by cfg.y
+		@hf_value.HFNAME[*].uri # return comma delimited list of uris (&lt; &amp; &gt; excluded)
+		@hf_value.HFNAME.uri    # the same as above [*] but may be parsed by cfg.y
+		@hf_value.HFNAME[IDX].name  # returns name part, quotes excluded
+		@hf_value.HFNAME.name   # returns name part of the first value
+
+		@hf_value2.HFNAME        # returns value of first header
+		@hf_value2.HFNAME[IDX]   # returns value of idx's header
+		@hf_value2.HFNAME.PARAM_NAME
+		@hf_value2.HFNAME[IDX].PARAM_NAME
+
+		@hf_value.HFNAME[IDX].uri  # return URI, quotes excluded
+		@hf_value.HFNAME.p.uri  # returns param named uri, not URI itself
+		@hf_value.HFNAME.p.name # returns param named name, not name itself
+		@hf_value.HFNAME[IDX].uri.name #  any sel_any_uri nested features may be used
+		@hf_value.HFNAME[IDX].nameaddr.name # select_any_nameaddr
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>HFNAME</em></span> - Header field name. Underscores are treated as dashes.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>IDX</em></span> - Value index, negative value counts from bottom
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>PARAM_NAME</em></span> - name of parameter
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1436496"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">@hf_value select</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$a = @hf_value.my_header[1].my_param;
+xplog("L_ERR", "$sel(@hf_value.via[-1]), $sel(@hf_value.from.tag)\n");
+$b = @hf_value.p_associated_uri;
+
+xplog("L_ERR", "Route uris: '$sel(@hf_value.route[*].uri)'\n");
+$rr = @hf_value.route.uri;
+
+$prt = @hf_value2.authorization.integrity_protected;
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. @hf_value2">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.sel.hf_value2"></a>3.2. @hf_value2</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		TBA.
+	</p>
+          </div>
+          <div class="section" title="3.3. @hf_value_exists">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textopsx.sel.hf_value_exists"></a>3.3. @hf_value_exists</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		TBA.
+	</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

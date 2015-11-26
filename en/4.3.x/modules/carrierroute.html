@@ -1,0 +1,3051 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>carrierroute</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15532552" title="carrierroute" />
+    <link rel="next" href="#idp2716472" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="carrierroute">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15532552"></a>carrierroute</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Henning</span> <span class="surname">Westerholt</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Lucian</span> <span class="surname">Balaceanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:lucian.balaceanu@1and1.ro">lucian.balaceanu@1and1.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 1&amp;1 Internet AG</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2716472">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3025272">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idm15488">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm15112">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm12184">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11816">3.1. <code class="varname">subscriber_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9168">3.2. <code class="varname">subscriber_user_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6592">3.3. <code class="varname">subscriber_domain_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm4064">3.4. <code class="varname">subscriber_carrier_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm1512">3.5. <code class="varname">config_source</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1818416">3.6. <code class="varname">config_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2646712">3.7. <code class="varname">default_tree</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp70696">3.8. <code class="varname">use_domain</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp73440">3.9. <code class="varname">fallback_default</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp76320">3.10. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79216">3.11. <code class="varname">match_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp82200">3.12. <code class="varname">avoid_failed_destinations</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp85016">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp86640">4.1. 
+		<code class="function">cr_user_carrier(user, domain, dstavp)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp21112">4.2. 
+		<code class="function">cr_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp29800">4.3. 
+		<code class="function">cr_nofallback_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp37608">4.4. 
+		<code class="function">cr_next_domain(carrier, domain, prefix_matching, host, reply_code, dstavp)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1262288">5. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1263272">5.1. <code class="function">cr_reload_routes</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1264824">5.2. <code class="function">cr_dump_routes</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1265760">5.3. <code class="function">cr_replace_host</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1270760">5.4. <code class="function">cr_deactivate_host</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1276200">5.5. <code class="function">cr_activate_host</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1280600">5.6. <code class="function">cr_add_host</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1287952">5.7. <code class="function">cr_delete_host</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1295504">6. Configuration examples</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1302584">7. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1302936">7.1. Database setup</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1305256">7.2. Database examples</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1318576">7.3. User specific routing</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp879688">2. Module parameter for database access.</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2485848">1. <code class="varname">db_url</code> (String)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp225704">2. <code class="varname">carrierroute_table</code> (String)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2584456">3. <code class="varname">carrierroute_id_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1100096">4. <code class="varname">carrierroute_carrier_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp334944">5. <code class="varname">carrierroute_domain_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp554064">6. <code class="varname">carrierroute_scan_prefix_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp556320">7. <code class="varname">carrierroute_flags_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp558256">8. <code class="varname">carrierroute_mask_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp560224">9. <code class="varname">carrierroute_prob_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3220752">10. <code class="varname">carrierroute_strip_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3222752">11. <code class="varname">carrierroute_rewrite_host_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3224888">12. <code class="varname">carrierroute_rewrite_prefix_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2778456">13. <code class="varname">carrierroute_rewrite_suffix_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2780552">14. <code class="varname">carrierroute_description_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2782656">15. <code class="varname">carrierfailureroute_table</code> (String)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2785304">16. <code class="varname">carrierfailureroute_id_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3476560">17. <code class="varname">carrierfailureroute_carrier_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3478520">18. <code class="varname">carrierfailureroute_domain_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3480688">19. <code class="varname">carrierfailureroute_scan_prefix_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3483040">20. <code class="varname">carrierfailureroute_host_name_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3485120">21. <code class="varname">carrierfailureroute_reply_code_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1801032">22. <code class="varname">carrierfailureroute_flags_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1803056">23. <code class="varname">carrierfailureroute_mask_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1805104">24. <code class="varname">carrierfailureroute_next_domain_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1807168">25. <code class="varname">carrierfailureroute_description_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1809208">26. <code class="varname">carrier_name_table</code> (String)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1811880">27. <code class="varname">carrier_name_id_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1813864">28. <code class="varname">carrier_name_carrier_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1815736">29. <code class="varname">domain_name_table</code> (String)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2875392">30. <code class="varname">domain_name_id_col</code> (string)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2877376">31. <code class="varname">domain_name_domain_col</code> (string)</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm10360">Set <code class="varname">subscriber_table</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm7784">Set <code class="varname">subscriber_user_col</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm5232">Set <code class="varname">subscriber_domain_col</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm2600">Set <code class="varname">subscriber_carrier_col</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp1773672">Set <code class="varname">config_source</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp2424408">Set <code class="varname">config_file</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp291816">Set <code class="varname">default_tree</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp72272">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp75136">Set <code class="varname">fallback_default</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp78048">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp81032">Set <code class="varname">match_mode</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp83776">Set <code class="varname">avoid_failed_destinations</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp1269504"><code class="function">cr_replace_host</code> usage</a></dt>
+          <dt>1.14. <a href="#idp1274952"><code class="function">cr_deactivate_host</code> usage</a></dt>
+          <dt>1.15. <a href="#idp1279360"><code class="function">cr_activate_host</code> usage</a></dt>
+          <dt>1.16. <a href="#idp1286712"><code class="function">cr_add_host</code> usage</a></dt>
+          <dt>1.17. <a href="#idp1294176"><code class="function">cr_delete_host</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1295856">Configuration example - Routing to default tree</a></dt>
+          <dt>1.19. <a href="#idp1297408">Configuration example - Routing to user tree</a></dt>
+          <dt>1.20. <a href="#idp1299168">Configuration example - module configuration</a></dt>
+          <dt>1.21. <a href="#idp1305632">Example database content - carrierroute table</a></dt>
+          <dt>1.22. <a href="#idp1310504">Example database content - simple carrierfailureroute table</a></dt>
+          <dt>1.23. <a href="#idp1313400">Example database content - more complex carrierfailureroute table</a></dt>
+          <dt>1.24. <a href="#idp1315952">Example database content - carrier_name table</a></dt>
+          <dt>1.25. <a href="#idp1317224">Example database content - domain_name table</a></dt>
+          <dt>1.26. <a href="#idp1319544">Necessary extensions for the user table</a></dt>
+          <dt>2.1. <a href="#idp1182912">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>2.2. <a href="#idp2359528">Set <code class="varname">carrierroute_table</code> parameter</a></dt>
+          <dt>2.3. <a href="#idp2869728">Set <code class="varname">carrierroute_id_col</code> parameter</a></dt>
+          <dt>2.4. <a href="#idp2165032">Set <code class="varname">carrierroute_carrier_col</code> parameter</a></dt>
+          <dt>2.5. <a href="#idp3471680">Set <code class="varname">carrierroute_domain_col</code> parameter</a></dt>
+          <dt>2.6. <a href="#idp555144">Set <code class="varname">carrierroute_scan_prefix_col</code> parameter</a></dt>
+          <dt>2.7. <a href="#idp557088">Set <code class="varname">carrierroute_flags_col</code> parameter</a></dt>
+          <dt>2.8. <a href="#idp559064">Set <code class="varname">carrierroute_mask_col</code> parameter</a></dt>
+          <dt>2.9. <a href="#idp3219616">Set <code class="varname">carrierroute_prob_col</code> parameter</a></dt>
+          <dt>2.10. <a href="#idp3221584">Set <code class="varname">carrierroute_strip_col</code> parameter</a></dt>
+          <dt>2.11. <a href="#idp3223712">Set <code class="varname">carrierroute_rewrite_host_col</code> parameter</a></dt>
+          <dt>2.12. <a href="#idp3225760">Set <code class="varname">carrierroute_rewrite_prefix_col</code> parameter</a></dt>
+          <dt>2.13. <a href="#idp2779328">Set <code class="varname">carrierroute_rewrite_suffix_col</code> parameter</a></dt>
+          <dt>2.14. <a href="#idp2781440">Set <code class="varname">carrierroute_description_col</code> parameter</a></dt>
+          <dt>2.15. <a href="#idp2784120">Set <code class="varname">carrierfailureroute_table</code> parameter</a></dt>
+          <dt>2.16. <a href="#idp2786080">Set <code class="varname">carrierfailureroute_id_col</code> parameter</a></dt>
+          <dt>2.17. <a href="#idp3477304">Set <code class="varname">carrierfailureroute_carrier_col</code> parameter</a></dt>
+          <dt>2.18. <a href="#idp3479472">Set <code class="varname">carrierfailureroute_domain_col</code> parameter</a></dt>
+          <dt>2.19. <a href="#idp3481816">Set <code class="varname">carrierfailureroute_scan_prefix_col</code> parameter</a></dt>
+          <dt>2.20. <a href="#idp3483896">Set <code class="varname">carrierfailureroute_host_name_col</code> parameter</a></dt>
+          <dt>2.21. <a href="#idp1799864">Set <code class="varname">carrierfailureroute_reply_code_col</code> parameter</a></dt>
+          <dt>2.22. <a href="#idp1801840">Set <code class="varname">carrierfailureroute_flags_col</code> parameter</a></dt>
+          <dt>2.23. <a href="#idp1803896">Set <code class="varname">carrierfailureroute_mask_col</code> parameter</a></dt>
+          <dt>2.24. <a href="#idp1805944">Set <code class="varname">carrierfailureroute_next_domain_col</code> parameter</a></dt>
+          <dt>2.25. <a href="#idp1807984">Set <code class="varname">carrierfailureroute_description_col</code> parameter</a></dt>
+          <dt>2.26. <a href="#idp1810688">Set <code class="varname">carrier_name_table</code> parameter</a></dt>
+          <dt>2.27. <a href="#idp1812680">Set <code class="varname">carrier_name_id_col</code> parameter</a></dt>
+          <dt>2.28. <a href="#idp1814568">Set <code class="varname">carrier_name_carrier_col</code> parameter</a></dt>
+          <dt>2.29. <a href="#idp2874200">Set <code class="varname">domain_name_table</code> parameter</a></dt>
+          <dt>2.30. <a href="#idp2876192">Set <code class="varname">domain_name_id_col</code> parameter</a></dt>
+          <dt>2.31. <a href="#idp2878080">Set <code class="varname">domain_name_domain_col</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2716472"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3025272">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idm15488">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm15112">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm12184">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11816">3.1. <code class="varname">subscriber_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9168">3.2. <code class="varname">subscriber_user_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6592">3.3. <code class="varname">subscriber_domain_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm4064">3.4. <code class="varname">subscriber_carrier_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm1512">3.5. <code class="varname">config_source</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1818416">3.6. <code class="varname">config_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2646712">3.7. <code class="varname">default_tree</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp70696">3.8. <code class="varname">use_domain</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp73440">3.9. <code class="varname">fallback_default</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp76320">3.10. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79216">3.11. <code class="varname">match_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp82200">3.12. <code class="varname">avoid_failed_destinations</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp85016">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp86640">4.1. 
+		<code class="function">cr_user_carrier(user, domain, dstavp)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp21112">4.2. 
+		<code class="function">cr_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp29800">4.3. 
+		<code class="function">cr_nofallback_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp37608">4.4. 
+		<code class="function">cr_next_domain(carrier, domain, prefix_matching, host, reply_code, dstavp)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1262288">5. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1263272">5.1. <code class="function">cr_reload_routes</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1264824">5.2. <code class="function">cr_dump_routes</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1265760">5.3. <code class="function">cr_replace_host</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1270760">5.4. <code class="function">cr_deactivate_host</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1276200">5.5. <code class="function">cr_activate_host</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1280600">5.6. <code class="function">cr_add_host</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1287952">5.7. <code class="function">cr_delete_host</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1295504">6. Configuration examples</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1302584">7. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1302936">7.1. Database setup</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1305256">7.2. Database examples</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1318576">7.3. User specific routing</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3025272"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>A module which provides routing, balancing and blacklisting capabilities.</p>
+          <p>
+		The module provides routing, balancing and blacklisting capabilities.
+		It reads routing entries from a database source or from a config file at Kamailio
+		startup. It can uses one routing tree (for one carrier), or if needed for every user
+		a different routing tree (unique for each carrier) for number prefix based routing.
+		It supports several route tree domains,	e.g. for failback routes or different routing
+		rules for VoIP and PSTN targets.
+	</p>
+          <p>
+		Based on the tree, the module decides which number prefixes are forwarded to which
+		gateway. It can also distribute the traffic by ratio parameters. Furthermore, the
+		requests can be distributed by a hash funcion to predictable destinations. The hash
+		source is configurable, two different hash functions are available.
+	</p>
+          <p>
+		This modules scales up to more than a few million users, and is able to handle
+		more than several hundred thousand routing table entries. We recieved reports of
+		some setups that used more than a million routing table entries. It also supports
+		a large number of carriers and domains which can be efficiently looked up in most of
+		the cases (see below for more informations). In load balancing scenarios the usage
+		of the config file mode is recommended, to avoid the additional complexity that the
+		database driven routing creates.
+	</p>
+          <p>
+		Routing tables can be reloaded and edited (in config file mode) with the MI
+		interface, the config file is updated according the changes. This is not
+		implemented for the db interface, because its easier to do the changes
+		directly on the db. But the reload and dump functions works of course here
+		too.
+	</p>
+          <p>
+		Some module functionality is not fully available in the config file mode, as
+		it is not possible to specify all information that can be stored in the database
+		tables in the config file. Further information about these limitations is given
+		in later sections. For user based routing or LCR you should use the database mode.
+	</p>
+          <p>
+		In database mode, this module supports names and IDs for the carriers and domains.
+		When using IDs for the routing functions, efficient binary search is used to find the
+		needed data structures. If you are using constant strings as parameter, these will
+		be converted to IDs during the fixup procedure. However, if you are using AVPs as
+		parameter and they contain strings, this cannot be converted to IDs during the
+		fixup procedure. In that case linear search is performed to find the needed data
+		structures. So from a performance point of view it is better to pass only IDs in
+		AVPs to the routing functions.
+	</p>
+          <p>
+		Basically this module could be used as an replacement for the lcr and the
+		dispatcher module, if you have certain flexibility, integration and/or performance
+		requirements that can't be satisfied with these modules. But for smaller
+		installations it probably make more sense to use the lcr and dispatcher module.
+	</p>
+          <p>
+		Starting with version 3.1 , if you want to use this module in failure routes,
+		it is not needed to call<span class="quote">“<span class="quote">append_branch()</span>”</span> after rewriting the request URI in order to
+		relay the message to the new target. Its also supportes the usage of database
+		derived failure routing descisions with the carrierfailureroute table.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm15488"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm15112"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following module must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span>, when a database is used as configuration data source.
+				Only SQL based databases are supported, as this module needs the capability to
+				issue raw queries. Its not possible to use the dbtext or db_berkeley module at the moment.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				The <span class="emphasis"><em>tm module</em></span>, when you want to use the $T_reply_code pseudo-variable in
+				the <span class="quote">“<span class="quote">cr_next_domain</span>”</span> function.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm12184"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. subscriber_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11816"></a>3.1. <code class="varname">subscriber_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    The name of the table containing the subscribers
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">subscriber</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idm10360"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">subscriber_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "subscriber_table", "subscriber")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. subscriber_user_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9168"></a>3.2. <code class="varname">subscriber_user_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    The name of the column in the subscriber table containing the usernames.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idm7784"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">subscriber_user_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "subscriber_user_col", "username")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. subscriber_domain_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6592"></a>3.3. <code class="varname">subscriber_domain_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    The name of the column in the subscriber table containing the domain of 
+		    the subscriber.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idm5232"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">subscriber_domain_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "subscriber_domain_col", "domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. subscriber_carrier_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm4064"></a>3.4. <code class="varname">subscriber_carrier_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    The name of the column in the subscriber table containing the carrier id
+		    of the subscriber.
+
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">cr_preferred_carrier</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idm2600"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">subscriber_carrier_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "subscriber_carrier_col", "cr_preferred_carrier")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. config_source (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm1512"></a>3.5. <code class="varname">config_source</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    Specifies whether the module loads its config data from a file or from a
+		    database. Possible values are file or db.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">file</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1773672"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">config_source</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "config_source", "file")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. config_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1818416"></a>3.6. <code class="varname">config_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    Specifies the path to the config file.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">/etc/kamailio/carrierroute.conf</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp2424408"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">config_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "config_file", "/etc/kamailio/carrierroute.conf")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. default_tree (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2646712"></a>3.7. <code class="varname">default_tree</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    The name of the carrier tree used per default (if the current
+		    subscriber has no preferred tree)
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">default</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp291816"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">default_tree</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "default_tree", "default")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. use_domain (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp70696"></a>3.8. <code class="varname">use_domain</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    When using tree lookup per user, this parameter specifies whether
+		    to use the domain part for user matching or not. This parameter
+		    is tunable via the ser cfg framework.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp72272"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "use_domain", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. fallback_default (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp73440"></a>3.9. <code class="varname">fallback_default</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    This parameter defines the behaviour when using user-based tree
+		    lookup. If the user has a non-existing tree set and fallback_default
+		    is set to 1, the default tree is used. Otherwise, cr_user_rewrite_uri
+		    returns an error. This parameter is tunable via the ser cfg framework.
+	    </p>
+            <p>
+		    <span class="emphasis"><em>
+			    Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		    </em></span>
+	    </p>
+            <div class="example">
+              <a id="idp75136"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">fallback_default</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "fallback_default", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp76320"></a>3.10. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of the rows to be fetched at once from database
+		when loading the routing data. This value can be used to tune
+		the load time at startup. For 1MB of private memory (default)
+		it should be below 3750. The database driver must support the
+		fetch_result() capability. This parameter is tunable via the ser
+		cfg framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">2000</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp78048"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "fetch_rows", 3000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. match_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79216"></a>3.11. <code class="varname">match_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of individual characters that are used for matching.
+		Valid values are 10 or 128. When you specifiy 10, only digits
+		will be used for matching, this operation mode is equivalent to
+		the old behaviour. When configured with 128, all standard ascii
+		chars are available for matching. Please be aware that memory
+		requirements for storing the routing tree in shared memory
+		will also increase by a factor of 12.8.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp81032"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">match_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "match_mode", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. avoid_failed_destinations (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp82200"></a>3.12. <code class="varname">avoid_failed_destinations</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Integer parameter to toggle on/off the possibility that in the failurerouting cases 
+		destinations that previously failed are avoided. Possible values are 0 (off), 1 (on).
+		Also see cr_route section.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp83776"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">avoid_failed_destinations</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("carrierroute", "avoid_failed_destinations", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp85016"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+    Previous versions of carrierroute had some more function. All the
+    old semantics can be achieved by using the few new functions
+    like this:
+	</p>
+          <pre class="programlisting">cr_rewrite_uri(domain, hash_source)
+-&gt; cr_route("default", domain, "$rU", "$rU", hash_source)
+
+cr_rewrite_by_to(domain, hash_source)
+-&gt; cr_route("default", domain, "$tU", "$rU", hash_source)
+
+cr_rewrite_by_from(domain, hash_source)
+-&gt; cr_route("default", domain, "$fU", "$rU", hash_source)
+
+cr_user_rewrite_uri(uri, domain)
+-&gt; cr_user_carrier(user, domain, "$avp(tree_avp)")
+-&gt; cr_route("$avp(tree_avp)", domain, "$rU", "$rU", "call_id")
+
+cr_tree_rewrite_uri(tree, domain)
+-&gt; cr_route(tree, domain, "$rU", "$rU", "call_id")</pre>
+          <div class="section" title="4.1.  cr_user_carrier(user, domain, dstavp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp86640"></a>4.1. 
+		<code class="function">cr_user_carrier(user, domain, dstavp)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+      This function loads the carrier and stores it in an AVP.
+      It cannot be used in the config file mode, as it needs a mapping of the
+	  given user to a certain carrier. The is derived from a database entry
+	  belonging to the user parameter. This mapping must be available in the
+	  table that is specified in the <span class="quote">“<span class="quote">subscriber_table</span>”</span> variable.
+	  This data is not cached in memory, that means for every execution of this
+	  function a database query will be done.
+	    </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>user</em></span> - Name of the user for the carrier tree lookup.
+            Additional to a string any pseudo-variable could
+            be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - Name of the routing domain to be used.
+            Additional to a string any pseudo-variable could
+            be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dstavp</em></span> - Name of the AVP where to store the carrier id.
+		      </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="4.2.  cr_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp21112"></a>4.2. 
+		<code class="function">cr_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        This function searches for the longest match for the user given
+        in prefix_matching at the given domain in the given carrier tree.
+        The Request URI is rewritten using rewrite_user and the given
+        hash source and algorithm. Returns -1 if there is no data found
+        or an empty rewrite host on the longest match is found. On sucess
+        also the description is stored in the given AVP (if obmitted, nothing
+        is stored in an AVP). This is useful if you need some additional
+        informations that belongs to each gw, like the destination or the
+        number of channels.
+		</p>
+            <p>
+		Depending on the value of the avoid_failed_destinations module parameter,
+		the function pays special attention to the failurerouting cases, so that
+		any destination that has failed to provide a successful response will not
+		be reused in a subsequent call of cr_route. This situation can appear when
+		different route domains contain a set of common gateways.
+		</p>
+            <p>
+        This function is only usable with rewrite_user and prefix_matching
+        containing a valid string. This string needs to be numerical if the match_mode
+        parameter is set to 10. It uses the standard CRC32 algorithm to calculate
+        the hash values.
+        </p>
+            <p>
+        If flags and masks values are specified in the routing rule, they will be
+        compared by this function to the message flags. Specify a flag and mask value of
+        <span class="quote">“<span class="quote">0</span>”</span> to match to all possible message flags (this is the default value).
+        If flags and mask are not zero, and no match to the message flags is possible, no
+        routing will be done. The calculation of the hash and the load-balancing is done
+        after the flags matching.
+	    </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>carrier</em></span> - The routing tree to be used. Additional to a string
+            any pseudo-variable could be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - Name of the routing domain to be used.
+            Additional to a string any pseudo-variable could
+            be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix_matching</em></span> - User name to be used for prefix matching
+            in the routing tree.
+            Additional to a string any pseudo-variable could
+            be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>rewrite_user</em></span> - The user name to be used for applying the
+            rewriting rule. Usually this is the user part of the request
+            URI. Additional to a string any pseudo-variable could
+            be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hash_source</em></span> - The hash values of the destination set must
+            be a contiguous range starting at 1, limited by the
+            configuration parameter max_targets. Possible values for
+            hash_source are: call_id, from_uri, from_user, to_uri,
+            to_user and rand
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>decsavp</em></span> - Name of the AVP where to store the description.
+			This parameter is optional.
+  		    </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="4.3.  cr_nofallback_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp29800"></a>4.3. 
+		<code class="function">cr_nofallback_route(carrier, domain, prefix_matching, rewrite_user, hash_source, descavp)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        This function searches for the longest match for the user given
+        in prefix_matching at the given domain in the given carrier tree.
+        The Request URI is rewritten using rewrite_user and the given
+        hash source and algorithm. Returns -1 if there is no data found
+        or an empty rewrite host on the longest match is found. On success
+        also the description is stored in the given AVP (if obmitted, nothing
+        is stored in an AVP). This is useful if you need some additional
+        informations that belongs to each gw, like the destination or the
+        number of channels.
+        This function is only usable with rewrite_user and prefix_matching
+        containing a valid string. This string needs to be numerical if the match_mode
+        parameter is set to 10.
+	    </p>
+            <p>
+		It uses the standard CRC32 algorithm to calculate the hash values. In contrast
+		to the normal <span class="emphasis"><em>cr_route</em></span> function the backup
+		rules of (now obselete) cr_prime_route is used. This means not the configured
+		probabilities will be used, only a fixed hash distribution. This
+		makes sense to distribute incoming register requests e.g. to a bunch of
+		registrar servers. If one of the hash targets is not available and
+		backup rule is configured, the function will return -1.
+	    </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>carrier</em></span> - The routing tree to be used. Additional to a string
+            any pseudo-variable could be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - Name of the routing domain to be used.
+            Additional to a string any pseudo-variable could
+            be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix_matching</em></span> - User name to be used for prefix matching
+            in the routing tree.
+            Additional to a string any pseudo-variable could
+            be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>rewrite_user</em></span> - The user name to be used for applying the
+            rewriting rule. Usually this is the user part of the request
+            URI. Additional to a string any pseudo-variable could
+            be used as input.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hash_source</em></span> - The hash values of the destination set must
+            be a contiguous range starting at 1, limited by the
+            configuration parameter max_targets. Possible values for
+            hash_source are: call_id, from_uri, from_user, to_uri
+            and to_user.
+		      </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>descavp</em></span> - Name of the AVP where to store the description.
+			This parameter is optional.
+		      </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="4.4.  cr_next_domain(carrier, domain, prefix_matching, host, reply_code, dstavp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp37608"></a>4.4. 
+		<code class="function">cr_next_domain(carrier, domain, prefix_matching, host, reply_code, dstavp)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        This function searches for the longest match for the user given
+        in prefix_matching at the given domain in the given carrier
+        failure tree. It tries to find a next domain matching the given
+        host, reply_code and the message flags. The matching is done in this order:
+        host, reply_code and then flags. The more wildcards in reply_code
+        and the more bits used in flags, the lower the priority.
+        Returns -1 if there is no data found or an empty next_domain on
+        the longest match is found. Otherwise the next domain is stored
+        in the given AVP.
+        This function is only usable with rewrite_user and prefix_matching
+        containing a valid string. This string needs to be numerical if the match_mode
+		parameter is set to 10.
+	    </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>carrier</em></span> - The routing tree to be used. Additional to a string
+            any pseudo-variable could be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - Name of the routing domain to be used.
+            Additional to a string any pseudo-variable could
+            be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix_matching</em></span> - User name to be used for prefix matching
+            in the routing tree.
+            Additional to a string any pseudo-variable could
+            be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>host</em></span> - The host name to be used for failure route rule
+            matching. Usually this is the last tried routing destination
+            stored in an avp by cr_route. Additional to a string any
+            pseudo-variable could be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reply_code</em></span> - The reply code to be used for failure route rule
+            matching. Additional to a string any pseudo-variable
+            could be used as input.
+  		    </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dstavp</em></span> - Name of the AVP where to store the next routing domain.
+  		    </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1262288"></a>5. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>All commands understand the "-?" parameter to print a short help message.
+		The options have to be quoted as one string to be passed to MI interface.
+		Each option except host and new host can be wildcarded by * (but only * and not things
+		like "-d prox*").</p>
+          <div class="section" title="5.1. cr_reload_routes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1263272"></a>5.1. <code class="function">cr_reload_routes</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This command reloads the routing data from the data source.
+		</p>
+            <p>
+		Important: When new domains have been added, a restart of the server must be
+		done, because the mapping of the ids used in the config script cannot be
+		updated at runtime at the moment. So a reload could result in a wrong routing
+		behaviour, because the ids used in the script could differ from the one used
+		internally from the server. Modifying of already existing domains is no problem.
+	    </p>
+          </div>
+          <div class="section" title="5.2. cr_dump_routes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1264824"></a>5.2. <code class="function">cr_dump_routes</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This command prints the route rules on the command line.
+	    </p>
+          </div>
+          <div class="section" title="5.3. cr_replace_host">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1265760"></a>5.3. <code class="function">cr_replace_host</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This command can replace the rewrite_host of a route rule, it is only
+		usable in file mode. Following options are possible:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-d</em></span> - the domain containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-p</em></span> - the prefix containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-h</em></span> - the host to be replaced</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-t</em></span> - the new host</p>
+                </li>
+              </ul>
+            </div>
+            <p>Use the "null" prefix to specify an empty prefix.</p>
+            <div class="example">
+              <a id="idp1269504"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">cr_replace_host</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. cr_deactivate_host">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1270760"></a>5.4. <code class="function">cr_deactivate_host</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    This command deactivates the specified host, i.e. it sets its status to 0.
+		    It is only usable in file mode. Following options are possible:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-d</em></span> - the domain containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-p</em></span> - the prefix containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-h</em></span> - the host to be deactivated</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-t</em></span> - the new host used as backup</p>
+                </li>
+              </ul>
+            </div>
+            <p>When -t (new_host) is specified, the portion of traffic for the deactivated host
+		is routed to the host given by -t. This is indicated in the output of dump_routes.
+		The backup route is deactivated if the host is activated again.</p>
+            <p>Use the "null" prefix to specify an empty prefix.</p>
+            <div class="example">
+              <a id="idp1274952"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">cr_deactivate_host</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo cr_deactivate_host "-d proxy -p 49 -h proxy1"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5. cr_activate_host">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1276200"></a>5.5. <code class="function">cr_activate_host</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    This command activates the specified host, i.e. it sets its status to 1.
+		    It is only usable in file mode. Following options are possible:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-d</em></span> - the domain containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-p</em></span> - the prefix containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-h</em></span> - the host to be activated</p>
+                </li>
+              </ul>
+            </div>
+            <p>Use the "null" prefix to specify an empty prefix.</p>
+            <div class="example">
+              <a id="idp1279360"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">cr_activate_host</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo cr_activate_host "-d proxy -p 49 -h proxy1"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6. cr_add_host">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1280600"></a>5.6. <code class="function">cr_add_host</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    This command adds a route rule, it is only usable in file mode. Following options
+		    are possible:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-d</em></span> - the domain containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-p</em></span> - the prefix containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-h</em></span> - the host to be added</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-w</em></span> - the weight of the rule</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-P</em></span> - an optional rewrite prefix</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-S</em></span> - an optional rewrite suffix</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-i</em></span> - an optional hash index</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-s</em></span> - an optional strip value</p>
+                </li>
+              </ul>
+            </div>
+            <p>Use the "null" prefix to specify an empty prefix.</p>
+            <div class="example">
+              <a id="idp1286712"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">cr_add_host</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7. cr_delete_host">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1287952"></a>5.7. <code class="function">cr_delete_host</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		    This command delete the specified hosts or rules, i.e. remove 
+		    them from the route tree. It is only usable in file mode.
+		    Following options are possible:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-d</em></span> - the domain containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-p</em></span> - the prefix containing the host</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-h</em></span> - the host to be added</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-w</em></span> - the weight of the rule</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-P</em></span> - an optional rewrite prefix</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-S</em></span> - an optional rewrite suffix</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-i</em></span> - an optional hash index</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-s</em></span> - an optional strip value</p>
+                </li>
+              </ul>
+            </div>
+            <p>Use the "null" prefix to specify an empty prefix.</p>
+            <div class="example">
+              <a id="idp1294176"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">cr_delete_host</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo cr_delete_host "-d proxy -p 49 -h proxy1 -w 0.25"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Configuration examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1295504"></a>6. Configuration examples</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp1295856"></a>
+            <p class="title">
+              <strong>Example 1.18. Configuration example - Routing to default tree</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+route {
+	# route calls based on hash over callid
+	# choose route domain 0 of the default carrier
+	
+	if(!cr_route("default", "0", "$rU", "$rU", "call_id")){
+		sl_send_reply("403", "Not allowed");
+	} else {
+		# In case of failure, re-route the request
+		t_on_failure("1");
+		# Relay the request to the gateway
+		t_relay();
+	}
+}
+
+failure_route[1] {
+	revert_uri();
+	# In case of failure, send it to an alternative route:
+	if (t_check_status("408|5[0-9][0-9]")) {
+	#choose route domain 1 of the default carrier
+	if(!cr_route("default", "1", "$rU", "$rU", "call_id")){
+			t_reply("403", "Not allowed");
+		} else {
+			t_on_failure("2");
+			t_relay();
+		}
+	}
+}
+
+failure_route[2] {
+	# further processing
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp1297408"></a>
+            <p class="title">
+              <strong>Example 1.19. Configuration example - Routing to user tree</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+route[1] {
+	cr_user_carrier("$fU", "$fd", "$avp(s:carrier)");
+
+	# just an example domain
+	$avp(s:domain)="start";
+	if (!cr_route("$avp(s:carrier)", "$avp(s:domain)", "$rU", "$rU",
+			"call_id")) {
+		xlog("L_ERR", "cr_route failed\n");
+		exit;
+	}
+	# if you store also the port as part of the rewrite host,
+	# otherwise you can just use $rd later
+	$avp(s:host)= $rd+":"+$rp;
+	t_on_failure("1");
+		if (!t_relay()) {
+			sl_reply_error();
+	};
+}
+
+failure_route[1] {
+	revert_uri();
+	if (!cr_next_domain("$avp(s:carrier)", "$avp(s:domain)", "$rU",
+			"$avp(s:host)", "$T_reply_code", "$avp(s:domain)")) {
+		xlog("L_ERR", "cr_next_domain failed\n");
+		exit;
+	}
+	if (!cr_route("$avp(s:carrier)", "$avp(s:domain)", "$rU", "$rU",
+			"call_id")) {
+		xlog("L_ERR", "cr_route failed\n");
+		exit;
+	}
+	$avp(s:host)= $rd+":"+$rp;
+	t_on_failure("1");
+	if (!t_relay()) {
+		xlog("L_ERR", "t_relay failed\n");
+		exit;
+	};
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp1299168"></a>
+            <p class="title">
+              <strong>Example 1.20. Configuration example - module configuration</strong>
+            </p>
+            <div class="example-contents">
+              <p>
+			The following config file specifies within the default carrier two
+			domains, each with an prefix that contains two hosts. It is not possible
+			to specify another carrier if you use the config file as data source.
+		</p>
+              <p>
+			All traffic will be equally distributed between the hosts, both are
+			active. The hash algorithm will working over the [1,2] set, messages
+			hashed to one will go to the first host, the other to the second one.
+			Don't use a hash index value of zero. If you ommit the hash completly,
+			the module gives them a autogenerated value, starting from one.
+		</p>
+              <p>
+			Use the <span class="quote">“<span class="quote">NULL</span>”</span> prefix to specify an empty prefix in the config file.
+			Please note that the prefix is matched against the request URI (or to URI),
+			if they did not contain a valid (numerical) URI, no match is possible. So
+			for loadbalancing purposes e.g. for your registrars, you should use an empty
+			prefix.
+		</p>
+              <pre class="programlisting">...
+domain proxy {
+   prefix 49 {
+     max_targets = 2
+      target proxy1.localdomain {
+         prob = 0.500000
+         hash_index = 1
+         status = 1
+         comment = "test target 1"
+      }
+      target proxy2.localdomain {
+         prob = 0.500000
+         hash_index = 2
+         status = 1
+         comment = "test target 2"
+      }
+   }
+}
+
+domain register {
+   prefix NULL {
+     max_targets = 2
+      target register1.localdomain {
+         prob = 0.500000
+         hash_index = 1
+         status = 1
+         comment = "test target 1"
+      }
+      target register2.localdomain {
+         prob = 0.500000
+         hash_index = 2
+         status = 1
+         comment = "test target 2"
+      }
+   }
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="7. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1302584"></a>7. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1. Database setup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1302936"></a>7.1. Database setup</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Before running Kamailio with carrierroute, you have to setup the database 
+			table where the module will store the routing data. For that, if 
+			the table was not created by the installation script or you choose
+			to install everything by yourself you can use the carrierroute-create.sql
+			<acronym class="acronym">SQL</acronym> script in the database directories in the 
+			kamailio/scripts folder as template. 
+			Database and table name can be set with module parameters so they 
+			can be changed, but the name of the columns must be as they are 
+			in the <acronym class="acronym">SQL</acronym> script.
+			You can also find the complete database documentation on the
+			project webpage, http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html.
+			The flags and mask columns have the same function as in the
+			carrierfailureroute table. A zero value in the flags and mask
+			column means that any message flags will match this rule.
+		</p>
+            <p>
+			For a minimal configuration either use the config file given above, or
+			insert some data into the tables of the module.
+		</p>
+          </div>
+          <div class="section" title="7.2. Database examples">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1305256"></a>7.2. Database examples</h3>
+                </div>
+              </div>
+            </div>
+            <div class="example">
+              <a id="idp1305632"></a>
+              <p class="title">
+                <strong>Example 1.21. Example database content - carrierroute table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+---------+--------+-------------+-------+------+---------------+
+| id | carrier | domain | scan_prefix | flags | prob | rewrite_host  |
++----+---------+--------+-------------+-------+------+---------------+
+| 1  |       1 |      1 | 49          |     0 |  0.5 | de-1.carrier1 |
+| 2  |       1 |      1 | 49          |     0 |  0.5 | de-2.carrier1 |
+| 3  |       1 |      1 | 49          |    16 |    1 | de-3.carrier1 |
+| 4  |       1 |      1 |             |     0 |    1 | gw.carrier1-1 |
+| 5  |       1 |      2 | 49          |     0 |    1 | gw.carrier1-1 |
+| 6  |       1 |      3 |             |     0 |    1 | gw.carrier1-2 |
+| 7  |       1 |      4 |             |     0 |    1 | gw.carrier1-3 |
+| 8  |       2 |      1 | 49          |     0 |  0.5 | de-1.carrier2 |
+| 9  |       2 |      1 | 49          |     0 |  0.5 | de-2.carrier2 |
+| 10 |       2 |      1 |             |     0 |    1 | gw.carrier2   |
+| 11 |       2 |      2 | 49          |     0 |    1 | gw.carrier2   |
+| 12 |       3 |      8 | 49          |     0 |    1 | de-gw.default |
+| 13 |       3 |      8 |             |     0 |    1 | gw.default    |
++----+---------+--------+-------------+-------+------+---------------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			This table contains three routes to two gateways for the <span class="quote">“<span class="quote">49</span>”</span> prefix,
+			and a default route for other prefixes over carrier 2 and carrier 1. The
+			gateways for the default carrier will be used for functions that don't
+			support the user specific carrier lookup. The routing rules for carrier 1
+			and carrier 2 for the <span class="quote">“<span class="quote">49</span>”</span> prefix contains a additional rule
+			with the domain 2, that can be used for example as fallback if the gateways
+			in domain 1 are not reachable. Two more fallback rules (domain 3 and 4) for 
+			carrier 1 are also supplied to support the functionality of the carrierfailureroute
+			table example that is provided in the next section.
+		</p>
+            <p>
+			This table provides also a <span class="quote">“<span class="quote">carrier 1</span>”</span> routing rule for the
+			<span class="quote">“<span class="quote">49</span>”</span> prefix, that is only choosen if some message flags are set.
+			If this flags are not set, the other two rules are used. The <span class="quote">“<span class="quote">strip</span>”</span>,
+			<span class="quote">“<span class="quote">mask</span>”</span> and <span class="quote">“<span class="quote">comment</span>”</span> colums are omitted for brevity.
+		</p>
+            <div class="example">
+              <a id="idp1310504"></a>
+              <p class="title">
+                <strong>Example 1.22. Example database content - simple carrierfailureroute table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+---------+--------+---------------+------------+-------------+
+| id | carrier | domain | host_name     | reply_code | next_domain |
++----+---------+--------+---------------+------------+-------------+
+|  1 |       1 | 1      | gw.carrier1-2 | ...        | 3           |
+|  2 |       1 | 1      | gw.carrier1-3 | ...        | 2           |
++----+---------+--------+---------------+------------+-------------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			This table contains two failure routes for the <span class="quote">“<span class="quote">gw.carrier1-1</span>”</span> and
+			<span class="quote">“<span class="quote">-2</span>”</span> gateways. For any (failure) reply code the respective next
+			domain is choosen. After that no more failure routes are available, an error will
+			be returned from the <span class="quote">“<span class="quote">cr_next_domain</span>”</span> function. Not all table
+			colums are show here for brevity.
+		</p>
+            <p>
+			For each failure route domain and carrier that is added to the carrierfailureroute
+			table there must be at least one corresponding entry in the carrierroute table,
+			otherwise the module will not load the routing data.
+		</p>
+            <div class="example">
+              <a id="idp1313400"></a>
+              <p class="title">
+                <strong>Example 1.23. Example database content - more complex carrierfailureroute table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+---------+-----------+------------+--------+-----+-------------+
+| id | domain  | host_name | reply_code | flags | mask | next_domain |
++----+---------+-----------+------------+-------+------+-------------+
+|  1 |      99 |           | 408        |    16 |   16 |             |
+|  2 |      99 | gw1       | 404        |     0 |    0 | 100         |
+|  3 |      99 | gw2       | 50.        |     0 |    0 | 100         |
+|  4 |      99 |           | 404        |  2048 | 2112 | 101         |
++----+---------+-----------+------------+-------+------+-------------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			This table contains four failure routes that shows the usage of more
+			advanced features. The first route matches to a 408, and to some flag
+			for example that indicates that ringing has happened. If this flag is set,
+			there will be no further forwarding, because next_domain is empty. In the
+			second and third routes are certain gateway errors matched, if this errors
+			have occured, then the next domain will be choosen. Note that the reply_code must be
+			3 characters wide, and only the "." character is accepted as wildcard.The last route
+			does forwarding according some flags, e.g. the customer came from a certain carrier,
+			and has call-forwarding deactivated. In order to use the routing that is
+			specified above, a matching carrierroute table must be provided, that holds
+			domain entries for this routing rules. Not all table colums are show here for
+			brevity.
+		</p>
+            <div class="example">
+              <a id="idp1315952"></a>
+              <p class="title">
+                <strong>Example 1.24. Example database content - carrier_name table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+----------+
+| id | carrier  |
++----+----------+
+|  1 | carrier1 |
+|  2 | carrier2 |
+|  3 | default  |
++----+----------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			This table contains the mapping of the carrier id to actual names.
+		</p>
+            <div class="example">
+              <a id="idp1317224"></a>
+              <p class="title">
+                <strong>Example 1.25. Example database content - domain_name table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
++----+----------+
+| id | domain   |
++----+----------+
+|  1 | domain1  |
+|  2 | domain2  |
+|  3 | domain3  |
++----+----------+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			This table contains the mapping of the domain id to actual names.
+		</p>
+          </div>
+          <div class="section" title="7.3. User specific routing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1318576"></a>7.3. User specific routing</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For a functional routing the <span class="quote">“<span class="quote">cr_preferred_carrier</span>”</span> column must
+			be added to the subscriber table (or to the table and column that you specified
+			as modul parameter) to choose the actual carrier for the users.
+		</p>
+            <div class="example">
+              <a id="idp1319544"></a>
+              <p class="title">
+                <strong>Example 1.26. Necessary extensions for the user table</strong>
+              </p>
+              <div class="example-contents">
+                <p>Suggested changes:</p>
+                <pre class="programlisting">...
+ALTER TABLE subscriber ADD cr_preferred_carrier int(10) default NULL; 
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Module parameter for database access.">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp879688"></a>Chapter 2. Module parameter for database access.</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2485848">1. <code class="varname">db_url</code> (String)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp225704">2. <code class="varname">carrierroute_table</code> (String)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2584456">3. <code class="varname">carrierroute_id_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1100096">4. <code class="varname">carrierroute_carrier_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp334944">5. <code class="varname">carrierroute_domain_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp554064">6. <code class="varname">carrierroute_scan_prefix_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp556320">7. <code class="varname">carrierroute_flags_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp558256">8. <code class="varname">carrierroute_mask_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp560224">9. <code class="varname">carrierroute_prob_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3220752">10. <code class="varname">carrierroute_strip_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3222752">11. <code class="varname">carrierroute_rewrite_host_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3224888">12. <code class="varname">carrierroute_rewrite_prefix_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2778456">13. <code class="varname">carrierroute_rewrite_suffix_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2780552">14. <code class="varname">carrierroute_description_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2782656">15. <code class="varname">carrierfailureroute_table</code> (String)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2785304">16. <code class="varname">carrierfailureroute_id_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3476560">17. <code class="varname">carrierfailureroute_carrier_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3478520">18. <code class="varname">carrierfailureroute_domain_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3480688">19. <code class="varname">carrierfailureroute_scan_prefix_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3483040">20. <code class="varname">carrierfailureroute_host_name_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3485120">21. <code class="varname">carrierfailureroute_reply_code_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1801032">22. <code class="varname">carrierfailureroute_flags_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1803056">23. <code class="varname">carrierfailureroute_mask_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1805104">24. <code class="varname">carrierfailureroute_next_domain_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1807168">25. <code class="varname">carrierfailureroute_description_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1809208">26. <code class="varname">carrier_name_table</code> (String)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1811880">27. <code class="varname">carrier_name_id_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1813864">28. <code class="varname">carrier_name_carrier_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1815736">29. <code class="varname">domain_name_table</code> (String)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2875392">30. <code class="varname">domain_name_id_col</code> (string)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2877376">31. <code class="varname">domain_name_domain_col</code> (string)</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. db_url (String)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2485848"></a>1. <code class="varname">db_url</code> (String)</h2>
+              </div>
+            </div>
+          </div>
+          <p>URL to the database containing the data.</p>
+          <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>.</em></span>
+    </p>
+          <div class="example">
+            <a id="idp1182912"></a>
+            <p class="title">
+              <strong>Example 2.1. Set <code class="varname">db_url</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2. carrierroute_table (String)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp225704"></a>2. <code class="varname">carrierroute_table</code> (String)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the carrierroute table for the carrierroute module.</p>
+          <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">carrierroute</span>”</span>.</em></span>
+    </p>
+          <div class="example">
+            <a id="idp2359528"></a>
+            <p class="title">
+              <strong>Example 2.2. Set <code class="varname">carrierroute_table</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_table", "carrierroute")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="3. carrierroute_id_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2584456"></a>3. <code class="varname">carrierroute_id_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the column contains the unique identifier of a route.</p>
+          <div class="example">
+            <a id="idp2869728"></a>
+            <p class="title">
+              <strong>Example 2.3. Set <code class="varname">carrierroute_id_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_id_col", "id")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="4. carrierroute_carrier_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1100096"></a>4. <code class="varname">carrierroute_carrier_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the carrier id.</p>
+          <div class="example">
+            <a id="idp2165032"></a>
+            <p class="title">
+              <strong>Example 2.4. Set <code class="varname">carrierroute_carrier_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_carrier_col", "carrier")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="5. carrierroute_domain_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp334944"></a>5. <code class="varname">carrierroute_domain_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the routing domain id. You can define several routing
+			  domains to have different routing rules. Maybe you use domain 0 for normal routing and
+			  domain 1 if domain 0 failed.</p>
+          <div class="example">
+            <a id="idp3471680"></a>
+            <p class="title">
+              <strong>Example 2.5. Set <code class="varname">carrierroute_domain_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_domain_col", "domain")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="6. carrierroute_scan_prefix_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp554064"></a>6. <code class="varname">carrierroute_scan_prefix_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of column contains the scan prefixes. Scan prefixes define
+			  the matching portion of a phone number, e.g. when we have the scan prefixes 49721
+			  and 49, the called number is 49721913740, it matches 49721, because the longest
+			  match is taken. If no prefix matches, the number is not routed. To prevent this,
+			  an empty prefix value of  could be added.</p>
+          <div class="example">
+            <a id="idp555144"></a>
+            <p class="title">
+              <strong>Example 2.6. Set <code class="varname">carrierroute_scan_prefix_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_scan_prefix_col", "scan_prefix")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="7. carrierroute_flags_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp556320"></a>7. <code class="varname">carrierroute_flags_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the flags used for rule matching.</p>
+          <div class="example">
+            <a id="idp557088"></a>
+            <p class="title">
+              <strong>Example 2.7. Set <code class="varname">carrierroute_flags_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_flags_col", "flags")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="8. carrierroute_mask_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp558256"></a>8. <code class="varname">carrierroute_mask_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the mask that is applied to the message flags before rule 
+			  matching.</p>
+          <div class="example">
+            <a id="idp559064"></a>
+            <p class="title">
+              <strong>Example 2.8. Set <code class="varname">carrierroute_mask_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_mask_col", "mask")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="9. carrierroute_prob_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp560224"></a>9. <code class="varname">carrierroute_prob_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			  Name of column contains the probability. The probability value is used to
+			  distribute the traffic between several gateways. Let's say 70 % of the
+			  traffic shall be routed to gateway A, the other 30 % shall be routed to
+			  gateway B, we define a rule for gateway A with a prob value of 0.7 and a
+			  rule for gateway B with a prob value of 0.3.
+			  
+			  
+			  If all probabilities for a given prefix, tree and domain don't add to 100%,
+			  the prefix values will be adjusted according the given prob values. E.g. if
+			  three hosts with prob values of 0.5, 0.5 and 0.4 are defined, the resulting
+			  probabilities are 35.714, 35.714 and 28.571%. But its better to choose meaningful
+			  values in the first place because of clarity.
+			  </p>
+          <div class="example">
+            <a id="idp3219616"></a>
+            <p class="title">
+              <strong>Example 2.9. Set <code class="varname">carrierroute_prob_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_prob_col", "prob")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="10. carrierroute_strip_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3220752"></a>10. <code class="varname">carrierroute_strip_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the column contains the number of digits to be stripped of the userpart of an URI before prepending rewrite_prefix.</p>
+          <div class="example">
+            <a id="idp3221584"></a>
+            <p class="title">
+              <strong>Example 2.10. Set <code class="varname">carrierroute_strip_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_strip_col", "strip")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="11. carrierroute_rewrite_host_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3222752"></a>11. <code class="varname">carrierroute_rewrite_host_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of column contains the rewrite prefixes. Here you can define a rewrite prefix
+			  for the localpart of the SIP URI. An empty field represents a blacklist entry, anything else
+			  is put as domain part into the Request URI of the SIP message.</p>
+          <div class="example">
+            <a id="idp3223712"></a>
+            <p class="title">
+              <strong>Example 2.11. Set <code class="varname">carrierroute_rewrite_host_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_rewrite_host_col", "rewrite_host")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="12. carrierroute_rewrite_prefix_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3224888"></a>12. <code class="varname">carrierroute_rewrite_prefix_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of column contains the rewrite prefixes. Here you can define a rewrite
+			  prefix for the localpart of the SIP URI.</p>
+          <div class="example">
+            <a id="idp3225760"></a>
+            <p class="title">
+              <strong>Example 2.12. Set <code class="varname">carrierroute_rewrite_prefix_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_rewrite_prefix_col", "rewrite_prefix")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="13. carrierroute_rewrite_suffix_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2778456"></a>13. <code class="varname">carrierroute_rewrite_suffix_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of column contains the rewrite suffixes. Here you can define a rewrite
+			  suffix for the localpart of the SIP URI.</p>
+          <div class="example">
+            <a id="idp2779328"></a>
+            <p class="title">
+              <strong>Example 2.13. Set <code class="varname">carrierroute_rewrite_suffix_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_rewrite_suffix_col", "rewrite_suffix")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="14. carrierroute_description_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2780552"></a>14. <code class="varname">carrierroute_description_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>A comment for the route entry, useful for larger routing tables.
+			  The comment is also displayed by the fifo cmd "cr_dump_routes".</p>
+          <div class="example">
+            <a id="idp2781440"></a>
+            <p class="title">
+              <strong>Example 2.14. Set <code class="varname">carrierroute_description_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierroute_description_col", "description")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="15. carrierfailureroute_table (String)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2782656"></a>15. <code class="varname">carrierfailureroute_table</code> (String)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the carrierfailureroute table for the carrierroute module.</p>
+          <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">carrierfailureroute</span>”</span>.</em></span>
+    </p>
+          <div class="example">
+            <a id="idp2784120"></a>
+            <p class="title">
+              <strong>Example 2.15. Set <code class="varname">carrierfailureroute_table</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_table", "carrierfailureroute")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="16. carrierfailureroute_id_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2785304"></a>16. <code class="varname">carrierfailureroute_id_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the unique identifier of a failure route.</p>
+          <div class="example">
+            <a id="idp2786080"></a>
+            <p class="title">
+              <strong>Example 2.16. Set <code class="varname">carrierfailureroute_id_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_id_col", "id")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="17. carrierfailureroute_carrier_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3476560"></a>17. <code class="varname">carrierfailureroute_carrier_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the carrier id.</p>
+          <div class="example">
+            <a id="idp3477304"></a>
+            <p class="title">
+              <strong>Example 2.17. Set <code class="varname">carrierfailureroute_carrier_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_carrier_col", "carrier")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="18. carrierfailureroute_domain_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3478520"></a>18. <code class="varname">carrierfailureroute_domain_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the routing domain id. You can define several routing domains
+			  to have different routing rules. Maybe you use domain 0 for normal routing and domain 1 if
+			  domain 0 failed.</p>
+          <div class="example">
+            <a id="idp3479472"></a>
+            <p class="title">
+              <strong>Example 2.18. Set <code class="varname">carrierfailureroute_domain_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_domain_col", "domain")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="19. carrierfailureroute_scan_prefix_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3480688"></a>19. <code class="varname">carrierfailureroute_scan_prefix_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of column contains the the scan prefixes. Scan prexies define the matching
+			  portion of a phone number, e.g. we have the scan prefixes 49721 and 49, the called number is
+			  49721913740, it matches 49721, because the longest match is taken. If no prefix matches,
+			  the number is not failure routed. To prevent this, an empty prefix value of 
+			  could be added.</p>
+          <div class="example">
+            <a id="idp3481816"></a>
+            <p class="title">
+              <strong>Example 2.19. Set <code class="varname">carrierfailureroute_scan_prefix_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_scan_prefix_col", "scan_prefix")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="20. carrierfailureroute_host_name_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3483040"></a>20. <code class="varname">carrierfailureroute_host_name_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the column containing the host name of the last routing destination,
+			  using for rules matching.</p>
+          <div class="example">
+            <a id="idp3483896"></a>
+            <p class="title">
+              <strong>Example 2.20. Set <code class="varname">carrierfailureroute_host_name_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_host_name_col", "host_name")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="21. carrierfailureroute_reply_code_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3485120"></a>21. <code class="varname">carrierfailureroute_reply_code_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the reply code used for rule matching.</p>
+          <div class="example">
+            <a id="idp1799864"></a>
+            <p class="title">
+              <strong>Example 2.21. Set <code class="varname">carrierfailureroute_reply_code_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_reply_code_col", "reply_code")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="22. carrierfailureroute_flags_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1801032"></a>22. <code class="varname">carrierfailureroute_flags_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the flags used for rule matching.</p>
+          <div class="example">
+            <a id="idp1801840"></a>
+            <p class="title">
+              <strong>Example 2.22. Set <code class="varname">carrierfailureroute_flags_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_flags_col", "flags")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="23. carrierfailureroute_mask_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1803056"></a>23. <code class="varname">carrierfailureroute_mask_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the mask that is applied to the message flags before rule matching.</p>
+          <div class="example">
+            <a id="idp1803896"></a>
+            <p class="title">
+              <strong>Example 2.23. Set <code class="varname">carrierfailureroute_mask_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_mask_col", "mask")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="24. carrierfailureroute_next_domain_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1805104"></a>24. <code class="varname">carrierfailureroute_next_domain_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the route domain id that should be used for the next routing attempt.</p>
+          <div class="example">
+            <a id="idp1805944"></a>
+            <p class="title">
+              <strong>Example 2.24. Set <code class="varname">carrierfailureroute_next_domain_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_next_domain_col", "next_domain")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="25. carrierfailureroute_description_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1807168"></a>25. <code class="varname">carrierfailureroute_description_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>A comment for the route entry, useful for larger routing tables.</p>
+          <div class="example">
+            <a id="idp1807984"></a>
+            <p class="title">
+              <strong>Example 2.25. Set <code class="varname">carrierfailureroute_description_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrierfailureroute_description_col", "description")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="26. carrier_name_table (String)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1809208"></a>26. <code class="varname">carrier_name_table</code> (String)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the carrier_name table for the carrierroute module.</p>
+          <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">carrier_name</span>”</span>.</em></span>
+    </p>
+          <div class="example">
+            <a id="idp1810688"></a>
+            <p class="title">
+              <strong>Example 2.26. Set <code class="varname">carrier_name_table</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrier_name_table", "carrier_name")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="27. carrier_name_id_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1811880"></a>27. <code class="varname">carrier_name_id_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the column containing the unique identifier of a carrier.</p>
+          <div class="example">
+            <a id="idp1812680"></a>
+            <p class="title">
+              <strong>Example 2.27. Set <code class="varname">carrier_name_id_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrier_name_id_col", "id")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="28. carrier_name_carrier_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1813864"></a>28. <code class="varname">carrier_name_carrier_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the carrier name.</p>
+          <div class="example">
+            <a id="idp1814568"></a>
+            <p class="title">
+              <strong>Example 2.28. Set <code class="varname">carrier_name_carrier_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "carrier_name_carrier_col", "carrier")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="29. domain_name_table (String)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1815736"></a>29. <code class="varname">domain_name_table</code> (String)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the domain_name table for the carrierroute module.</p>
+          <p>
+      <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">domain_name</span>”</span>.</em></span>
+    </p>
+          <div class="example">
+            <a id="idp2874200"></a>
+            <p class="title">
+              <strong>Example 2.29. Set <code class="varname">domain_name_table</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "domain_name_table", "domain_name")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="30. domain_name_id_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2875392"></a>30. <code class="varname">domain_name_id_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>Name of the column containing the unique identifier of a domain.</p>
+          <div class="example">
+            <a id="idp2876192"></a>
+            <p class="title">
+              <strong>Example 2.30. Set <code class="varname">domain_name_id_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "domain_name_id_col", "id")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="31. domain_name_domain_col (string)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2877376"></a>31. <code class="varname">domain_name_domain_col</code> (string)</h2>
+              </div>
+            </div>
+          </div>
+          <p>This column contains the domain name.</p>
+          <div class="example">
+            <a id="idp2878080"></a>
+            <p class="title">
+              <strong>Example 2.31. Set <code class="varname">domain_name_domain_col</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("carrierroute", "domain_name_domain_col", "domain")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

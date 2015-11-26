@@ -1,0 +1,2246 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Dynamic Routing Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15455936" title="Dynamic Routing Module" />
+    <link rel="next" href="#idp1356288" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Dynamic Routing Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15455936"></a>Dynamic Routing Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname"></span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005-2008 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1356288">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3167768">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3323936">1.1. Introduction</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2783264">1.2. Features</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2566328">1.3. Performance</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2667320">1.4. Routing Rule Definition</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp49320">1.4.1. Gateway Addresses</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm10120">1.4.2. Destination/GW lists</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idm8408">1.4.3. Routing Rules</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1793464">1.5. Routing Rule Processing</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1798888">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1799264">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1800904">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1802352">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1802720">3.1. <code class="varname">db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1805328">3.2. <code class="varname">drd_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1807960">3.3. <code class="varname">drr_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1810592">3.4. <code class="varname">drg_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1813216">3.5. <code class="varname">drl_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1816104">3.6. <code class="varname">sort_order</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1822432">3.7. <code class="varname">ruri_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1825176">3.8. <code class="varname">attrs_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1828040">3.9. <code class="varname">use_domain</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1830712">3.10. <code class="varname">drg_user_col</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1833384">3.11. <code class="varname">drg_domain_col</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1836048">3.12. <code class="varname">drg_grpid_col</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1838720">3.13. <code class="varname">fetch_rows</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1841384">3.14. <code class="varname">force_dns</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1844184">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1844552">4.1. 
+		<code class="function">do_routing("[groupID]")</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1847624">4.2. 
+		<code class="function">use_next_gw()/next_routing()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1851000">4.3. 
+		<code class="function">goes_to_gw([type])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1854976">4.4. 
+		<code class="function">is_from_gw([type])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1859048">4.5. 
+		<code class="function">is_from_gw( type, [flag])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1863136">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1863512">5.1. 
+		<code class="function">drouting.reload</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1865464">6. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3121024">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-tables">
+        <p>
+          <strong>List of Tables</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3589128">Definition of table dr_gateways</a></dt>
+          <dt>1.2. <a href="#idm17664">Sample dr_gateways records</a></dt>
+          <dt>1.3. <a href="#idm7392">Definition of dr_rules table</a></dt>
+          <dt>1.4. <a href="#idp78872">Time recurrence attributes</a></dt>
+          <dt>1.5. <a href="#idp1782448">Sample dr_rules records</a></dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1804120">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp1806792">Set <code class="varname">drd_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp1809424">Set <code class="varname">drr_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp1812048">Set <code class="varname">drg_table</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp1814936">Set <code class="varname">drl_table</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp1821272">Set <code class="varname">sort_order</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp1823960">Set <code class="varname">ruri_avp</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp1826816">Set <code class="varname">attrs_avp</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp1829552">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp1832208">Set <code class="varname">drg_user_col</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp1834872">Set <code class="varname">drg_domain_col</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp1837544">Set <code class="varname">drg_grpid_col</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp1840224">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp1842944">Set <code class="varname">force_dns</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp1846384"><code class="function">do_routing</code> usage</a></dt>
+          <dt>1.16. <a href="#idp1849784"><code class="function">use_next_gw</code> usage</a></dt>
+          <dt>1.17. <a href="#idp1853728"><code class="function">goes_to_gw</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1857848"><code class="function">is_from_gw</code> usage</a></dt>
+          <dt>1.19. <a href="#idp1861896"><code class="function">is_from_gw</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1356288"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3167768">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3323936">1.1. Introduction</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2783264">1.2. Features</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2566328">1.3. Performance</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2667320">1.4. Routing Rule Definition</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp49320">1.4.1. Gateway Addresses</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm10120">1.4.2. Destination/GW lists</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idm8408">1.4.3. Routing Rules</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1793464">1.5. Routing Rule Processing</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1798888">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1799264">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1800904">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1802352">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1802720">3.1. <code class="varname">db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1805328">3.2. <code class="varname">drd_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1807960">3.3. <code class="varname">drr_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1810592">3.4. <code class="varname">drg_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1813216">3.5. <code class="varname">drl_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1816104">3.6. <code class="varname">sort_order</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1822432">3.7. <code class="varname">ruri_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1825176">3.8. <code class="varname">attrs_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1828040">3.9. <code class="varname">use_domain</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1830712">3.10. <code class="varname">drg_user_col</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1833384">3.11. <code class="varname">drg_domain_col</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1836048">3.12. <code class="varname">drg_grpid_col</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1838720">3.13. <code class="varname">fetch_rows</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1841384">3.14. <code class="varname">force_dns</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1844184">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1844552">4.1. 
+		<code class="function">do_routing("[groupID]")</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1847624">4.2. 
+		<code class="function">use_next_gw()/next_routing()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1851000">4.3. 
+		<code class="function">goes_to_gw([type])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1854976">4.4. 
+		<code class="function">is_from_gw([type])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1859048">4.5. 
+		<code class="function">is_from_gw( type, [flag])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1863136">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1863512">5.1. 
+		<code class="function">drouting.reload</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1865464">6. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3167768"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1. Introduction">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3323936"></a>1.1. Introduction</h3>
+                </div>
+              </div>
+            </div>
+            <p>Dynamic Routing is a module for selecting (based on multiple
+	criteria) the the best gateway/destination to be used for delivering a
+	certain call. Least Cost Routing (LCR) is a special case of dynamic
+	routing - when the rules are ordered based on costs. Dynamic Routing 
+	comes with many features regarding routing rule selection:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>prefix based</p>
+                </li>
+                <li class="listitem">
+                  <p>caller/group based</p>
+                </li>
+                <li class="listitem">
+                  <p>time based</p>
+                </li>
+                <li class="listitem">
+                  <p>priority based</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	, processing :
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>stripping and prefixing</p>
+                </li>
+                <li class="listitem">
+                  <p>default rules</p>
+                </li>
+                <li class="listitem">
+                  <p>inbound and outbound processing</p>
+                </li>
+                <li class="listitem">
+                  <p>script route triggering</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	and failure handling:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>serial forking</p>
+                </li>
+                <li class="listitem">
+                  <p>weight based GW selection</p>
+                </li>
+                <li class="listitem">
+                  <p>random GW selection</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="1.2. Features">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2783264"></a>1.2. Features</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The dynamic routing implementation for Kamailio is designed with the
+	following properties:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+	routing info (destinations, rules, groups) are stored in a database and
+	loaded into memory at start up time; reload at runtime via RPC command
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	load balancing or random selection of the destinations (from a given set)
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	able to handle large volume of routing info (300K of rules) with minimal
+	speed/time and memory consumption penalties
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	script integration - Pseudo variables support in functions; scripting
+	route triggering when rules are matched
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	bidirectional behavior - inbound and outbound processing (strip and 
+	prefixing when sending and receiving from a destination/GW)
+	</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.3. Performance">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2566328"></a>1.3. Performance</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	There were several tests performed regarding the performance of the module
+	when dealing with a large number of routing rules.
+	</p>
+            <p>
+	The tests were performed with a set of 383000 rules and to values were
+	measured:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>time to load from DB</p>
+                </li>
+                <li class="listitem">
+                  <p>used shared memory</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	The time to load was varying between 4 seconds and 8 seconds, depending of
+	the caching of the DB client - the first load was the slowest (as the DB 
+	query hits the disk drive); the following are faster as data is already 
+	cached in the DB client. So technically speaking, the time to load (without
+	the time to query which is DB type dependent) is ~4 seconds
+	</p>
+            <p>
+	After loading the data into shared memory ~ 96M of memory were used 
+	exclusively for the DR data.
+	</p>
+          </div>
+          <div class="section" title="1.4. Routing Rule Definition">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2667320"></a>1.4. Routing Rule Definition</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Dynamic routing rules are stored in a database, in four tables:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>one for storing the gateway definitions
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>one for storing the routing rule definitions
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>one for storing the users mappings over groups
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>one for storing a list of gateways, so you don't have to enter all
+	the elements every time you need it
+        </p>
+                </li>
+              </ul>
+            </div>
+            <div class="section" title="1.4.1. Gateway Addresses">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp49320"></a>1.4.1. Gateway Addresses</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	Default name for the table storing gateway addresses is 
+	<span class="quote">“<span class="quote">dr_gateways</span>”</span>.
+	Gateway addresses are stored in a separate table because of need to
+	access them independent of Dynamic Routing processing (e.g., adding/
+	removing gateway PRI prefix before/after performing other operation
+	-- receiving/relaying to gateway).
+	</p>
+              <p>
+	</p>
+              <div class="table">
+                <a id="idp3589128"></a>
+                <p class="title">
+                  <strong>Table 1.1. Definition of table dr_gateways</strong>
+                </p>
+                <div class="table-contents">
+                  <table summary="Definition of table dr_gateways" border="1">
+                    <colgroup>
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>Column name</th>
+                        <th>Type</th>
+                        <th>Default value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>gwid</td>
+                        <td>integer</td>
+                        <td>auto increment</td>
+                        <td>unique identifier for GW</td>
+                      </tr>
+                      <tr>
+                        <td>type</td>
+                        <td>unsigned int</td>
+                        <td>0</td>
+                        <td>type/class of GW</td>
+                      </tr>
+                      <tr>
+                        <td>address</td>
+                        <td>varchar(128)</td>
+                        <td> </td>
+                        <td>address of the gateway</td>
+                      </tr>
+                      <tr>
+                        <td>strip</td>
+                        <td>unsigned int</td>
+                        <td>0</td>
+                        <td>no of digits to strip</td>
+                      </tr>
+                      <tr>
+                        <td>pri_prefix</td>
+                        <td>varchar(255)</td>
+                        <td> </td>
+                        <td>PRI prefix of the gateway</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>varchar(128)</td>
+                        <td> </td>
+                        <td>description of the gateway</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p><br class="table-break" /> 
+	
+	</p>
+              <p>
+	Once a rule is matched, the STRIP number of digits are removed from the
+	username part of the RURI and then the PRI prefix has to be added to the 
+	request URI before forwarding the call to the gateway. 
+	</p>
+              <p>
+	</p>
+              <div class="table">
+                <a id="idm17664"></a>
+                <p class="title">
+                  <strong>Table 1.2. Sample dr_gateways records</strong>
+                </p>
+                <div class="table-contents">
+                  <table summary="Sample dr_gateways records" border="1">
+                    <colgroup>
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>gwid</th>
+                        <th>type</th>
+                        <th>address</th>
+                        <th>strip</th>
+                        <th>pri_prefix</th>
+                        <th>description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>10</td>
+                        <td>10.10.10.10:5080</td>
+                        <td>0</td>
+                        <td>2222</td>
+                        <td>Gateway 1</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>10</td>
+                        <td>10.10.10.10</td>
+                        <td>2</td>
+                        <td>3333</td>
+                        <td>Gateway 2</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>20</td>
+                        <td>10.10.10.11</td>
+                        <td>0</td>
+                        <td> </td>
+                        <td>Gateway 3</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p><br class="table-break" /> 
+	</p>
+            </div>
+            <div class="section" title="1.4.2. Destination/GW lists">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm10120"></a>1.4.2. Destination/GW lists</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	For each rule, you can set a list of destinations to be used. The list is
+	comma or pipe separated enumeration of the destinations. The module
+	will use (one by one) each destination from the list (in the given order).
+	</p>
+              <p>
+	Also the module allows the usage of groups in the destination lists. A
+	group of destinations is delimited by semi-colon char. inside the whole
+	destination list ( like: 2,4;5,78,23;4;7;2 ). The destinations from 
+	within a group may be act differently (like load-balancing, random 
+	selection, etc), depending of the <span class="quote">“<span class="quote">sort_order</span>”</span> module 
+	parameter - more about this is available under the module paramters 
+	section.
+	</p>
+            </div>
+            <div class="section" title="1.4.3. Routing Rules">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idm8408"></a>1.4.3. Routing Rules</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	Default name for the table storing rule definitions is 
+	<span class="quote">“<span class="quote">dr_rules</span>”</span>.
+	</p>
+              <p>
+	</p>
+              <div class="table">
+                <a id="idm7392"></a>
+                <p class="title">
+                  <strong>Table 1.3. Definition of dr_rules table</strong>
+                </p>
+                <div class="table-contents">
+                  <table summary="Definition of dr_rules table" border="1">
+                    <colgroup>
+                      <col />
+                      <col />
+                      <col />
+                      <col />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>Column name</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>ruleid</td>
+                        <td>integer</td>
+                        <td>auto</td>
+                        <td>UID of the rule</td>
+                      </tr>
+                      <tr>
+                        <td>groupid</td>
+                        <td>varchar(255)</td>
+                        <td> </td>
+                        <td>list of routing group IDs</td>
+                      </tr>
+                      <tr>
+                        <td>prefix</td>
+                        <td>varchar(64)</td>
+                        <td> </td>
+                        <td>destination prefix for this route</td>
+                      </tr>
+                      <tr>
+                        <td>timerec</td>
+                        <td>varchar(255)</td>
+                        <td> </td>
+                        <td>time recurrence for this rule</td>
+                      </tr>
+                      <tr>
+                        <td>priority</td>
+                        <td>integer</td>
+                        <td>0</td>
+                        <td>priority of the rule</td>
+                      </tr>
+                      <tr>
+                        <td>routeid</td>
+                        <td>integer</td>
+                        <td>0</td>
+                        <td>route block to be execute</td>
+                      </tr>
+                      <tr>
+                        <td>gwlist</td>
+                        <td>varchar(255)</td>
+                        <td> </td>
+                        <td>the list with GWs to be used</td>
+                      </tr>
+                      <tr>
+                        <td>description</td>
+                        <td>varchar(128)</td>
+                        <td> </td>
+                        <td>description of this rule</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p><br class="table-break" /> 
+	</p>
+              <p>
+	</p>
+              <div class="orderedlist">
+                <ol class="orderedlist" type="a">
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>groupid column</em></span> 
+	</p>
+                    <p>
+	Each user must be member of only one routing group. It must be 
+	specified in user's profile.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>prefix column</em></span> 
+	</p>
+                    <p>
+	Destination URI must start with prefix value to match the rule.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>time rec column</em></span> 
+	</p>
+                    <p>
+	A date-time expression that defines the time recurrence to match for
+	current rule. Time recurrences are based closely on the specification
+	of recurring intervals of time in the Internet Calendaring and Scheduling
+	Core Object Specification (calendar COS), RFC 2445. The set of attributes
+	used in routing rule specification is subset of time recurrence attributes
+	used by Call Processing Language (CPL). These attributes are (extracted
+	from CPL draft 09):
+	</p>
+                    <p>
+	</p>
+                    <div class="table">
+                      <a id="idp78872"></a>
+                      <p class="title">
+                        <strong>Table 1.4. Time recurrence attributes</strong>
+                      </p>
+                      <div class="table-contents">
+                        <table summary="Time recurrence attributes" border="1">
+                          <colgroup>
+                            <col />
+                            <col />
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th>Attribute</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>dastard</td>
+                              <td>Start of interval (RFC 2445 DATE-TIME)</td>
+                            </tr>
+                            <tr>
+                              <td>duration</td>
+                              <td>Length of interval (RFC 2445 DURATION)</td>
+                            </tr>
+                            <tr>
+                              <td>freq</td>
+                              <td>Frequency of recurrence (secondly,minutely,hourly, daily,weekly,
+	monthly, or yearly).</td>
+                            </tr>
+                            <tr>
+                              <td>until</td>
+                              <td>bound of recurrence (RFC 2445 DATE-TIME)</td>
+                            </tr>
+                            <tr>
+                              <td>interval</td>
+                              <td>How often the recurrence repeats</td>
+                            </tr>
+                            <tr>
+                              <td>byday</td>
+                              <td>List of days of the week</td>
+                            </tr>
+                            <tr>
+                              <td>bymonthday</td>
+                              <td>List of days of the month</td>
+                            </tr>
+                            <tr>
+                              <td>byyearday</td>
+                              <td>List of days of the year</td>
+                            </tr>
+                            <tr>
+                              <td>byweekno</td>
+                              <td>List of weeks of the year</td>
+                            </tr>
+                            <tr>
+                              <td>bymonth</td>
+                              <td>List of months of the year</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <p><br class="table-break" />
+	</p>
+                    <p>
+	The value stored in database has the format of:
+	
+	&lt;dtstart&gt;|&lt;duration&gt;|&lt;freq&gt;|&lt;until&gt;|&lt;interval&gt;|&lt;byday&gt;|&lt;bymonthday&gt;|&lt;byyearday&gt;|&lt;byweekno&gt;|&lt;bymonth&gt;
+	
+	</p>
+                    <p>
+	When an attribute is not specified, the corresponding place must be left
+	empty, whenever another attribute that follows in the list has to be
+	specified.
+	</p>
+                    <p>
+	Detailed description of time recurrence attributes:
+	</p>
+                    <div class="itemizedlist">
+                      <ul class="itemizedlist">
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>dtstart</em></span> - specifies the beginning of the first 
+		period.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>duration</em></span> - specifies the duration of the period.
+		For a recurring interval, the <span class="quote">“<span class="quote">duration</span>”</span> parameter MUST
+		be small enough such that subsequent intervals do not overlap. 
+		For non-recurring intervals, durations of any positive length are 
+		permitted, zero-length duration means <span class="quote">“<span class="quote">forever</span>”</span>. 
+		Negative-length durations are not allowed.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>freq</em></span> - takes one of the following values: 
+		<span class="quote">“<span class="quote">daily</span>”</span>,
+		to specify repeating periods based on an interval of a day or more;
+		<span class="quote">“<span class="quote">weekly</span>”</span>, to specify repeating periods based on an 
+		interval of a week or more; <span class="quote">“<span class="quote">monthly</span>”</span>, to specify 
+		repeating periods based on an interval of a month or more; and 
+		<span class="quote">“<span class="quote">yearly</span>”</span>, to specify repeating periods based
+		on an interval of a year or more. These values are not case-sensitive.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>until</em></span> - defines an iCalendar COS DATE or DATE-TIME
+		value which bounds the recurrence rule in an inclusive manner. If the
+		value specified by <span class="quote">“<span class="quote">until</span>”</span> is synchronized with the 
+		specified 
+		recurrence, this date or date-time becomes the last instance of the 
+		recurrence. If not present, the recurrence is considered to repeat 
+		forever.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>interval</em></span> - contains a positive integer 
+		representing how often the recurrence rule repeats. The default value
+		is <span class="quote">“<span class="quote">1</span>”</span>, meaning every day for a <span class="quote">“<span class="quote">daily</span>”</span> rule,
+		every week for a <span class="quote">“<span class="quote">weekly</span>”</span>
+		rule, every month for a <span class="quote">“<span class="quote">monthly</span>”</span> rule and every year for
+		a <span class="quote">“<span class="quote">yearly</span>”</span> rule.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>interval</em></span> - contains a positive integer 
+		representing how often the recurrence rule repeats. The default value 
+		is <span class="quote">“<span class="quote">1</span>”</span>, meaning every day for a <span class="quote">“<span class="quote">daily</span>”</span> rule,
+		every week for a <span class="quote">“<span class="quote">weekly</span>”</span> rule, every
+		month for a <span class="quote">“<span class="quote">monthly</span>”</span> rule and every year for a 
+		<span class="quote">“<span class="quote">yearly</span>”</span> rule.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>byday</em></span> - specifies a comma-separated list of days 
+		of the week. <span class="quote">“<span class="quote">MO</span>”</span> indicates Monday; <span class="quote">“<span class="quote">TU</span>”</span> 
+		indicates Tuesday; <span class="quote">“<span class="quote">WE</span>”</span> indicates Wednesday; 
+		<span class="quote">“<span class="quote">TH</span>”</span> indicates Thursday; <span class="quote">“<span class="quote">FR</span>”</span> indicates 
+		Friday; <span class="quote">“<span class="quote">SA</span>”</span> indicates Saturday; <span class="quote">“<span class="quote">SU</span>”</span> 
+		indicates Sunday. These values are not case-sensitive.
+	</p>
+                          <p>
+		Each <span class="quote">“<span class="quote">byday</span>”</span> value can also be preceded by a positive 
+		(+n) or negative (-n) integer. If present, this indicates the nth 
+		occurrence of the specific day within the <span class="quote">“<span class="quote">monthly</span>”</span> or 
+		<span class="quote">“<span class="quote">yearly</span>”</span> recurrence. For example, within a 
+		<span class="quote">“<span class="quote">monthly</span>”</span> rule, +1MO (or simply 1MO) represents the first 
+		Monday within the month, whereas -1MO represents the last Monday of
+		the month. If an integer modifier is not present, it means all days
+		of this type within the specified frequency. For example, within a 
+		<span class="quote">“<span class="quote">monthly</span>”</span> rule, MO represents all Mondays within the month.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>bymonthday</em></span> - parameter specifies a comma-separated
+		list of days of the month. Valid values are 1 to 31 or -31 to -1. For 
+		example, -10 represents the tenth to the last day of the month.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>byyearday</em></span> - specifies a comma-separated list of 
+		days of the year. Valid values are 1 to 366 or -366 to -1. For example,
+		-1 represents the last day of the year (December 31st) and -306 
+		represents the 306th to the last day of the year (March 1st).
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>byweekno</em></span> - specifies a comma-separated list of 
+		ordinals specifying weeks of the year. Valid values are 1 to 53 or 
+		-53 to -1.
+	</p>
+                        </li>
+                        <li class="listitem">
+                          <p>
+		<span class="emphasis"><em>bymonth</em></span> - parameter specifies a comma-separated
+		list of months of the year. Valid values are 1 to 12.
+	</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <p>
+</p>
+                    <p>
+</p>
+                    <p></p>
+                    <p>
+		A recurrence is specified by including the <span class="quote">“<span class="quote">freq</span>”</span> 
+		parameter, which indicates the type of recurrence rule. Parameters 
+		other than <span class="quote">“<span class="quote">dtstart</span>”</span>
+		and <span class="quote">“<span class="quote">duration</span>”</span> SHOULD NOT be specified unless 
+		<span class="quote">“<span class="quote">freq</span>”</span> is present.
+	</p>
+                    <p></p>
+                    <p>
+		If byxxx parameter values are found which are beyond the available 
+		scope (ie, bymonthday=<span class="quote">“<span class="quote">30</span>”</span> in February), they are simply
+		ignored. 
+	</p>
+                    <br />
+                    <p></p>
+                    <p>
+		Byxxx parameters modify the recurrence in some manner. Byxxx rule 
+		parts for a period of time which is the same or greater than the 
+		frequency generally reduce or limit the number of occurrences of the 
+		recurrence generated. For example, freq=<span class="quote">“<span class="quote">daily</span>”</span> 
+		bymonth=<span class="quote">“<span class="quote">1</span>”</span> reduces the number of
+		recurrence instances from all days (if the <span class="quote">“<span class="quote">bymonth</span>”</span> 
+		parameter is not present) to all days in January. Byxxx parameters for 
+		a period of time less than the frequency generally increase or expand 
+		the number of occurrences of the recurrence. For example, 
+		freq=<span class="quote">“<span class="quote">yearly</span>”</span> bymonth=<span class="quote">“<span class="quote">1,2</span>”</span>
+		increases the number of days within the yearly recurrence set from 1 
+		(if <span class="quote">“<span class="quote">bymonth</span>”</span> parameter is not present) to 2.
+	</p>
+                    <p>
+		If multiple Byxxx parameters are specified, then after evaluating the
+		specified <span class="quote">“<span class="quote">freq</span>”</span> and <span class="quote">“<span class="quote">interval</span>”</span> parameters,
+		the Byxxx parameters are 
+		applied to the current set of evaluated occurrences in the following
+		order: <span class="quote">“<span class="quote">bymonth</span>”</span>, <span class="quote">“<span class="quote">byweekno</span>”</span>, 
+		<span class="quote">“<span class="quote">byyearday</span>”</span>, <span class="quote">“<span class="quote">bymonthday</span>”</span>, 
+		<span class="quote">“<span class="quote">byday</span>”</span>; then <span class="quote">“<span class="quote">until</span>”</span> is  evaluated.
+	</p>
+                    <p>
+		Here is an example of evaluating multiple Byxxx parameters.
+	</p>
+                    <p>
+		dtstart=<span class="quote">“<span class="quote">19970105T083000</span>”</span> duration=<span class="quote">“<span class="quote">10M</span>”</span>
+		freq=<span class="quote">“<span class="quote">yearly</span>”</span> interval=<span class="quote">“<span class="quote">2</span>”</span> 
+		bymonth=<span class="quote">“<span class="quote">1</span>”</span> byday=<span class="quote">“<span class="quote">SU</span>”</span>
+	</p>
+                    <p>
+		First, the interval=<span class="quote">“<span class="quote">2</span>”</span> would be applied to 
+		freq=<span class="quote">“<span class="quote">yearly</span>”</span> to arrive at <span class="quote">“<span class="quote">every other year</span>”</span>
+		. Then, bymonth=<span class="quote">“<span class="quote">1</span>”</span> would be applied to arrive at 
+		<span class="quote">“<span class="quote">every January, every other year</span>”</span>. Then,
+		byday=<span class="quote">“<span class="quote">SU</span>”</span> would be applied to arrive at <span class="quote">“<span class="quote">every 
+		Sunday in January, 
+		every other year, from 8:30 to 8:40 </span>”</span>. The appropriate minutes 
+		and hours have been retrieved from the <span class="quote">“<span class="quote">dtstart</span>”</span> and 
+		<span class="quote">“<span class="quote">duration</span>”</span> parameters.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>priority column</em></span> 
+	</p>
+                    <p>
+	If many rules are eligible, choose the one with highest priority.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>routeid column</em></span> 
+	</p>
+                    <p>
+	If different than 0, then execute the route with the specified ID.
+	That is, a route which can be used to perform custom
+	operations on message. At this route, no modification is performed
+	at signaling level.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>gwlist column</em></span> 
+	</p>
+                    <p>
+	A comma separated list of gateway identifiers corresponding to a row in 
+	table <span class="quote">“<span class="quote">dr_gateways</span>”</span>. You can use a predefined list from the
+	table <span class="quote">“<span class="quote">dr_gw_lists</span>”</span> preceded by the character
+	<span class="quote">“<span class="quote">#</span>”</span>. The first gateway is tried first and if routing to it
+	fails, then the second one, and so one. If no gateway is left a negative 
+	response is sent back to caller.
+	</p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+		<span class="emphasis"><em>Routing Rules Examples</em></span> 
+	</p>
+                    <p>
+	</p>
+                    <div class="table">
+                      <a id="idp1782448"></a>
+                      <p class="title">
+                        <strong>Table 1.5. Sample dr_rules records</strong>
+                      </p>
+                      <div class="table-contents">
+                        <table summary="Sample dr_rules records" width="100%" border="1">
+                          <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th align="left">ruleid</th>
+                              <th align="left">group</th>
+                              <th align="left">prefix</th>
+                              <th align="left">timerec</th>
+                              <th align="left">priority</th>
+                              <th align="left">routeid</th>
+                              <th align="left">gwlist</th>
+                              <th align="left">description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td align="left">1</td>
+                              <td align="left">6</td>
+                              <td align="left">0049</td>
+                              <td align="left">20040101T083000|10H|weekly|||MO,TU,WE,TH,FR</td>
+                              <td align="left">5</td>
+                              <td align="left">23</td>
+                              <td align="left">1,2</td>
+                              <td align="left">Rule 1</td>
+                            </tr>
+                            <tr>
+                              <td align="left">2</td>
+                              <td align="left">8</td>
+                              <td align="left">0049</td>
+                              <td align="left">20040101T083000</td>
+                              <td align="left">0</td>
+                              <td align="left">0</td>
+                              <td align="left">1,2</td>
+                              <td align="left">Rule 2</td>
+                            </tr>
+                            <tr>
+                              <td align="left">3</td>
+                              <td align="left">7,8,9</td>
+                              <td align="left">0049</td>
+                              <td align="left">20040101T083000</td>
+                              <td align="left">0</td>
+                              <td align="left">0</td>
+                              <td align="left">3</td>
+                              <td align="left">Rule 3</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <p><br class="table-break" />
+
+	</p>
+                    <p>
+	(The time recurrence for first rule is:
+	<span class="quote">“<span class="quote">20040101T083000|10H|weekly|||MO,TU,WE,TH,FR</span>”</span>)
+	</p>
+                  </li>
+                </ol>
+              </div>
+              <p>
+	</p>
+            </div>
+          </div>
+          <div class="section" title="1.5. Routing Rule Processing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1793464"></a>1.5. Routing Rule Processing</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The module can be used to find out which is the best gateway to use for new
+	calls terminated to PSTN. The algorithm to select the rule is as follows:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+	the module discovers the routing group of the originating user. This 
+	step is skipped if a routing group is passed from the script as parameter.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	once the group is known, in the subset of the rules for this group the 
+	module looks for the one that matches the destination based on "prefix"
+	column. The set of rules with the longest prefix is chosen. If no digit 
+	from the prefix matches, the default rules are used (rules with no prefix)
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	within the set of rules is applied the time criteria, and the rule which
+	has the highest priority and matches the time criteria is selected to drive
+	the routing.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	Once found the rule, it may contain a route ID to execute. If a certain 
+	flag is set, then the processing is stopped after executing the route
+	block.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	The rule must contain a gateway chain. The module will execute serial 
+	forking for each address in chain. The next address in chain is used only
+	if the previously has failed.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+	With the right gateway address found, the prefix (PRI) of the gateway is
+	added to the request URI and then the request is forwarded.
+	</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	</p>
+            <p>
+	If no rule is found to match the selection criteria an default action must
+	be taken (e.g., error response sent back). If the gateway in the chain has 
+	no prefix the request is forwarded without adding any prefix to the request
+	URI.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1798888"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1799264"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1800904"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1802352"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1802720"></a>3.1. <code class="varname">db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The database url.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1804120"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "db_url", 
+	"mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. drd_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1805328"></a>3.2. <code class="varname">drd_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table storing gateway addresses.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">dr_gateways</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1806792"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">drd_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drd_table", "dr_gateways")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. drr_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1807960"></a>3.3. <code class="varname">drr_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table storing routing rules.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">dr_rules</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1809424"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">drr_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drr_table", "rules")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. drg_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1810592"></a>3.4. <code class="varname">drg_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table storing groups.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">dr_groups</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1812048"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">drg_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drg_table", "groups")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. drl_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1813216"></a>3.5. <code class="varname">drl_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table storing definitions of destination lists (to 
+		be used directly by the routing rules).
+		You will have a identifier to a group of gateways instead of having all the
+		members of the group as a individual elements.
+		Very useful to reuse a list of gateways in different places.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">dr_gw_lists</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1814936"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">drl_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drl_table", "my_gw_lists")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. sort_order (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1816104"></a>3.6. <code class="varname">sort_order</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Defines how the destination list should be processed (ordering of
+		the elements). Possible modes are
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>0</em></span> - destination groups are ignored and all the
+			destinations are tried in the given order; 
+			Ex: list 1,2;3,4,5;6 will lead to usage as 1,2,3,4,5,6 
+		</li>
+                <li class="listitem"><span class="emphasis"><em>1</em></span> - the destinations from each group are
+			randomly arranged (only the two elements are randomly selected);
+			groups do maintain their order (as given); the resulting list is 
+			used (with all the defined destinations).
+			Ex: 1,2;3,4,5;6 -&gt; randomizer -&gt; 
+			(A) 2,1;4,3,5;6  -&gt; usage 2,1,4,3,5,6
+			(B) 1,2;3,5,4;6  -&gt; usage 1,2,3,5,4,6
+		</li>
+                <li class="listitem"><span class="emphasis"><em>2</em></span> - from each destination group, only a 
+			single destination is randomly selected; groups do maintain their
+			order (as given);
+			<p>
+			Ex: 1,2;3,4,5;6 -&gt; randomizer -&gt;
+			</p><p>
+			(A) 2;4;6  -&gt; usage 2,4,6
+			</p><p>
+			(B) 1;5;6  -&gt; usage 1,5,6
+			</p><p>
+			It is ok to have repeating gateways in different groups. The module will
+			take care internally in case of failure not to choose a gateway that
+			was tried already.
+			</p><p>
+			Ex: 1,2,3; 1,2,3; 1,2,3 -&gt; no gateway will be chosen twice. So in case there
+			are 2 failures, all the three gateways (1,2,3) will be tried in a random order.
+			</p></li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1821272"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">sort_order</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "sort_order", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. ruri_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1822432"></a>3.7. <code class="varname">ruri_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the avp for storing Request URIs to be later used 
+		(alternative destiantions for the current one).
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1823960"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">ruri_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "ruri_avp", '$avp(dr_ruri)')
+modparam("drouting", "ruri_avp", '$avp(i:33)')
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. attrs_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1825176"></a>3.8. <code class="varname">attrs_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the avp for storing the attribute of the current selected
+		destination - once a new destination is selected (via the 
+		use_next_gw() function), the AVP will be updated with the attrs of the
+		new used destination.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1826816"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">attrs_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "attrs_avp", '$avp(dr_attrs)')
+modparam("drouting", "atrrs_avp", '$avp(i:67)')
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. use_domain (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1828040"></a>3.9. <code class="varname">use_domain</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Flag to configure whether to use domain match when querying
+			database for user's routing group.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1829552"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "use_domain", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. drg_user_col (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1830712"></a>3.10. <code class="varname">drg_user_col</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in group db table where the username is stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1832208"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">drg_user_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drg_user_col", "user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. drg_domain_col (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1833384"></a>3.11. <code class="varname">drg_domain_col</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in group db table where the domain is stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1834872"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">drg_domain_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drg_domain_col", "host")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. drg_grpid_col (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1836048"></a>3.12. <code class="varname">drg_grpid_col</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column in group db table where the
+			group id is stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">groupid</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1837544"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">drg_grpid_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "drg_grpid_col", "grpid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. fetch_rows (int)"><div class="titlepage"><div><div><h3 class="title"><a id="idp1838720"></a>3.13. <code class="varname">fetch_rows</code> (int)</h3></div></div></div><p>
+		</p>
+		The number of rows that should be fetched from the result of a
+		query in rules db table.
+		<p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">2000</span>”</span>.
+		</em></span>
+		</p><div class="example"><a id="idp1840224"></a><p class="title"><strong>Example 1.13. Set <code class="varname">fetch_rows</code> parameter</strong></p><div class="example-contents"><pre class="programlisting">...
+modparam("drouting", "fetch_rows", 1500)
+...</pre></div></div><br class="example-break" /></div>
+          <div class="section" title="3.14. force_dns (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1841384"></a>3.14. <code class="varname">force_dns</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Force DNS resolving of GW/destination names (if not IPs) during 
+		startup. If not enabled, the GW name will be blindly used during 
+		routing.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1 (enabled)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1842944"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">force_dns</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("drouting", "force_dns", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1844184"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  do_routing(&quot;[groupID]&quot;)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1844552"></a>4.1. 
+		<code class="function">do_routing("[groupID]")</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function to trigger routing of the message according to the 
+		rules in the database table and the configured parameters.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <p>
+		The module can take one optional parameter: the routing group the 
+		caller belongs to - this may be a static numerical value or an AVP
+		specification. If none specified, the function will automatically
+		try to query the dr_group table to get this information.
+		</p>
+            <div class="example">
+              <a id="idp1846384"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">do_routing</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+do_routing();
+...
+do_routing("0");
+...
+do_routing("$avp(i:10)");</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  use_next_gw()/next_routing()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1847624"></a>4.2. 
+		<code class="function">use_next_gw()/next_routing()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function takes the next available destination (set by do_routing, 
+		as alternative destinations) and push it into RURI. Note that the 
+		function just sets the RURI (nothing more).
+		</p>
+            <p>
+		If a new RURI is set, the used destination is removed from the 
+		pending set of alternative destinations.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <p>
+		The function returns true only if a new RURI was set. False
+		is returned is no other alternative destinations are found or in case
+		of internal processing error.
+		</p>
+            <div class="example">
+              <a id="idp1849784"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">use_next_gw</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (use_next_gw()) {
+	t_relay();
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  goes_to_gw([type])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1851000"></a>4.3. 
+		<code class="function">goes_to_gw([type])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function returns true if the destination of the current request 
+		(destination URI or Request URI) points (as IP) to one of the gateways.
+		There no DNS lookups done if the domain part of the URI is not an IP.
+		</p>
+            <p>
+		This function does not change anything in the message.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <p>
+			The function can take one optional parameter:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>type</em></span> (optional) - GW/destination 
+					type to be checked
+				</li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp1853728"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">goes_to_gw</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (goes_to_gw("1")) {
+	sl_send_reply("403","Forbidden");
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  is_from_gw([type])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1854976"></a>4.4. 
+		<code class="function">is_from_gw([type])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function checks if the sender of the message is a gateway
+		from a certain group.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE and 
+		ONREPLY_ROUTE
+		</p>
+            <p>
+			The function can take one optional parameter:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>type</em></span> (optional) - GW/destination type
+					to be checked
+				</li>
+                <li class="listitem"><span class="emphasis"><em>flags</em></span> - if message is a request and
+					the GW has a STRIP defined, then apply it if GW is source.
+				</li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp1857848"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">is_from_gw</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_from_gw("1") {
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  is_from_gw( type, [flag])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1859048"></a>4.5. 
+		<code class="function">is_from_gw( type, [flag])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function checks if the sender of the message is a gateway
+		from a certain group.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <p>
+			The function can take two parameters:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>type</em></span> (mandatory) - GW/destination
+					type to be checked
+				</li>
+                <li class="listitem"><span class="emphasis"><em>flags</em></span> (optional) - if message is a 
+					request and the GW has a STRIP defined, then apply it 
+					if GW is source.
+				</li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp1861896"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">is_from_gw</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_from_gw("3","1") {
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1863136"></a>5. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  drouting.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1863512"></a>5.1. 
+		<code class="function">drouting.reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Command to reload routing rules from database.</p>
+            <p>It takes no parameter.</p>
+            <p>RPC Command Format:</p>
+            <pre class="programlisting">	kamcmd drouting.reload</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1865464"></a>6. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module requires 3 table in Kamailio database: dr_groups,
+	dr_gateways, dr_rules. The SQL syntax to create them can be
+	found in drouting-create.sql script in kamctl db directories.
+	You can also find the complete
+	database documentation on the project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3121024"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+		The module provides no function to be used
+		by other Kamailio modules.
+	</p>
+      </div>
+    </div>
+  </body>
+</html>

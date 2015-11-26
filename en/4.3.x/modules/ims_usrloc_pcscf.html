@@ -1,0 +1,825 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>IMS Usrloc PCSCF Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11229008" title="IMS Usrloc PCSCF Module" />
+    <link rel="next" href="#idp18282792" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="IMS Usrloc PCSCF Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11229008"></a>IMS Usrloc PCSCF Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jason Penton</span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18282792">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17483920">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16934784">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17228448">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16691744">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17289312">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17279768">3.1. hash_size (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17960928">3.2. timer_interval (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15516632">3.3. db_url (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15518512">3.4. db_mode (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15521936">3.5. hashing_type (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15527248">3.6. lookup_check_received (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15530392">3.7. match_contact_host_port (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15717056">4. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15717640">4.1. ulpcscf.status</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15718440">5. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15719080">5.1. registered contacts</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15719816">5.2. impus</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15720472">5.3. expired contacts</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18853680">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18183200">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp16682512">Set timer_interval parameter</a></dt>
+          <dt>1.3. <a href="#idp15517592">Set db_url parameter</a></dt>
+          <dt>1.4. <a href="#idp15521016">Set db_mode parameter</a></dt>
+          <dt>1.5. <a href="#idp15526320">Set hashing_type parameter</a></dt>
+          <dt>1.6. <a href="#idp15529456">Set lookup_check_received parameter</a></dt>
+          <dt>1.7. <a href="#idp15716040">Set match_contact_host_port parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18282792"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17483920">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16934784">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17228448">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16691744">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17289312">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17279768">3.1. hash_size (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17960928">3.2. timer_interval (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15516632">3.3. db_url (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15518512">3.4. db_mode (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15521936">3.5. hashing_type (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15527248">3.6. lookup_check_received (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15530392">3.7. match_contact_host_port (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15717056">4. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15717640">4.1. ulpcscf.status</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15718440">5. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15719080">5.1. registered contacts</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15719816">5.2. impus</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15720472">5.3. expired contacts</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17483920"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module serves as a storage engine for PCSCF contacts, much like
+    the standard Kamailio module, usrloc, is a storage engine for standard SIP
+    contacts. The concept of a contact in IMS, PCSCF specifically, is very
+    different to that of std. SIP and as a result we have built this new
+    module. Alot of the design has been borrowed from the std. usrloc module.
+    For example. An IMS contact, in PCSCF, needs things like:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>Diameter Rx session for signalling bearer status. i.e. this is
+          effectively QoS from the network to make sure the signalling link
+          can be 'trusted'</p>
+              </li>
+              <li class="listitem">
+                <p>IPSEC Security Assocation for secure signalling between UE and
+          PCSCF (first point of contact)</p>
+              </li>
+              <li class="listitem">
+                <p>IMPU, each contact can have a number of associated public
+          identities (IMPU).</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16934784"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17228448"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded before this module:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16691744"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+      running Kamailio with this module loaded: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17289312"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽hash_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17279768"></a>3.1.聽hash_size (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of entries of the hash table used by to store the
+      contact records is 2^hash_size. For hash_size=4, the number of entries
+      of the hash table is 16.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 9. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp18183200"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "hash_size", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽timer_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17960928"></a>3.2.聽timer_interval (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of seconds between two timer runs. The module uses timer to
+      delete expired contacts.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 60. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp16682512"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set timer_interval parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "timer_interval", 30)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽db_url (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15516632"></a>3.3.聽db_url (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Database URL</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is
+			  "mysql://kamailio:kamailiorw@localhost/kamailio".</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15517592"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set db_url parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "db_url",
+       "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽db_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15518512"></a>3.4.聽db_mode (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the database mode to be used for the PCSCF usrloc data
+      persistent storage. Currently this module supports the Write-Through
+      scheme only.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 - This disables DB mode. Only memory will be used for usrloc
+          and data will not survive a restart.</p>
+                </li>
+                <li class="listitem">
+                  <p>1 - Write-Through Scheme. All changes to usrloc are
+          immediately refelcted in the database. This is slow but very
+          reliable. This mode will ensure that no registration data is lost as
+          a result of a restart or crash.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 0.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15521016"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set db_mode parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "db_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.聽hashing_type (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15521936"></a>3.5.聽hashing_type (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is used to specify how contacts are stored in the internal
+      memory hashing structures. This is an important parameter, not only for
+      efficiency, but also for functionality. IMS can get rather confusing
+      when it comes to contacts, SIP URIs and Implicitly registered SIP URIs
+      (IMPUs). Originally the hash for storage of contacts was performed over
+      the full contact URI viz (27821234567@10.0.0.10:12345;user=phone). This
+      scheme is useful (from a performance perspective) in circumstances where
+      you have many SIP URIs being registered from the same host/port.
+      However, this causes problems in IMS environments where an implicit
+      registration set of IMPU's is implicitly registered on behalf of a UA
+      when it registers. This is because the implicit contact being used in
+      subsequent requests could use a different SIP URI, for example
+      john.doe@10.0.0.10:12345. In this case the P-CSCF would not be able to
+      retrieve the initial contact as the hash over the different contact
+      would in most cases be different. It was therefore proposed to hash the
+      contact by IP:PORT only, effectively identifying a "device" - assuming a
+      1-1 relationship between an IP:PORT pair. In our example, we would get
+      to the same hash slot using the second SIP URI as we got using the
+      initial registered SIP URI. Within this slot we can now search for the
+      appropriate contact (remember there are still collision possibilities)
+      and then traverse through the linked list if iumplcit IMPUs to find the
+      contact currently being used. Of course if it is not found, then you can
+      deny the request.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 - This uses the original hash over AOR method. By default we
+          are backwards compatible...</p>
+                </li>
+                <li class="listitem">
+                  <p>1 - Use the newer hash over the Host from Contact-Header.</p>
+                </li>
+                <li class="listitem">
+                  <p>2 - Use the newer hash over the source-IP from where the 
+		request was received (useful for NAT-Scenarios)</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 0.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15526320"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Set hashing_type parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "hashing_type", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.聽lookup_check_received (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15527248"></a>3.6.聽lookup_check_received (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If set to 1 (default), the Host in the contact will be checked
+	against the Host, from which the request was received.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 - Upon lookup, do not check the host against received.</p>
+                </li>
+                <li class="listitem">
+                  <p>1 - Compare the host in the contact against the received info.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15529456"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Set lookup_check_received parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "lookup_check_received", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.聽match_contact_host_port (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15530392"></a>3.7.聽match_contact_host_port (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If set to 1 (default), the contact is matched using only host
+	  and port in the contact URI.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 - When matching contact do full contact match procedure.</p>
+                </li>
+                <li class="listitem">
+                  <p>1 - When matching contact compare only host and port of the contact URI.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15716040"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Set match_contact_host_port parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_usrloc_pcscf", "match_contact_host_port", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15717056"></a>4.聽RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>exported RPC commands.</p>
+          <div class="section" title="4.1.聽ulpcscf.status">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15717640"></a>4.1.聽ulpcscf.status</h3>
+                </div>
+              </div>
+            </div>
+            <p>Status of pcscf_usrloc, AORs, max slots, etc.</p>
+          </div>
+        </div>
+        <div class="section" title="5.聽Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15718440"></a>5.聽Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <p>Exported statistics are listed in the next sections.</p>
+          <div class="section" title="5.1.聽registered contacts">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15719080"></a>5.1.聽registered contacts</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of AOR contacts in registered state - cannot be
+      reset.</p>
+          </div>
+          <div class="section" title="5.2.聽impus">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15719816"></a>5.2.聽impus</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of IMPUs - cannot be reset.</p>
+          </div>
+          <div class="section" title="5.3.聽expired contacts">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15720472"></a>5.3.聽expired contacts</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of expired contacts - can be reset.</p>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter聽2.聽Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18853680"></a>Chapter聽2.聽Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp17622816"></a>
+          <dl>
+            <dt>2.1. <a href="#idp15817368">Where can I find more about Kamailio?</a></dt>
+            <dt>2.2. <a href="#idp17956760">Where can I post a question about this module?</a></dt>
+            <dt>2.3. <a href="#idp15628016">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp15817368"></a>
+                  <a id="idp17296520"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp17956760"></a>
+                  <a id="idp17293032"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp15628016"></a>
+                  <a id="idp17181632"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

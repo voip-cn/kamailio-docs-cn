@@ -1,0 +1,1050 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Benchmark Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11133904" title="Benchmark Module" />
+    <link rel="next" href="#idp18373552" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Benchmark Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11133904"></a>Benchmark Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Collax GmbH<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:bastian.friedrich@collax.com">bastian.friedrich@collax.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:bastian.friedrich@collax.com">bastian.friedrich@collax.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Collax GmbH</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Voice System SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18373552">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18753216">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18695088">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18913056">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17523840">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18008640">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18104584">3.1. <code class="varname">enable</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16606824">3.2. <code class="varname">granularity</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15647992">3.3. <code class="varname">loglevel</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15437008">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15439928">4.1. 
+		<code class="function">bm_start_timer(name)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15442464">4.2. 
+		<code class="function">bm_log_timer(name)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15453392">5. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15454024">5.1. $BM_time_diff</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15455160">6. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15742208">6.1. <code class="function">bm_enable_global</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15743192">6.2. <code class="function">bm_enable_timer</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15745064">6.3. <code class="function">bm_granularity</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15746008">6.4. <code class="function">bm_loglevel</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15747016">7. Example of usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16251240">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18519600">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17532184">1.1. 
+		<code class="function">bm_register(name, mode, id)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17895752">1.2. 
+		<code class="function">bm_start(id)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15718240">1.3. 
+		<code class="function">bm_log(id)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18691312">2. Benchmark API Example</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18209456">Set <code class="varname">enable</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15646832">Set <code class="varname">granularity</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15652280">Set <code class="varname">loglevel</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15441296"><code class="function">bm_start_timer</code> usage</a></dt>
+          <dt>1.5. <a href="#idp15452144"><code class="function">bm_log_timer</code> usage</a></dt>
+          <dt>1.6. <a href="#idp15744120">Enabling a timer</a></dt>
+          <dt>1.7. <a href="#idp15747656">benchmark usage</a></dt>
+          <dt>2.1. <a href="#idp18694032">Using the benchmark module's API from another module</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18373552"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18753216">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18695088">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18913056">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17523840">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18008640">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18104584">3.1. <code class="varname">enable</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16606824">3.2. <code class="varname">granularity</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15647992">3.3. <code class="varname">loglevel</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15437008">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15439928">4.1. 
+		<code class="function">bm_start_timer(name)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15442464">4.2. 
+		<code class="function">bm_log_timer(name)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15453392">5. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15454024">5.1. $BM_time_diff</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15455160">6. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15742208">6.1. <code class="function">bm_enable_global</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15743192">6.2. <code class="function">bm_enable_timer</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15745064">6.3. <code class="function">bm_granularity</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15746008">6.4. <code class="function">bm_loglevel</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15747016">7. Example of usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18753216"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module helps developers to benchmark their module functions. By adding
+		this module's functions via the configuration file or through its API, Kamailio
+		can log profiling information for every function.
+	</p>
+          <p>
+		The duration between calls to start_timer and log_timer is stored and logged
+		via Kamailio's logging facility. Please note that all durations are given as
+		microseconds (don't confuse with milliseconds!).
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18695088"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18913056"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17523840"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18008640"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. enable (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18104584"></a>3.1. <code class="varname">enable</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Even when the module is loaded, benchmarking is not enabled
+			per default. This variable may have three different values:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				-1 - Globally disable benchmarking
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				0 - Enable per-timer enabling. Single timers are inactive by default
+				and can be activated through the MI interface as soon as that feature is
+				implemented.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				1 - Globally enable benchmarking
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18209456"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">enable</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("benchmark", "enable", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. granularity (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16606824"></a>3.2. <code class="varname">granularity</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Logging normally is not done for every reference to the log_timer()
+			function, but only every n'th call. n is defined through this variable.
+			A sensible granularity seems to be 100.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15646832"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">granularity</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("benchmark", "granularity", 500)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. loglevel (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15647992"></a>3.3. <code class="varname">loglevel</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the log level for the benchmark logs. These levels should be used:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>-5 - L_ALERT</p>
+                </li>
+                <li class="listitem">
+                  <p>-4 - L_BUG</p>
+                </li>
+                <li class="listitem">
+                  <p>-3 - L_CRIT</p>
+                </li>
+                <li class="listitem">
+                  <p>-2 - L_CRIT (no prefix)</p>
+                </li>
+                <li class="listitem">
+                  <p>-1 - L_ERR</p>
+                </li>
+                <li class="listitem">
+                  <p>0 - L_WARN</p>
+                </li>
+                <li class="listitem">
+                  <p>1 - L_NOTICE</p>
+                </li>
+                <li class="listitem">
+                  <p>2 - L_INFO</p>
+                </li>
+                <li class="listitem">
+                  <p>3 - L_DBG</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">3</span>”</span> (L_INFO).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15652280"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">loglevel</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("benchmark", "loglevel", 4)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		This will set the logging level to L_DBG.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15437008"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  bm_start_timer(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15439928"></a>4.1. 
+		<code class="function">bm_start_timer(name)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Start timer <span class="quote">“<span class="quote">name</span>”</span>. A later call to
+		<span class="quote">“<span class="quote">bm_log_timer()</span>”</span> logs this timer..
+		</p>
+            <div class="example">
+              <a id="idp15441296"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">bm_start_timer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+bm_start_timer("test");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  bm_log_timer(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15442464"></a>4.2. 
+		<code class="function">bm_log_timer(name)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function logs the timer with the given ID. The following data are
+			logged:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Last msgs</em></span> is the number of calls in the last logging interval. This equals the granularity variable.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Last sum</em></span> is the accumulated duration in the current logging interval (i.e. for the last <span class="quote">“<span class="quote">granularity</span>”</span> calls).
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Last min</em></span> is the minimum duration between start/log_timer calls during the last interval.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Last max</em></span> - maximum duration.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Last average</em></span> is the average duration between
+					bm_start_timer() and bm_log_timer() since the last logging.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Global msgs</em></span> number of calls to log_timer.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Global sum</em></span> total duration in microseconds.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Global min</em></span>... You get the point. :)
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Global max</em></span> also obvious.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Global avg</em></span> possibly the most interesting value.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp15452144"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">bm_log_timer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+bm_log_timer("test");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15453392"></a>5. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Exported pseudo-variables are listed in the next sections.
+		</p>
+          <div class="section" title="5.1. $BM_time_diff">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15454024"></a>5.1. $BM_time_diff</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			<span class="emphasis"><em>$BM_time_diff</em></span> - the time difference
+			elapsed between calls of bm_start_timer(name) and
+			bm_log_timer(name). The value is 0 if no bm_log_timer()
+			was called.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="6. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15455160"></a>6. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. bm_enable_global">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15742208"></a>6.1. <code class="function">bm_enable_global</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Enables/disables the module. Parameter may be -1, 0 or 1. See
+				discription of "enable" parameter.
+			</p>
+          </div>
+          <div class="section" title="6.2. bm_enable_timer">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15743192"></a>6.2. <code class="function">bm_enable_timer</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Enable or disable a single timer. The following example enables
+				timer "test" (the second parameter must be 0 to disable):
+			</p>
+            <div class="example">
+              <a id="idp15744120"></a>
+              <p class="title">
+                <strong>Example 1.6. Enabling a timer</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo bm_enable_timer test 1
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.3. bm_granularity">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15745064"></a>6.3. <code class="function">bm_granularity</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Modifies the benchmarking granularity. See "granularity" variable.
+			</p>
+          </div>
+          <div class="section" title="6.4. bm_loglevel">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15746008"></a>6.4. <code class="function">bm_loglevel</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Modifies the module log level. See "loglevel" variable.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="7. Example of usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15747016"></a>7. Example of usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Measure the duration of user location lookup.
+		</p>
+          <div class="example">
+            <a id="idp15747656"></a>
+            <p class="title">
+              <strong>Example 1.7. benchmark usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+bm_start_timer("usrloc-lookup");
+lookup("location");
+bm_log_timer("usrloc-lookup");
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16251240"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18519600">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17532184">1.1. 
+		<code class="function">bm_register(name, mode, id)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17895752">1.2. 
+		<code class="function">bm_start(id)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15718240">1.3. 
+		<code class="function">bm_log(id)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18691312">2. Benchmark API Example</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+	The benchmark module provides an internal <acronym class="acronym">API</acronym> to be used by 
+	other Kamailio modules. The available functions are identical to the user exported
+	functions.
+	</p>
+        <p>
+	Please note that this module is intended mainly for developers. It should
+	be used with caution in production environments.
+	</p>
+        <div class="section" title="1. Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18519600"></a>1. Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.  bm_register(name, mode, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17532184"></a>1.1. 
+		<code class="function">bm_register(name, mode, id)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function register a new timer and/or returns the internal ID
+		associated with the timer. mode controls the creation of new timer
+		if not found. id is to be used by start and log timer functions.
+		</p>
+          </div>
+          <div class="section" title="1.2.  bm_start(id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17895752"></a>1.2. 
+		<code class="function">bm_start(id)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function equals the user-exported function bm_start_timer. The
+		id is passed as an integer, though.
+		</p>
+          </div>
+          <div class="section" title="1.3.  bm_log(id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15718240"></a>1.3. 
+		<code class="function">bm_log(id)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function equals the user-exported function bm_log_timer. The id
+		is passed as an integer, though.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2. Benchmark API Example">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18691312"></a>2. Benchmark API Example</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp18694032"></a>
+            <p class="title">
+              <strong>Example 2.1. Using the benchmark module's API from another module</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+#include "../benchmark/benchmark.h"
+...
+struct bm_binds bmb;
+...
+...
+/* load the benchmarking API */
+if (load_bm_api( &amp;bmb )!=0) {
+    LM_ERR("can't load benchmark API\n");
+    goto error;
+}
+...
+...
+/* Start/log timers during a (usually user-exported) module function */
+bmp.bm_register("test", 1, &amp;id)
+bmb.bm_start(id);
+do_something();
+bmb.bm_log(id);
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

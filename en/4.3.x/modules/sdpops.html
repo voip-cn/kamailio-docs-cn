@@ -1,0 +1,1190 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SDPOPS Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp133544" title="SDPOPS Module" />
+    <link rel="next" href="#idp7782168" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SDPOPS Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp133544"></a>SDPOPS Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp7782168">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp7791408">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6544992">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7390632">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6892600">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp6996248">3. Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6340912">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.remove_codecs_by_id">4.1. 
+		<code class="function">sdp_remove_codecs_by_id(list)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.remove_codecs_by_name">4.2. 
+		<code class="function">sdp_remove_codecs_by_name(list)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.remove_line_by_prefix">4.3. 
+		<code class="function">sdp_remove_line_by_prefix(string)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.keep_codecs_by_id">4.4. 
+		<code class="function">sdp_keep_codecs_by_id(list [, mtype])</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.keep_codecs_by_name">4.5. 
+		<code class="function">sdp_keep_codecs_by_name(list [, mtype])</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_media">4.6. 
+		<code class="function">sdp_with_media(type)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_active_media">4.7. 
+		<code class="function">sdp_with_active_media(type)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_remove_media">4.8. 
+		<code class="function">sdp_remove_media(type)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_transport">4.9. 
+		<code class="function">sdp_with_transport(type)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_transport_like">4.10. 
+		<code class="function">sdp_with_transport_like(string)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_transport">4.11. 
+		<code class="function">sdp_transport(pv)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_remove_transport">4.12. 
+		<code class="function">sdp_remove_transport(type)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_codecs_by_id">4.13. 
+		<code class="function">sdp_with_codecs_by_id(list)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdspops.f.sdp.with_codecs_by_name">4.14. 
+		<code class="function">sdp_with_codecs_by_name(list)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_print">4.15. 
+		<code class="function">sdp_print(level)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_get">4.16. 
+		<code class="function">sdp_get(avpvar)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_content">4.17. 
+		<code class="function">sdp_content()</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_with_ice">4.18. 
+		<code class="function">sdp_with_ice()</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sdpops.f.sdp_get_line_startswith">4.19. 
+			<code class="function">sdp_get_line_startswith(avpvar, string)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp7165304"><code class="function">sdp_remove_codecs_by_id</code> usage</a></dt>
+          <dt>1.2. <a href="#idp4403664"><code class="function">sdp_remove_codecs_by_name</code> usage</a></dt>
+          <dt>1.3. <a href="#idp4406464"><code class="function">sdp_remove_line_by_prefix</code> usage</a></dt>
+          <dt>1.4. <a href="#idp4409808"><code class="function">sdp_keep_codecs_by_id</code> usage</a></dt>
+          <dt>1.5. <a href="#idp4484840"><code class="function">sdp_keep_codecs_by_name</code> usage</a></dt>
+          <dt>1.6. <a href="#idp4487640"><code class="function">sdp_with_media</code> usage</a></dt>
+          <dt>1.7. <a href="#idp4490624"><code class="function">sdp_with_active_media</code> usage</a></dt>
+          <dt>1.8. <a href="#idp4493352"><code class="function">sdp_remove_media</code> usage</a></dt>
+          <dt>1.9. <a href="#idp4496144"><code class="function">sdp_with_transport</code> usage</a></dt>
+          <dt>1.10. <a href="#idp4499000"><code class="function">sdp_with_transport_like</code> usage</a></dt>
+          <dt>1.11. <a href="#idp4501848"><code class="function">sdp_transport</code> usage</a></dt>
+          <dt>1.12. <a href="#idp4540752"><code class="function">sdp_remove_transport</code> usage</a></dt>
+          <dt>1.13. <a href="#idp4543656"><code class="function">sdp_with_codecs_by_id</code> usage</a></dt>
+          <dt>1.14. <a href="#idp4546640"><code class="function">sdp_with_codecs_by_name</code> usage</a></dt>
+          <dt>1.15. <a href="#idp4549480"><code class="function">sdp_print</code> usage</a></dt>
+          <dt>1.16. <a href="#idp4552168"><code class="function">sdp_get</code> usage</a></dt>
+          <dt>1.17. <a href="#idp4554776"><code class="function">sdp_content</code> usage</a></dt>
+          <dt>1.18. <a href="#idp4557368"><code class="function">sdp_with_ice</code> usage</a></dt>
+          <dt>1.19. <a href="#idp4560168"><code class="function">sdp_get_line_startswith</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp7782168"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp7791408">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6544992">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7390632">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6892600">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp6996248">3. Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6340912">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.remove_codecs_by_id">4.1. 
+		<code class="function">sdp_remove_codecs_by_id(list)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.remove_codecs_by_name">4.2. 
+		<code class="function">sdp_remove_codecs_by_name(list)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.remove_line_by_prefix">4.3. 
+		<code class="function">sdp_remove_line_by_prefix(string)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.keep_codecs_by_id">4.4. 
+		<code class="function">sdp_keep_codecs_by_id(list [, mtype])</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.keep_codecs_by_name">4.5. 
+		<code class="function">sdp_keep_codecs_by_name(list [, mtype])</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_media">4.6. 
+		<code class="function">sdp_with_media(type)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_active_media">4.7. 
+		<code class="function">sdp_with_active_media(type)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_remove_media">4.8. 
+		<code class="function">sdp_remove_media(type)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_transport">4.9. 
+		<code class="function">sdp_with_transport(type)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_transport_like">4.10. 
+		<code class="function">sdp_with_transport_like(string)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_transport">4.11. 
+		<code class="function">sdp_transport(pv)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_remove_transport">4.12. 
+		<code class="function">sdp_remove_transport(type)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_codecs_by_id">4.13. 
+		<code class="function">sdp_with_codecs_by_id(list)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdspops.f.sdp.with_codecs_by_name">4.14. 
+		<code class="function">sdp_with_codecs_by_name(list)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_print">4.15. 
+		<code class="function">sdp_print(level)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_get">4.16. 
+		<code class="function">sdp_get(avpvar)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_content">4.17. 
+		<code class="function">sdp_content()</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_with_ice">4.18. 
+		<code class="function">sdp_with_ice()</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sdpops.f.sdp_get_line_startswith">4.19. 
+			<code class="function">sdp_get_line_startswith(avpvar, string)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7791408"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides functions for checking and managing the 
+		<acronym class="acronym">SDP</acronym> payloads of SIP messages.
+	</p>
+          <p>
+		Examples of functions this module offers: remove codecs from SDP,
+		check the media stream types and return attributes of SDP document.
+		For the full list of the features provided by this module and
+		the implementation state, please read the list of exported functions.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6544992"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7390632"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6892600"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6996248"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module does not export any config parameters yet.
+		</p>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6340912"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sdp_remove_codecs_by_id(list)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.remove_codecs_by_id"></a>4.1. 
+		<code class="function">sdp_remove_codecs_by_id(list)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Remove the codecs provided in the parameter 'list' from all
+			media streams found in SDP payload. The parameter 'list' must
+			be one item or a comma separated list of numeric codec IDs. The
+			parameter can be a static string or a variable holding the
+			list of numeric codec IDs.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp7165304"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">sdp_remove_codecs_by_id</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# remove PCMU
+sdp_remove_codecs_by_id("0");
+# remove PCMU, PCMA and GSM
+sdp_remove_codecs_by_id("0,8,3");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  sdp_remove_codecs_by_name(list)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.remove_codecs_by_name"></a>4.2. 
+		<code class="function">sdp_remove_codecs_by_name(list)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Remove the codecs provided in the parameter 'list' from all
+			media streams found in SDP payload. The parameter 'list' must
+			be one item or a comma separated list of codec names. The
+			parameter can be a static string or a variable holding the
+			list of codec names.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4403664"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">sdp_remove_codecs_by_name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# remove PCMU
+sdp_remove_codecs_by_name("PCMU");
+# remove PCMU, PCMA and GSM
+sdp_remove_codecs_by_name("PCMU,PCMA,GSM");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  sdp_remove_line_by_prefix(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.remove_line_by_prefix"></a>4.3. 
+		<code class="function">sdp_remove_line_by_prefix(string)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Remove all SDP attribute lines beginning with 'string'
+			in all media streams.
+	</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	</p>
+            <div class="example">
+              <a id="idp4406464"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">sdp_remove_line_by_prefix</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ($si == "2001:DB8::8:800:200C:417A"
+        and ( has_body("application/sdp") or has_body("multipart/mixed")))
+{
+    xlog("L_INFO", "Cleaning ugly SDP from $si\n");
+    sdp_remove_codecs_by_name("X-NSE");
+    sdp_remove_line_by_prefix("a=X-");
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  sdp_keep_codecs_by_id(list [, mtype])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.keep_codecs_by_id"></a>4.4. 
+		<code class="function">sdp_keep_codecs_by_id(list [, mtype])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Keep only the codecs provided in the parameter 'list' from all
+			media streams found in SDP payload. The parameter 'list' must
+			be one item or a comma separated list of numeric codec IDs. The
+			parameter can be a static string or a variable holding the
+			list of numeric codec IDs.
+	    </p>
+            <p>
+			Optional parameter mtype can be provided to apply the operations
+			only to the streams matching m=mtype.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4409808"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">sdp_keep_codecs_by_id</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# keep only PCMU
+sdp_keep_codecs_by_id("0");
+# keep PCMU, PCMA and GSM in audio stream
+sdp_keep_codecs_by_id("0,8,3", "audio");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  sdp_keep_codecs_by_name(list [, mtype])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.keep_codecs_by_name"></a>4.5. 
+		<code class="function">sdp_keep_codecs_by_name(list [, mtype])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Keep only the codecs provided in the parameter 'list' from all
+			media streams found in SDP payload. The parameter 'list' must
+			be one or a comma separated list of codec names. The
+			parameter can be a static string or a variable holding the
+			list of codec names.
+	    </p>
+            <p>
+			Note that you have to explicitely keep 'telephone-event' in the list
+			of names if you want to keep DTMF attributes.
+	    </p>
+            <p>
+			Optional parameter mtype can be provided to apply the operations
+			only to the streams matching m=mtype.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4484840"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">sdp_keep_codecs_by_name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# keep only PCMU
+sdp_keep_codecs_by_name("PCMU");
+# keep PCMU, PCMA and GSM
+sdp_keep_codecs_by_name("PCMU,PCMA,GSM");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  sdp_with_media(type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_media"></a>4.6. 
+		<code class="function">sdp_with_media(type)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true of the SDP has 'media=type ...' line. Useful to check
+		the content of the RTP sessions, such as 'audio' or 'video'. The
+		parameter can be static string or variable holding the media type.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4487640"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">sdp_with_media</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# check for video stream
+if(sdp_with_media("video"))
+{
+    # the session has a video stream
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  sdp_with_active_media(type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_active_media"></a>4.7. 
+		<code class="function">sdp_with_active_media(type)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true of the SDP has 'media=type ...' line and the media is active.
+		Useful to check	the content of the RTP sessions, such as 'audio' or 'video'.
+		Active media means the port is non-zero and the direction is not "inactive"
+		The parameter can be static string or variable holding the media type.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4490624"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">sdp_with_active_media</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# check for active video stream
+if(sdp_with_active_media("video"))
+{
+    # the session has an active video stream
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  sdp_remove_media(type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_remove_media"></a>4.8. 
+		<code class="function">sdp_remove_media(type)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove the streams that match on 'm=type ...' line. The
+		parameter can be static string or variable holding the media type.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4493352"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">sdp_remove_media</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# remove video stream
+sdp_remove_media("video");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  sdp_with_transport(type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_transport"></a>4.9. 
+		<code class="function">sdp_with_transport(type)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true of the SDP has 'media=media port type ...' line. Useful to check
+		the transport of the RTP sessions, such as 'RTP/AVP', 'RTP/SAVP' or 'RTP/SAVPF'. The
+		parameter can be static string or variable holding the transport type.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4496144"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">sdp_with_transport</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# check for RTP/SAVP stream
+if(sdp_with_transport("RTP/SAVP"))
+{
+    # the session has a SRTP/SAVP stream
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.  sdp_with_transport_like(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_transport_like"></a>4.10. 
+		<code class="function">sdp_with_transport_like(string)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the SDP has 'media=media port type ...' line,
+		where type contains string. The
+		parameter can be static string or variable holding a string.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4499000"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">sdp_with_transport_like</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# check for SAVPF stream
+if(sdp_with_transport_like("SAVPF"))
+{
+    # the session has a SAVPF stream, e.g., RTP/SAVPF or UDP/TLS/RTP/SAVPF
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.  sdp_transport(pv)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_transport"></a>4.11. 
+		<code class="function">sdp_transport(pv)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Assigns common media transport (if any) of 'm' lines to pv
+		argument.  Returns 1 if common media transport was found, -2
+		if there was no common media transport, and -1 in case of
+		error.
+	    </p>
+            <p>
+		  This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4501848"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">sdp_transport</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sdp_transport("$avp(caller_rtp_transport)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12.  sdp_remove_transport(type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_remove_transport"></a>4.12. 
+		<code class="function">sdp_remove_transport(type)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove the streams that match on 'm=media port type ...' line. The
+		parameter can be static string or variable holding the transport type.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4540752"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">sdp_remove_transport</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# remove stream with transport RTP/AVP
+sdp_remove_transport("RTP/AVP");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13.  sdp_with_codecs_by_id(list)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_codecs_by_id"></a>4.13. 
+		<code class="function">sdp_with_codecs_by_id(list)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if any of the codecs provided in the parameter 'list'
+			from all media streams is found in SDP payload. The parameter
+			'list' must be one or a comma separated list of numeric codec IDs.
+			The parameter can be a static string or a variable holding the
+			list of numeric codec IDs.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4543656"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">sdp_with_codecs_by_id</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# test for PCMU
+if(sdp_with_codecs_by_id("0")) { ... }
+# test for PCMU, PCMA or GSM
+if(sdp_with_codecs_by_id("0,8,3")) { ... }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.14.  sdp_with_codecs_by_name(list)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdspops.f.sdp.with_codecs_by_name"></a>4.14. 
+		<code class="function">sdp_with_codecs_by_name(list)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if any of the codecs provided in the parameter 'list'
+			from all media streams is found in SDP payload. The parameter
+			'list' must be one item or a comma separated list of codec names.
+			The parameter can be a static string or a variable holding the
+			list of codec names.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4546640"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">sdp_with_codecs_by_name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# test for PCMU
+if(sdp_with_codecs_by_name("PCMU")) { ... }
+# test for PCMU, PCMA or GSM
+if(sdp_with_codecs_by_name("PCMU,PCMA,GSM")) { ... }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.15.  sdp_print(level)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_print"></a>4.15. 
+		<code class="function">sdp_print(level)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print the SDP internal structure to log 'level'. The
+		parameter can be static integer or variable holding the integer
+		value of the log level.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4549480"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">sdp_print</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# print the SDP
+sdp_print("1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.16.  sdp_get(avpvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_get"></a>4.16. 
+		<code class="function">sdp_get(avpvar)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Store the SDP part of message body in an AVP. Return 1 if SDP is found,
+		-1 on error and -2 if there is no SDP part in the message body.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4552168"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">sdp_get</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sdp_get("$avp(sdp)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.17.  sdp_content()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_content"></a>4.17. 
+		<code class="function">sdp_content()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true if the SIP message has SDP body or a SDP part in body.
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4554776"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">sdp_content</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(sdp_content()) {
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.18.  sdp_with_ice()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_with_ice"></a>4.18. 
+		<code class="function">sdp_with_ice()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true if the SIP message has SDP body that contains ICE candidate attribute(s).
+	    </p>
+            <p>
+			This function can be used from ANY_ROUTE.
+	    </p>
+            <div class="example">
+              <a id="idp4557368"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">sdp_with_ice</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(sdp_with_ice()) {
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.19.  sdp_get_line_startswith(avpvar, string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sdpops.f.sdp_get_line_startswith"></a>4.19. 
+			<code class="function">sdp_get_line_startswith(avpvar, string)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Store the search part of SDP body message with line beginning with 'string' in an AVP. 
+			Return 1 if 'string' is found in SDP, -1 on error and -2 if there is no SDP part in the message body.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4560168"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">sdp_get_line_startswith</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(sdp_get_line_startswith("$avp(mline)", "m=")) {
+	xlog("m-line: $avp(mline)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

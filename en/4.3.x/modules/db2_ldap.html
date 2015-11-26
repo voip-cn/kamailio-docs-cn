@@ -1,0 +1,466 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>db2_ldap module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#ldap" title="db2_ldap module" />
+    <link rel="next" href="#idp11960144" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="db2_ldap module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="ldap"></a>db2_ldap module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Iptel.org<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 Iptel.org GmBH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp11960144">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#ldap.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ldap.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ldap.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#config">3.1. <code class="varname">config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#reconnect_attempt">3.2. <code class="varname">reconnect_attempt</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ldap.functions">4. Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp16267984">URI example</a></dt>
+          <dt>1.2. <a href="#idp16274064">Example <code class="varname">config</code></a></dt>
+          <dt>1.3. <a href="#idp16274832">Configuration file example</a></dt>
+          <dt>1.4. <a href="#idp16282856">Example <code class="varname">reconnect_attempt</code></a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp11960144"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#ldap.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ldap.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ldap.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#config">3.1. <code class="varname">config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#reconnect_attempt">3.2. <code class="varname">reconnect_attempt</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ldap.functions">4. Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ldap.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The LDAP module is database driver, i.e. it implements DBv2 API functions.
+		The goal is map database query defined by table, matching fields and result fields
+		to LDAP search in sub-tree defined by root, object class, attributes and
+		pass it to the <span class="emphasis"><em>OpenLDAP</em></span> which communicates with the LDAP server.
+		</p>
+          <p>
+		This procedure is sometimes tricky because the LDAP does not support
+		all database features or supports them in different manner. Here we
+		must express especially <span class="emphasis"><em>filtering</em></span> and <span class="emphasis"><em>
+		multi-values</em></span>. The multi-value is de facto array of single
+		values. If the LDAP module get a multi-value field then generates
+		record for every single value, respectively for every combination
+		in case the more fields contain multi-value.
+		</p>
+          <p>		
+		The LDAP supports natively "AND", "OR", "NOT" logical operators and "equal", "non-equal",
+		"less-or-equal" and "greater-or-equal" comparison operators. Therefore
+		"less" and "greater" operators are mapped as "less/greater-or-equal-AND-not-equal".
+		It's important realize it when the attribute which will be used for
+		filtering may contain multi-value. 
+		The LDAP server evaluates comparison operator on multi-value so that
+		the result for record is true if the condition is satisfied for any single
+		value. The single values not satisfying condition are not truncated. It implies two cases
+		for positive comparison, e.g. "equal", the result contains values not satisfying the
+		condition, the case may be handled by additional filter in the LDAP module,
+		the negative comparison, e.g. "non-equal", does not return record at all.
+		Because the LDAP module cannot know if the LDAP attribute may
+		logically contain multi-value so there is introduced DB API option <span class="emphasis"><em>client_side_filtering</em></span>
+		which forces filtering such fields in the LDAP module, i.e. the LDAP server returns
+		larger result set because the filtering condition is not passed there.
+		</p>
+          <p>
+		The syntax of <span class="emphasis"><em>client_side_filtering</em></span> value is comma delimited
+		of field names which won't be used for server-side filter if such a field appears in a match
+		condition. Instead records will 
+		be filtered out in module. It implies such fields MUST exist in result field list.
+		</p>
+          <p>
+		The necessary condition of successful filtering of particular
+		attribute at the LDAP server is correct attribute definition.
+		The "equal"/"non-equal" operator requires <span class="emphasis"><em>equality matching rule</em></span>,
+		the "greater"/"less" operator requires <span class="emphasis"><em>ordering matching rule</em></span>.
+		If required matching rule is missing the LDAP server silently returns
+		empty result set. In case of double filtering both at the LDAP servar and the LDAP
+		module, e.g. multi-value and equal comparison, check the LDAP server matching
+		rule satisfies your needs or use <span class="emphasis"><em>client_side_filtering</em></span> feature. 
+		</p>
+          <p>
+		The LDAP server may be identified either 
+		complete specification of host, user, password in URI or
+		is specification reference to <code class="varname">connection</code> section
+		of <code class="varname">config</code> file. Note in the second case there is only
+		one slash.
+		</p>
+          <div class="example">
+            <a id="idp16267984"></a>
+            <p class="title">
+              <strong>Example 1.1. URI example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">	...
+	modparam("auth", "db_url", "ldap://admin:heslo@127.0.0.1");
+
+	modparam("auth", "db_url", "ldap:/ldap_server1");
+
+	...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+			Features:
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+						simple, SASL authentication, TLS
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						server and client side filtering
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						read-only queries
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						optional referral chasing by OpenLDAP
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						optional reference chasing by OpenLDAP
+
+					</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ldap.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		none
+		</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ldap.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="config"></a>3.1. <code class="varname">config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Default value is <span class="emphasis"><em>ldap.cfg</em></span>.
+			</p>
+            <p>
+			The filename (relatively to ser config file) of mapping database to LDAP definition.
+
+			It is the main configuration file for the LDAP module in SER.
+			The configuration file maps database table names used in SER to LDAP directory
+			sub-trees to be searched. In addition to that the configuration file also allows to
+			configure the LDAP search filter and maps database field names to
+			LDAP attribute names and vice versa. 
+			</p>
+            <div class="example">
+              <a id="idp16274064"></a>
+              <p class="title">
+                <strong>Example 1.2. Example <code class="varname">config</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("ldap", "config", "my-ldap.cfg");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp16274832"></a>
+              <p class="title">
+                <strong>Example 1.3. Configuration file example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># Supported Attribute Type Names:
+#  * GeneralizedTime
+#  * Integer
+#  * BitString
+#  * Boolean
+#  * String
+#  * Binary
+#  * Float
+#
+
+[connection:ldap_server1]
+host=127.0.0.1
+port=389
+username=ser
+password=heslo
+# LDAP or LDAP SASL authentication mechanism.
+# Allowed values: none (default), simple, digest-md5, external
+authtype=simple
+
+# tls encryption
+tls=off
+
+# Specifies the file that contains certificates for all of the Certificate
+# Authorities the ldap module will recognize.
+ca_list=/home/kg/work/openssl/demoCA/cacert.pem
+
+# Specifies what checks to perform on server certificates in a TLS session
+# allowed values are never/allow/try/demand
+# see the TLS_REQCERT tls option part of ldap.conf(8) man page for more details
+require_certificate=demand
+
+#
+# Table credentials contains SIP digest authentication credentials.
+#
+[table:credentials]
+
+# In our LDAP directory we store SIP digest credentials under 
+# "Digest Credentials" organization unit so this is where searches for digest 
+# credentials should start.
+base = "ou=Digest Credentials,dc=iptel,dc=org"
+
+# We search the whole subtree.
+scope = subtree
+
+# For digest credentials we are only interested in objects with objectClass 
+# 'digestAuthCredentials', objects of all other types are ignored.
+filter = "(objectClass=digestAuthCredentials)"
+
+# Mapping of field names to LDAP attribute names and vice versa. Names are
+# delimited using ':', the first name is database field name as used in SER
+# modules, the second name (after :) is corresponding LDAP attribute name,
+# optionally preceeded with LDAP attribute syntax name in parentheses.
+field_map = password : (Binary) digestPassword
+field_map = realm : digestRealm
+field_map = auth_username : digestUsername
+field_map = uid : serUID
+field_map = flags : (BitString) serFlags
+
+# retrieve at most sizelimit entries for a search
+#sizelimit = 2147483647
+
+# wait at most timelimit seconds for a search to complete
+#timelimit = 120
+
+# chase references automatically by OpenLDAP. Default is "never"
+# chase_references = never | searching | finding | always
+
+# chase referrals automatically by OpenLDAP. Default is "no"
+# chase_referrals = yes | no
+
+#
+# Domain table stores information about virtual domains
+#
+[table:domain]
+
+# Objects mapping domain IDs to domain names and vice versa are stored
+# in the subtree with the following root:
+base = "ou=Domains,dc=iptel,dc=org"
+
+scope = subtree
+
+# We are only interested in serDomain objects when looking up information
+# about virtual domains.
+filter = "(objectClass=serDomain)"
+
+field_map = did : (String) serDID
+field_map = domain : (String) serDomain
+field_map = flags : (BitString) serFlags
+
+#
+# Table domain_attrs contains domain attributes, domain attributes store
+# extra information about virtual domains.
+#
+[table:domain_attrs]
+base = "ou=Domains, dc=iptel,dc=org"
+scope = subtree
+
+filter = "(objectClass=serDomainAttr)"
+
+field_map = did : serDID
+field_map = name : serAttrName
+field_map = type : (Integer) serAttrType
+field_map = value : serAttrValue
+field_map = flags : (BitString) serFlags</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. reconnect_attempt (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="reconnect_attempt"></a>3.2. <code class="varname">reconnect_attempt</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Default value is <span class="emphasis"><em>3</em></span>.
+			</p>
+            <p>
+			Number of reconnect attempts when connection to the LDAP server is lost.
+			</p>
+            <div class="example">
+              <a id="idp16282856"></a>
+              <p class="title">
+                <strong>Example 1.4. Example <code class="varname">reconnect_attempt</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("ldap", "reconnect_attempt", "5");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ldap.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		none
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

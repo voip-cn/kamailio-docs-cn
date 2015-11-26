@@ -1,0 +1,3708 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Acc Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4249992" title="Acc Module" />
+    <link rel="next" href="#idp2201592" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Acc Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4249992"></a>Acc Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptel.org<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jiri@iptel.org">jiri@iptel.org</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:bogdan@voice-system.ro">bogdan@voice-system.ro</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ramona-Elena</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">rosdev.ro<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:bogdan@voice-system.ro">bogdan@voice-system.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Sven</span> <span class="surname">Knoblich</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:sven.knoblich@1und1.de">sven.knoblich@1und1.de</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2002, 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2004, 2006 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2011 1&amp;1 Internet AG</p>
+          </div>
+          <div>
+            <div class="revhistory">
+              <table border="1" width="100%" summary="Revision history">
+                <tr>
+                  <th align="left" valign="top" colspan="2">
+                    <strong>Revision History</strong>
+                  </th>
+                </tr>
+                <tr>
+                  <td align="left">Revision $Revision$</td>
+                  <td align="left">$Date$</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2201592">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2187792">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14248">1.1. General Example</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#acc.i.extra-accounting">2. Extra accounting</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6104">2.1. Overview</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc-def-syn">2.2. Definitions and syntax</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp78656">2.3. How it works</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#acc.i.multi-call-legs">3. Multi Call-Legs accounting</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp80008">3.1. Overview</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp81280">3.2. Configuration</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp83520">3.3. Logged data</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp88296">4. Call Data Record generation</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp88648">4.1. Overview</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.i.cdr-extra">4.2. CDR Extra</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp93440">4.2.1. Definitions and syntax</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#multi-cdr-call-legs">4.3. CDR with Multi Call-Legs</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp23336">4.3.1. Overview</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp24632">4.3.2. Configuration</a>
+                        </span>
+                      </dt>
+                      <dd>
+                        <dl>
+                          <dt>
+                            <span class="section">
+                              <a href="#idp26424">4.3.2.1. Example for a spiraled Proxy</a>
+                            </span>
+                          </dt>
+                        </dl>
+                      </dd>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp27776">4.3.3. Logged data</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp28592">5. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28968">5.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp32872">5.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#acc.i.params">6. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.early_media">6.1. <code class="varname">early_media</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.failed_transaction_flag">6.2. <code class="varname">failed_transaction_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.failed_filter">6.3. <code class="varname">failed_filter</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.report_ack">6.4. <code class="varname">report_ack</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.report_cancels">6.5. <code class="varname">report_cancels</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.detect_direction">6.6. <code class="varname">detect_direction</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_prepare_flag">6.7. <code class="varname">acc_prepare_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.multi_leg_info">6.8. <code class="varname">multi_leg_info</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.log_flag">6.9. <code class="varname">log_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.log_missed_flag">6.10. <code class="varname">log_missed_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.log_level">6.11. <code class="varname">log_level</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.log_facility">6.12. <code class="varname">log_facility</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.log_extra">6.13. <code class="varname">log_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.radius_config">6.14. <code class="varname">radius_config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.radius_flag">6.15. <code class="varname">radius_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.radius_missed_flag">6.16. <code class="varname">radius_missed_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.service_type">6.17. <code class="varname">service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.radius_extra">6.18. <code class="varname">radius_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_flag">6.19. <code class="varname">db_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_missed_flag">6.20. <code class="varname">db_missed_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_table_acc">6.21. <code class="varname">db_table_acc</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_table_missed_calls">6.22. <code class="varname">db_table_missed_calls</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_url">6.23. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_method_column">6.24. <code class="varname">acc_method_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_from_tag_column">6.25. <code class="varname">acc_from_tag_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_to_tag_column">6.26. <code class="varname">acc_to_tag_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_callid_column">6.27. <code class="varname">acc_callid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_sip_code_column">6.28. <code class="varname">acc_sip_code_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_sip_reason_column">6.29. <code class="varname">acc_sip_reason_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.acc_time_column">6.30. <code class="varname">acc_time_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_extra">6.31. <code class="varname">db_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.db_insert_mode">6.32. <code class="varname">db_insert_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.diameter_flag">6.33. <code class="varname">diameter_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.diameter_missed_flag">6.34. <code class="varname">diameter_missed_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.diameter_client_host">6.35. <code class="varname">diameter_client_host</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.diameter_client_port">6.36. <code class="varname">diameter_client_port</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.diameter_extra">6.37. <code class="varname">diameter_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_enable">6.38. <code class="varname">cdr_enable</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_expired_dlg_enable">6.39. <code class="varname">cdr_expired_dlg_enable</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_start_on_confirmed">6.40. <code class="varname">cdr_start_on_confirmed</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_facility">6.41. <code class="varname">cdr_facility</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_extra">6.42. <code class="varname">cdr_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_start_id">6.43. <code class="varname">cdr_start_id</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_end_id">6.44. <code class="varname">cdr_end_id</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_duration_id">6.45. <code class="varname">cdr_duration_id</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_log_enable">6.46. <code class="varname">cdr_log_enable</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdrs_table">6.47. <code class="varname">cdrs_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.time_mode">6.48. <code class="varname">time_mode</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.time_attr">6.49. <code class="varname">time_attr</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.time_exten">6.50. <code class="varname">time_exten</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.time_format">6.51. <code class="varname">time_format</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.reason_from_hf">6.52. <code class="varname">reason_from_hf</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.clone_msg">6.53. <code class="varname">clone_msg</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.p.cdr_on_failed">6.54. <code class="varname">cdr_on_failed</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3588416">7. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.f.acc_log_request">7.1. 
+			<code class="function">acc_log_request(comment)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.f.acc_db_request">7.2. 
+			<code class="function">acc_db_request(comment, table)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.f.acc_rad_request">7.3. 
+			<code class="function">acc_rad_request(comment)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#acc.f.acc_diam_request">7.4. 
+			<code class="function">acc_diam_request(comment)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1483480">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp37024">early_media example</a></dt>
+          <dt>1.2. <a href="#idp39168">failed_transaction_flag example</a></dt>
+          <dt>1.3. <a href="#idp41472">failed_filter example</a></dt>
+          <dt>1.4. <a href="#idp1841552">report_ack example</a></dt>
+          <dt>1.5. <a href="#idp1843712">report_cancels example</a></dt>
+          <dt>1.6. <a href="#idp1846280">detect_direction example</a></dt>
+          <dt>1.7. <a href="#idp1848680">acc_prepare_flag example</a></dt>
+          <dt>1.8. <a href="#idp1851344">multi_leg_info example</a></dt>
+          <dt>1.9. <a href="#idp1854184">log_flag example</a></dt>
+          <dt>1.10. <a href="#idp1856192">log_missed_flag example</a></dt>
+          <dt>1.11. <a href="#idp1858344">log_level example</a></dt>
+          <dt>1.12. <a href="#idp1860600">log_facility example</a></dt>
+          <dt>1.13. <a href="#idp1862992">log_extra example</a></dt>
+          <dt>1.14. <a href="#idp1866336">radius_config example</a></dt>
+          <dt>1.15. <a href="#idp1868504">radius_flag example</a></dt>
+          <dt>1.16. <a href="#idp1870520">radius_missed_flag example</a></dt>
+          <dt>1.17. <a href="#idp1872640">service_type example</a></dt>
+          <dt>1.18. <a href="#idp1875032">radius_extra example</a></dt>
+          <dt>1.19. <a href="#idp1877384">db_flag example</a></dt>
+          <dt>1.20. <a href="#idp1879400">db_missed_flag example</a></dt>
+          <dt>1.21. <a href="#idp1881792">db_table_acc example</a></dt>
+          <dt>1.22. <a href="#idp1884192">db_table_missed_calls example</a></dt>
+          <dt>1.23. <a href="#idp1886608">db_url example</a></dt>
+          <dt>1.24. <a href="#idp1888960">acc_method_column example</a></dt>
+          <dt>1.25. <a href="#idp1891256">acc_from_tag_column example</a></dt>
+          <dt>1.26. <a href="#idp1893552">acc_to_tag_column example</a></dt>
+          <dt>1.27. <a href="#idp1895840">acc_callid_column example</a></dt>
+          <dt>1.28. <a href="#idp1898160">acc_sip_code_column example</a></dt>
+          <dt>1.29. <a href="#idp1900448">acc_sip_reason_column example</a></dt>
+          <dt>1.30. <a href="#idp1902824">acc_time_column example</a></dt>
+          <dt>1.31. <a href="#idp1905240">db_extra example</a></dt>
+          <dt>1.32. <a href="#idp1908072">db_insert_mode example</a></dt>
+          <dt>1.33. <a href="#idp1910376">diameter_flag example</a></dt>
+          <dt>1.34. <a href="#idp1912472">diameter_missed_flag example</a></dt>
+          <dt>1.35. <a href="#idp1914792">diameter_client_host example</a></dt>
+          <dt>1.36. <a href="#idp1916928">diameter_client_host example</a></dt>
+          <dt>1.37. <a href="#idp1919328">diameter_extra example</a></dt>
+          <dt>1.38. <a href="#idp1921496">cdr_enable example</a></dt>
+          <dt>1.39. <a href="#idp1923640">cdr_expired_dlg_enable example</a></dt>
+          <dt>1.40. <a href="#idp1925984">cdr_start_on_confirmed example</a></dt>
+          <dt>1.41. <a href="#idp1928208">cdr_facility example</a></dt>
+          <dt>1.42. <a href="#idp1930616">cdr_extra example</a></dt>
+          <dt>1.43. <a href="#idp1932808">cdr_start_id example</a></dt>
+          <dt>1.44. <a href="#idp1934952">cdr_end_id example</a></dt>
+          <dt>1.45. <a href="#idp1937032">cdr_duration_id example</a></dt>
+          <dt>1.46. <a href="#idp1939120">cdr_log_enable example</a></dt>
+          <dt>1.47. <a href="#idp1941288">cdrs_table example</a></dt>
+          <dt>1.48. <a href="#idp1946920">time_mode example</a></dt>
+          <dt>1.49. <a href="#idp1952336">time_attr example</a></dt>
+          <dt>1.50. <a href="#idp1954584">time_exten example</a></dt>
+          <dt>1.51. <a href="#idp1956752">time_format example</a></dt>
+          <dt>1.52. <a href="#idp1958976">reason_from_hf</a></dt>
+          <dt>1.53. <a href="#idp1961472">clone_msg</a></dt>
+          <dt>1.54. <a href="#idp1963656">cdr_on_failed</a></dt>
+          <dt>1.55. <a href="#idp3591544">acc_log_request usage</a></dt>
+          <dt>1.56. <a href="#idp3596304">acc_db_request usage</a></dt>
+          <dt>1.57. <a href="#idp3600376">acc_rad_request usage</a></dt>
+          <dt>1.58. <a href="#idp3604176">acc_diam_request usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2201592"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2187792">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14248">1.1. General Example</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#acc.i.extra-accounting">2. Extra accounting</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6104">2.1. Overview</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc-def-syn">2.2. Definitions and syntax</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp78656">2.3. How it works</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#acc.i.multi-call-legs">3. Multi Call-Legs accounting</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp80008">3.1. Overview</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp81280">3.2. Configuration</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp83520">3.3. Logged data</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp88296">4. Call Data Record generation</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp88648">4.1. Overview</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.i.cdr-extra">4.2. CDR Extra</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp93440">4.2.1. Definitions and syntax</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#multi-cdr-call-legs">4.3. CDR with Multi Call-Legs</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp23336">4.3.1. Overview</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp24632">4.3.2. Configuration</a>
+                      </span>
+                    </dt>
+                    <dd>
+                      <dl>
+                        <dt>
+                          <span class="section">
+                            <a href="#idp26424">4.3.2.1. Example for a spiraled Proxy</a>
+                          </span>
+                        </dt>
+                      </dl>
+                    </dd>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp27776">4.3.3. Logged data</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp28592">5. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28968">5.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp32872">5.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#acc.i.params">6. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.early_media">6.1. <code class="varname">early_media</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.failed_transaction_flag">6.2. <code class="varname">failed_transaction_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.failed_filter">6.3. <code class="varname">failed_filter</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.report_ack">6.4. <code class="varname">report_ack</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.report_cancels">6.5. <code class="varname">report_cancels</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.detect_direction">6.6. <code class="varname">detect_direction</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_prepare_flag">6.7. <code class="varname">acc_prepare_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.multi_leg_info">6.8. <code class="varname">multi_leg_info</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.log_flag">6.9. <code class="varname">log_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.log_missed_flag">6.10. <code class="varname">log_missed_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.log_level">6.11. <code class="varname">log_level</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.log_facility">6.12. <code class="varname">log_facility</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.log_extra">6.13. <code class="varname">log_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.radius_config">6.14. <code class="varname">radius_config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.radius_flag">6.15. <code class="varname">radius_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.radius_missed_flag">6.16. <code class="varname">radius_missed_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.service_type">6.17. <code class="varname">service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.radius_extra">6.18. <code class="varname">radius_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_flag">6.19. <code class="varname">db_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_missed_flag">6.20. <code class="varname">db_missed_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_table_acc">6.21. <code class="varname">db_table_acc</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_table_missed_calls">6.22. <code class="varname">db_table_missed_calls</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_url">6.23. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_method_column">6.24. <code class="varname">acc_method_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_from_tag_column">6.25. <code class="varname">acc_from_tag_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_to_tag_column">6.26. <code class="varname">acc_to_tag_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_callid_column">6.27. <code class="varname">acc_callid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_sip_code_column">6.28. <code class="varname">acc_sip_code_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_sip_reason_column">6.29. <code class="varname">acc_sip_reason_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.acc_time_column">6.30. <code class="varname">acc_time_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_extra">6.31. <code class="varname">db_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.db_insert_mode">6.32. <code class="varname">db_insert_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.diameter_flag">6.33. <code class="varname">diameter_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.diameter_missed_flag">6.34. <code class="varname">diameter_missed_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.diameter_client_host">6.35. <code class="varname">diameter_client_host</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.diameter_client_port">6.36. <code class="varname">diameter_client_port</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.diameter_extra">6.37. <code class="varname">diameter_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_enable">6.38. <code class="varname">cdr_enable</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_expired_dlg_enable">6.39. <code class="varname">cdr_expired_dlg_enable</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_start_on_confirmed">6.40. <code class="varname">cdr_start_on_confirmed</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_facility">6.41. <code class="varname">cdr_facility</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_extra">6.42. <code class="varname">cdr_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_start_id">6.43. <code class="varname">cdr_start_id</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_end_id">6.44. <code class="varname">cdr_end_id</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_duration_id">6.45. <code class="varname">cdr_duration_id</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_log_enable">6.46. <code class="varname">cdr_log_enable</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdrs_table">6.47. <code class="varname">cdrs_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.time_mode">6.48. <code class="varname">time_mode</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.time_attr">6.49. <code class="varname">time_attr</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.time_exten">6.50. <code class="varname">time_exten</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.time_format">6.51. <code class="varname">time_format</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.reason_from_hf">6.52. <code class="varname">reason_from_hf</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.clone_msg">6.53. <code class="varname">clone_msg</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.p.cdr_on_failed">6.54. <code class="varname">cdr_on_failed</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3588416">7. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.f.acc_log_request">7.1. 
+			<code class="function">acc_log_request(comment)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.f.acc_db_request">7.2. 
+			<code class="function">acc_db_request(comment, table)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.f.acc_rad_request">7.3. 
+			<code class="function">acc_rad_request(comment)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#acc.f.acc_diam_request">7.4. 
+			<code class="function">acc_diam_request(comment)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2187792"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		ACC module is used to account transactions information to different
+		backends like syslog, <abbr class="abbrev">SQL</abbr>,
+		<acronym class="acronym">RADIUS</acronym> and <acronym class="acronym">DIAMETER</acronym> 
+		(beta version).
+	</p>
+          <p>
+		To account a transaction and to choose which set of backends to be 
+		used, the script writer just has to set some flags (see the module
+		parameters section for flag definitions <a class="xref" href="#acc.i.params" title="6.¬†Parameters">Section¬†6, ‚ÄúParameters‚Äù</a>).
+		If the accounting flag for a specific backend is set, the acc module 
+		will then report on completed transaction. A typical usage of the 
+		module takes no acc-specific script command -- the functionality 
+		binds invisibly through transaction processing. Script writers just 
+		need to mark the transaction for accounting with proper setflag. 
+		Even so, the module allows the script writter to force accounting in 
+		special cases via some script functions.
+	</p>
+          <p>
+		The accounting module will log by default a fixed set of attributes 
+		for the transaction - if you customize your accounting by adding more
+		information to be logged, please see the next chapter about extra
+		accounting - <a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a>.
+	</p>
+          <p>
+		The fixed minimal accounting information is: 
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>Request Method name</p>
+              </li>
+              <li class="listitem">
+                <p>From header TAG parameter</p>
+              </li>
+              <li class="listitem">
+                <p>To header TAG parameter</p>
+              </li>
+              <li class="listitem">
+                <p>Call-Id</p>
+              </li>
+              <li class="listitem">
+                <p>3-digit Status code from final reply</p>
+              </li>
+              <li class="listitem">
+                <p>Reason phrase from final reply</p>
+              </li>
+              <li class="listitem">
+                <p>Time stamp when transaction was completed</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		If a value is not present in request, the empty string is accounted 
+		instead.
+	</p>
+          <p>
+		Note that:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			A single INVITE may produce multiple accounting reports -- that's
+			due to SIP forking feature.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			All flags related to accounting need to be set in request processing
+			route - only the "missed-call" flag may be toggled from other
+			types of routes.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			If a UA fails in middle of conversation, a proxy will never 
+			find out about it. In general, a better practice is to account from an 
+			end-device (such as PSTN gateway), which best knows about call 
+			status (including media status and PSTN status in case of the 
+			gateway). However, CDR-base logging has the option to log existing
+			information from expired dialogs (the dlg_vars in cdr_extra)
+			Please see cdr_expired_dlg_enable parameter - <a class="xref" href="#acc.p.cdr_expired_dlg_enable" title="6.39.¬†cdr_expired_dlg_enable (integer)">Section¬†6.39, ‚Äú<code class="varname">cdr_expired_dlg_enable</code> (integer)‚Äù</a>.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+		The SQL backend support is compiled in the module. For RADIUS and
+		DIAMETER you need to enable it by recompiling the module with properly
+		set defines: uncomment the RAD_ACC or DDIAM_ACC lines in
+		modules/acc/Makefile. To compile RADIUS support, 
+		you need to have radiusclient-ng (only versions higher or equal 
+		to 0.5.0) installed on your system which is available from
+		<a class="ulink" href="javascript:if(confirm('http://developer.berlios.de/projects/radiusclient-ng/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://developer.berlios.de/projects/radiusclient-ng/'" tppabs="http://developer.berlios.de/projects/radiusclient-ng/">
+		http://developer.berlios.de/projects/radiusclient-ng/</a>.
+		The radius client needs to be configured properly. To do so, use the 
+		template at etc/radiusclient.conf and make sure
+		that module's radius_config parameter points to its location.
+		In particular, accounting secret must match that one configured in
+		server and proper dictionary is used (one is available at 
+		etc/sip_dictionary). Also note that Debian radiusclient-ng uses
+		/var/run/radius.seq as seqfile but Kamailio Debian init script expects
+		/var/run/kamailio/kamailio_radius.seq, so is needed to change it in
+		radiusclient-ng configuration or in Kamailio Debian init script (if not,
+		Kamailio can't create the seq file when not running as root). Uses along
+		with FreeRadius (<a class="ulink" href="javascript:if(confirm('http://www.freeradius.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.freeradius.org/'" tppabs="http://www.freeradius.org/">
+		http://www.freeradius.org/</a>) and Radiator 
+		(<a class="ulink" href="javascript:if(confirm('http://www.open.com.au/radiator/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.open.com.au/radiator/'" tppabs="http://www.open.com.au/radiator/">
+		http://www.open.com.au/radiator/</a>) servers have been
+		reported to us.
+        </p>
+          <p>
+	NOTE: diameter support was developed for DISC (DIameter Server Client 
+	project at http://developer.berlios.de/projects/disc/). This project 
+	seems to be no longer maintained and DIAMETER specifications were updated
+	in the meantime. Thus, the DIAMETER part in the module is obsolete and 
+	needs rework to be usable with opendiameter or other DIAMETER servers.
+	</p>
+          <div class="section" title="1.1.¬†General Example">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14248"></a>1.1.¬†General Example</h3>
+                </div>
+              </div>
+            </div>
+            <pre class="programlisting">loadmodule "modules/acc/acc.so"
+modparam("acc", "log_level", 1)
+modparam("acc", "log_flag", 1)
+
+if (uri=~"sip:+40") /* calls to Romania */ {
+    if (!proxy_authorize("sip_domain.net" /* realm */,
+    "subscriber" /* table name */))  {
+        proxy_challenge("sip_domain.net" /* realm */, "0" /* no qop */ );
+        exit;
+    }
+
+    if (method=="INVITE" &amp;&amp; !check_from()) {
+        log("from!=digest\n");
+        sl_send_reply("403","Forbidden");
+    }
+
+    setflag(1); /* set for accounting (the same value as in log_flag!)
+    t_relay(); 	/* enter stateful mode now */
+};</pre>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Extra accounting">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="acc.i.extra-accounting"></a>2.¬†Extra accounting</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Overview">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6104"></a>2.1.¬†Overview</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Along the static default information, ACC modules 
+			allows dynamical selection of extra information to be logged. 
+			This allows you to log any pseudo-variable (AVPs, parts of 
+			the request, etc).
+			</p>
+          </div>
+          <div class="section" title="2.2.¬†Definitions and syntax">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc-def-syn"></a>2.2.¬†Definitions and syntax</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Selection of extra information is done via 
+			<span class="emphasis"><em>xxx_extra</em></span> parameters by specifying the names
+			of additional information you want to log. This information is 
+			defined via pseudo-variables and may include headers, AVPs values
+			or other message or system values. The syntax of the parameter is:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				xxx_extra = extra_definition (';'extra_definition)*
+				</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				extra_definition = log_name '=' pseudo_variable
+				</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			The full list of supported pseudo-variables in Kamailio is
+			available at: 
+			<a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/cookbooks/devel/pseudovariables  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/wiki/cookbooks/devel/pseudovariables'" tppabs="http://www.kamailio.org/wiki/cookbooks/devel/pseudovariables">
+			http://www.kamailio.org/wiki/cookbooks/devel/pseudovariables</a>
+			</p>
+            <p>
+			Note: For all the ACK processed by tm, the registered callbacks
+			(like acc module) will be called with the corresponding INVITE
+			transaction contexts as long as this is still available. This means
+			that the ACK callbacks will see the AVPs setup for the INVITE
+			transaction and not the AVPs setup before t_relay().
+			</p>
+            <p>
+			Via <span class="emphasis"><em>log_name</em></span> you define how/where the 
+			<span class="emphasis"><em>data</em></span> will be logged. Its meaning depends 
+			of the accounting support which is used:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>LOG accounting</em></span> - log_name
+				will be just printed along with the data in <span class="emphasis"><em>
+				log_name=data</em></span> format;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>DB accounting</em></span> - log_name 
+				will be the name of the DB column where the data will be 
+				stored.<span class="emphasis"><em>IMPORTANT</em></span>: add in db 
+				<span class="emphasis"><em>acc</em></span> table the columns corresponding to 
+				each extra data;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>RADIUS accounting</em></span> - 
+				log_name will be the AVP name used for packing the data into 
+				RADIUS message. The log_name will be translated to AVP number 
+				via the dictionary. <span class="emphasis"><em>IMPORTANT</em></span>: add in 
+				RADIUS dictionary the <span class="emphasis"><em>log_name</em></span> attribute.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>DIAMETER accounting</em></span> - 
+				log_name will be the AVP code used for packing the data 
+				into DIAMETER message. The AVP code is given directly as 
+				integer, since DIAMETER has no dictionary support yet.
+				<span class="emphasis"><em>IMPORTANT</em></span>:	<span class="emphasis"><em>log_name</em></span>
+				must be a number.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.3.¬†How it works">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp78656"></a>2.3.¬†How it works</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Some pseudo variables may return more than one value (like 
+			headers or AVPs). In this case, the returned values are
+			embedded in a single string in a comma-separated format.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Multi Call-Legs accounting">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="acc.i.multi-call-legs"></a>3.¬†Multi Call-Legs accounting</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Overview">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp80008"></a>3.1.¬†Overview</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			A SIP call can have multiple legs due forwarding actions. For 
+			example user A calls user B which forwards the call to user C. 
+			There is only one SIP call but with 2 legs ( A to B and B to C). 
+			Accounting the legs of a call is required for proper billing of 
+			the calls (if C is a PSTN number and the call is billed, user B 
+			must pay for the call - as last party modifing the call 
+			destination-, and not A - as initiator of the call. Call 
+			forwarding on server is only one example which shows the 
+			necessity of the having an accounting engine with multiple legs 
+			support.
+			</p>
+          </div>
+          <div class="section" title="3.2.¬†Configuration">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp81280"></a>3.2.¬†Configuration</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			First how it works: The idea is to have a set of AVPs and for each
+			call leg to store a set of values in the AVPs. The meaning of
+			the AVP content is stricly decided by the script writer - it can
+			be the origin and source of the leg, its status or any other 
+			related information. If you have a set of 4 AVPS (AVP1, AVP2, AVP3,
+			AVP4), then for the "A call B and B forwards to C" example, 
+			you need to set a different set of values for the AVPs
+			for each leg ([A,B] and [B,C]) .
+			The script writer must take care and properly insert all 
+			these AVP from the script (in proper order and with the correct type).
+			</p>
+            <p>
+			When the accounting information for the call will be written/sent, 
+			all the call-leg pairs will be added (based on the found AVP sets).
+			</p>
+            <p>
+			By default, the multiple call-leg support is disabled - it can be
+			enabled just be setting the per-leg set of AVPs via the 
+			<code class="varname">multi_leg_info</code> module parameter.
+			</p>
+          </div>
+          <div class="section" title="3.3.¬†Logged data">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp83520"></a>3.3.¬†Logged data</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For each call, all the values of the AVP set (which defines a 
+			call-leg) will be logged. How the information will be actually
+			logged, depends of the data backend:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>syslog</em></span> -- all leg-sets will be added
+				to one record string as AVP1=xxx, AVP2=xxxx ,... sets.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>database</em></span> -- each pair will be 
+				separately logged (due DB data structure constraints); several
+				records will be written, the difference between them being 
+				only the fields corresponding to the call-leg info.
+				</p>
+                  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                    <h3 class="title">Note</h3>
+                    <p>You will need to add in your DB (all acc related
+				tables) the colums for call-leg info (a column for each AVP
+				of the set).
+				</p>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Radius</em></span> -- all sets will be added
+				to the same Radius accounting message as RADIUS AVPs - for each
+				call-leg a set of RADIUS AVPs will be added (corresponding
+				to the per-leg AVP set)
+				</p>
+                  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                    <h3 class="title">Note</h3>
+                    <p>You will need to add in your dictionary the
+				RADIUS AVPs used in call-leg AVP set definition.
+				</p>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Diameter</em></span> same as for RADIUS.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Call Data Record generation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp88296"></a>4.¬†Call Data Record generation</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†Overview">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp88648"></a>4.1.¬†Overview</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                In addition to transaction-based logging, it is possible to generate and log Call Data
+                Records (CDRs) directly from Kamailio. Apart from a basic set of CDR fields which
+                are always included (covering start time, end time, and duration), the approach allows
+                flexible specification of additional fields that should be taken into account using
+                the configuration script. This is very similar to how transaction-based logging may
+                be customized with the exception that CDRs rely on dialogs instead of transactions
+                to store relevant information during a call.
+                </p>
+            <p>
+                In order to set up CDR generation, you must enable the CDR switch and load the dialog
+                module. You probably also want to specify a set of pseudo-variables that define more
+                relevant CDR fields. Pseudo-variables may be assigned arbitrarily during script
+                execution, and the module will make sure that the variable content will be transformed
+                into a CDR by the end of the dialog.
+                </p>
+            <p>
+                To use CDR logging in a correct manner, you should only use the dialog-based
+                pseudo-variables (dlg_var) from the dialog module. This allows you to save values
+                right from the beginning through all requests and replies until termination of the
+                call. While not recommended, it is still possible to use other pseudo-variables as
+                well. Except for pseudo-variables valid in the call-final transaction, however,
+                information given will not be stored in the CDR as they cannot be accessed by the
+                end of the call when the CDR is logged.
+                </p>
+            <p>
+				Sometimes, dialogs expire because the UA has a problem and a final message is never
+				transmitted. You can toggle on/off the generation of CDR-based logging in such cases
+				with only the dlg_vars showing by using the cdr_expired_dlg_enable parameter
+				- <a class="xref" href="#acc.p.cdr_expired_dlg_enable" title="6.39.¬†cdr_expired_dlg_enable (integer)">Section¬†6.39, ‚Äú<code class="varname">cdr_expired_dlg_enable</code> (integer)‚Äù</a>. Default behavior is not logging.
+                </p>
+          </div>
+          <div class="section" title="4.2.¬†CDR Extra"><div class="titlepage"><div><div><h3 class="title"><a id="acc.i.cdr-extra"></a>4.2.¬†CDR Extra</h3></div></div></div>
+					This section is similar to the <span class="quote">‚Äú<span class="quote">LOG accounting</span>‚Äù</span> part of
+					<a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a>.
+			<div class="section" title="4.2.1.¬†Definitions and syntax"><div class="titlepage"><div><div><h4 class="title"><a id="idp93440"></a>4.2.1.¬†Definitions and syntax</h4></div></div></div><p>
+					Selection of extra information is done similar to the transaction extra
+					<a class="xref" href="#acc-def-syn" title="2.2.¬†Definitions and syntax">Section¬†2.2, ‚ÄúDefinitions and syntax‚Äù</a>.
+					</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="emphasis"><em>
+						cdr_extra = cdr_extra_definition (';'cdr_extra_definition)*
+						</em></span></p></li><li class="listitem"><p><span class="emphasis"><em>
+						cdr_extra_definition = cdr_log_name '=' pseudo_variable
+						</em></span></p></li></ul></div>
+					See also <a class="xref" href="#acc.p.cdr_extra" title="6.42.¬†cdr_extra (string)">Section¬†6.42, ‚Äú<code class="varname">cdr_extra</code> (string)‚Äù</a>.
+					<p>
+					The full list of supported pseudo-variables in Sip-Router is
+					available at:
+					<a class="ulink" href="javascript:if(confirm('http://sip-router.org/wiki/cookbooks/pseudo-variables/devel  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/wiki/cookbooks/pseudo-variables/devel'" tppabs="http://sip-router.org/wiki/cookbooks/pseudo-variables/devel">
+					http://sip-router.org/wiki/cookbooks/pseudo-variables/devel</a>
+					</p></div></div>
+          <div class="section" title="4.3.¬†CDR with Multi Call-Legs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="multi-cdr-call-legs"></a>4.3.¬†CDR with Multi Call-Legs</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="4.3.1.¬†Overview">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp23336"></a>4.3.1.¬†Overview</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				As mentioned in <a class="xref" href="#acc.i.multi-call-legs" title="3.¬†Multi Call-Legs accounting">Section¬†3, ‚ÄúMulti Call-Legs accounting‚Äù</a>, a leg represents a parallel
+				or forwarded call. In contrast to the normal accounting the cdr logging uses dialogs
+				instead of transaction to log data. This may reduce the amount of information 
+				but it also make it possible to combine all important data in one cdr at 
+				once. A second mechanism to process multiple data-sets into one cdr is not further
+				necessary.
+				</p>
+            </div>
+            <div class="section" title="4.3.2.¬†Configuration">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp24632"></a>4.3.2.¬†Configuration</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				When you route messages multiple times through your proxy (e.g. to
+				handle <span class="quote">‚Äú<span class="quote">call-forwardings</span>‚Äù</span>) you have to use detect_spirals
+				from the dialog modules. Otherwise the proxy can't identify and reuse existing
+				dialogs.
+				</p>
+              <p>
+				To get the correct call-forwarding-chain you have to store each cf* with the
+				corresponding caller and callee in a dialog based pseudo-variable (dlg_var)
+				(e.g. chain=B;cfa;C|C;cfnr;D). Additionally it is necessary to store the
+				caller and callee for each leg. All this helps to identify the involved
+				phone parners and forwarding chain. When you route such calls multiple times
+				to the same Proxy, you could store the caller and callee within an transaction
+				based avp and write it into the dialog based dlg_var pv during a 200 INVITE.
+				</p>
+              <div class="section" title="4.3.2.1.¬†Example for a spiraled Proxy">
+                <div class="titlepage">
+                  <div>
+                    <div>
+                      <h5 class="title"><a id="idp26424"></a>4.3.2.1.¬†Example for a spiraled Proxy</h5>
+                    </div>
+                  </div>
+                </div>
+                <pre class="programlisting">...
+# A calls B (transaction 1)
+$avp(caller)='A'
+$avp(callee)='B';
+$dlg_var(chain)='';
+
+# B cfa C (transaction 2)
+$avp(caller)='B'
+$avp(callee)='C';
+$dlg_var(chain)='B;cfu;C';
+
+# C cfnr D (transaction 3)
+$avp(caller)='C'
+$avp(callee)='D';
+$dlg_var(chain)=$dlg_var(chain) + "|" + "C;cfnr;D";
+
+# C confirms call (200 reply of transaction 2)
+$dlg_var(caller) = $avp(caller); #caller='B'
+$dlg_var(callee) = $avp(callee); #callee='C'
+...</pre>
+              </div>
+            </div>
+            <div class="section" title="4.3.3.¬†Logged data"><div class="titlepage"><div><div><h4 class="title"><a id="idp27776"></a>4.3.3.¬†Logged data</h4></div></div></div>
+				For each call, all dialog corresponding variables will be logged. After a call
+				is finished, the generated call data record information will be logged as string
+				(VAR1=xxx,VAR2=xxxx,...) to the syslog.
+			</div>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp28592"></a>5.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28968"></a>5.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The module depends on the following modules (in the other words 
+			the listed modules must be loaded before this module):
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>tm</em></span> -- Transaction Manager</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>a database module</em></span> -- If SQL 
+				support is used.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>rr</em></span> -- Record Route, if 
+				<span class="quote">‚Äú<span class="quote">detect_direction</span>‚Äù</span> module parameter is enabled.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dialog</em></span> -- Dialog, if
+				<span class="quote">‚Äú<span class="quote">cdr_enable</span>‚Äù</span> module parameter is enabled.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="5.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp32872"></a>5.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed 
+			before running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>radiusclient-ng</em></span> 0.5.0 or higher -- 
+				if compiled with RADIUS support. See <a class="ulink" href="javascript:if(confirm('http://developer.berlios.de/projects/radiusclient-ng/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://developer.berlios.de/projects/radiusclient-ng/'" tppabs="http://developer.berlios.de/projects/radiusclient-ng/">
+				http://developer.berlios.de/projects/radiusclient-ng/</a>.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="acc.i.params"></a>6.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†early_media (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.early_media"></a>6.1.¬†<code class="varname">early_media</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Should be early media (any provisional reply with body) accounted too ?
+		</p>
+            <p>
+		Default value is 0 (no).
+		</p>
+            <div class="example">
+              <a id="idp37024"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†early_media example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "early_media", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.¬†failed_transaction_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.failed_transaction_flag"></a>6.2.¬†<code class="varname">failed_transaction_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Per transaction flag which says if the transaction should be 
+		accounted also in case of failure (status&gt;=300).
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp39168"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†failed_transaction_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "failed_transaction_flag", 4)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.3.¬†failed_filter (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.failed_filter"></a>6.3.¬†<code class="varname">failed_filter</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		A string of failure response codes from 300 to 999
+		separated by commas. Failed transaction will not be accounted
+		if its response code is in the list even when
+		failed_transaction_flag is set. 
+		</p>
+            <p>
+		Default value is not-set (failure filtering is off).
+		</p>
+            <div class="example">
+              <a id="idp41472"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†failed_filter example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "failed_filter", "404,407")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.4.¬†report_ack (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.report_ack"></a>6.4.¬†<code class="varname">report_ack</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Shall acc attempt to account e2e ACKs too ? Note that this is really 
+		only an attempt, as e2e ACKs may take a different path 
+		(unless RR enabled) and mismatch original INVITE (e2e ACKs are 
+		a separate transaction). The flag for accounting has to be set
+		for each ACK as well.
+		</p>
+            <p>
+		Default value is 0 (no).
+		</p>
+            <div class="example">
+              <a id="idp1841552"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†report_ack example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "report_ack", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.5.¬†report_cancels (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.report_cancels"></a>6.5.¬†<code class="varname">report_cancels</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		By default, CANCEL reporting is disabled -- most accounting
+		applications wants to see INVITE's cancellation status.
+		Turn on if you explicitly want to account CANCEL transactions.
+		</p>
+            <p>
+		Default value is 0 (no).
+		</p>
+            <div class="example">
+              <a id="idp1843712"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†report_cancels example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "report_cancels", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.6.¬†detect_direction (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.detect_direction"></a>6.6.¬†<code class="varname">detect_direction</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Controlles the direction detection for sequential requests. If 
+		enabled (non zero value), for sequential requests with upstream
+		direction (from callee to caller), the FROM and TO will be swapped
+		(the direction will be preserved as in the original request).
+		</p>
+            <p>
+		It affects all values related to TO and FROM headers (body, URI, 
+		username, domain, TAG).
+		</p>
+            <p>
+		Default value is 0 (disabled).
+		</p>
+            <div class="example">
+              <a id="idp1846280"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†detect_direction example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "detect_direction", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.7.¬†acc_prepare_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_prepare_flag"></a>6.7.¬†<code class="varname">acc_prepare_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Per transaction flag which says if the transaction may be accounted
+		later, with flags set in TM module specific routes (e.g., like
+		failure_route). If this flag is not set and acc or missed_call flag
+		are not set either in request route block, there is no way to mark the
+		request for transaction later. If either acc or missed_call flags are
+		set in request route block, there is no need to set this flag.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1848680"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†acc_prepare_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_prepare_flag", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.8.¬†multi_leg_info (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.multi_leg_info"></a>6.8.¬†<code class="varname">multi_leg_info</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Defines the AVP set to be used in per-call-leg accounting.
+		See <a class="xref" href="#acc.i.multi-call-legs" title="3.¬†Multi Call-Legs accounting">Section¬†3, ‚ÄúMulti Call-Legs accounting‚Äù</a> for a 
+		detailed description of the Multi Call-Legs accounting.
+		</p>
+            <p>
+		If empty, the multi-leg accounting support will be disabled.
+		</p>
+            <p>
+		Default value is 0 (disabled).
+		</p>
+            <div class="example">
+              <a id="idp1851344"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†multi_leg_info example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# for syslog-based accounting, use any text you want to be printed
+modparam("acc", "multi_leg_info",
+    "text1=$avp(src);text2=$avp(dst)")
+# for mysql-based accounting, use the names of the columns
+modparam("acc", "multi_leg_info",
+    "leg_src=$avp(src);leg_dst=$avp(dst)")
+# for RADIUS-based accounting, use the names of the RADIUS AVPs
+modparam("acc", "multi_leg_info",
+    "RAD_LEG_SRC=$avp(src);RAD_LEG_SRC=$avp(dst)")
+# for DIAMETER-based accounting, use the DIAMETER AVP ID (as integer)
+modparam("acc", "multi_leg_info",
+    "2345=$avp(src);2346=$avp(dst)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.9.¬†log_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.log_flag"></a>6.9.¬†<code class="varname">log_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account a transaction via syslog.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1854184"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†log_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "log_flag", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.10.¬†log_missed_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.log_missed_flag"></a>6.10.¬†<code class="varname">log_missed_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account missed calls via syslog.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1856192"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†log_missed_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "log_missed_flag", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.11.¬†log_level (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.log_level"></a>6.11.¬†<code class="varname">log_level</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Log level at which accounting messages are issued to syslog.
+		</p>
+            <p>
+		Default value is L_NOTICE.
+		</p>
+            <div class="example">
+              <a id="idp1858344"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†log_level example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "log_level", 2)   # Set log_level to 2
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.12.¬†log_facility (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.log_facility"></a>6.12.¬†<code class="varname">log_facility</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Log facility to which accounting messages are issued to syslog.
+		This allows to easily seperate the accounting specific logging
+		from the other log messages.
+		</p>
+            <p>
+		Default value is LOG_DAEMON.
+		</p>
+            <div class="example">
+              <a id="idp1860600"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†log_facility example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "log_facility", "LOG_DAEMON")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.13.¬†log_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.log_extra"></a>6.13.¬†<code class="varname">log_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra values to be logged.
+		See section <a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a> for more details.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idp1862992"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†log_extra example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "log_extra", "ua=$hdr(User-Agent);uuid=$avp(i:123)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.14.¬†radius_config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.radius_config"></a>6.14.¬†<code class="varname">radius_config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		<span class="emphasis"><em>This parameter is radius specific.</em></span> Path to 
+		radius client configuration file, set the referred config file 
+		correctly and specify there address of server, shared secret 
+		(should equal that in /usr/local/etc/raddb/clients for
+		freeRadius servers) and dictionary, see etc for an example of 
+		config file and dictionary.
+		</p>
+            <p>
+		If the parameter is set to empty string, the RADIUS accounting support
+		will be disabled (even if compiled).
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1866336"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†radius_config example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "radius_config", "/etc/radiusclient/radiusclient.conf")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.15.¬†radius_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.radius_flag"></a>6.15.¬†<code class="varname">radius_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account a 
+		transaction -- RADIUS specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1868504"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†radius_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "radius_flag", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.16.¬†radius_missed_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.radius_missed_flag"></a>6.16.¬†<code class="varname">radius_missed_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account missed 
+		calls -- RADIUS specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1870520"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†radius_missed_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "radius_missed_flag", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.17.¬†service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.service_type"></a>6.17.¬†<code class="varname">service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Radius service type used for accounting.
+		</p>
+            <p>
+		Default value is 15 (SIP).
+		</p>
+            <div class="example">
+              <a id="idp1872640"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†service_type example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "service_type", 16)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.18.¬†radius_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.radius_extra"></a>6.18.¬†<code class="varname">radius_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra values to be logged via RADIUS - RADIUS specific.
+		See section <a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a> for more details.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idp1875032"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†radius_extra example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "radius_extra", "via=$hdr(Via[*]); email=$avp(s:email)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.19.¬†db_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_flag"></a>6.19.¬†<code class="varname">db_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account a 
+		transaction -- database specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1877384"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†db_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_flag", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.20.¬†db_missed_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_missed_flag"></a>6.20.¬†<code class="varname">db_missed_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account missed 
+		calls -- database specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1879400"></a>
+              <p class="title">
+                <strong>Example¬†1.20.¬†db_missed_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_missed_flag", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.21.¬†db_table_acc (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_table_acc"></a>6.21.¬†<code class="varname">db_table_acc</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Table name of accounting successfull calls -- database specific. It
+		can contain config variables that will be evaluated at runtime.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">acc</span>‚Äù</span>
+		</p>
+            <div class="example">
+              <a id="idp1881792"></a>
+              <p class="title">
+                <strong>Example¬†1.21.¬†db_table_acc example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_table_acc", "myacc_table")
+modparam("acc", "db_table_acc", "acc_$time(year)_$time(mon)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.22.¬†db_table_missed_calls (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_table_missed_calls"></a>6.22.¬†<code class="varname">db_table_missed_calls</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Table name for accounting missed calls -- database specific. It
+		can contain config variables that will be evaluated at runtime.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">missed_calls</span>‚Äù</span>
+		</p>
+            <div class="example">
+              <a id="idp1884192"></a>
+              <p class="title">
+                <strong>Example¬†1.22.¬†db_table_missed_calls example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_table_missed_calls", "myMC_table")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.23.¬†db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_url"></a>6.23.¬†<code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		SQL address -- database specific. If is set to NULL or emty string,
+		the SQL support is disabled.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span> (SQL disabled).
+		</p>
+            <div class="example">
+              <a id="idp1886608"></a>
+              <p class="title">
+                <strong>Example¬†1.23.¬†db_url example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_url", "mysql://user:password@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.24.¬†acc_method_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_method_column"></a>6.24.¬†<code class="varname">acc_method_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the request's method name as
+		string.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">method</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1888960"></a>
+              <p class="title">
+                <strong>Example¬†1.24.¬†acc_method_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_method_column", "method")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.25.¬†acc_from_tag_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_from_tag_column"></a>6.25.¬†<code class="varname">acc_from_tag_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the From header TAG parameter.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">from_tag</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1891256"></a>
+              <p class="title">
+                <strong>Example¬†1.25.¬†acc_from_tag_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_from_tag_column", "from_tag")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.26.¬†acc_to_tag_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_to_tag_column"></a>6.26.¬†<code class="varname">acc_to_tag_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the To header TAG parameter.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">to_tag</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1893552"></a>
+              <p class="title">
+                <strong>Example¬†1.26.¬†acc_to_tag_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_to_tag_column", "to_tag")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.27.¬†acc_callid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_callid_column"></a>6.27.¬†<code class="varname">acc_callid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the request's Callid value.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">callid</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1895840"></a>
+              <p class="title">
+                <strong>Example¬†1.27.¬†acc_callid_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_callid_column", "callid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.28.¬†acc_sip_code_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_sip_code_column"></a>6.28.¬†<code class="varname">acc_sip_code_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the final reply's numric code
+		value in string format.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">sip_code</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1898160"></a>
+              <p class="title">
+                <strong>Example¬†1.28.¬†acc_sip_code_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_sip_code_column", "sip_code")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.29.¬†acc_sip_reason_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_sip_reason_column"></a>6.29.¬†<code class="varname">acc_sip_reason_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the final reply's reason
+		phrase value.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">sip_reason</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1900448"></a>
+              <p class="title">
+                <strong>Example¬†1.29.¬†acc_sip_reason_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_sip_reason_column", "sip_reason")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.30.¬†acc_time_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.acc_time_column"></a>6.30.¬†<code class="varname">acc_time_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column name in accounting table to store the time stamp of the 
+		transaction completion in date-time format.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">time</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1902824"></a>
+              <p class="title">
+                <strong>Example¬†1.30.¬†acc_time_column example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "acc_time_column", "time")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.31.¬†db_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_extra"></a>6.31.¬†<code class="varname">db_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra values to be logged into database - DB specific.
+		See section <a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a> for more details.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idp1905240"></a>
+              <p class="title">
+                <strong>Example¬†1.31.¬†db_extra example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_extra", "ct=$hdr(Content-type); email=$avp(s:email)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.32.¬†db_insert_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.db_insert_mode"></a>6.32.¬†<code class="varname">db_insert_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, use INSERT DELAYED to add records to accounting tables
+		when the DB driver has support for it. If no INSERT DELAYED support
+		is offered by DB driver, then standard INSERT is used. Beware that
+		MySQL InnoDB engine doesn't support INSERT DELAYED, thus be sure
+		the acc tables are defined with different type (e.g., MyISAM).
+		</p>
+            <p>
+		If set to 2, async insert is used if the db driver module has
+		support for it and if async_workers core parameter value is greater than 0. If not, then standard INSERT is used.
+		</p>
+            <p>
+		Default value is 0 (no INSERT DELAYED nor async insert).
+		</p>
+            <div class="example">
+              <a id="idp1908072"></a>
+              <p class="title">
+                <strong>Example¬†1.32.¬†db_insert_mode example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "db_insert_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.33.¬†diameter_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.diameter_flag"></a>6.33.¬†<code class="varname">diameter_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account a 
+		transaction -- DIAMETER specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1910376"></a>
+              <p class="title">
+                <strong>Example¬†1.33.¬†diameter_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "diameter_flag", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.34.¬†diameter_missed_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.diameter_missed_flag"></a>6.34.¬†<code class="varname">diameter_missed_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Request flag which needs to be set to account missed 
+		calls -- DIAMETER specific.
+		</p>
+            <p>
+		Default value is not-set (no flag).
+		</p>
+            <div class="example">
+              <a id="idp1912472"></a>
+              <p class="title">
+                <strong>Example¬†1.34.¬†diameter_missed_flag example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "diameter_missed_flag", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.35.¬†diameter_client_host (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.diameter_client_host"></a>6.35.¬†<code class="varname">diameter_client_host</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Hostname of the machine where the DIAMETER Client is 
+		running -- DIAMETER specific.
+		</p>
+            <p>
+		Default value is <span class="quote">‚Äú<span class="quote">localhost</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1914792"></a>
+              <p class="title">
+                <strong>Example¬†1.35.¬†diameter_client_host example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "diameter_client_host", "3a_server.net")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.36.¬†diameter_client_port (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.diameter_client_port"></a>6.36.¬†<code class="varname">diameter_client_port</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Port number where the Diameter Client is 
+		listening -- DIAMETER specific.
+		</p>
+            <p>
+		Default value is 3000.
+		</p>
+            <div class="example">
+              <a id="idp1916928"></a>
+              <p class="title">
+                <strong>Example¬†1.36.¬†diameter_client_host example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "diameter_client_port", 3000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.37.¬†diameter_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.diameter_extra"></a>6.37.¬†<code class="varname">diameter_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra values to be logged via DIAMETER - DIAMETER specific.
+		See section <a class="xref" href="#acc.i.extra-accounting" title="2.¬†Extra accounting">Section¬†2, ‚ÄúExtra accounting‚Äù</a> for more details.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idp1919328"></a>
+              <p class="title">
+                <strong>Example¬†1.37.¬†diameter_extra example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "diameter_extra", "7846=$hdr(Content-type);7847=$avp(s:email)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.38.¬†cdr_enable (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_enable"></a>6.38.¬†<code class="varname">cdr_enable</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Should CDR-based logging be enabled?
+		</p>
+            <p>
+		0 - off (default).
+		1 - on.
+		</p>
+            <div class="example">
+              <a id="idp1921496"></a>
+              <p class="title">
+                <strong>Example¬†1.38.¬†cdr_enable example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_enable", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.39.¬†cdr_expired_dlg_enable (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_expired_dlg_enable"></a>6.39.¬†<code class="varname">cdr_expired_dlg_enable</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Should CDR-based logging be enabled in case of expired dialogs?
+		</p>
+            <p>
+		0 - off (default).
+		1 - on.
+		</p>
+            <div class="example">
+              <a id="idp1923640"></a>
+              <p class="title">
+                <strong>Example¬†1.39.¬†cdr_expired_dlg_enable example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_expired_dlg_enable", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.40.¬†cdr_start_on_confirmed (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_start_on_confirmed"></a>6.40.¬†<code class="varname">cdr_start_on_confirmed</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Should the start time be taken from the time when the dialog is created,
+        	or when the dialog is confirmed?
+		</p>
+            <p>
+		0 - use time of dialog creation (default).
+		1 - use time of dialog confirmation.
+		</p>
+            <div class="example">
+              <a id="idp1925984"></a>
+              <p class="title">
+                <strong>Example¬†1.40.¬†cdr_start_on_confirmed example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_start_on_confirmed", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.41.¬†cdr_facility (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_facility"></a>6.41.¬†<code class="varname">cdr_facility</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Log facility to which CDR messages are issued to syslog.
+		This allows to easily seperate CDR-specific logging from
+		the other log messages.
+		</p>
+            <p>
+		Default value is LOG_DAEMON.
+		</p>
+            <div class="example">
+              <a id="idp1928208"></a>
+              <p class="title">
+                <strong>Example¬†1.41.¬†cdr_facility example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_facility", "LOG_DAEMON")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.42.¬†cdr_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_extra"></a>6.42.¬†<code class="varname">cdr_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set of pseudo-variables defining custom CDR fields. See
+        <a class="xref" href="#acc.i.cdr-extra" title="4.2.¬†CDR Extra">Section¬†4.2, ‚ÄúCDR Extra‚Äù</a> for more details.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idp1930616"></a>
+              <p class="title">
+                <strong>Example¬†1.42.¬†cdr_extra example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_extra", "c1=$dlg_var(caller);c2=$dlg_var(callee)"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.43.¬†cdr_start_id (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_start_id"></a>6.43.¬†<code class="varname">cdr_start_id</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Modifying the id which is used to store the start time.
+		</p>
+            <p>
+		Default value is 'start_time'
+		</p>
+            <div class="example">
+              <a id="idp1932808"></a>
+              <p class="title">
+                <strong>Example¬†1.43.¬†cdr_start_id example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_start_id", "start")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.44.¬†cdr_end_id (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_end_id"></a>6.44.¬†<code class="varname">cdr_end_id</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Modifying the id which is used to store the end time.
+		</p>
+            <p>
+		Default value is 'end_time'
+		</p>
+            <div class="example">
+              <a id="idp1934952"></a>
+              <p class="title">
+                <strong>Example¬†1.44.¬†cdr_end_id example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_end_id", "end")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.45.¬†cdr_duration_id (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_duration_id"></a>6.45.¬†<code class="varname">cdr_duration_id</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Modify the id which is used to store the duration.
+		</p>
+            <p>
+		Default value is 'duration'
+		</p>
+            <div class="example">
+              <a id="idp1937032"></a>
+              <p class="title">
+                <strong>Example¬†1.45.¬†cdr_duration_id example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_duration_id", "d")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.46.¬†cdr_log_enable (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_log_enable"></a>6.46.¬†<code class="varname">cdr_log_enable</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Control if CDR-based accounting should be written to syslog.
+		</p>
+            <p>
+		0 - off.
+		1 - on (default).
+		</p>
+            <div class="example">
+              <a id="idp1939120"></a>
+              <p class="title">
+                <strong>Example¬†1.46.¬†cdr_log_enable example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_log_enable", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.47.¬†cdrs_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdrs_table"></a>6.47.¬†<code class="varname">cdrs_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of db table to store dialog-based CDRs.
+		</p>
+            <p>
+		Default value is "" (no db storage for dialog-based CDRs).
+		</p>
+            <div class="example">
+              <a id="idp1941288"></a>
+              <p class="title">
+                <strong>Example¬†1.47.¬†cdrs_table example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdrs_table", "acc_cdrs")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.48.¬†time_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.time_mode"></a>6.48.¬†<code class="varname">time_mode</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Store additional value related to the time of event.
+		</p>
+            <p>
+		Values can be:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>0</em></span> -  (default), save only unix
+				timestamp for syslog and datetime for database.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> - save seconds in time_attr and
+				microseconds in time_exten.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>2</em></span> - save seconds.miliseconds
+				in time_attr.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>3</em></span> - save formatted time according
+				to time_format parameter, using the output of localtime().
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>4</em></span> - save formatted time according
+				to time_format parameter, using the output of gmtime().
+			</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1946920"></a>
+              <p class="title">
+                <strong>Example¬†1.48.¬†time_mode example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "time_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.49.¬†time_attr (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.time_attr"></a>6.49.¬†<code class="varname">time_attr</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the syslog attribute or database column where to store additional
+		value related to the time of event.
+		</p>
+            <p>
+		For db accounting, the column has to be of different types, depending on
+		time_mode value. When time_mode is:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> - time_attr column has to be int.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>2</em></span> - time_attr column has to be double.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>3</em></span> - time_attr column has to be varchar(128).</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>4</em></span> - time_attr column has to be varchar(128).</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		For time_mode=1, this attribute is not written in syslog, because time
+		value is already unix timestamp, but in db accounting time value is
+		datetime and requires a function to get the timestamp.
+		</p>
+            <div class="example">
+              <a id="idp1952336"></a>
+              <p class="title">
+                <strong>Example¬†1.49.¬†time_attr example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "time_attr", "seconds")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.50.¬†time_exten (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.time_exten"></a>6.50.¬†<code class="varname">time_exten</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the syslog attribute or database column where to store extended
+		value related to the time of event.
+		</p>
+            <p>
+		It is used now only for time_mode=1 and database column has to be int:
+		</p>
+            <div class="example">
+              <a id="idp1954584"></a>
+              <p class="title">
+                <strong>Example¬†1.50.¬†time_exten example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "time_exten", "micorsecs")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.51.¬†time_format (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.time_format"></a>6.51.¬†<code class="varname">time_format</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specify the format to print the time for time_mode 3 or 4.
+		</p>
+            <p>
+		Default value is %Y-%m-%d %H:%M:%S".
+		</p>
+            <div class="example">
+              <a id="idp1956752"></a>
+              <p class="title">
+                <strong>Example¬†1.51.¬†time_format example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "time_format", "%Y/%m/%d %H:%M:%S")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.52.¬†reason_from_hf (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.reason_from_hf"></a>6.52.¬†<code class="varname">reason_from_hf</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tells where to take sip_reason from.  If value is 0,
+		sip_reason is taken from status line.  Otherwise, sip_reason
+		is taken from Reason header field(s) if present.
+		Currently only the first Reason header is used.
+		</p>
+            <p>
+		Default value is 0.
+		</p>
+            <div class="example">
+              <a id="idp1958976"></a>
+              <p class="title">
+                <strong>Example¬†1.52.¬†reason_from_hf</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "reason_from_hf", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.53.¬†clone_msg (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.clone_msg"></a>6.53.¬†<code class="varname">clone_msg</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, request structure from transaction is cloned temporarily
+		in the callback to get acc attributes. It is required if you account
+		values from SIP headers to avoid concurent access to the shared memory
+		transaction structure, specially when accounting 1xx events. If set to
+		0, it uses directly the shared memory structure, be sure you store all
+		needed attributes in AVPs/XAVPs inside request route.
+		</p>
+            <p>
+		Default value is 1.
+		</p>
+            <div class="example">
+              <a id="idp1961472"></a>
+              <p class="title">
+                <strong>Example¬†1.53.¬†clone_msg</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "clone_msg", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.54.¬†cdr_on_failed (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.p.cdr_on_failed"></a>6.54.¬†<code class="varname">cdr_on_failed</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the module stores the CDR for a failed dialog (calls not
+		answered). If set to 0, those records are not stored, only those for
+		answered calls.
+		</p>
+            <p>
+		Default value is 1.
+		</p>
+            <div class="example">
+              <a id="idp1963656"></a>
+              <p class="title">
+                <strong>Example¬†1.54.¬†cdr_on_failed</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("acc", "cdr_on_failed", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3588416"></a>7.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬† acc_log_request(comment)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.f.acc_log_request"></a>7.1.¬†
+			<code class="function">acc_log_request(comment)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		<code class="function">acc_request</code> reports on a request, 
+		for example, it can be used to report on missed calls to off-line users 
+		who are replied 404 - Not Found. To avoid multiple reports on UDP 
+		request retransmission, you would need to embed the
+		action in stateful processing.
+		</p>
+            <p>
+		Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>comment</em></span> - Comment to be appended.
+			The string can contain any number of pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3591544"></a>
+              <p class="title">
+                <strong>Example¬†1.55.¬†acc_log_request usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+acc_log_request("Some comment");
+$var(code) = 404;
+$avp(reason) = "Not found";
+acc_log_request("$var(code) Error: $avp(reason)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.2.¬† acc_db_request(comment, table)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.f.acc_db_request"></a>7.2.¬†
+			<code class="function">acc_db_request(comment, table)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Like <code class="function">acc_log_request</code>, 
+		<code class="function">acc_db_request</code> reports on a 
+		request. The report is sent to database at <span class="quote">‚Äú<span class="quote">db_url</span>‚Äù</span>, in 
+		the table referred to in the second action parameter.
+		</p>
+            <p>
+		Meaning of the parameters is as follows:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>comment</em></span> - Comment to be appended.
+			The string can contain any number of pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>table</em></span> - Database table to be used. It
+			can contain config variables that are evaluated at runtime.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3596304"></a>
+              <p class="title">
+                <strong>Example¬†1.56.¬†acc_db_request usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+acc_db_request("Some comment", "SomeTable");
+acc_db_request("Some comment", "acc_$time(year)_$time(mon)");
+acc_db_request("$var(code) Error: $avp(reason)", "SomeTable");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.3.¬† acc_rad_request(comment)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.f.acc_rad_request"></a>7.3.¬†
+			<code class="function">acc_rad_request(comment)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Like <code class="function">acc_log_request</code>, 
+		<code class="function">acc_rad_request</code> reports on 
+		a request. It reports to radius server as configured in 
+		<span class="quote">‚Äú<span class="quote">radius_config</span>‚Äù</span>.
+		</p>
+            <p>
+		Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>comment</em></span> - Comment to be appended.
+			The string can contain any number of pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3600376"></a>
+              <p class="title">
+                <strong>Example¬†1.57.¬†acc_rad_request usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+acc_rad_request("Some comment");
+acc_rad_request("$var(code) Error: $avp(reason)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.4.¬† acc_diam_request(comment)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="acc.f.acc_diam_request"></a>7.4.¬†
+			<code class="function">acc_diam_request(comment)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Like <code class="function">acc_log_request</code>, 
+		<code class="function">acc_diam_request</code> reports on 
+		a request. It reports to the configured Diameter server.
+		</p>
+            <p>
+		Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>comment</em></span> - Comment to be appended.
+			The string can contain any number of pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3604176"></a>
+              <p class="title">
+                <strong>Example¬†1.58.¬†acc_diam_request usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+acc_diam_request("Some comment");
+acc_diam_request("$var(code) Error: $avp(reason)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1483480"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp3392864"></a>
+          <dl>
+            <dt>2.1. <a href="#idp2100952">What happend with old log_fmt parameter</a></dt>
+            <dt>2.2. <a href="#idp2655400">What happend with old multi_leg_enabled parameter</a></dt>
+            <dt>2.3. <a href="#idp2427616">What happend with old src_leg_avp_id and dst_leg_avp_id
+				parameters</a></dt>
+            <dt>2.4. <a href="#idp3397784">Where can I find more about Kamailio?</a></dt>
+            <dt>2.5. <a href="#idp617048">Where can I post a question about this module?</a></dt>
+            <dt>2.6. <a href="#idp2771152">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp2100952"></a>
+                  <a id="idp1196744"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with old log_fmt parameter</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			The parameter became obsolete with the restructure of the data
+			logged by ACC module (refer to the Overview chapter). For similar
+			behaviour you can use the extra accouting (see the coresponding
+			chapter).
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp2655400"></a>
+                  <a id="idp1689384"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with old multi_leg_enabled parameter</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			The parameter becaome obsolete by the addition of the new
+			multi_leg_info parameter. The multi-leg accouting is automatically
+			enabled when multi_leg_info is defined.
+			</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp2427616"></a>
+                  <a id="idp245080"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with old src_leg_avp_id and dst_leg_avp_id
+				parameters</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			The parameter was replaced by the more generic new parameter
+			multi_leg_info. This allows logging (per-leg) of more information
+			than just dst and src.
+			</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp3397784"></a>
+                  <a id="idp3273504"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.5.">
+                <td align="left" valign="top">
+                  <a id="idp617048"></a>
+                  <a id="idp1626456"></a>
+                  <p>
+                    <strong>2.5.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.6.">
+                <td align="left" valign="top">
+                  <a id="idp2771152"></a>
+                  <a id="idp2771296"></a>
+                  <p>
+                    <strong>2.6.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

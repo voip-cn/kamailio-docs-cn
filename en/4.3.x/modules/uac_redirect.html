@@ -1,0 +1,1042 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UAC_REDIRECT Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4258064" title="UAC_REDIRECT Module" />
+    <link rel="next" href="#idp2755824" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UAC_REDIRECT Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4258064"></a>UAC_REDIRECT Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice System<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005 Voice Sistem</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2755824">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2534488">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2827200">2. Accounting</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1482792">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2817440">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3317952">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2674512">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1751568">4.1. <code class="varname">default_filter</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1659624">4.2. <code class="varname">deny_filter</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3301168">4.3. <code class="varname">accept_filter</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2944696">4.4. <code class="varname">acc_function</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2426272">4.5. <code class="varname">acc_db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1323512">4.6. <code class="varname">bflags</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2126640">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2795048">5.1. 
+				<code class="function">set_deny_filter(filter,flags)
+					</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1159616">5.2. 
+				<code class="function">set_accept_filter(filter,flags)
+					</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2609280">5.3. 
+				<code class="function">get_redirects(max)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1008888">5.4. 
+				<code class="function">get_redirects(max,reason)</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2277192">6. Script Example</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2714888">Set <code class="varname">default_filter</code> 
+					module parameter</a></dt>
+          <dt>1.2. <a href="#idp2741560">Set <code class="varname">deny_filter</code> 
+					module parameter</a></dt>
+          <dt>1.3. <a href="#idp2600920">Set <code class="varname">accept_filter</code> 
+					module parameter</a></dt>
+          <dt>1.4. <a href="#idp2442328">Set <code class="varname">acc_function</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp2327064">Set <code class="varname">acc_db_table</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp2696192">Set <code class="varname">bflags</code> 
+					module parameter</a></dt>
+          <dt>1.7. <a href="#idp2446008"><code class="function">set_deny_filter</code> usage</a></dt>
+          <dt>1.8. <a href="#idp1456536"><code class="function">set_accept_filter</code> usage</a></dt>
+          <dt>1.9. <a href="#idp2837160"><code class="function">get_redirects</code> usage</a></dt>
+          <dt>1.10. <a href="#idp2870272"><code class="function">get_redirects</code> usage</a></dt>
+          <dt>1.11. <a href="#idp2903312">Redirection script example</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2755824"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2534488">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2827200">2. Accounting</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1482792">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2817440">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3317952">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2674512">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1751568">4.1. <code class="varname">default_filter</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1659624">4.2. <code class="varname">deny_filter</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3301168">4.3. <code class="varname">accept_filter</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2944696">4.4. <code class="varname">acc_function</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2426272">4.5. <code class="varname">acc_db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1323512">4.6. <code class="varname">bflags</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2126640">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2795048">5.1. 
+				<code class="function">set_deny_filter(filter,flags)
+					</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1159616">5.2. 
+				<code class="function">set_accept_filter(filter,flags)
+					</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2609280">5.3. 
+				<code class="function">get_redirects(max)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1008888">5.4. 
+				<code class="function">get_redirects(max,reason)</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2277192">6. Script Example</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2534488"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		UAC REDIRECT - User Agent Client redirection - module enhance Kamailio
+		with the functionality of being able to handle (interpret, filter,
+		log and follow) redirect responses ( 3xx replies class).
+		</p>
+          <p>
+		UAC REDIRECT module offer stateful processing, gathering the
+		contacts from all 3xx branches of a call.
+		</p>
+          <p>
+		The module provide a powerful mechanism for selecting and filtering 
+		the contacts to be used for the new redirect:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>number based</em></span> - limits like the 
+			number of total contacts to be used or the maximum number of 
+			contacts per branch to be selected.
+			</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>Regular Expression based</em></span> - combinations
+			of deny and accept filters allow a strict control of the 
+			contacts to be used for redirection.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		When selecting from a 3xx branch the contacts to be used, the contacts
+		will be ordered and prioritized based on the <span class="quote">“<span class="quote">q</span>”</span> value.
+		</p>
+        </div>
+        <div class="section" title="2. Accounting">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2827200"></a>2. Accounting</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		UAC REDIRECT module allows to log all the redirection (to be later
+		used for CDR aggregation). This functionality may be dynamically
+		enabled for each redirection situation.
+		</p>
+          <p>
+		The logging will be done via the accounting module functions (all are
+		supported). The information to be logged will be the same as the 
+		normal logged information directly via ACC module, but with 
+		following differences:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>reason phrase</em></span> - which will be
+			dynamically set by the redirection function;
+			</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>outgoing URI</em></span> - which will be the
+			redirect URI.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		For each redirect contact, a separate record will be logged. For
+		example, if a call is redirected to three new contacts, the 
+		module will log three additional records corresponding to each
+		redirect URI.
+		</p>
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1482792"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2817440"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM</em></span> - Transaction Module, for accessing
+				replies.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>ACC</em></span> - Accounting Module, but only if the
+				logging feature is used.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3317952"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed 
+				before running Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>None</em></span>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2674512"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. default_filter (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1751568"></a>4.1. <code class="varname">default_filter</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The default behavior in filtering contacts. It may be 
+			<span class="quote">“<span class="quote">accept</span>”</span> or <span class="quote">“<span class="quote">deny</span>”</span>.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					The default value is <span class="quote">“<span class="quote">accept</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2714888"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">default_filter</code> 
+					module parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","default_filter","deny")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. deny_filter (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1659624"></a>4.2. <code class="varname">deny_filter</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The regular expression for default deny filtering. It make sens
+			to be defined on only if the <code class="varname">default_filter</code>
+			parameter is set to <span class="quote">“<span class="quote">accept</span>”</span>. All contacts matching
+			the <code class="varname">deny_filter</code> will be rejected; the rest 
+			of them will be accepted for redirection.
+			</p>
+            <p>
+			The parameter may be defined only one - multiple definition will
+			overwrite the previous definitions. If more regular expression 
+			need to be defined, use the 
+			<code class="function">set_deny_filter()</code> scripting
+			function.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default 
+					value being NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2741560"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">deny_filter</code> 
+					module parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","deny_filter",".*@siphub\.net")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. accept_filter (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3301168"></a>4.3. <code class="varname">accept_filter</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The regular expression for default accept filtering. It make sens
+			to be defined on only if the <code class="varname">default_filter</code>
+			parameter is set to <span class="quote">“<span class="quote">deny</span>”</span>. All contacts matching
+			the <code class="varname">accept_filter</code> will be accepted; the rest 
+			of them will be rejected for redirection.
+			</p>
+            <p>
+			The parameter may be defined only one - multiple definition will
+			overwrite the previous definitions. If more regular expression 
+			need to be defined, use the 
+			<code class="function">set_accept_filter()</code> scripting
+			function.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default 
+					value being NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2600920"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">accept_filter</code> 
+					module parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","accept_filter",".*@siphub\.net")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. acc_function (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2944696"></a>4.4. <code class="varname">acc_function</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specifies the accounting function to be used. Just be defining 
+			this parameter, the accounting support will not be enabled. 
+			Accounting may only be enabled via two parameters 
+			<code class="function">set_accept_filter()</code> 
+			scripting function.
+			</p>
+            <p>
+			Its values my be:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>acc_log_request</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>acc_db_request</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>acc_rad_request</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>acc_diam_request</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+				<span class="emphasis"><em>
+					The default value is <span class="quote">“<span class="quote">acc_log_request</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2442328"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">acc_function</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","acc_function","acc_db_request")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. acc_db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2426272"></a>4.5. <code class="varname">acc_db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specifies the accounting table to be used if DB accounting was 
+			chosen (<code class="varname">acc_function</code> was set to 
+			<span class="quote">“<span class="quote">acc_db_request</span>”</span>). Just be defining 
+			this parameter, the accounting support will not be enabled. 
+			Accounting may only be enabled via two parameters 
+			<code class="function">set_accept_filter()</code> 
+			scripting function.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					The default value is <span class="quote">“<span class="quote">acc</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2327064"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">acc_db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","acc_db_table","acc_redirect")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. bflags (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1323512"></a>4.6. <code class="varname">bflags</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This parameter defines the branch-flags to be set for new, added branch.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default 
+					value being 0.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp2696192"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">bflags</code> 
+					module parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac_redirect","bflags", 1)
+...
+
+branch_route[1] {
+	if (isbflagset(1)) {
+		log(1, "This branch comes from a 302 Forward Request.\n");
+	} else {
+		log(1, "This is a regular branch.\n");
+	}
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2126640"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  set_deny_filter(filter,flags)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2795048"></a>5.1. 
+				<code class="function">set_deny_filter(filter,flags)
+					</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Sets additional deny filters. Maximum 6 may be combined. This
+			additional filter will apply only to the current message - it
+			will not have a global effect.
+			</p>
+            <p>
+			Default or previous added deny filter may be reset depending of
+			the <span class="emphasis"><em>flag</em></span> parameter value:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_all</em></span> - reset both default
+				and previous added deny filters;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_default</em></span> - reset only the
+				default deny filter;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_added</em></span> - reset only the 
+				previous added deny filters;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>empty</em></span> - no reset, just add the
+				filter.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp2446008"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">set_deny_filter</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_deny_filter(".*@domain2.net","reset_all");
+set_deny_filter(".*@domain1.net","");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  set_accept_filter(filter,flags)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1159616"></a>5.2. 
+				<code class="function">set_accept_filter(filter,flags)
+					</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Sets additional accept filters. Maximum 6 may be combined. This
+			additional filter will apply only to the current message - it
+			will not have a global effect.
+			</p>
+            <p>
+			Default or previous added deny filter may be reset depending of
+			the <span class="emphasis"><em>flag</em></span> parameter value:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_all</em></span> - reset both default
+				and previous added accept filters;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_default</em></span> - reset only the
+				default accept filter;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reset_added</em></span> - reset only the 
+				previous added accept filters;
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>empty</em></span> - no reset, just add
+				the filter.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1456536"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">set_accept_filter</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_accept_filter(".*@domain2.net","reset_added");
+set_accept_filter(".*@domain1.net","");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.  get_redirects(max)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2609280"></a>5.3. 
+				<code class="function">get_redirects(max)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The function may be called only from failure routes. It will
+				extract the contacts from all 3xx branches and append them
+				as new branches. Note that the function will not forward the
+				new branches, this must be done explicitly from script.
+			</p>
+            <p>
+				How many contacts (in total and per branch) are selected 
+				depends of the <span class="emphasis"><em>max</em></span> parameter values.
+				Its syntax is:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				max = max_total [":" max_branch]
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				max_total = number of total contacts to be selected
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				max_branch = number of contacts per branch to be selected
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+				Both <span class="quote">“<span class="quote">max_total</span>”</span> and <span class="quote">“<span class="quote">max_branch</span>”</span>
+				are positive integer. To specify unlimited values, use 0 value
+				or "*" character.
+			</p>
+            <p>
+				NOTE that during the selection process, each set of contacts 
+				from a specific branch are ordered based on <span class="quote">“<span class="quote">q</span>”</span> 
+				value.
+			</p>
+            <p>
+				This function will produce no accounting records.
+			</p>
+            <p>
+				This function can be used from FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp2837160"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">get_redirects</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# max 2 contacts per branch, but no overall limit
+get_redirects("*:2");
+...
+# no limits per branch, but not more than 6 overall contacts
+get_redirects("6:*");
+...
+# no restrictions
+get_redirects("*");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.  get_redirects(max,reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1008888"></a>5.4. 
+				<code class="function">get_redirects(max,reason)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The function has same functionality as 
+				<code class="function">get_redirects(max)</code>
+				function, but it will produce accounting records.
+			</p>
+            <p>
+				The accounting records will be mark by the 
+				<span class="emphasis"><em>reason</em></span> phrase.
+			</p>
+            <p>
+				If this function appears in the script, at startup, the module
+				will import the accounting function. Otherwise not.
+			</p>
+            <p>
+			This function can be used from FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp2870272"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">get_redirects</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+get_redirects("4:1","Redirected");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Script Example">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2277192"></a>6. Script Example</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp2903312"></a>
+            <p class="title">
+              <strong>Example 1.11. Redirection script example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">loadmodule "modules/sl/sl.so"
+loadmodule "modules/usrloc/usrloc.so"
+loadmodule "modules/registrar/registrar.so"
+loadmodule "modules/tm/tm.so"
+loadmodule "modules/acc/acc.so"
+loadmodule "modules/uac_redirect/uac_redirect.so"
+
+modparam("usrloc", "db_mode",   0)
+
+request_route{
+	if (uri==myself) {
+
+		if (method=="REGISTER") {
+			save("location");
+			exit;
+		}
+
+		if (!lookup("location")) {
+			sl_send_reply("404", "Not Found");
+			exit;
+		}
+		# do redirect with accounting
+		t_on_failure("REDIRECT_ACC");
+	} else {
+		# just do redirect
+		t_on_failure("REDIRECT_NOACC");
+	}
+
+	if (!t_relay()) {
+		sl_reply_error();
+	}
+}
+
+# redirect without storing acc record
+failure_route[REDIRECT_NOACC] {
+	if(!t_check_status("3[0-9][0-9]")) {
+		exit;
+	}
+	get_redirects("3:1");
+	t_relay();
+}
+
+# redirect with storing acc record
+failure_route[REDIRECT_ACC] {
+	if(!t_check_status("3[0-9][0-9]")) {
+		exit;
+	}
+	get_redirects("6:2", "redirect");
+	t_relay();
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

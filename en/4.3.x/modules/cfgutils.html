@@ -1,0 +1,1927 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>cfgutils Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15554000" title="cfgutils Module" />
+    <link rel="next" href="#idp16929536" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="cfgutils Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15554000"></a>cfgutils Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Henning</span> <span class="surname">Westerholt</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1und1 Internet AG<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:henning.westerholt@1und1.de">henning.westerholt@1und1.de</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">BASIS AudioNet GmbH<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">rosdev.ro<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jiri@iptel.org">jiri@iptel.org</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Olle E.</span> <span class="surname">Johansson</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:oej@edvina.net">oej@edvina.net</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2014, 2013, 2007, 2008, 2004 Edvina AB, 1und1 Internet AG, BASIS AudioNet GmbH, Elena-Ramona Modroiu, Juha Heinanen, FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16929536">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18032184">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17977528">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18065032">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.p.initial_propability">3.1. <code class="varname">initial_probability</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.p.hash_file">3.2. <code class="varname">hash_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.p.initial_gflags">3.3. <code class="varname">initial_gflags</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.p.lock_set_size">3.4. <code class="varname">lock_set_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15524384">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.rand_event">4.1. <code class="function">rand_event()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.rand_set_prob">4.2. <code class="function">rand_set_prob(probabiltiy)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.rand_reset_prob">4.3. <code class="function">rand_reset_prob()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.rand_get_prob">4.4. <code class="function">rand_get_prob()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.sleep">4.5. 
+			<code class="function">sleep(time)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.usleep">4.6. 
+			<code class="function">usleep(time)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.abort">4.7. 
+			<code class="function">abort()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.pkg_status">4.8. 
+			<code class="function">pkg_status()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.pkg_summary">4.9. 
+			<code class="function">pkg_summary()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.shm_status">4.10. 
+			<code class="function">shm_status()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.shm_summary">4.11. 
+			<code class="function">shm_summary()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.set_gflag">4.12. <code class="function">set_gflag(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.reset_gflag">4.13. <code class="function">reset_gflag(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.is_gflag">4.14. <code class="function">is_gflag(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.lock">4.15. <code class="function">lock(key)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.unlock">4.16. <code class="function">unlock(key)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.check_route_exists">4.17. <code class="function">check_route_exists(route)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.route_if_exists">4.18. <code class="function">route_if_exists(route)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.f.core_hash">4.19. <code class="function">core_hash(string1, string2, size)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17348944">5. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.rand_set_prob">5.1. <code class="function">rand_set_prop</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.rand_reset_prob">5.2. <code class="function">rand_reset_prob</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.rand_get_prob">5.3. <code class="function">rand_get_prob</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.check_config_hash">5.4. <code class="function">check_config_hash</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.get_config_hash">5.5. <code class="function">get_config_hash</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.set_gflag">5.6. <code class="function">set_gflag</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.reset_gflag">5.7. <code class="function">reset_gflag</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.is_gflag">5.8. <code class="function">is_gflag</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.m.get_gflags">5.9. <code class="function">get_gflags</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17373344">6. <acronym class="acronym">RPC</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.rpc.set_gflag">6.1. <code class="function">cfgutils.set_gflag</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.rpc.reset_gflag">6.2. <code class="function">cfgutils.reset_gflag</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cfgutils.rpc.is_gflag">6.3. <code class="function">cfgutils.is_gflag</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17381920">7. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17382272">7.1. <code class="varname">$RANDOM</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18093328"><code class="varname">initial_probability</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idp15618856"><code class="varname">hash_file</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp15520752"><code class="varname">initial</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp15523208"><code class="varname">lock_set_size</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp15525752"><code class="function">rand_event()</code> usage</a></dt>
+          <dt>1.6. <a href="#idp15528672"><code class="function">rand_set_prob()</code> usage</a></dt>
+          <dt>1.7. <a href="#idp15530808"><code class="function">rand_reset_prob()</code> usage</a></dt>
+          <dt>1.8. <a href="#idp15532960"><code class="function">rand_get_prob()</code> usage</a></dt>
+          <dt>1.9. <a href="#idp15557224"><code class="function">sleep</code> usage</a></dt>
+          <dt>1.10. <a href="#idp15560912"><code class="function">usleep</code> usage</a></dt>
+          <dt>1.11. <a href="#idp15563712"><code class="function">abort</code> usage</a></dt>
+          <dt>1.12. <a href="#idp15566536"><code class="function">pkg_status</code> usage</a></dt>
+          <dt>1.13. <a href="#idp15569336"><code class="function">pkg_summary</code> usage</a></dt>
+          <dt>1.14. <a href="#idp15652336"><code class="function">shm_status</code> usage</a></dt>
+          <dt>1.15. <a href="#idp15655136"><code class="function">shm_summary</code> usage</a></dt>
+          <dt>1.16. <a href="#idp15658208"><code class="function">set_gflag()</code> usage</a></dt>
+          <dt>1.17. <a href="#idp15661280"><code class="function">reset_gflag()</code> usage</a></dt>
+          <dt>1.18. <a href="#idp15664448"><code class="function">is_gflag()</code> usage</a></dt>
+          <dt>1.19. <a href="#idp15667816"><code class="function">lock()</code> usage</a></dt>
+          <dt>1.20. <a href="#idp15670736"><code class="function">unlock()</code> usage</a></dt>
+          <dt>1.21. <a href="#idp17339032"><code class="function">check_route_exists()</code> usage</a></dt>
+          <dt>1.22. <a href="#idp17342512"><code class="function">route_if_exists()</code> usage</a></dt>
+          <dt>1.23. <a href="#idp17347664"><code class="function">core_hash()</code> usage</a></dt>
+          <dt>1.24. <a href="#idp17351248"><code class="function">rand_set_prob</code> usage</a></dt>
+          <dt>1.25. <a href="#idp17353656">
+					<code class="function">rand_reset_prob</code> usage</a></dt>
+          <dt>1.26. <a href="#idp17356136"><code class="function">rand_get_prob</code> usage</a></dt>
+          <dt>1.27. <a href="#idp17358936"><code class="function">check_config_hash</code> usage</a></dt>
+          <dt>1.28. <a href="#idp17361512"><code class="function">get_config_hash</code> usage</a></dt>
+          <dt>1.29. <a href="#idp17364056"><code class="function">set_gflag</code> usage</a></dt>
+          <dt>1.30. <a href="#idp17366512">
+				<code class="function">reset_gflag</code> usage</a></dt>
+          <dt>1.31. <a href="#idp17369520"><code class="function">is_gflag</code> usage</a></dt>
+          <dt>1.32. <a href="#idp17371968">
+				<code class="function">get_gflags</code> usage</a></dt>
+          <dt>1.33. <a href="#idp17375160"><code class="function">cfgutils.set_gflag</code> usage</a></dt>
+          <dt>1.34. <a href="#idp17377824">
+				<code class="function">cfgutils.reset_gflag</code> usage</a></dt>
+          <dt>1.35. <a href="#idp17380464"><code class="function">cfgutils.is_gflag</code> usage</a></dt>
+          <dt>1.36. <a href="#idp17382976"><code class="function">RANDOM pseudo-variable</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16929536"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18032184">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17977528">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18065032">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.p.initial_propability">3.1. <code class="varname">initial_probability</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.p.hash_file">3.2. <code class="varname">hash_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.p.initial_gflags">3.3. <code class="varname">initial_gflags</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.p.lock_set_size">3.4. <code class="varname">lock_set_size</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15524384">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.rand_event">4.1. <code class="function">rand_event()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.rand_set_prob">4.2. <code class="function">rand_set_prob(probabiltiy)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.rand_reset_prob">4.3. <code class="function">rand_reset_prob()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.rand_get_prob">4.4. <code class="function">rand_get_prob()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.sleep">4.5. 
+			<code class="function">sleep(time)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.usleep">4.6. 
+			<code class="function">usleep(time)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.abort">4.7. 
+			<code class="function">abort()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.pkg_status">4.8. 
+			<code class="function">pkg_status()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.pkg_summary">4.9. 
+			<code class="function">pkg_summary()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.shm_status">4.10. 
+			<code class="function">shm_status()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.shm_summary">4.11. 
+			<code class="function">shm_summary()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.set_gflag">4.12. <code class="function">set_gflag(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.reset_gflag">4.13. <code class="function">reset_gflag(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.is_gflag">4.14. <code class="function">is_gflag(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.lock">4.15. <code class="function">lock(key)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.unlock">4.16. <code class="function">unlock(key)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.check_route_exists">4.17. <code class="function">check_route_exists(route)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.route_if_exists">4.18. <code class="function">route_if_exists(route)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.f.core_hash">4.19. <code class="function">core_hash(string1, string2, size)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17348944">5. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.rand_set_prob">5.1. <code class="function">rand_set_prop</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.rand_reset_prob">5.2. <code class="function">rand_reset_prob</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.rand_get_prob">5.3. <code class="function">rand_get_prob</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.check_config_hash">5.4. <code class="function">check_config_hash</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.get_config_hash">5.5. <code class="function">get_config_hash</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.set_gflag">5.6. <code class="function">set_gflag</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.reset_gflag">5.7. <code class="function">reset_gflag</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.is_gflag">5.8. <code class="function">is_gflag</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.m.get_gflags">5.9. <code class="function">get_gflags</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17373344">6. <acronym class="acronym">RPC</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.rpc.set_gflag">6.1. <code class="function">cfgutils.set_gflag</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.rpc.reset_gflag">6.2. <code class="function">cfgutils.reset_gflag</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cfgutils.rpc.is_gflag">6.3. <code class="function">cfgutils.is_gflag</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17381920">7. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17382272">7.1. <code class="varname">$RANDOM</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18032184"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>Useful extensions for the server configuration.</p>
+          <p>
+	The cfgutils module can be used to introduce randomness to
+	the behaviour of the server. It provides setup functions
+	and the <span class="quote">“<span class="quote">rand_event</span>”</span> function. This function return either
+	true or false, depending on a random value and a specified probability.
+	E.g. if you set via fifo or script a probability value of 5%, then 5% of
+	all calls to rand_event will return true.
+	The pseudovariable <span class="quote">“<span class="quote">$RANDOM</span>”</span> could be used to introduce 
+	random values e.g. into a SIP reply.
+	</p>
+          <p>
+	The benefit of this module is the probability of the decision
+	can be manipulated by external applications such as web interface
+	or command line tools. The probability must be specified as 
+	percent value, ranging from 0 to 100.
+	</p>
+          <p>
+	The module exports commands to FIFO server that can be used to change
+	the global settings via FIFO interface. The FIFO commands are:
+	<span class="quote">“<span class="quote">set_prob</span>”</span>, <span class="quote">“<span class="quote">reset_prob</span>”</span> and
+	<span class="quote">“<span class="quote">get_prob</span>”</span>.
+	</p>
+          <p>
+	This module can be used for simple load-shedding, e.g. reply 5% of
+	the Invites with a 503 error and a adequate random Retry-After value.
+	</p>
+          <p>
+	The module provides as well functions to delay the execution of the
+	server. The functions <span class="quote">“<span class="quote">sleep</span>”</span> and <span class="quote">“<span class="quote">usleep</span>”</span> could
+	be used to let the server wait a specific time interval.
+	</p>
+          <p>It can also hash the config file used from the server with a (weak)
+	cryptographic hash function on startup. This value is saved and can be
+	later compared to the actual hash, to detect modifications of this file
+	after the server start. This functions are available as the FIFO commands
+	<span class="quote">“<span class="quote">check_config_hash</span>”</span> and <span class="quote">“<span class="quote">get_config_hash</span>”</span>.
+	</p>
+          <p>
+	The gflags functionality (global flags) keeps a bitmap of flags in shared
+	memory and may be used to change behaviour of server based on value of the
+	flags. Example:
+	</p>
+          <pre class="programlisting">	if (is_gflag("1")) {
+		t_relay("udp:10.0.0.1:5060");
+	} else {
+		t_relay("udp:10.0.0.2:5060");
+	}</pre>
+          <p>
+	</p>
+          <p>
+	The benefit of this is the value of the switch flags can be manipulated
+	by external applications such as web interface or command line tools.
+	The size of bitmap is 32.
+	</p>
+          <p>
+	The module exports external commands that can be used to change
+	the global flags via Management Interface and RPC. See relevant
+	sections below.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17977528"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The module depends on the following modules (in the other words the
+		listed modules must be loaded before this module):
+	    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>none</em>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18065032"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. initial_probability (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.p.initial_propability"></a>3.1. <code class="varname">initial_probability</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The initial value of the probability.
+		</p>
+            <p>
+		Default value is 
+			<span class="quote">“<span class="quote">10</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp18093328"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="varname">initial_probability</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">   
+modparam("cfgutils", "initial_probability", 15)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. hash_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.p.hash_file"></a>3.2. <code class="varname">hash_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The config file name for that a hash value should be calculated on startup.
+		</p>
+            <p>
+		There is no default value, is no parameter is given the hash functionality
+		is disabled.
+		</p>
+            <div class="example">
+              <a id="idp15618856"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">hash_file</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">   
+modparam("cfgutils", "hash_file", "/etc/kamailio/kamailio.cfg")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. initial_gflags (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.p.initial_gflags"></a>3.3. <code class="varname">initial_gflags</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The initial value of global flags bitmap.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp15520752"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">initial</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("cfgutils", "initial_gflags", 15)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. lock_set_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.p.lock_set_size"></a>3.4. <code class="varname">lock_set_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Size of lock set - the value is used as power of two to compute the
+		size of lock array.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">0</span>”</span> - no lock set created.
+		</p>
+            <div class="example">
+              <a id="idp15523208"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">lock_set_size</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("cfgutils", "lock_set_size", 4)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15524384"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. rand_event()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.rand_event"></a>4.1. <code class="function">rand_event()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return true or false, depending on a random value and a
+			probability value.
+		</p>
+            <div class="example">
+              <a id="idp15525752"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">rand_event()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (rand_event()) {
+  append_to_reply("Retry-After: 120\n");
+  sl_send_reply("503", "Try later");
+  exit;
+};
+# normal message processing follows
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. rand_set_prob(probabiltiy)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.rand_set_prob"></a>4.2. <code class="function">rand_set_prob(probabiltiy)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set the <span class="quote">“<span class="quote">probability</span>”</span> of the decision.
+	    </p>
+            <p>
+		<span class="quote">“<span class="quote">probability</span>”</span> can have a value from the range 0..100.
+	    </p>
+            <div class="example">
+              <a id="idp15528672"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">rand_set_prob()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rand_set_prob("4");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. rand_reset_prob()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.rand_reset_prob"></a>4.3. <code class="function">rand_reset_prob()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reset the probability back to the inital value.
+	    </p>
+            <div class="example">
+              <a id="idp15530808"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">rand_reset_prob()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rand_reset_prob();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. rand_get_prob()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.rand_get_prob"></a>4.4. <code class="function">rand_get_prob()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return the current probability setting, e.g. for logging purposes.
+	    </p>
+            <div class="example">
+              <a id="idp15532960"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">rand_get_prob()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rand_get_prob();</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  sleep(time)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.sleep"></a>4.5. 
+			<code class="function">sleep(time)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Waits "time" seconds.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>time</em></span> - Time to wait in seconds.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+			FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15557224"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">sleep</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sleep("1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  usleep(time)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.usleep"></a>4.6. 
+			<code class="function">usleep(time)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Waits "time" micro-seconds.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>time</em></span> - Time to wait in micro-seconds
+					(1/1000000 of a second).
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+			FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15560912"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">usleep</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# wait 5 miliseconds
+usleep("5000");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  abort()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.abort"></a>4.7. 
+			<code class="function">abort()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Debugging function that aborts the server. Depending on the
+			configuration of the server a core dump will be created.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+			FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15563712"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">abort</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+abort();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  pkg_status()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.pkg_status"></a>4.8. 
+			<code class="function">pkg_status()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Debugging function that dumps the status for the private (PKG) memory.
+			This information is logged to the default log facility, depending on
+			the general log level and the memlog setting. You need to compile
+			the server with activated memory debugging to get detailed informations.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+			FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15566536"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">pkg_status</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pkg_status();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  pkg_summary()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.pkg_summary"></a>4.9. 
+			<code class="function">pkg_summary()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Debugging function that dumps the summary for the private (PKG) memory
+			usage. This information is logged to the default log facility,
+			depending on the general log level and the memlog setting. You need
+			to compile the server with activated memory debugging to get detailed
+			informations.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15569336"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">pkg_summary</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pkg_summary();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.  shm_status()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.shm_status"></a>4.10. 
+			<code class="function">shm_status()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Debugging function that dumps the status for the shared (SHM) memory.
+			This information is logged to the default log facility, depending on
+			the general log level and the memlog setting. You need to compile
+			the server with activated memory debugging to get detailed informations.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+			FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15652336"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">shm_status</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+shm_status();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.  shm_summary()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.shm_summary"></a>4.11. 
+			<code class="function">shm_summary()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Debugging function that dumps the summary for the shared (SHM) memory
+			usage. This information is logged to the default log facility,
+			depending on the general log level and the memlog setting. You need
+			to compile the server with activated memory debugging to get detailed
+			informations.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15655136"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">shm_summary</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+shm_summary();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12. set_gflag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.set_gflag"></a>4.12. <code class="function">set_gflag(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set the bit at the position <span class="quote">“<span class="quote">flag</span>”</span> in global flags.
+		</p>
+            <p>
+		<span class="quote">“<span class="quote">flag</span>”</span> can have a value in the range of 0..31.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15658208"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">set_gflag()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_gflag("4");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13. reset_gflag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.reset_gflag"></a>4.13. <code class="function">reset_gflag(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reset the bit at the position <span class="quote">“<span class="quote">flag</span>”</span> in global flags.
+		</p>
+            <p>
+		<span class="quote">“<span class="quote">flag</span>”</span> can have a value in the range of 0..31.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15661280"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">reset_gflag()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reset_gflag("4");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.14. is_gflag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.is_gflag"></a>4.14. <code class="function">is_gflag(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if bit at the position <span class="quote">“<span class="quote">flag</span>”</span> in global flags is
+		set.
+		</p>
+            <p>
+		<span class="quote">“<span class="quote">flag</span>”</span> can have a value in the range of 0..31.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15664448"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">is_gflag()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_gflag("4"))
+{
+	log("global flag 4 is set\n");
+} else {
+	log("global flag 4 is not set\n");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.15. lock(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.lock"></a>4.15. <code class="function">lock(key)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lock the key. Can be used to syncronize operations in config file,
+		a hash id is computed over the key and appropriate lock is set in the
+		lock array controlled by parameter "lock_set_size". Do not use lock()
+		after another lock() unless you are sure the keys hit different array
+		entries.
+		</p>
+            <p>
+		<span class="quote">“<span class="quote">key</span>”</span> can be static string or string with PVs.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15667816"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">lock()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lock("$rU");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.16. unlock(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.unlock"></a>4.16. <code class="function">unlock(key)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Unlock the key.
+		</p>
+            <p>
+		<span class="quote">“<span class="quote">key</span>”</span> can be static string or string with PVs.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15670736"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">unlock()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+unlock("$rU");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.17. check_route_exists(route)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.check_route_exists"></a>4.17. <code class="function">check_route_exists(route)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if a route block exists
+		</p>
+            <p>Parameters:</p>
+            <p>
+		<span class="quote">“<span class="quote">name</span>”</span> of a route block in the config file, like <span class="quote">“<span class="quote">route[FROGJUMP]</span>”</span>
+		</p>
+            <p>
+		This function can be used from any route. You can only check for
+		route[] blocks, not reply, event or other routes.
+		</p>
+            <div class="example">
+              <a id="idp17339032"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">check_route_exists()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(check_route_exists("FROGJUMP") {
+	$var(jumping_frogs) = 1;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.18. route_if_exists(route)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.route_if_exists"></a>4.18. <code class="function">route_if_exists(route)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute a routing block only if it is defined. If it's not defined, silently
+		move to the next action in the configuration script.
+		</p>
+            <p>Parameters:</p>
+            <p>
+		<span class="quote">“<span class="quote">name</span>”</span> of a route block in the config file, like <span class="quote">“<span class="quote">route[FROGJUMP]</span>”</span>
+		</p>
+            <p>
+		This function can be used from any route. You can only execute it for
+		route[] blocks, not reply, event or other routes.
+		</p>
+            <div class="example">
+              <a id="idp17342512"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">route_if_exists()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+route_if_exists("PRESENCE_SANTA_CLAUS");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.19. core_hash(string1, string2, size)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.f.core_hash"></a>4.19. <code class="function">core_hash(string1, string2, size)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Exported function that enables the core_hash() function to be used
+		from the configuration file.
+		</p>
+            <p>
+		This is a quick and simple hash function and it is not
+		cryptographically secure.  This function should not be used for
+		any security related purposes.
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">string1</span>”</span> first string to
+					hash</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">string2</span>”</span> (optional) second
+					string to hash (set to "" if not
+					needed)</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">size</span>”</span> size of the hash space
+					(used as a power of 2)</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from ANY_ROUTE.</p>
+            <div class="example">
+              <a id="idp17347664"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">core_hash()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+core_hash("$ci", "", 4);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17348944"></a>5. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>Functions that check or change some global flags accepts one
+			parameter which is the flag bitmap/mask specifing the corresponding
+			flags. It is not possible to specify directly the flag position that
+			should be changed as in the functions available in the routing
+			script.
+		</p>
+          <div class="section" title="5.1. rand_set_prop">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.rand_set_prob"></a>5.1. <code class="function">rand_set_prop</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Set the probability value to the given parameter.
+				The parameter should be a percent value.
+			</p>
+            <p>
+				The parameter value must be a number from 0 to 100.
+			</p>
+            <div class="example">
+              <a id="idp17351248"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">rand_set_prob</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo rand_set_prob 10
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. rand_reset_prob">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.rand_reset_prob"></a>5.2. <code class="function">rand_reset_prob</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Reset the probability value to the inital start value.
+			</p>
+            <p>
+				This command don't need a parameter.
+			</p>
+            <div class="example">
+              <a id="idp17353656"></a>
+              <p class="title">
+                <strong>Example 1.25. 
+					<code class="function">rand_reset_prob</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo rand_reset_prob
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3. rand_get_prob">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.rand_get_prob"></a>5.3. <code class="function">rand_get_prob</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Return the actual probability setting.
+			</p>
+            <p>
+				The function return the actual probability value.
+			</p>
+            <div class="example">
+              <a id="idp17356136"></a>
+              <p class="title">
+                <strong>Example 1.26. <code class="function">rand_get_prob</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo get_prob
+The actual probability is 50 percent.
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. check_config_hash">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.check_config_hash"></a>5.4. <code class="function">check_config_hash</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Check if the actual config file hash is identical to the stored one.
+			</p>
+            <p>
+				The function returns 200 OK if the hash values are identical, 400 if
+				there are not identical, 404 if no file for hashing has been configured
+				and 500 on errors. Additional a short text message is printed.
+			</p>
+            <div class="example">
+              <a id="idp17358936"></a>
+              <p class="title">
+                <strong>Example 1.27. <code class="function">check_config_hash</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo check_config_hash
+The actual config file hash is identical to the stored one.
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5. get_config_hash">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.get_config_hash"></a>5.5. <code class="function">get_config_hash</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Return the stored config file hash.
+			</p>
+            <p>
+				The function returns 200 OK and the hash value on success or 404 if no
+				file for hashing has been configured.
+			</p>
+            <div class="example">
+              <a id="idp17361512"></a>
+              <p class="title">
+                <strong>Example 1.28. <code class="function">get_config_hash</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo get_config_hash
+1580a37104eb4de69ab9f31ce8d6e3e0
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6. set_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.set_gflag"></a>5.6. <code class="function">set_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the value of some flags (specified by bitmask) to 1.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or hexadecimal format.
+			The bitmask has a 32 bit size.
+			</p>
+            <div class="example">
+              <a id="idp17364056"></a>
+              <p class="title">
+                <strong>Example 1.29. <code class="function">set_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo set_gflag 1
+$ kamctl fifo set_gflag 0x3
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7. reset_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.reset_gflag"></a>5.7. <code class="function">reset_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reset the value of some flags to 0.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or hexadecimal format.
+			The bitmask has a 32 bit size.
+			</p>
+            <div class="example">
+              <a id="idp17366512"></a>
+              <p class="title">
+                <strong>Example 1.30. 
+				<code class="function">reset_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo reset_gflag 1
+$ kamctl fifo reset_gflag 0x3
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8. is_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.is_gflag"></a>5.8. <code class="function">is_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if the all the flags from the bitmask are set.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or hexadecimal format.
+			The bitmask has a 32 bit size.
+			</p>
+            <p>
+			The function returns TRUE if all the flags from the set are set
+			and FALSE if at least one is not set.
+			</p>
+            <div class="example">
+              <a id="idp17369520"></a>
+              <p class="title">
+                <strong>Example 1.31. <code class="function">is_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo set_gflag 1024
+$ kamctl fifo is_gflag 1024
+TRUE
+$ kamctl fifo is_gflag 1025
+TRUE
+$ kamctl fifo is_gflag 1023
+FALSE
+$ kamctl fifo set_gflag 0x10
+$ kamctl fifo is_gflag 1023
+TRUE
+$ kamctl fifo is_gflag 1007
+FALSE
+$ kamctl fifo is_gflag 16
+TRUE
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9. get_gflags">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.m.get_gflags"></a>5.9. <code class="function">get_gflags</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return the bitmap with all flags. The function gets no 
+			parameters and returns the bitmap in hexadecimal and decimal format.
+			</p>
+            <div class="example">
+              <a id="idp17371968"></a>
+              <p class="title">
+                <strong>Example 1.32. 
+				<code class="function">get_gflags</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo get_gflags
+0x3039
+12345
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17373344"></a>6. <acronym class="acronym">RPC</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. cfgutils.set_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.rpc.set_gflag"></a>6.1. <code class="function">cfgutils.set_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the value of some flags (specified by bitmask) to 1.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or
+			hexadecimal format.  The bitmask has a 32 bit size.
+			</p>
+            <div class="example">
+              <a id="idp17375160"></a>
+              <p class="title">
+                <strong>Example 1.33. <code class="function">cfgutils.set_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl cfgutils.set_gflag s:1
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2. cfgutils.reset_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.rpc.reset_gflag"></a>6.2. <code class="function">cfgutils.reset_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reset the value of some flags to 0.
+			</p>
+            <p>
+			Reset the value of some flags (specified by bitmask)
+			to 1.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or
+			hexadecimal format.  The bitmask has a 32 bit size.
+			</p>
+            <div class="example">
+              <a id="idp17377824"></a>
+              <p class="title">
+                <strong>Example 1.34. 
+				<code class="function">cfgutils.reset_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl cfgutils.reset_gflag s:0x1
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.3. cfgutils.is_gflag">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cfgutils.rpc.is_gflag"></a>6.3. <code class="function">cfgutils.is_gflag</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns string "TRUE" if all the
+			flags from the given set are set
+			and "FALSE" if at least one is not set.
+			</p>
+            <p>
+			The parameter value must be a bitmask in decimal or
+			hexadecimal format.  The bitmask has a 32 bit size.
+			</p>
+            <div class="example">
+              <a id="idp17380464"></a>
+              <p class="title">
+                <strong>Example 1.35. <code class="function">cfgutils.is_gflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl cfgutils.set_gflag s:1024
+$ kamctl cfgutils.is_gflag s:1024
+TRUE
+$ kamctl cfgutils.is_gflag s:1023
+FALSE
+$ kamctl cfgutils.set_gflag s:0x7FFF
+$ kamctl cfgutils.is_gflag s:1023
+TRUE
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17381920"></a>7. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1. $RANDOM">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17382272"></a>7.1. <code class="varname">$RANDOM</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns a random value from the [0 - 2^31) range.
+			</p>
+            <div class="example">
+              <a id="idp17382976"></a>
+              <p class="title">
+                <strong>Example 1.36. <code class="function">RANDOM pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (rand_event()) {
+  $avp(i:10) = ($RANDOM / 16777216); # 2^24
+  if ($avp(i:10) &lt; 10) {
+     $avp(i:10) = 10;
+  }
+  append_to_reply("Retry-After: $avp(i:10)\n");
+  sl_send_reply("503", "Try later");
+  exit;
+};
+# normal message processing follows</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

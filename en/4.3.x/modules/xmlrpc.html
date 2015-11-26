@@ -1,0 +1,1401 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The XMLRPC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#xmlrpc" title="The XMLRPC Module" />
+    <link rel="next" href="#xmlrpc.design" title="1.¬†Design Goals" />
+  </head>
+  <body>
+    <div class="book" title="The XMLRPC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="xmlrpc"></a>The XMLRPC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2005 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17392616">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18265840">1. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18219000">1.1. Kamailio modules</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17214672">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#route">2.1. <code class="varname">route</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#autoconversion">2.2. <code class="varname">autoconversion</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#escape_cr">2.3. <code class="varname">escape_cr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#double_lf_to_crlf">2.4. <code class="varname">double_lf_to_crlf</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#param_mode">2.5. <code class="varname">mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15768400">2.6. <code class="varname">url_skip</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15770832">2.7. <code class="varname">url_match</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15773552">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#xmlrpc.dispatch_rpc">3.1. 
+		<code class="function">dispatch_rpc()</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xmlrpc.xmlrpc_reply">3.2. 
+		<code class="function">xmlrpc_reply(code, reason)</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-tables">
+        <p>
+          <strong>List of Tables</strong>
+        </p>
+        <dl>
+          <dt>1. <a href="#tab.type_conversion">Data Type Conversion</a></dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1. <a href="#idp15670424"></a></dt>
+          <dt>1.1. <a href="#idp17649928">Set <code class="varname">route</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15515600">Set the <code class="varname">autoconversion</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp17133632">Set the <code class="varname">escape_cr</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15764768">Set the <code class="varname">double_lf_to_crlf</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15767296">Set the <code class="varname">mode</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15769672">Set <code class="varname">url_skip</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15772312">Set <code class="varname">url_match</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15672824"><code class="function">dispatch_rpc</code> usage</a></dt>
+          <dt>1.9. <a href="#idp15675400"><code class="function">xmlrpc_reply</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="section" title="1.¬†Design Goals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="xmlrpc.design"></a>1.¬†Design Goals</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+
+	</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist">
+            <li class="listitem">
+              <p>Implemented as a module.</p>
+            </li>
+            <li class="listitem">
+              <p>API independent of transport protocols.</p>
+            </li>
+            <li class="listitem">
+              <p>Reuse transports available in Kamailio.</p>
+            </li>
+            <li class="listitem">
+              <p>The possibility to encrypt all communication.</p>
+            </li>
+            <li class="listitem">
+              <p>The possibility to authenticate clients.</p>
+            </li>
+            <li class="listitem">
+              <p>Easy integration with existing languages and
+		    implementations.</p>
+            </li>
+            <li class="listitem">
+              <p>
+		    Easy and straightforward implementation of management
+		    functions in Kamailio modules.
+		</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="section" title="2.¬†Overview of Operation">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="xmlrpc.overview"></a>2.¬†Overview of Operation</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+		This module implements the XML-RPC transport and encoding interface
+		for Kamailio RPCs.
+	</p>
+        <p>
+	    The XML-RPC protocol encodes the name of the method
+	    to be called along with its parameter in an XML document which is
+	    then conveyed using HTTP (Hyper Text Transfer Protocol) to the
+	    server. The server will extract the name of the function to be
+	    called along with its parameters from the XML document, execute the
+	    function, and encode any data returned by the function into another
+	    XML document which is then returned to the client in the body of a
+	    200 OK reply to the HTTP request.
+	</p>
+        <p>
+	    XML-RPC is similar to more popular <a class="ulink" href="javascript:if(confirm('http://www.w3.org/TR/soap/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.w3.org/TR/soap/'" tppabs="http://www.w3.org/TR/soap/">SOAP</a> (Simple Object
+		Access Protocol), which is an XML-based messaging framework
+		used in Web Services developed within the <a class="ulink" href="javascript:if(confirm('http://www.w3c.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.w3c.org/'" tppabs="http://www.w3c.org/">World Wide Web
+		Consortium</a>. Both protocols are using HTTP as the
+		transport protocol for XML documents, but XML-RPC is much
+		simpler and easier to implement than SOAP.
+	</p>
+        <p>
+	    Here is an example of single XML-RPC function call to determine
+	    current time:
+	</p>
+        <pre class="programlisting">POST /RPC2 HTTP/1.0
+User-Agent: Radio UserLand/7.1b7 (WinNT)
+Host: time.xmlrpc.com
+Content-Type: text/xml
+Content-length: 131
+
+&lt;?xml version="1.0"?&gt;
+&lt;methodCall&gt;
+&lt;methodName&gt;currentTime.getCurrentTime&lt;/methodName&gt;
+&lt;params&gt;
+&lt;/params&gt;
+&lt;/methodCall&gt;</pre>
+        <p>
+	    And the response returned by the server:
+	</p>
+        <pre class="programlisting">HTTP/1.1 200 OK
+Connection: close
+Content-Length: 183
+Content-Type: text/xml
+Date: Wed, 03 Oct 2001 15:53:38 GMT
+Server: UserLand Frontier/7.0.1-WinNT
+
+&lt;?xml version="1.0"?&gt;
+&lt;methodResponse&gt;
+&lt;params&gt;
+&lt;param&gt;
+&lt;value&gt;&lt;dateTime.iso8601&gt;20011003T08:53:38&lt;/dateTime.iso8601&gt;
+&lt;/value&gt;
+&lt;/param&gt;
+&lt;/params&gt;
+&lt;/methodResponse&gt;</pre>
+        <p>
+	    XML-RPC specification spells HTTP as the official transport
+	    protocol for XML-RPC documents. Kamailio does not directly support
+	    HTTP, it is a SIP server so SIP is the only protocol supported by
+	    Kamailio. Because we would like to reuse all transport protocols
+	    available in Kamailio, such as TCP and TLS, it would be natural to use
+	    modified version of XML-RPC which would run on top of SIP instead
+	    of HTTP. XML-RPC documents would be then encoded in the bodies of
+	    SIP requests and replies would be sent by the server in the bodies of
+	    SIP replies. This way we could reuse all transport protocols
+	    (including UDP) and message parsers available in Kamailio.
+	</p>
+        <p>
+	    Although this approach seems to be the logical choice, there is one
+	    big drawback. No existing XML-RPC implementations support SIP as the
+	    transport protocol, and there are many existing implementations
+	    available for vast majority of existing languages. See the <a class="ulink" href="javascript:if(confirm('http://www.xmlrpc.com/directory/1568/implementations  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.xmlrpc.com/directory/1568/implementations'" tppabs="http://www.xmlrpc.com/directory/1568/implementations">XML-RPC
+	    implementation page</a> for more details. Extending existing
+	    implementations with SIP support would not be easy.
+	</p>
+        <p>
+	    Because  extending available XML-RPC implementation would be too
+	    expensive, we could also do it the other way around, keep existing
+	    XML-RPC implementations and extend Kamailio to support HTTP. Extending
+	    Kamailio with HTTP support is easier than it might seem at a first
+	    glance, due to the similarity between SIP requests and HTTP
+	    requests.
+	</p>
+        <p>
+	    Kamailio already supports TCP, so existing HTTP implementations can send
+	    HTTP requests to it. HTTP requests are missing certain mandatory
+	    SIP header fields, such as Via, From, and CSeq. The contents of the
+	    header fields is mainly used for transaction matching. A SIP server
+	    could perform two basic operations when processing an HTTP
+	    request:
+	    </p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist">
+            <li class="listitem">
+              <p>
+			Terminate the request, execute the function and send a
+			reply back.
+		    </p>
+            </li>
+            <li class="listitem">
+              <p>
+			Forward the request to another SIP server.
+		    </p>
+            </li>
+          </ul>
+        </div>
+        <p>
+	</p>
+        <p>
+	    Nothing special is needed on the SIP server terminating the
+	    request, except that it has to know where it should send the
+	    reply. Parsing of HTTP header field bodies would fail because we do
+	    not have parsers for them in Kamailio, but that does not matter anyway
+	    because all the information is encoded in the body of the
+	    request. HTTP requests contain no Via header fields. Via header
+	    fields are used by SIP implementations to determine the destination
+	    (IP, transport protocol, and port number) for replies. When
+	    processing HTTP requests the SIP server needs to create a fake Via
+	    header field based on the source IP address and port number of the
+	    TCP connection. The SIP server will use this information when
+	    sending a reply back.
+	</p>
+        <p>
+	    Forwarding of HTTP requests by SIP proxies is a little bit more
+	    complicated and there are several limitations. First of all, we can
+	    only use stateless forwarding, no transactional forwarding, because
+	    HTTP requests do not contain all the header fields needed for
+	    transaction matching. Any attempt to call t_relay on an HTTP
+	    requests would fail. HTTP requests always use TCP and thus we could
+	    use stateless forwarding on the SIP server, provided that the
+	    request will be also forwarded over TCP. Stateless forwarding does
+	    not require the mandatory header fields (which are missing here)
+	    and it would work. In addition to that, the SIP server would also
+	    append fake Via header field to the request and change the contents
+	    of the Request-URI. The Request-URI of HTTP requests sent by XML-RPC
+	    implementations typically contain something like "/RPC2" and the
+	    first SIP server processing the request should rewrite the value
+	    with a valid SIP URI.
+	</p>
+        <p>
+	    <a class="xref" href="#fig.rpc_example">Figure RPC Example</a> shows a scenario which involves
+	    two SIP servers, one performs HTTP request "normalization" and
+	    forwarding, and the other terminates the request, executes
+	    corresponding function, and generates a reply.
+	</p>
+        <div class="mediaobject" align="center">
+          <a id="fig.rpc_example"></a>
+          <img src="xmlrpc_example.png" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/xmlrpc_example.png" align="middle" />
+          <div class="caption">
+		Example RPC Scenario
+	    </div>
+        </div>
+        <p>
+	    <span class="emphasis"><em>Step 1.</em></span> An HTTP user agent sends an ordinary
+	    HTTP request to a SIP server. The user agent can either establish a
+	    connection directly to port 5060 or the SIP server can be
+	    configured to listen on port 80. The request contains standard HTTP
+	    headers and an XML-RPC document in the body:
+	    </p>
+        <pre class="programlisting">POST / HTTP/1.0.
+Host: localhost:5060
+User-Agent: xmlrpclib.py/1.0.1 (by www.pythonware.com)
+Content-Type: text/xml
+Content-Length: 111
+
+&lt;?xml version='1.0'?&gt;
+&lt;methodCall&gt;
+&lt;methodName&gt;<span class="emphasis"><em>usrloc.statistics</em></span>&lt;/methodName&gt;
+&lt;params&gt;
+&lt;/params&gt;
+&lt;/methodCall&gt;</pre>
+        <p>
+	    This particular request calls method "statistics" from from usrloc
+	    module of Kamailio. The method has no parameters.
+	</p>
+        <p>
+	    The outbound SIP server receives the HTTP request and performs a
+	    set of actions called "SIP-normalization". This includes creation
+	    of fake Via header field based on the source IP and port of the TCP
+	    connection, looking up of the target SIP server that should
+	    terminate and process the request, and rewriting of the Request-URI
+	    with the SIP URI of the target SIP server. Modified HTTP request
+	    will be then forwarded statelessly to the target SIP server.
+	    </p>
+        <pre class="programlisting">POST <span class="emphasis"><em>sip:proxy01.sip-server.net</em></span> HTTP/1.0
+<span class="emphasis"><em>Via: SIP/2.0/TCP 127.0.0.1:3571</em></span>
+Host: localhost:5060
+User-Agent: xmlrpclib.py/1.0.1 (by www.pythonware.com)
+Content-Type: text/xml
+Content-Length: 111
+
+&lt;?xml version='1.0'?&gt;
+&lt;methodCall&gt;
+&lt;methodName&gt;usrloc.statistics&lt;/methodName&gt;
+&lt;params&gt;
+&lt;/params&gt;
+&lt;/methodCall&gt;</pre>
+        <p>
+	</p>
+        <p>
+	    <span class="emphasis"><em>Step 2.</em></span> "normalized" HTTP request is
+	    statelessly forwarded to the target SIP server over TCP.
+	</p>
+        <p>
+	    <span class="emphasis"><em>Step 3.</em></span> The target SIP server receives the
+	    HTTP request and executes function called
+	    <code class="function">dispatch_rpc</code> from xmlrpc Kamailio module. This
+	    function will parse the XML-RPC document in the body of the request
+	    and lookup the function to be called among all RPC functions
+	    exported by the Kamailio core and modules. Function
+	    <code class="function">dispatch_rpc</code> will be called from the
+	    configuration file just like any other function:
+	    </p>
+        <pre class="programlisting">if (method == "POST" || method == "GET") {
+    <span class="emphasis"><em>dispatch_rpc();</em></span>
+    break;
+};</pre>
+        <p>
+	    This particular configuration snippet executes the function
+	    whenever Kamailio receives GET or POST requests. These two method names
+	    indicate HTTP.
+	</p>
+        <p>
+	    <span class="emphasis"><em>Step 4.</em></span> The function
+	    <code class="function">dispatch_rpc</code> scans through the list of all
+	    exported RPC functions searching for the
+	    <code class="function">statistics</code> function of the usrloc module. The
+		<a class="ulink" href="javascript:if(confirm('http://rpm.kamailio.org/docbook/sip-router/branch/master/rpc/kamailio_rpc.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://rpm.kamailio.org/docbook/sip-router/branch/master/rpc/kamailio_rpc.html'" tppabs="http://rpm.kamailio.org/docbook/sip-router/branch/master/rpc/kamailio_rpc.html">
+		Kamailio RPC Module API</a>
+		describes in detail how modules export RPC functions.
+	</p>
+        <p>
+	    <span class="emphasis"><em>Step 5.</em></span> As the RPC function from usrloc module
+	    is running and gathering statistics, it calls functions of RPC
+	    interface to prepare the result for the caller.
+	</p>
+        <p>
+	    <span class="emphasis"><em>Step 6.</em></span> Once the RPC function finishes, xmlrpc
+	    module will build the XML-RPC document from the data received from
+	    usrloc module and generate a reply which will be sent to the caller.
+	</p>
+        <p>
+	    <span class="emphasis"><em>Steps 7. and 8.</em></span> HTTP reply is sent back to the
+	    caller and the remote procedure call finishes.
+	    </p>
+        <pre class="programlisting">HTTP/1.0 200 OK
+Via: SIP/2.0/TCP 127.0.0.1:3571
+Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))
+Content-Length: 651
+Warning: 392 127.0.0.1:5060 "Noisy feedback tells:  pid=9975 req_src_ip=127.0.0
+1 req_src_port=3571 in_uri=/ out_uri=sip:proxy01.sip-server.net via_cnt==1"
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;methodResponse&gt;
+&lt;params&gt;
+&lt;param&gt;&lt;value&gt;&lt;array&gt;&lt;data&gt;
+&lt;value&gt;&lt;struct&gt;
+&lt;member&gt;&lt;name&gt;domain&lt;/name&gt;
+&lt;value&gt;&lt;string&gt;aliases&lt;/string&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;member&gt;&lt;name&gt;users&lt;/name&gt;
+&lt;value&gt;&lt;i4&gt;0&lt;/i4&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;member&gt;&lt;name&gt;expired&lt;/name&gt;
+&lt;value&gt;&lt;i4&gt;0&lt;/i4&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;/struct&gt;&lt;/value&gt;
+&lt;value&gt;&lt;struct&gt;
+&lt;member&gt;&lt;name&gt;domain&lt;/name&gt;
+&lt;value&gt;&lt;string&gt;location&lt;/string&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;member&gt;&lt;name&gt;users&lt;/name&gt;
+&lt;value&gt;&lt;i4&gt;0&lt;/i4&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;member&gt;&lt;name&gt;expired&lt;/name&gt;
+&lt;value&gt;&lt;i4&gt;0&lt;/i4&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;/struct&gt;&lt;/value&gt;
+&lt;/data&gt;&lt;/array&gt;&lt;/value&gt;&lt;/param&gt;
+&lt;/params&gt;
+&lt;/methodResponse&gt;</pre>
+        <p>
+	</p>
+        <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">Note</h3>
+          <p>
+		The scenario described on <a class="xref" href="#fig.rpc_example">Figure RPC Example</a>
+		involves two SIP servers. This is just to demonstrate that in
+		setups containing more SIP servers it is possible to forward
+		HTTP requests from one SIP server to another and use standard
+		SIP routing mechanisms to decide which SIP server should
+		process the request. There is no need to have multiple SIP
+		servers in simple setups, because one SIP server can both add
+		fake Via header field and process the RPC at the same
+		time. Modified configuration file snipped could then look like
+		this:
+		</p>
+          <pre class="programlisting">if (method == "POST" || method == "GET") {
+    <span class="emphasis"><em>dispatch_rpc();</em></span> # Process the request
+    break;
+};</pre>
+          <p>
+	    </p>
+        </div>
+      </div>
+      <div class="section" title="3.¬†XML-RPC Implementation">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="xmlrpc.implementation"></a>3.¬†XML-RPC Implementation</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	    The purpose of the functions of this module is to convert XML-RPC
+	    document carried in the body of HTTP requests into data returned by
+	    the RPC interface and back. The module also contains functions
+	    necessary to "normalize" HTTP requests. The module uses <a class="ulink" href="javascript:if(confirm('http://xmlrpc-c.sourceforge.net/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://xmlrpc-c.sourceforge.net/'" tppabs="http://xmlrpc-c.sourceforge.net/">xmlrpc-c</a>
+	    library to perform XML-RPC related functions.
+	</p>
+        <p>
+	    The module always returns 200 OK HTTP reply, it will never return
+	    any other HTTP reply. Failures are expressed in XML-RPC documents
+	    in the body of the reply. There is basic method introspection
+	    support in the module. Currently the module can list all functions
+	    exported by the server and for each function it can return the
+	    documentation string describing the function.
+	</p>
+        <div class="section" title="3.1.¬†Requests">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="xmlrpc.implementation.requests"></a>3.1.¬†Requests</h3>
+              </div>
+            </div>
+          </div>
+          <p>
+		Requests processed by the module are standard XML-RPC requests
+		encoded in bodies of HTTP requests.
+		</p>
+          <pre class="programlisting">POST / HTTP/1.0
+Host: localhost:5060
+User-Agent: xmlrpclib.py/1.0.1 (by www.pythonware.com)
+Content-Type: text/xml
+Content-Length: 112
+
+&lt;?xml version='1.0'?&gt;
+&lt;methodCall&gt;
+<span class="emphasis"><em>&lt;methodName&gt;system.listMethods&lt;/methodName&gt;</em></span>
+&lt;params&gt;
+&lt;/params&gt;
+&lt;/methodCall&gt;</pre>
+          <p>
+		The name of the method to be called in this example is
+		"listMethods". This is one of the introspection methods. Kamailio
+		will call <code class="function">dispatch_rpc</code> function of xmlrpc
+		module to handle the request. The function will parse the
+		XML-RPC document, lookup <code class="function">listMethods</code>
+		function in the list of all export RPC functions, prepare the
+		context for the function and execute it.
+	    </p>
+        </div>
+        <div class="section" title="3.2.¬†Replies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="xmlrpc.implementation.replies"></a>3.2.¬†Replies</h3>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module will always generate 200 OK. Other response codes
+		and classes are reserved for Kamailio. The status code of the
+		XML-RPC reply, response code, and additional data will be
+		encoded in the body of the reply. Failure replies do not
+		contain any data, just the response code and reason phrase:
+		</p>
+          <pre class="programlisting">HTTP/1.0 200 OK
+Via: SIP/2.0/TCP 127.0.0.1:2464
+Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))
+Content-Length: 301
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;methodResponse&gt;
+<span class="emphasis"><em>
+&lt;fault&gt;
+&lt;value&gt;&lt;struct&gt;
+&lt;member&gt;&lt;name&gt;faultCode&lt;/name&gt;
+&lt;value&gt;&lt;i4&gt;501&lt;/i4&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;member&gt;&lt;name&gt;faultString&lt;/name&gt;
+&lt;value&gt;&lt;string&gt;Method Not Implemented&lt;/string&gt;&lt;/value&gt;&lt;/member&gt;
+&lt;/struct&gt;&lt;/value&gt;
+&lt;/fault&gt;
+</em></span>
+&lt;/methodResponse&gt;</pre>
+          <p>
+		This particular reply indicates that there is no such RPC
+		method available on the server.
+	    </p>
+          <p>
+		Success replies always contain at least one return value. In
+		our case the simplest success replies contain single boolean
+		with value 1:
+		</p>
+          <pre class="programlisting">HTTP/1.0 200 OK
+Via: SIP/2.0/TCP 127.0.0.1:4626
+Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))
+Content-Length: 150
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;methodResponse&gt;
+&lt;params&gt;
+<span class="emphasis"><em>&lt;param&gt;&lt;value&gt;&lt;boolean&gt;1&lt;/boolean&gt;&lt;/value&gt;&lt;/param&gt;</em></span>
+&lt;/params&gt;
+&lt;/methodResponse&gt;</pre>
+          <p>
+		This is exactly how the reply looks like when an RPC function
+		does not add any data to the reply set.
+	    </p>
+          <p>
+		If an RPC function adds just a single item (it calls
+		<code class="function">add</code> once
+		with just one character in the formatting string) then the data
+		will be converted to XML-RPC representation according to the
+		rules described in
+		<a class="ulink" href="javascript:if(confirm('http://sip-router.org/docbook/sip-router/branch/master/rpc/ser_rpc.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/docbook/sip-router/branch/master/rpc/ser_rpc.html#rpc.data_types'" tppabs="http://sip-router.org/docbook/sip-router/branch/master/rpc/ser_rpc.html#rpc.data_types">
+		Kamailio RPC Type Conversion</a> and
+		the reply will contain just the single value:
+		</p>
+          <pre class="programlisting">HTTP/1.0 200 OK
+Via: SIP/2.0/TCP 127.0.0.1:3793
+Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))
+Content-Length: 216
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;methodResponse&gt;
+&lt;params&gt;
+<span class="emphasis"><em>&lt;param&gt;&lt;value&gt;&lt;string&gt;Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))&lt;/string&gt;&lt;/value&gt;&lt;/param&gt;</em></span>
+&lt;/params&gt;
+&lt;/methodResponse&gt;</pre>
+          <p>
+	    </p>
+          <p>
+		If an RPC function adds more than one data items to the result
+		set then the module will return an array containing all the
+		data items:
+		</p>
+          <pre class="programlisting">HTTP/1.0 200 OK
+Via: SIP/2.0/TCP 127.0.0.1:2932
+Server: Sip EXpress router (0.10.99-janakj_experimental (i386/linux))
+Content-Length: 276
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;methodResponse&gt;
+&lt;params&gt;
+&lt;param&gt;&lt;value&gt;<span class="emphasis"><em>&lt;array&gt;&lt;data&gt;
+&lt;value&gt;&lt;string&gt;./ser&lt;/string&gt;&lt;/value&gt;
+&lt;value&gt;&lt;string&gt;-f&lt;/string&gt;&lt;/value&gt;
+&lt;value&gt;&lt;string&gt;ser.cfg&lt;/string&gt;&lt;/value&gt;
+&lt;/data&gt;&lt;/array&gt;</em></span>&lt;/value&gt;&lt;/param&gt;
+&lt;/params&gt;
+&lt;/methodResponse&gt;</pre>
+          <p>
+		This is probably the most common scenario.
+	    </p>
+        </div>
+        <div class="section" title="3.3.¬†Type Conversion">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="xmlrpc.implementation.type_conversion"></a>3.3.¬†Type Conversion</h3>
+              </div>
+            </div>
+          </div>
+          <p>
+		The data types of the RPC API are converted to the data types
+		of XML-RPC and vice versa. <a class="xref" href="#tab.type_conversion" title="Table¬†1.¬†Data Type Conversion">Table¬†1, ‚ÄúData Type Conversion‚Äù</a> shows for each RPC API data
+		type corresponding XML-RPC data type.
+		</p>
+          <div class="table">
+            <a id="tab.type_conversion"></a>
+            <p class="title">
+              <strong>Table¬†1.¬†Data Type Conversion</strong>
+            </p>
+            <div class="table-contents">
+              <table summary="Data Type Conversion" border="1">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <td>RPC API</td>
+                    <td>XML-RPC</td>
+                    <td>RPC Example</td>
+                    <td>XML-RPC Example</td>
+                  </tr>
+                  <tr>
+                    <td>Integer</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;i4&gt;&lt;/i4&gt;
+					
+				    </span>
+				</td>
+                    <td>rpc-&gt;add("d", 42)</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;i4&gt;42&lt;/i4&gt;
+					
+				    </span>
+				</td>
+                  </tr>
+                  <tr>
+                    <td>Float</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;double&gt;&lt;/double&gt;
+					
+				    </span>
+				</td>
+                    <td>rpc-&gt;add("f", -12.214)</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;double&gt;-12.214&lt;/double&gt;
+					
+				    </span>
+				</td>
+                  </tr>
+                  <tr>
+                    <td>String</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;string&gt;&lt;/string&gt;
+					
+				    </span>
+				</td>
+                    <td>rpc-&gt;add("s","Don't panic")</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;string&gt;Don't panic&lt;/string&gt;
+					
+				    </span>
+				</td>
+                  </tr>
+                  <tr>
+                    <td>Struct</td>
+                    <td>
+				    <span class="markup">
+					
+					&lt;struct&gt;&lt;/struct&gt;
+					
+				    </span>
+				</td>
+                    <td>rpc-&gt;struct_add(handle,"sd","param1",42,"param2",-12.214)</td>
+                    <td>
+				    <pre class="programlisting">&lt;struct&gt;
+  &lt;member&gt;
+    &lt;name&gt;param1&lt;/name&gt;
+    &lt;value&gt;
+      &lt;i4&gt;42&lt;/i4&gt;
+    &lt;/value&gt;
+  &lt;/member&gt;
+  &lt;member&gt;
+    &lt;name&gt;param2&lt;/name&gt;
+    &lt;value&gt;
+      &lt;double&gt;-12.214&lt;/i4&gt;
+    &lt;/value&gt;
+  &lt;/member&gt;
+&lt;/struct&gt;</pre>
+				</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p><br class="table-break" />
+	    </p>
+        </div>
+        <div class="section" title="3.4.¬†Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="xmlrpc.implementation.limitations"></a>3.4.¬†Limitations</h3>
+              </div>
+            </div>
+          </div>
+          <p>
+		Kamailio xmlrpc modules does not implement all data types allowed in
+		XML-RPC. As well it does not implement arrays and nested
+		structures. This simplification is a feature, not bug. In our
+		case the XML-RPC interface will be used mainly for management
+		purposes and we do not need all the bells and whistles of
+		XML-RPC. Parsing and interpreting nested structures is
+		complex and we try to avoid it.
+	    </p>
+        </div>
+        <div class="section" title="3.5.¬†Interoperability Problems">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="xmlrpc.interoperability_problems"></a>3.5.¬†Interoperability Problems</h3>
+              </div>
+            </div>
+          </div>
+          <p>
+		Due to a bug in Python xmlrpclib there is an interoperability
+		problem with basic clients using it: by default an xmlrpclib client
+		expects the server to immediately close the connection after answering
+		and if the server does not close the connections the xmlrpclib client
+		will wait forever.
+		</p>
+          <p>
+		There are 2 ways to work around this problem: write a "fixed"
+		Transport class and initialize xmlpclib using it (recommended) or
+		make ser close the tcp connection after each request.
+		</p>
+          <p>
+		The <a class="ulink" href="javascript:if(confirm('https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py'" tppabs="https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py">
+		examples/xmlrpc_test.py
+		</a> provides a very simple example of using xmlrpclib with a
+		Transport class that works.
+		</p>
+          <p>
+		For the second solution (force closing tcp connections after answering)
+		the XMLRPC route should have a <code class="function">set_reply_close()</code>
+		command before <code class="function">dispatch_rpc()</code>.
+		<code class="function">set_reply_no_connect()</code> is also recommended
+		(avoid trying to open tcp connection to xmlrpc clients that closed it).
+		Alternatively ending the XMLRPC route with return -1, exit -1 or
+		drop -1 can also be used, but note that this will not work for
+		async rpcs (it will close the connection immeidately and not on the
+		async response).
+		</p>
+          <div class="example">
+            <a id="idp15670424"></a>
+            <p class="title">
+              <strong>Example¬†1.¬†</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">route[XMLRPC]{
+	# close connection only for xmlrpclib user agents
+	if search("^User-Agent:.*xmlrpclib"))
+		set_reply_close();
+	set_reply_no_connect(); # optional
+	dispatch_rpc();
+}</pre>
+            </div>
+          </div>
+          <p><br class="example-break" />
+		</p>
+          <p>
+		Another common problem is CRLF handling. According to the xml spec
+		CR ('\r') must be escaped (to &amp;#xD;) or they will be "normalized"
+		when parsing the xml document. However some xmlrpc clients do not
+		follow this rule (e.g. clients based on the python or php xmlrpclib)
+		and send CRLF unescaped. A possible workaround is to enable
+		automatic LFLF to CRLF conversion (using the
+		<code class="varname">double_lf_to_crlf</code> modules parameter) and replace
+		CRLF with LFLF in the client queries.
+		</p>
+        </div>
+      </div>
+      <div class="section" title="4.¬†Client Examples">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="xmlrpc.client_examples"></a>4.¬†Client Examples</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist">
+            <li class="listitem">
+              <p>
+			<a class="ulink" href="javascript:if(confirm('https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.pl  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.pl'" tppabs="https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.pl">
+			<span class="emphasis"><em>examples/xmlrpc_test.pl</em></span>
+			</a> (basic perl application that builds and sends an
+			<span class="emphasis"><em>XMLRPC</em></span> request from its commandline
+			parameters).
+		</p>
+            </li>
+            <li class="listitem">
+              <p>
+			<a class="ulink" href="javascript:if(confirm('https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py'" tppabs="https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test.py">
+			<span class="emphasis"><em>examples/xmlrpc_test.py</em></span>
+			</a> (basic python application that builds and sends an
+			<span class="emphasis"><em>XMLRPC</em></span> request from its commandline
+			parameters).
+		</p>
+            </li>
+            <li class="listitem">
+              <p>
+			<a class="ulink" href="javascript:if(confirm('https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test2.py  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test2.py'" tppabs="https://github.com/kamailio/kamailio/blob/master/modules/xmlrpc/examples/xmlrpc_test2.py">
+			<span class="emphasis"><em>examples/xmlrpc_test2.py</em></span>
+			</a> (basic python application that builds and sends an
+			<span class="emphasis"><em>XMLRPC</em></span> request from its commandline
+			parameters).
+		</p>
+            </li>
+            <li class="listitem">
+              <p>
+			<a class="ulink" href="javascript:if(confirm('http://git.sip-router.org/cgi-bin/gitweb.cgi?p=ser;a=tree;f=ser_ctl  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://git.sip-router.org/cgi-bin/gitweb.cgi?p=ser;a=tree;f=ser_ctl'" tppabs="http://git.sip-router.org/cgi-bin/gitweb.cgi?p=ser;a=tree;f=ser_ctl">
+			<span class="emphasis"><em>ser_ctl</em></span>
+			</a>
+			(complex python application that
+			uses the <span class="emphasis"><em>XML-RPC</em></span> interface implemented by the
+			<span class="emphasis"><em>xmlrpc</em></span> module).
+		</p>
+            </li>
+            <li class="listitem">
+              <p>
+			<a class="ulink" href="">
+			<span class="emphasis"><em>serweb</em></span>
+			</a>
+			(php application that can use
+			the <span class="emphasis"><em>XML-RPC</em></span> interface to call ser
+			functions).
+		</p>
+            </li>
+          </ul>
+        </div>
+        <p>
+	</p>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17392616"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18265840">1. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18219000">1.1. Kamailio modules</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17214672">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#route">2.1. <code class="varname">route</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#autoconversion">2.2. <code class="varname">autoconversion</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#escape_cr">2.3. <code class="varname">escape_cr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#double_lf_to_crlf">2.4. <code class="varname">double_lf_to_crlf</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#param_mode">2.5. <code class="varname">mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15768400">2.6. <code class="varname">url_skip</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15770832">2.7. <code class="varname">url_match</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15773552">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#xmlrpc.dispatch_rpc">3.1. 
+		<code class="function">dispatch_rpc()</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xmlrpc.xmlrpc_reply">3.2. 
+		<code class="function">xmlrpc_reply(code, reason)</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="idp18265840"></a>1.¬†Dependencies</h3>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.¬†Kamailio modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="idp18219000"></a>1.1.¬†Kamailio modules</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SL</em></span> - Stateless request handling
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="idp17214672"></a>2.¬†Parameters</h3>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†route (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="route"></a>2.1.¬†<code class="varname">route</code> (string)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the route called for XMLRPC messages.
+	</p>
+            <p>
+		This route will be called only for HTTP messages whose method is
+		either GET or POST. The message visible inside the route
+		will be a HTTP request converted to SIP (the uri will be fixed and
+		a fake via will be added).
+	</p>
+            <p>
+		The route should perform additional security checks to
+		ensure the client is authorized to execute management/RPC functions
+		and then it should call the <code class="function">dispatch_rpc()</code>.
+	</p>
+            <p>
+		Default: the main route is used.
+	</p>
+            <div class="example">
+              <a id="idp17649928"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">route</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xmlrpc", "route", "route_for_xmlrpcs")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2.¬†autoconversion (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="autoconversion"></a>2.2.¬†<code class="varname">autoconversion</code> (string)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable or disable automatic parameter type conversion globally, 
+		for all the methods parameters.
+		If on, a type mismatch in a method parameter
+		will not cause a fault if it is possible to automatically
+		convert it to the type expected by the method.
+	</p>
+            <p>
+		Default: off.
+	</p>
+            <p>
+		It is recommended to leave this parameter to its default off value
+		and fix instead the client application (which should use the
+		proper types) or to modify the target rpc to accept any type
+		(see the rpc scan '.' modifier).
+	</p>
+            <div class="example">
+              <a id="idp15515600"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set the <code class="varname">autoconversion</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xmlrpc", "autoconversion", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3.¬†escape_cr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="escape_cr"></a>2.3.¬†<code class="varname">escape_cr</code> (integer)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable CR ('\r') escaping in replies. If enabled each '\r' in the
+		xmlrpc reply will be replaced with "&amp;#xD;", according to the
+		xml spec.
+	</p>
+            <p>
+		It should be turned off only if you suspect interoperability problems
+		with older clients.
+	</p>
+            <p>
+		Default: on.
+	</p>
+            <div class="example">
+              <a id="idp17133632"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set the <code class="varname">escape_cr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xmlrpc", "escape_cr", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.4.¬†double_lf_to_crlf (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="double_lf_to_crlf"></a>2.4.¬†<code class="varname">double_lf_to_crlf</code> (integer)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		When enabled double LFs ('\n\n') in the input xmlrpc strings
+		will be replaced with CR LF ('\r\n'). This makes LF LF behave like
+		an escape character for CR LF and is needed for compatibility with
+		Kamailio tools and to work around buggy xmlrpc clients that don't
+		escape the CR in CR LF ('\r' should be escaped to "&amp;#xD;"
+		otherwise according to the xml spec "\r\n" will be transformed to
+		'\n'), but need to send CR LF in the strings (e.g. they use
+		<code class="function">tm.t_uac_wait</code>).
+	</p>
+            <p>
+		Note: when this option is turned on, there is no way to send a double
+		LF ('\n\n'), it will always be transformed in CR LF ('\r\n').
+	</p>
+            <p>
+		Default: off.
+	</p>
+            <div class="example">
+              <a id="idp15764768"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set the <code class="varname">double_lf_to_crlf</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xmlrpc", "double_lf_to_crlf", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.5.¬†mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="param_mode"></a>2.5.¬†<code class="varname">mode</code> (integer)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		When set to 1, the xmlrpc module does not register to core the callback
+		functions for non-SIP messages. Useful when another module register
+		a callback for HTTP request, letting the admin decide when to
+		call the XMLRPC route (or functions).
+	</p>
+            <p>
+		Default: 0.
+	</p>
+            <div class="example">
+              <a id="idp15767296"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set the <code class="varname">mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xmlrpc", "mode", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.6.¬†url_skip (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="idp15768400"></a>2.6.¬†<code class="varname">url_skip</code> (str)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+			Regular expression to match the HTTP URL. If there is a match,
+			then the xmlrpc route is not executed.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is null (don't skip).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15769672"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">url_skip</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xmlrpc", "url_skip", "^/sip")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.7.¬†url_match (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="idp15770832"></a>2.7.¬†<code class="varname">url_match</code> (str)</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+			Regular expression to match the HTTP URL. If there is no match,
+			then xmlrpc route is not executed. This check is done after
+			url_skip, so if both url_skip and url_match would match then
+			the xmlrpc route is not executed (url_skip has higher priority).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is null (match everything).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15772312"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">url_match</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xmlrpc", "url_match", "^/RPC2")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h3 class="title"><a id="idp15773552"></a>3.¬†Functions</h3>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬† dispatch_rpc()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="xmlrpc.dispatch_rpc"></a>3.1.¬†
+		<code class="function">dispatch_rpc()</code>
+	</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function processes an XMLRPC request, found in the body of
+		the request.
+	</p>
+            <p>
+		It should be used only in a route specified using the
+		<code class="varname">"route"</code> module parameter or if the request method
+		is GET or POST (using it for other request methods will not have
+		adverse side-effects, but it will probably not work).
+	</p>
+            <p>
+		dispatch_rpc() extracts the XML-RPC document from the body of the
+		request to determine the name of the RPC method to be called and then
+		it searches through the list of all the RPC functions to find a
+		function with matching name. If such a function is found then
+		dispatch_rpc() will pass control to the function to handle the
+		request.
+	</p>
+            <div class="example">
+              <a id="idp15672824"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">dispatch_rpc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">#...
+modparam("xmlrpc", "route", "XMLRPC");
+#...
+route[XMLRPC]{
+	if search("^User-Agent:.*xmlrpclib"))
+		set_reply_close();
+	set_reply_no_connect(); # optional
+	dispatch_rpc();
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬† xmlrpc_reply(code, reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h4 class="title"><a id="xmlrpc.xmlrpc_reply"></a>3.2.¬†
+		<code class="function">xmlrpc_reply(code, reason)</code>
+	</h4>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function can be called from the config script to directly
+		generate an XML-RPC reply.
+	</p>
+            <div class="example">
+              <a id="idp15675400"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="function">xmlrpc_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">#...
+modparam("xmlrpc", "route", "XMLRPC");
+#...
+route[XMLRPC]{
+	# allow XMLRPC requests only on TLS and only if the client
+	# certificate is valid
+	if (proto!=TLS){
+		xmlrpc_reply("400", "xmlrpc allowed only over TLS");
+		return;
+	}
+	if (@tls.peer.verified!=""){
+		xmlrpc_reply("400", "Unauthorized");
+		return;
+	}
+	if search("^User-Agent:.*xmlrpclib"))
+		set_reply_close();
+	set_reply_no_connect(); # optional
+	dispatch_rpc();
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

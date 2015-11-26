@@ -1,0 +1,767 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The malloc_test Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#malloc_test" title="The malloc_test Module" />
+    <link rel="next" href="#idp57000" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The malloc_test Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="malloc_test"></a>The malloc_test Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp57000">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#malloc_test.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#malloc_test.parameters">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#check_content">2.1. <code class="varname">check_content</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#malloc_test.functions">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#malloc_test.mt_mem_alloc">3.1. <code class="function">mt_mem_alloc(size)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#malloc_test.mt_mem_free">3.2. <code class="function">mt_mem_free()</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#malloc_test.rpcs">4. malloc_test RPC Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_alloc">4.1.  <code class="function">mt.mem_alloc size [unit]</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_free">4.2.  <code class="function">mt.mem_free [size] [unit]</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_used">4.3.  <code class="function">mt.mem_used [unit]</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_rnd_alloc">4.4. <code class="function">mt.mem_rnd_alloc min max total [unit]</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_test_start">4.5. 
+			<code class="function">
+				mt.mem_test_start min max total min_int max_int total_time
+				[unit]
+			</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_test_stop">4.6.  <code class="function">mt.mem_test_stop id</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_test_destroy">4.7.  <code class="function">mt.mem_test_destroy id</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_test_destroy_all">4.8.  <code class="function">mt.mem_test_destroy_all id</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mt.mem_test_list">4.9.  <code class="function">mt.mem_test_list [id] [unit]</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1621080">
+				Set <code class="varname">check_content</code> in the config file
+			</a></dt>
+          <dt>1.2. <a href="#idp2430168">
+				Set <code class="varname">check_content</code> at runtime via sercmd
+			</a></dt>
+          <dt>1.3. <a href="#idp2384392"><code class="function">men_alloc</code> usage</a></dt>
+          <dt>1.4. <a href="#idp3048448"><code class="function">mem_free</code> usage</a></dt>
+          <dt>1.5. <a href="#idp3042960"><code class="function">mt.mem_alloc</code> usage</a></dt>
+          <dt>1.6. <a href="#idp1233896"><code class="function">mt.mem_free</code> usage</a></dt>
+          <dt>1.7. <a href="#idp1238504"><code class="function">mt.mem_used</code> usage</a></dt>
+          <dt>1.8. <a href="#idp1284952"><code class="function">mt.mem_rnd_alloc</code> usage</a></dt>
+          <dt>1.9. <a href="#idp1290208"><code class="function">mt.mem_test_start</code> usage</a></dt>
+          <dt>1.10. <a href="#idp2232112"><code class="function">mt.mem_test_stop</code> usage</a></dt>
+          <dt>1.11. <a href="#idp2234616"><code class="function">mt.mem_test_destroy</code> usage</a></dt>
+          <dt>1.12. <a href="#idp2236776"><code class="function">mt.mem_test_destroy_all</code> usage</a></dt>
+          <dt>1.13. <a href="#idp1903816"><code class="function">mt.mem_test_list</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp57000"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#malloc_test.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#malloc_test.parameters">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#check_content">2.1. <code class="varname">check_content</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#malloc_test.functions">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#malloc_test.mt_mem_alloc">3.1. <code class="function">mt_mem_alloc(size)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#malloc_test.mt_mem_free">3.2. <code class="function">mt_mem_free()</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#malloc_test.rpcs">4. malloc_test RPC Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_alloc">4.1.  <code class="function">mt.mem_alloc size [unit]</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_free">4.2.  <code class="function">mt.mem_free [size] [unit]</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_used">4.3.  <code class="function">mt.mem_used [unit]</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_rnd_alloc">4.4. <code class="function">mt.mem_rnd_alloc min max total [unit]</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_test_start">4.5. 
+			<code class="function">
+				mt.mem_test_start min max total min_int max_int total_time
+				[unit]
+			</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_test_stop">4.6.  <code class="function">mt.mem_test_stop id</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_test_destroy">4.7.  <code class="function">mt.mem_test_destroy id</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_test_destroy_all">4.8.  <code class="function">mt.mem_test_destroy_all id</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mt.mem_test_list">4.9.  <code class="function">mt.mem_test_list [id] [unit]</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="malloc_test.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This is a debugging/test module. It implements functions (both
+			script and rpcs) that can be used to stress the memory allocator
+			or force memory leaks.
+		</p>
+          <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+            <h3 class="title">Warning</h3>
+            <p>
+			This module should never be used in a production environment.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="malloc_test.parameters"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. check_content">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="check_content"></a>2.1. <code class="varname">check_content</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When doing the tests, check also for the possibility of the
+			memory being overwritten. When activated, the allocated memory
+			will be filled with a special pattern, that will be checked on
+			free.
+		</p>
+            <p>
+			Default: 0 (off).
+		</p>
+            <p>
+			It can be changed also at runtime, via the rpc interface.
+		</p>
+            <div class="example">
+              <a id="idp1621080"></a>
+              <p class="title">
+                <strong>Example 1.1. 
+				Set <code class="varname">check_content</code> in the config file
+			</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("malloc_test", "check_content", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp2430168"></a>
+              <p class="title">
+                <strong>Example 1.2. 
+				Set <code class="varname">check_content</code> at runtime via sercmd
+			</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">$ kamcmd cfg.set_now_int malloc_test check_content 1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="malloc_test.functions"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. mt_mem_alloc(size)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="malloc_test.mt_mem_alloc"></a>3.1. <code class="function">mt_mem_alloc(size)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Allocates size bytes.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This is a debugging function for simulating memory
+					leaks or stressing the memory allocator. It should not
+					be used in production setups
+		</p>
+            </div>
+            <div class="example">
+              <a id="idp2384392"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">men_alloc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mem_alloc(1048576); # 1MB
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. mt_mem_free()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="malloc_test.mt_mem_free"></a>3.2. <code class="function">mt_mem_free()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Frees all the memory allocated with mem_alloc() up to this
+			point.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This is a debugging function for simulating memory
+					leaks or stressing the memory allocator. It should not
+					be used in production setups
+		</p>
+            </div>
+            <div class="example">
+              <a id="idp3048448"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">mem_free</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mem_free();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. malloc_test RPC Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="malloc_test.rpcs"></a>4. malloc_test RPC Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  mt.mem_alloc size [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_alloc"></a>4.1.  <code class="function">mt.mem_alloc size [unit]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Allocates the specified number of bytes.
+			<code class="varname">unit</code> is optional and can be one of:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>b</em></span> - bytes </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>k</em></span> - KB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>m</em></span> - MB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>g</em></span> - GB </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp3042960"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">mt.mem_alloc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_alloc 10 k</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  mt.mem_free [size] [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_free"></a>4.2.  <code class="function">mt.mem_free [size] [unit]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Frees at least <code class="varname">size</code> bytes from the memory
+			allocated by other malloc_test functions (e.g. mt.mem_alloc).
+		</p>
+            <p>
+			<code class="varname">size</code> is optional. If missing, everything will
+			be freed.
+		</p>
+            <p>
+			<code class="varname">unit</code> is optional and can be one of:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>b</em></span> - bytes </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>k</em></span> - KB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>m</em></span> - MB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>g</em></span> - GB </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp1233896"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">mt.mem_free</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_free 1 m</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  mt.mem_used [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_used"></a>4.3.  <code class="function">mt.mem_used [unit]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns/displays how many bytes are allocated. The default
+			unit is bytes (for all the possible units see above).
+		</p>
+            <p>
+			<code class="varname">unit</code> is optional and can be one of:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>b</em></span> - bytes </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>k</em></span> - KB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>m</em></span> - MB </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>g</em></span> - GB </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp1238504"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">mt.mem_used</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_used
+9221460</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. mt.mem_rnd_alloc min max total [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_rnd_alloc"></a>4.4. <code class="function">mt.mem_rnd_alloc min max total [unit]</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Allocates <code class="varname">total_size</code> memory, in pieces of
+			random size between
+			<code class="varname">min</code> .. <code class="varname">max</code> (inclusive).
+			<code class="varname">unit</code> is optional and represents the unit for
+			all the given sizes (see above).
+		</p>
+            <div class="example">
+              <a id="idp1284952"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">mt.mem_rnd_alloc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_rnd_alloc 1 64 10240 k</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  mt.mem_test_start min max total min_int max_int total_time [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_test_start"></a>4.5. 
+			<code class="function">
+				mt.mem_test_start min max total min_int max_int total_time
+				[unit]
+			</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Starts a malloc test that will take <code class="varname">total_time</code>
+			to execute. Memory allocations will be performed at intervals
+			randomly chosen between <code class="varname">min_int</code> and
+			<code class="varname">max_int</code> (in ms). Each allocation will have a
+			randomly chosen size between <code class="varname">min</code> and
+			<code class="varname">max</code> <code class="varname">unit</code> bytes. After
+			<code class="varname">total</code> <code class="varname">unit</code> bytes are
+			allocated, everything is released/freed again and the allocations
+			are restarted. All the times are expressed in milliseconds.
+			<code class="varname">unit</code> is optional and represents the unit for
+			all the given sizes (see above).
+		</p>
+            <p>
+			Several tests can be run in parallel.
+		</p>
+            <p>
+			Returns the test id.
+		</p>
+            <div class="example">
+              <a id="idp1290208"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">mt.mem_test_start</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_test_start 15 64 25000 128 1500 3600000 k
+1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  mt.mem_test_stop id">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_test_stop"></a>4.6.  <code class="function">mt.mem_test_stop id</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Stops the test indentified by <code class="varname">id</code>.
+		</p>
+            <div class="example">
+              <a id="idp2232112"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">mt.mem_test_stop</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_test_stop 1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  mt.mem_test_destroy id">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_test_destroy"></a>4.7.  <code class="function">mt.mem_test_destroy id</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Destroys the test indentified by <code class="varname">id</code>
+			(besides stopping it, it also frees all the data, including the
+			statistics).
+		</p>
+            <div class="example">
+              <a id="idp2234616"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">mt.mem_test_destroy</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_test_destroy 1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  mt.mem_test_destroy_all id">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_test_destroy_all"></a>4.8.  <code class="function">mt.mem_test_destroy_all id</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Destroys all the running or stopped tests.
+		</p>
+            <div class="example">
+              <a id="idp2236776"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">mt.mem_test_destroy_all</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_test_destroy_all</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  mt.mem_test_list [id] [unit]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mt.mem_test_list"></a>4.9.  <code class="function">mt.mem_test_list [id] [unit]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns/displays data about the test identified by
+			<code class="varname">id</code>, or if no <code class="varname">id</code> is
+			specified, it lists all the tests (running or stopped).
+		</p>
+            <p>
+			<code class="varname">unit</code> is optional. The default is
+			is bytes (for all the possible units see above).
+		</p>
+            <div class="example">
+              <a id="idp1903816"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">mt.mem_test_list</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd mt.mem_test_list
+{
+	ID           : 2
+	run time (s) : 1471
+	remaining (s): 2128
+	allocations  : 1749
+	errors       : 24
+	overflows    : 2
+	total alloc  : 69614530
+	min          : 15360
+	max          : 65536
+	total        : 25600000
+}
+{
+	ID           : 1
+	run time (s) : 3600
+	remaining (s): 0
+	allocations  : 4268
+	errors       : 640
+	overflows    : 4
+	total alloc  : 144220713
+	min          : 15360
+	max          : 65536
+	total        : 29696000
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,898 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>group Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp3920" title="group Module" />
+    <link rel="next" href="#idp3412464" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="group Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp3920"></a>group Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3412464">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3086936">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2991320">1.1. Strict membership checking</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2470552">1.2. Regular Expression based checking</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1638160">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm4251432">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2451200">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1997112">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.table">3.2. <code class="varname">table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.user_column">3.3. <code class="varname">user_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.domain_column">3.4. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.group_column">3.5. <code class="varname">group_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.use_domain">3.6. <code class="varname">use_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.re_table">3.7. <code class="varname">re_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.re_exp_column">3.8. <code class="varname">re_exp_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp78144">3.9. <code class="varname">re_gid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.p.multiple_gid">3.10. <code class="varname">multiple_gid</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp83864">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.f.is_user_in">4.1. 
+		<code class="function">is_user_in(URI, group)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#group.f.get_user_group">4.2. 
+		<code class="function">get_user_group(URI, AVP)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2559096">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm17520">Set <code class="varname">table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm14608">Set <code class="varname">user_column</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm11712">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm8800">Set <code class="varname">group_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm6120">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm3256">Set <code class="varname">re_table</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp76976">Set <code class="varname">re_exp_column</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp79760">Set <code class="varname">re_gid_column</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp82616">Set <code class="varname">multiple_gid</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp90704"><code class="function">is_user_in</code> usage</a></dt>
+          <dt>1.12. <a href="#idp22352"><code class="function">get_user_group</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3412464"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3086936">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2991320">1.1. Strict membership checking</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2470552">1.2. Regular Expression based checking</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1638160">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm4251432">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2451200">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1997112">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.table">3.2. <code class="varname">table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.user_column">3.3. <code class="varname">user_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.domain_column">3.4. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.group_column">3.5. <code class="varname">group_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.use_domain">3.6. <code class="varname">use_domain</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.re_table">3.7. <code class="varname">re_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.re_exp_column">3.8. <code class="varname">re_exp_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp78144">3.9. <code class="varname">re_gid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.p.multiple_gid">3.10. <code class="varname">multiple_gid</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp83864">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#group.f.is_user_in">4.1. 
+		<code class="function">is_user_in(URI, group)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#group.f.get_user_group">4.2. 
+		<code class="function">get_user_group(URI, AVP)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3086936"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides functionality for two different methods of group 
+		membership checking.
+		</p>
+          <div class="section" title="1.1. Strict membership checking">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2991320"></a>1.1. Strict membership checking</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The module uses a database table that contains a list of users and groups 
+			they belong to. The module provides the possibility to check if a
+			specific user belongs to a specific group.
+			</p>
+            <p>
+			There is no DB caching support, which means that each check involves a DB query.
+			</p>
+          </div>
+          <div class="section" title="1.2. Regular Expression based checking">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2470552"></a>1.2. Regular Expression based checking</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Another database table contains list of regular expressions and 
+			group IDs. A matching occurs if the user URI match the regular
+			expression. This type of matching may be used to fetch the 
+			group ID(s) the user belongs to (via RE matching) .
+			</p>
+            <p>
+			Due to performance reasons (regular expression evaluation), DB cache
+			support is available: the table content is loaded into memory at 
+			startup and all regular expressions are compiled.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1638160"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm4251432"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				A database module, like db_mysql, db_postgres or db_text
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2451200"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1997112"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.db_url"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		<acronym class="acronym">URL</acronym> of the database table to be used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 
+			<span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2559096"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.table"></a>3.2. <code class="varname">table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the table holding strict definitions of groups and 
+		their members.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">grp</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm17520"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "table", "grp_table")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. user_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.user_column"></a>3.3. <code class="varname">user_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the <span class="quote">“<span class="quote">table</span>”</span> column holding usernames.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm14608"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">user_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "user_column", "user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.domain_column"></a>3.4. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the <span class="quote">“<span class="quote">table</span>”</span> column holding domains.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm11712"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "domain_column", "realm")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. group_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.group_column"></a>3.5. <code class="varname">group_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the <span class="quote">“<span class="quote">table</span>”</span> column holding group names.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">grp</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm8800"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">group_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "group_column", "grp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. use_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.use_domain"></a>3.6. <code class="varname">use_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled (set to a non zero value) then the domain will be used also used
+		for strict group matching; otherwise only the username part will be 
+		used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm6120"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "use_domain", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. re_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.re_table"></a>3.7. <code class="varname">re_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the table holding definitions for regular-expression 
+		based groups. If no table is defined, the regular-expression
+		support is disabled.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm3256"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">re_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "re_table", "re_grp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. re_exp_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.re_exp_column"></a>3.8. <code class="varname">re_exp_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the <span class="quote">“<span class="quote">re_table</span>”</span> column holding the regular
+		expression used for user matching.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">reg_exp</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp76976"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">re_exp_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "re_exp_column", "re")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. re_gid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp78144"></a>3.9. <code class="varname">re_gid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the <span class="quote">“<span class="quote">re_table</span>”</span> column holding the group IDs.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">group_id</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp79760"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">re_gid_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "re_gid_column", "grp_id")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. multiple_gid (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.p.multiple_gid"></a>3.10. <code class="varname">multiple_gid</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled (non zero value) the regular-expression matching will
+		return all group IDs that match the user; otherwise only the first
+		will be returned.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1</span>”</span> (enabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp82616"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">multiple_gid</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("group", "multiple_gid", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp83864"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  is_user_in(URI, group)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.f.is_user_in"></a>4.1. 
+		<code class="function">is_user_in(URI, group)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function is to be used for script group membership. The function 
+		returns true if username in the given <acronym class="acronym">URI</acronym> is a member of the given
+		group and false if not.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em><acronym class="acronym">URI</acronym></em></span> - <acronym class="acronym">URI</acronym> whose username and 
+			optionally domain to be used, this can be one of:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>Request-URI - Use Request-URI username and 
+				(optionally) domain.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>To - Use To username and (optionally) domain.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>From - Use From username and (optionally) domain.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>Credentials - Use digest credentials username.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>$avp(name) - Use the URI from the AVP
+				specified by this pseudo-variable.</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>group</em></span> - Name of the group to check.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp90704"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">is_user_in</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_user_in("Request-URI", "ld")) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  get_user_group(URI, AVP)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="group.f.get_user_group"></a>4.2. 
+		<code class="function">get_user_group(URI, AVP)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function is to be used for regular expression based group 
+		membership. The function returns true if username in the given <acronym class="acronym">URI</acronym> 
+		belongs to at least one group; the group ID(s) are returned as AVPs.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em><acronym class="acronym">URI</acronym></em></span> - <acronym class="acronym">URI</acronym> to be matched against
+			the regular expressions:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>Request-URI - Use Request-URI</p>
+                      </li>
+                      <li class="listitem">
+                        <p>To - Use To URI.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>From - Use From URI</p>
+                      </li>
+                      <li class="listitem">
+                        <p>Credentials - Use digest credentials username 
+				and realm.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>$avp(name) - Use the URI from the AVP
+				specified by this pseudo-variable.</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AVP</em></span> - $avp(name) - the matched group
+			IDs are returned in this AVP.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp22352"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">get_user_group</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (get_user_group("Request-URI", "$avp(i:10)")) {
+    xgdb("User $ru belongs to $(avp(i:10)[*]) group(s)\n");
+    ....
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

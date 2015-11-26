@@ -1,0 +1,785 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>sipt Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15478456" title="sipt Module" />
+    <link rel="next" href="#idp18618408" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="sipt Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15478456"></a>sipt Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Torrey</span> <span class="surname">Searle</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voxbone SA<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:torrey@voxbone.com">torrey@voxbone.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Voxbone SA</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18618408">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17898024">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18422584">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17008696">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.f.sipt_destination">3.1. <code class="function">sipt_destination(destination, hops, nai)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.f.sipt_set_bci_1">3.2. <code class="function">sipt_set_bci_1(charge_indicator, called_status, called_category, e2e_indicator)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.f.sipt_set_calling">3.3. <code class="function">sipt_set_calling(origin, nai, presentation, screening)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18502352">4. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_presentation">4.1. <code class="varname">$sipt(calling_party_number.presentation) / $sipt_presentation</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_screening">4.2. <code class="varname">$sipt(calling_party_number.screening) / $sipt_screening</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_hop_counter">4.3. <code class="varname">$sipt(hop_counter) / $sipt_hop_counter</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_cpc">4.4. <code class="varname">$sipt(calling_party_category) / $sipt(cpc) / $sipt_cpc</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_calling_party_nai">4.5. <code class="varname">$sipt(calling_party_number.nature_of_address) / $sipt.(calling_party_number.nai) / $sipt_calling_party_nai</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_called_party_nai">4.6. <code class="varname">$sipt(called_party_number.nature_of_address) / $sipt(called_party_number.nai) / $sipt_called_party_nai</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipt.v.sipt_event_info">4.7. <code class="varname">$sipt(event_info)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-tables">
+        <p>
+          <strong>List of Tables</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18503744">Address Presentation Restricted Indicator Values</a></dt>
+          <dt>1.2. <a href="#idp15443552">Screening Indicator Values</a></dt>
+          <dt>1.3. <a href="#idp15453248">Calling Nature of Address Values</a></dt>
+          <dt>1.4. <a href="#idp15524464">Called Nature of Address Values</a></dt>
+          <dt>1.5. <a href="#idp15530240">Event Info Values</a></dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp16906200"><code class="function">sipt_destination(destination, hops, nai)</code> usage</a></dt>
+          <dt>1.2. <a href="#idp17241496"><code class="function">sipt_destination(destination, hops, nai)</code> usage</a></dt>
+          <dt>1.3. <a href="#idp18500952"><code class="function">sipt_set_calling(origin, nai, presentation, screening)</code> usage</a></dt>
+          <dt>1.4. <a href="#idp18506496"><code class="function">sipt_presentation pseudo-variable</code> usage</a></dt>
+          <dt>1.5. <a href="#idp15446312"><code class="function">sipt_screening pseudo-variable</code> usage</a></dt>
+          <dt>1.6. <a href="#idp15448584"><code class="function">sipt_hop_counter pseudo-variable</code> usage</a></dt>
+          <dt>1.7. <a href="#idp15450952"><code class="function">sipt_cpc pseudo-variable</code> usage</a></dt>
+          <dt>1.8. <a href="#idp15456440"><code class="function">sipt_calling_party_nai pseudo-variable</code> usage</a></dt>
+          <dt>1.9. <a href="#idp15528072"><code class="function">sipt_called_party_nai pseudo-variable</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18618408"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17898024">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18422584">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17008696">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.f.sipt_destination">3.1. <code class="function">sipt_destination(destination, hops, nai)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.f.sipt_set_bci_1">3.2. <code class="function">sipt_set_bci_1(charge_indicator, called_status, called_category, e2e_indicator)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.f.sipt_set_calling">3.3. <code class="function">sipt_set_calling(origin, nai, presentation, screening)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18502352">4. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_presentation">4.1. <code class="varname">$sipt(calling_party_number.presentation) / $sipt_presentation</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_screening">4.2. <code class="varname">$sipt(calling_party_number.screening) / $sipt_screening</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_hop_counter">4.3. <code class="varname">$sipt(hop_counter) / $sipt_hop_counter</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_cpc">4.4. <code class="varname">$sipt(calling_party_category) / $sipt(cpc) / $sipt_cpc</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_calling_party_nai">4.5. <code class="varname">$sipt(calling_party_number.nature_of_address) / $sipt.(calling_party_number.nai) / $sipt_calling_party_nai</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_called_party_nai">4.6. <code class="varname">$sipt(called_party_number.nature_of_address) / $sipt(called_party_number.nai) / $sipt_called_party_nai</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipt.v.sipt_event_info">4.7. <code class="varname">$sipt(event_info)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17898024"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>Module for updating ISUP encapuslated in SIP (SIP-T/SIP-I)</p>
+          <p>
+	The sipt module can be used to update various ss7 headers contained inside
+	a message. 
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18422584"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The module depends on the following modules (in the other words the
+		listed modules must be loaded before this module):
+	    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>none</em>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17008696"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. sipt_destination(destination, hops, nai)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.f.sipt_destination"></a>3.1. <code class="function">sipt_destination(destination, hops, nai)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			updates the IAM in the body if it exists, setting the called party number to <span class="quote">“<span class="quote">destination</span>”</span>
+			with the nature address specified in <span class="quote">“<span class="quote">nai</span>”</span> and decrementing the hop counter value if present.
+			If the hop counter header is missing it will be added with the value of <span class="quote">“<span class="quote">hops</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp16906200"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">sipt_destination(destination, hops, nai)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# update the destination number to our current request uri, 
+# setting nature of address to international
+$rU = "19495551234";
+sipt_destination($rU, 31, 4);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. sipt_set_bci_1(charge_indicator, called_status, called_category, e2e_indicator)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.f.sipt_set_bci_1"></a>3.2. <code class="function">sipt_set_bci_1(charge_indicator, called_status, called_category, e2e_indicator)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			updates the first byte of the backward call indicator in the ACM or COT in the body if setting the 
+			Charge Indicator to <span class="quote">“<span class="quote">charge_indicator</span>”</span>, the Called party's status indicator in <span class="quote">“<span class="quote">called_status</span>”</span>, 
+			the Called party's category indicator in <span class="quote">“<span class="quote">called_category</span>”</span> and the End to End Method Indicator
+			with the value of the value of <span class="quote">“<span class="quote">e2e_indicator</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp17241496"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">sipt_destination(destination, hops, nai)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# set bci for charging, subscriber free, ordinary, no e2e available
+sipt_set_bci_1("2", "1", "1", "0");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. sipt_set_calling(origin, nai, presentation, screening)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.f.sipt_set_calling"></a>3.3. <code class="function">sipt_set_calling(origin, nai, presentation, screening)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			updates the IAM in the body if it exists, setting (or adding) the calling party number to <span class="quote">“<span class="quote">origin</span>”</span>
+			with the nature address specified in <span class="quote">“<span class="quote">nai</span>”</span> and setting the presentation and screening values to 
+			 <span class="quote">“<span class="quote">presentation</span>”</span> and <span class="quote">“<span class="quote">screening</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp18500952"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">sipt_set_calling(origin, nai, presentation, screening)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# update the calling party to the value in the from header
+sipt_set_calling($fU, 4, 0, 3);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18502352"></a>4. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. $sipt(calling_party_number.presentation) / $sipt_presentation">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_presentation"></a>4.1. <code class="varname">$sipt(calling_party_number.presentation) / $sipt_presentation</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Address presentation restricted indicator contained in the
+			Calling Party Number header of the IAM message if it exists.
+			Returns -1 if there isn't a Calling Party Number header.
+		</p>
+            <div class="table">
+              <a id="idp18503744"></a>
+              <p class="title">
+                <strong>Table 1.1. Address Presentation Restricted Indicator Values</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="Address Presentation Restricted Indicator Values" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>0</td>
+                      <td>presentation allowed</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>presentation restricted</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>address not avail (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>spare</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+            <div class="example">
+              <a id="idp18506496"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">sipt_presentation pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# add privacy header if restriction is requested 
+if($sipt(calling_party_number.presentation) == 1)
+{
+	append_hf("Privacy: id\r\n");
+	$fn = "Anonymous";
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. $sipt(calling_party_number.screening) / $sipt_screening">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_screening"></a>4.2. <code class="varname">$sipt(calling_party_number.screening) / $sipt_screening</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Screening Indicator contained in the
+			Calling Party Number header of the IAM message if it exists.
+			Returns -1 if there isn't a Calling Party Number header.
+		</p>
+            <div class="table">
+              <a id="idp15443552"></a>
+              <p class="title">
+                <strong>Table 1.2. Screening Indicator Values</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="Screening Indicator Values" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>0</td>
+                      <td>Reserved (user provided, not verified)</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>User Provided, Verified and Passed</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Reserved (user provided, verified and failed)</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Network provided</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+            <div class="example">
+              <a id="idp15446312"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">sipt_screening pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+# remove P-Asserted-Identity header if the screening isn't verified 
+# or network provided
+$avp(s:screening) = $sipt(calling_party_number.screening);
+if($avp(s:screening) != 1 &amp;&amp; $avp(s:screening) != 3)
+{
+	remove_hf("P-Asserted-Id");
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. $sipt(hop_counter) / $sipt_hop_counter">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_hop_counter"></a>4.3. <code class="varname">$sipt(hop_counter) / $sipt_hop_counter</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Hop Counter for the IAM message if it exists.
+			Returns -1 if there isn't a hop counter.
+		</p>
+            <div class="example">
+              <a id="idp15448584"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">sipt_hop_counter pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# get the hop counter and update the Max-Forwards header if it exists
+$avp(s:hop) = $sipt(hop_counter);
+if($avp(s:hop) &gt; 0)
+{
+	remove_hf("Max-Forwards");
+	append_hf("Max-Forwards: $avp(s:hop)\r\n");
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. $sipt(calling_party_category) / $sipt(cpc) / $sipt_cpc">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_cpc"></a>4.4. <code class="varname">$sipt(calling_party_category) / $sipt(cpc) / $sipt_cpc</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Calling Party Category for the IAM message.
+			Returns -1 if there is a parsing error.
+		</p>
+            <div class="example">
+              <a id="idp15450952"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">sipt_cpc pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# get the Cpc code and set put it in a custom sip header
+append_hf("X-CPC: $sipt(cpc)\r\n");
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. $sipt(calling_party_number.nature_of_address) / $sipt.(calling_party_number.nai) / $sipt_calling_party_nai">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_calling_party_nai"></a>4.5. <code class="varname">$sipt(calling_party_number.nature_of_address) / $sipt.(calling_party_number.nai) / $sipt_calling_party_nai</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Nature of Address Indicator
+			of the Calling Party for the IAM message.
+			Returns -1 if there is a parsing error or if
+			the Calling Party Number is not present.
+		</p>
+            <div class="table">
+              <a id="idp15453248"></a>
+              <p class="title">
+                <strong>Table 1.3. Calling Nature of Address Values</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="Calling Nature of Address Values" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>0</td>
+                      <td>Spare</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Subscriber Number (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Unknown (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>National (significant) number (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>International use</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+            <div class="example">
+              <a id="idp15456440"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">sipt_calling_party_nai pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# get the Calling Nai and add country code if national
+if($sipt(calling_party_number.nai) == 3)
+{
+	$fU = "32" + "$fU";
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. $sipt(called_party_number.nature_of_address) / $sipt(called_party_number.nai) / $sipt_called_party_nai">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_called_party_nai"></a>4.6. <code class="varname">$sipt(called_party_number.nature_of_address) / $sipt(called_party_number.nai) / $sipt_called_party_nai</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Nature of Address Indicator
+			of the Called Party for the IAM message.
+			Returns -1 if there is a parsing error.
+		</p>
+            <div class="table">
+              <a id="idp15524464"></a>
+              <p class="title">
+                <strong>Table 1.4. Called Nature of Address Values</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="Called Nature of Address Values" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>0</td>
+                      <td>Spare</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Subscriber Number (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Unknown (national use)</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>National (significant) number</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>International use</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Network-specific number (national use)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+            <div class="example">
+              <a id="idp15528072"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">sipt_called_party_nai pseudo-variable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# get the Called Nai and add country code if national
+if($sipt(called_party_number.nai) == 3)
+{
+	$rU = "32" + "$rU";
+}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7. $sipt(event_info)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipt.v.sipt_event_info"></a>4.7. <code class="varname">$sipt(event_info)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the value of the Event Info header
+			of the CPG message.
+			Returns -1 if there is a parsing error.
+		</p>
+            <div class="table">
+              <a id="idp15530240"></a>
+              <p class="title">
+                <strong>Table 1.5. Event Info Values</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="Event Info Values" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>0</td>
+                      <td>Spare</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>ALERTING</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>PROGRESS</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>In-band information or an appropriate pattern is now available</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Call forward on busy</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Call forward on no reply</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>Call forward unconditional</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

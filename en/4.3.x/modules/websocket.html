@@ -1,0 +1,1337 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>WebSocket Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15790976" title="WebSocket Module" />
+    <link rel="next" href="#idp2268432" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="WebSocket Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15790976"></a>WebSocket Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Peter</span> <span class="surname">Dunkley</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Crocodile RCS Ltd<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012-2013 Crocodile RCS Ltd</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2268432">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2462840">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2076416">2. How it works</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2787344">2.1. Initiating a connection</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2491688">2.2. SIP message routing</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2953856">2.3. MSRP message routing</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2640936">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2545384">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm7960">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm5720">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.keepalive_mechanism">4.1. <code class="varname">keepalive_mechanism</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.keepalive_timeout">4.2. <code class="varname">keepalive_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.keepalive.processes">4.3. <code class="varname">keepalive_processes</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.keepalive_interval">4.4. <code class="varname">keepalive_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.ping_application_data">4.5. <code class="varname">ping_application_data</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.sub_protocols">4.6. <code class="varname">sub_protocols</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.p.cors_mode">4.7. <code class="varname">cors_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp25408">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.f.ws_handle_handshake">5.1. 
+		<code class="function">ws_handle_handshake()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.f.ws_close">5.2. 
+		<code class="function">ws_close([status,
+			reason[, connection_id]])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp35064">6. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ws.dump">6.1. <code class="function">ws.dump</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ws.close">6.2. <code class="function">ws.close</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ping">6.3. <code class="function">ws.ping</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ws.pong">6.4. <code class="function">ws.pong</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ws.disable">6.5. <code class="function">ws.disable</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.m.ws.enable">6.6. <code class="function">ws.enable</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1767736">7. Event routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#websocket.e.closed">7.1. 
+		<code class="function">websocket:closed</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2558632">event_route[xhttp:request]</a></dt>
+          <dt>1.2. <a href="#idp2729120">WebSocket SIP Routing</a></dt>
+          <dt>1.3. <a href="#idm1736">Set <code class="varname">keepalive_mechanism</code>
+		parameter</a></dt>
+          <dt>1.4. <a href="#idp78024">Set <code class="varname">keepalive_timeout</code>
+		parameter</a></dt>
+          <dt>1.5. <a href="#idp80520">Set <code class="varname">keepalive_processes</code>
+		parameter</a></dt>
+          <dt>1.6. <a href="#idp83000">Set <code class="varname">keepalive_interval</code>
+		parameter</a></dt>
+          <dt>1.7. <a href="#idp85488">Set <code class="varname">ping_application_data</code>
+		parameter</a></dt>
+          <dt>1.8. <a href="#idp89320">Set <code class="varname">sub_protocols</code>
+		parameter</a></dt>
+          <dt>1.9. <a href="#idp24160">Set <code class="varname">cors_mode</code>
+		parameter</a></dt>
+          <dt>1.10. <a href="#idp27920"><code class="function">ws_handle_handshake</code> usage</a></dt>
+          <dt>1.11. <a href="#idp33768"><code class="function">ws_close</code> usage</a></dt>
+          <dt>1.12. <a href="#idp1769416"><code class="function">event_route[websocket:closed]</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2268432"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2462840">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2076416">2. How it works</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2787344">2.1. Initiating a connection</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2491688">2.2. SIP message routing</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2953856">2.3. MSRP message routing</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2640936">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2545384">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm7960">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm5720">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.keepalive_mechanism">4.1. <code class="varname">keepalive_mechanism</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.keepalive_timeout">4.2. <code class="varname">keepalive_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.keepalive.processes">4.3. <code class="varname">keepalive_processes</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.keepalive_interval">4.4. <code class="varname">keepalive_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.ping_application_data">4.5. <code class="varname">ping_application_data</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.sub_protocols">4.6. <code class="varname">sub_protocols</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.p.cors_mode">4.7. <code class="varname">cors_mode</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp25408">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.f.ws_handle_handshake">5.1. 
+		<code class="function">ws_handle_handshake()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.f.ws_close">5.2. 
+		<code class="function">ws_close([status,
+			reason[, connection_id]])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp35064">6. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ws.dump">6.1. <code class="function">ws.dump</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ws.close">6.2. <code class="function">ws.close</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ping">6.3. <code class="function">ws.ping</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ws.pong">6.4. <code class="function">ws.pong</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ws.disable">6.5. <code class="function">ws.disable</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.m.ws.enable">6.6. <code class="function">ws.enable</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1767736">7. Event routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#websocket.e.closed">7.1. 
+		<code class="function">websocket:closed</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2462840"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module implements a WebSocket (RFC 6455) server and provides
+	connection establishment (handshaking), management (including
+	connection keep-alive), and framing for the SIP and MSRP WebSocket
+	sub-protocols (draft-ietf-sipcore-sip-websocket and
+	draft-pd-msrp-websocket).</p>
+          <p>The module supports WebSockets (ws) and secure WebSockets (wss)
+	</p>
+        </div>
+        <div class="section" title="2. How it works">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2076416"></a>2. How it works</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Initiating a connection">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2787344"></a>2.1. Initiating a connection</h3>
+                </div>
+              </div>
+            </div>
+            <p>A WebSocket connection is initiated with an HTTP GET.  The
+	<span class="emphasis"><em>xhttp</em></span> module is used to handle this GET and
+	call the <a class="xref" href="#websocket.f.ws_handle_handshake" title="5.1.  ws_handle_handshake()">Section 5.1, “
+		<code class="function">ws_handle_handshake()</code>
+		”</a> exported function.
+	</p>
+            <p><span class="emphasis"><em>event_route[xhttp:request]</em></span> should perform
+	some validation of the HTTP headers before calling
+	<a class="xref" href="#websocket.f.ws_handle_handshake" title="5.1.  ws_handle_handshake()">Section 5.1, “
+		<code class="function">ws_handle_handshake()</code>
+		”</a>.  The event_route can also be
+	used to make sure the HTTP GET has the correct URI, perform HTTP
+	authentication on the WebSocket connection, and check the
+	<span class="emphasis"><em>Origin</em></span> header (RFC 6454) to ensure a
+	browser-based SIP UA or MSRP client has been downloaded from the
+	correct location.</p>
+            <div class="example">
+              <a id="idp2558632"></a>
+              <p class="title">
+                <strong>Example 1.1. event_route[xhttp:request]</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+loadmodule "sl.so"
+loadmodule "xhttp.so"
+loadmodule "msrp.so"  # Only required if using MSRP over WebSockets
+loadmodule "websocket.so"
+...
+event_route[xhttp:request] {
+        set_reply_close();
+        set_reply_no_connect();
+
+        if ($Rp != 80
+#!ifdef WITH_TLS
+            &amp;&amp; $Rp != 443
+#!endif
+        ) {
+
+                xlog("L_WARN", "HTTP request received on $Rp\n");
+                xhttp_reply("403", "Forbidden", "", "");
+                exit;
+        }
+
+        xlog("L_DBG", "HTTP Request Received\n");
+
+        if ($hdr(Upgrade)=~"websocket"
+                        &amp;&amp; $hdr(Connection)=~"Upgrade"
+                        &amp;&amp; $rm=~"GET") {
+
+                # Validate Host - make sure the client is using the correct
+                # alias for WebSockets
+                if ($hdr(Host) == $null || !is_myself("sip:" + $hdr(Host))) {
+                        xlog("L_WARN", "Bad host $hdr(Host)\n");
+                        xhttp_reply("403", "Forbidden", "", "");
+                        exit;
+                }
+
+                # Optional... validate Origin - make sure the client is from an
+                # authorised website.  For example,
+                #
+                # if ($hdr(Origin) != "http://communicator.MY_DOMAIN"
+                #     &amp;&amp; $hdr(Origin) != "https://communicator.MY_DOMAIN") {
+                #       xlog("L_WARN", "Unauthorised client $hdr(Origin)\n");
+                #       xhttp_reply("403", "Forbidden", "", "");
+                #       exit;
+                # }
+
+                # Optional... perform HTTP authentication
+
+                # ws_handle_handshake() exits (no further configuration file
+                # processing of the request) when complete.
+                if (ws_handle_handshake())
+		{
+			# Optional... cache some information about the
+			# successful connection
+			exit;
+		}
+        }
+
+        xhttp_reply("404", "Not found", "", "");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. SIP message routing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2491688"></a>2.2. SIP message routing</h3>
+                </div>
+              </div>
+            </div>
+            <p>SIP over WebSockets uses invalid URIs in routing headers
+	(Contact:, Record-Route:, and Via:) because a JavaScript stack running
+	in a browser has no way to determine the local address from which the
+	WebSocket connection is made.  This means that the routing headers
+	cannot be used for request or response routing in the normal manner.
+	</p>
+            <p>draft-ietf-sipcore-sip-websocket states that SIP WebSocket
+	Clients and the SIP registrar should implement Outbound (RFC 5626) and
+	Path (RFC 3327) to enable requests and responses to be correctly
+	routed.  However, Kamailio does not currently support Outbound and
+	it may not be possible to guarantee all SIP WebSocket clients will
+	support Outbound and Path.</p>
+            <p>The <span class="emphasis"><em>nathelper</em></span> module functions
+	(<span class="emphasis"><em>nat_uac_test()</em></span>, 
+	<span class="emphasis"><em>fix_nated_register()</em></span>,
+	<span class="emphasis"><em>add_contact_alias()</em></span>, and
+	<span class="emphasis"><em>handle_ruri_alias()</em></span>) and the Kamailio core
+	<span class="emphasis"><em>force_rport()</em></span> can be used to ensure correct
+	routing of SIP WebSocket requests without using Outbound and Path.
+	</p>
+            <div class="example">
+              <a id="idp2729120"></a>
+              <p class="title">
+                <strong>Example 1.2. WebSocket SIP Routing</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+loadmodule "sl.so"
+loadmodule "tm.so"
+...
+loadmodule "websocket.so"
+...
+request_route {
+
+        # per request initial checks
+        route(REQINIT);
+
+        if (nat_uac_test(64)) {
+                # Do NAT traversal stuff for requests from a WebSocket
+                # connection - even if it is not behind a NAT!
+                # This won't be needed in the future if Kamailio and the
+                # WebSocket client support Outbound and Path.
+                force_rport();
+                if (is_method("REGISTER"))
+                        fix_nated_register();
+                else {
+                        if (!add_contact_alias()) {
+                                xlog("L_ERR", "Error aliasing contact &lt;$ct&gt;\n");
+                                sl_send_reply("400", "Bad Request");
+                                exit;
+                        }
+                }
+        }
+
+        if (!is_method("REGISTER"))
+                t_on_reply("WS_REPLY");
+...
+# Handle requests within SIP dialogs
+route[WITHINDLG] {
+        if (has_totag()) {
+                # sequential request withing a dialog should
+                # take the path determined by record-routing
+                if (loose_route()) {
+                        if ($du == "") {
+                                if (!handle_ruri_alias()) {
+                                        xlog("L_ERR", "Bad alias &lt;$ru&gt;\n");
+                                        sl_send_reply("400", "Bad Request");
+                                        exit;
+                                }
+                        }
+                        route(RELAY);
+                } else {
+                        if ( is_method("ACK") ) {
+...
+onreply_route[WS_REPLY] {
+        if (nat_uac_test(64)) {
+                # Do NAT traversal stuff for replies to a WebSocket connection
+		# - even if it is not behind a NAT!
+                # This won't be needed in the future if Kamailio and the
+		# WebSocket client support Outbound and Path.
+                add_contact_alias();
+        }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3. MSRP message routing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2953856"></a>2.3. MSRP message routing</h3>
+                </div>
+              </div>
+            </div>
+            <p>MSRP over WebSocket clients create invalid local URIs for use in
+	Path headers (From-Path: and To-Path:) because a JavaScript stack
+	running in a browser has no way to determine the local address from
+	which the WebSocket connection is made.  This is OK because MSRP over
+	WebSocket clients MUST use an MSRP relay and it is the MSRP relay's
+	responsibility to select the correct connection to the client based on
+	the MSRP URIs that it has created (and maintains a mapping for).</p>
+          </div>
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2640936"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2545384"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following module must be loaded before this module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>sl</em></span>.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>tm</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		The following modules are required to make proper use of this
+		module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>nathelper</em></span> or
+		<span class="emphasis"><em>outbound</em></span>.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>xhttp</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		The following module is required to use the secure WebSocket
+		(wss) scheme:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>tls</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		The following module is required to support MSRP over
+		WebSockets:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>msrp</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm7960"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries must be installed before running
+		Kamailio with this module loaded:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>OpenSSL</em></span>.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>GNU libunistring</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm5720"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. keepalive_mechanism (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.keepalive_mechanism"></a>4.1. <code class="varname">keepalive_mechanism</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The keep-alive mechanism to use for WebSocket connections.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>If <span class="emphasis"><em>nathelper</em></span> is only being used
+		for WebSocket connections then <span class="emphasis"><em>nathelper NAT
+		pinging</em></span> is not required.  If
+		<span class="emphasis"><em>nathelper</em></span> is used for WebSocket connections
+		and TCP/TLS aliasing/NAT-traversal then WebSocket keep-alives
+		are not required.</p>
+            </div>
+            <p>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p> 0 - no WebSocket keep-alives</p>
+                </li>
+                <li class="listitem">
+                  <p> 1 - Ping WebSocket
+		keep-alives</p>
+                </li>
+                <li class="listitem">
+                  <p> 2 - Pong WebSocket
+		keep-alives</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm1736"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">keepalive_mechanism</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "keepalive_mechanism", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. keepalive_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.keepalive_timeout"></a>4.2. <code class="varname">keepalive_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The time (in seconds) after which to send a keep-alive on
+		idle WebSocket connections.</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 180.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp78024"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">keepalive_timeout</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "keepalive_timeout", 30)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. keepalive_processes (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.keepalive.processes"></a>4.3. <code class="varname">keepalive_processes</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of processes to start to perform WebSocket
+		connection keep-alives.</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp80520"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">keepalive_processes</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "keepalive_processes", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. keepalive_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.keepalive_interval"></a>4.4. <code class="varname">keepalive_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of seconds between each keep-alice process run
+		</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp83000"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">keepalive_interval</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "keepalive_interval", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. ping_application_data (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.ping_application_data"></a>4.5. <code class="varname">ping_application_data</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The application data to use in keep-alive Ping and Pong
+		frames.</p>
+            <p>
+              <span class="emphasis">
+                <em>Default value is Kamailio Server: header
+		content</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp85488"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">ping_application_data</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "ping_application_data", "WebSockets rock")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. sub_protocols (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.sub_protocols"></a>4.6. <code class="varname">sub_protocols</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>A bitmap that allows you to control the sub-protocols
+		supported by the WebSocket server.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>1</em></span> - sip (draft-ietf-sipcore-sip-websocket)
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>2</em></span> - msrp (draft-pd-msrp-websocket) -
+		msrp.so must be loaded before websocket.so
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 1 when msrp.so is not loaded
+		 3 when msrp.so is loaded.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp89320"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">sub_protocols</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "sub_protocols", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7. cors_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.p.cors_mode"></a>4.7. <code class="varname">cors_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This parameter lets you set the "Cross-origin
+		resource sharing" behaviour of the WebSocket server.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>0</em></span> - Do not add an
+		"Access-Control-Allow-Origin:" header to the response
+		accepting the WebSocket handshake. 
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>1</em></span> - Add a
+		"Access-Control-Allow-Origin: *" header to the
+		response accepting the WebSocket handshake.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>2</em></span> - Add a
+		"Access-Control-Allow-Origin:" header containing the
+		same body as the "Origin:" header from the request to
+		the response accepting the WebSocket handshake. If there is no
+		"Origin:" header in the request no header will be
+		added to the response.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+              <span class="emphasis">
+                <em>Default value is 0.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp24160"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">cors_mode</code>
+		parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("websocket", "cors_mode", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp25408"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  ws_handle_handshake()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.f.ws_handle_handshake"></a>5.1. 
+		<code class="function">ws_handle_handshake()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks an HTTP GET request for the required
+		headers and values, and (if successful) upgrades the connection
+		from HTTP to WebSocket.</p>
+            <p>This function can be used from ANY_ROUTE (but will only
+		work in <span class="emphasis"><em>event_route[xhttp:request]</em></span>).</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function returns 0, stopping all further
+		processing of the request, when there is a problem.</p>
+            </div>
+            <div class="example">
+              <a id="idp27920"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">ws_handle_handshake</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ws_handle_handshake();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  ws_close([status, reason[, connection_id]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.f.ws_close"></a>5.2. 
+		<code class="function">ws_close([status,
+			reason[, connection_id]])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function closes a WebSocket connection.</p>
+            <p>The function returns -1 if there is an error and 1 if
+		it succeeds.</p>
+            <p>The meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>status</em></span> - an
+			integer indicating the reason for closure.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reason</em></span> - a
+			string describing the reason for closure.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>connection_id</em></span> - the
+			connection to close. If not specified the connection the
+			current message arrived on will be closed.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p><span class="emphasis"><em>status</em></span> and
+		<span class="emphasis"><em>reason</em></span> values SHOULD correspond to the
+		definitions in section 7.4 of RFC 6455. If these parameters are
+		not used the defaults of "1000" and "Normal
+		closure" will be used.</p>
+            </div>
+            <p>This function can be used from ANY_ROUTE.</p>
+            <div class="example">
+              <a id="idp33768"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">ws_close</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ws_close(4000, "Because I say so");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp35064"></a>6. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. ws.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ws.dump"></a>6.1. <code class="function">ws.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Provides the details of the first 50 WebSocket
+		connections.</p>
+            <p>Name: <span class="emphasis"><em>ws.dump</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>order (optional) -
+				<span class="quote">“<span class="quote">id_hash</span>”</span>,
+				<span class="quote">“<span class="quote">used_desc</span>”</span>, or
+				<span class="quote">“<span class="quote">used_asc</span>”</span>.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>If no parameter is provided id_hash order is
+		used.</p>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.dump:fifo_reply
+			used_asc
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="6.2. ws.close">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ws.close"></a>6.2. <code class="function">ws.close</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Starts the close handshake for the specified
+		WebSocket connection.</p>
+            <p>Name: <span class="emphasis"><em>ws.close</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>id - WebSocket connection ID.</p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.close:fifo_reply
+			1
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="6.3. ws.ping">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ping"></a>6.3. <code class="function">ws.ping</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Sends a Ping frame on the specified WebSocket
+		connection.</p>
+            <p>Name: <span class="emphasis"><em>ws.ping</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>id - WebSocket connection ID.</p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.ping:fifo_reply
+			1
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="6.4. ws.pong">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ws.pong"></a>6.4. <code class="function">ws.pong</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Sends a Pong frame on the specified WebSocket
+		connection.</p>
+            <p>Name: <span class="emphasis"><em>ws.pong</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>id - WebSocket connection ID.</p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.pong:fifo_reply
+			1
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="6.5. ws.disable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ws.disable"></a>6.5. <code class="function">ws.disable</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Disables WebSockets preventing new connections from
+		being established.</p>
+            <p>Name: <span class="emphasis"><em>ws.disable</em></span></p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.disable:fifo_reply
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="6.6. ws.enable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.m.ws.enable"></a>6.6. <code class="function">ws.enable</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Enables WebSockets allowing new connections to be
+		established.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>WebSockets are enabled at start-up.</p>
+            </div>
+            <p>Name: <span class="emphasis"><em>ws.enable</em></span></p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:ws.enable:fifo_reply
+			_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="7. Event routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1767736"></a>7. Event routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.  websocket:closed">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="websocket.e.closed"></a>7.1. 
+		<code class="function">websocket:closed</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When defined, the module calls
+			event_route[websocket:closed] when a connection
+			closes.  The connection may be identified using the
+			the $si and $sp pseudo-variables.
+		</p>
+            <div class="example">
+              <a id="idp1769416"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">event_route[websocket:closed]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route[websocket:closed] {
+	xlog("L_INFO", "WebSocket connection from $si:$sp has closed\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

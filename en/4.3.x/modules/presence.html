@@ -1,0 +1,3046 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4340336" title="Presence Module" />
+    <link rel="next" href="#idp1980424" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4340336"></a>Presence Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TutPro Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1980424">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2376664">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2554184">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2562656">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2957280">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2585904">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.db_url">3.1. <code class="varname">db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.presentity_table">3.2. <code class="varname">presentity_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.active_watchers_table">3.3. <code class="varname">active_watchers_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.watchers_table">3.4. <code class="varname">watchers_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.clean_period">3.5. <code class="varname">clean_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.db_update_period">3.6. <code class="varname">db_update_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.waitn_time">3.7. <code class="varname">waitn_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.notifier_poll_rate">3.8. <code class="varname">notifier_poll_rate</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.notifier_processes">3.9. <code class="varname">notifier_processes</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.to_tag_pref">3.10. <code class="varname">to_tag_pref</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.expires_offset">3.11. <code class="varname">expires_offset</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.max_expires">3.12. <code class="varname">max_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.min_expires">3.13. <code class="varname">min_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.min_expires_action">3.14. <code class="varname">min_expires_action</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.server_address">3.15. <code class="varname">server_address</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.subs_db_mode">3.16. <code class="varname">subs_db_mode</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.publ_cache">3.17. <code class="varname">publ_cache</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.subs_htable_size">3.18. <code class="varname">subs_htable_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.pres_htable_size">3.19. <code class="varname">pres_htable_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.send_fast_notify">3.20. <code class="varname">send_fast_notify</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.enable_sphere_check">3.21. <code class="varname">enable_sphere_check</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.timeout_rm_subs">3.22. <code class="varname">timeout_rm_subs</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.fetch_rows">3.23. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.db_table_lock_type">3.24. <code class="varname">db_table_lock_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.local_log_level">3.25. <code class="varname">local_log_level</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.subs_remove_match">3.26. <code class="varname">subs_remove_match</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.xavp_cfg">3.27. <code class="varname">xavp_cfg</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.retrieve_order">3.28. <code class="varname">retrieve_order</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.p.sip_uri_match">3.29. <code class="varname">sip_uri_match</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1789760">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.f.handle_publish">4.1. 
+		<code class="function">handle_publish([sender_uri])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.f.handle_subscribe">4.2. 
+		<code class="function">handle_subscribe([watcher_uri])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.f.pres_auth_status">4.3. 
+		<code class="function">pres_auth_status(watcher_uri, presentity_uri)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.f.pres_refresh_watchers">4.4. 
+		<code class="function">pres_refresh_watchers(uri, event, type[, file_uri, filename])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#presence.f.pres_update_whatchers">4.5. 
+		<code class="function">pres_update_watchers(uri, event)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1816536">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1816904">5.1. 
+		<code class="function">refreshWatchers</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1824000">5.2. 
+		<code class="function">cleanup</code>
+	  </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1827104">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1827480">6.1. 
+		<code class="function">presence.cleanup</code>
+	  </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1830000">7. Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1830376">7.1. <code class="varname">$subs(attr)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1833952">8. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp533776">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp262944">1. 
+				<code class="function">bind_presence(presence_api_t* api)</code>
+				</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1232048">2. 
+		<code class="function">add_event</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp564032">3. 
+			<code class="function">get_rules_doc</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3245008">4. 
+			<code class="function">get_auth_status</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1587840">5. 
+			<code class="function">apply_auth_nbody</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1324144">6. 
+			<code class="function">agg_nbody</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp829208">7. 
+			<code class="function">free_body</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp831160">8. 
+			<code class="function">aux_body_processing</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3151896">9. 
+			<code class="function">aux_free_body</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3154032">10. 
+			<code class="function">evs_publ_handl</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3155808">11. 
+			<code class="function">evs_subs_handl</code>
+		</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3157584">12. 
+	<code class="function">contains_event</code>
+	</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3159544">13. 
+	<code class="function">get_event_list</code>
+	</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1146136">14. 
+	<code class="function">update_watchers_status</code>
+	</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1148136">15. 
+	<code class="function">get_sphere</code>
+	</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1150016">16. 
+	<code class="function">get_presentity</code>
+	</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2658672">17. 
+	<code class="function">free_presentity</code>
+	</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp49448">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3532216">Set <code class="varname">presentity_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm16696">Set <code class="varname">active_watchers_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm13920">Set <code class="varname">watchers_table</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm11056">Set <code class="varname">clean_period</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm8216">Set <code class="varname">db_update_period</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm4952">Set <code class="varname">waitn_time</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm1672">Set <code class="varname">notifier_poll_rate</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp75136">Set <code class="varname">notifier_processes</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp77928">Set <code class="varname">to_tag_pref</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp80832">Set <code class="varname">expires_offset</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp83720">Set <code class="varname">max_expires</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp86824">Set <code class="varname">min_expires</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp20312">Set <code class="varname">min_expires</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp22536">Set <code class="varname">server_address</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp29104">Set <code class="varname">subs_db_mode</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp32632">Set <code class="varname">publ_cache</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp35480">Set <code class="varname">subs_htable_size</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp38352">Set <code class="varname">pres_htable_size</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp41384">Set <code class="varname">send_fast_notify</code> parameter</a></dt>
+          <dt>1.21. <a href="#idp1763184">Set <code class="varname">enable_sphere_check</code> parameter</a></dt>
+          <dt>1.22. <a href="#idp1766192">Set <code class="varname">timeout_rm_subs</code> parameter</a></dt>
+          <dt>1.23. <a href="#idp1768712">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.24. <a href="#idp1771984">Set <code class="varname">db_table_lock_type</code> parameter</a></dt>
+          <dt>1.25. <a href="#idp1774520">Set <code class="varname">local_log_level</code> parameter</a></dt>
+          <dt>1.26. <a href="#idp1777296">Set <code class="varname">subs_remove_match</code> parameter</a></dt>
+          <dt>1.27. <a href="#idp1781384">Set <code class="varname">xavp_cfg</code> parameter</a></dt>
+          <dt>1.28. <a href="#idp1784088">Set <code class="varname">retrieve_order</code> parameter</a></dt>
+          <dt>1.29. <a href="#idp1788464">Set <code class="varname">sip_uri_match</code> parameter</a></dt>
+          <dt>1.30. <a href="#idp1794464"><code class="function">handle_publish</code> usage</a></dt>
+          <dt>1.31. <a href="#idp1800144"><code class="function">handle_subscribe</code> usage</a></dt>
+          <dt>1.32. <a href="#idp1803144"><code class="function">pres_auth_status</code> usage</a></dt>
+          <dt>1.33. <a href="#idp1810984"><code class="function">pres_refresh_watchers</code> usage</a></dt>
+          <dt>1.34. <a href="#idp1815232"><code class="function">pres_update_watchers</code> usage</a></dt>
+          <dt>1.35. <a href="#idp1832624"><code class="function">$subs(name)</code> usage</a></dt>
+          <dt>2.1. <a href="#idp2141832"><code class="function">presence_api_t</code> structure</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1980424"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2376664">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2554184">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2562656">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2957280">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2585904">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.db_url">3.1. <code class="varname">db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.presentity_table">3.2. <code class="varname">presentity_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.active_watchers_table">3.3. <code class="varname">active_watchers_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.watchers_table">3.4. <code class="varname">watchers_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.clean_period">3.5. <code class="varname">clean_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.db_update_period">3.6. <code class="varname">db_update_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.waitn_time">3.7. <code class="varname">waitn_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.notifier_poll_rate">3.8. <code class="varname">notifier_poll_rate</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.notifier_processes">3.9. <code class="varname">notifier_processes</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.to_tag_pref">3.10. <code class="varname">to_tag_pref</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.expires_offset">3.11. <code class="varname">expires_offset</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.max_expires">3.12. <code class="varname">max_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.min_expires">3.13. <code class="varname">min_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.min_expires_action">3.14. <code class="varname">min_expires_action</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.server_address">3.15. <code class="varname">server_address</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.subs_db_mode">3.16. <code class="varname">subs_db_mode</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.publ_cache">3.17. <code class="varname">publ_cache</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.subs_htable_size">3.18. <code class="varname">subs_htable_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.pres_htable_size">3.19. <code class="varname">pres_htable_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.send_fast_notify">3.20. <code class="varname">send_fast_notify</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.enable_sphere_check">3.21. <code class="varname">enable_sphere_check</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.timeout_rm_subs">3.22. <code class="varname">timeout_rm_subs</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.fetch_rows">3.23. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.db_table_lock_type">3.24. <code class="varname">db_table_lock_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.local_log_level">3.25. <code class="varname">local_log_level</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.subs_remove_match">3.26. <code class="varname">subs_remove_match</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.xavp_cfg">3.27. <code class="varname">xavp_cfg</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.retrieve_order">3.28. <code class="varname">retrieve_order</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.p.sip_uri_match">3.29. <code class="varname">sip_uri_match</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1789760">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.f.handle_publish">4.1. 
+		<code class="function">handle_publish([sender_uri])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.f.handle_subscribe">4.2. 
+		<code class="function">handle_subscribe([watcher_uri])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.f.pres_auth_status">4.3. 
+		<code class="function">pres_auth_status(watcher_uri, presentity_uri)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.f.pres_refresh_watchers">4.4. 
+		<code class="function">pres_refresh_watchers(uri, event, type[, file_uri, filename])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#presence.f.pres_update_whatchers">4.5. 
+		<code class="function">pres_update_watchers(uri, event)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1816536">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1816904">5.1. 
+		<code class="function">refreshWatchers</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1824000">5.2. 
+		<code class="function">cleanup</code>
+	  </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1827104">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1827480">6.1. 
+		<code class="function">presence.cleanup</code>
+	  </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1830000">7. Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1830376">7.1. <code class="varname">$subs(attr)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1833952">8. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2376664"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> The Presence module implements the core functionality of SIP event notification.
+	It handles PUBLISH and SUBSCRIBE messages and generates
+	NOTIFY messages in a general, event independent way. It is extensible and allows registering 
+	events to it from other Kamailio modules.
+	Supported SIP event packages are presence, presence.winfo, dialog;sla from the presence_xml
+	module and message-summary from the presence_mwi module.
+	</p>
+          <p>
+	The module can use database and memory storage (to improve performance).
+	For subscriptions it supports the 4 storage modes: Memory Only, Write Back,
+	Write Through and DB Only. For publishes, it stores the state documents in
+	database only(because of the large size) and it can store a publish cache in
+	memory to avoid unnecessairy database queries. Read the 
+	<span class="emphasis"><em>subs_db_mode</em></span> and <span class="emphasis"><em>publ_cache</em></span> parameter
+	sections to decide which is the best storage configuration for you.
+	</p>
+          <p>The module implements several API functions, that can be used by other
+	modules. In fact, it can be used only as a resource module, or "library".
+	This mode of operation is enabled if the db_url parameter is not set to any value.
+	</p>
+          <p>
+	The Kamailio Presence module implements the specifications in: RFC3265, RFC3856, RFC3857, 
+	RFC3858.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2554184"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2562656"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2957280"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2585904"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.db_url"></a>3.1. <code class="varname">db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The database url.
+		</p>
+            <p>If set, the module is a fully operational
+		presence server. Otherwise, it is used as a 'library', for 
+		its exported functions.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp49448"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "db_url", 
+	"mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. presentity_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.presentity_table"></a>3.2. <code class="varname">presentity_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table where PUBLISH presence information is stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">presentity</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3532216"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">presentity_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "presentity_table", "presentity")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. active_watchers_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.active_watchers_table"></a>3.3. <code class="varname">active_watchers_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table where active subscription information is stored. 
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">active_watchers</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm16696"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">active_watchers_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "active_watchers_table", "active_watchers")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. watchers_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.watchers_table"></a>3.4. <code class="varname">watchers_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table where subscription states are stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">watchers</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm13920"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">watchers_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "watchers_table", "watchers")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. clean_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.clean_period"></a>3.5. <code class="varname">clean_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The period in seconds between checks if there are expired messages stored in database.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">100</span>”</span>. A zero or negative value disables this activity.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm11056"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">clean_period</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "clean_period", 100)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. db_update_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.db_update_period"></a>3.6. <code class="varname">db_update_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The period at which to synchronize cached subscriber info with the
+		database.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">100</span>”</span>. A zero or negative value disables synchronization.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm8216"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">db_update_period</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "db_update_period", 100)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. waitn_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.waitn_time"></a>3.7. <code class="varname">waitn_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum time period that NOTIFY requests will
+		be buffered for.  The server will attempt to send
+		NOTIFY requests within many seconds of a change occurring.
+		</p>
+            <p>
+		Note: this parameter is only used when notifier_processes is
+		greater than 0. When notifier_processes is less than or equal
+		to 0 NOTIFY requests are sent immediately.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">5</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm4952"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">waitn_time</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "waitn_time", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. notifier_poll_rate (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.notifier_poll_rate"></a>3.8. <code class="varname">notifier_poll_rate</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of times per second that the notifier processes
+		should check for work.  Approximately
+		1/(waitn_time * notifier_poll_rate * notifier_processes) of the
+		pending updates will be sent each time a notifier process runs.
+		</p>
+            <p>
+		Separate notifier processes are only run when subs_db_mode is 3
+		(DB only mode).
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm1672"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">notifier_poll_rate</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "notifier_poll_rate", 20)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. notifier_processes (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.notifier_processes"></a>3.9. <code class="varname">notifier_processes</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of notifier processes that should be started.
+		</p>
+            <p>
+		Separate notifier processes are only run when subs_db_mode is
+		3 (DB only mode).
+		</p>
+            <p>
+		Note: setting this parameter to 0 when subs_db_mode is 3
+		keeps the old behaviour (sending NOTIFY requests immediately).
+		This (old) behaviour is disabled by default in DB only mode
+		because under load, when lots of NOTIFY requests can be sent
+		on a dialog at the same time, there are race conditions which
+		result in CSeq re-use.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp75136"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">notifier_processes</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "notifier_processes", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. to_tag_pref (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.to_tag_pref"></a>3.10. <code class="varname">to_tag_pref</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The prefix used when generating to_tag when sending replies for
+		SUBSCRIBE requests.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp77928"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">to_tag_pref</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "to_tag_pref", 'pres')
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. expires_offset (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.expires_offset"></a>3.11. <code class="varname">expires_offset</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value in seconds that should be subtracted from the expires value when
+		sending a 200OK for a publish. It is used for forcing the client
+		to send an update before the old publish expires.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp80832"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">expires_offset</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "expires_offset", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. max_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.max_expires"></a>3.12. <code class="varname">max_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+               The maximum admissible expires value for PUBLISH/SUBSCRIBE
+               message (in seconds).
+               </p>
+            <p>
+               <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">3600</span>”</span>.
+               </em></span>
+               </p>
+            <div class="example">
+              <a id="idp83720"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">max_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "max_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. min_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.min_expires"></a>3.13. <code class="varname">min_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The minimum admissible expires value for PUBLISH/SUBSCRIBE
+        message (in seconds).
+    </p>
+            <p>
+        If &gt; 0 then min_expires_action parameter determines the response.
+    </p>
+            <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+        </em></span>
+    </p>
+            <div class="example">
+              <a id="idp86824"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">min_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">            ...
+            modparam("presence", "min_expires", 1800)
+            ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. min_expires_action (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.min_expires_action"></a>3.14. <code class="varname">min_expires_action</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The action to take when UA sends a expires value less then min_expires.
+    </p>
+            <p>
+        </p>
+            <div class="itemizedlist" title="Possible Values">
+              <p class="title">
+                <strong>Possible Values</strong>
+              </p>
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p> 1 : RFC Compliant, returns <span class="quote">“<span class="quote">423 Interval Too Brief</span>”</span></p>
+                </li>
+                <li class="listitem">
+                  <p> 2 : forces the min_expires value in the subscription</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+    </p>
+            <p>
+        If &gt; 0 then min_expires_action parameter determines the response.
+    </p>
+            <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.</em></span>
+    </p>
+            <div class="example">
+              <a id="idp20312"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">min_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">            ...
+            modparam("presence", "min_expires", 1800)
+            ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. server_address (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.server_address"></a>3.15. <code class="varname">server_address</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The presence server address which will become the value of Contact header filed 
+		for 200 OK replies to SUBSCRIBE and PUBLISH and in NOTIFY messages.
+		</p>
+            <div class="example">
+              <a id="idp22536"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">server_address</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "server_address", "sip:10.10.10.10:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. subs_db_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.subs_db_mode"></a>3.16. <code class="varname">subs_db_mode</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The presence module can utilize database for persistent subscription storage.
+		If you use database, your subscriptions will survive machine restarts or
+		SW crashes. The disadvantage is that accessing database can be time consuming.
+		Therefore, presence module implements four database accessing modes:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			0 - This disables database completely. Only memory will be used.
+			Subscriptions will not survive restart. Use this value if you need a
+			really fast presence module and subscription persistence is not necessary or
+			is provided by other means.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			1 - Write-Through scheme. Subscriptions are updated synchronously
+			in database and in memory(used for read operations). Use this
+			scheme if speed is not top priority, but it's important that no
+			subscriptions will be lost during crash or reboot or if you have
+			an external application that reads the state of the subscriptions
+			from database and they need to be updated synchronously.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			2 - Write-Back scheme. This is a combination of previous two
+			schemes. All changes are made to memory and database
+			synchronization is done in the timer. The timer deletes all
+			expired contacts and flushes all modified or new subscriptions to
+			database. Use this scheme if you encounter high-load peaks
+			and want them to process as fast as possible. Latency of this
+			mode is much lower than latency of mode 1, but slightly higher
+			than latency of mode 0. To control the interval at which data is
+			flushed to database, set the <span class="emphasis"><em>db_update_period</em></span>
+			parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			3 - DB-Only scheme. No memory cache is kept, all operations being
+			directly performed with the database. The timer deletes all expired
+			subscriptions from database. The mode is useful if you configure
+			more servers sharing the same DB without any replication at SIP
+			level. The mode may be slower due the high number of DB operation.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>Default value is 2 (Write-Back scheme).</em></span>
+		</p>
+            <div class="example">
+              <a id="idp29104"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">subs_db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "subs_db_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. publ_cache (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.publ_cache"></a>3.17. <code class="varname">publ_cache</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		To improve performance, the presence module holds by default a
+		publish cache that says if a certain publication exists in database.
+		This is only a list of URI + event, so it does not use much memory.
+		The cache is used when a Subscription is received to check if there
+		is any published state in database. This way unnecessary queries in
+		presentity table are avoided.
+		</p>
+            <p>
+		Setting this parameter to 0 will disable the usage of the publish
+		cache. This is desirable when you have more servers sharing the same
+		database or there are other external entities inserting data into the
+		presentity table.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp32632"></a>
+              <p class="title">
+                <strong>Example 1.17. Set <code class="varname">publ_cache</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "publ_cache", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. subs_htable_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.subs_htable_size"></a>3.18. <code class="varname">subs_htable_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The size of the in-memory hash table to store subscription dialogs.
+		This parameter will be used as the power of 2 when computing table size.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">9 (512)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp35480"></a>
+              <p class="title">
+                <strong>Example 1.18. Set <code class="varname">subs_htable_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "subs_htable_size", 11)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. pres_htable_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.pres_htable_size"></a>3.19. <code class="varname">pres_htable_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        	The size of the in-memory hash table to store publish records.
+        	This parameter will be used as the power of 2 when computing table size.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">9 (512)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp38352"></a>
+              <p class="title">
+                <strong>Example 1.19. Set <code class="varname">pres_htable_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "pres_htable_size", 11)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20. send_fast_notify (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.send_fast_notify"></a>3.20. <code class="varname">send_fast_notify</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter enables or disables the sending of an initial empty NOTIFY after a SUBSCRIBE/reSUBSCRIBE. 
+		This caused problems for MWI application, because some CPEs (like Samsung) fail to understand an empty
+		NOTIFY to an message-summary event. This parameter is enabled by default, thus addering to the standard.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1 </span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp41384"></a>
+              <p class="title">
+                <strong>Example 1.20. Set <code class="varname">send_fast_notify</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "send_fast_notify", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21. enable_sphere_check (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.enable_sphere_check"></a>3.21. <code class="varname">enable_sphere_check</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is a flag that should be set if permission rules include
+		sphere checking.
+		The sphere information is expected to be present in the RPID body
+		published by the presentity. The flag is introduced as this check requires
+		extra processing that should be avoided if this feature is not supported
+		by the clients.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0 </span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1763184"></a>
+              <p class="title">
+                <strong>Example 1.21. Set <code class="varname">enable_sphere_check</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "enable_sphere_check", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22. timeout_rm_subs (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.timeout_rm_subs"></a>3.22. <code class="varname">timeout_rm_subs</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is a flag that should be set if subscriptions should be
+		removed from the active_watchers when a NOTIFY times out. RFC3265
+		section 3.2.2 defines this behaviour as a SHOULD, so by default it is
+		on. Disabling this will keep subscriptions active on unreliable
+		networks.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1766192"></a>
+              <p class="title">
+                <strong>Example 1.22. Set <code class="varname">timeout_rm_subs</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "timeout_rm_subs", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.fetch_rows"></a>3.23. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rows to be loaded in one step from database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 500.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1768712"></a>
+              <p class="title">
+                <strong>Example 1.23. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "fetch_rows", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24. db_table_lock_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.db_table_lock_type"></a>3.24. <code class="varname">db_table_lock_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable (=1) or disable (=0) the Locks for table during an
+		transaction. Locking only the "current" table causes problems
+		with a MySQL-Databases in "DB-Only" mode.
+	    </p>
+            <p>
+		In order to use the Presence-Module in "DB_ONLY"-mode with a 
+		MySQL-Backend, set this parameter to "0", otherwise the 
+		MySQL-Operations will fail. The Presence-Module will generate
+		a "500 Server error" due to the failed MySQL-queries.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 1 (Write Lock for the Tables).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1771984"></a>
+              <p class="title">
+                <strong>Example 1.24. Set <code class="varname">db_table_lock_type</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "db_table_lock_type", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25. local_log_level (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.local_log_level"></a>3.25. <code class="varname">local_log_level</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Control log level for some debug messages inside the module.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 2 (L_INFO).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1774520"></a>
+              <p class="title">
+                <strong>Example 1.25. Set <code class="varname">local_log_level</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "local_log_level", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.26. subs_remove_match (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.subs_remove_match"></a>3.26. <code class="varname">subs_remove_match</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Control how to match the subscriptions to remove from memory.
+		If set to 0, then the match is done on To-Tag (local generated),
+		if set to 1, then the match is done on all dialog attributes
+		(Call-Id, From-Tag, To-Tag).
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1777296"></a>
+              <p class="title">
+                <strong>Example 1.26. Set <code class="varname">subs_remove_match</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "subs_remove_match", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.27. xavp_cfg (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.xavp_cfg"></a>3.27. <code class="varname">xavp_cfg</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the xavp to be used to specify attributes for internal
+		processing of presence module.
+    </p>
+            <p>
+		Inner attributes inside xavp can be:
+    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>priority</em></span> - integer value to set the
+			priority of the presence document (higher value, higher priority).
+			It can set the order of the aggregated presence documents sent by
+			NOTIFY (first the document with higher priority). If xavp_cfg
+			parameter is set but this attribute is not in the avp,
+			the priority of the presence document is based on timestamp,
+			so newer documents have higher priority.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        Default value is <span class="emphasis"><em>empty</em></span> (not set).
+    </p>
+            <div class="example">
+              <a id="idp1781384"></a>
+              <p class="title">
+                <strong>Example 1.27. Set <code class="varname">xavp_cfg</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "xavp_cfg", "pres")
+...
+if(is_method("PUBLISH")) {
+    $xavp(pres=&gt;priority) = 100;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.28. retrieve_order (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.retrieve_order"></a>3.28. <code class="varname">retrieve_order</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 0, presentity records are retrieve by received_time order.
+		if set to 1, presentity records are retrieve by priority order.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1784088"></a>
+              <p class="title">
+                <strong>Example 1.28. Set <code class="varname">retrieve_order</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence", "retrieve_order", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.29. sip_uri_match (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.p.sip_uri_match"></a>3.29. <code class="varname">sip_uri_match</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The mode used when comparing uris.
+    </p>
+            <p>
+        </p>
+            <div class="itemizedlist" title="Possible Values">
+              <p class="title">
+                <strong>Possible Values</strong>
+              </p>
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p> 0 : case sensitive</p>
+                </li>
+                <li class="listitem">
+                  <p> 1 : case insensitive</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+    </p>
+            <p>
+        <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.</em></span>
+    </p>
+            <div class="example">
+              <a id="idp1788464"></a>
+              <p class="title">
+                <strong>Example 1.29. Set <code class="varname">sip_uri_match</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">            ...
+            modparam("presence", "sip_uri_match", 1)
+            ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1789760"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  handle_publish([sender_uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.f.handle_publish"></a>4.1. 
+		<code class="function">handle_publish([sender_uri])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handles PUBLISH requests by storing and updating 
+		published information in memory cache and database, then calls functions to send 
+		NOTIFY messages when changes in the published information occur.
+		It takes one argument -&gt; sender_uri. The parameter was added 
+		for enabling BLA implementation. If present, notification of
+		a change in published state is not sent to the respective uri
+		even though a subscription exists.
+		It should be taken from the Sender header. It was left at the
+		decision of the administrator whether or not to transmit the 
+		content of this header as parameter for handle_publish, to 
+		prevent security problems.  
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> 1 - if success</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -1 - if error</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+			The module sends an appropriate stateless reply
+			in all cases.
+		</p>
+            <div class="example">
+              <a id="idp1794464"></a>
+              <p class="title">
+                <strong>Example 1.30. <code class="function">handle_publish</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	if(is_method("PUBLISH"))
+	{
+		if($hdr(Sender)!= NULL)
+			handle_publish("$hdr(Sender)");
+		else
+			handle_publish();
+		t_release();
+	} 
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  handle_subscribe([watcher_uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.f.handle_subscribe"></a>4.2. 
+		<code class="function">handle_subscribe([watcher_uri])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function which handles SUBSCRIBE requests. It stores or 
+		updates information in memory and database and calls functions to send NOTIFY 
+		messages when a SUBSCRIBE which initiate a dialog is received.
+		</p>
+            <p>
+		By default this function uses the From: URI from the SUBSCRIBE
+		request as the Watcher URI.  The optional watcher_uri parameter
+		can be used to specify a different Watcher URI, possibly taken
+		from a SIP header like P-Asserted-Identity:.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <p>
+		<span class="emphasis"><em>Return code:</em></span>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> 1 - if success</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em> -1 - if error</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+			The module sends an appropriate stateless reply
+			in all cases.
+		</p>
+            <div class="example">
+              <a id="idp1800144"></a>
+              <p class="title">
+                <strong>Example 1.31. <code class="function">handle_subscribe</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(method=="SUBSCRIBE")
+    handle_subscribe();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  pres_auth_status(watcher_uri, presentity_uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.f.pres_auth_status"></a>4.3. 
+		<code class="function">pres_auth_status(watcher_uri, presentity_uri)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function checks if watcher is authorized to subscribe
+		event 'presence' of presentity.  Both watcher_uri and
+		presentity_uri are pseudo variables.  Function returns
+		ACTIVE_STATUS, if subscription is allowed and
+		PENDING_STATUS, TERMINATED_STATUS, or WAITING_STATUS
+		otherwise.  See presence/subscribe.h for the
+		corresponding integer codes.  In case of error, function
+		returns -1.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1803144"></a>
+              <p class="title">
+                <strong>Example 1.32. <code class="function">pres_auth_status</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="MESSAGE") {
+    pres_auth_status("$fu", $ru");
+    if ($retcode == 1) {
+        t_relay();
+    } else {
+        send_reply("403", "Forbidden");
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  pres_refresh_watchers(uri, event, type[, file_uri, filename])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.f.pres_refresh_watchers"></a>4.4. 
+		<code class="function">pres_refresh_watchers(uri, event, type[, file_uri, filename])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The function can be used in configuration to triger notifies to watchers
+			if a change in watchers authorization or in published state occurred
+			(i.e., updates of xcap documents).
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>uri - the uri of the user who made the change
+				and whose watchers should be informed.</p>
+                </li>
+                <li class="listitem">
+                  <p>event - the event package.</p>
+                </li>
+                <li class="listitem">
+                  <p>type - it distinguishes between the three different types of events
+						that can trigger the refresh, depending on its value:
+						</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>0 - a change in watchers authentication.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>1 - a statical update in published state through direct
+								update in db table.
+								</p>
+                      </li>
+                      <li class="listitem">
+                        <p>2 - a statical update in published state by modifying
+								the pidf manipulation document.
+								</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>file_uri - the uri of the pidf-manipulation file on
+				the XCAP server (only used for type 2).</p>
+                </li>
+                <li class="listitem">
+                  <p>filename - the name of the pidf-manipulation file on
+				the XCAP server (only used for type 2).</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1810984"></a>
+              <p class="title">
+                <strong>Example 1.33. <code class="function">pres_refresh_watchers</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pres_refresh_watchers("sip:test@kamailio.org", "presence", 1);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  pres_update_watchers(uri, event)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="presence.f.pres_update_whatchers"></a>4.5. 
+		<code class="function">pres_update_watchers(uri, event)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The function can be used in configuration to triger updates to watchers
+			status if a change in watchers authorization state occurred
+			(i.e., updates of xcap documents change state from pending to active).
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>uri - the uri of the user who made the change
+				and whose watchers should be informed. Can be PV.</p>
+                </li>
+                <li class="listitem">
+                  <p>event - the event package (e.g., presence).</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1815232"></a>
+              <p class="title">
+                <strong>Example 1.34. <code class="function">pres_update_watchers</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pres_update_watchers("sip:test@kamailio.org", "presence");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1816536"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  refreshWatchers">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1816904"></a>5.1. 
+		<code class="function">refreshWatchers</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Triggers sending Notify messages to watchers if a change in watchers
+		authorization or in published state occurred.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>refreshWatchers</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>uri - the uri of the user who made the change
+				and whose watchers should be informed</p>
+                </li>
+                <li class="listitem">
+                  <p>event - the event package.</p>
+                </li>
+                <li class="listitem">
+                  <p>type - it distinguishes between the three different types of events
+						that can trigger the refresh, depending on its value:
+						</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>0 - a change in watchers authentication.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>1 - a statical update in published state through direct
+								update in db table.
+								</p>
+                      </li>
+                      <li class="listitem">
+                        <p>2 - a statical update in published state by modifying
+								the pidf manipulation document.
+								</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>file_uri - the uri of the pidf-manipulation file on
+				the XCAP server (only used for type 2).</p>
+                </li>
+                <li class="listitem">
+                  <p>filename - the name of the pidf-manipulation file on
+				the XCAP server (only used for type 2).</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:refreshWatchers:fifo_reply
+		sip:test@kamailio.org
+		presence
+		1
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.  cleanup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1824000"></a>5.2. 
+		<code class="function">cleanup</code>
+	  </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manually triggers the cleanup functions for the active_watchers, presentity,
+		and watchers tables. Useful if you have set <code class="varname">clean_period</code>
+		and/or <code class="varname">db_update_period</code> to zero or less.
+	  </p>
+            <p>
+		Name: <span class="emphasis"><em>cleanup</em></span>
+	  </p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+	  </p>
+            <pre class="programlisting">		:cleanup:fifo_reply
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1827104"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  presence.cleanup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1827480"></a>6.1. 
+		<code class="function">presence.cleanup</code>
+	  </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manually triggers the cleanup functions for the active_watchers, presentity,
+		and watchers tables. Useful if you have set <code class="varname">clean_period</code>
+		and/or <code class="varname">db_update_period</code> to zero or less.
+	  </p>
+            <p>
+		Name: <span class="emphasis"><em>presence.cleanup</em></span>
+	  </p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+          </div>
+        </div>
+        <div class="section" title="7. Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1830000"></a>7. Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1. $subs(attr)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1830376"></a>7.1. <code class="varname">$subs(attr)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Access the attributes of handled subscription. 
+				It must be used after a call of
+				<span class="quote">“<span class="quote">handle_subscription())</span>”</span>.
+			</p>
+            <p>
+			The <span class="quote">“<span class="quote">attr</span>”</span> can be:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>uri</em></span> - subscription presentity uri
+				</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1832624"></a>
+              <p class="title">
+                <strong>Example 1.35. <code class="function">$subs(name)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(handle_subscription())
+{
+  xlog("presentity=$subs(uri)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="8. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1833952"></a>8. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module requires 3 tables in the Kamailio database: "presentity",
+	"active_watchers" and "watchers". The SQL 
+	syntax to create them can be found in presence-create.sql     
+	script in the database directories in the kamailio/scripts folder.
+	You can also find the complete database documentation on the
+	project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp533776"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp262944">1. 
+				<code class="function">bind_presence(presence_api_t* api)</code>
+				</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1232048">2. 
+		<code class="function">add_event</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp564032">3. 
+			<code class="function">get_rules_doc</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3245008">4. 
+			<code class="function">get_auth_status</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1587840">5. 
+			<code class="function">apply_auth_nbody</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1324144">6. 
+			<code class="function">agg_nbody</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp829208">7. 
+			<code class="function">free_body</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp831160">8. 
+			<code class="function">aux_body_processing</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3151896">9. 
+			<code class="function">aux_free_body</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3154032">10. 
+			<code class="function">evs_publ_handl</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3155808">11. 
+			<code class="function">evs_subs_handl</code>
+		</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3157584">12. 
+	<code class="function">contains_event</code>
+	</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3159544">13. 
+	<code class="function">get_event_list</code>
+	</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1146136">14. 
+	<code class="function">update_watchers_status</code>
+	</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1148136">15. 
+	<code class="function">get_sphere</code>
+	</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1150016">16. 
+	<code class="function">get_presentity</code>
+	</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2658672">17. 
+	<code class="function">free_presentity</code>
+	</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+		The module provides the following functions that can be used
+		in other Kamailio modules.
+   </p>
+        <div class="section" title="1.  bind_presence(presence_api_t* api)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp262944"></a>1. 
+				<code class="function">bind_presence(presence_api_t* api)</code>
+				</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+				This function binds the presence modules and fills the structure 
+				with one exported function -&gt; add_event, which when called adds a 
+				new event to be handled by presence.
+			</p>
+          <div class="example">
+            <a id="idp2141832"></a>
+            <p class="title">
+              <strong>Example 2.1. <code class="function">presence_api_t</code> structure</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+typedef struct presence_api {
+	add_event_t add_event;
+	contains_event_t contains_event;
+	search_event_t search_event;
+	get_event_list_t get_event_list;
+	
+	update_watchers_t update_watchers_status;
+	
+	/* subs hash table handling functions */
+	new_shtable_t new_shtable;
+	destroy_shtable_t destroy_shtable;
+	insert_shtable_t insert_shtable;
+	search_shtable_t search_shtable;
+	delete_shtable_t delete_shtable;
+	update_shtable_t update_shtable;
+	/* function to duplicate a subs structure*/
+	mem_copy_subs_t  mem_copy_subs;
+	/* function used for update in database*/
+	update_db_subs_t update_db_subs_timer;
+	/* function to extract dialog information from a
+	SUBSCRIBE message */
+	extract_sdialog_info_t extract_sdialog_info;
+	/* function to request sphere defition for a presentity */
+	pres_get_sphere_t get_sphere;
+
+}presence_api_t;
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2.  add_event">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1232048"></a>2. 
+		<code class="function">add_event</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Field type:
+		</p>
+          <pre class="programlisting">...
+typedef int (*add_event_t)(pres_ev_t* event);
+...</pre>
+          <p>
+			This function receives as a parameter a structure with event specific
+			information and adds it to presence event list.
+		</p>
+          <p>
+		The structure received as a parameter:
+		</p>
+          <pre class="programlisting">...
+typedef struct pres_ev
+{
+	str name;
+	event_t* evp;
+	str content_type;
+	int default_expires;
+	int type;
+	int etag_not_new;
+	/*
+	 *  0 - the standard mechanism (allocating new etag
+			for each Publish)
+	 *  1 - allocating an etag only
+			for an initial Publish 
+	*/
+	int req_auth;
+	get_rules_doc_t* get_rules_doc;
+	apply_auth_t*  apply_auth_nbody;
+	is_allowed_t*  get_auth_status;
+	
+	/* an agg_body_t function should be registered
+	 * if the event permits having multiple published
+	 * states and requires an aggregation of the information
+	 * otherwise, this field should be NULL and the last
+	 * published state is taken when constructing Notify msg
+	 */
+	agg_nbody_t* agg_nbody;
+	publ_handling_t  * evs_publ_handl;
+	subs_handling_t  * evs_subs_handl;
+	free_body_t* free_body;
+    /* sometimes it is necessary that a module make changes for a body for each
+     * active watcher (e.g. setting the "version" parameter in an XML document.
+     * If a module registers the aux_body_processing callback, it gets called for
+     * each watcher. It either gets the body received by the PUBLISH, or the body
+     * generated by the agg_nbody function.
+     * The module can deceide if it makes a copy of the original body, which is then
+     * manipulated, or if it works directly in the original body. If the module makes a
+     * copy of the original body, it also has to register the aux_free_body() to
+     * free this "per watcher" body.
+     */
+    aux_body_processing_t* aux_body_processing;
+    free_body_t* aux_free_body;
+	struct pres_ev* wipeer;			
+	struct pres_ev* next;
+	
+}pres_ev_t;
+...</pre>
+        </div>
+        <div class="section" title="3.  get_rules_doc">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp564032"></a>3. 
+			<code class="function">get_rules_doc</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		
+		</p>
+          <p>
+			Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef int (get_rules_doc_t)(str* user, str* domain, str** rules_doc);
+...</pre>
+          <p>
+		</p>
+          <p>
+		This function returns the authorization rules document that will be
+		used in obtaining the status of the subscription and processing the
+		notified body. A reference to the document should be put in the 
+		auth_rules_doc of the subs_t structure given as a parameter to the
+		functions described bellow.
+		</p>
+        </div>
+        <div class="section" title="4.  get_auth_status">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3245008"></a>4. 
+			<code class="function">get_auth_status</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This filed is a function to be called for a subscription request
+			to return the state for that subscription according to
+			authorization rules. In the auth_rules_doc field of the subs_t
+			structure received as a parameter should contain the rules 
+			document of the presentity in case, if it exists.
+		</p>
+          <p>
+			It is called only if the req_auth field is not 0. 
+		</p>
+          <p>
+			Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef int (is_allowed_t)(struct subscription* subs);
+...</pre>
+          <p>
+			</p>
+        </div>
+        <div class="section" title="5.  apply_auth_nbody">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1587840"></a>5. 
+			<code class="function">apply_auth_nbody</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This parameter should be a function to be called for an event 
+			that requires authorization, when constructing final body. 
+			The authorization document is taken from the auth_rules_doc
+			field of the subs_t structure given as a parameter.
+			It is called only if the req_auth field is not 0.
+		</p>
+          <p>
+			Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef int (apply_auth_t)(str* , struct subscription*, str** );
+...</pre>
+          <p>
+			</p>
+        </div>
+        <div class="section" title="6.  agg_nbody">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1324144"></a>6. 
+			<code class="function">agg_nbody</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			If present, this field marks that the events requires aggregation
+			of states. This function receives a body array and should return
+			the final body.	If not present, it is considered that the event
+			does not require aggregation and the most recent published
+			information is used when constructing Notifies.
+		</p>
+          <p>
+		Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef str* (agg_nbody_t)(str* pres_user, str* pres_domain, 
+str** body_array, int n, int off_index);
+..</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="7.  free_body">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp829208"></a>7. 
+			<code class="function">free_body</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This field must be field in if subsequent processing is performed
+			on the info from database before being inserted in Notify
+			message body(if agg_nbody or apply_auth_nbody fields are
+			filled in). It should match the allocation function used when
+			processing the body.  
+		</p>
+          <p>
+		Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef void(free_body_t)(char* body);
+..</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="8.  aux_body_processing">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp831160"></a>8. 
+			<code class="function">aux_body_processing</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This field must be set if the module needs to manipulate the NOTIFY body 
+			for each watcher. E.g. if the XML body includes a 'version' parameter which 
+			will be increased for each NOTIFY, on a "per watcher" basis.
+			The module can either allocate a new buffer for the new body an return it (aux_free_body
+			function must be set too) or it manipualtes the original body directly and returns NULL.
+		</p>
+          <p>
+		Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef str* (aux_body_processing_t)(struct subscription *subs, str* body);
+..</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="9.  aux_free_body">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3151896"></a>9. 
+			<code class="function">aux_free_body</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This field must be set if the module registers the aux_body_processing function
+			and allocates memory for the new modified body. Then, this function will be used
+			to free the pointer returned by the aux_body_processing function.
+			If the module does use the aux_body_processing, but does not allocate new memory, but
+			manipulates directly the original body buffer, then the aux_body_processing
+			must return NULL and this field should not be set.
+		</p>
+          <p>
+		Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef void(free_body_t)(char* body);
+..</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="10.  evs_publ_handl">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3154032"></a>10. 
+			<code class="function">evs_publ_handl</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This function is called when handling Publish requests. Most contain 
+		body correctness check.
+		</p>
+          <p>
+			</p>
+          <pre class="programlisting">...
+typedef int (publ_handling_t)(struct sip_msg*);
+..</pre>
+          <p>
+			</p>
+        </div>
+        <div class="section" title="11.  evs_subs_handl">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3155808"></a>11. 
+			<code class="function">evs_subs_handl</code>
+		</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		It is not compulsory. Should contain event specific handling for
+		Subscription requests.
+		</p>
+          <p>
+		Filed type:
+			</p>
+          <pre class="programlisting">...
+typedef int (subs_handling_t)(struct sip_msg*);
+..</pre>
+        </div>
+        <div class="section" title="12.  contains_event">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3157584"></a>12. 
+	<code class="function">contains_event</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">..
+typedef pres_ev_t* (*contains_event_t)(str* name,
+event_t* parsed_event);
+...</pre>
+          <p>
+	The function parses the event name received as a parameter and searches
+	the result in the list. It returns the found event or NULL, if not found. 
+	If the second argument is an allocated event_t* structure it fills it
+	with the result of the parsing.
+	</p>
+        </div>
+        <div class="section" title="13.  get_event_list">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3159544"></a>13. 
+	<code class="function">get_event_list</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">...
+typedef int (*get_event_list_t) (str** ev_list);
+...</pre>
+          <p>
+	This function returns a string representation of the events registered
+	in presence module.( used for Allowed-Events header).
+	</p>
+        </div>
+        <div class="section" title="14.  update_watchers_status">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1146136"></a>14. 
+	<code class="function">update_watchers_status</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">...
+typedef int (*update_watchers_t)(str pres_uri, pres_ev_t* ev,
+str* rules_doc);
+...</pre>
+          <p>
+	This function is an external command that can be used to announce a change
+	in authorization rules for a presentity. It updates the stored status and
+	sends a Notify to the watchers whose status has changes. (used by
+	presence_xml module when notified through an MI command of a change in
+	an xcap document).
+	</p>
+        </div>
+        <div class="section" title="15.  get_sphere">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1148136"></a>15. 
+	<code class="function">get_sphere</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">...
+typedef char* (*pres_get_sphere_t)(str* pres_uri);
+...</pre>
+          <p>
+	This function searches for a sphere definition in the published information
+	if this has type RPID. If not found returns NULL. (the return value is
+	allocated in private memory and should be freed)
+	</p>
+        </div>
+        <div class="section" title="16.  get_presentity">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1150016"></a>16. 
+	<code class="function">get_presentity</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">...
+typedef str* (*pres_get_presentity_t)(str pres_uri, pres_ev_t *ev, str *etag, str *contact);
+...</pre>
+          <p>
+	This function returns a pointer to a <span class="emphasis"><em>str</em></span> containing an
+	XML document with all of the matching presentities.  If no matching
+	presentities are found the function returns NULL.
+	</p>
+          <p>
+	The <span class="emphasis"><em>etag</em></span> and <span class="emphasis"><em>contact</em></span> parameters are
+	optional and may be set to NULL.  Once you are finished with the presentity
+	document you must call <span class="emphasis"><em>free_presentity</em></span> to free the
+	allocated memory.
+	</p>
+        </div>
+        <div class="section" title="17.  free_presentity">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2658672"></a>17. 
+	<code class="function">free_presentity</code>
+	</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Field type:
+	</p>
+          <pre class="programlisting">...
+typedef void (*pres_free_presentity_t)(str *presentity, pres_ev_t *ev);
+...</pre>
+          <p>
+	This function frees memory allocated by a call to 
+	<span class="emphasis"><em>get_presentity</em></span>.  The <span class="emphasis"><em>ev</em></span> parameter
+	MUST point to the same <span class="emphasis"><em>pres_ev_t</em></span> data-structure
+	that was used in the call to <span class="emphasis"><em>get_presentity</em></span>.
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

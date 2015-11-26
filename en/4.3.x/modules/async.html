@@ -1,0 +1,511 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ASYNC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp104" title="ASYNC Module" />
+    <link rel="next" href="#idp2719280" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="ASYNC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp104"></a>ASYNC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2719280">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3284120">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3411992">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2832936">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1828288">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2542520">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2488752">3.1. <code class="varname">workers</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2519144">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#async.f.async_route">4.1. 
+		<code class="function">async_route(routename, seconds)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#async.f.async_sleep">4.2. 
+		<code class="function">async_sleep(seconds)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#async.f.async_task_route">4.3. 
+		<code class="function">async_task_route(routename)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2602720">Set <code class="varname">workers</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp210448"><code class="function">async_route</code> usage</a></dt>
+          <dt>1.3. <a href="#idp182072"><code class="function">async_sleep</code> usage</a></dt>
+          <dt>1.4. <a href="#idp185216"><code class="function">async_workers</code> usage</a></dt>
+          <dt>1.5. <a href="#idp187888"><code class="function">async_task_route</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2719280"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3284120">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3411992">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2832936">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1828288">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2542520">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2488752">3.1. <code class="varname">workers</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2519144">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#async.f.async_route">4.1. 
+		<code class="function">async_route(routename, seconds)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#async.f.async_sleep">4.2. 
+		<code class="function">async_sleep(seconds)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#async.f.async_task_route">4.3. 
+		<code class="function">async_task_route(routename)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3284120"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides asynchronous operations for handling SIP requests
+		in the configuration file.
+	</p>
+          <p>
+		Async uses t_suspend() and t_continue() from the TM and TMX modules.
+	</p>
+          <p>
+		Note that after invoking the asynchronous operation, the processing
+		will continue later in another application process. Therefore variables 
+		stored in private memory should not be used, try to use shared memory if you
+		want to get values after the processing is resumed (e.g., $avp(...),
+		$xavp(...), $shv(...), htable $sht(...)).
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3411992"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2832936"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span> - transaction management.
+			</p>
+                  <p>
+				<span class="emphasis"><em>tmx</em></span> - transaction management extensions.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1828288"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2542520"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. workers (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2488752"></a>3.1. <code class="varname">workers</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of worker processes to be started to handle the asynchronous
+			tasks for async_route() and async_sleep(). 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2602720"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">workers</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("async", "workers", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2519144"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  async_route(routename, seconds)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="async.f.async_route"></a>4.1. 
+		<code class="function">async_route(routename, seconds)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Simulate a sleep of 'seconds' and then continue the processing of the SIP
+		request with the route[routename]. In case of internal errors, the
+		function returns false, otherwise the function exits the execution of
+		the script at that moment (return 0 behaviour).
+		</p>
+            <p>
+		The routename parameter can be a static string or a dynamic string
+		value with config variables.
+		</p>
+            <p>
+		The sleep parameter represent the number of seconds to suspend the
+		processing of a SIP request. Maximum value is 100. The parameter can be
+		a static integer or a variable holding an integer.
+		</p>
+            <p>
+		Since the SIP request handling is resumed in another process,
+		the config file execution state is practically lost. Therefore beware
+		that the execution of config after resume will end once the
+		route[routename] is finished.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp210448"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">async_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+async_route("RESUME", "4");
+...
+route[RESUME] {
+   send_reply("404", "Not found");
+   exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  async_sleep(seconds)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="async.f.async_sleep"></a>4.2. 
+		<code class="function">async_sleep(seconds)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Simulate a sleep of 'seconds' and then continue the processing of SIP
+		request with the next action. In case of internal errors, the function
+		returns false.
+		</p>
+            <p>
+		The sleep parameter represent the number of seconds to suspend the
+		processing of SIP request. Maximum value is 100. The parameter can be
+		a static integer or a variable holding an integer.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp182072"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">async_sleep</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+async_sleep("4");
+send_reply("404", "Not found");
+exit;
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  async_task_route(routename)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="async.f.async_task_route"></a>4.3. 
+		<code class="function">async_task_route(routename)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Continue the processing of the SIP request with the route[routename]
+		in one of the processes from core asynchronous framework. The core
+		parameter async_workers has to be set to enable asynchronous
+		framework. The task is executed as soon as a process from asynchronous
+		framework is idle, there is no wait time for the task like for
+		async_route(...).
+		</p>
+            <p>
+		To enable the core asynchronous framework, you need to set the
+		<span class="emphasis"><em>async_workers</em></span> core parameter in the configuration
+		file. See the core cookbook for more information.
+		</p>
+            <div class="example">
+              <a id="idp185216"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">async_workers</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+; Enable 8 worker processes used by async and other modules
+async_workers=8
+...</pre>
+              </div>
+            </div>
+            <p><br class="example-break" />
+		</p>
+            <p>
+		In case of internal errors, the function returns false, otherwise the
+		function exits the execution of the script at that moment (return
+		0 behaviour).
+		</p>
+            <p>
+		The routename parameter can be a static string or a dynamic string
+		value with config variables.
+		</p>
+            <p>
+		Since the SIP request handling is resumed in another process,
+		the config file execution state is practically lost. Therefore beware
+		that the execution of config after resume will end once the
+		route[routename] is finished.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp187888"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">async_task_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+async_task_route("RESUME");
+...
+route[RESUME] {
+   t_relay();
+   exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

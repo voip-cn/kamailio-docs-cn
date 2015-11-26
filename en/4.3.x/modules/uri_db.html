@@ -1,0 +1,691 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>uri_db Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4265408" title="uri_db Module" />
+    <link rel="next" href="#idp3271952" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="uri_db Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4265408"></a>uri_db Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3271952">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3076480">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idm4253656">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1576312">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1950680">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1764520">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.db_table">3.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.user_column">3.3. <code class="varname">user_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.domain_column">3.4. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.uriuser_column">3.5. <code class="varname">uriuser_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.use_uri_table">3.6. <code class="varname">use_uri_table</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.p.use_domain">3.7. <code class="varname">use_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm32992">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.f.check_to">4.1. 
+		<code class="function">check_to()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.f.check_from">4.2. 
+		<code class="function">check_from()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uri_db.f.does_uri_exist">4.3. 
+		<code class="function">does_uri_exist()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2622240">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp172848">Set <code class="varname">uri_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp175560">Set <code class="varname">user_column</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp2994344">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp2997256">Set <code class="varname">uriuser_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp3000432">Set <code class="varname">use_uri_table</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm34232">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm30704"><code class="function">check_to</code> usage</a></dt>
+          <dt>1.9. <a href="#idm27616"><code class="function">check_from</code> usage</a></dt>
+          <dt>1.10. <a href="#idm24432"><code class="function">does_uri_exist</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3271952"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3076480">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idm4253656">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1576312">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1950680">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1764520">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.db_table">3.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.user_column">3.3. <code class="varname">user_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.domain_column">3.4. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.uriuser_column">3.5. <code class="varname">uriuser_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.use_uri_table">3.6. <code class="varname">use_uri_table</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.p.use_domain">3.7. <code class="varname">use_domain</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm32992">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.f.check_to">4.1. 
+		<code class="function">check_to()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.f.check_from">4.2. 
+		<code class="function">check_from()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uri_db.f.does_uri_exist">4.3. 
+		<code class="function">does_uri_exist()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3076480"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>Various checks related to <acronym class="acronym">SIP</acronym> <acronym class="acronym">URI</acronym>.</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm4253656"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1576312"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a Kamailio database module </em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1950680"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1764520"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.db_url"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		<acronym class="acronym">URL</acronym> of the database to be used.
+		</p>
+            <p>
+		If the db_url string is empty, the default database URL
+		will be used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2622240"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "db_url", "mysql://username:password@localhost/openser")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.db_table"></a>3.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The DB table that should be used. Its possible to use the
+		<span class="quote">“<span class="quote">subscriber</span>”</span> and <span class="quote">“<span class="quote">uri</span>”</span> table. If the
+		<span class="quote">“<span class="quote">uri</span>”</span> table should be used, an additional parameter
+		<span class="quote">“<span class="quote">use-uri-table</span>”</span>) must be set.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">subscriber</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp172848"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">uri_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "db_table", "uri")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. user_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.user_column"></a>3.3. <code class="varname">user_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column holding usernames in the table.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp175560"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">user_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "user_column", "username")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.domain_column"></a>3.4. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column holding domain in the table.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2994344"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "domain_column", "domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. uriuser_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.uriuser_column"></a>3.5. <code class="varname">uriuser_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Column holding <acronym class="acronym">URI</acronym> username in the table.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">uri_user</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2997256"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">uriuser_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "uriuser_column", "uri_user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. use_uri_table (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.use_uri_table"></a>3.6. <code class="varname">use_uri_table</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specify if the <span class="quote">“<span class="quote">uri</span>”</span> table should be used for checkings
+		instead of <span class="quote">“<span class="quote">subscriber</span>”</span> table. A non-zero value means true.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0 (false)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3000432"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">use_uri_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "use_uri_table", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. use_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.p.use_domain"></a>3.7. <code class="varname">use_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specify if the domain part of the URI should be used to identify the
+		users (along with username). This is useful in multi domain setups, a 
+		non-zero value means true.
+		</p>
+            <p>This parameter is only evaluated for calls to <span class="quote">“<span class="quote">does_uri_exist</span>”</span>,
+		all other functions checks the digest username and realm against the 
+		given username, if the <span class="quote">“<span class="quote">uri</span>”</span> table is used.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0 (false)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm34232"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uri_db", "use_domain", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm32992"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  check_to()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.f.check_to"></a>4.1. 
+		<code class="function">check_to()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check <span class="quote">“<span class="quote">To</span>”</span> username against <acronym class="acronym">URI</acronym> table (if use_uri_table is set) or
+		digest credentials (no DB backend required).
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm30704"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">check_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (check_to()) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  check_from()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.f.check_from"></a>4.2. 
+		<code class="function">check_from()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check <span class="quote">“<span class="quote">From</span>”</span> username against <acronym class="acronym">URI</acronym> table (if use_uri_table is set) or
+		digest credentials (no DB backend required).
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm27616"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">check_from</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (check_from()) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  does_uri_exist()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uri_db.f.does_uri_exist"></a>4.3. 
+		<code class="function">does_uri_exist()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if username in the request <acronym class="acronym">URI</acronym> belongs to an existing user.
+		</p>
+            <p>
+		The checking is done against the <acronym class="acronym">URI</acronym> table (if use_uri_table is set) 
+		or the subscriber table.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm24432"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">does_uri_exist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (does_uri_exist()) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

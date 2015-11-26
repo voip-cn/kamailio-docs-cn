@@ -1,0 +1,520 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Statsd Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4236120" title="Statsd Module" />
+    <link rel="next" href="#idp2145568" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Statsd Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4236120"></a>Statsd Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Eloy</span> <span class="surname">Coto Pereiro</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:eloy.coto@gmail.com">eloy.coto@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Eloy</span> <span class="surname">Coto Pereiro</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:eloy.coto@gmail.com">eloy.coto@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2014 Eloy Coto</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2145568">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2639488">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2392080">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.p.serverIP">2.1. <code class="varname">ip</code>(string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.p.serverPort">2.2. <code class="varname">port</code>(int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2556160">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_set">3.1. 
+                <code class="function">statsd_set(key, value)</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_gauge">3.2. 
+                <code class="function">statsd_gauge(key, value)</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_start">3.3. 
+                <code class="function">statsd_start(key)</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_stop">3.4. 
+                <code class="function">statsd_stop(key)</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_incr">3.5. 
+                <code class="function">statsd_incr(key)</code>
+            </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statsd.f.statsd_decr">3.6. 
+                <code class="function">statsd_decr(key)</code>
+            </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3439680">Set ip parameter</a></dt>
+          <dt>1.2. <a href="#idp51680">Set ip parameter</a></dt>
+          <dt>1.3. <a href="#idp2717072"><code class="function">statsd_set</code> usage</a></dt>
+          <dt>1.4. <a href="#idp263016"><code class="function">statsd_set</code> usage</a></dt>
+          <dt>1.5. <a href="#idp186592"><code class="function">statsd_start</code> usage</a></dt>
+          <dt>1.6. <a href="#idp189512"><code class="function">statsd_stop</code> usage</a></dt>
+          <dt>1.7. <a href="#idp192296"><code class="function">statsd_incr</code> usage</a></dt>
+          <dt>1.8. <a href="#idp281840"><code class="function">statsd_decr</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2145568"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2639488">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2392080">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.p.serverIP">2.1. <code class="varname">ip</code>(string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.p.serverPort">2.2. <code class="varname">port</code>(int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2556160">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_set">3.1. 
+                <code class="function">statsd_set(key, value)</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_gauge">3.2. 
+                <code class="function">statsd_gauge(key, value)</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_start">3.3. 
+                <code class="function">statsd_start(key)</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_stop">3.4. 
+                <code class="function">statsd_stop(key)</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_incr">3.5. 
+                <code class="function">statsd_incr(key)</code>
+            </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statsd.f.statsd_decr">3.6. 
+                <code class="function">statsd_decr(key)</code>
+            </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2639488"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The module provides the ability to send commands to statsd
+			(you can use InfluxDB too) with different kind of information.
+			It provides native integration with statsd (https://github.com/etsy/statsd/)
+			and graphite (http://graphite.wikidot.com/).
+		</p>
+          <p>
+			The module does not have any special dependency, it does a direct
+			socket connection to Graphite.
+		</p>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2392080"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. ip(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.p.serverIP"></a>2.1. <code class="varname">ip</code>(string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Statsd server ip
+            </p>
+            <div class="example">
+              <a id="idp3439680"></a>
+              <p class="title">
+                <strong>Example 1.1. Set ip parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("statsd", "ip", "127.0.0.1")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. port(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.p.serverPort"></a>2.2. <code class="varname">port</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Statsd server ip
+            </p>
+            <div class="example">
+              <a id="idp51680"></a>
+              <p class="title">
+                <strong>Example 1.2. Set ip parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("statsd", "port", "8125")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2556160"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.  statsd_set(key, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_set"></a>3.1. 
+                <code class="function">statsd_set(key, value)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Sets count the number of unique values passed to a key.
+            </p>
+            <p>
+                If that method is called multiple times with the same userid in the same sample period, that userid will only be counted once.
+            </p>
+            <p>
+                This function can be used in ALL ROUTES.
+            </p>
+            <div class="example">
+              <a id="idp2717072"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">statsd_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+failure_route[tryagain] {
+...
+    statsd_set("customerFailure", 1);
+...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.  statsd_gauge(key, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_gauge"></a>3.2. 
+                <code class="function">statsd_gauge(key, value)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Gauges are a constant data type. They are not subject to averaging, and they donât change unless you change them. That is, once you set a gauge value, it will be a flat line on the graph until you change it again.
+            </p>
+            <p>
+                Gauges are useful for things that are already averaged, or donât need to reset periodically
+            </p>
+            <p>
+                This function can be used in ALL ROUTES.
+            </p>
+            <p>
+                The statsd server collects gauges under the stats.gauges prefix.
+            </p>
+            <div class="example">
+              <a id="idp263016"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">statsd_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">route [gauge_method]{
+    statsd_gauge("method"+$rm, "+1");
+    statsd_gauge("customer_credit"+$var(customer),"$var(customer_credit)");
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.  statsd_start(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_start"></a>3.3. 
+                <code class="function">statsd_start(key)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+statsd start set a avp with the key name, and when you use statsd_stop(key), module will send to statsd the difference in milliseconds. this is useful to know the time of a sql query, or how many time take your replies.
+            </p>
+            <p>
+                this function can be used in all routes.
+            </p>
+            <p>
+                the statsd server collects all timers under the stats.timers prefix, and will calculate the lower bound, mean, 90th percentile, upper bound, and count of each timer for each period (by the time you see it in graphite, thatâs usually per minute).
+            </p>
+            <div class="example">
+              <a id="idp186592"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">statsd_start</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+statsd_start("long_mysql_query");
+sql_query("ca", "select sleep(0.2)", "ra");
+statsd_stop("long_mysql_query");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.  statsd_stop(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_stop"></a>3.4. 
+                <code class="function">statsd_stop(key)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                statsd_stop(key) get the avp string with the key and calculate the difference from the start time. When finish app send the milliseconds to statsd.
+            </p>
+            <p>
+                This function can be used in all routes.
+            </p>
+            <div class="example">
+              <a id="idp189512"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">statsd_stop</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+statsd_start("long_mysql_query");
+sql_query("ca", "select sleep(0.2)", "ra");
+statsd_stop("long_mysql_query");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.  statsd_incr(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_incr"></a>3.5. 
+                <code class="function">statsd_incr(key)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Increment a counter
+            </p>
+            <p>
+                This function can be used in all routes.
+            </p>
+            <div class="example">
+              <a id="idp192296"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">statsd_incr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(geoip_match("$si", "src")){
+    statsd_incr("country."+$(gip(src=&gt;cc)));
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.  statsd_decr(key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statsd.f.statsd_decr"></a>3.6. 
+                <code class="function">statsd_decr(key)</code>
+            </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Decrement a counter
+            </p>
+            <p>
+                This function can be used in all routes.
+            </p>
+            <div class="example">
+              <a id="idp281840"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">statsd_decr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (t_check_status("408")) {
+    statsd_decr("kamailio.successfulCalls");
+    statsd_incr("kamailio.reply.busy");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

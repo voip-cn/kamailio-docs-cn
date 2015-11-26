@@ -1,0 +1,805 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Call Control Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4235080" title="Call Control Module" />
+    <link rel="next" href="#idp2442192" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Call Control Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4235080"></a>Call Control Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Dan</span> <span class="surname">Pascu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:dan@ag-projects.com">dan@ag-projects.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Dan</span> <span class="surname">Pascu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:dan@ag-projects.com">dan@ag-projects.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005-2008 Dan Pascu</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2442192">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#call_control.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2853392">2. Description</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp48728">3. Features</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3047448">4. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3047824">4.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2518672">4.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2710824">5. Exported parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.disable">5.1. <code class="varname">disable</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.socket_name">5.2. <code class="varname">socket_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.socket_time">5.3. <code class="varname">socket_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.signaling_ip_avp">5.4. <code class="varname">signaling_ip_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.canonical_uri_avp">5.5. <code class="varname">canonical_uri_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.p.diverter_avp_id">5.6. <code class="varname">diverter_avp_id</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp65888">6. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#call_control.f.call_control">6.1. <code class="function">call_control()</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm16536">Setting the <code class="varname">disable</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm13856">Setting the <code class="varname">socket_name</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm10976">Setting the <code class="varname">socket_timeout</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm7056">Setting the <code class="varname">signaling_ip_avp</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm3808">Setting the <code class="varname">canonical_uri_avp</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp64528">Setting the <code class="varname">diverter_avp_id</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp70632">Using the <code class="function">call_control</code> function</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2442192"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#call_control.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2853392">2. Description</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp48728">3. Features</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3047448">4. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3047824">4.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2518672">4.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2710824">5. Exported parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.disable">5.1. <code class="varname">disable</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.socket_name">5.2. <code class="varname">socket_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.socket_time">5.3. <code class="varname">socket_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.signaling_ip_avp">5.4. <code class="varname">signaling_ip_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.canonical_uri_avp">5.5. <code class="varname">canonical_uri_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.p.diverter_avp_id">5.6. <code class="varname">diverter_avp_id</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp65888">6. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#call_control.f.call_control">6.1. <code class="function">call_control()</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="call_control.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This module allows one to limit the duration of calls and automatically
+      end them when they exceed the imposed limit. Its main use case is to
+      implement a prepaid system, but it can also be used to impose a global
+      limit on all calls processed by the proxy.
+    </p>
+        </div>
+        <div class="section" title="2. Description">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2853392"></a>2. Description</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      Callcontrol consists of 3 components:
+      </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>The Kamailio call_control module</p>
+              </li>
+              <li class="listitem">
+                <p>
+            An external application called callcontrol which keeps track of
+            the calls that have a time limit and automatically ends them when
+            they exceed it. This application receives requests from Kamailio
+            and makes requests to a rating engine (see below) to find out if
+            a call needs to be limited or not. When a call ends (or is ended)
+            it will also instruct the rating engine to debit the balance for
+            the caller with the consumed amount. The callcontrol application
+            is available from http://callcontrol.ag-projects.com/
+          </p>
+              </li>
+              <li class="listitem">
+                <p>
+            A rating engine that is used to calculate the time limit based on
+            the caller's credit and the destination price and to debit the
+            caller's balance after a call ends. This is available as part of
+            CDRTool from http://cdrtool.ag-projects.com/
+          </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+    </p>
+          <p>
+      The callcontrol application runs on the same machine as Kamailio and they
+      communicate over a filesystem socket, while the rating engine can run on
+      a different host and communicates with the callcontrol application using
+      a TCP connection.
+    </p>
+          <p>
+      Callcontrol is invoked by calling the call_control() function for the
+      initial INVITE of every call we want to apply a limit to. This will end
+      up as a request to the callcontrol application, which will interogate
+      the rating engine for a time limit for the given caller and destination.
+      The rating engine will determine if the destination has any associated
+      cost and if the caller has any credit limit and if so will return the
+      amount of time he is allowed to call that destination. Otherwise it will
+      indicate that there is no limit associated with the call. If there is a
+      limit, the callcontrol application will retain the session and attach
+      a timer to it that will expire after the given time causing it to call
+      back to Kamailio with a request to end the dialog. If the rating engine
+      returns that there is no limit for the call, the session is discarded
+      by the callcontrol application and it will allow it to go proceed any
+      limit. An appropriate response is returned to the call_control module
+      that is then returned by the call_control() function call and allows
+      the script to make a decision based on the answer.
+    </p>
+        </div>
+        <div class="section" title="3. Features">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp48728"></a>3. Features</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+            Very simple API consisting of a single function that needs to be
+            called once for the first INVITE of every call. The rest is done
+            automatically in the background using dialog callbacks.
+          </p>
+              </li>
+              <li class="listitem">
+                <p>
+            Gracefully end dialogs when they exceed their time by triggering
+            a dlg_end_dlg request into the dialog module, that will generate
+            two BYE messages towards each endpoint, ending the call cleanly.
+          </p>
+              </li>
+              <li class="listitem">
+                <p>
+            Allow parallel sessions using one balance per subscriber
+          </p>
+              </li>
+              <li class="listitem">
+                <p>
+            Integrates with mediaproxy's ability to detect when a call does
+            timeout sending media and is closed. In this case the dlg_end_dlg
+            that is triggered by mediaproxy will end the callcontrol session
+            before it reaches the limit and consumes all the credit for a call
+            that died and didn't actually take place. For this mediaproxy has
+            to be used and it has to be started by engage_media_proxy() to be
+            able to keep track of the call's dialog and end it on timeout.
+          </p>
+                <p>
+            Even when mediaproxy is unable to end the dialog because it was
+            not started with engage_media_proxy(), the callcantrol application
+            is still able to detect calls that did timeout sending media, by
+            looking in the radius accounting records for entries recorded by
+            mediaproxy for calls that did timeout. These calls will also be
+            ended gracefully by the callcontrol application itself.
+          </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+    </p>
+        </div>
+        <div class="section" title="4. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3047448"></a>4. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3047824"></a>4.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The following modules must be loaded before this module:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+              <span class="emphasis"><em>pv</em></span> module
+            </p>
+                </li>
+                <li class="listitem">
+                  <p>
+              <span class="emphasis"><em>dialog</em></span> module
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+          <div class="section" title="4.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2518672"></a>4.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The following libraries or applications must be installed before
+        running Kamailio with this module loaded:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+              <span class="emphasis"><em>None</em></span>.
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+        </div>
+        <div class="section" title="5. Exported parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2710824"></a>5. Exported parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. disable (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.disable"></a>5.1. <code class="varname">disable</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Boolean flag that specifies if callcontrol should be disabled. This
+        is useful when you want to use the same Kamailio configuration in
+        two different contexts, one using callcontrol, the other not. In the
+        case callcontrol is disabled, calls to the call_control() function
+        will return a code indicating that there is no limit associated with
+        the call, allowing the use of the same configuration without changes.
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idm16536"></a>
+              <p class="title">
+                <strong>Example 1.1. Setting the <code class="varname">disable</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "disable", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. socket_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.socket_name"></a>5.2. <code class="varname">socket_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The path to the filesystem socket where the callcontrol
+        application listens for commands from the module.
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is 
+            <span class="quote">“<span class="quote">/var/run/callcontrol/socket</span>”</span>.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idm13856"></a>
+              <p class="title">
+                <strong>Example 1.2. Setting the <code class="varname">socket_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "socket_name", "/var/run/callcontrol/socket")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3. socket_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.socket_time"></a>5.3. <code class="varname">socket_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        How long time (in milliseconds) to wait for an answer from the
+        callcontrol application.
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is <span class="quote">“<span class="quote">500</span>”</span> ms.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idm10976"></a>
+              <p class="title">
+                <strong>Example 1.3. Setting the <code class="varname">socket_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "socket_timeout", 500)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. signaling_ip_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.signaling_ip_avp"></a>5.4. <code class="varname">signaling_ip_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Specification of the AVP which holds the IP address from where
+        the SIP signaling originated. If this AVP is set it will be used
+        to get the signaling IP address, else the source IP address
+        from where the SIP message was received will be used.
+        This AVP is meant to be used in cases where there are more than
+        one proxy in the call setup path and the proxy that actually
+        starts callcontrol doesn't receive the SIP messages directly
+        from the UA and it cannot determine the NAT IP address from
+        where the signaling originated. In such a case attaching a
+        SIP header at the first proxy and then copying that header's
+        value into the signaling_ip_avp on the proxy that starts
+        callcontrol will allow it to get the correct NAT IP address
+        from where the SIP signaling originated.
+      </p>
+            <p>
+        This is used by the rating engine which finds the rates to apply to a
+        call based on caller's SIP URI, caller's SIP domain or caller's IP
+        address (whichever yields a rate forst, in this order).
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is <span class="quote">“<span class="quote">$avp(s:signaling_ip)</span>”</span>.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idm7056"></a>
+              <p class="title">
+                <strong>Example 1.4. Setting the <code class="varname">signaling_ip_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "signaling_ip_avp", "$avp(s:signaling_ip)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5. canonical_uri_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.canonical_uri_avp"></a>5.5. <code class="varname">canonical_uri_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Specification of the AVP which holds an optional application defined
+        canonical request URI. When this is set, it will be used as the
+        destination when computing the call price, otherwise the request URI
+        will be used. This is useful when the username of the ruri needs to
+        have a different, canonical form in the rating engine computation
+        than it has in the ruri.
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is <span class="quote">“<span class="quote">$avp(s:can_uri)</span>”</span>.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idm3808"></a>
+              <p class="title">
+                <strong>Example 1.5. Setting the <code class="varname">canonical_uri_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "canonical_uri_avp", "$avp(s:can_uri)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6. diverter_avp_id (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.p.diverter_avp_id"></a>5.6. <code class="varname">diverter_avp_id</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Specification of the id of an integer AVP which holds an optional
+        application defined diverter SIP URI. When this is set, it will be
+        used by the rating engine as the billing party when finding the rates
+        to apply to a given call, otherwise, the caller's URI taken from the
+        From field will be used. When set, this AVP should contain a value in
+        the form <span class="quote">“<span class="quote">user@domain</span>”</span> (no sip: prefix should be used).
+      </p>
+            <p>
+        This is useful when a destination diverts a call, thus becoming the
+        new caller. In this case the billing party is the diverter and this
+        AVP should be set to it, to allow the rating engine to pick the right
+        rates for the call. For example, if A calls B and B diverts all its
+        calls unconditionally to C, then the diverter AVP should the set to
+        B's URI, because B is the billing party in the call not A after the
+        call was diverted.
+      </p>
+            <p>
+        <span class="emphasis"><em>
+          Default value is <span class="quote">“<span class="quote">805</span>”</span>.
+        </em></span>
+      </p>
+            <div class="example">
+              <a id="idp64528"></a>
+              <p class="title">
+                <strong>Example 1.6. Setting the <code class="varname">diverter_avp_id</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("call_control", "diverter_avp_id", 805)
+
+route {
+  ...
+  # alice@example.com is paying for this call
+  $avp(i:805) = "sip:alice@example.com";
+  ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp65888"></a>6. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. call_control()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="call_control.f.call_control"></a>6.1. <code class="function">call_control()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Trigger the use of callcontrol for the dialog started by the INVITE
+        for which this function is called (the function should only be called
+        for the first INVITE of a call). Further in-dialog requests will be
+        processed automatically using internal bindings into the dialog state
+        machine, allowing callcontrol to update its internal state as the
+        dialog progresses, without any other intervention from the script.
+      </p>
+            <p>
+        This function should be called right before the message is sent out
+        using t_relay(), when all the request uri modifications are over and
+        a final destination has been determined.
+      </p>
+            <p>This function has the following return codes:</p>
+            <p>
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+          +2 - call has no limit
+        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+          +1 - call has limit and is traced by callcontrol
+        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+          -1 - not enough credit to make the call
+        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+          -2 - call is locked by another call in progress
+        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+          -5 - internal error (message parsing, communication, ...)
+        </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+            <p>
+        This function can be used from REQUEST_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp70632"></a>
+              <p class="title">
+                <strong>Example 1.7. Using the <code class="function">call_control</code> function</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_avp_set("$avp(i:805)")) {
+    # the diverter AVP is set, use it as billing party
+    $avp(s:billing_party_domain) = $(avp(i:805){uri.domain});
+} else {
+    $avp(s:billing_party_domain) = $fd;
+}
+
+if (method==INVITE &amp;&amp; !has_totag() &amp;&amp;
+    is_domain_local("$avp(s:billing_party_domain)")) {
+    call_control();
+    switch ($retcode) {
+    case 2:
+        # Call with no limit
+    case 1:
+        # Call has limit and is under callcontrol management
+        break;
+    case -1:
+        # Not enough credit (prepaid call)
+        sl_send_reply("402", "Not enough credit");
+        exit;
+        break;
+    case -2:
+        # Locked by another call in progress (prepaid call)
+        sl_send_reply("403", "Call locked by another call in progress");
+        exit;
+        break;
+    default:
+        # Internal error (message parsing, communication, ...)
+        if (PREPAID_ACCOUNT) {
+            xlog("Call control: internal server error\n");
+            sl_send_reply("500", "Internal server error");
+            exit;
+        } else {
+            xlog("L_WARN", "Cannot set time limit for postpaid call\n");
+        }
+    }
+}
+t_relay();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

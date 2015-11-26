@@ -1,0 +1,1023 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>misc_radius Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4415704" title="misc_radius Module" />
+    <link rel="next" href="#idp7706648" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="misc_radius Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4415704"></a>misc_radius Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004-2008 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp7706648">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp6917896">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6225248">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6440024">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6934456">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4462200">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4462568">3.1. <code class="varname">radius_config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7275640">3.2. <code class="varname">caller_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7278040">3.3. <code class="varname">callee_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7280440">3.4. <code class="varname">group_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7282832">3.5. <code class="varname">uri_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7285240">3.6. <code class="varname">caller_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4396264">3.7. <code class="varname">callee_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4398688">3.8. <code class="varname">group_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4401080">3.9. <code class="varname">uri_extra</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4403488">3.10. <code class="varname">use_sip_uri_host</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4405856">3.11. <code class="varname">common_response</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4410904">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4411272">4.1. <code class="function">radius_load_caller_avps(caller)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4478816">4.2. <code class="function">radius_load_callee_avps(callee)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4481512">4.3. <code class="function">radius_is_user_in(user, group)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4484192">4.4. <code class="function">radius_does_uri_exist([uri])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4486760">4.5. <code class="function">radius_does_uri_user_exist([user])</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp6242120"><span class="quote">“<span class="quote">SIP-AVP</span>”</span> RADIUS AVP exmaples</a></dt>
+          <dt>1.2. <a href="#idp7274520"><code class="varname">radius_config</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp7276936"><code class="varname">caller_service_type</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp7279336"><code class="varname">callee_service_type</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp7281728"><code class="varname">group_service_type</code> parameter usage</a></dt>
+          <dt>1.6. <a href="#idp7284136"><code class="varname">uri_service_type</code> parameter usage</a></dt>
+          <dt>1.7. <a href="#idp4395144"><code class="varname">caller_extra</code> parameter usage</a></dt>
+          <dt>1.8. <a href="#idp4397560"><code class="varname">callee_extra</code> parameter usage</a></dt>
+          <dt>1.9. <a href="#idp4399968"><code class="varname">group_extra</code> parameter usage</a></dt>
+          <dt>1.10. <a href="#idp4402384"><code class="varname">uri_extra</code> parameter usage</a></dt>
+          <dt>1.11. <a href="#idp4404752"><code class="varname">use_sip_uri_host</code> parameter usage</a></dt>
+          <dt>1.12. <a href="#idp4407880"><code class="varname">common_response</code> parameter usage</a></dt>
+          <dt>1.13. <a href="#idp4408936">radius response with <code class="varname">common_response</code> value 1</a></dt>
+          <dt>1.14. <a href="#idp4477480"><code class="function">radius_load_caller_avps()</code> usage</a></dt>
+          <dt>1.15. <a href="#idp4480280"><code class="function">radius_load_callee_avps()</code> usage</a></dt>
+          <dt>1.16. <a href="#idp4482872"><code class="function">radius_is_user_in()</code> usage</a></dt>
+          <dt>1.17. <a href="#idp4485472"><code class="function">radius_does_uri_exist()</code> usage</a></dt>
+          <dt>1.18. <a href="#idp4488128"><code class="function">radius_does_uri_user_exist()</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp7706648"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp6917896">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6225248">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6440024">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6934456">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4462200">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4462568">3.1. <code class="varname">radius_config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7275640">3.2. <code class="varname">caller_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7278040">3.3. <code class="varname">callee_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7280440">3.4. <code class="varname">group_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7282832">3.5. <code class="varname">uri_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7285240">3.6. <code class="varname">caller_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4396264">3.7. <code class="varname">callee_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4398688">3.8. <code class="varname">group_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4401080">3.9. <code class="varname">uri_extra</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4403488">3.10. <code class="varname">use_sip_uri_host</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4405856">3.11. <code class="varname">common_response</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4410904">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4411272">4.1. <code class="function">radius_load_caller_avps(caller)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4478816">4.2. <code class="function">radius_load_callee_avps(callee)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4481512">4.3. <code class="function">radius_is_user_in(user, group)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4484192">4.4. <code class="function">radius_does_uri_exist([uri])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4486760">4.5. <code class="function">radius_does_uri_user_exist([user])</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6917896"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The <span class="emphasis"><em>misc_radius</em></span> module implements various 
+	RADIUS related functions.
+	Functions exist for loading caller's or callee's
+	attributes into AVPs, checking if user belongs to a group, and
+	checking if a specific URI belongs to a user.  It thus replaces old
+	avp_radius, group_radius, and uri_radius modules.
+	</p>
+          <p>
+	All functions of this module load AVPs from SIP-AVP reply items
+	received from RADIUS upon a successful request. Value of the
+	SIP-AVP reply item must be a string of form:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+		value = SIP_AVP_NAME SIP_AVP_VALUE
+		</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+		SIP_AVP_NAME = STRING_NAME | '#'ID_NUMBER
+		</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+		SIP_AVP_VALUE = ':'STRING_VALUE | '#'NUMBER_VALUE
+		</em>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <div class="example">
+            <a id="idp6242120"></a>
+            <p class="title">
+              <strong>Example 1.1. <span class="quote">“<span class="quote">SIP-AVP</span>”</span> RADIUS AVP exmaples</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">....
+"email:joe@yahoo.com"
+    -&gt; STRING NAME AVP (email) with STRING VALUE (joe@yahoo.com)
+"#14:joe@yahoo.com"
+    -&gt; ID AVP (14) with STRING VALUE (joe@yahoo.com)
+"age#28"
+    -&gt; STRING NAME AVP (age) with INTEGER VALUE (28)
+"#14#28"
+    -&gt; ID AVP (14) with INTEGER VALUE (28)
+....</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+	Unlike in old avp_radius module, functions
+	radius_load_calle[re]_avps() do not prefix string names of AVPs
+	by string 
+	<span class="quote">“<span class="quote">caller_</span>”</span> or <span class="quote">“<span class="quote">callee_</span>”</span> depending if
+	caller's or callee's attributes were loaded.  If you need these
+	prefixes, make your RADIUS server to prepend them into attribute
+	names when it constructs reply items.
+	</p>
+          <p>
+	A new feature of misc_radius module is that it is now possible
+	to include user defined extra RADIUS attributes in all requests
+	send by functions of this module.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6225248"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6440024"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The module depends on the following modules (in the other words 
+			the listed modules must be loaded before this module):
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>none</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6934456"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed 
+			before compilling Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>radiusclient-ng</em></span> 0.5.6 or higher -- 
+				library and development files. See <a class="ulink" href="javascript:if(confirm('http://developer.berlios.de/projects/radiusclient-ng/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://developer.berlios.de/projects/radiusclient-ng/'" tppabs="http://developer.berlios.de/projects/radiusclient-ng/">
+				http://developer.berlios.de/projects/radiusclient-ng/</a>.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4462200"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. radius_config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4462568"></a>3.1. <code class="varname">radius_config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the location of the configuration file of radius client 
+		libraries.
+		</p>
+            <p>
+		Default value is 
+			<span class="quote">“<span class="quote">/usr/local/etc/radiusclient-ng/radiusclient.conf</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp7274520"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">radius_config</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "radius_config", "/etc/radiusclient.conf")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. caller_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7275640"></a>3.2. <code class="varname">caller_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of the Service-Type radius attribute to be
+		used, when caller's attributes are loaded.
+		</p>
+            <p>
+		Default value is dictionary value of <span class="quote">“<span class="quote">SIP-Caller-AVPs</span>”</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idp7276936"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">caller_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "caller_service_type", 18)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. callee_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7278040"></a>3.3. <code class="varname">callee_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of the Service-Type radius attribute to be
+		used, when callee's attributes are loaded.
+		</p>
+            <p>
+		Default value is dictionary value of <span class="quote">“<span class="quote">SIP-Callee-AVPs</span>”</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idp7279336"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">callee_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "callee_service_type", 19)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. group_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7280440"></a>3.4. <code class="varname">group_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of Service-Type RADIUS attribute to be
+		used, when radius_is_user_in() function is called.
+		</p>
+            <p>
+		Default value is dictionary value of <span class="quote">“<span class="quote">Group-Check</span>”</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idp7281728"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="varname">group_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "group_service_type", 20)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. uri_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7282832"></a>3.5. <code class="varname">uri_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of Service-Type RADIUS attribute to be
+		used, when radius_does_uri[_user]_exist() function is
+		called.
+		</p>
+            <p>
+		Default value is dictionary value of <span class="quote">“<span class="quote">Call-Check</span>”</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idp7284136"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="varname">uri_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "uri_service_type", 21)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. caller_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7285240"></a>3.6. <code class="varname">caller_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Semi-colon separated list of extra RADIUS
+	        attribute name=pseudo variable pairs.  When
+		radius_load_caller_avps() is called, the listed extra 
+		attributes are included RADIUS request with
+		current values of corresponding pseudo variables.
+		</p>
+            <p>
+		There is no default value, i.e., by default no extra
+		attributes are included.
+		</p>
+            <div class="example">
+              <a id="idp4395144"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="varname">caller_extra</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "caller_extra", "Calling-Station-Id=$fu")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. callee_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4396264"></a>3.7. <code class="varname">callee_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Semi-colon separated list of extra RADIUS
+	        attribute name=pseudo variable pairs.  When
+		radius_load_callee_avps() is called, the listed extra 
+		attributes are included RADIUS request with
+		current values of corresponding pseudo variables.
+		</p>
+            <p>
+		There is no default value, i.e., by default no extra
+		attributes are included.
+		</p>
+            <div class="example">
+              <a id="idp4397560"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="varname">callee_extra</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "callee_extra", "SIP-URI-User=$rU;SIP-URI-Host=$rd")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. group_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4398688"></a>3.8. <code class="varname">group_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Semi-colon separated list of extra RADIUS
+	        attribute name=pseudo variable pairs.  When
+		radius_is_user_in() is called, the listed extra 
+		attributes are included RADIUS request with
+		current values of corresponding pseudo variables.
+		</p>
+            <p>
+		There is no default value, i.e., by default no extra
+		attributes are included.
+		</p>
+            <div class="example">
+              <a id="idp4399968"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="varname">group_extra</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "group_extra", "My-Special=$avp(i:100)")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. uri_extra (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4401080"></a>3.9. <code class="varname">uri_extra</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Semi-colon separated list of extra RADIUS
+	        attribute name=pseudo variable pairs.  When
+		radius_does_uri[_user]_exist() function is called, the
+		listed extra  
+		attributes are included in RADIUS request with
+		current values of corresponding pseudo variables.
+		</p>
+            <p>
+		There is no default value, i.e., by default no extra
+		attributes are included.
+		</p>
+            <div class="example">
+              <a id="idp4402384"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="varname">uri_extra</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "uri_extra", "Called-Station-Id=$tu")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. use_sip_uri_host (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4403488"></a>3.10. <code class="varname">use_sip_uri_host</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If zero, radius_does_uri_exist() function sends to
+		RADIUS server userpart@hostpart in UserName attribute. If
+		non-zero, radius_does_uri_exist() function sends to
+		RADIUS server userpart in UserName attribute and hostpart in
+		SIP-URI-Host attribute.
+		</p>
+            <p>
+		Default value is 0 (only use UserName attribute).
+		</p>
+            <div class="example">
+              <a id="idp4404752"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="varname">use_sip_uri_host</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "use_sip_uri_host", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. common_response (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4405856"></a>3.11. <code class="varname">common_response</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set it to 1 if you need common radius response attributes to
+		be added as AVPs in <code class="function">radius_load_caller_avps</code>
+        and <code class="function">radius_load_callee_avps</code>
+        with name as radius attribute name and value as radius attribute value.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp4407880"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="varname">common_response</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("misc_radius", "common_response", 1)
+...
+radius_load_caller_avps($fU);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp4408936"></a>
+              <p class="title">
+                <strong>Example 1.13. radius response with <code class="varname">common_response</code> value 1</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    Sending Access-Accept of id 60 to 192.168.25.32 port 59736
+    Session-Timeout = 4261674
+    next-hop-ip = "SIP/00111222333444@cisco-out"
+    SIP-AVP = "email:sr-users@lists.sip-router.org session-timeout#161 next-hop-ip:h323/0001111@myvoip-gate.kamailio.org"
+    session-protocol = "SIP"
+...
+
+$avp(Session-Timeout) has integer value 4261674
+$avp(next-hop-ip) has string value "SIP/005555777888@cisco-out"
+$avp(session-protocol) has string value "SIP"
+$avp(SIP-AVP) has string value  "email:sr-users@lists.sip-router.org session-timeout#161 next-hop-ip:h323/0001111@myvoip-gate.kamailio.org"
+
+...
+    When recieving negative response, check appropriate avp's:
+    $avp(Reply-Message) = "Not enough money on deposit '-89.83'. Rejected"
+    $avp(Filter-Id) = "neg_deposit"
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4410904"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. radius_load_caller_avps(caller)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4411272"></a>4.1. <code class="function">radius_load_caller_avps(caller)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The functions loads caller's attributes from radius and
+		stores them into AVPs.  Parameter <span class="quote">“<span class="quote">caller</span>”</span>
+		is a string that may contain pseudo variables.
+		It indicates the user, whose attributes are loaded.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4477480"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">radius_load_caller_avps()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+radius_load_caller_avps("$fU@$fd");	# take caller from From URI
+...
+radius_load_caller_avps("$au@$ar");	# take caller from Authorization
+...					# or Proxy-Authorization header</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. radius_load_callee_avps(callee)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4478816"></a>4.2. <code class="function">radius_load_callee_avps(callee)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The functions loads callee's attributes from radius and
+		stores them into AVPs.  Parameter <span class="quote">“<span class="quote">callee</span>”</span>
+		is a string that may contain pseudo variables.
+		It indicates the user, whose attributes are loaded.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4480280"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">radius_load_callee_avps()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+radius_load_callee_avps("$rU@$rd");	# take callee from Request-URI
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. radius_is_user_in(user, group)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4481512"></a>4.3. <code class="function">radius_is_user_in(user, group)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The functions checks from RADIUS, if user given in first
+		argument belongs to group given in second argument.  Both
+		arguments are strings, but user string may also contain
+		pseudo variables.  In case of positive result, loads
+		AVPs from SIP-AVP reply items, if any.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE,
+		FAILURE_ROUTE, BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4482872"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">radius_is_user_in()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+radius_is_user_in("$rU@$rd", "1");	# take user from Request-URI
+...
+radius_is_user_in("$au@$ar", "group_x");# take user from credentials
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. radius_does_uri_exist([uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4484192"></a>4.4. <code class="function">radius_does_uri_exist([uri])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks from RADIUS if userpart@hostpart of Request-URI
+		or of an URI stored in optional pseudo variable argument
+		belongs to a local 
+		user.  In case of positive result, loads AVPs from
+		SIP-AVP reply items, if any.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and
+		LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4485472"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">radius_does_uri_exist()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (radius_does_uri_exist()) ...	# check Request-URI
+...
+if (radius_does_uri_exist("$avp(i:99)")) ...	# check URI in $avp(i:99)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. radius_does_uri_user_exist([user])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4486760"></a>4.5. <code class="function">radius_does_uri_user_exist([user])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Similar to radius_does_uri_exist, but check is done
+		based only on Request-URI userpart or userpart stored in
+		optional pseudo variable argument. Userpart should thus
+		be unique among all user URIs, such as an E.164 number.
+		In case of positive result, loads AVPs from
+		SIP-AVP reply items, if any.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and
+		LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp4488128"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">radius_does_uri_user_exist()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (radius_does_uri_user_exist()) ...	# check Request-URI userpart
+...
+if (radius_does_uri_exist("$fU")) ...	# check From URI userpart
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

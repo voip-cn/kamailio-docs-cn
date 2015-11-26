@@ -1,0 +1,1995 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>IMS Usrloc PCSCF Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11207192" title="IMS Usrloc PCSCF Module" />
+    <link rel="next" href="#idp18617776" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="IMS Usrloc PCSCF Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11207192"></a>IMS Usrloc PCSCF Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jason Penton</span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18617776">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16666704">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18843904">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17960192">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18032904">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18151232">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18100472">3.1. default_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15746848">3.2. default_expires_range (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15442376">3.3. min_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15444584">3.4. max_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15446848">3.5. subscription_default_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15449352">3.6. subscription_expires_range (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15451976">3.7. subscription_min_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15454152">3.8. subscription_max_expires (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15529632">3.9. user_data_dtd (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15531784">3.10. user_data_xsd (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15533976">3.11. support_wildcardPSI (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15536080">3.12. scscf_name (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15538208">3.13. store_profile_dereg (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15540328">3.14. cxdx_dest_realm (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15542456">3.15. cxdx_forced_peer (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15544760">3.16. append_branches (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15547400">3.17. method_filtering (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15477600">3.18. user_data_always (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15479792">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15480160">4.1. <code class="function">save(async_reply_route,
+      domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15484816">4.2. <code class="function">lookup(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15491400">4.3. <code class="function">lookup_path_to_contact(uri)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15496360">4.4. <code class="function">unregister(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15499768">4.5. <code class="function">assign_server_unreg(aysnc_reply_route,
+      domain, direction)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15500904">4.6. <code class="function">impu_registered(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17284192">4.7. <code class="function">term_impu_registered(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17289248">4.8. <code class="function">reg_fetch_contacts(domain, uri,
+      profile)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17294336">4.9. <code class="function">reg_free_contacts(profile)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17297920">4.10. <code class="function">can_subscribe_to_reg(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17303008">4.11. <code class="function">subscribe_to_reg(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17306352">4.12. <code class="function">can_publish_reg(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17311408">4.13. <code class="function">publish_reg(domain)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17314928">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17315512">5.1. ulpcscf.status</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17316312">6. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17316952">6.1. registered contacts</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17317688">6.2. impus</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17318384">6.3. expired contacts</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16027776">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17986440">Set <code class="varname">default_expires</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15508136">Set <code class="varname">default_expires_range </code>parameter</a></dt>
+          <dt>1.3. <a href="#idp15443456">Set <code class="varname">min_expires</code>parameter</a></dt>
+          <dt>1.4. <a href="#idp15445664">Set <code class="varname">max_expires</code>parameter</a></dt>
+          <dt>1.5. <a href="#idp15448160">Set <code class="varname">subscription_default_expires</code>
+        parameter</a></dt>
+          <dt>1.6. <a href="#idp15450760">Set <code class="varname">subscription_expires_range
+        </code>parameter</a></dt>
+          <dt>1.7. <a href="#idp15452976">Set
+        <code class="varname">subscription_min_expires</code>parameter</a></dt>
+          <dt>1.8. <a href="#idp15455152">Set
+        <code class="varname">subscription_max_expires</code>parameter</a></dt>
+          <dt>1.9. <a href="#idp15530552">Set <code class="varname">user_data_dtd</code>parameter</a></dt>
+          <dt>1.10. <a href="#idp15532744">Set <code class="varname">user_data_xsd</code>parameter</a></dt>
+          <dt>1.11. <a href="#idp15534888">Set <code class="varname">support_wildcardPSI</code>parameter</a></dt>
+          <dt>1.12. <a href="#idp15537000">Set <code class="varname">scscf_name</code>parameter</a></dt>
+          <dt>1.13. <a href="#idp15539136">Set <code class="varname">store_profile_dereg</code>parameter</a></dt>
+          <dt>1.14. <a href="#idp15541256">Set <code class="varname">cxdx_dest_realm</code>parameter</a></dt>
+          <dt>1.15. <a href="#idp15543544">Set <code class="varname">cxdx_forced_peer</code>parameter</a></dt>
+          <dt>1.16. <a href="#idp15546208">Set <code class="varname">cxdx_forced_peer</code>parameter</a></dt>
+          <dt>1.17. <a href="#idp15548432">Set <code class="varname">cxdx_forced_peer</code>parameter</a></dt>
+          <dt>1.18. <a href="#idp15478520">Set <code class="varname">user_data_always</code>parameter</a></dt>
+          <dt>1.19. <a href="#idp15483560"><code class="function">save</code> usage</a></dt>
+          <dt>1.20. <a href="#idp15490024"><code class="function">lookup</code> usage</a></dt>
+          <dt>1.21. <a href="#idp15495200"><code class="function">lookup</code> usage</a></dt>
+          <dt>1.22. <a href="#idp15498568"><code class="function">unregister</code> usage</a></dt>
+          <dt>1.23. <a href="#idp17282824"><code class="function">impu_registered</code> usage</a></dt>
+          <dt>1.24. <a href="#idp17287896"><code class="function">term_impu_registered</code> usage</a></dt>
+          <dt>1.25. <a href="#idp17293032"><code class="function">reg_fetch_contacts</code> usage</a></dt>
+          <dt>1.26. <a href="#idp17296752"><code class="function">reg_free_contacts</code> usage</a></dt>
+          <dt>1.27. <a href="#idp17301760"><code class="function">can_subscribe_to_reg</code> usage</a></dt>
+          <dt>1.28. <a href="#idp17305080"><code class="function">subscribe_to_reg</code> usage</a></dt>
+          <dt>1.29. <a href="#idp17310144"><code class="function">can_publish_reg</code> usage</a></dt>
+          <dt>1.30. <a href="#idp17313592"><code class="function">publish_reg</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18617776"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16666704">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18843904">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17960192">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18032904">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18151232">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18100472">3.1. default_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15746848">3.2. default_expires_range (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15442376">3.3. min_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15444584">3.4. max_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15446848">3.5. subscription_default_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15449352">3.6. subscription_expires_range (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15451976">3.7. subscription_min_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15454152">3.8. subscription_max_expires (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15529632">3.9. user_data_dtd (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15531784">3.10. user_data_xsd (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15533976">3.11. support_wildcardPSI (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15536080">3.12. scscf_name (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15538208">3.13. store_profile_dereg (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15540328">3.14. cxdx_dest_realm (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15542456">3.15. cxdx_forced_peer (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15544760">3.16. append_branches (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15547400">3.17. method_filtering (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15477600">3.18. user_data_always (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15479792">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15480160">4.1. <code class="function">save(async_reply_route,
+      domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15484816">4.2. <code class="function">lookup(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15491400">4.3. <code class="function">lookup_path_to_contact(uri)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15496360">4.4. <code class="function">unregister(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15499768">4.5. <code class="function">assign_server_unreg(aysnc_reply_route,
+      domain, direction)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15500904">4.6. <code class="function">impu_registered(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17284192">4.7. <code class="function">term_impu_registered(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17289248">4.8. <code class="function">reg_fetch_contacts(domain, uri,
+      profile)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17294336">4.9. <code class="function">reg_free_contacts(profile)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17297920">4.10. <code class="function">can_subscribe_to_reg(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17303008">4.11. <code class="function">subscribe_to_reg(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17306352">4.12. <code class="function">can_publish_reg(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17311408">4.13. <code class="function">publish_reg(domain)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17314928">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17315512">5.1. ulpcscf.status</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17316312">6. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17316952">6.1. registered contacts</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17317688">6.2. impus</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17318384">6.3. expired contacts</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16666704"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module contains REGISTER processing logic for the S-CSCF. The
+    'storage engine' of this module is provided by the ims_usrloc_scscf
+    module:</p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18843904"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17960192"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded before this module:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>CDP</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>CDP_AVP</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>TM</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>ims_usrloc_scscf</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18032904"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+      running Kamailio with this module loaded: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>LibXML2 - used for parsing the XML Subscription
+            information obtained from the HSS (Home Subscriber
+            Server)</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18151232"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽default_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18100472"></a>3.1.聽default_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If the processed message contains neither Expires HFs nor expires
+      contact parameters, this value will be used for newly created S-CSCF
+      usrloc records. The parameter contains number of second to expire (for
+      example use 3600 for one hour). If it is set to a lower value than the
+      min_expires parameter then it will be ignored. This parameter can be
+      modified via ser config framework. A random value in a specific interval
+      can be selected by using the default_expires_range parameter</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 3600. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp17986440"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">default_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "default_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽default_expires_range (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15746848"></a>3.2.聽default_expires_range (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This parameter specifies that the expiry used for newly created
+      S-CSCF usrloc records are not fixed(when default_expires applies), but a
+      random value in the intervalrdq [default_expires-default_expires_range%,
+      default_expires+default_expires_range%]. The value is between 0 and 100
+      and represent the maximim percentage from default_expires that will be
+      substracted or added when computing the value. Default in 0, meaning
+      default_expires is left unmodified. This parameter can be modified via
+      ser config framework.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15508136"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set <code class="varname">default_expires_range </code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "default_expires_range", 30) # +- 30% from default_expires
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽min_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15442376"></a>3.3.聽min_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The minimum expires value of a Contact, values lower than this
+      minimum will be automatically set to the minimum. Value 0 disables the
+      checking. This parameter can be modified via ser config
+      framework.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 60. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15443456"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set <code class="varname">min_expires</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "min_expires", 1800)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽max_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15444584"></a>3.4.聽max_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The maximum expires value of a Contact, values higher than this
+      maximum will be automatically set to the maximum. Value 0 disables the
+      checking. This parameter can be modified via ser config
+      framework.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15445664"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set <code class="varname">max_expires</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "max_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.聽subscription_default_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15446848"></a>3.5.聽subscription_default_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If the processed message contains neither Expires HFs nor expires
+      contact parameters, this value will be used for newly created
+      subscriptions. The parameter contains number of second to expire (for
+      example use 3600 for one hour). If it is set to a lower value than the
+      subscription_min_expires parameter then it will be ignored. A random
+      value in a specific interval can be selected by using the
+      subscription_expires_range parameter</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 3600. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15448160"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Set <code class="varname">subscription_default_expires</code>
+        parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "subscription_default_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.聽subscription_expires_range (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15449352"></a>3.6.聽subscription_expires_range (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This parameter specifies that the expiry used for newly created
+      subscriptions are not fixed(when subscription_default_expires applies),
+      but a random value in the interval
+      [subscription_default_expires-subscription_expires_range%,
+      subscription_default_expires+subscription_expires_range%]. The value is
+      between 0 and 100 and represent the maximim percentage from
+      subscription_default_expires that will be substracted or added when
+      computing the value. Default in 0, meaning subscription_default_expires
+      is left unmodified.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15450760"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Set <code class="varname">subscription_expires_range
+        </code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "subscription_expires_range", 30) # +- 30% from subscription_expires_range
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.聽subscription_min_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15451976"></a>3.7.聽subscription_min_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The minimum expires value of a subscription, values lower than
+      this minimum will be automatically set to the minimum. Value 0 disables
+      the checking.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 10. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15452976"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Set
+        <code class="varname">subscription_min_expires</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("subscription_min_expires", "min_expires", 1800)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.聽subscription_max_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15454152"></a>3.8.聽subscription_max_expires (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The maximum expires value of a subscription, values higher than
+      this maximum will be automatically set to the maximum. Value 0 disables
+      the checking.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 1000000. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15455152"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽Set
+        <code class="varname">subscription_max_expires</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "subscription_max_expires", 3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.聽user_data_dtd (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15529632"></a>3.9.聽user_data_dtd (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>DTD to check the user data received in SAA (Server Assignment
+      Answer).</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is NULL (none). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15530552"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽Set <code class="varname">user_data_dtd</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "user_data_dtd", "/usr/local/etc/kamailio/CxDataType_Rel7.dtd")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.聽user_data_xsd (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15531784"></a>3.10.聽user_data_xsd (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>XSD to check the user data received in SAA (Server Assignment
+      Answer).</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is NULL (none). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15532744"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽Set <code class="varname">user_data_xsd</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "user_data_xsd", "/usr/local/etc/kamailio/CxDataType_Rel7.xsd")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.聽support_wildcardPSI (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15533976"></a>3.11.聽support_wildcardPSI (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>indicate support for wildcard PSI is subscription profile
+      (SAA)</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15534888"></a>
+              <p class="title">
+                <strong>Example聽1.11.聽Set <code class="varname">support_wildcardPSI</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "support_wildcardPSI", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.聽scscf_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15536080"></a>3.12.聽scscf_name (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The name of the S-CSCF</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is sip:scscf.ims.smilecoms.com:6060.
+      </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15537000"></a>
+              <p class="title">
+                <strong>Example聽1.12.聽Set <code class="varname">scscf_name</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "scscf_name", "sip:scscf2.ims.smilecoms.com:6060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.聽store_profile_dereg (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15538208"></a>3.13.聽store_profile_dereg (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Should the subscription profile be stored on
+      de-registration</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value 0.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15539136"></a>
+              <p class="title">
+                <strong>Example聽1.13.聽Set <code class="varname">store_profile_dereg</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "store_profile_dereg", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.聽cxdx_dest_realm (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15540328"></a>3.14.聽cxdx_dest_realm (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Destination realm to be used in Diameter messages</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value "ims.smilecoms.com"</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15541256"></a>
+              <p class="title">
+                <strong>Example聽1.14.聽Set <code class="varname">cxdx_dest_realm</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "cxdx_dest_realm", "my.domain,org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15.聽cxdx_forced_peer (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15542456"></a>3.15.聽cxdx_forced_peer (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>FQDN of Diameter Peer (HSS) to use for communication (SAR). If you
+      use this, the routing defined in your diameter xml configuration file
+      (CDP) will be ignored and as a result you will lose the benefits of load
+      balancing and failover.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value NULL (none)</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15543544"></a>
+              <p class="title">
+                <strong>Example聽1.15.聽Set <code class="varname">cxdx_forced_peer</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "cxdx_forced_peer", "hss.ims.smilecoms.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16.聽append_branches (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15544760"></a>3.16.聽append_branches (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The parameter controls how lookup function processes multiple
+      contacts. If there are multiple contacts for the given username in
+      usrloc and this parameter is set to 1, Request-URI will be overwritten
+      with the highest-q rated contact and the rest will be appended to
+      sip_msg structure and can be later used by tm for forking. If the
+      parameter is set to 0, only Request-URI will be overwritten with the
+      highest-q rated contact and the rest will be left unprocessed. This
+      parameter can be modified via Kamailio config framework.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (disabled)</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15546208"></a>
+              <p class="title">
+                <strong>Example聽1.16.聽Set <code class="varname">cxdx_forced_peer</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "append_branches", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17.聽method_filtering (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15547400"></a>3.17.聽method_filtering (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Tells if the contact filtering based on supported methods should
+      be performed during lookup. It's enabled only if it has a non zero
+      value.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (disabled)</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15548432"></a>
+              <p class="title">
+                <strong>Example聽1.17.聽Set <code class="varname">cxdx_forced_peer</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "method_filtering", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18.聽user_data_always (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15477600"></a>3.18.聽user_data_always (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If specified this will make the S-CSCF always request user data
+      from HSS.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (disabled)</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15478520"></a>
+              <p class="title">
+                <strong>Example聽1.18.聽Set <code class="varname">user_data_always</code>parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+        modparam("ims_registrar_scscf", "user_data_always", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15479792"></a>4.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽save(async_reply_route, domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15480160"></a>4.1.聽<code class="function">save(async_reply_route,
+      domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function processes a REGISTER message. It can add, remove or
+      modify usrloc records depending on Contact and Expires HFs in the
+      REGISTER message. On success and when called from the REQUEST_ROUTE, 200
+      OK will be returned listing all contacts that are currently in usrloc.
+      On an error, error message will be sent with a short description in
+      reason phrase. In case of internal errors the function will return
+      FALSE, otherwise a force to exit the cfg is file is actioned by
+      returning 0 (asynchronous processing)</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>async_reply_route</em></span>- the route to execute
+          after the save has completed. This is required because the save
+          function is executed asynchronously (Diameter).</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span>- Logical domain within
+          registrar.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE</p>
+            <div class="example">
+              <a id="idp15483560"></a>
+              <p class="title">
+                <strong>Example聽1.19.聽<code class="function">save</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!impu_registered("location")) {
+   save("PRE_REG_SAR_REPLY","location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.聽lookup(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15484816"></a>4.2.聽<code class="function">lookup(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function extract the IMPU from the Request-URI and tries to
+      find all registered contacts in usrloc. If there are no such contacts,
+      -1 is returned. If there are, Request-URI will be rewritten with the
+      contact that has the highest q value. The rest of the contacts will be
+      appended to the sip msg structure (if append_branches is set) and can be
+      later used by TM module for forking for example...</p>
+            <p>If the method filtering option is enabled, the lookup function
+      will only return contacts that support the method of the request being
+      processed (see allows header)</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - Logical domain within
+            registrar.</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-1</em></span> - Not found</p>
+                </li>
+                <li class="listitem">
+                  <p>-2 - Found, but method not allowed (check Allows header for
+            INVITE, MESSAGE, etc).</p>
+                </li>
+                <li class="listitem">
+                  <p>-3 - Error ocurred internally during processing</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp15490024"></a>
+              <p class="title">
+                <strong>Example聽1.20.聽<code class="function">lookup</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lookup("location");
+switch ($retcode) {
+    case -1:
+    case -3:
+        sl_send_reply("404", "Not Found");
+        exit;
+    case -2:
+        sl_send_reply("405", "Not Found");
+        exit;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.聽lookup_path_to_contact(uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15491400"></a>4.3.聽<code class="function">lookup_path_to_contact(uri)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function take a URI and tries to find the contact in usrloc.
+      If the contact is found and has a path set, then a path header is added
+      to the SIP message so it can be loose routed.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>uri - URI of contact to lookup</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> - Success</p>
+                </li>
+                <li class="listitem">
+                  <p>-1 - Failure</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp15495200"></a>
+              <p class="title">
+                <strong>Example聽1.21.聽<code class="function">lookup</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lookup_path_to_contact($ruri);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.聽unregister(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15496360"></a>4.4.聽<code class="function">unregister(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function will remove all bindings for the IMPU found in the
+      Request-URI.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>Domain</em></span>- Logical domain within
+          registrar.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp15498568"></a>
+              <p class="title">
+                <strong>Example聽1.22.聽<code class="function">unregister</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+unregister("location");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.聽assign_server_unreg(aysnc_reply_route, domain, direction)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15499768"></a>4.5.聽<code class="function">assign_server_unreg(aysnc_reply_route,
+      domain, direction)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>TBD</p>
+            <p>used in REQUEST_ROUTE</p>
+          </div>
+          <div class="section" title="4.6.聽impu_registered(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15500904"></a>4.6.聽<code class="function">impu_registered(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks if the IMPU in the To header is registered in
+      usrloc.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span>- Logical domain within
+          registrar.</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>1 - True, IMPU exists in registered state in usrloc</p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>-1 - False, IMPU not registered</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp17282824"></a>
+              <p class="title">
+                <strong>Example聽1.23.聽<code class="function">impu_registered</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+impu_registered("location");
+switch ($retcode) {
+    case -1:
+        sl_send_reply("404", "Not Found");
+        exit;
+    case 1:
+        #true, continue with normal processing
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.聽term_impu_registered(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17284192"></a>4.7.聽<code class="function">term_impu_registered(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks if the IMPU in the Request-URI is registered
+      in usrloc.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span>- Logical domain within
+          registrar.</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>1 - True, IMPU exists in registered state in usrloc</p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>-1 - False, IMPU not registered</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp17287896"></a>
+              <p class="title">
+                <strong>Example聽1.24.聽<code class="function">term_impu_registered</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+term_impu_registered("location");
+switch ($retcode) {
+     case -1:
+          sl_send_reply("404", "Not Found");
+          exit;
+     case 1:
+          #true, continue with normal processing
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.聽reg_fetch_contacts(domain, uri, profile)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17289248"></a>4.8.聽<code class="function">reg_fetch_contacts(domain, uri,
+      profile)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function fetches the contacts for 'uri' from table 'domain' to
+      pseudo-variable $imssulc(profile) [imssulc = ims scscf ulc].</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain </em></span>- Name of table that should be
+          used for the lookup of contact addresses.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>uri</em></span> - The SIP URI address of the user
+          which to fetch the contact addresses for. It can contain
+          pseudo-variables that are evaluated at runtime.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>profile</em></span> - Name of $imssulc
+          pseudo-variable profile that will store the fetched contacts. It is
+          a static string.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp17293032"></a>
+              <p class="title">
+                <strong>Example聽1.25.聽<code class="function">reg_fetch_contacts</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reg_fetch_contacts("location", "$ru", "callee");
+reg_fetch_contacts("location", "sip:user@kamailio.org", "caller");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.聽reg_free_contacts(profile)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17294336"></a>4.9.聽<code class="function">reg_free_contacts(profile)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function frees the contacts from pseudo-variable
+      $ulc(profile). Should be called to release the content of a profile.
+      Anyhow, fetching a new contact addresses set over a profile will release
+      any existing data in that profile.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>profile</em></span> - Name of $imssulc
+          pseudo-variable profile that stores the contacts. It is a static
+          string.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE, FAILURE_ROUTE</p>
+            <div class="example">
+              <a id="idp17296752"></a>
+              <p class="title">
+                <strong>Example聽1.26.聽<code class="function">reg_free_contacts</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reg_free_contacts("callee");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.聽can_subscribe_to_reg(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17297920"></a>4.10.聽<code class="function">can_subscribe_to_reg(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks to see that a SUBSCRIBE request is authorised
+      to subscribe to the particular identity. Only 3 entities can
+      subscribe:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>The user agent to it's own state</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>The P-CSCF specified in the path header for that user</p>
+                </li>
+                <li class="listitem">
+                  <p>Application Server (AS) not yet implemented</p>
+                </li>
+              </ul>
+            </div>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>domain - Logical domain within
+          registrar.</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE</p>
+            <div class="example">
+              <a id="idp17301760"></a>
+              <p class="title">
+                <strong>Example聽1.27.聽<code class="function">can_subscribe_to_reg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (can_subscribe_to_reg("location")){
+     $var(ret)= subscribe_to_reg("location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.聽subscribe_to_reg(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17303008"></a>4.11.聽<code class="function">subscribe_to_reg(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Save the subscription to the REG event for the UAC or the
+      appropriate P-CSCF (in the path to the UAC).</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>domain - Logical domain within
+          registrar.</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE</p>
+            <div class="example">
+              <a id="idp17305080"></a>
+              <p class="title">
+                <strong>Example聽1.28.聽<code class="function">subscribe_to_reg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (can_subscribe_to_reg("location")){
+     $var(ret)= subscribe_to_reg("location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12.聽can_publish_reg(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17306352"></a>4.12.聽<code class="function">can_publish_reg(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks to see that a PUBLISH request is authorised
+      to publish for a particular identity. Only 3 entities can
+      publish:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>The user agent to it's own state</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>The P-CSCF specified in the path header for that user</p>
+                </li>
+                <li class="listitem">
+                  <p>Application Server (AS) not yet implemented</p>
+                </li>
+              </ul>
+            </div>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>domain - Logical domain within
+          registrar.</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE</p>
+            <div class="example">
+              <a id="idp17310144"></a>
+              <p class="title">
+                <strong>Example聽1.29.聽<code class="function">can_publish_reg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (can_publish_reg("location")){
+    $var(ret)= publish_reg("location"); 
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13.聽publish_reg(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17311408"></a>4.13.聽<code class="function">publish_reg(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Save the publish to the REG event for the UAC or the appropriate
+      P-CSCF (in the path to the UAC).</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>domain - Logical domain within
+          registrar.</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used in REQUEST_ROUTE</p>
+            <div class="example">
+              <a id="idp17313592"></a>
+              <p class="title">
+                <strong>Example聽1.30.聽<code class="function">publish_reg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (can_publish_reg("location")){
+    $var(ret)= publish_reg("location"); 
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.聽RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17314928"></a>5.聽RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>exported RPC commands.</p>
+          <div class="section" title="5.1.聽ulpcscf.status">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17315512"></a>5.1.聽ulpcscf.status</h3>
+                </div>
+              </div>
+            </div>
+            <p>Status of pcscf_usrloc, AORs, max slots, etc.</p>
+          </div>
+        </div>
+        <div class="section" title="6.聽Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17316312"></a>6.聽Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <p>Exported statistics are listed in the next sections.</p>
+          <div class="section" title="6.1.聽registered contacts">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17316952"></a>6.1.聽registered contacts</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of AOR contacts in registered state - cannot be
+      reset.</p>
+          </div>
+          <div class="section" title="6.2.聽impus">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17317688"></a>6.2.聽impus</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of IMPUs - cannot be reset.</p>
+          </div>
+          <div class="section" title="6.3.聽expired contacts">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17318384"></a>6.3.聽expired contacts</h3>
+                </div>
+              </div>
+            </div>
+            <p>Number of expired contacts - can be reset.</p>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter聽2.聽Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16027776"></a>Chapter聽2.聽Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp18009856"></a>
+          <dl>
+            <dt>2.1. <a href="#idp16279592">Where can I find more about Kamailio?</a></dt>
+            <dt>2.2. <a href="#idp16586760">Where can I post a question about this module?</a></dt>
+            <dt>2.3. <a href="#idp17862704">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp16279592"></a>
+                  <a id="idp16725648"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp16586760"></a>
+                  <a id="idp17572840"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp17862704"></a>
+                  <a id="idp17785144"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

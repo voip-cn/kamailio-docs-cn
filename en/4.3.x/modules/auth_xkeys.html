@@ -1,0 +1,464 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>AUTH_XKEYS Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4209104" title="AUTH_XKEYS Module" />
+    <link rel="next" href="#idm4221792" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="AUTH_XKEYS Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4209104"></a>AUTH_XKEYS Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2015 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idm4221792">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2556240">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2554096">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1401488">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2907424">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1772472">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_xkeys.p.xkey">3.1. <code class="varname">xkey</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp217672">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_xkeys.f.auth_xkeys_add">4.1. 
+		<code class="function">auth_xkeys_add(hdr, kid, alg, data)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_xkeys.f.auth_xkeys_check">4.2. 
+		<code class="function">auth_xkeys_check(hdr, kid, alg, data)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp216472">Set <code class="varname">xkey</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp91744"><code class="function">auth_xkeys_add</code> usage</a></dt>
+          <dt>1.3. <a href="#idp95128"><code class="function">auth_xkeys_check</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idm4221792"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2556240">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2554096">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1401488">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2907424">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1772472">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_xkeys.p.xkey">3.1. <code class="varname">xkey</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp217672">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_xkeys.f.auth_xkeys_add">4.1. 
+		<code class="function">auth_xkeys_add(hdr, kid, alg, data)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_xkeys.f.auth_xkeys_check">4.2. 
+		<code class="function">auth_xkeys_check(hdr, kid, alg, data)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2556240"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides a custom mechanism to authenticate a SIP entity
+		using a list of shared keys.
+	</p>
+          <p>
+		It is similar to the API key based authentication used by many web
+		services. In short, the sender adds a particular header with a hash
+		token computed with the shared key and some values from the SIP
+		request (e.g., local IP, From/To/R-URI username, Call-ID, CSeq). The
+		receiver will check the hash value and decide whether the SIP message
+		is authenticated or not. The sender and receiver have to agree
+		beforehand on the name of the server, shared secret, algorithm to be
+		used and what data is going to be hashed.
+	</p>
+          <p>
+		The module is designed to work with many shared keys on the same
+		group, for more flexibility in adding/removing keys. The last added
+		key in the group is used to add the header, but older ones are used
+		for matching the hash value. That allows to change the active shared
+		key without affecting ongoing traffic. If one decides to use a new
+		share key, add it first to receiver (it will still authenticate with
+		older key) and then to the sender. Once both nodes are provisioned
+		with the new key, the older one can be removed.
+	</p>
+          <p>
+		For proper protection, it is recommended to use this
+		authentication mechanism over a secure channel (e.g., TLS, VPN,
+		private network).
+	</p>
+          <p>
+		The benefit is avoiding the extra traffic and processing required
+		by WWW-Digest authentication schema (no more 401/407 and a follow up
+		request with credentials).
+	</p>
+          <p>
+		Another goal is to provide more elasticity for scalability needs of
+		the core SIP network nodes. Most of the nodes in the core network or
+		the interconnecting peers trust each other based on IP address. But
+		adding a new node requires updates to the exiting ones to trust the
+		IP address of the new node. On large deployments, that can become
+		rather complex. For example, as a replacement for IP trust
+		relationships, the sender can hash the local IP with the secret
+		shared key, add it in the header and the receiver will check if the
+		source ip hased with the key results in the same value.
+	</p>
+          <p>
+		Not being a challenge-reply mechanism, this can be used to authenticate
+		SIP responses from trusted peers.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2554096"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1401488"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2907424"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1772472"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. xkey (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_xkeys.p.xkey"></a>3.1. <code class="varname">xkey</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specify the attributes for a shared secret. The value is in
+			the format 'name1=value1;name2=value2;...'. The attributes can be:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>id</em></span> - the id of the group for keys
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>name</em></span> - the name of the key within group
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>value</em></span> - the value of the key
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>expires</em></span> - expiration time (seconds)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is empty.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp216472"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">xkey</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_xkeys", "xkey", "id=abc;name=xyz;value=secret;expires=72000")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp217672"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  auth_xkeys_add(hdr, kid, alg, data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_xkeys.f.auth_xkeys_add"></a>4.1. 
+		<code class="function">auth_xkeys_add(hdr, kid, alg, data)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Add a header computed with the first key in the group kid, hasing with
+		algorithm alg over the content of parameter data. The parameters can
+		include variables.
+		</p>
+            <p>
+		The algorithm can be: sha256, sha384, sha512.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp91744"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">auth_xkeys_add</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+auth_xkeys_add("X-My-Key", "abc", "sha256", "$Ri:$fu:$ru:$hdr(CSeq)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  auth_xkeys_check(hdr, kid, alg, data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_xkeys.f.auth_xkeys_check"></a>4.2. 
+		<code class="function">auth_xkeys_check(hdr, kid, alg, data)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if the value of header hdr matches the value computed with the
+		first key in the group kid, hasing with algorithm alg over the content
+		of parameter data. The parameters can include variables.
+		</p>
+            <p>
+		The algorithm can be: sha256, sha384, sha512.
+		</p>
+            <p>
+		Note that the header is not removed by the function, it is recommended
+		to remove it if sending to untrusted destination.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp95128"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">auth_xkeys_check</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!auth_xkeys_add("X-My-Key", "abc", "sha256", "$si:$fu:$ru:$hdr(CSeq)")) {
+    send_reply("403", "Forbidden");
+    exit;
+}
+remove_hf("X-My-Key");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

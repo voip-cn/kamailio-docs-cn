@@ -1,0 +1,1242 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ipops Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp3704" title="ipops Module" />
+    <link rel="next" href="#idp1805760" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="ipops Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp3704"></a>ipops Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">I√±aki</span> <span class="surname">Baz Castillo</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ibc@aliax.net">ibc@aliax.net</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">I√±aki</span> <span class="surname">Baz Castillo</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ibc@aliax.net">ibc@aliax.net</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2011 I√±aki Baz Castillo</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1805760">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2994256">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2884280">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2027072">2.1. SIP Router Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1754648">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2678104">3. Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2540056">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ip">4.1. 
+        <code class="function">is_ip (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_pur_ip">4.2. 
+        <code class="function">is_pure_ip (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ipv4">4.3. 
+        <code class="function">is_ipv4 (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ipv6">4.4. 
+        <code class="function">is_ipv6 (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ipv6_reference">4.5. 
+        <code class="function">is_ipv6_reference (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ip_type">4.6. 
+        <code class="function">ip_type (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.compare_ips">4.7. 
+        <code class="function">compare_ips (ip1, ip2)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.compare_pure_ips">4.8. 
+        <code class="function">compare_pure_ips (ip1, ip2)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_ip_rfc1918">4.9. 
+        <code class="function">is_ip_rfc1918 (ip)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.is_in_subnet">4.10. 
+        <code class="function">is_in_subnet (ip, subnet)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.dns_sys_match_ip">4.11. 
+        <code class="function">dns_sys_match_ip(hostname, ipaddr)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.dns_int_match_ip">4.12. 
+        <code class="function">dns_int_match_ip(hostname, ipaddr)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.dns_query">4.13. 
+        <code class="function">dns_query(hostname, pvid)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ipops.f.srv_query">4.14. 
+        <code class="function">srv_query(srvcname, pvid)</code>
+      </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm7256">
+          <code class="function">is_ip</code> usage
+        </a></dt>
+          <dt>1.2. <a href="#idp145512">
+          <code class="function">is_pure_ip</code> usage
+        </a></dt>
+          <dt>1.3. <a href="#idp23136">
+          <code class="function">is_ipv4</code> usage
+        </a></dt>
+          <dt>1.4. <a href="#idp27200">
+          <code class="function">is_ipv6</code> usage
+        </a></dt>
+          <dt>1.5. <a href="#idp31216">
+          <code class="function">is_ipv6_reference</code> usage
+        </a></dt>
+          <dt>1.6. <a href="#idp56352">
+          <code class="function">ip_type</code> usage
+        </a></dt>
+          <dt>1.7. <a href="#idp61440">
+          <code class="function">compare_ips</code> usage
+        </a></dt>
+          <dt>1.8. <a href="#idp66344">
+          <code class="function">compare_pure_ips</code> usage
+        </a></dt>
+          <dt>1.9. <a href="#idp70432">
+          <code class="function">is_ip_rfc1918</code> usage
+        </a></dt>
+          <dt>1.10. <a href="#idp75280">
+          <code class="function">is_in_subnet</code> usage
+        </a></dt>
+          <dt>1.11. <a href="#idp80360">
+          <code class="function">dns_sys_match_ip</code> usage
+        </a></dt>
+          <dt>1.12. <a href="#idp85536">
+          <code class="function">dns_int_match_ip</code> usage
+        </a></dt>
+          <dt>1.13. <a href="#idp1859624">
+          <code class="function">dns_query</code> usage
+        </a></dt>
+          <dt>1.14. <a href="#idp1870384">
+          <code class="function">srv_query</code> usage
+        </a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1805760"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2994256">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2884280">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2027072">2.1. SIP Router Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1754648">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2678104">3. Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2540056">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ip">4.1. 
+        <code class="function">is_ip (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_pur_ip">4.2. 
+        <code class="function">is_pure_ip (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ipv4">4.3. 
+        <code class="function">is_ipv4 (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ipv6">4.4. 
+        <code class="function">is_ipv6 (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ipv6_reference">4.5. 
+        <code class="function">is_ipv6_reference (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ip_type">4.6. 
+        <code class="function">ip_type (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.compare_ips">4.7. 
+        <code class="function">compare_ips (ip1, ip2)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.compare_pure_ips">4.8. 
+        <code class="function">compare_pure_ips (ip1, ip2)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_ip_rfc1918">4.9. 
+        <code class="function">is_ip_rfc1918 (ip)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.is_in_subnet">4.10. 
+        <code class="function">is_in_subnet (ip, subnet)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.dns_sys_match_ip">4.11. 
+        <code class="function">dns_sys_match_ip(hostname, ipaddr)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.dns_int_match_ip">4.12. 
+        <code class="function">dns_int_match_ip(hostname, ipaddr)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.dns_query">4.13. 
+        <code class="function">dns_query(hostname, pvid)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ipops.f.srv_query">4.14. 
+        <code class="function">srv_query(srvcname, pvid)</code>
+      </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2994256"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      The IPops module offers operations for handling IP addresses, both IPv4 and IPv6.
+    </p>
+          <p>
+      IPv6 is defined in <a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc2460  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc2460'" tppabs="http://tools.ietf.org/html/rfc2460">RFC 2460</a>.
+	The same IPv6 address can be represented by different ASCII strings, so binary comparison is required.
+	For example, the following IPv6 addresses are equivalent:
+    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>2001:DB8:0000:0000:0008:0800:200C:417A</p>
+              </li>
+              <li class="listitem">
+                <p>2001:DB8:0:0:8:800:200C:417A</p>
+              </li>
+              <li class="listitem">
+                <p>2001:DB8::200C:417A</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+      	When using IPv6 in an URI (i.e. a SIP URI) the IP address must be written in "IPv6 reference" format 
+	(which is the textual representation of the IPv6 enclosed between [ ] symbols).
+	An example is <span class="quote">‚Äú<span class="quote">sip:alice@[2001:DB8:0:0:8:800:200C:417A]</span>‚Äù</span>. This allows separation of
+	address and port number with a :, like <span class="quote">‚Äú<span class="quote">[2001:DB8:0:0:8:800:200C:417A]:5060</span>‚Äù</span>.
+	This module also allows comparing an IPv6 address with its IPv6 reference representation.
+    </p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2884280"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†SIP Router Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2027072"></a>2.1.¬†SIP Router Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The following modules must be loaded before this module:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+              <span class="emphasis"><em>No dependencies on other SIP Router modules</em></span>
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1754648"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The following libraries or applications must be installed before running SIP Router with this module loaded:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+              <span class="emphasis"><em>No dependencies on external libraries</em></span>
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2678104"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2540056"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† is_ip (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ip"></a>4.1.¬†
+        <code class="function">is_ip (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a valid IPv4, IPv6 or IPv6 reference. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP address to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idm7256"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†
+          <code class="function">is_ip</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_ip($rd)) {
+  xlog("L_INFO", "RURI domain is an IP address (not a host name/domain)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† is_pure_ip (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_pur_ip"></a>4.2.¬†
+        <code class="function">is_pure_ip (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a valid IPv4 or IPv6. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp145512"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†
+          <code class="function">is_pure_ip</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$var(ip) = "::1";
+if (is_pure_ip($var(ip))) {
+  xlog("L_INFO", "it's IPv4 or IPv6\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬† is_ipv4 (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ipv4"></a>4.3.¬†
+        <code class="function">is_ipv4 (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a valid IPv4. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp23136"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†
+          <code class="function">is_ipv4</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_ipv4("1.2.3.4")) {
+  xlog("L_INFO", "it's IPv4\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬† is_ipv6 (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ipv6"></a>4.4.¬†
+        <code class="function">is_ipv6 (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a valid IPv6. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp27200"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†
+          <code class="function">is_ipv6</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_ipv6("1080:0:0:0:8:800:200C:417A")) {
+  xlog("L_INFO", "it's IPv6\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬† is_ipv6_reference (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ipv6_reference"></a>4.5.¬†
+        <code class="function">is_ipv6_reference (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a valid IPv6 reference. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp31216"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†
+          <code class="function">is_ipv6_reference</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_ipv6_reference("[1080:0:0:0:8:800:200C:417A]")) {
+  xlog("L_INFO", "it's IPv6 reference\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬† ip_type (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ip_type"></a>4.6.¬†
+        <code class="function">ip_type (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns the type of the given IP.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>Return value:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>1</em></span> - IPv4
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>2</em></span> - IPv6
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>3</em></span> - IPv6 reference
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>-1</em></span> - invalid IP
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp56352"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†
+          <code class="function">ip_type</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ip_type($var(myip));
+switch($rc) {
+  case 1:
+    xlog("L_INFO", "it's IPv4\n");
+    break;
+  case 2:
+    xlog("L_INFO", "it's IPv6\n");
+    break;
+  case 3:
+    xlog("L_INFO", "it's IPv6 reference\n");
+    break;
+  case -1:
+    xlog("L_INFO", it's type invalid\n");
+    break;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬† compare_ips (ip1, ip2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.compare_ips"></a>4.7.¬†
+        <code class="function">compare_ips (ip1, ip2)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if both IP addresses are the same. FALSE otherwise.
+	This function also allows comparing an IPv6 address against an IPv6 reference.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip1</em></span> - String or pseudo-variable containing the first IP to compare.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip2</em></span> - String or pseudo-variable containing the second IP to compare.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp61440"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†
+          <code class="function">compare_ips</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (compare_ips("1080:0000:0000:0000:0008:0800:200C:417A", "[1080::8:800:200C:417A]")) {
+  xlog("L_INFO", "both are the same IP\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬† compare_pure_ips (ip1, ip2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.compare_pure_ips"></a>4.8.¬†
+        <code class="function">compare_pure_ips (ip1, ip2)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if both IP's are the same. FALSE otherwise. This function does NOT 
+	allow comparing an IPv6 against an IPv6 reference.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip1</em></span> - String or pseudo-variable containing the first IP address to compare.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip2</em></span> - String or pseudo-variable containing the second IP address to compare.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp66344"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†
+          <code class="function">compare_pure_ips</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (compare_pure_ips($si, "1080::8:800:200C:417A")) {
+  xlog("L_INFO", "both are the same IP\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬† is_ip_rfc1918 (ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_ip_rfc1918"></a>4.9.¬†
+        <code class="function">is_ip_rfc1918 (ip)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the argument is a private IPv4 according to RFC 1918. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - String or pseudo-variable containing the IP to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp70432"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†
+          <code class="function">is_ip_rfc1918</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_ip_rfc1918("10.0.123.123")) {
+  xlog("L_INFO", "it's a private IPv4\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬† is_in_subnet (ip, subnet)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.is_in_subnet"></a>4.10.¬†
+        <code class="function">is_in_subnet (ip, subnet)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Returns TRUE if the first argument is an IP address within the (CIDR notation)
+        subnet in the second argument. FALSE otherwise.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ip</em></span> - string or pseudo-variable containing the ip to evaluate.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>subnet</em></span> - string or pseudo-variable containing the (CIDR notation) subnet to evaluate.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp75280"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†
+          <code class="function">is_in_subnet</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_in_subnet("10.0.123.123", "10.0.123.1/24")) {
+  xlog("L_INFO", "it's in the subnet\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.¬† dns_sys_match_ip(hostname, ipaddr)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.dns_sys_match_ip"></a>4.11.¬†
+        <code class="function">dns_sys_match_ip(hostname, ipaddr)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  Returns TRUE if ipaddr is associated by DNS to hostname. FALSE otherwise. It
+		  does not use the internal DNS resolver, but directly getaddrinfo(...). All
+		  addresses returned for the hostname are checked. Note that some hosts may
+		  return different lists of IP addresses for each query, if the DNS server
+		  is configured in that way (e.g., for providing load balancing through DNS).
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			  <span class="emphasis"><em>hostname</em></span> - string or pseudo-variable containing the hostname.
+			  The resulting IP addresses from DNS query are compared with ipaddr.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ipaddr</em></span> - string or pseudo-variable containing the ip address.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from ANY_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp80360"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†
+          <code class="function">dns_sys_match_ip</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!dns_sys_match_ip("myhost.com", "1.2.3.4")) {
+    xdbg("ip address not associated with hostname\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12.¬† dns_int_match_ip(hostname, ipaddr)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.dns_int_match_ip"></a>4.12.¬†
+        <code class="function">dns_int_match_ip(hostname, ipaddr)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  Returns TRUE if ipaddr is associated by DNS to hostname. FALSE otherwise. It
+		  uses internal DNS resolver. At this moment, the function might not check all
+		  the IP addresses as returned by dns_sys_match_ip(), because the internal
+		  resolver targets to discover the first address to be used for relaying
+		  SIP traffic. Thus is better to use dns_sys_match_ip() if the host you want
+		  to check has many IP addresses, in different address famililies (IPv4/6).
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			  <span class="emphasis"><em>hostname</em></span> - string or pseudo-variable containing the hostname.
+			  The resulting IP addresses from DNS query are compared with ipaddr.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>ipaddr</em></span> - string or pseudo-variable containing the ip address.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from ANY_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp85536"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†
+          <code class="function">dns_int_match_ip</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!dns_int_match_ip("myhost.com", "1.2.3.4")) {
+    xdbg("ip address not associated with hostname\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13.¬† dns_query(hostname, pvid)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.dns_query"></a>4.13.¬†
+        <code class="function">dns_query(hostname, pvid)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  Store the IP addresses and their type that correspond to hostname
+		  in a config variable $dns(pvid=&gt;key).
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			  <span class="emphasis"><em>hostname</em></span> - string or pseudo-variable containing the hostname.
+			  The resulting IP addresses from DNS query are compared with ipaddr.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>pvid</em></span> - container id for script variable.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+        This function can be used from ANY_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp1859624"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†
+          <code class="function">dns_query</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(dns_query("test.com", "xyz"))
+{
+    xlog(" number of addresses: $dns(xyz=&gt;count)\n");
+    xlog(" ipv4 address found: $dns(xyz=&gt;ipv4)\n");
+    xlog(" ipv6 address found: $dns(xyz=&gt;ipv6)\n");
+    $var(i) = 0;
+    while($var(i)&lt;$dns(xyz=&gt;count)) {
+        xlog(" #[$var(i)] type ($dns(xyz=&gt;type[$var(i)]))"
+             " addr [$dns(xyz=&gt;addr[$var(i)])]\n");
+        $var(i) = $var(i) + 1;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.14.¬† srv_query(srvcname, pvid)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ipops.f.srv_query"></a>4.14.¬†
+        <code class="function">srv_query(srvcname, pvid)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Queries DNS SRV records to resolve a service/protocol name into a list of priorities, weights, ports, and targets sorted by priority and weight as outlined in <a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc2782  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc2782'" tppabs="http://tools.ietf.org/html/rfc2782">RFC 2782</a>.
+      </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			  <span class="emphasis"><em>srvcname</em></span> - string or pseudo-variable containing the service/protocol. For example, "_sip._tcp.example.com".
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>pvid</em></span> - container id for script variable.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>Output:</p>
+            <p>
+        Returns a positive number indicating success or a negative number when an error is encountered. It can be used from ANY_ROUTE.
+      </p>
+            <p>
+        The $srvquery pseudo-variable (PV) is loaded with the results of the query. Multiple queries can be stored in the PV using the pvid key. Each query contains zero-indexed arrays sorted by priority and weight that contain:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>count</em></span> - number of records found
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>port [index]</em></span> - port number
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>priority [index]</em></span> - priority number as defined by <a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc2782  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc2782'" tppabs="http://tools.ietf.org/html/rfc2782">RFC 2782</a>
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>target [index]</em></span> - target host name
+          </p>
+                </li>
+                <li class="listitem">
+                  <p>
+            <span class="emphasis"><em>weight [index]</em></span> - weight number as defined by <a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc2782  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc2782'" tppabs="http://tools.ietf.org/html/rfc2782">RFC 2782</a>
+          </p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1870384"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†
+          <code class="function">srv_query</code> usage
+        </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (srv_query ("_sip._udp.example.com", "udp") &gt; 0) {
+  $var(cnt) = $srvquery(udp=&gt;count);
+  $var(i) = 0;
+  while ($var(i) &lt; $var(cnt)) {
+    xlog ("port[$var(i)] $srvquery(udp=&gt;port[$var(i)])\n)";
+    xlog ("priority[$var(i)] $srvquery(udp=&gt;priority[$var(i)])\n)";
+    xlog ("target[$var(i)] $srvquery(udp=&gt;target[$var(i)])\n)";
+    xlog ("weight[$var(i)] $srvquery(udp=&gt;weight[$var(i)])\n)";
+    $var(i) = $var(i) + 1;
+  }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

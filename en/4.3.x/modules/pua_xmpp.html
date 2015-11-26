@@ -1,0 +1,454 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence User Agent for XMPP (Presence gateway between SIP and XMPP)</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp104" title="Presence User Agent for XMPP (Presence gateway between SIP and XMPP)" />
+    <link rel="next" href="#idp2143376" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence User Agent for XMPP (Presence gateway between SIP and XMPP)">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp104"></a>Presence User Agent for XMPP (Presence gateway between SIP and XMPP)</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2143376">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2716328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2796568">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3381072">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2559352">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1560808">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pua_xmpp.p.server_address">3.1. <code class="varname">server_address</code>(str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2564240">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pua_xmpp.f.pua_xmpp_notify">4.1. 
+		<code class="function">pua_xmpp_notify()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pua_xmpp.f.pua_xmpp_req_winfo">4.2. 
+		<code class="function">pua_xmpp_req_winfo(request_uri, expires)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp72584">5.  Filtering </a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3190344">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1734344">Set <code class="varname">server_address</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp269192"><code class="function">pua_xmpp_notify</code> usage</a></dt>
+          <dt>1.3. <a href="#idp71120"><code class="function">xmpp_send_winfo</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2143376"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2716328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2796568">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3381072">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2559352">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1560808">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pua_xmpp.p.server_address">3.1. <code class="varname">server_address</code>(str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2564240">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pua_xmpp.f.pua_xmpp_notify">4.1. 
+		<code class="function">pua_xmpp_notify()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pua_xmpp.f.pua_xmpp_req_winfo">4.2. 
+		<code class="function">pua_xmpp_req_winfo(request_uri, expires)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp72584">5.  Filtering </a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2716328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module is a gateway for presence between SIP and XMPP.  
+	</p>
+          <p>
+		It translates one format into another and uses xmpp, pua and presence
+		modules to manage the transmition of presence state information. 
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2796568"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3381072"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pua</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xmpp</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2559352"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1560808"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. server_address(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pua_xmpp.p.server_address"></a>3.1. <code class="varname">server_address</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The SIP URI specifying the address of the SIP server. 
+		</p>
+            <div class="example">
+              <a id="idp1734344"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">server_address</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua_xmpp", "server_address", "sip:160.23.23.10")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2564240"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	Functions exported to be used in configuration file.
+	</p>
+          <div class="section" title="4.1.  pua_xmpp_notify()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pua_xmpp.f.pua_xmpp_notify"></a>4.1. 
+		<code class="function">pua_xmpp_notify()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function that handles Notify messages addressed to a user from
+		an xmpp domain. It requires filtering after method and domain in
+		configuration file. If the function is successful, a 2xx reply must
+		be sent.  
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp269192"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">pua_xmpp_notify</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	if( is_method("NOTIFY") &amp;&amp; uri=~"sip:.+@sip-xmpp.kamailio.org")
+	{
+		if(pua_xmpp_notify())
+			t_reply("200", "OK");
+		exit;
+	}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  pua_xmpp_req_winfo(request_uri, expires)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pua_xmpp.f.pua_xmpp_req_winfo"></a>4.2. 
+		<code class="function">pua_xmpp_req_winfo(request_uri, expires)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function called when a Subscribe addressed to a user from a
+		xmpp domain is received. It calls sending a Subscribe for 
+		winfo for the user, and the following Notify with dialog-info
+		is translated into a subscription in xmpp. 
+		It also requires filtering in configuration file, after method, 
+		domain and event(only for presence).
+		</p>
+            <p>
+		It takes 2 parameters: request_uri and the value of Expires header field 
+		in received Subscribe.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp71120"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">xmpp_send_winfo</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	if( is_method("SUBSCRIBE"))
+	{
+		handle_subscribe();
+		if(uri=~"sip:.+@sip-xmpp.siphub.ro" &amp;&amp; $hdr(Event)== "presence")
+		{
+			pua_xmpp_req_winfo("$ruri", "$hdr(Expires)");
+		}
+		t_release();
+	}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.  Filtering">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp72584"></a>5.  Filtering </h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+	Instead of "sip-xmpp.siphub.ro"  in the example you should use the value
+	set for the xmpp module parameter named 'gateway_domain'.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3190344"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+		The module provides no function to be used in other Kamailio modules.
+   </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,623 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mi_fifo Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11284248" title="mi_fifo Module" />
+    <link rel="next" href="#idp18377440" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mi_fifo Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11284248"></a>mi_fifo Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18377440">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17538288">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17793384">2. FIFO command syntax</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15591912">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16949592">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18483752">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17458976">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17342408">4.1. <code class="varname">fifo_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15792560">4.2. <code class="varname">fifo_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15794872">4.3. <code class="varname">fifo_group</code> (integer)
+		<code class="varname">fifo_group</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15516424">4.4. <code class="varname">fifo_user</code> (integer)
+		<code class="varname">fifo_group</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15519144">4.5. <code class="varname">reply_dir</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15521768">4.6. <code class="varname">reply_indent</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15524560">5. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15525288">6. Example</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15512624">Set <code class="varname">fifo_name</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15793824">Set <code class="varname">fifo_mode</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15796392">Set <code class="varname">fifo_group</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15517944">Set <code class="varname">fifo_user</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15520592">Set <code class="varname">reply_dir</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15523304">Set <code class="varname">reply_indent</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15526120">FIFO request</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18377440"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17538288">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17793384">2. FIFO command syntax</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15591912">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16949592">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18483752">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17458976">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17342408">4.1. <code class="varname">fifo_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15792560">4.2. <code class="varname">fifo_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15794872">4.3. <code class="varname">fifo_group</code> (integer)
+		<code class="varname">fifo_group</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15516424">4.4. <code class="varname">fifo_user</code> (integer)
+		<code class="varname">fifo_group</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15519144">4.5. <code class="varname">reply_dir</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15521768">4.6. <code class="varname">reply_indent</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15524560">5. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15525288">6. Example</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17538288"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module which provides a FIFO transport layer 
+		implementation for the Management Interface.
+	</p>
+        </div>
+        <div class="section" title="2. FIFO command syntax">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17793384"></a>2. FIFO command syntax</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The external commands issued via the FIFO interface must follow the
+		following syntax:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			request = first_line argument*
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			first_line = ':'command_name':'reply_fifo'\n'
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			argument = (arg_name '::' (arg_value)? ) | (arg_value)
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			arg_name = not-quoted_string
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			arg_value = not-quoted_string | '"' string '"'
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			not-quoted_string = string - {',",\n,\r}
+			</em>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15591912"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16949592"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18483752"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17458976"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. fifo_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17342408"></a>4.1. <code class="varname">fifo_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the FIFO file to be created for listening and 
+		reading external commands. If the value is a file name or does
+		not start with '/', the FIFO file is created in the 'run_dir'. The
+		'run_dir' is a core parameter that can specify where to create
+		runtime files, its default value is '/var/run/kamailio/'.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'Kamailio_fifo'.
+		</em></span>
+		</p>
+            <p>
+			The full path used by default for FIFO file is
+			'/var/run/kamailio/Kamailio_fifo'
+		</p>
+            <div class="example">
+              <a id="idp15512624"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">fifo_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "fifo_name", "/tmp/kamailio_fifo")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. fifo_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15792560"></a>4.2. <code class="varname">fifo_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Permission to be used for creating the listening FIFO file. It 
+		follows the UNIX conventions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0660 (rw-rw----).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15793824"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">fifo_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "fifo_mode", 0600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. fifo_group (integer) fifo_group (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15794872"></a>4.3. <code class="varname">fifo_group</code> (integer)
+		<code class="varname">fifo_group</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		System Group to be used for creating the listening FIFO file.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one (process group).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15796392"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">fifo_group</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "fifo_group", 0)
+modparam("mi_fifo", "fifo_group", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. fifo_user (integer) fifo_group (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15516424"></a>4.4. <code class="varname">fifo_user</code> (integer)
+		<code class="varname">fifo_group</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		System User to be used for creating the listening FIFO file.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one (process user).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15517944"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">fifo_user</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "fifo_user", 0)
+modparam("mi_fifo", "fifo_user", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. reply_dir (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15519144"></a>4.5. <code class="varname">reply_dir</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Directory to be used for creating the reply FIFO files.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">/tmp/</span>”</span>
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15520592"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">reply_dir</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "reply_dir", "/home/kamailio/tmp/")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. reply_indent (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15521768"></a>4.6. <code class="varname">reply_indent</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Strings to be used for line indentation. As the MI data structure 
+		is tree oriented, the depth level will be printed as indentation.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">"\t" (TAB)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15523304"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">reply_indent</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_fifo", "reply_indent", "    ")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15524560"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		No function exported to be used from configuration file.
+		</p>
+        </div>
+        <div class="section" title="6. Example">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15525288"></a>6. Example</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is an example showing the FIFO format for the 
+		<span class="quote">“<span class="quote">get_statistics dialog: tm:</span>”</span> MI command
+		response.
+		</p>
+          <div class="example">
+            <a id="idp15526120"></a>
+            <p class="title">
+              <strong>Example 1.7. FIFO request</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">:get_statistics:reply_fifo\n
+dialog:\n
+tm:\n
+\n</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

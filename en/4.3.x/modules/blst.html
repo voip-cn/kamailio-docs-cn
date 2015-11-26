@@ -1,0 +1,489 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Blst Module - Blacklist Management</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#blst" title="Blst Module - Blacklist Management" />
+    <link rel="next" href="#idm4268936" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Blst Module - Blacklist Management">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="blst"></a>Blst Module - Blacklist Management</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idm4268936">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#blst.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#blst.functions">2. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_add">2.1. 
+	    <code class="function">blst_add([timeout])</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_add_retry_after">2.2. 
+	    <code class="function">blst_add_retry_after(min, max)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_del">2.3. 
+	    <code class="function">blst_del()</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_is_blacklisted">2.4. 
+	    <code class="function">blst_is_blacklisted()</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_set_ignore">2.5. 
+		<code class="function">blst_set_ignore([flags])</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_rpl_set_ignore">2.6. 
+		<code class="function">blst_rpl_set_ignore([flags])</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_clear_ignore">2.7. 
+		<code class="function">blst_clear_ignore([flags])</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#blst_rpl_clear_ignore">2.8. 
+		<code class="function">blst_rpl_clear_ignore([flags])</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2986000"><code class="function">blst_add</code> usage</a></dt>
+          <dt>1.2. <a href="#idp2678864"><code class="function">blst_add_retry_after</code> usage</a></dt>
+          <dt>1.3. <a href="#idp2077976"><code class="function">blst_del</code> usage</a></dt>
+          <dt>1.4. <a href="#idp1242856"><code class="function">blst_is_blacklisted</code> usage</a></dt>
+          <dt>1.5. <a href="#idp2412584"><code class="function">blst_set_ignore</code> usage</a></dt>
+          <dt>1.6. <a href="#idp1471504"><code class="function">blst_clear_ignore</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idm4268936"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#blst.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#blst.functions">2. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_add">2.1. 
+	    <code class="function">blst_add([timeout])</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_add_retry_after">2.2. 
+	    <code class="function">blst_add_retry_after(min, max)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_del">2.3. 
+	    <code class="function">blst_del()</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_is_blacklisted">2.4. 
+	    <code class="function">blst_is_blacklisted()</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_set_ignore">2.5. 
+		<code class="function">blst_set_ignore([flags])</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_rpl_set_ignore">2.6. 
+		<code class="function">blst_rpl_set_ignore([flags])</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_clear_ignore">2.7. 
+		<code class="function">blst_clear_ignore([flags])</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#blst_rpl_clear_ignore">2.8. 
+		<code class="function">blst_rpl_clear_ignore([flags])</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="blst.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module exports blacklist related functions to the script.
+	</p>
+        </div>
+        <div class="section" title="2. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="blst.functions"></a>2. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.  blst_add([timeout])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_add"></a>2.1. 
+	    <code class="function">blst_add([timeout])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds the source of the current message to the blacklist for
+		<code class="varname">timeout</code> seconds. If timeout is missing or 0
+		 it uses the default blacklist timeout 
+		 (<code class="varname">dst_blacklist_expire</code>).
+	</p>
+            <div class="example">
+              <a id="idp2986000"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">blst_add</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (src_ip==10.0.0.0/9)
+    blst_add(30); # 30 s
+else
+    blst_add();  # use default blacklist timeout
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2.  blst_add_retry_after(min, max)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_add_retry_after"></a>2.2. 
+	    <code class="function">blst_add_retry_after(min, max)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds the source of the current message to the blacklist for
+		the time interval specified in the <span class="emphasis"><em>Retry-After</em></span> 
+		header.
+		If the <span class="emphasis"><em>Retry-After</em></span> header is missing, it will 
+		fail (returns false).
+		If the <span class="emphasis"><em>Retry-After</em></span> value is less than 
+		<code class="varname">min</code>, then <code class="varname">min</code> seconds will be 
+		used instead.
+		If the <span class="emphasis"><em>Retry-After</em></span> value is greater than
+		<code class="varname">max</code>, then <code class="varname">max</code> seconds will be 
+		used instead.
+	</p>
+            <div class="example">
+              <a id="idp2678864"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">blst_add_retry_after</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# on_reply route
+if (msg_status==503){ # blacklist 503 source for Retry-After seconds
+    if (! blst_add_retry_after(30, 3600))
+        blst_add(60); # if no retry_after header add it for 60s
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3.  blst_del()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_del"></a>2.3. 
+	    <code class="function">blst_del()</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Removes the source of the current message from the blacklist.
+		If the address is not present in the blacklist at the time of the call
+		it returns false.
+	</p>
+            <div class="example">
+              <a id="idp2077976"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">blst_del</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    blst_del();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.4.  blst_is_blacklisted()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_is_blacklisted"></a>2.4. 
+	    <code class="function">blst_is_blacklisted()</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the source of the current message is blacklisted.
+	</p>
+            <div class="example">
+              <a id="idp1242856"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">blst_is_blacklisted</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (blst_is_blacklisted()){
+        log("message from a blacklisted source");
+        drop;
+   }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.5.  blst_set_ignore([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_set_ignore"></a>2.5. 
+		<code class="function">blst_set_ignore([flags])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set errors that will not be taken into account when deciding
+		whether to blacklist a destination for the current message
+		or a local reply to the current message.
+	</p>
+            <p>
+		<code class="function">blst_set_ignore(..)</code> works for forwarding the
+		current message and <code class="function">blst_rpl_set_ignore(...)</code>
+		works for local replies to the current message.
+	</p>
+            <p>
+		The variants of these functions with no parameters will ignore 
+		everything (equivalent to passing 0xff).
+	</p>
+            <p>
+		The flags are stored internally as a bitmask, and are applied by
+		bitwise ANDing them together.  The following flags are available:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>0x02</em></span> - generic send error (send denied/
+				 failed).
+			</li>
+                <li class="listitem"><span class="emphasis"><em>0x04</em></span> - connect failed (TCP, TLS or SCTP).
+			</li>
+                <li class="listitem"><span class="emphasis"><em>0x08</em></span> - ICMP error (not currently used).
+			</li>
+                <li class="listitem"><span class="emphasis"><em>0x10</em></span> - SIP transaction timeout.
+			</li>
+                <li class="listitem"><span class="emphasis"><em>0x20</em></span> - 503 reply (statefull mode only).
+				For more details see <span class="emphasis"><em>tm</em></span><code class="varname">blst_503</code>.
+			</li>
+              </ul>
+            </div>
+            <p>
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+		TCP and TLS send and connect errors are handled per connection and
+		not per message. The connection blacklist ignore flags are inherithed
+		from the message that caused the connection establishment.
+	</div>
+            <div class="example">
+              <a id="idp2412584"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">blst_set_ignore</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">    blst_set_ignore(6); # ignore send and connect errors</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.6.  blst_rpl_set_ignore([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_rpl_set_ignore"></a>2.6. 
+		<code class="function">blst_rpl_set_ignore([flags])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		See function <code class="function">blst_set_ignore([flags])</code>.
+	</p>
+          </div>
+          <div class="section" title="2.7.  blst_clear_ignore([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_clear_ignore"></a>2.7. 
+		<code class="function">blst_clear_ignore([flags])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Clears blacklist ignore flags previously set by the corresponding
+		<code class="function">blst_set_ignore(...)</code> or
+		<code class="function">blst_rpl_set_ignore(...)</code> functions.
+	</p>
+            <p>
+		See also <code class="function">blst_set_ignore</code>.
+	</p>
+            <div class="example">
+              <a id="idp1471504"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">blst_clear_ignore</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">    blst_clear_ignore(4); # ignore connect errors</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.8.  blst_rpl_clear_ignore([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="blst_rpl_clear_ignore"></a>2.8. 
+		<code class="function">blst_rpl_clear_ignore([flags])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		See function <code class="function">blst_clear_ignore([flags])</code>.
+	</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

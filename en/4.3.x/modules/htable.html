@@ -1,0 +1,2362 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>HTable Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4520" title="HTable Module" />
+    <link rel="next" href="#idp1327024" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="HTable Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4520"></a>HTable Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alex</span> <span class="surname">Balashov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:abalashov@evaristesys.com">abalashov@evaristesys.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:osas@voipembedded.com">osas@voipembedded.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008-2011 http://www.asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1327024">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2107064">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2675160">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1857424">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2590200">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2522312">2.3. Loading from database</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm9696">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.htable">3.1. <code class="varname">htable</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.db_url">3.2. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.key_name_column">3.3. <code class="varname">key_name_column</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.key_type_column">3.4. <code class="varname">key_type_column</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.value_type_column">3.5. <code class="varname">value_type_column</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.key_value_column">3.6. <code class="varname">key_value_column</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.expires_column">3.7. <code class="varname">expires_column</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.array_size_suffix">3.8. <code class="varname">array_size_suffix</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.fetch_rows">3.9. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.timer_interval">3.10. <code class="varname">timer_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.timer_mode">3.11. <code class="varname">timer_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.db_expires">3.12. <code class="varname">db_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.p.enable_dmq">3.13. <code class="varname">enable_dmq</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp41984">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_print">4.1. 
+		<code class="function">sht_print()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_rm_name_re">4.2. 
+		<code class="function">sht_rm_name_re(htable=&gt;regexp)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_rm_value_re">4.3. 
+		<code class="function">sht_rm_value_re(htable=&gt;regexp)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_reset">4.4. 
+		<code class="function">sht_reset(htable)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_lock">4.5. 
+		<code class="function">sht_lock(htable=&gt;key)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_unlock">4.6. 
+		<code class="function">sht_unlock(htable=&gt;key)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_iterator_start">4.7. 
+		<code class="function">sht_iterator_start(iname, hname)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_iterator_end">4.8. 
+		<code class="function">sht_iterator_end(iname)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#htable.f.sht_iterator_next">4.9. 
+		<code class="function">sht_iterator_next(iname)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1697576">5. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1702472">6. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1702840">6.1. 
+		<code class="function">sht_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1705432">6.2. 
+		<code class="function">sht_dump</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1708024">6.3. 
+		<code class="function">sht_delete</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1712344">7. Exported RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1712696">7.1. 
+                <code class="function">htable.get htable key</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1716152">7.2. 
+                <code class="function">htable.delete htable key</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1719632">7.3. 
+                <code class="function">htable.sets htable key value</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1723568">7.4. 
+                <code class="function">htable.seti htable key value</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1727504">7.5. 
+                <code class="function">htable.dump htable</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1730576">7.6. 
+                <code class="function">htable.reload htable</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1733632">7.7. 
+                <code class="function">htable.listTables</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1736664">7.8. 
+                <code class="function">htable.stats</code>
+          </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1739952">8. Event routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1740328">8.1. 
+		<code class="function">htable:mod-init</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1742088">8.2. 
+		<code class="function">htable:expired:&lt;table&gt;</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3503208">Accessing $sht(htname=&gt;key)</a></dt>
+          <dt>1.2. <a href="#idp1031056">Dictionary attack limitation</a></dt>
+          <dt>1.3. <a href="#idp2563232">Storing array values</a></dt>
+          <dt>1.4. <a href="#idp78824">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp81800">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp84368">Set <code class="varname">key_name_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp86936">Set <code class="varname">key_type_column</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp89464">Set <code class="varname">value_type_column</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp21392">Set <code class="varname">key_value_column</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp23952">Set <code class="varname">expires_column</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp26536">Set <code class="varname">array_size_suffix</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp29152">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp31640">Set <code class="varname">timer_interval</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp34312">Set <code class="varname">timer_mode</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp36992">Set <code class="varname">db_expires</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp40768">Set <code class="varname">enable_dmq</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp1672520"><code class="function">sht_print</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1675144"><code class="function">sht_rm_name_re</code> usage</a></dt>
+          <dt>1.19. <a href="#idp1677840"><code class="function">sht_rm_value_re</code> usage</a></dt>
+          <dt>1.20. <a href="#idp1680504"><code class="function">sht_reset</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1683272"><code class="function">sht_lock</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1686016"><code class="function">sht_unlock</code> usage</a></dt>
+          <dt>1.23. <a href="#idp1689560"><code class="function">sht_iterator_start</code> usage</a></dt>
+          <dt>1.24. <a href="#idp1692496"><code class="function">sht_iterator_end</code> usage</a></dt>
+          <dt>1.25. <a href="#idp1696152"><code class="function">sht_iterator_next</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1327024"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2107064">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2675160">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1857424">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2590200">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2522312">2.3. Loading from database</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm9696">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.htable">3.1. <code class="varname">htable</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.db_url">3.2. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.key_name_column">3.3. <code class="varname">key_name_column</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.key_type_column">3.4. <code class="varname">key_type_column</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.value_type_column">3.5. <code class="varname">value_type_column</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.key_value_column">3.6. <code class="varname">key_value_column</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.expires_column">3.7. <code class="varname">expires_column</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.array_size_suffix">3.8. <code class="varname">array_size_suffix</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.fetch_rows">3.9. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.timer_interval">3.10. <code class="varname">timer_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.timer_mode">3.11. <code class="varname">timer_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.db_expires">3.12. <code class="varname">db_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.p.enable_dmq">3.13. <code class="varname">enable_dmq</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp41984">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_print">4.1. 
+		<code class="function">sht_print()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_rm_name_re">4.2. 
+		<code class="function">sht_rm_name_re(htable=&gt;regexp)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_rm_value_re">4.3. 
+		<code class="function">sht_rm_value_re(htable=&gt;regexp)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_reset">4.4. 
+		<code class="function">sht_reset(htable)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_lock">4.5. 
+		<code class="function">sht_lock(htable=&gt;key)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_unlock">4.6. 
+		<code class="function">sht_unlock(htable=&gt;key)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_iterator_start">4.7. 
+		<code class="function">sht_iterator_start(iname, hname)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_iterator_end">4.8. 
+		<code class="function">sht_iterator_end(iname)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#htable.f.sht_iterator_next">4.9. 
+		<code class="function">sht_iterator_next(iname)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1697576">5. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1702472">6. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1702840">6.1. 
+		<code class="function">sht_reload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1705432">6.2. 
+		<code class="function">sht_dump</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1708024">6.3. 
+		<code class="function">sht_delete</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1712344">7. Exported RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1712696">7.1. 
+                <code class="function">htable.get htable key</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1716152">7.2. 
+                <code class="function">htable.delete htable key</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1719632">7.3. 
+                <code class="function">htable.sets htable key value</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1723568">7.4. 
+                <code class="function">htable.seti htable key value</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1727504">7.5. 
+                <code class="function">htable.dump htable</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1730576">7.6. 
+                <code class="function">htable.reload htable</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1733632">7.7. 
+                <code class="function">htable.listTables</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1736664">7.8. 
+                <code class="function">htable.stats</code>
+          </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1739952">8. Event routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1740328">8.1. 
+		<code class="function">htable:mod-init</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1742088">8.2. 
+		<code class="function">htable:expired:&lt;table&gt;</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2107064"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module adds a hash table container to the configuration language. The
+		hash table is stored in shared memory and the access to it can be
+		done via pseudo-variables: $sht(htname=&gt;name). The module supports
+		definition of many hash tables and can load values at startup from
+		a database table.
+	</p>
+          <p>
+		A typical use case for the SIP server is to implement a cache system
+		in configuration file - if a value is not found in hash table, load
+		it from database and store it in hash table so next time the access to
+		it is very fast. In the definition of the table you can define the
+		default expiration time of cached items. The expiration time can
+		be adjusted per item via assignment operation at runtime.
+	</p>
+          <p>
+		Replication between multiple servers is performed automatically (if 
+		enabled) via the DMQ module.
+	</p>
+          <p>
+		You can read more about hash tables at:
+		http://en.wikipedia.org/wiki/Hash_table.
+	</p>
+          <p>
+		The <span class="quote">“<span class="quote">name</span>”</span> can be a static string or can include pseudo-
+		variables that will be replaced at runtime.
+	</p>
+          <div class="example">
+            <a id="idp3503208"></a>
+            <p class="title">
+              <strong>Example 1.1. Accessing $sht(htname=&gt;key)</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("htable", "htable", "a=&gt;size=8;")
+...
+$sht(a=&gt;test) = 1;
+$sht(a=&gt;$ci::srcip) = $si;
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		Next example shows a way to protect against dictionary attacks. If
+		someone fails to authenticate 3 times, it is forbidden for 15min.
+		Authenticatiion against database is expensive as it does a select
+		on the <span class="quote">“<span class="quote">subscriberthe</span>”</span> table. By disabling the DB auth for 15min,
+		resources on the server are saved and time to discover the password is increased
+		substantially. Additional alerting can be done by writing a message
+		to syslog or sending email, etc.
+	</p>
+          <p>
+		To implement the logic, two hash table variables are used: one counting
+		the failed authentications per user and one for storing the time of 
+		last authentication attempt. To ensure a unique name per user, the
+		hash table uses a combination of authentication username and text
+		<span class="quote">“<span class="quote">::auth_count</span>”</span> and <span class="quote">“<span class="quote">::last_auth</span>”</span>.
+	</p>
+          <div class="example">
+            <a id="idp1031056"></a>
+            <p class="title">
+              <strong>Example 1.2. Dictionary attack limitation</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("htable", "htable", "a=&gt;size=8;")
+...
+if(is_present_hf("Authorization"))
+{
+    if($sht(a=&gt;$au::auth_count)==3)
+    {
+		$var(exp) = $Ts - 900;
+        if($sht(a=&gt;$au::last_auth) &gt; $var(exp))
+        {
+            sl_send_reply("403", "Try later");
+            exit;
+        } else {
+            $sht(a=&gt;$au::auth_count) = 0;
+        }
+    }
+    if(!www_authenticate("$td", "subscriber"))
+    {
+        switch ($retcode) {
+            case -1:
+                sl_send_reply("403", "Forbidden");
+            exit;
+            case -2:
+                if($sht(a=&gt;$au::auth_count) == $null)
+                    $sht(a=&gt;$au::auth_count) = 0;
+                $sht(a=&gt;$au::auth_count) = $sht(a=&gt;$au::auth_count) + 1;
+                if($sht(a=&gt;$au::auth_count) == 3)
+                    xlog("auth failed 3rd time - src ip: $si\n");
+                $sht(a=&gt;$au::last_auth) = $Ts;
+            break;
+        }
+        www_challenge("$td"/*realm*/,"0"/*qop*/);
+        exit;
+    }
+    $sht(a=&gt;$au::auth_count) = 0;
+} else {
+    www_challenge("$td","0");
+    exit;
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		The module also provides a way to store multiple values for a single key.
+		This is emulated by storing individual keys as 'key_name[n]', where n is
+		incremented for each key. The total number of keys is stored in a
+		dedicated key, by default: 'key_name::size'.
+	</p>
+          <p>
+		The array is built when the table is loaded in memory and afterwards all
+		the keys are treated as individual keys.
+		If a particular entry in the array is deleted, it is the administrator's
+		responsibility to update the size of the array and any other elements
+		(if required).
+	</p>
+          <div class="example">
+            <a id="idp2563232"></a>
+            <p class="title">
+              <strong>Example 1.3. Storing array values</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting"># Example of dbtext with multiple keys
+$ cat /usr/local/etc/kamailio/dbtext/htable
+1:key:1:0:value3:0
+2:key:1:0:value2:0
+3:key:1:0:value1:0
+
+# The array key will be loaded in memory in the following format:
+$ kamcmd htable.dump htable
+{
+        entry: 35
+        size: 1
+        slot: {
+                item: {
+                        name: key[0]
+                        value: value1
+                }
+        }
+}
+{
+        entry: 50
+        size: 1
+        slot: {
+                item: {
+                        name: key::size
+                        value: 3
+                }
+        }
+}
+{
+        entry: 67
+        size: 1
+        slot: {
+                item: {
+                        name: key[1]
+                        value: value2
+                }
+        }
+}
+{
+        entry: 227
+        size: 1
+        slot: {
+                item: {
+                        name: key[2]
+                        value: value3
+                }
+        }
+}
+
+# Now let's delete a particular entry in the array: key[0].
+$ kamcmd htable.delete htable key[0]
+
+# The array key will look like this after a key was deleted:
+$ kamcmd htable.dump htable
+{
+        entry: 50
+        size: 1
+        slot: {
+                item: {
+                        name: key::size
+                        value: 3
+                }
+        }
+}
+{
+        entry: 67
+        size: 1
+        slot: {
+                item: {
+                        name: key[1]
+                        value: value2
+                }
+        }
+}
+{
+        entry: 227
+        size: 1
+        slot: {
+                item: {
+                        name: key[2]
+                        value: value3
+                }
+        }
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2675160"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1857424"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>If DMQ replication is enabled, the DMQ module must be loaded first.</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2590200"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.3. Loading from database">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2522312"></a>2.3. Loading from database</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module is able to load values in a hash table at startup upon
+		providing a DB URL and table name.
+		</p>
+            <p>
+			The structure of the table must contain:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>key name</em></span> - string containing the name of
+				the key.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>key type</em></span> - the type of the key
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>0</em></span> - simple key - the key is added
+					as 'key_name'.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>1</em></span> - array key - the key is added
+					as 'key_name[n]' - n is incremented for each key with this
+					name to build an array in hash table.  In addition, an additional
+					key is built to hold the total number of key in the array,
+					by default key_name::size (see array_size_suffix parameter).
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>value type</em></span> - the type of the key value
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>0</em></span> - value is string.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>1</em></span> - value is integer.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>key value</em></span> - string containing the value of
+				the key.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm9696"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. htable (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.htable"></a>3.1. <code class="varname">htable</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The definition of a hash table. The value of the parameter must have the
+		following format:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		"htname=&gt;size=_number_;autoexpire=_number_;dbtable=_string_"
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			The parameter can be set multiple times to get more hash tables in
+			same configuration file.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>htname</em></span> - string specifying the name of
+			the hash table. This string is used by <span class="emphasis"><em>$sht(...)</em></span>
+			to refer to the hash table.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>size</em></span> - number specifying the size of hash
+			table.  Larger value means less collisions. The number of entries
+			(aka slots or buckets) in the table is 2^size. The possible range
+			for this value is from 2 to 31, smaller or larger values will be
+			increased to 3 (8 slots) or decreased to 14 (16384 slots).
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>autoexpire</em></span> -time in seconds to delete an item
+			from hash table if no update was done to it. If is missing or set
+			to 0, the items won't expire.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>dbtable</em></span> - name of database to be loaded at
+			startup in hash table. If empty or missing, no data will be loaded.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>dbmode</em></span> - if set to 1, the content of hash
+			table is written to database table when the SIP server is stopped
+			(i.e., ensure persistency over restarts). Default value is 0 (no
+			write back to db table).
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>initval</em></span> - the integer value to be returned
+			instead of $null when a requested key is not set.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>updateexpire</em></span> - if set to 1 (default), the time until
+			expiration of an item is reset when that item is updated.  Certain uses of
+			htable may dictate that updates should not reset the expiration timeout, however,
+			in which case this attribute can be set to 0.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>dmqreplicate</em></span> - if set to 1, any actions (set, update, delete
+			etc.) performed upon entries in this table will be replicated to other nodes (htable
+			peers). Please note, module parameter <span class="quote">“<span class="quote">enable_dmq</span>”</span> must also be set in
+			order for this to apply (see below). Default is 0 (no replication).
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp78824"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "htable", "a=&gt;size=4;autoexpire=7200;dbtable=htable_a;")
+modparam("htable", "htable", "b=&gt;size=5;")
+modparam("htable", "htable", "c=&gt;size=4;autoexpire=7200;initval=1;dmqreplicate=1;")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.db_url"></a>3.2. <code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The <acronym class="acronym">URL</acronym> to connect to database for loading values in hash
+			table at start up.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL (do not connect).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp81800"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "db_url", "mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. key_name_column (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.key_name_column"></a>3.3. <code class="varname">key_name_column</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column containing the hash table key name.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'key_name'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp84368"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">key_name_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "key_name_column", "kname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. key_type_column (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.key_type_column"></a>3.4. <code class="varname">key_type_column</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column containing the hash table key type.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'key_type'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp86936"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">key_type_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "key_type_column", "ktype")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. value_type_column (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.value_type_column"></a>3.5. <code class="varname">value_type_column</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column containing the hash table value type.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'value_type'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp89464"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">value_type_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "value_type_column", "vtype")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. key_value_column (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.key_value_column"></a>3.6. <code class="varname">key_value_column</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column containing hash table key value.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'key_value'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp21392"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">key_value_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "key_value_column", "kvalue")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. expires_column (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.expires_column"></a>3.7. <code class="varname">expires_column</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the column containing the expires value.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'expires'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp23952"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">expires_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "expires", "expiry")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. array_size_suffix (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.array_size_suffix"></a>3.8. <code class="varname">array_size_suffix</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The suffix to be added to store the number of items in an
+			array (see key type).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is '::size'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp26536"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">array_size_suffix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "array_size_suffix", "-count")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.fetch_rows"></a>3.9. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		How many rows to fetch at once from database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 100.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp29152"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "fetch_rows", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. timer_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.timer_interval"></a>3.10. <code class="varname">timer_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Interval in seconds to check for expired htable values.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 20.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp31640"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">timer_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "timer_interval", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. timer_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.timer_mode"></a>3.11. <code class="varname">timer_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the module will start a new timer process. If set to 0
+		will use the default timer process to check for expired htable
+		values.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp34312"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">timer_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "timer_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. db_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.db_expires"></a>3.12. <code class="varname">db_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to 1, the module will load/save the expires values of the items in
+			hash table from/to database. It applies only to hash tables that
+			have the auto-expires attribute defined.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp36992"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">db_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "db_expires", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. enable_dmq (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.p.enable_dmq"></a>3.13. <code class="varname">enable_dmq</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to 1, will enable DMQ replication of actions performed upon 
+			entries in all tables having "dmqreplicate" parameter set. Any update 
+			action performed via pseudo-variables, MI and RPC commands will be 
+			repeated on all other nodes. Therefore, it is important to ensure the
+			table definition (size, autoexpire etc.) is identical across all instances.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Important: If this parameter is enabled, the DMQ module must be loaded first - otherwise, startup will fail.
+		</em></span>
+		</p>
+            <p>
+			Currently, values are not replicated on load from DB as it is expected 
+			that in these cases, all servers will load their values from the same DB.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp40768"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">enable_dmq</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("htable", "enable_dmq", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp41984"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sht_print()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_print"></a>4.1. 
+		<code class="function">sht_print()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Dump content of hash table to L_ERR log level. Intended for debug
+			purposes.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			ONREPLY_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1672520"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">sht_print</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_print();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  sht_rm_name_re(htable=&gt;regexp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_rm_name_re"></a>4.2. 
+		<code class="function">sht_rm_name_re(htable=&gt;regexp)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Delete all entries in the htable that match the name against
+			regular expression.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			ONREPLY_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1675144"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">sht_rm_name_re</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_rm_name_re("ha=&gt;.*");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  sht_rm_value_re(htable=&gt;regexp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_rm_value_re"></a>4.3. 
+		<code class="function">sht_rm_value_re(htable=&gt;regexp)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Delete all entries in the htable that match the value against
+			regular expression.
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			ONREPLY_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1677840"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">sht_rm_value_re</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_rm_value_re("ha=&gt;.*");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  sht_reset(htable)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_reset"></a>4.4. 
+		<code class="function">sht_reset(htable)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Delete all entries in the htable. The name of the hash table
+			can be a dynamic string with variables.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1680504"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">sht_reset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_reset("ha$var(x)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  sht_lock(htable=&gt;key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_lock"></a>4.5. 
+		<code class="function">sht_lock(htable=&gt;key)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Lock the slot in htable corespoding to the key item. Note that
+			the locking is re-entrant for the process, therefore the lock
+			and unlock should be done by the same process.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1683272"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">sht_lock</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_lock("ha=&gt;test");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  sht_unlock(htable=&gt;key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_unlock"></a>4.6. 
+		<code class="function">sht_unlock(htable=&gt;key)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Unlock the slot in htable corespoding to the key item. Note that
+			the locking is re-entrant for the process, therefore the lock
+			and unlock should be done by the same process.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1686016"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">sht_unlock</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_lock("ha=&gt;test");
+$sht(ha=&gt;test) = $sht(ha=&gt;test) + 10;
+sht_unlock("ha=&gt;test");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  sht_iterator_start(iname, hname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_iterator_start"></a>4.7. 
+		<code class="function">sht_iterator_start(iname, hname)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Start an iterator for hash table named by the value of parameter
+			hname. The parameter iname is used to identify the iterator. There
+			can be up to 4 iterators at the same time, with different name.
+		</p>
+            <p>
+			Both parameters can be dynamic strings with variables.
+		</p>
+            <p>
+			IMPORTANT: the slot of the hash table is left locked when
+			retrieving in item. Therefore be sure you do not update the
+			content of the hash table in between sht_iterator_start()
+			and sht_iterator_end(), because it may end up in dead lock.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1689560"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">sht_iterator_start</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_iterator_start("i1", "h1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  sht_iterator_end(iname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_iterator_end"></a>4.8. 
+		<code class="function">sht_iterator_end(iname)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Close the iterator identified by iname parameter and release
+			the hash table slot aquired by the iterator. The iname value
+			must be the same used for sht_iterator_start().
+		</p>
+            <p>
+			The parameter can be dynamic string with variables.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1692496"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">sht_iterator_end</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+sht_iterator_end("i1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  sht_iterator_next(iname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="htable.f.sht_iterator_next"></a>4.9. 
+		<code class="function">sht_iterator_next(iname)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Move the iterator to the next item in hash table. It must
+			be called also after sht_iterator_start() to get the first
+			item in the hash table. Items are returned as they are found
+			in the hash table slot, starting with the first slot.
+		</p>
+            <p>
+			The return code is false when there is no (more) item in the
+			hash table.
+		</p>
+            <p>
+			The item name and value are accessible via variables:
+			$shtitkey(iname) and $shtitval(iname).
+		</p>
+            <p>
+			The parameter can be dynamic string with variables.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1696152"></a>
+              <p class="title">
+                <strong>Example 1.25. <code class="function">sht_iterator_next</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    sht_iterator_start("i1", "h1");
+    while(sht_iterator_next("i1")) {
+        xlog("h1[$shtitkey(i1)] is: $shtitval(i1)\n");
+    }
+    sht_iterator_end("i1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1697576"></a>5. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$sht(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtex(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtcn(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtcv(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtinc(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtval(htable=&gt;key)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$shtrecord(attribute)</em></span>
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+		</p>
+        </div>
+        <div class="section" title="6. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1702472"></a>6. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  sht_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1702840"></a>6.1. 
+		<code class="function">sht_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload a hash table from database.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>sht_reload</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>_hash_table_name_</em></span> - the name
+		of hash table to reload.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:sht_reload:_reply_fifo_file_
+		_hash_table_name_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="6.2.  sht_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1705432"></a>6.2. 
+		<code class="function">sht_dump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Dump content of a hash table via MI.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>sht_dump</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>_hash_table_name_</em></span> - the name
+		of hash table to dump.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:sht_dump:_reply_fifo_file_
+		_hash_table_name_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="6.3.  sht_delete">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1708024"></a>6.3. 
+		<code class="function">sht_delete</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Delete a key from a hash table via MI.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>sht_delete</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>_hash_table_name: </em></span>The table name to delete the key from</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>_key_name: </em></span>The key to delete from the htable</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:sht_delete:_reply_fifo_file_
+		_hash_table_name_
+		_key_name_
+		_empty_line_</pre>
+            <p>
+		Example (note the quoting when executing it via FIFO):
+		</p>
+            <pre class="programlisting">		kamctl fifo sht_delete auth '"user@example.org::last_auth"'</pre>
+          </div>
+        </div>
+        <div class="section" title="7. Exported RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1712344"></a>7. Exported RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.  htable.get htable key">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1712696"></a>7.1. 
+                <code class="function">htable.get htable key</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists one value in a hash table
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.get</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table to dump</p>
+                </li>
+                <li class="listitem">
+                  <p>key : Key name of the hash table value to dump</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+# Dump $sht(students=&gt;daniel)
+kamcmd htable.get students daniel
+
+# Dump first entry in array key course $sht(students=&gt;course[0])
+kamcmd htable.get students course[0]
+...</pre>
+          </div>
+          <div class="section" title="7.2.  htable.delete htable key">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1716152"></a>7.2. 
+                <code class="function">htable.delete htable key</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Delete one value in a hash table
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.delete</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table to delete</p>
+                </li>
+                <li class="listitem">
+                  <p>key : Key name of the hash table value to delete</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+# Delete $sht(students=&gt;anna)
+kamcmd htable.delete students anna
+
+# Delete first entry in array key course $sht(students=&gt;course[0])
+kamcmd htable.delete students course[0]
+...</pre>
+          </div>
+          <div class="section" title="7.3.  htable.sets htable key value">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1719632"></a>7.3. 
+                <code class="function">htable.sets htable key value</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+					Set an item in hash table to string value.
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.sets</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table</p>
+                </li>
+                <li class="listitem">
+                  <p>key : Key name in the hash table</p>
+                </li>
+                <li class="listitem">
+                  <p>Value : String value for the item</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+# Set $sht(test=&gt;x) as string
+kamcmd htable.sets test x abc
+
+# Set firsti entry in array key x $sht(test=&gt;x[0]) as string
+kamcmd htable.sets test x[0] abc
+...</pre>
+          </div>
+          <div class="section" title="7.4.  htable.seti htable key value">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1723568"></a>7.4. 
+                <code class="function">htable.seti htable key value</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+					Set an item in hash table to integer value.
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.seti</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table</p>
+                </li>
+                <li class="listitem">
+                  <p>key : Key name in the hash table</p>
+                </li>
+                <li class="listitem">
+                  <p>Value : Integer value for the item</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+# Set $sht(test=&gt;x) as integer
+kamcmd htable.seti test x 123
+
+# Set firsti entry in array key x $sht(test=&gt;x[0]) as integer
+kamcmd htable.sets test x[0] 123
+...</pre>
+          </div>
+          <div class="section" title="7.5.  htable.dump htable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1727504"></a>7.5. 
+                <code class="function">htable.dump htable</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists all the values in a hash table
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>dhtable.dump</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table to dump</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+kamcmd htable.dump ipban
+...</pre>
+          </div>
+          <div class="section" title="7.6.  htable.reload htable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1730576"></a>7.6. 
+                <code class="function">htable.reload htable</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload hash table from database.
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>dhtable.reload</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>htable : Name of the hash table to reload</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+kamcmd htable.reload ipban
+...</pre>
+          </div>
+          <div class="section" title="7.7.  htable.listTables">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1733632"></a>7.7. 
+                <code class="function">htable.listTables</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists all defined tables
+                </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.listTables</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>None</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+kamcmd htable.listTables
+...</pre>
+          </div>
+          <div class="section" title="7.8.  htable.stats">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1736664"></a>7.8. 
+                <code class="function">htable.stats</code>
+          </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			  Get statistics for hash tables - name, number of slots,
+			  number of items, max number of items per slot, min number
+			  of items per slot.
+          </p>
+            <p>
+                Name: <span class="emphasis"><em>htable.stats</em></span>
+                </p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>None</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+                Example:
+                </p>
+            <pre class="programlisting">...
+kamcmd htable.stats
+...</pre>
+          </div>
+        </div>
+        <div class="section" title="8. Event routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1739952"></a>8. Event routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="8.1.  htable:mod-init">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1740328"></a>8.1. 
+		<code class="function">htable:mod-init</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When defined, the module calls event_route[htable:mod-init] after
+			all modules have been initialized. A typical use case is to
+			initialise items in hash tables. The event route is executed only
+			once, after core and module initialization, but before Kamailio forks any
+			child processes.
+		</p>
+            <pre class="programlisting">...
+event_route[htable:mod-init] {
+    $sht(a=&gt;x) = 1;
+}
+...</pre>
+          </div>
+          <div class="section" title="8.2.  htable:expired:&lt;table&gt;">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1742088"></a>8.2. 
+		<code class="function">htable:expired:&lt;table&gt;</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When defined, the module calls event_route[htable:expired:&lt;table&gt;]
+			when an entry in the given table expires. In this event route, the key and value
+			of the expired record are available with the $shtrecord(key) and $shtrecord(value)
+			pseudo-variables.
+		</p>
+            <pre class="programlisting">...
+
+event_route[htable:expired:mytable] {
+    xlog("mytable record expired $shtrecord(key) =&gt; $shtrecord(value)\n");
+}
+...</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

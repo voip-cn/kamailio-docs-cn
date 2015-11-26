@@ -1,0 +1,240 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Presence_Profile Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15460328" title="Presence_Profile Module" />
+    <link rel="next" href="#idp16363800" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Presence_Profile Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15460328"></a>Presence_Profile Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Mih脙隆ly</span> <span class="surname">M脙漏sz脙隆ros</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:misi@niif.hu">misi@niif.hu</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">M脙漏sz脙隆ros</span> <span class="surname">Mih脙隆ly</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:misi@niif.hu">misi@niif.hu</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alex</span> <span class="surname">Balashov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:abalashov@evaristesys.com">abalashov@evaristesys.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2011 M脙漏sz脙隆ros Mih脙隆ly</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16363800">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16628928">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17793504">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17191960">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17614680">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17110904">3. Exported Parameters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18668080">4. Exported Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16363800"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16628928">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17793504">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17191960">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17614680">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17110904">3. Exported Parameters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18668080">4. Exported Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16628928"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+		The module extends the presence server implementation, providing the ability 
+		to handle the 'ua-profile' event. When a user agent subscribes to ua-profile
+		event for its own AoR, it retrieves the profile data document from the body 
+		of a NOTIFY request.
+	    </p>
+          <p>
+		The profile data document format is usually specific to the user agent. Such
+		documents have to be built and added to presentity table by either the admin
+		or a third party application.
+	    </p>
+          <p>
+		Warning: When you add a profile data document (i.e. the user agent's
+		provisioning config) to the presentity table, you must make sure that you
+		set the presentity table expires field to a time value far in the future.
+	    </p>
+          <p>
+		  Read more about SIP user agent configuration framework in RFC6080:
+		  <a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc6080  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://tools.ietf.org/html/rfc6080'" tppabs="http://tools.ietf.org/html/rfc6080">http://tools.ietf.org/html/rfc6080</a>.
+	    </p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17793504"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17191960"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17614680"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		None.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Exported Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17110904"></a>3.聽Exported Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		  None.
+		</p>
+        </div>
+        <div class="section" title="4.聽Exported Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18668080"></a>4.聽Exported Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	        None to be used in configuration file.
+	      </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

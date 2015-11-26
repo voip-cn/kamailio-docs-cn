@@ -1,0 +1,610 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The IMS ISC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11411976" title="The IMS ISC Module" />
+    <link rel="next" href="#idp17841296" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The IMS ISC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11411976"></a>The IMS ISC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Dragos Vingarzan</span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG Fokus<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:Dragos.Vingarzan@fokus.fraunhofer.de">Dragos.Vingarzan@fokus.fraunhofer.de</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jason</span> <span class="surname">Penton</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jason.penton@smilecoms.com">jason.penton@smilecoms.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:richard.good@smilecoms.com">richard.good@smilecoms.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17841296">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18680968">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp19425136">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18320704">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17562928">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18630928">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18291512">3.1. <code class="varname">my_uri</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18351744">3.2. <code class="varname">expires_grace</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18387280">3.3. <code class="varname">isc_fr_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15974344">3.4. <code class="varname">isc_fr_inv_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15698688">3.5. <code class="varname">add_p_served_user</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15700984">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15701352">4.1. <code class="function">isc_match_filter_reg(reg_state,domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15705784">4.2. <code class="function">isc_match_filter(direction,domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15710384">4.3. <code class="function">isc_from_as(direction)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18169544"><code class="varname">my_uri</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idp18259536"><code class="varname">expires_grace</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp15695184"><code class="varname">isc_fr_timeout</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp15975616"><code class="varname">isc_fr_inv_timeout</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp15699808"><code class="varname">add_p_served_user</code> parameter usage</a></dt>
+          <dt>1.6. <a href="#idp15704624"><code class="function">isc_match_filter_reg</code>
+        usage</a></dt>
+          <dt>1.7. <a href="#idp15709144"><code class="function">isc_match_filter</code>
+        usage</a></dt>
+          <dt>1.8. <a href="#idp15712928"><code class="function">isc_from_as</code>
+        usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17841296"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18680968">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp19425136">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18320704">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17562928">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18630928">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18291512">3.1. <code class="varname">my_uri</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18351744">3.2. <code class="varname">expires_grace</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18387280">3.3. <code class="varname">isc_fr_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15974344">3.4. <code class="varname">isc_fr_inv_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15698688">3.5. <code class="varname">add_p_served_user</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15700984">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15701352">4.1. <code class="function">isc_match_filter_reg(reg_state,domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15705784">4.2. <code class="function">isc_match_filter(direction,domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15710384">4.3. <code class="function">isc_from_as(direction)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18680968"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module provides the functionality for an IMS S-CSCF to implement 
+    the ISC interface between S-CSCF and SIP Application Server.
+    </p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19425136"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18320704"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The Following modules must be loaded before this module:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>TM - Transaction Manager</p>
+                </li>
+                <li class="listitem">
+                  <p>IMS Usrloc SCSCF</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17562928"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>This modules requires the Kamailio internal IMS library.</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18630928"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. my_uri (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18291512"></a>3.1. <code class="varname">my_uri</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the SIP URI of server on which the SCSCF is hosted.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 'sip:scscf.ims.smilecoms.com:6060'.
+      </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp18169544"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="varname">my_uri</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_isc", "my_uri", "sip:scscf.ims.smilecoms.com:6060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. expires_grace (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18351744"></a>3.2. <code class="varname">expires_grace</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the expires value to add to the expires during 3rd party 
+      registration to prevent expiration in Application Server.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 120.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp18259536"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">expires_grace</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_isc", "expires_grace", 120)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. isc_fr_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18387280"></a>3.3. <code class="varname">isc_fr_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the time in ms that we will wait for an AS response
+      before we consider it dead.  It has to be lower than the SIP transaction
+      timeout to prevent downstream timeouts.  But not too small as ASs tend
+      to take a long time to respond.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 5000.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15695184"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">isc_fr_timeout</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_isc", "isc_fr_timeout", 5000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. isc_fr_inv_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15974344"></a>3.4. <code class="varname">isc_fr_inv_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the time in ms that we will wait for an AS INVITE response
+      before we consider it dead.  It has to be lower than the SIP transaction
+      timeout to prevent downstream timeouts.  But not too small as ASs tend
+      to take a long time to respond.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 20000</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15975616"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">isc_fr_inv_timeout</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_isc", "isc_fr_inv_timeout", 20000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. add_p_served_user (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15698688"></a>3.5. <code class="varname">add_p_served_user</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This boolean indicates if a P-Served-User should be added on the ISC
+      interface, according to RFC 5502.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (false)</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15699808"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="varname">add_p_served_user</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_isc", "add_p_served_user", 1)
+# p-served user header will be enabled
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15700984"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. isc_match_filter_reg(reg_state,domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15701352"></a>4.1. <code class="function">isc_match_filter_reg(reg_state,domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks if a REGISTER messages matches Initial Filter
+      Criteria - if so it inserts the necessary route headers and modifies
+      the destination URI to forward to the relevant Application Server.
+      </p>
+            <p>A positive return code (1) means that the REGISTER message has 
+      matched to Initial Filter Criteria and is armed for routing.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reg_state</em></span> if the user was previously 
+          registered 0 - for initial registration, 1 for re/de-registration. 
+          </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> that usrloc_scscf uses to store 
+          user information. </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp15704624"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">isc_match_filter_reg</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+isc_match_filter_reg("1","location");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. isc_match_filter(direction,domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15705784"></a>4.2. <code class="function">isc_match_filter(direction,domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks if a non-REGISTER messages matches Initial 
+      Filter Criteria - if so it inserts the necessary route headers and 
+      modifies the destination URI to forward to the relevant Application 
+      Server.
+      </p>
+            <p>A positive return code (1) means that the message has 
+      matched to Initial Filter Criteria and is armed for routing.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>direction</em></span> the direction of this message - 
+          orig, term, etc.
+          </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> that usrloc_scscf uses to store 
+          user information. </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE | FAILURE_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp15709144"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">isc_match_filter</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+isc_match_filter("orig","location");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. isc_from_as(direction)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15710384"></a>4.3. <code class="function">isc_from_as(direction)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks if this message has come from an Application
+      Server.
+      </p>
+            <p>A positive return code (1) means that the message has 
+      come from an Application Server.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>direction</em></span> the direction of this message - 
+          orig, term, etc.
+          </p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE | FAILURE_ROUTE.
+      </p>
+            <div class="example">
+              <a id="idp15712928"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">isc_from_as</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!isc_from_as("orig")) {
+    remove_hf("P-Asserted-Identity");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,580 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mysql Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp81000" title="mysql Module" />
+    <link rel="next" href="#idp6537568" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mysql Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp81000"></a>mysql Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp6537568">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp6946584">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp6424680">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6104824">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6002608">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp6981848">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6469024">3.1. <code class="varname">ping_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7023200">3.2. <code class="varname">timeout_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4599216">3.3. <code class="varname">auto_reconnect</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_mysql.p.insert_delayed">3.4. <code class="varname">insert_delayed</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_mysql.p.update_affected_found">3.5. <code class="varname">update_affected_found</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4606960">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp7302824">5. Installation</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp7305024">6. Reading configuration from my.cnf</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp7046576">Set <code class="varname">ping_interval</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4598144">Set <code class="varname">timeout_interval</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp4600496">Set <code class="varname">auto_reconnect</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp4603120">Set <code class="varname">insert_delayed</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp4605728">Set <code class="varname">update_affected_found</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp7307544">Set a my.cnf group in <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp7308632">Adding a kamailio group to my.cnf</a></dt>
+          <dt>1.8. <a href="#idp7310416">Using [client] and specific group</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp6537568"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp6946584">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp6424680">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6104824">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6002608">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp6981848">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6469024">3.1. <code class="varname">ping_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7023200">3.2. <code class="varname">timeout_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4599216">3.3. <code class="varname">auto_reconnect</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_mysql.p.insert_delayed">3.4. <code class="varname">insert_delayed</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_mysql.p.update_affected_found">3.5. <code class="varname">update_affected_found</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4606960">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp7302824">5. Installation</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp7305024">6. Reading configuration from my.cnf</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6946584"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module which provides MySQL connectivity for Kamailio.
+		It implements the DB API defined in Kamailio.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6424680"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6104824"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6002608"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>mysql</em></span> - the development libraries forthe Mysql database. In some Linux distributions named "libmysqlclient-dev".
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6981848"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. ping_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6469024"></a>3.1. <code class="varname">ping_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Time interval in seconds to send ping messages to MySQL server in order to keep
+		the connection open.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 300 (5 min).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp7046576"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">ping_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_mysql", "ping_interval", 600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. timeout_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7023200"></a>3.2. <code class="varname">timeout_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Time interval (in seconds) after that an connection attempt, read or write request
+		is aborted. The value counts three times, as several retries are done
+		from the driver before it gives up.
+		</p>
+            <p>
+		The read timeout parameter is ignored on MySQL driver versions prior to
+		<span class="quote">“<span class="quote">5.1.12</span>”</span>, <span class="quote">“<span class="quote">5.0.25</span>”</span> and <span class="quote">“<span class="quote">4.1.22</span>”</span>.
+		The write timeout parameter is ignored on versions prior to <span class="quote">“<span class="quote">5.1.12</span>”</span>
+		and <span class="quote">“<span class="quote">5.0.25</span>”</span>, the <span class="quote">“<span class="quote">4.1</span>”</span> release don't support it at all.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 2 (6 sec).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4598144"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">timeout_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_mysql", "timeout_interval", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. auto_reconnect (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4599216"></a>3.3. <code class="varname">auto_reconnect</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Configure whether the module should automatically reconnect to MySQL server if the
+		connection was lost.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1 (1 - on / 0 - off).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4600496"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">auto_reconnect</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_mysql", "auto_reconnect", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. insert_delayed (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_mysql.p.insert_delayed"></a>3.4. <code class="varname">insert_delayed</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, all INSERT SQL queries will be sent to MySQL server as
+		INSERT DELAYED.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (1 - on / 0 - off).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4603120"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">insert_delayed</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_mysql", "insert_delayed", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. update_affected_found (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_mysql.p.update_affected_found"></a>3.5. <code class="varname">update_affected_found</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, all UPDATE SQL queries will return the number of matched rows instead of the number of "updated" rows.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (1 - on / 0 - off).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4605728"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">update_affected_found</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_mysql", "update_affected_found", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4606960"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		No function exported to be used from configuration file.
+		</p>
+        </div>
+        <div class="section" title="5. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7302824"></a>5. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Because it dependes on an external library, the mysql module is not
+		compiled and installed by default. You can use one of these options.
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			- edit the "Makefile" and remove "db_mysql" from "excluded_modules"
+			list. Then follow the standard procedure to install Kamailio:
+			"make all; make install".
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			- from command line use: 'make all include_modules="db_mysql";
+			make install include_modules="db_mysql"'.
+			</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="6. Reading configuration from my.cnf">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7305024"></a>6. Reading configuration from my.cnf</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		In order to take into account specific mysql client options, a my.cnf config group can be passed using the <span class="emphasis"><em>db_url</em></span> module parameter. This is done by setting <span class="emphasis"><em>[group]</em></span> in front of or instead of the host part. The following examples are valid <span class="emphasis"><em>db_url</em></span> definitions, which include a my.cnf group:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">mysql://user:pass@[group]host:port/db</li>
+              <li class="listitem">mysql://user:pass@[group]:port/db</li>
+              <li class="listitem">mysql://user:pass@[group]/db</li>
+              <li class="listitem">mysql://[group]/db</li>
+            </ul>
+          </div>
+          <div class="example">
+            <a id="idp7307544"></a>
+            <p class="title">
+              <strong>Example 1.6. Set a my.cnf group in <code class="varname">db_url</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("usrloc", "db_url", "mysql://[kamailio]/kamailio)
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp7308632"></a>
+            <p class="title">
+              <strong>Example 1.7. Adding a kamailio group to my.cnf</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+[kamailio]
+socket = /path/to/mysql.sock
+user = kamailiouser
+password = kamailiopass
+default-character-set = utf8
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		In addition to the given group, also the <span class="emphasis"><em>[client]</em></span> section is read, in the order given in my.cnf. So if you for example specify a <span class="emphasis"><em>socket</em></span> in both your specific group and the client group, then the value is taken from the last one.
+		</p>
+          <div class="example">
+            <a id="idp7310416"></a>
+            <p class="title">
+              <strong>Example 1.8. Using [client] and specific group</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+[client]
+socket = /var/run/mysql/mysqld.sock
+
+[kamailio]
+socket = /path/to/mysqld.sock
+user = kamailiouser
+password = kamailiopass
+default-character-set = utf8
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		In the example given above, the socket <span class="emphasis"><em>/path/to/mysqld.sock</em></span> is used by Kamailio because both <span class="emphasis"><em>[kamailio]</em></span> and <span class="emphasis"><em>[client]</em></span> define this option, and the latter overwrites the first.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

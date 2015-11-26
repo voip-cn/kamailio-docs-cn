@@ -1,0 +1,970 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mohqueue Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4418008" title="mohqueue Module" />
+    <link rel="next" href="#idp5887960" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mohqueue Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4418008"></a>mohqueue Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Robert</span> <span class="surname">Boisvert</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2013 Robert Boisvert, rdbprog@gmail.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp5887960">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#dependencies">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#mod.depends">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app.depends">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#url.parms">3.1. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#table.parms">3.2. <code class="varname">db_qtable</code> and <code class="varname">db_ctable</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dir.parms">3.3. <code class="varname">mohdir</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#maxcalls.parms">3.4. <code class="varname">moh_maxcalls</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#proc.func">4.1. 
+        <code class="function">mohq_process ()</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#send.func">4.2. 
+        <code class="function">mohq_send (queue_name)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#retrieve.func">4.3. 
+        <code class="function">mohq_retrieve (queue_name, URI)</code>
+      </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#count.func">4.4. 
+        <code class="function">mohq_count (queue_name, pvar)</code>
+      </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#database">5. Database Schema</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#mohqueues.dbase">5.1. MOHQUEUES Table</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mohqcalls.dbase">5.2. MOHQCALLS Table</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#audiofiles">6. Audio Files</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp6172104">Set <code class="varname">db_url</code>:</a></dt>
+          <dt>1.2. <a href="#idp4405800">Set table names:</a></dt>
+          <dt>1.3. <a href="#idp4408400">Set default directory for audio files:</a></dt>
+          <dt>1.4. <a href="#idp4411224">Set default directory for audio files:</a></dt>
+          <dt>1.5. <a href="#idp4543248"><code class="function">mohq_process</code> usage:</a></dt>
+          <dt>1.6. <a href="#idp4548520"><code class="function">mohq_send</code> usage:</a></dt>
+          <dt>1.7. <a href="#idp4553232"><code class="function">mohq_retrieve</code> usage:</a></dt>
+          <dt>1.8. <a href="#idp4557968"><code class="function">mohq_count</code> usage:</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp5887960"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#dependencies">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#mod.depends">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app.depends">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#url.parms">3.1. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#table.parms">3.2. <code class="varname">db_qtable</code> and <code class="varname">db_ctable</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dir.parms">3.3. <code class="varname">mohdir</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#maxcalls.parms">3.4. <code class="varname">moh_maxcalls</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#proc.func">4.1. 
+        <code class="function">mohq_process ()</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#send.func">4.2. 
+        <code class="function">mohq_send (queue_name)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#retrieve.func">4.3. 
+        <code class="function">mohq_retrieve (queue_name, URI)</code>
+      </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#count.func">4.4. 
+        <code class="function">mohq_count (queue_name, pvar)</code>
+      </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#database">5. Database Schema</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#mohqueues.dbase">5.1. MOHQUEUES Table</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mohqcalls.dbase">5.2. MOHQCALLS Table</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#audiofiles">6. Audio Files</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="overview"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+The mohqueue module diverts INVITE requests into a
+<a class="ulink" href="javascript:if(confirm('http://en.wikipedia.org/wiki/Music_on_hold  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://en.wikipedia.org/wiki/Music_on_hold'" tppabs="http://en.wikipedia.org/wiki/Music_on_hold">Music On
+Hold (MOH)</a> queue where the caller can listen to recorded
+audio until an operator is available to take the call. When an
+operator is available, a function can be used to transfer the oldest
+call in a queue to an operator using an unattended transfer (REFER)
+to a specified URI. If successful, the call is removed from the queue.
+    </p>
+          <p>
+While in queue, recorded audio is streamed to the caller in an endless
+loop using the rtpproxy module and application. Each queue can be
+configured to use different audio files.
+    </p>
+          <p>
+The queues are defined in the database which allows for dynamic
+configuration of the queues. Each queue is assigned a specific
+URI to respond to and a location for the audio files.
+    </p>
+          <p>
+As each call arrives the database is updated to show the call
+status which allows outside processes to inspect the queue. It
+can also be inspected using a function to see how many calls are
+currently in queue.
+    </p>
+          <p>
+While in queue, all SIP messages for a call must pass through
+the mohqueue module so that it can accurately detect the call
+status.
+    </p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dependencies"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mod.depends"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+The following modules must be loaded before this module:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>a database module</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>sl module</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>tm module</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>rtpproxy module</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app.depends"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+The rtpproxy applications supported by the rtpproxy module (e.g.
+<a class="ulink" href="javascript:if(confirm('http://www.b2bua.org/wiki/RTPproxy  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.b2bua.org/wiki/RTPproxy'" tppabs="http://www.b2bua.org/wiki/RTPproxy">
+http://www.b2bua.org/wiki/RTPproxy</a>).
+      </p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="parameters"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="url.parms"></a>3.1.聽<code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+The URL to connect to the database for the mohqueue tables.
+      </p>
+            <p>
+<span class="emphasis"><em>Default value for Kamailio.</em></span>
+      </p>
+            <div class="example">
+              <a id="idp6172104"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">db_url</code>:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam ("mohqueue", "db_url", "mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽db_qtable and db_ctable (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="table.parms"></a>3.2.聽<code class="varname">db_qtable</code> and <code class="varname">db_ctable</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+<code class="varname">db_qtable</code> is the name of the table that defines
+the queues and <code class="varname">db_ctable</code> is the table that
+maintains the call status.
+      </p>
+            <p>
+<span class="emphasis"><em>"MOHQUEUES" for <code class="varname">db_qtable</code> and
+"MOHQCALLS" for <code class="varname">db_ctable</code>.</em></span>
+      </p>
+            <div class="example">
+              <a id="idp4405800"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set table names:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam ("mohqueue", "db_qtable", "mqueues")
+modparam ("mohqueue", "db_ctable", "mcalls")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽mohdir (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dir.parms"></a>3.3.聽<code class="varname">mohdir</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Path to the directory where the audio files are stored. Audio files
+are usually relative to this directory although the value can be
+overridden by a directory specified in the queues table.
+      </p>
+            <p>
+<span class="emphasis"><em>None. If not set by the module it must be defined in the
+queues table.</em></span>
+      </p>
+            <div class="example">
+              <a id="idp4408400"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set default directory for audio files:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam ("mohqueue", "mohdir", "/var/kamailio/MOH")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽moh_maxcalls (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="maxcalls.parms"></a>3.4.聽<code class="varname">moh_maxcalls</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Defines the maximum number of calls that can be placed in queue.
+It is the sum of all calls in all queues. It must be in the range
+of 1 to 5000. <span class="emphasis"><em>NOTE:</em></span> it may be limited by the
+processing power of the server or the number of available rtpproxy
+ports.
+      </p>
+            <p>
+<span class="emphasis"><em>None. If not set by the module it must be defined in the
+queues table.</em></span>
+      </p>
+            <div class="example">
+              <a id="idp4411224"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set default directory for audio files:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam ("mohqueue", "mohdir", "/var/kamailio/MOH")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="functions"></a>4.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽 mohq_process ()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="proc.func"></a>4.1.聽
+        <code class="function">mohq_process ()</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Checks to see if the current SIP message involves a queue. If it
+does it will process the message and return a TRUE value.
+      </p>
+            <p>
+In order for mohqueue to detect changes in the call it is necessary
+that all messages involving the call be processed through this
+function. The easiest way is to accomplish this is to place it at
+the beginning of the main route of the script.
+      </p>
+            <p>
+mohqueue calls are identified by an RURI that matches a queue URI.
+Once a call is placed in queue it checks the <code class="varname">To</code>
+header field along with the RURI to find a match, except in the case
+of a CANCEL which matches only on the RURI.
+      </p>
+            <p>
+This function has no parameters and must be called from a request route.
+      </p>
+            <p>
+<span class="emphasis"><em>Return code:</em></span>
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>TRUE=successful and call in queue</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>FALSE=failed, unrecognized URI or unable to place in queue</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+            <div class="example">
+              <a id="idp4543248"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽<code class="function">mohq_process</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+request_route {
+  # main route with limited processing
+...
+  # MOH queue?
+  if (mohq_process ()) {
+    xlog ("L_DBG", "Handled by mohqueue");
+    exit;
+  }
+  # An error or not a MOH queue message; continue processing
+...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.聽 mohq_send (queue_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="send.func"></a>4.2.聽
+        <code class="function">mohq_send (queue_name)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Normally calls enter the queue with an initial INVITE message that
+1) has a RURI that matches a queue URI and 2) is passed through
+<code class="function">mohq_proc ()</code>, which is the preferred method.
+      </p>
+            <p>
+This function is used when you wish to send a call into a queue that
+does not match the queue URI.
+      </p>
+            <p>
+It has only one parameter, the name of the queue, and must be called
+from the request route with an initial INVITE message. The queue name
+can be passed as a literal or pseudo-variable.
+      </p>
+            <p>
+<span class="emphasis"><em>Return code:</em></span>
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>TRUE=successful and call in queue</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>FALSE=failed, unable to place in queue</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+            <div class="example">
+              <a id="idp4548520"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽<code class="function">mohq_send</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+  # call is initial INVITE and ready for queue?
+  if (some test) {
+    if (mohq_send ("main")) {
+      xlog ("L_DBG", "Sent call to main mohqueue");
+      exit;
+    }
+    # failed to enter queue!
+    ...
+  }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.聽 mohq_retrieve (queue_name, URI)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="retrieve.func"></a>4.3.聽
+        <code class="function">mohq_retrieve (queue_name, URI)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Retrieves the oldest call in a queue and redirects it to a URI.
+Although the function returns, the transfer of the call may not have
+completed since the new URI (operator) must answer the call.
+      </p>
+            <p>
+It has two parameters, the queue name and the URI to REFER the call
+to, both which can be passed as literals or pseudo-variables. It can
+be called from any route.
+      </p>
+            <p>
+<span class="emphasis"><em>Return code:</em></span>
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>TRUE=successful, transfer started</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>FALSE=failed, parameters are incorrect or there are no calls in queue</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+            <div class="example">
+              <a id="idp4553232"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽<code class="function">mohq_retrieve</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+#!define MOHQNAME "operators"
+#!define CGROUP   "sip:operators@10.211.64.5"
+...
+  # redirect oldest call to operator call group
+  if (mohq_retrieve (MOHQNAME, CGROUP)) {
+      xlog ("L_DBG", "Retrieved call from mohqueue");
+      exit;
+    }
+  # queue is empty or something went wrong
+  }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.聽 mohq_count (queue_name, pvar)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="count.func"></a>4.4.聽
+        <code class="function">mohq_count (queue_name, pvar)</code>
+      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+Finds the number of calls that are in a queue. It will not count
+calls that are in the process of entering or exiting the queue.
+      </p>
+            <p>
+The function has two parameters, the name of the queue and the
+pseudo-variable which receives the count. The queue name can be
+passed as a literal or a pseudo-variable. It can be called from
+any route.
+      </p>
+            <p>
+<span class="emphasis"><em>Return code:</em></span>
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>TRUE=successful, pseudo-variable contains count</em>
+                  </span>
+                </li>
+                <li class="listitem">
+                  <span class="emphasis">
+                    <em>FALSE=failed, parameters are incorrect</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+            <div class="example">
+              <a id="idp4557968"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽<code class="function">mohq_count</code> usage:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$var(mohq) = "operators";
+...
+  # more than 10 calls?
+  mohq_count ("$var(mohq)", "$var(mohqcnt)");
+  if ($var(mohqcnt) &gt; 10) {
+    xlog ("L_WARN", "$var(mohq) queue has $var(mohqcnt) calls!");
+  }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.聽Database Schema">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="database"></a>5.聽Database Schema</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+mohqueue uses two external database tables to manage the queues and
+provide status information to outside processes. Internally, it keeps
+a volatile database in memory of call status. If the module is
+restarted it loses the internal database and clears the external
+one.
+      </p>
+          <p>
+On a reqular basis it checks the external table that defines the
+queues to see if the definition has changed. It makes this check
+under the following conditions: the queue has not been checked in the
+last 60 seconds <span class="emphasis"><em>AND</em></span> no call is currently in
+queue or transitioning in or out. The last condition prevents
+existing calls from being adversely affected by queue redefinitions.
+      </p>
+          <div class="section" title="5.1.聽MOHQUEUES Table">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mohqueues.dbase"></a>5.1.聽MOHQUEUES Table</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+This table controls the definition of the queue. The name is set by
+the <a class="ulink" href="#table.parms">db_qtable</a> parameter. There is
+no internal function to modify the table so it must be configured
+externally. It contains the following fields:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>id</em></span> (integer): unique identifier that is created
+automatically. <span class="emphasis"><em>Do not attempt to change this value.</em></span></li>
+                <li class="listitem"><span class="emphasis"><em>name</em></span> (25-character string, required): the queue name.
+Duplicate names are not allowed.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>uri</em></span> (100-character string, required): the URI of
+the queue. It should not include any parameters or headers (e.g.
+"sip:user@host;maddr=239.255.255.1" or "sip:user@host?subject=project")
+although it will match any RURI that contains this URI even if the
+RURI has parameters or headers. Duplicates are not allowed.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>mohdir</em></span> (100-character string, optional): path to
+the directory where the audio files for the queue are stored. This path
+overrides the one provided by the <a class="ulink" href="#dir.parms">mohdir</a>
+parameter. If the directory is not accessible by the module the queue
+is not activated.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>mohfile</em></span> (100-character string, required): the
+base name of the audio file. See the section about
+<a class="ulink" href="#audiofiles">audio files</a> for more information
+about file names. If no files matching this name are found in the
+directory the queue is not activated.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>debug</em></span> (integer, required): enables debugging
+messages for the queue. If non-zero, it will send debugging messages
+to the log for conditions that involve the queue, whether or not
+Kamailio has logging enabled for debugging. If zero, it depends on
+Kamailio's log level.
+          </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+          <div class="section" title="5.2.聽MOHQCALLS Table">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mohqcalls.dbase"></a>5.2.聽MOHQCALLS Table</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+This table contains the status of calls that are in queue, or
+transitioning in or out of a queue. The name is set by the
+<a class="ulink" href="#table.parms">db_ctable</a> parameter. This table
+is read-only for external processes and its contents should
+<span class="emphasis"><em>not be modified</em></span>. It contains the following
+fields:
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><span class="emphasis"><em>id</em></span> (integer): unique identifier that is created
+automatically.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>mohq_id</em></span> (integer, required): the id value of the
+queue.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>call_status</em></span> (integer, required): the status of
+the call. 1=entering; 2=in queue (listening to MOH); 3=leaving
+          </li>
+                <li class="listitem"><span class="emphasis"><em>call_from</em></span> (100-character string, required): the
+contents of the <code class="varname">From</code> header field.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>call_id</em></span> (100-character string, required): the
+contents of the <code class="varname">Call-ID</code> header field.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>call_contact</em></span> (100-character string, optional):
+the contents of the <code class="varname">Contact</code> header field, if it
+exists.
+          </li>
+                <li class="listitem"><span class="emphasis"><em>call_time</em></span> (datetime, required): time the call
+entered the queue. If a <a class="ulink" href="#retrieve.func">retrieve</a>
+fails this time is not changed.
+          </li>
+              </ul>
+            </div>
+            <p>
+      </p>
+          </div>
+        </div>
+        <div class="section" title="6.聽Audio Files">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="audiofiles"></a>6.聽Audio Files</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+When rtpproxy negotiates to determine which media to use in the audio
+stream it uses the files in the MOH directory as defined by the
+<a class="ulink" href="#mohqueues.dbase">MOHQUEUES</a> table. The table
+defines the location of the files and the base name used to identify
+each. The actual stream type depends on the RTP payload number that
+is part of the name. The complete file name for each stream is
+composed of <code class="varname">mohdir/mohfile.type</code>. For example,
+<code class="varname">/var/kamailio/MOH/HeWillCall.8</code> would be the file
+for payload type 8 (PCMA/8000).
+      </p>
+          <p>
+The supported types and their order of preference are:
+        </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem"><span class="emphasis"><em>9</em></span>: G722/8000</li>
+              <li class="listitem"><span class="emphasis"><em>0</em></span>: PCMU/8000</li>
+              <li class="listitem"><span class="emphasis"><em>8</em></span>: PCMA/8000</li>
+              <li class="listitem"><span class="emphasis"><em>18</em></span>: G729/8000</li>
+              <li class="listitem"><span class="emphasis"><em>3</em></span>: GSM/8000</li>
+              <li class="listitem"><span class="emphasis"><em>4</em></span>: G723/8000</li>
+              <li class="listitem"><span class="emphasis"><em>15</em></span>: G728/8000</li>
+              <li class="listitem"><span class="emphasis"><em>5</em></span>: DVI4/8000</li>
+              <li class="listitem"><span class="emphasis"><em>7</em></span>: LPC/8000</li>
+              <li class="listitem"><span class="emphasis"><em>12</em></span>: QCELP/8000</li>
+              <li class="listitem"><span class="emphasis"><em>13</em></span>: CN/8000</li>
+              <li class="listitem"><span class="emphasis"><em>16</em></span>: DVI4/11025</li>
+              <li class="listitem"><span class="emphasis"><em>6</em></span>: DVI4/16000</li>
+              <li class="listitem"><span class="emphasis"><em>17</em></span>: DVI4/22050</li>
+              <li class="listitem"><span class="emphasis"><em>10</em></span>: L16/44100</li>
+              <li class="listitem"><span class="emphasis"><em>11</em></span>: L16/44100</li>
+              <li class="listitem"><span class="emphasis"><em>14</em></span>: MPA/90000</li>
+            </ul>
+          </div>
+          <p>
+      </p>
+          <p>
+See <a class="ulink" href="javascript:if(confirm('http://en.wikipedia.org/wiki/RTP_audio_video_profile  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://en.wikipedia.org/wiki/RTP_audio_video_profile'" tppabs="http://en.wikipedia.org/wiki/RTP_audio_video_profile">
+RTP Audio Video Profile</a> for more information about RTP
+payload types.
+      </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

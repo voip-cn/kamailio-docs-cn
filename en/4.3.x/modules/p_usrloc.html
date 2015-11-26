@@ -1,0 +1,2092 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>p_usrloc - Distributed databases</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4243520" title="p_usrloc - Distributed databases" />
+    <link rel="next" href="#idp3404712" title="Chapter 1. User's Guide" />
+  </head>
+  <body>
+    <div class="book" title="p_usrloc - Distributed databases">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4243520"></a>p_usrloc - Distributed databases</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Henning</span> <span class="surname">Westerholt</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Patric</span> <span class="surname">Marschall</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">1&amp;1 Internet AG<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 1&amp;1 Internet AG</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3404712">1. User's Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2563400">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2508128">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1774600">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2602904">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm15168">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14800">3.1. <code class="varname">write_db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm12416">3.2. <code class="varname">read_db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9848">3.3. <code class="varname">reg_db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm7240">3.4. <code class="varname">id_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm4728">3.5. <code class="varname">num_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm1952">3.6. <code class="varname">url_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp71616">3.7. <code class="varname">status_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp74272">3.8. <code class="varname">failover_time_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp76976">3.9. <code class="varname">spare_flag_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79888">3.10. <code class="varname">error_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp82680">3.11. <code class="varname">risk_group_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp85536">3.12. <code class="varname">expire_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp88312">3.13. <code class="varname">db_err_threshold</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp21160">3.14. <code class="varname">failover_level</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp25264">3.15. <code class="varname">db_retry_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28136">3.16. <code class="varname">db_use_transactions</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp30864">3.17. <code class="varname">db_transaction_level</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp33632">3.18. <code class="varname">write_on_master_db</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp36328">3.19. <code class="varname">write_on_db</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp39000">3.20. <code class="varname">connection_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp41720">3.21. <code class="varname">alg_location</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1841792">3.22. <code class="varname">domain_db</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1845744">3.23. <code class="varname">default_db_type</code>(str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1848576">4. <code class="varname">default_db_url</code>(str)</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1851312">5.  Changes from usrloc module </a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1851664">5.1. <code class="varname">db_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1855456">5.2. <code class="varname">db_url</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1856344">6. Installation &amp; Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1856696">6.1. Database setup</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1857072">6.1.1. Configuration Table</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1861160">6.2. Maintenance</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1864088">6.3. Additional configuration</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1245848">2. Developer's Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2751304">1. 
+			<code class="function">load_ul_db_api(ul_db_api_t * api)</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2699128">2. 
+			<code class="function">int (* ul_db_insert_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1734912">3. 
+			<code class="function">int (* ul_db_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_op_t * _op, db_val_t* _v, db_key_t* _uk,
+				db_val_t* _uv, int _n, int _un);</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1047424">4. 
+			<code class="function">int (* ul_db_insert_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3009144">5. 
+			<code class="function">int (* ul_db_replace_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2848120">6. 
+			<code class="function">int (* ul_db_delete_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_op_t* _o, db_val_t* _v, int _n)</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3370632">7. 
+			<code class="function">int (* ul_db_query_t) (str * table, str * first, str * second, db_con_t *** _r_h,
+				db_key_t* _k, db_op_t* _op, db_val_t* _v, db_key_t* _c,
+				int _n, int _nc, db_key_t _o, db_res_t** _r);</code>
+			</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3115232">8. 
+			<code class="function">int (* ul_db_free_result_t)(db_con_t ** dbh, db_res_t * res);</code>
+			</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm13576">Set <code class="varname">write_db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm10984">Set <code class="varname">read_db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm8360">Set <code class="varname">reg_db_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm5776">Set <code class="varname">id_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm3112">Set <code class="varname">num_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp70456">Set <code class="varname">url_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp73096">Set <code class="varname">status_column</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp75816">Set <code class="varname">failover_time_column</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp78704">Set <code class="varname">spare_flag_column</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp81504">Set <code class="varname">error_column</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp84360">Set <code class="varname">risk_group_column</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp87144">Set <code class="varname">expire_time</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp89776">Set <code class="varname">db_err_threshold</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp24088">Set <code class="varname">failover_level</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp26960">Set <code class="varname">db_retry_interval</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp29688">Set <code class="varname">db_use_transactions</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp32464">Set <code class="varname">db_transaction_level</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp35152">Set <code class="varname">write_on_master_db</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp37840">Set <code class="varname">write_on_db</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp40544">Set <code class="varname">connection_expires</code> parameter</a></dt>
+          <dt>1.21. <a href="#idp43304">Set <code class="varname">alg_location</code> parameter</a></dt>
+          <dt>1.22. <a href="#idp1844560">Set <code class="varname">domain_db</code> parameter</a></dt>
+          <dt>1.23. <a href="#idp1847312">Set <code class="varname">default_db_type</code> parameter</a></dt>
+          <dt>1.24. <a href="#idp1850112">Set <code class="varname">default_db_type</code> parameter</a></dt>
+          <dt>1.25. <a href="#idp1854296">Set <code class="varname">db_mode</code> parameter</a></dt>
+          <dt>1.26. <a href="#idp1858800">Example database content - reg_table (locdb) table</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. User's Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3404712"></a>Chapter 1. User's Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2563400">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2508128">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1774600">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2602904">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm15168">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14800">3.1. <code class="varname">write_db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm12416">3.2. <code class="varname">read_db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9848">3.3. <code class="varname">reg_db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm7240">3.4. <code class="varname">id_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm4728">3.5. <code class="varname">num_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm1952">3.6. <code class="varname">url_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp71616">3.7. <code class="varname">status_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp74272">3.8. <code class="varname">failover_time_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp76976">3.9. <code class="varname">spare_flag_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79888">3.10. <code class="varname">error_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp82680">3.11. <code class="varname">risk_group_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp85536">3.12. <code class="varname">expire_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp88312">3.13. <code class="varname">db_err_threshold</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp21160">3.14. <code class="varname">failover_level</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp25264">3.15. <code class="varname">db_retry_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28136">3.16. <code class="varname">db_use_transactions</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp30864">3.17. <code class="varname">db_transaction_level</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp33632">3.18. <code class="varname">write_on_master_db</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp36328">3.19. <code class="varname">write_on_db</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp39000">3.20. <code class="varname">connection_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp41720">3.21. <code class="varname">alg_location</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1841792">3.22. <code class="varname">domain_db</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1845744">3.23. <code class="varname">default_db_type</code>(str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1848576">4. <code class="varname">default_db_url</code>(str)</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1851312">5.  Changes from usrloc module </a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1851664">5.1. <code class="varname">db_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1855456">5.2. <code class="varname">db_url</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1856344">6. Installation &amp; Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1856696">6.1. Database setup</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1857072">6.1.1. Configuration Table</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1861160">6.2. Maintenance</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1864088">6.3. Additional configuration</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2563400"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	      The p_usrloc module is built upon the usrloc module and provides the same usrloc export to the registrar module (for example). The usrloc module must not be loaded at the same time with the p_usrloc module. The parameters and the interface for the p_usrloc module are thus almost the same, so in this document only extra parameters (specific only to p_usrloc module) and differences are noted. For a complete description of the paramters that are inherited from usrloc see the page here. Note that the modparam statement must still refer to the p_usrloc module.
+	</p>
+          <p> The goal of the p_usrloc module is to provide partionioned user location service to Kamailio/SER. This provides three major benefits:
+	      </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>Redundancy</em></span> Failure of a location database does not mean that the location service is down
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em> Load Balancing</em></span> DB performance is greatly increased as queries are automatically split on a pool of ID(number configurable at runtime). Furthermore, a read only db handler can be used to further increase the spead of the "select" queries.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em> Failover </em></span> A faulty DB server is detected and taken out. When it recovers, the module makes sure that no stale contacts are returned from it.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+	</p>
+          <p>Write queries are replicated to two or more databases, depending on some
+	distribution keys, e.g. the username and domain the subscribers. The number of databases
+	used for replication is configurable at compile time by modifying the DB_NUM define.
+	Its main field of application is for storing and retrieving location data. The actual
+	database for this subscriber is choosen from a set that is specified in the master
+	database. Read queries are executed on one database of the set. If this database is
+	not available, the other database would be used. This failure is recorded in the
+	master database.
+	</p>
+          <p>Connections to the distributed databases are setup prior the actual query
+	is executed. The module maintains a cache of the database handles to provide
+	better performance. This handles are periodically checked if there are still valid
+	and if needed updated from the master database. As default only one key is used
+	for the database lookup, but the additional usage of a second one is possible.
+	</p>
+          <p>Changes in the master database are autodetected. For better performance it is
+	possible to use one read-only instance, that is locally installed, and write only
+	errors and other status information to a central master database.
+	It is also possible to specify different failover schemas and even use transaction to
+	provide additional data safety. This module could further try to minimise the impact
+	of a database error with the usage of spare databases that are automatically activated.
+	It also supports the manual deactivation of redundant databases for maintenance purposes.
+	</p>
+          <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3>
+	      The p_usrloc module still has some missing feature, like automatic expiry of contacts and dumping of all users via the fifo cmd.
+	</div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2508128"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1774600"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span> necessary to connect to the 
+				master database and to the distributed databases.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2602904"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm15168"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. write_db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14800"></a>3.1. <code class="varname">write_db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The url to the master database where errors are written to.
+	    </p>
+            <p>
+		    Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>
+	    </p>
+            <div class="example">
+              <a id="idm13576"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">write_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "write_db_url", "mysql://username:password@localhost/databasename")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. read_db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm12416"></a>3.2. <code class="varname">read_db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The url to the master database where the distribution data is
+		read from. It is seperated from write access, so for better
+		performance, a local replicate can be used for read access.
+	    </p>
+            <p>
+		<span class="emphasis"><em>Default value is mysql://kamailio:kamailiorw@localhost/kamailio .
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm10984"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">read_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "read_db_url", "mysql://user:passwd@localhost/db")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. reg_db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9848"></a>3.3. <code class="varname">reg_db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the table where the information about the distributed databases
+		is stored.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">locdb</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm8360"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">reg_db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "reg_db_table", "locdb")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. id_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm7240"></a>3.4. <code class="varname">id_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the id of a distributed database is stored.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">id</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm5776"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">id_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "id_column", "id")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. num_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm4728"></a>3.5. <code class="varname">num_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the associated number of the distributed 
+		database is stored. For each distributed database ID there
+		must be at least two databases available, the databases above
+		the second are ignored.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">no</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm3112"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">num_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "num_column", "nr")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. url_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm1952"></a>3.6. <code class="varname">url_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the url of the distributed database is stored.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">url</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp70456"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">url_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "url_column", "url")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. status_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp71616"></a>3.7. <code class="varname">status_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the status of the distributed database is stored.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">status</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp73096"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">status_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "status_column", "status")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. failover_time_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp74272"></a>3.8. <code class="varname">failover_time_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the failover time of the
+		location databases is stored. This field is set to the
+		current time when a databases is turned off or turned on.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">failover</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp75816"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">failover_time_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "failover_time_column", "fail")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. spare_flag_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp76976"></a>3.9. <code class="varname">spare_flag_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the spare flag of the location 
+		databases is stored. It is possible to declare an entry in
+		the p_usrloc table as spare which is used in a failover.
+		Due to the fact that the data is stored in two databases and
+		it takes the spare the complete expire time to be up to
+		date, it is not very useful.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">spare</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp78704"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">spare_flag_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "spare_flag_column", "spare")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. error_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79888"></a>3.10. <code class="varname">error_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the errors of the distributed 
+		databases are stored. Each call to db_handle_error increases
+		the error counter. After exceeding the error threshold, the
+		database's status is set to off.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">errors</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp81504"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">error_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "error_column", "error")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. risk_group_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp82680"></a>3.11. <code class="varname">risk_group_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the column where the risk group of the distributed
+		databases is stored. All databases on one host are in the
+		same risk group. This is only useful when using spares and
+		prevents the module from taking a spare which shares the same
+		risk as the broken database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">rg</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp84360"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">risk_group_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "risk_group_column", "rg")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. expire_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp85536"></a>3.12. <code class="varname">expire_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the time (in seconds) when a contact expires, used
+		for resetting the failover time of a reactivated database.
+		It should be equal or greater than the contact expiration
+		time of the registrar module.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">3600</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp87144"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">expire_time</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "expire_time", "3600")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. db_err_threshold (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp88312"></a>3.13. <code class="varname">db_err_threshold</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the error value on which a database shall be turned of.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">50</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp89776"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">db_err_threshold</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "db_err_threshold", "50")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. failover_level (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp21160"></a>3.14. <code class="varname">failover_level</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the manner a failover is done. Following modes are supported:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> - Just turn off the broken database</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>2</em></span> - Try to find a spare, if none found, just
+			turn off the broken database</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp24088"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">failover_level</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "failover_level", "1")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. db_retry_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp25264"></a>3.15. <code class="varname">db_retry_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the interval (in seconds) in which a timer process
+		shall check the availability of the databases and try to reconnect
+		to broken ones. It don't make sense to choose a lower value as 10.
+		It's necessary to provide a writeable master database, otherwise
+		this check stays disabled.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp26960"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">db_retry_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "db_retry_interval", "10")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. db_use_transactions (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28136"></a>3.16. <code class="varname">db_use_transactions</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies if transactions should be used (set to 1) to reach a higher data
+		consistency. Keep in mind that this will probably decrease performance.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp29688"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">db_use_transactions</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "db_use_transactions", "0")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. db_transaction_level (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp30864"></a>3.17. <code class="varname">db_transaction_level</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the isolation level on which transactions are performed.
+		Possible values: Modes supported by the database backend. In order
+		to activate transaction the db_use_transactions parameter must be
+		also set.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">READ UNCOMMITED</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp32464"></a>
+              <p class="title">
+                <strong>Example 1.17. Set <code class="varname">db_transaction_level</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "db_transaction_level", "READ UNCOMMITED")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. write_on_master_db (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp33632"></a>3.18. <code class="varname">write_on_master_db</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the write access to the master database. If set to 0,
+		no write operations are permitted on the master database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp35152"></a>
+              <p class="title">
+                <strong>Example 1.18. Set <code class="varname">write_on_master_db</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "write_on_master_db", "0")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. write_on_db (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp36328"></a>3.19. <code class="varname">write_on_db</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the write access to the distributed databases. If set 
+		to 0, no write operations are permitted on the databases.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp37840"></a>
+              <p class="title">
+                <strong>Example 1.19. Set <code class="varname">write_on_db</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "write_on_db", "0")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20. connection_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp39000"></a>3.20. <code class="varname">connection_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the period (in seconds) after a database connection
+		expires. Usage of a too small value will probably decrease the
+		performance.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">300</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp40544"></a>
+              <p class="title">
+                <strong>Example 1.20. Set <code class="varname">connection_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "connection_expires", "300")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21. alg_location (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp41720"></a>3.21. <code class="varname">alg_location</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specify the way the distribution of the subscriptions are computed. At the moment the only way is to use the CRC32 algorithm to compute the  location ID. Any integer value is fine.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp43304"></a>
+              <p class="title">
+                <strong>Example 1.21. Set <code class="varname">alg_location</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "alg_location", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22. domain_db(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1841792"></a>3.22. <code class="varname">domain_db</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specify the way the lookup is made. In can be either partitioned or single. For example, if you have a location table that is large and needs to be partitioned, and a smaller table cfa that is ok to be on only the master db(so there is no need to have it distributed), you can set this parameter to <span class="quote">“<span class="quote">location=cluster,cfa=single</span>”</span>. This means that a call to </p>
+            <pre class="programlisting">lookup(location)</pre>
+            <p> will be done via the partition databases configured via the  reg_db_table parameter, but a call to </p>
+            <pre class="programlisting">lookup(cfa)</pre>
+            <p> will be done on only the master database (as with usrloc module)
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">location=cluster,cfa=single</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1844560"></a>
+              <p class="title">
+                <strong>Example 1.22. Set <code class="varname">domain_db</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "domain_db", "location=cluster,cfa=single")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23. default_db_type(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1845744"></a>3.23. <code class="varname">default_db_type</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  In case  a domain (like location,cfa) is not matched by a domain_db definition, the type is configured by using this parameter. Accepted values are single and cluster.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">single</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1847312"></a>
+              <p class="title">
+                <strong>Example 1.23. Set <code class="varname">default_db_type</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "default_db_type", "cluster")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. default_db_url(str)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1848576"></a>4. <code class="varname">default_db_url</code>(str)</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		  The URL of the default database for Location domains (for domains that are single). This must be configured if they are use.
+		</p>
+          <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">DEFAULT_DB_URL</span>”</span>.
+		</em></span>
+	    </p>
+          <div class="example">
+            <a id="idp1850112"></a>
+            <p class="title">
+              <strong>Example 1.24. Set <code class="varname">default_db_type</code> parameter</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+modparam("p_usrloc", "default_db_url", "mysql://ser:ser@localhost/ser")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="5.  Changes from usrloc module">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1851312"></a>5.  Changes from usrloc module </h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. db_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1851664"></a>5.1. <code class="varname">db_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The p_usrloc module must utilize database for persistent contact storage.
+		Only mode 3 is possible at this time. Because of the way other matching mode work,
+		they make no sense on a distributed environment.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			3 - DB-Only scheme. No memory cache is kept, all operations being
+			directly performed with the database. The timer deletes all
+			expired contacts from database - cleans after clients that didn't
+			un-register or re-register. The mode is useful if you configure
+			more servers sharing the same DB without any replication at SIP
+			level. The mode may be slower due the high number of DB operation.
+			For example NAT pinging is a killer since during each ping cycle
+			all nated contact are loaded from the DB; The lack of memory
+			caching also disable the statistics exports.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 3.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1854296"></a>
+              <p class="title">
+                <strong>Example 1.25. Set <code class="varname">db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("p_usrloc", "db_mode", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. db_url">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1855456"></a>5.2. <code class="varname">db_url</code></h3>
+                </div>
+              </div>
+            </div>
+            <p> This parameters is now obsolete, and replaced by specific p_usrloc parameters</p>
+          </div>
+        </div>
+        <div class="section" title="6. Installation &amp; Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1856344"></a>6. Installation &amp; Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. Database setup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1856696"></a>6.1. Database setup</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="6.1.1. Configuration Table">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1857072"></a>6.1.1. Configuration Table</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+			Before running Kamailio with p_usrloc, you have to setup the master database
+			table where the module will find data about the distributed databases. 
+			For that, if the table was not created by the installation script or you choose
+			to install everything by yourself you can use the p_usrloc-create.sql
+			<acronym class="acronym">SQL</acronym> script in the database directories in the 
+			openser/scripts folder as template. 
+			Database and table name can be set with module parameters so they
+			can be changed, but the name of the columns must be as they are
+			in the <acronym class="acronym">SQL</acronym> script.
+			You can also find the complete database documentation on the
+			project webpage, http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html.
+		</p>
+              <div class="example">
+                <a id="idp1858800"></a>
+                <p class="title">
+                  <strong>Example 1.26. Example database content - reg_table (locdb) table</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
++----+----+------+--------+--------+---------------------+-------+----+
+| id | no | url  | status | errors | failover            | spare | rg |
++----+----+------+--------+--------+---------------------+-------+----+
+|  1 |  1 | URL1 |      1 |      0 | 1900-01-01 00:00:01 |     0 |  0 |
+|  1 |  2 | URL2 |      1 |      0 | 1900-01-01 00:00:01 |     0 |  0 |
+|  2 |  1 | URL3 |      1 |      0 | 1900-01-01 00:00:01 |     0 |  0 |
+|  2 |  2 | URL4 |      1 |      0 | 1900-01-01 00:00:01 |     0 |  0 |
++----+----+------+--------+--------+---------------------+-------+----+
+...</pre>
+                  <p>The URLs are omitted for a better overview, but you can use
+			standard Kamailio database URLs like
+			mysql://kamailio:kamailiorw@localhost/kamailio 
+			Databases don't need to be on different hosts, e.g. for testing purposes.
+		</p>
+                </div>
+              </div>
+              <br class="example-break" />
+              <p>
+			This table contains two database groups. The first with id one,
+			and the second with the id two.
+		</p>
+            </div>
+          </div>
+          <div class="section" title="6.2. Maintenance">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1861160"></a>6.2. Maintenance</h3>
+                </div>
+              </div>
+            </div>
+            <p>The module supports the decativation of redundant databases for maintenance
+		reasons. This can be done by setting the status column of the respective database
+		in the p_usrloc to the value <span class="quote">“<span class="quote">2</span>”</span>. This setting is autodetected from
+		all modules on the server cluster. Changes in the locdb table are periodically
+		polled with help of a timer process. After one minute the all read and write traffic
+		is removed from the deactivated database, and maintenance can be done.
+		</p>
+            <p>
+		In order to activate the database again, after the maintenance has been finished,
+		the respective status column needs to be set to <span class="quote">“<span class="quote">0</span>”</span>. This is
+		autodetected as well, the first module that noticed the change will set the status
+		column to <span class="quote">“<span class="quote">1</span>”</span> and setting the failover column to the current time and
+		date. Write requests are now transfered again to the database, but no reads are done
+		yet.
+		</p>
+            <p>
+		After the configured expire_time has been passed, i.e. every contact has been
+		inserted at least one time in the database the respective failover time column
+		is set to the default value again. The database is then also used to read contacts
+		from, the cluster is in normal operation with full redundancy again.
+		</p>
+          </div>
+          <div class="section" title="6.3. Additional configuration">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1864088"></a>6.3. Additional configuration</h3>
+                </div>
+              </div>
+            </div>
+            <p>As this module is only used internally from other modules, there is no
+		additional configuration except for the module parameter setup necessary.
+		</p>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer's Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1245848"></a>Chapter 2. Developer's Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2751304">1. 
+			<code class="function">load_ul_db_api(ul_db_api_t * api)</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2699128">2. 
+			<code class="function">int (* ul_db_insert_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1734912">3. 
+			<code class="function">int (* ul_db_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_op_t * _op, db_val_t* _v, db_key_t* _uk,
+				db_val_t* _uv, int _n, int _un);</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1047424">4. 
+			<code class="function">int (* ul_db_insert_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3009144">5. 
+			<code class="function">int (* ul_db_replace_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2848120">6. 
+			<code class="function">int (* ul_db_delete_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_op_t* _o, db_val_t* _v, int _n)</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3370632">7. 
+			<code class="function">int (* ul_db_query_t) (str * table, str * first, str * second, db_con_t *** _r_h,
+				db_key_t* _k, db_op_t* _op, db_val_t* _v, db_key_t* _c,
+				int _n, int _nc, db_key_t _o, db_res_t** _r);</code>
+			</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3115232">8. 
+			<code class="function">int (* ul_db_free_result_t)(db_con_t ** dbh, db_res_t * res);</code>
+			</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+	These are the primary functions that are used to perform the SQL queries.
+	</p>
+        <div class="section" title="1.  load_ul_db_api(ul_db_api_t * api)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2751304"></a>1. 
+			<code class="function">load_ul_db_api(ul_db_api_t * api)</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Import the <acronym class="acronym">dbd</acronym> API, setup the master database connection.
+			
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>api</em></span> - Pointer to distributed database API structure 
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2.  int (* ul_db_insert_t) (str * table, str * first, str * second, db_key_t* _k, db_val_t* _v, int _n)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2699128"></a>2. 
+			<code class="function">int (* ul_db_insert_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_val_t* _v, int _n)</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and insert the given values into the
+			 choosen databases.
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the inserted db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the inserted db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="3.  int (* ul_db_update_t) (str * table, str * first, str * second, db_key_t* _k, db_op_t * _op, db_val_t* _v, db_key_t* _uk, db_val_t* _uv, int _n, int _un);">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1734912"></a>3. 
+			<code class="function">int (* ul_db_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_op_t * _op, db_val_t* _v, db_key_t* _uk,
+				db_val_t* _uv, int _n, int _un);</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and update the given values in the
+			 choosen databases.
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the db keys that will be matched.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_op</em></span> - Pointer to the db options for this operation.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the db values that will be matched.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_uk</em></span> - Pointer to the updated db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_uv</em></span> - Pointer to the updated db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_un</em></span> - Number of key-value pairs in _uk and _uv parameters.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="4.  int (* ul_db_insert_update_t) (str * table, str * first, str * second, db_key_t* _k, db_val_t* _v, int _n)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1047424"></a>4. 
+			<code class="function">int (* ul_db_insert_update_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and insert on duplicate key update 
+			 the given values in the choosen databases. This is like an insert, but update 
+			 if the key already exist.
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the inserted or updated db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the inserted or updated db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="5.  int (* ul_db_replace_t) (str * table, str * first, str * second, db_key_t* _k, db_val_t* _v, int _n)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3009144"></a>5. 
+			<code class="function">int (* ul_db_replace_t) (str * table, str * first, str * second,
+				db_key_t* _k, db_val_t* _v, int _n)</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and replace the given values in the
+			 choosen databases.
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the replaced db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the replaced db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="6.  int (* ul_db_delete_t) (str * table, str * first, str * second, db_key_t* _k, db_op_t* _o, db_val_t* _v, int _n)">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2848120"></a>6. 
+			<code class="function">int (* ul_db_delete_t) (str * table, str * first, str * second,
+				 db_key_t* _k, db_op_t* _o, db_val_t* _v, int _n)</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and delete the given values into the
+			 choosen databases.
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the deleted db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_op</em></span> - Pointer to the db options for this operation.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the deleted db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="7.  int (* ul_db_query_t) (str * table, str * first, str * second, db_con_t *** _r_h, db_key_t* _k, db_op_t* _op, db_val_t* _v, db_key_t* _c, int _n, int _nc, db_key_t _o, db_res_t** _r);">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3370632"></a>7. 
+			<code class="function">int (* ul_db_query_t) (str * table, str * first, str * second, db_con_t *** _r_h,
+				db_key_t* _k, db_op_t* _op, db_val_t* _v, db_key_t* _c,
+				int _n, int _nc, db_key_t _o, db_res_t** _r);</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Lookup the first and if needed the second key, and performs a query in one of the
+			 choosen databases. The returned handle _r_h must be used to free the result
+			 set after the usage of the returned database entries, otherwise a memory leak
+			 will occur.You must call ul_db_free_result before you can call ul_db_query again!
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>table</em></span> - Pointer to the table name.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>first</em></span> - Pointer to the first key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>second</em></span> - Pointer to the second key.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_r_h</em></span> - Pointer to the result handle, to free the result.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_op</em></span> - Pointer to the db options for this operation.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_k</em></span> - Pointer to the queried db keys.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_v</em></span> - Pointer to the queried db values.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_c</em></span> - Pointer to the db keys that should be returned.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_n</em></span> - Number of key-value pairs in _k and _v parameters.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_nc</em></span> - Number of key-value pairs in _c parameter.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_o</em></span> - Order by options for the query.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>_nc</em></span> - Pointer to the result set.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="8.  int (* ul_db_free_result_t)(db_con_t ** dbh, db_res_t * res);">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3115232"></a>8. 
+			<code class="function">int (* ul_db_free_result_t)(db_con_t ** dbh, db_res_t * res);</code>
+			</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			 Frees the given result set, .
+			</p>
+          <p>Meaning of the parameters is as follows:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>dbh</em></span> - Pointer to the result handle.
+				</p>
+              </li>
+              <li class="listitem">
+                <p><span class="emphasis"><em>res</em></span> - Pointer to the result.
+				</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

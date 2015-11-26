@@ -1,0 +1,1973 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MSILO Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11163416" title="MSILO Module" />
+    <link rel="next" href="#idp18992832" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="MSILO Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11163416"></a>MSILO Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18992832">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp15537568">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17973264">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18065064">2.1. Kamailio modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15518288">2.2. External libraries or applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15520024">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.db_table">3.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.from_address">3.3. <code class="varname">from_address</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.contact_hdr">3.4. <code class="varname">contact_hdr</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.extra_hdrs">3.5. <code class="varname">extra_hdrs</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.offline_message">3.6. <code class="varname">offline_message</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.content_type_hdr">3.7. <code class="varname">content_type_hdr</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.reminder">3.8. <code class="varname">reminder</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.outbound_proxy">3.9. <code class="varname">outbound_proxy</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.expire_time">3.10. <code class="varname">expire_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.check_time">3.11. <code class="varname">check_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.send_time">3.12. <code class="varname">send_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.clean_period">3.13. <code class="varname">clean_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.use_contact">3.14. <code class="varname">use_contact</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_mid">3.15. <code class="varname">sc_mid</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_from">3.16. <code class="varname">sc_from</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_to">3.17. <code class="varname">sc_to</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_uri_user">3.18. <code class="varname">sc_uri_user</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_uri_host">3.19. <code class="varname">sc_uri_host</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_body">3.20. <code class="varname">sc_body</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_ctype">3.21. <code class="varname">sc_ctype</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_exp_time">3.22. <code class="varname">sc_exp_time</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_inc_time">3.23. <code class="varname">sc_inc_time</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.sc_snd_time">3.24. <code class="varname">sc_snd_time</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.snd_time_avp">3.25. <code class="varname">snd_time_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.add_date">3.26. <code class="varname">add_date</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.max_messages">3.27. <code class="varname">max_messages</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.add_contact">3.28. <code class="varname">add_contact</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.extra_hdrs_avp">3.29. <code class="varname">extra_hdrs_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.p.skip_notification_flag">3.30. <code class="varname">skip_notification_flag</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17386856">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.f.m_store">4.1. <code class="function">m_store([owner])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#msilo.f.m_dump">4.2. <code class="function">m_dump([owner])</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17396352">5. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17396720">5.1. stored_messages</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17397440">5.2. dumped_messages</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17398104">5.3. failed_messages</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17398768">5.4. dumped_reminders</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17399488">5.5. failed_reminders</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17400288">6. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17400640">6.1. Kamailio config file</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15528216">Set the <span class="quote">“<span class="quote">db_url</span>”</span> parameter</a></dt>
+          <dt>1.2. <a href="#idp15608840">Set the <span class="quote">“<span class="quote">db_table</span>”</span> parameter</a></dt>
+          <dt>1.3. <a href="#idp15611976">Set the <span class="quote">“<span class="quote">from_address</span>”</span> parameter</a></dt>
+          <dt>1.4. <a href="#idp15615136">Set the <span class="quote">“<span class="quote">contact_hdr</span>”</span> parameter</a></dt>
+          <dt>1.5. <a href="#idp15618008">Set the <span class="quote">“<span class="quote">extra_hdrs</span>”</span> parameter</a></dt>
+          <dt>1.6. <a href="#idp15620768">Set the <span class="quote">“<span class="quote">offline_message</span>”</span> parameter</a></dt>
+          <dt>1.7. <a href="#idp15623752">Set the <span class="quote">“<span class="quote">content_type_hdr</span>”</span> parameter</a></dt>
+          <dt>1.8. <a href="#idp15554384">Set the <span class="quote">“<span class="quote">reminder</span>”</span> parameter</a></dt>
+          <dt>1.9. <a href="#idp15557752">Set the <span class="quote">“<span class="quote">outbound_proxy</span>”</span> parameter</a></dt>
+          <dt>1.10. <a href="#idp15560632">Set the <span class="quote">“<span class="quote">expire_time</span>”</span> parameter</a></dt>
+          <dt>1.11. <a href="#idp15563552">Set the <span class="quote">“<span class="quote">check_time</span>”</span> parameter</a></dt>
+          <dt>1.12. <a href="#idp15566712">Set the <span class="quote">“<span class="quote">send_time</span>”</span> parameter</a></dt>
+          <dt>1.13. <a href="#idp15569664">Set the <span class="quote">“<span class="quote">clean_period</span>”</span> parameter</a></dt>
+          <dt>1.14. <a href="#idp15572896">Set the <span class="quote">“<span class="quote">use_contact</span>”</span> parameter</a></dt>
+          <dt>1.15. <a href="#idp15575472">Set the <span class="quote">“<span class="quote">sc_mid</span>”</span> parameter</a></dt>
+          <dt>1.16. <a href="#idp15578056">Set the <span class="quote">“<span class="quote">sc_from</span>”</span> parameter</a></dt>
+          <dt>1.17. <a href="#idp17349872">Set the <span class="quote">“<span class="quote">sc_to</span>”</span> parameter</a></dt>
+          <dt>1.18. <a href="#idp17352456">Set the <span class="quote">“<span class="quote">sc_uri_user</span>”</span> parameter</a></dt>
+          <dt>1.19. <a href="#idp17355032">Set the <span class="quote">“<span class="quote">sc_uri_host</span>”</span> parameter</a></dt>
+          <dt>1.20. <a href="#idp17357624">Set the <span class="quote">“<span class="quote">sc_body</span>”</span> parameter</a></dt>
+          <dt>1.21. <a href="#idp17360208">Set the <span class="quote">“<span class="quote">sc_ctype</span>”</span> parameter</a></dt>
+          <dt>1.22. <a href="#idp17362816">Set the <span class="quote">“<span class="quote">sc_exp_time</span>”</span> parameter</a></dt>
+          <dt>1.23. <a href="#idp17365424">Set the <span class="quote">“<span class="quote">sc_inc_time</span>”</span> parameter</a></dt>
+          <dt>1.24. <a href="#idp17368032">Set the <span class="quote">“<span class="quote">sc_snd_time</span>”</span> parameter</a></dt>
+          <dt>1.25. <a href="#idp17371472">Set the <span class="quote">“<span class="quote">snd_time_avp</span>”</span> parameter</a></dt>
+          <dt>1.26. <a href="#idp17374272">Set the <span class="quote">“<span class="quote">add_date</span>”</span> parameter</a></dt>
+          <dt>1.27. <a href="#idp17376744">Set the <span class="quote">“<span class="quote">max_messages</span>”</span> parameter</a></dt>
+          <dt>1.28. <a href="#idp17379568">Set the <span class="quote">“<span class="quote">add_contact</span>”</span> parameter</a></dt>
+          <dt>1.29. <a href="#idp17382736">Set the <span class="quote">“<span class="quote">extra_hdrs_avp</span>”</span> parameter</a></dt>
+          <dt>1.30. <a href="#idp17385592">Set the <span class="quote">“<span class="quote">skip_notification_flag</span>”</span> parameter</a></dt>
+          <dt>1.31. <a href="#idp17390784"><code class="function">m_store</code> usage</a></dt>
+          <dt>1.32. <a href="#idp17395112"><code class="function">m_dump</code> usage</a></dt>
+          <dt>1.33. <a href="#idp17401264">Kamailio config script - sample msilo usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18992832"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp15537568">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17973264">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18065064">2.1. Kamailio modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15518288">2.2. External libraries or applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15520024">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.db_table">3.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.from_address">3.3. <code class="varname">from_address</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.contact_hdr">3.4. <code class="varname">contact_hdr</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.extra_hdrs">3.5. <code class="varname">extra_hdrs</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.offline_message">3.6. <code class="varname">offline_message</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.content_type_hdr">3.7. <code class="varname">content_type_hdr</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.reminder">3.8. <code class="varname">reminder</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.outbound_proxy">3.9. <code class="varname">outbound_proxy</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.expire_time">3.10. <code class="varname">expire_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.check_time">3.11. <code class="varname">check_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.send_time">3.12. <code class="varname">send_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.clean_period">3.13. <code class="varname">clean_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.use_contact">3.14. <code class="varname">use_contact</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_mid">3.15. <code class="varname">sc_mid</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_from">3.16. <code class="varname">sc_from</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_to">3.17. <code class="varname">sc_to</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_uri_user">3.18. <code class="varname">sc_uri_user</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_uri_host">3.19. <code class="varname">sc_uri_host</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_body">3.20. <code class="varname">sc_body</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_ctype">3.21. <code class="varname">sc_ctype</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_exp_time">3.22. <code class="varname">sc_exp_time</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_inc_time">3.23. <code class="varname">sc_inc_time</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.sc_snd_time">3.24. <code class="varname">sc_snd_time</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.snd_time_avp">3.25. <code class="varname">snd_time_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.add_date">3.26. <code class="varname">add_date</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.max_messages">3.27. <code class="varname">max_messages</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.add_contact">3.28. <code class="varname">add_contact</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.extra_hdrs_avp">3.29. <code class="varname">extra_hdrs_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.p.skip_notification_flag">3.30. <code class="varname">skip_notification_flag</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17386856">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.f.m_store">4.1. <code class="function">m_store([owner])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#msilo.f.m_dump">4.2. <code class="function">m_dump([owner])</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17396352">5. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17396720">5.1. stored_messages</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17397440">5.2. dumped_messages</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17398104">5.3. failed_messages</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17398768">5.4. dumped_reminders</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17399488">5.5. failed_reminders</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17400288">6. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17400640">6.1. Kamailio config file</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15537568"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This modules provides offline message storage for the Kamailio SIP Server Platform. It 
+		stores received messages for an offline user and sends them when the 
+		user becomes online.
+	</p>
+          <p>
+		For each message, the modules stores <span class="quote">“<span class="quote">Request-URI</span>”</span> 
+		(<span class="quote">“<span class="quote">R-URI</span>”</span>) only if it is a complete address of record 
+		(<span class="quote">“<span class="quote">username@hostname</span>”</span>), <acronym class="acronym">URI</acronym> from <span class="quote">“<span class="quote">To</span>”</span> 
+		header, <acronym class="acronym">URI</acronym> from <span class="quote">“<span class="quote">From</span>”</span> header, incoming time,
+		expiration time, content type and body of the message. If 
+		<span class="quote">“<span class="quote">R-URI</span>”</span> is not an address of record (it might be the 
+		contact address for current <acronym class="acronym">SIP</acronym> session) the <acronym class="acronym">URI</acronym>
+		from <span class="quote">“<span class="quote">To</span>”</span> header will be used as <abbr class="abbrev">R-URI</abbr>.
+	</p>
+          <p>
+		When the expiration time passed, the message is discarded from 
+		database.  Expiration time is computed based on incoming time and 
+		one of the module's parameters.
+	</p>
+          <p>
+		Every time when a user registers with Kamailio, the module is looking in 
+		database for offline messages intended for that user. All of them will 
+		be sent to contact address provided in REGISTER request.
+	</p>
+          <p>
+		It may happen that the <acronym class="acronym">SIP</acronym> user to be registered use a  <acronym class="acronym">SIP</acronym> User Agent 
+		that has no support for MESSAGE requests. In this case the <span class="quote">“<span class="quote">failure_route</span>”</span>
+		should be used to re-store the undelivered requests.
+	</p>
+          <p>
+		Another functionality provided by the module is to send messages at
+		a certain time -- the reminder functionality. Using config logic, a
+		received message can be stored and delivered at a time specified while
+		storing with the 'snd_time_avp'.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17973264"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18065064"></a>2.1. Kamailio modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database module</em></span> - mysql, dbtext or other 
+				module that implements the <span class="quote">“<span class="quote">db</span>”</span> interface and 
+				provides support for storing/receiving data to/from a 
+				database system.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM</em></span>--transaction module-- used to 
+				send <acronym class="acronym">SIP</acronym> requests.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External libraries or applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15518288"></a>2.2. External libraries or applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15520024"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.db_url"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Database <acronym class="acronym">URL</acronym>.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 
+			<span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15528216"></a>
+              <p class="title">
+                <strong>Example 1.1. Set the <span class="quote">“<span class="quote">db_url</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "db_url", "mysql://user:passwd@host.com/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.db_table"></a>3.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of table where to store the messages.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">silo</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15608840"></a>
+              <p class="title">
+                <strong>Example 1.2. Set the <span class="quote">“<span class="quote">db_table</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "db_table", "silo")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. from_address (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.from_address"></a>3.3. <code class="varname">from_address</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The <acronym class="acronym">SIP</acronym> address used to inform users that destination of their 
+		message is not online and the message will be delivered next time 
+		when that user goes online. If the parameter is not set, the module 
+		will not send any notification. It can contain pseudo-variables.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15611976"></a>
+              <p class="title">
+                <strong>Example 1.3. Set the <span class="quote">“<span class="quote">from_address</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "from_address", "sip:registrar@example.org")
+modparam("msilo", "from_address", "sip:$rU@example.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. contact_hdr (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.contact_hdr"></a>3.4. <code class="varname">contact_hdr</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value of the <span class="quote">“<span class="quote">Contact</span>”</span> header (including header name and ending
+		\r\n) to be added in notification messages.
+		It can contain pseudo-variables.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15615136"></a>
+              <p class="title">
+                <strong>Example 1.4. Set the <span class="quote">“<span class="quote">contact_hdr</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "contact_hdr", "Contact: &lt;sip:null@example.com&gt;\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. extra_hdrs (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.extra_hdrs"></a>3.5. <code class="varname">extra_hdrs</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra headers (each ending with	\r\n) to be added in
+	messages sent from silo by m_dump.
+		It can contain pseudo-variables.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15618008"></a>
+              <p class="title">
+                <strong>Example 1.5. Set the <span class="quote">“<span class="quote">extra_hdrs</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "extra_hdrs", "X-Extra: $tu\r\nY-Extra: foo\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. offline_message (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.offline_message"></a>3.6. <code class="varname">offline_message</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The body of the notification message.
+		It can contain pseudo-variables.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15620768"></a>
+              <p class="title">
+                <strong>Example 1.6. Set the <span class="quote">“<span class="quote">offline_message</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "offline_message", "*** User $rU is offline!")
+modparam("msilo", "offline_message", "&lt;em&gt;I am offline!&lt;/em&gt;")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. content_type_hdr (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.content_type_hdr"></a>3.7. <code class="varname">content_type_hdr</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value of the Content-Type header (including header name and ending
+		\r\n) to be added in notification messages. It must reflect what the
+		'offline_message' contains.
+		It can contain pseudo-variables.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15623752"></a>
+              <p class="title">
+                <strong>Example 1.7. Set the <span class="quote">“<span class="quote">content_type_hdr</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "content_type_hdr", "Content-Type: text/plain\r\n")
+modparam("msilo", "content_type_hdr", "Content-Type: text/html\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. reminder (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.reminder"></a>3.8. <code class="varname">reminder</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The <acronym class="acronym">SIP</acronym> address used to send reminder messages. If this value
+		is not set, the reminder feature is disabled.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15554384"></a>
+              <p class="title">
+                <strong>Example 1.8. Set the <span class="quote">“<span class="quote">reminder</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "reminder", "sip:registrar@example.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. outbound_proxy (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.outbound_proxy"></a>3.9. <code class="varname">outbound_proxy</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The <acronym class="acronym">SIP</acronym> address used as next hop when sending the message. Very
+		useful when using Kamailio with a domain name not in <acronym class="acronym">DNS</acronym>, or when
+		using a separate Kamailio instance for msilo processing. If not set,
+		the message will be sent to the address in destination URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15557752"></a>
+              <p class="title">
+                <strong>Example 1.9. Set the <span class="quote">“<span class="quote">outbound_proxy</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "outbound_proxy", "sip:kamailio.org;transport=tcp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. expire_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.expire_time"></a>3.10. <code class="varname">expire_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Expire time of stored messages - seconds. When this time passed, the message is
+		silently discarded from database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">259200 (72 hours = 3 days)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15560632"></a>
+              <p class="title">
+                <strong>Example 1.10. Set the <span class="quote">“<span class="quote">expire_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "expire_time", 36000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. check_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.check_time"></a>3.11. <code class="varname">check_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Timer interval to check if dumped messages are sent OK - seconds. The module keeps
+		each request send by itself for a new online user and if the reply is 2xx then the
+		message is deleted from database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">30</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15563552"></a>
+              <p class="title">
+                <strong>Example 1.11. Set the <span class="quote">“<span class="quote">check_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "check_time", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. send_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.send_time"></a>3.12. <code class="varname">send_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Timer interval in seconds to check if there are reminder messages.
+		The module takes all reminder messages that must be sent at that moment 
+		or before that moment.
+		</p>
+            <p>
+		If the value is 0, the reminder feature is disabled.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15566712"></a>
+              <p class="title">
+                <strong>Example 1.12. Set the <span class="quote">“<span class="quote">send_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "send_time", 60)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. clean_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.clean_period"></a>3.13. <code class="varname">clean_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of <span class="quote">“<span class="quote">check_time</span>”</span> cycles when to check if
+		there are expired messages in database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">5</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15569664"></a>
+              <p class="title">
+                <strong>Example 1.13. Set the <span class="quote">“<span class="quote">clean_period</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "clean_period", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. use_contact (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.use_contact"></a>3.14. <code class="varname">use_contact</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Turns on/off the usage of the <span class="quote">“<span class="quote">Contact</span>”</span> address to send notification
+		back to sender whose message is stored by <acronym class="acronym">MSILO</acronym>.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1 (0 = off, 1 = on)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15572896"></a>
+              <p class="title">
+                <strong>Example 1.14. Set the <span class="quote">“<span class="quote">use_contact</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "use_contact", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. sc_mid (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_mid"></a>3.15. <code class="varname">sc_mid</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing message id. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">mid</span>”</span>.</p>
+            <div class="example">
+              <a id="idp15575472"></a>
+              <p class="title">
+                <strong>Example 1.15. Set the <span class="quote">“<span class="quote">sc_mid</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_mid", "other_mid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. sc_from (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_from"></a>3.16. <code class="varname">sc_from</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the source address. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">src_addr</span>”</span>.</p>
+            <div class="example">
+              <a id="idp15578056"></a>
+              <p class="title">
+                <strong>Example 1.16. Set the <span class="quote">“<span class="quote">sc_from</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_from", "source_address")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. sc_to (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_to"></a>3.17. <code class="varname">sc_to</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the destination address. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">dst_addr</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17349872"></a>
+              <p class="title">
+                <strong>Example 1.17. Set the <span class="quote">“<span class="quote">sc_to</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_to", "destination_address")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. sc_uri_user (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_uri_user"></a>3.18. <code class="varname">sc_uri_user</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the user name.
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">username</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17352456"></a>
+              <p class="title">
+                <strong>Example 1.18. Set the <span class="quote">“<span class="quote">sc_uri_user</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_uri_user", "user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. sc_uri_host (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_uri_host"></a>3.19. <code class="varname">sc_uri_host</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the domain. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">domain</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17355032"></a>
+              <p class="title">
+                <strong>Example 1.19. Set the <span class="quote">“<span class="quote">sc_uri_host</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_uri_host", "domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20. sc_body (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_body"></a>3.20. <code class="varname">sc_body</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column storing the message body in silo table. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">body</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17357624"></a>
+              <p class="title">
+                <strong>Example 1.20. Set the <span class="quote">“<span class="quote">sc_body</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_body", "message_body")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21. sc_ctype (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_ctype"></a>3.21. <code class="varname">sc_ctype</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing content type.
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">ctype</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17360208"></a>
+              <p class="title">
+                <strong>Example 1.21. Set the <span class="quote">“<span class="quote">sc_ctype</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_ctype", "content_type")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22. sc_exp_time (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_exp_time"></a>3.22. <code class="varname">sc_exp_time</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the expire time of the message. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">exp_time</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17362816"></a>
+              <p class="title">
+                <strong>Example 1.22. Set the <span class="quote">“<span class="quote">sc_exp_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_exp_time", "expire_time")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23. sc_inc_time (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_inc_time"></a>3.23. <code class="varname">sc_inc_time</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the incoming time of the message. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">inc_time</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17365424"></a>
+              <p class="title">
+                <strong>Example 1.23. Set the <span class="quote">“<span class="quote">sc_inc_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_inc_time", "incoming_time")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24. sc_snd_time (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.sc_snd_time"></a>3.24. <code class="varname">sc_snd_time</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column in silo table, storing the send time for the reminder. 
+		</p>
+            <p>Default value is <span class="quote">“<span class="quote">snd_time</span>”</span>.</p>
+            <div class="example">
+              <a id="idp17368032"></a>
+              <p class="title">
+                <strong>Example 1.24. Set the <span class="quote">“<span class="quote">sc_snd_time</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "sc_snd_time", "send_reminder_time")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25. snd_time_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.snd_time_avp"></a>3.25. <code class="varname">snd_time_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of an AVP which may contain the time when to sent
+		the received message as reminder.The AVP is used ony by m_store().
+		</p>
+            <p>
+		If the parameter is not set, the module does not look for this AVP. If
+		the value is set to a valid AVP name, then the module expects in the AVP
+		to be a time value in format <span class="quote">“<span class="quote">YYYYMMDDHHMMSS</span>”</span> (e.g., 20060101201500).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">null</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17371472"></a>
+              <p class="title">
+                <strong>Example 1.25. Set the <span class="quote">“<span class="quote">snd_time_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "snd_time_avp", "$avp(i:123)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.26. add_date (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.add_date"></a>3.26. <code class="varname">add_date</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Wheter to add as prefix the date when the message was stored.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1</span>”</span> (1==on/0==off).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17374272"></a>
+              <p class="title">
+                <strong>Example 1.26. Set the <span class="quote">“<span class="quote">add_date</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "add_date", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.27. max_messages (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.max_messages"></a>3.27. <code class="varname">max_messages</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Maximum number of stored message for an AoR.  Value 0
+		equals to no limit.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17376744"></a>
+              <p class="title">
+                <strong>Example 1.27. Set the <span class="quote">“<span class="quote">max_messages</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "max_messages", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.28. add_contact (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.add_contact"></a>3.28. <code class="varname">add_contact</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Wheter to add contact header to generated messages. The
+		contact address is the From URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0</span>”</span> (1==on; 0==off as
+			per RFC3428).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17379568"></a>
+              <p class="title">
+                <strong>Example 1.28. Set the <span class="quote">“<span class="quote">add_contact</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "add_contact", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.29. extra_hdrs_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.extra_hdrs_avp"></a>3.29. <code class="varname">extra_hdrs_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of an AVP which may contain extra headers that are
+		stored with the message when m_store() is called.  These extra
+		headers (if any) are then included in MESSAGE request
+		generated by m_dump().
+		</p>
+            <p>
+		If the parameter is not set, m_store() does not look
+		for extra headers from any AVP.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">null</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17382736"></a>
+              <p class="title">
+                <strong>Example 1.29. Set the <span class="quote">“<span class="quote">extra_hdrs_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "extra_hdrs_avp", "$avp(msilo_extra_hdrs)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.30. skip_notification_flag (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.p.skip_notification_flag"></a>3.30. <code class="varname">skip_notification_flag</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Flag to mark the message for which no notification should be
+			sent back to sender when storing in msilo. Valid value is in
+			between 0 and 31.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">-1</span>”</span> (feature disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17385592"></a>
+              <p class="title">
+                <strong>Example 1.30. Set the <span class="quote">“<span class="quote">skip_notification_flag</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("msilo", "skip_notification_flag", 18)
+...
+setflag(18);
+m_store(...);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17386856"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. m_store([owner])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.f.m_store"></a>4.1. <code class="function">m_store([owner])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method stores certain parts of the current <acronym class="acronym">SIP</acronym> request (it 
+		should be called when the request type is MESSAGE and the destination 
+		user is offline or his UA does not support MESSAGE requests). If the 
+		user is registered with a UA which does not support MESSAGE requests 
+		you should not use mode=<span class="quote">“<span class="quote">0</span>”</span> if you have
+		changed the request uri with the contact address of user's <acronym class="acronym">UA</acronym>.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>owner</em></span> - is a string that must contain
+			a SIP URI in whose inbox the message will be stored. It can have
+			any pseudo variable. If "owner" is missing, the SIP address is
+			taken from R-URI.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17390784"></a>
+              <p class="title">
+                <strong>Example 1.31. <code class="function">m_store</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+m_store();
+m_store("$tu");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. m_dump([owner])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="msilo.f.m_dump"></a>4.2. <code class="function">m_dump([owner])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method sends stored messages for the <acronym class="acronym">SIP</acronym> user that is going to 
+		register to his actual contact address. The method should be called 
+		when a REGISTER request is received and the <span class="quote">“<span class="quote">Expire</span>”</span> 
+		header has a value greater than zero.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>owner</em></span> - is a string that must contain
+			a SIP URI whose inbox will be dumped. It can have
+			any pseudo variable. If "owner" is missing, the SIP address is
+			taken from To URI.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17395112"></a>
+              <p class="title">
+                <strong>Example 1.32. <code class="function">m_dump</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+m_dump();
+m_dump("$fu");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17396352"></a>5. Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. stored_messages">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17396720"></a>5.1. stored_messages</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of messages stored by msilo.
+		</p>
+          </div>
+          <div class="section" title="5.2. dumped_messages">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17397440"></a>5.2. dumped_messages</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of dumped messages.
+		</p>
+          </div>
+          <div class="section" title="5.3. failed_messages">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17398104"></a>5.3. failed_messages</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of failed dumped messages.
+		</p>
+          </div>
+          <div class="section" title="5.4. dumped_reminders">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17398768"></a>5.4. dumped_reminders</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of dumped reminder messages.
+		</p>
+          </div>
+          <div class="section" title="5.5. failed_reminders">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17399488"></a>5.5. failed_reminders</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of failed reminder messages.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="6. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17400288"></a>6. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. Kamailio config file">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17400640"></a>6.1. Kamailio config file</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Next picture displays a sample usage of msilo.
+		</p>
+            <div class="example">
+              <a id="idp17401264"></a>
+              <p class="title">
+                <strong>Example 1.33. Kamailio config script - sample msilo usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# $Id$
+#
+# MSILO usage example
+#
+#
+
+
+debug=9           # debug level (cmd line: -dddddddddd)
+fork=no           # don't fork
+log_stderror=yes  # log to stderr (cmd line: -E)
+
+
+children=2        # number of children
+check_via=no      # (cmd. line: -v)
+dns=off           # (cmd. line: -r)
+rev_dns=off       # (cmd. line: -R)
+port=5060
+
+listen=10.0.0.2   # listen address
+
+# ------------------ module loading ----------------------------------
+mpath="/usr/local/lib/kamailio/modules/"
+
+loadmodule "textops.so"
+
+loadmodule "sl.so"
+loadmodule "mysql.so"
+loadmodule "maxfwd.so"
+loadmodule "msilo.so"
+loadmodule "tm.so"
+loadmodule "registrar.so"
+loadmodule "usrloc.so"
+
+# ----------------- setting module-specific parameters ---------------
+
+# -- registrar params --
+
+modparam("registrar", "default_expires", 120)
+
+# -- registrar params --
+
+modparam("usrloc", "db_mode", 0)
+
+# -- msilo params --
+
+modparam("msilo","db_url","mysql://openser:openserrw@localhost/openser")
+modparam("msilo","from_address","sip:registrar@kamailio.org")
+modparam("msilo","contact_hdr","Contact: registrar@192.168.1.2:5060;msilo=yes\r\n")
+modparam("msilo","content_type_hdr","Content-Type: text/plain\r\n")
+modparam("msilo","offline_message","*** User $rU is offline!")
+
+# -- tm params --
+
+modparam("tm", "fr_timer", 10 )
+modparam("tm", "fr_inv_timer", 15 )
+modparam("tm", "wt_timer", 10 )
+
+
+route{
+    if ( !mf_process_maxfwd_header("10") )
+    {
+        sl_send_reply("483","To Many Hops");
+        exit;
+    };
+
+
+    if (uri==myself) {
+    {
+        # for testing purposes, simply okay all REGISTERs
+        if (method=="REGISTER")
+        {
+            save("location");
+            log("REGISTER received -&gt; dumping messages with MSILO\n");
+
+            # MSILO - dumping user's offline messages
+            if (m_dump())
+            {
+                log("MSILO: offline messages dumped - if they were\n");
+            }else{
+                log("MSILO: no offline messages dumped\n");
+            };
+            exit;
+        };
+
+        # domestic SIP destinations are handled using our USRLOC DB
+        
+        if(!lookup("location")) 
+        {
+            if (! t_newtran())
+            {
+                sl_reply_error();
+                exit;
+            };
+            # we do not care about anything else but MESSAGEs
+            if (!method=="MESSAGE")
+            {
+                if (!t_reply("404", "Not found")) 
+                {
+                    sl_reply_error();
+                };
+                exit;
+            };
+            log("MESSAGE received -&gt; storing using MSILO\n");
+            # MSILO - storing as offline message
+            if (m_store("$ru"))
+            {
+                log("MSILO: offline message stored\n");
+                if (!t_reply("202", "Accepted")) 
+                {
+                    sl_reply_error();
+                };
+            }else{
+                log("MSILO: offline message NOT stored\n");
+                if (!t_reply("503", "Service Unavailable")) 
+                {
+                    sl_reply_error();
+                };
+            };
+            exit;
+        };
+        # if the downstream UA does not support MESSAGE requests
+        # go to failure_route[1]
+        t_on_failure("1");
+        t_relay();
+        exit;
+    };
+
+    # forward anything else
+    t_relay();
+}
+
+failure_route[1] {
+    # forwarding failed -- check if the request was a MESSAGE 
+    if (!method=="MESSAGE")
+    {
+        exit;
+    };
+    
+    log(1,"MSILO:the downstream UA doesn't support MESSAGEs\n");
+    # we have changed the R-URI with the contact address, ignore it now
+    if (m_store("$ou"))
+    {
+        log("MSILO: offline message stored\n");
+        t_reply("202", "Accepted"); 
+    }else{
+        log("MSILO: offline message NOT stored\n");
+        t_reply("503", "Service Unavailable");
+    };
+}
+
+
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

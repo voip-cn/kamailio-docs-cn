@@ -1,0 +1,535 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The Sanity Module - SIP syntax checking</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#options" title="The Sanity Module - SIP syntax checking" />
+    <link rel="next" href="#idp1612312" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The Sanity Module - SIP syntax checking">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="options"></a>The Sanity Module - SIP syntax checking</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Nils</span> <span class="surname">Ohlmeier</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1612312">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#sanity.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#sanity.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#sanity.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sanity.p.default_checks">3.1. <code class="varname">default_checks</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sanity.p.uri_checks">3.2. <code class="varname">uri_checks</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sanity.p.proxy_require">3.3. <code class="varname">proxy_require</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sanity.p.autodrop">3.4. <code class="varname">autodrop</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#sanity.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sanity.f.sanity_check">4.1. 
+		<code class="function">sanity_check([msg_checks [, uri_checks]])</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp238216">Set <code class="varname">default_checks</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp240760">Set <code class="varname">uri_checks</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp243032">Set <code class="varname">proxy_require</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp245728">Set <code class="varname">autodrop</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp23584"><code class="function">sanity_check</code> usage</a></dt>
+          <dt>1.6. <a href="#idp25480"><code class="function">sanity_check</code> usage with parameter</a></dt>
+          <dt>1.7. <a href="#idp27136"><code class="function">sanity_check</code> usage with two parameters</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1612312"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#sanity.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#sanity.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#sanity.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sanity.p.default_checks">3.1. <code class="varname">default_checks</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sanity.p.uri_checks">3.2. <code class="varname">uri_checks</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sanity.p.proxy_require">3.3. <code class="varname">proxy_require</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sanity.p.autodrop">3.4. <code class="varname">autodrop</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#sanity.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sanity.f.sanity_check">4.1. 
+		<code class="function">sanity_check([msg_checks [, uri_checks]])</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sanity.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module aims to implement several sanity checks on incoming
+		requests which are suggested or even required by a RFC, but are
+		not available yet in the core of Kamailio.
+	</p>
+          <p>
+		These checks are not required by Kamailio itself for its functionality.
+		But on the other side it does not make much sense if a broken
+		request traverses through a SIP network if it is rejected sooner
+		or later by a SIP device any way. As every sanity check cost extra
+		performance because of additional parsing and evaluation it
+		is with this module now up to the Kamailio adminstrator what checks
+		should be done on which request.
+	</p>
+          <p>
+		The following checks are available:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			ruri sip version - (1) - checks if the SIP version in the request
+			URI is supported, currently only 2.0.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			ruri scheme - (2) - checks if the URI scheme of the request URI is
+			supported (sip[s]|tel[s]) by Kamailio
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			required headers - (4) -checks if the minimum set of required headers
+			to, from, cseq, callid and via is present in the request.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			via sip version - (8) - not working because parser fails already 
+			when another version then 2.0 is present.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			via protocol - (16) - not working because parser fails already if an
+			unsupported transport is present.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			Cseq method - (32) - checks if the method from the Cseq header is equal
+			to the request method.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			Cseq value - (64) - checks if the number in the Cseq header is a valid
+			unsigned integer.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			content length - (128) - checks if the size of the body matches with the
+			value from the content length header.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			expires value - (256) - checks if the value of the expires header is a
+			valid unsigned integer.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			proxy require - (512) - checks if all items of the proxy require header
+			are present in the list of the extensions from the module 
+			parameter proxy_require.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			parse uri's - (1024) - checks if the specified URIs are present and
+			parseable by the Kamailio parsers
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			digest credentials (2048) - Check all instances of digest credentials in a
+			message. The test checks whether there are all required
+			digest parameters and that they have meaningful values.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sanity.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The following modules must be loaded before this module:
+	    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>sl</em></span> - Stateless replies.
+		    </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sanity.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. default_checks (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sanity.p.default_checks"></a>3.1. <code class="varname">default_checks</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter determines which of the checks from the sanity
+		module are executed if no parameter was given to the <code class="function">sanity_check</code>
+		function call. By default all implemented checks are included
+		in the execution of the <code class="function">sanity_check</code> function. The integer value
+		is the sum of the check numbers which should be executed by default.
+	</p>
+            <p>
+	    Default value is <span class="quote">“<span class="quote">999</span>”</span>. This resolves to the following list of
+		checks: ruri_sip_version (1), ruri_scheme (2), required_headers (4),
+		cseq_method (32), cseq_value (64), cotent_length (128), 
+		expires_value (256), proxy_require (512).
+	</p>
+            <div class="example">
+              <a id="idp238216"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">default_checks</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sanity", "default_checks", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. uri_checks (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sanity.p.uri_checks"></a>3.2. <code class="varname">uri_checks</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter determines which URIs are going to be checked
+		if the 'parse uri' will be executed.
+	</p>
+            <p>
+		Default value is 7. This resolves to the following list of
+		parsed URIs: Request RUI (1), From URI (2) and To URI (4).
+	</p>
+            <div class="example">
+              <a id="idp240760"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">uri_checks</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sanity", "uri_checks", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. proxy_require (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sanity.p.proxy_require"></a>3.3. <code class="varname">proxy_require</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter sets the list of supported SIP extensions for this Kamailio.
+		The value is expected as a comma separated list of extensions.
+		This list is separated into single tokens. Each token from
+		a proxy require header will be compared with the tokens from this
+		list.
+	</p>
+            <div class="example">
+              <a id="idp243032"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">proxy_require</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sanity", "proxy_require", "foo, bar")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. autodrop (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sanity.p.autodrop"></a>3.4. <code class="varname">autodrop</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter controls whether the module drops 
+		the SIP message automatically if the sanity checks fail. Default value
+		is 1 (auto drop). If set to 0, sanity_check() function will return
+		-1 (false) to configuration file, allowing to write log messages for
+		example - be sure you <span class="quote">“<span class="quote">exit</span>”</span> execution of config without
+		sending a SIP reply because it is sent by module itself.
+	</p>
+            <div class="example">
+              <a id="idp245728"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">autodrop</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sanity", "autodrop", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sanity.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sanity_check([msg_checks [, uri_checks]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sanity.f.sanity_check"></a>4.1. 
+		<code class="function">sanity_check([msg_checks [, uri_checks]])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function makes a row of sanity checks over the given SIP request. The
+		behavior of the function is also controlled by <code class="varname">autodrop</code> parameter.
+		If autodrop=0, the function returns false (-1) if one of the checks failed.
+		When autodrop=1, the function stops the execution of configuration file.
+		In both cases, if one of the checks fails the module sends a precise error
+		reply via SL <code class="function">send_reply()</code>. Thus there is no need to reply with a generic 
+		error message.
+	</p>
+            <div class="example">
+              <a id="idp23584"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">sanity_check</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!sanity_check()) {
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		Optionally the function takes an integer argument which overwrites
+		the global module parameter <code class="varname">default_checks</code>. 
+		This makes it possible to run certain tests from script regions.
+		The integer value is again the sum
+		of the checks (like for the module parameter) which should be executed
+		at this function call.
+	</p>
+            <div class="example">
+              <a id="idp25480"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">sanity_check</code> usage with parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="REGISTER" &amp;&amp; !sanity_check("256")) {
+	/* the register contains an invalid expires value and is replied with a 400 */
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		Optionally the function takes a second integer argument which
+		overwrites the global module parameter uri_checks and thus determines
+		which URIs will be checked if the parse uri test will be executed.
+	</p>
+            <div class="example">
+              <a id="idp27136"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">sanity_check</code> usage with two parameters</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="INVITE" &amp;&amp; !sanity_check("1024", "6")) {
+	/* the INVITE contains an invalid From or To header and is replied with a 400 */
+	exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

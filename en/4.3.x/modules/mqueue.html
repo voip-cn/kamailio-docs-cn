@@ -1,0 +1,527 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mqueue Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11163416" title="mqueue Module" />
+    <link rel="next" href="#idp17525040" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mqueue Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11163416"></a>mqueue Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@asipto.com">ramona@asipto.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alex</span> <span class="surname">Balashov</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Evariste Systems<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:abalashov@evaristesys.com">abalashov@evaristesys.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2010 Elena-Ramona Modroiu (asipto.com)</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17525040">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18583504">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16368888">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15537688">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18089096">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17053400">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#mqueue.p.mqueue">3.1. <code class="varname">mqueue</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp16678464">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#mqueue.f.mq_add">4.1. 
+		<code class="function">mq_add(queue, key, value)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mqueue.f.mq_fetch">4.2. 
+		<code class="function">mq_fetch(queue)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mqueue.f.mq_pv_free">4.3. 
+		<code class="function">mq_pv_free(queue)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#mqueue.f.mq_size">4.4. 
+		<code class="function">mq_size(queue)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15618624">5. Exported Pseudo-variables</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18103552">Set <code class="varname">mqueue</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15793528"><code class="function">mq_add</code> usage</a></dt>
+          <dt>1.3. <a href="#idp15612128"><code class="function">mq_fetch</code> usage</a></dt>
+          <dt>1.4. <a href="#idp15614600"><code class="function">mq_pv_free</code> usage</a></dt>
+          <dt>1.5. <a href="#idp15617280"><code class="function">mq_size</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17525040"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18583504">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16368888">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15537688">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18089096">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17053400">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#mqueue.p.mqueue">3.1. <code class="varname">mqueue</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp16678464">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#mqueue.f.mq_add">4.1. 
+		<code class="function">mq_add(queue, key, value)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mqueue.f.mq_fetch">4.2. 
+		<code class="function">mq_fetch(queue)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mqueue.f.mq_pv_free">4.3. 
+		<code class="function">mq_pv_free(queue)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#mqueue.f.mq_size">4.4. 
+		<code class="function">mq_size(queue)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15618624">5. Exported Pseudo-variables</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18583504"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The mqueue module offers a generic message queue system in shared memory for
+		inter-process communication using the config file. One example of usage is
+		to send time consuming operations to one or several timer processes that consumes
+		items in the queue, without affecting SIP message handling in the socket-listening 
+		process.
+	</p>
+          <p>
+		There can be many defined queues. Access to queued values is done via
+		pseudo variables.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16368888"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15537688"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18089096"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17053400"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†mqueue (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mqueue.p.mqueue"></a>3.1.¬†<code class="varname">mqueue</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Definition of a memory queue
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">‚Äú<span class="quote">none</span>‚Äù</span>.
+		</em></span>
+	    </p>
+            <p>
+		Value must be a list of parameters: attr=value;... The attribute 'name'
+		is mandatory, defining the name of the queue. Optional attribute 'size'
+		specifies the maximum number of items in queue, if it is execeeded the
+		oldest one is removed.
+	    </p>
+            <p>
+		The parameter can be set many times, each holding the definition of one
+		queue.
+	    </p>
+            <div class="example">
+              <a id="idp18103552"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">mqueue</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mqueue", "mqueue", "name=myq;size=20;")
+modparam("mqueue", "mqueue", "name=qaz")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16678464"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† mq_add(queue, key, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mqueue.f.mq_add"></a>4.1.¬†
+		<code class="function">mq_add(queue, key, value)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Add a new item (key, value) in the queue. If max size of queue is
+		exceeded, the oldest one is removed.
+	    </p>
+            <div class="example">
+              <a id="idp15793528"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†<code class="function">mq_add</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mq_add("myq", "$rU", "call from $fU");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† mq_fetch(queue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mqueue.f.mq_fetch"></a>4.2.¬†
+		<code class="function">mq_fetch(queue)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Take oldest item from queue and fill $mqk(queue) and
+		$mqv(queue) pseudo variables.
+	    </p>
+            <p>
+		Return: true on success (1); false on failure (-1) or
+		no item fetched (-2).
+	    </p>
+            <div class="example">
+              <a id="idp15612128"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†<code class="function">mq_fetch</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+while(mq_fetch("myq"))
+{
+   xlog("$mqk(myq) - $mqv(myq)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬† mq_pv_free(queue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mqueue.f.mq_pv_free"></a>4.3.¬†
+		<code class="function">mq_pv_free(queue)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Free the item fetched in pseudo-variables. It is optional, a new fetch
+		frees the previous values.
+	    </p>
+            <div class="example">
+              <a id="idp15614600"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†<code class="function">mq_pv_free</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mq_pv_free("myq");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬† mq_size(queue)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="mqueue.f.mq_size"></a>4.4.¬†
+		<code class="function">mq_size(queue)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns the current number of elements in the mqueue.
+	    </p>
+            <p>
+	    If the mqueue is empty, the function returns -1. If the
+	    mqueue is not found, the function returns -2.
+	    </p>
+            <div class="example">
+              <a id="idp15617280"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="function">mq_size</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$var(q_size) = mq_size("queue");
+xlog("L_INFO", "Size of queue is: $var(q_size)\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Exported Pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15618624"></a>5.¬†Exported Pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem"><span class="emphasis"><em>$mqv(mqueue)</em></span> - the most recent item key fetched from the specified mqueue
+			</li>
+              <li class="listitem"><span class="emphasis"><em>$mqv(mqueue)</em></span> - the most recent item value fetched from the specified mqueue
+			</li>
+              <li class="listitem"><span class="emphasis"><em>$mq_size(mqueue)</em></span> - the size of the specified mqueue
+			</li>
+            </ul>
+          </div>
+          <p>
+		Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1184 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>db2_ops module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#db2_ops" title="db2_ops module" />
+    <link rel="next" href="#idp11070488" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="db2_ops module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="db2_ops"></a>db2_ops module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Tomas</span> <span class="surname">Mandys</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Iptel.org<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Tomas Mandys</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp11070488">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.syntax">3. ABNF syntax</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.parameters">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#declare_query">4.2. <code class="varname">declare_query</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#declare_handle">4.3. <code class="varname">declare_handle</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.functions">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_query">5.1. 
+				<code class="function">db_query(query | query_id [,handle] )</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_close">5.2. 
+				<code class="function">db_close(handle)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_first">5.3. 
+				<code class="function">db_first(handle)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_next">5.4. 
+				<code class="function">db_next(handle)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_seek">5.5. 
+				<code class="function">db_seek(handle, row_no)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_foreach">5.6. 
+				<code class="function">db_foreach(handle, route)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_proper">5.7. 
+				<code class="function">db_proper()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id">5.8. 
+				<code class="function">@db.query.query_id</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id.count">5.9. 
+				<code class="function">@db.query.query_id.count</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id.is_empty">5.10. 
+				<code class="function">@db.query.query_id.is_empty</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id.field">5.11. 
+				<code class="function">@db.query.query_id.field[m]</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id.row">5.12. 
+				<code class="function">@db.query.query_id.row[n]</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.query.query_id.row.field">5.13. 
+				<code class="function">@db.query.query_id.row[n].field[m]</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.fetch.handle">5.14. 
+				<code class="function">@db.fetch.handle</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db.fetch.handle.row_no">5.15. 
+				<code class="function">@db.fetch.handle.row_no</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#db_ops.examples">6. Examples</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15508056">Example <code class="varname">db_url</code></a></dt>
+          <dt>1.2. <a href="#idp15510656">Example <code class="varname">declare_query</code></a></dt>
+          <dt>1.3. <a href="#idp15512784">Example <code class="varname">declare_handle</code></a></dt>
+          <dt>1.4. <a href="#idp15516624"><code class="function">db_query</code> usage</a></dt>
+          <dt>1.5. <a href="#idp15518704"><code class="function">db_close</code> usage</a></dt>
+          <dt>1.6. <a href="#idp15520464"><code class="function">db_first</code> usage</a></dt>
+          <dt>1.7. <a href="#idp15522184"><code class="function">db_next</code> usage</a></dt>
+          <dt>1.8. <a href="#idp15523976"><code class="function">db_seek</code> usage</a></dt>
+          <dt>1.9. <a href="#idp15526048"><code class="function">db_foreach</code> usage</a></dt>
+          <dt>1.10. <a href="#idp15528040"><code class="function">db_proper</code> usage</a></dt>
+          <dt>1.11. <a href="#idp15529808"><code class="function">db.query.query_id</code> usage</a></dt>
+          <dt>1.12. <a href="#idp15531512"><code class="function">db.query.query_id.count</code> usage</a></dt>
+          <dt>1.13. <a href="#idp15533224"><code class="function">db.query.query_id.is_empty</code> usage</a></dt>
+          <dt>1.14. <a href="#idp15535544"><code class="function">db.query.query_id.field[m]</code> usage</a></dt>
+          <dt>1.15. <a href="#idp15537328"><code class="function">db.query.query_id.row[n]</code> usage</a></dt>
+          <dt>1.16. <a href="#idp15539664"><code class="function">db.query.query_id.row[n].field[m]</code> usage</a></dt>
+          <dt>1.17. <a href="#idp15542984"><code class="function">db.fetch.handle</code> usage</a></dt>
+          <dt>1.18. <a href="#idp15544800"><code class="function">db.fetch.handle.row_no</code> usage</a></dt>
+          <dt>1.19. <a href="#idp15546424">db_ops common example</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp11070488"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.syntax">3. ABNF syntax</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.parameters">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#declare_query">4.2. <code class="varname">declare_query</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#declare_handle">4.3. <code class="varname">declare_handle</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.functions">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#db_query">5.1. 
+				<code class="function">db_query(query | query_id [,handle] )</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_close">5.2. 
+				<code class="function">db_close(handle)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_first">5.3. 
+				<code class="function">db_first(handle)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_next">5.4. 
+				<code class="function">db_next(handle)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_seek">5.5. 
+				<code class="function">db_seek(handle, row_no)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_foreach">5.6. 
+				<code class="function">db_foreach(handle, route)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_proper">5.7. 
+				<code class="function">db_proper()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id">5.8. 
+				<code class="function">@db.query.query_id</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id.count">5.9. 
+				<code class="function">@db.query.query_id.count</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id.is_empty">5.10. 
+				<code class="function">@db.query.query_id.is_empty</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id.field">5.11. 
+				<code class="function">@db.query.query_id.field[m]</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id.row">5.12. 
+				<code class="function">@db.query.query_id.row[n]</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.query.query_id.row.field">5.13. 
+				<code class="function">@db.query.query_id.row[n].field[m]</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.fetch.handle">5.14. 
+				<code class="function">@db.fetch.handle</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db.fetch.handle.row_no">5.15. 
+				<code class="function">@db.fetch.handle.row_no</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#db_ops.examples">6. Examples</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module introduces possibility to run SQL queries from script.
+		</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		none
+		</p>
+        </div>
+        <div class="section" title="3. ABNF syntax">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.syntax"></a>3. ABNF syntax</h2>
+              </div>
+            </div>
+          </div>
+          <pre class="programlisting">	xltext = text_parsed_by_xl_lib
+	database = type "://" user:psw "@" host "/" database_name
+	field = xltext
+	fields = field [ "," field ... ]
+	op = "=" | "&lt;" | "&gt;" | "&lt;=" | "&gt;=" | "&lt;&gt;" | "!=" 
+	where = fields
+	ops = op [ "," op ... ]
+	order = field
+	type = "s" | "i" | "d" | "f" | "t" ; enables to force particular type when writing to db driver (string/int/double/float/datetime), valueable especially for datetime
+	value = [type ":"] xltext
+	values = value [ "," value ...]
+	extra_op = name "=" [type ":"] text
+	extra_ops = extra_op [ "," extra_op]
+
+	select = [database "/"] "select/" table "/" fields "/" where "/" ops "/" order "/" values [ "/" extra_ops ]
+	insert = [database "/"] "insert/" table "/" fields "/" values [ "/" extra_ops ]
+	update = [database "/"] "update/" table "/" fields "/" where "/" ops "/" values [ "/" extra_ops ]
+	replace = [database "/"] "replace/" table "/" fields "/" values [ "/" extra_ops ]
+	delete = [database "/"] "delete/" table "/" where "/" ops "/" values [ "/" extra_ops ]
+	raw_query = [database "/"] "select ...." | "insert ..." [[ / "values" [ "/" extra_ops ]]  # not delimited by "/"
+	query = (select | insert | update | replace | delete | raw_query)
+	query_id = alphanum
+	handle = alphanum  (plain text possible but alphanum recommended)
+	declare_query_param = query_id "=" query
+	declare_handle_param = handle</pre>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.parameters"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_url"></a>4.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Default database URL. 
+			</p>
+            <p>
+			The format is:
+			</p>
+            <pre class="programlisting">			db_url = database</pre>
+            <div class="example">
+              <a id="idp15508056"></a>
+              <p class="title">
+                <strong>Example 1.1. Example <code class="varname">db_url</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("db_ops", "db_url", "mysql://ser:123@127.0.0.1:12345/ser");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. declare_query (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="declare_query"></a>4.2. <code class="varname">declare_query</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Declare query_id for <code class="varname">@db.query_id</code> (see select syntax) or for reference from <code class="function">db_query(query_id)</code>.
+			Queries are pre-compiled therefore volatile stuff must be passed via parameters (AVP or so).
+			</p>
+            <p>
+			The format is:
+			</p>
+            <pre class="programlisting">			declare_query = declare_query_param</pre>
+            <div class="example">
+              <a id="idp15510656"></a>
+              <p class="title">
+                <strong>Example 1.2. Example <code class="varname">declare_query</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("db_ops", "declare_query", "sel1=select/location/received/uid///%$f.uid");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. declare_handle (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="declare_handle"></a>4.3. <code class="varname">declare_handle</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Declare handle for fetching.
+			</p>
+            <p>
+			The format is:
+			</p>
+            <pre class="programlisting">			declare_handle = declare_handle_param</pre>
+            <div class="example">
+              <a id="idp15512784"></a>
+              <p class="title">
+                <strong>Example 1.3. Example <code class="varname">declare_handle</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("db_ops", "declare_handle", "my_handle");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.functions"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  db_query(query | query_id [,handle] )">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_query"></a>5.1. 
+				<code class="function">db_query(query | query_id [,handle] )</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Executes query and in case of SELECT returns result via <span class="emphasis"><em>handle</em></span>, seeks the first 
+				record and returns TRUE if table is not empty.
+				The result is accesible using <code class="function">@db.fetch</code> select. See also <code class="varname">declare_handle</code>.
+				<span class="emphasis"><em>Query_id</em></span> references to query declared using <code class="varname">declare_query</code>,
+				<span class="emphasis"><em>handle</em></span> references to query declared using <code class="varname">declare_handle</code>.
+			</p>
+            <div class="example">
+              <a id="idp15516624"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">db_query</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	db_query("delete/silo///");
+	if (db_query("select/silo/body/uid//inc_time/%$f.uid", my_handle)) { 	
+	...
+	}
+	...
+	if (db_query(sel1, my_handle)) {
+
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  db_close(handle)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_close"></a>5.2. 
+				<code class="function">db_close(handle)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Close table that has been opened using <code class="function">db_query</code>.
+				Note all close after script processing automatically.
+			</p>
+            <div class="example">
+              <a id="idp15518704"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">db_close</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	db_close(my_handle);
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.  db_first(handle)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_first"></a>5.3. 
+				<code class="function">db_first(handle)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns TRUE if table is not empty. Note that rewind might not be supported by particular db driver.
+			</p>
+            <div class="example">
+              <a id="idp15520464"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">db_first</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	if (db_first(my_handle)) {
+	...
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.  db_next(handle)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_next"></a>5.4. 
+				<code class="function">db_next(handle)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Moves to the next record and returns TRUE if not EOF.
+			</p>
+            <div class="example">
+              <a id="idp15522184"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">db_next</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	if (db_next(my_handle)) {
+	...
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.  db_seek(handle, row_no)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_seek"></a>5.5. 
+				<code class="function">db_seek(handle, row_no)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Seeks at the row no (origin is zero) and Returns TRUE in case of success. Backward seek might not be supported by db driver.
+			</p>
+            <div class="example">
+              <a id="idp15523976"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">db_seek</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	if (db_seek(my_handle, $row_no)) {
+	...
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6.  db_foreach(handle, route)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_foreach"></a>5.6. 
+				<code class="function">db_foreach(handle, route)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Call specific route for each row, loop is interrupted if route returns code &lt;= 0.
+				Return code of the last route call is returned as result of <code class="function">db_foreach</code> (or -1 when no select is empty).
+			</p>
+            <div class="example">
+              <a id="idp15526048"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">db_foreach</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	route["print_row"] {
+	....
+	}
+	
+	...
+	if (db_foreach(my_handle, print_row)) {
+	...
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7.  db_proper()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_proper"></a>5.7. 
+				<code class="function">db_proper()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Hack which enables using db_ops queries in failure route.
+				Call it at the beginning of <span class="emphasis"><em>failure_route</em></span> block.
+			</p>
+            <div class="example">
+              <a id="idp15528040"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">db_proper</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	failure_route["my_failure"] {
+		db_proper();
+		db_query(my_query, my_handle);		
+	....
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8.  @db.query.query_id">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id"></a>5.8. 
+				<code class="function">@db.query.query_id</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns value of the first row and the first field.
+			</p>
+            <div class="example">
+              <a id="idp15529808"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">db.query.query_id</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query == "my") {
+	....
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9.  @db.query.query_id.count">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id.count"></a>5.9. 
+				<code class="function">@db.query.query_id.count</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns number of rows in select query.
+			</p>
+            <div class="example">
+              <a id="idp15531512"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">db.query.query_id.count</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query.count == "2") {
+	....
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.10.  @db.query.query_id.is_empty">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id.is_empty"></a>5.10. 
+				<code class="function">@db.query.query_id.is_empty</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns 1 if select query is empty.
+			</p>
+            <div class="example">
+              <a id="idp15533224"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">db.query.query_id.is_empty</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query.is_query == "1") {
+		# query is empty
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.11.  @db.query.query_id.field[m]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id.field"></a>5.11. 
+				<code class="function">@db.query.query_id.field[m]</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns value of the first row and the m-th field.
+				<span class="emphasis"><em>@*.field</em></span> supports <span class="emphasis"><em>select_any_uri</em></span> and <span class="emphasis"><em>select_any_nameaddr</em></span>.
+			</p>
+            <div class="example">
+              <a id="idp15535544"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">db.query.query_id.field[m]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query.field[2] == "xyz") {
+		...
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.12.  @db.query.query_id.row[n]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id.row"></a>5.12. 
+				<code class="function">@db.query.query_id.row[n]</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns value of the n-th row and the first field, negative values count from the end (-1 == last row).
+			</p>
+            <div class="example">
+              <a id="idp15537328"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">db.query.query_id.row[n]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query.row[2] == "xyz") {
+		...
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.13.  @db.query.query_id.row[n].field[m]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.query.query_id.row.field"></a>5.13. 
+				<code class="function">@db.query.query_id.row[n].field[m]</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns value of the n-th row and the m-th field.
+				<span class="emphasis"><em>@*.field</em></span> supports <span class="emphasis"><em>select_any_uri</em></span> and <span class="emphasis"><em>select_any_nameaddr</em></span>.
+			</p>
+            <div class="example">
+              <a id="idp15539664"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">db.query.query_id.row[n].field[m]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@db.query.my_query.row[2].field[1] == "xyz") {
+		...
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.14.  @db.fetch.handle">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.fetch.handle"></a>5.14. 
+				<code class="function">@db.fetch.handle</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Similar functionality as <code class="function">@db.query</code> selects with exception that 
+				operation is performed at query has been opened by <code class="function">db_query</code>.
+			</p>
+            <p>
+				<code class="function">@db.fetch.handle.count</code> invalidates current record, do <code class="function">db_seek</code>/<code class="function">db_first</code>!
+			</p>
+            <p>
+				 Note all opened queries are closed in POST_SCRIPT callback not to leak memory.
+			</p>
+            <div class="example">
+              <a id="idp15542984"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">db.fetch.handle</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	db_query(sel1, my_handle);
+	if (@db.fetch.my_handle.is_empty == "0") {
+		if (@db.fetch.my_handle == "xyz") {
+
+		}
+	}
+	db_close(my_handle);</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.15.  @db.fetch.handle.row_no">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db.fetch.handle.row_no"></a>5.15. 
+				<code class="function">@db.fetch.handle.row_no</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns current row number (origin is zero).
+			</p>
+            <div class="example">
+              <a id="idp15544800"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">db.fetch.handle.row_no</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	db_query(sel1, my_handle);
+	...
+	db_next(my_handle);
+	if (@db.handle == "xyz") {
+		db_next(my_handle);
+	}
+	if (@db.fetch.my_handle.row_no == "1") {
+
+		}
+	}
+	if (@db.fetch.my_handle.count == "10") {
+		...
+	}
+	if (@db.fetch.my_handle.row_no == "1") {	# always false because .count has invalidated current record!
+
+	}	
+	db_close(my_handle);</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="db_ops.examples"></a>6. Examples</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp15546424"></a>
+            <p class="title">
+              <strong>Example 1.19. db_ops common example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">modparam("db_ops", "declare_query", "sel1=select/location/received/uid///%$f.uid");  
+modparam("db_ops", "declare_query", "sel2=select/subscriber/email_address,greeting/uid,allow_find///%$uidparam,1");  
+modparam("db_ops", "declare_query", "sel3=select/silo/body/uid//inc_time/%$f.uid");  
+modparam("db_ops", "declare_query", "del1=delete from location where expires&lt;now()"); # raw query
+
+# @db.query.sel1             ..  SELECT received FROM location WHERE uid = "%$f.uid"
+# @db.query.sel1.count       ..  SELECT count(*) FROM location WHERE uid = "%$f.uid"
+# @db.query.sel2.field[0]    ..  SELECT email_address FROM subscriber WHERE uid = "%$f.uid" AND allow_find=1
+# @db.query.sel2.field[1]    ..  SELECT greeting FROM subscriber WHERE uid = "%$f.uid" AND allow_find=1
+# @db.query.sel3.count       ..  SELECT count(*) FROM silo WHERE uid = "%$f.uid"
+# @db.query.sel1.is_empty
+
+
+db_query("delete/silo///");     #  DELETE FROM silo
+db_query("delete/silo/expired/&lt;=/%Ts");     #  DELETE FROM silo WHERE expired &lt;= now;
+db_query("insert/foo/bar,rab,abr,rbs/%$f.id,'hello world %fu',1,2");  # INSERT INTO foo(bar,rab,abr,rbs) VALUES ("%$f.id","hello world %fu",1,2)
+db_query("update/foo/rab,abr/bar//'hello world %f',1,2,%$f.id");      # UPDATE foo SET rab="hello world %fu",rbs=45 WHERE bar="%$f.id"
+
+db_query("mysql://pretorian:sandra@net/delete/fbi/identities//");
+
+if (db_query("select/silo/body/uid//inc_time/%$f.uid", my_handle)) { #  SELECT body FROM silo WHERE uid = "%$f.uid" ORDER BY inc_time
+    @db.fetch.my_handle             ..  get first raw
+    if (db_next(my_handle)) {
+	@db.fetch.my_handle      ..  get second raw
+    }
+}
+
+if (db_query("select/silo/src_addr,dest_addr,body/uid//inc_time/%$t.uid", my_next_handle)) { # SELECT src_addr,dest_addr,body FROM silo WHERE uid = "%$t.uid" ORDER BY inc_time
+    @db.fetch.my_next_handle.row[-1].field[1]	.. get last dest_addr, not supported now!
+}
+db_close(my_handle);
+db_close(my_next_handle);
+
+# parametrization of queries
+$uidparam="xx";
+@db.query.sel2
+
+$uidparam="yy";
+@db.query.sel2
+
+$uidparam="zz";
+db_query(sel2, my_handle);
+
+$uidparam="qq";
+db_query(sel2, my_next_handle);
+if (@db.fetch.my_handle == @db.fetch.my_next_handle) ....
+
+db_close(my_handle);
+db_close(my_next_handle);
+
+db_query(sel3, my_handle);
+forach(my_handle, PROCESS_ROW_ROUTE);</pre>
+              <pre class="programlisting">loadmodule "mysql.so"
+loadmodule "xprint.so"
+loadmodule "db_ops.so"
+loadmodule "timer.so"
+
+modparam("timer", "declare_timer", "timer_route,1000,,enable");
+
+# -------------------------  request routing logic -------------------
+
+modparam("db_ops", "db_url", "mysql://admin:123456789@127.0.0.1:12345/ser");
+
+modparam("db_ops", "declare_query", "q1=select/location/uid,aor,contact,received//////"); #key=location_key,key_omit=i:3");
+modparam("db_ops", "declare_query", "q2=select/location/uid,aor,contact,received/uid///%$f.uid/key=location_key,key_omit=i:1");
+# select raw query not yet supported
+modparam("db_ops", "declare_query", "q3=select uid,aor,contact,received from location where uid=?/%$f.uid");
+modparam("db_ops", "declare_query", "q4=mysql://admin:123456789@127.0.0.1:12345/ser/replace/location/uid,aor,contact,received,expires,q,callid,cseq,user_agent,instance,path,service_route,assoc_uri,flags,nated_contact,term_toi/QWERTY,aor@qqq,1.2.3.4:5678,1.2.3.4:5678;proto=tcp,d:1000,0.8,CAALL,6543,bubak,INSTANCE@bubak,sip:path_to_localhost,,,0,1,,");
+modparam("db_ops", "declare_query", "q5=mysql://admin:123456789@127.0.0.1:12345/ser/delete from location where uid=?/s:QWERTY");
+
+modparam("db_ops", "declare_handle", "h0");
+modparam("db_ops", "declare_handle", "h1");
+
+route["print_count"] {
+# testing count
+	xplog("L_INFO", "print count\n");
+	db_query("q1", "h1");
+	xplog("L_INFO", "fetch: row_no: %@db.fetch.h1.row_no, count: %@db.fetch.h1.count, row_no: %@db.fetch.h1.row_no, is_empty: %@db.fetch.h1.is_empty, row_no: %@db.fetch.h1.row_no\n");
+
+	xplog("L_INFO", "query: is_empty: %@db.query.q1.is_empty, count: %@db.query.q1.count\n");
+}
+
+route["print_record"] {
+	xplog("L_INFO","row_no: %@db.fetch.h0.row_no, record: %@db.fetch.h0.field[0], %@db.fetch.h0.field[1],  %@db.fetch.h0.field[2],  %@db.fetch.h0.field[3]\n");
+
+}
+
+route["print_tbl"] {
+	route("print_record");
+	if (!db_next("h0")) return;
+	route("print_record");
+	if (!db_next("h0")) return;
+	route("print_record");
+	if(!db_seek("h0", 5)) return;
+	route("print_record");
+	if (!db_first("h0")) return;
+	route("print_record");
+
+}
+
+route["db_test"] {
+
+	route("print_count");
+	
+	$f.uid="QWERTY";
+	xplog("L_INFO", "query #1\n");
+	if (db_query("q1", "h0")) {
+		route("print_tbl");
+	}
+	db_close("h0");
+
+	xplog("L_INFO", "replace\n"); 
+	db_query("q4");
+
+	xplog("L_INFO", "query #2\n");
+	if (db_query("q2", "h0")) {
+		route("print_tbl");
+	}
+	db_close("h0");
+
+	xplog("L_INFO", "query #3\n");
+	if (db_query("q3", "h0")) {
+		route("print_tbl");
+	}
+	db_close("h0");
+
+	route("print_count");
+
+
+	db_query("q5");
+	route("print_count");
+
+	
+	xplog("L_INFO", "foreach\n");
+	db_query("q1", "h0");
+	db_foreach("h0", "print_record");
+
+	xplog("L_INFO", "query test\n");
+	xplog("L_INFO", "#0: %@db.query.q1.row[0].field[0], %@db.query.q1.row[0].field[1], %@db.query.q1.row[0].field[2], %@db.query.q1.row[0].field[3]\n");
+	xplog("L_INFO", "#1: %@db.query.q1.row[1].field[0], %@db.query.q1.row[1].field[1], %@db.query.q1.row[1].field[2], %@db.query.q1.row[1].field[3]\n");
+	xplog("L_INFO", "#3: %@db.query.q1.row[3].field[0], %@db.query.q1.row[3].field[1], %@db.query.q1.row[3].field[2], %@db.query.q1.row[3].field[3]\n");
+
+
+}
+
+route["timer_route"] {
+	xplog("L_INFO", "\n\n\ntimer\n");
+	route("db_test");
+
+	timer_enable(0, 0);
+	xplog("L_INFO", "\n\n\n");
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

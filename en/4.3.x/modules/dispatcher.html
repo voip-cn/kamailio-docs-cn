@@ -1,0 +1,3457 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>DISPATCHER Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4363816" title="DISPATCHER Module" />
+    <link rel="next" href="#idp2169048" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="DISPATCHER Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4363816"></a>DISPATCHER Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Olle E.</span> <span class="surname">Johansson</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Edvina AB<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alessandro</span> <span class="surname">Arrichiello</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Hewlett Packard<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005 Voice Sistem</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 Daniel-Constantin Mierla (asipto.com)</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2014 Olle E. Johansson, Edvina AB</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2015 Alessandro Arrichiello, Hewlett Packard</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2169048">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1530824">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1569776">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp969944">2.1. Kamailio modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2552880">2.2. External libraries or applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2589784">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.list_file">3.1. <code class="varname">list_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.db_url">3.2. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.table_name">3.3. <code class="varname">table_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.setid_col">3.4. <code class="varname">setid_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.destination_col">3.5. <code class="varname">destination_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.flags_col">3.6. <code class="varname">flags_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.priority_col">3.7. <code class="varname">priority_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.force_dst">3.8. <code class="varname">force_dst</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.flags">3.9. <code class="varname">flags</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.use_default">3.10. <code class="varname">use_default</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.dst_avp">3.11. <code class="varname">dst_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.grp_avp">3.12. <code class="varname">grp_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.cnt_avp">3.13. <code class="varname">cnt_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.dstid_avp">3.14. <code class="varname">dstid_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.attrs_avp">3.15. <code class="varname">attrs_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.sock_avp">3.16. <code class="varname">sock_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.hash_pvar">3.17. <code class="varname">hash_pvar</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.setid_pvname">3.18. <code class="varname">setid_pvname</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.attrs_pvname">3.19. <code class="varname">attrs_pvname</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_ping_method">3.20. <code class="varname">ds_ping_method</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_ping_from">3.21. <code class="varname">ds_ping_from</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_ping_interval">3.22. <code class="varname">ds_ping_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_probing_threshold">3.23. <code class="varname">ds_probing_threshold</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_inactive_threshold">3.24. <code class="varname">ds_inactive_threshold</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_ping_reply_codes">3.25. <code class="varname">ds_ping_reply_codes</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_probing_mode">3.26. <code class="varname">ds_probing_mode</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_hash_size">3.27. <code class="varname">ds_hash_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_hash_expire">3.28. <code class="varname">ds_hash_expire</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_hash_initexpires">3.29. <code class="varname">ds_hash_initexpire</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_hash_check_interval">3.30. <code class="varname">ds_hash_check_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.outbound_proxy">3.31. <code class="varname">outbound_proxy</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.p.ds_default_socket">3.32. <code class="varname">ds_default_socket</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1919768">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_select_dst">4.1. 
+		<code class="function">ds_select_dst(set, alg[, limit])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_select_domain">4.2. 
+ 		<code class="function">ds_select_domain(set, alg[, limit])</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1939384">4.3. 
+ 		<code class="function">ds_next_dst()</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1940824">4.4. 
+ 		<code class="function">ds_next_domain()</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_mark_dst">4.5. 
+ 		<code class="function">ds_mark_dst([state])</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_list_exist">4.6. 
+		<code class="function">ds_list_exist(groupid)</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_is_from_list">4.7. 
+		<code class="function">ds_is_from_list([groupid [, mode [, uri] ] ])</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.ds_load_update">4.8. 
+ 		<code class="function">ds_load_update()</code>
+ 		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1962464">4.9. 
+ 		<code class="function">ds_load_unset()</code>
+ 		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1965400">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.mi.ds_set_state">5.1. 
+		<code class="function">ds_set_state</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.mi.ds_list">5.2. 
+		<code class="function">ds_list</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.mi.ds_reload">5.3. 
+		<code class="function">ds_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1978704">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.rpc.set_state">6.1. 
+		<code class="function">dispatcher.set_state</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.rpc.list">6.2. 
+		<code class="function">dispatcher.list</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.f.reload">6.3. 
+		<code class="function">dispatcher.reload</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#dispatcher.ex.install">7. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1992504">7.1. Destination List File</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#dispatcher.ex.attributes">7.1.1. Special Attributes</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#dispatcher.ex.fileforma">7.1.2. File Format</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#dispatcher.ex.config">7.2. Kamailio config file</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#dispatcher.ex.event_routes">8. Event routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3771240">8.1. 
+                <code class="function">dispatcher:dst-down</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3772792">8.2. 
+                <code class="function">dispatcher:dst-up</code>
+                </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3226200">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp83480">Set the <span class="quote">“<span class="quote">list_file</span>”</span> parameter</a></dt>
+          <dt>1.2. <a href="#idp91984">Set <span class="quote">“<span class="quote">db_url</span>”</span> parameter</a></dt>
+          <dt>1.3. <a href="#idp94784">Set <span class="quote">“<span class="quote">table_name</span>”</span> parameter</a></dt>
+          <dt>1.4. <a href="#idm16248">Set <span class="quote">“<span class="quote">setid_col</span>”</span> parameter</a></dt>
+          <dt>1.5. <a href="#idm13448">Set <span class="quote">“<span class="quote">destination_col</span>”</span> parameter</a></dt>
+          <dt>1.6. <a href="#idm10680">Set <span class="quote">“<span class="quote">flags_col</span>”</span> parameter</a></dt>
+          <dt>1.7. <a href="#idp49096">Set <span class="quote">“<span class="quote">priority_col</span>”</span> parameter</a></dt>
+          <dt>1.8. <a href="#idp51968">Set the <span class="quote">“<span class="quote">force_dst</span>”</span> parameter</a></dt>
+          <dt>1.9. <a href="#idp55560">Set the <span class="quote">“<span class="quote">flags</span>”</span> parameter</a></dt>
+          <dt>1.10. <a href="#idp22608">Set the <span class="quote">“<span class="quote">use_default</span>”</span> parameter</a></dt>
+          <dt>1.11. <a href="#idp26184">Set the <span class="quote">“<span class="quote">dst_avp</span>”</span> parameter</a></dt>
+          <dt>1.12. <a href="#idp29488">Set the <span class="quote">“<span class="quote">grp_avp</span>”</span> parameter</a></dt>
+          <dt>1.13. <a href="#idp32768">Set the <span class="quote">“<span class="quote">cnt_avp</span>”</span> parameter</a></dt>
+          <dt>1.14. <a href="#idp36072">Set the <span class="quote">“<span class="quote">dstid_avp</span>”</span> parameter</a></dt>
+          <dt>1.15. <a href="#idp39024">Set the <span class="quote">“<span class="quote">attrs_avp</span>”</span> parameter</a></dt>
+          <dt>1.16. <a href="#idp42376">Set the <span class="quote">“<span class="quote">sock_avp</span>”</span> parameter</a></dt>
+          <dt>1.17. <a href="#idp1873440">Use $avp(i:273) for hashing:</a></dt>
+          <dt>1.18. <a href="#idp1874296">Use combination of PVs for hashing:</a></dt>
+          <dt>1.19. <a href="#idp1876848">Set the <span class="quote">“<span class="quote">setid_pvname</span>”</span> parameter</a></dt>
+          <dt>1.20. <a href="#idp1879664">Set the <span class="quote">“<span class="quote">attrs_pvname</span>”</span> parameter</a></dt>
+          <dt>1.21. <a href="#idp1882512">Set the <span class="quote">“<span class="quote">ds_ping_method</span>”</span> parameter</a></dt>
+          <dt>1.22. <a href="#idp1885392">Set the <span class="quote">“<span class="quote">ds_ping_from</span>”</span> parameter</a></dt>
+          <dt>1.23. <a href="#idp1888704">Set the <span class="quote">“<span class="quote">ds_ping_interval</span>”</span> parameter</a></dt>
+          <dt>1.24. <a href="#idp1891848">Set the <span class="quote">“<span class="quote">ds_probing_threshold</span>”</span> parameter</a></dt>
+          <dt>1.25. <a href="#idp1895032">Set the <span class="quote">“<span class="quote">ds_inactive_threshold</span>”</span> parameter</a></dt>
+          <dt>1.26. <a href="#idp1898184">Set the <span class="quote">“<span class="quote">ds_ping_reply_codes</span>”</span> parameter</a></dt>
+          <dt>1.27. <a href="#idp1901392">Set the <span class="quote">“<span class="quote">ds_probing_mode</span>”</span> parameter</a></dt>
+          <dt>1.28. <a href="#idp1904344">Set the <span class="quote">“<span class="quote">ds_hash_size</span>”</span> parameter</a></dt>
+          <dt>1.29. <a href="#idp1907136">Set the <span class="quote">“<span class="quote">ds_hash_expire</span>”</span> parameter</a></dt>
+          <dt>1.30. <a href="#idp1910072">Set the <span class="quote">“<span class="quote">ds_hash_initexpire</span>”</span> parameter</a></dt>
+          <dt>1.31. <a href="#idp1912936">Set the <span class="quote">“<span class="quote">ds_hash_check_interval</span>”</span> parameter</a></dt>
+          <dt>1.32. <a href="#idp1915504">Set the <span class="quote">“<span class="quote">outbound_proxy</span>”</span> parameter</a></dt>
+          <dt>1.33. <a href="#idp1918488">Set the <span class="quote">“<span class="quote">ds_default_socket</span>”</span> parameter</a></dt>
+          <dt>1.34. <a href="#idp1935896"><code class="function">ds_select_dst</code> usage</a></dt>
+          <dt>1.35. <a href="#idp1947776"><code class="function">ds_mark_dst</code> usage</a></dt>
+          <dt>1.36. <a href="#idp1951264"><code class="function">ds_list_exist</code> usage</a></dt>
+          <dt>1.37. <a href="#idp1958312"><code class="function">ds_is_from_list</code> usage</a></dt>
+          <dt>1.38. <a href="#idp1963808"><code class="function">ds_load_unset</code> usage</a></dt>
+          <dt>1.39. <a href="#idp3761392">dispatcher list file</a></dt>
+          <dt>1.40. <a href="#idp3763696">Kamailio config script - sample dispatcher usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2169048"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1530824">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1569776">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp969944">2.1. Kamailio modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2552880">2.2. External libraries or applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2589784">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.list_file">3.1. <code class="varname">list_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.db_url">3.2. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.table_name">3.3. <code class="varname">table_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.setid_col">3.4. <code class="varname">setid_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.destination_col">3.5. <code class="varname">destination_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.flags_col">3.6. <code class="varname">flags_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.priority_col">3.7. <code class="varname">priority_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.force_dst">3.8. <code class="varname">force_dst</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.flags">3.9. <code class="varname">flags</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.use_default">3.10. <code class="varname">use_default</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.dst_avp">3.11. <code class="varname">dst_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.grp_avp">3.12. <code class="varname">grp_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.cnt_avp">3.13. <code class="varname">cnt_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.dstid_avp">3.14. <code class="varname">dstid_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.attrs_avp">3.15. <code class="varname">attrs_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.sock_avp">3.16. <code class="varname">sock_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.hash_pvar">3.17. <code class="varname">hash_pvar</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.setid_pvname">3.18. <code class="varname">setid_pvname</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.attrs_pvname">3.19. <code class="varname">attrs_pvname</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_ping_method">3.20. <code class="varname">ds_ping_method</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_ping_from">3.21. <code class="varname">ds_ping_from</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_ping_interval">3.22. <code class="varname">ds_ping_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_probing_threshold">3.23. <code class="varname">ds_probing_threshold</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_inactive_threshold">3.24. <code class="varname">ds_inactive_threshold</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_ping_reply_codes">3.25. <code class="varname">ds_ping_reply_codes</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_probing_mode">3.26. <code class="varname">ds_probing_mode</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_hash_size">3.27. <code class="varname">ds_hash_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_hash_expire">3.28. <code class="varname">ds_hash_expire</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_hash_initexpires">3.29. <code class="varname">ds_hash_initexpire</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_hash_check_interval">3.30. <code class="varname">ds_hash_check_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.outbound_proxy">3.31. <code class="varname">outbound_proxy</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.p.ds_default_socket">3.32. <code class="varname">ds_default_socket</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1919768">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_select_dst">4.1. 
+		<code class="function">ds_select_dst(set, alg[, limit])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_select_domain">4.2. 
+ 		<code class="function">ds_select_domain(set, alg[, limit])</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1939384">4.3. 
+ 		<code class="function">ds_next_dst()</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1940824">4.4. 
+ 		<code class="function">ds_next_domain()</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_mark_dst">4.5. 
+ 		<code class="function">ds_mark_dst([state])</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_list_exist">4.6. 
+		<code class="function">ds_list_exist(groupid)</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_is_from_list">4.7. 
+		<code class="function">ds_is_from_list([groupid [, mode [, uri] ] ])</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.ds_load_update">4.8. 
+ 		<code class="function">ds_load_update()</code>
+ 		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1962464">4.9. 
+ 		<code class="function">ds_load_unset()</code>
+ 		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1965400">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.mi.ds_set_state">5.1. 
+		<code class="function">ds_set_state</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.mi.ds_list">5.2. 
+		<code class="function">ds_list</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.mi.ds_reload">5.3. 
+		<code class="function">ds_reload</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1978704">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.rpc.set_state">6.1. 
+		<code class="function">dispatcher.set_state</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.rpc.list">6.2. 
+		<code class="function">dispatcher.list</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.f.reload">6.3. 
+		<code class="function">dispatcher.reload</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#dispatcher.ex.install">7. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1992504">7.1. Destination List File</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#dispatcher.ex.attributes">7.1.1. Special Attributes</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#dispatcher.ex.fileforma">7.1.2. File Format</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#dispatcher.ex.config">7.2. Kamailio config file</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#dispatcher.ex.event_routes">8. Event routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3771240">8.1. 
+                <code class="function">dispatcher:dst-down</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3772792">8.2. 
+                <code class="function">dispatcher:dst-up</code>
+                </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1530824"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module offers SIP load balancer functionality and it can be
+		used as SIP traffic dispatcher. There are many load balancing and
+		traffic dispaching algorithms that you can choose from, like:
+		round-robin, weight based load balancing, call load distribution,
+		hashing over SIP message attributes.
+	</p>
+          <p>
+		The module can be used as a stateless load balancer, it does not
+		depend on any call state tracking module. It requires the TM module if
+		you enable auto-discovery of active/inactive gateways.
+	</p>
+          <p>
+		It is very lightweight, therefore suitable for handling heavy SIP
+		traffic. The module has a small footprint and ability to load balancing rules
+		from a text plain file makes it suitable for embedded systems.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1569776"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp969944"></a>2.1. Kamailio modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM - only if active recovery of failed hosts
+					is required</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database engine - only if you want to load
+					balancing routes from database instead of plain text file.
+				</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External libraries or applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2552880"></a>2.2. External libraries or applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before
+		running Kamailio with this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2589784"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. list_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.list_file"></a>3.1. <code class="varname">list_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Path to the file with destination sets.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">/etc/kamailio/dispatcher.list</span>”</span> or
+			<span class="quote">“<span class="quote">/usr/local/etc/kamailio/dispatcher.list</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp83480"></a>
+              <p class="title">
+                <strong>Example 1.1. Set the <span class="quote">“<span class="quote">list_file</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "list_file", "/var/run/kamailio/dispatcher.list")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.db_url"></a>3.2. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If you want to load the sets of gateways from the database you must set
+		this parameter.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">NULL</span>”</span> (disable DB support).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp91984"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <span class="quote">“<span class="quote">db_url</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "db_url", "mysql://user:passwb@localhost/database")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. table_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.table_name"></a>3.3. <code class="varname">table_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If you want to load the sets of gateways from the database you must set
+		this parameter as the database name.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">dispatcher</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp94784"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <span class="quote">“<span class="quote">table_name</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "table_name", "my_dispatcher")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. setid_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.setid_col"></a>3.4. <code class="varname">setid_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The column's name in the database storing the gateway's group id.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">setid</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm16248"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <span class="quote">“<span class="quote">setid_col</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "setid_col", "groupid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. destination_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.destination_col"></a>3.5. <code class="varname">destination_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The column's name in the database storing the destination
+			sip URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">destination</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm13448"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <span class="quote">“<span class="quote">destination_col</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "destination_col", "uri")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. flags_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.flags_col"></a>3.6. <code class="varname">flags_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The column's name in the database storing the flags for
+			the destination URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">flags</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm10680"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <span class="quote">“<span class="quote">flags_col</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "flags_col", "dstflags")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. priority_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.priority_col"></a>3.7. <code class="varname">priority_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The column's name in the database storing the priority for
+			destination URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">priority</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp49096"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <span class="quote">“<span class="quote">priority_col</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "priority_col", "dstpriority")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. force_dst (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.force_dst"></a>3.8. <code class="varname">force_dst</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, force overwriting of destination address (outbound proxy)
+		when that is already set. If set to 0, will return error when the
+		destination address is already set.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp51968"></a>
+              <p class="title">
+                <strong>Example 1.8. Set the <span class="quote">“<span class="quote">force_dst</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dispatcher", "force_dst", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. flags (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.flags"></a>3.9. <code class="varname">flags</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		Various flags that affect dispatcher's behaviour. The flags are defined
+		as a bitmask on an integer value.
+ 		If flag 1 is set only the username
+ 		part of the URI will be used when computing an URI based hash.
+ 		If no flags are set the username, hostname and port will be used.
+ 		The port is used only if different from 5060 (normal sip URI) or 5061
+ 		(in the sips: case).
+ 		</p>
+            <p>
+		If flag 2 is set, then failover support is enabled. The functions
+		exported by the module will store the rest of addresses from the
+		destination set in the AVP, and use these AVPs to contact next address if
+		the current-tried destination fails.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp55560"></a>
+              <p class="title">
+                <strong>Example 1.9. Set the <span class="quote">“<span class="quote">flags</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "flags", 3)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. use_default (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.use_default"></a>3.10. <code class="varname">use_default</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		If the parameter is set to 1, the last address in destination set
+		is used as a final option to send the request to. For example, it is useful
+		when wanting to send the call to an anouncement server saying:
+		"the gateways are full, try later".
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp22608"></a>
+              <p class="title">
+                <strong>Example 1.10. Set the <span class="quote">“<span class="quote">use_default</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "use_default", 1)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. dst_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.dst_avp"></a>3.11. <code class="varname">dst_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		The name of the avp which will hold the list with addresses, in the
+		order
+		they have been selected by the chosen algorithm. If use_default is 1,
+		the value of last dst_avp_id is the last address in destination set. The
+		first dst_avp_id is the selected destinations. All the other addresses
+		from the destination set will be added in the avp list to be able to
+		implement serial forking.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you want to do load balancing fail over.
+ 		</p>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVPs.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp26184"></a>
+              <p class="title">
+                <strong>Example 1.11. Set the <span class="quote">“<span class="quote">dst_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "dst_avp", "$avp(dsdst)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. grp_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.grp_avp"></a>3.12. <code class="varname">grp_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		The name of the avp storing the group id of the destination set. Good
+		to have it for later usage or checks.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you want to do load balancing fail over.
+ 		</p>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVP.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp29488"></a>
+              <p class="title">
+                <strong>Example 1.12. Set the <span class="quote">“<span class="quote">grp_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "grp_avp", "$avp(dsgrp)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. cnt_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.cnt_avp"></a>3.13. <code class="varname">cnt_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		The name of the avp storing the number of destination addresses kept in
+		dst_avp AVPs.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you want to do load balancing fail over.
+ 		</p>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVP.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp32768"></a>
+              <p class="title">
+                <strong>Example 1.13. Set the <span class="quote">“<span class="quote">cnt_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "cnt_avp", "$avp(dscnt)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. dstid_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.dstid_avp"></a>3.14. <code class="varname">dstid_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the avp storing the destination unique ID used for
+		call load based dispatching.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you want to do load balancing on
+		call load (alg 10).
+ 		</p>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVP.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp36072"></a>
+              <p class="title">
+                <strong>Example 1.14. Set the <span class="quote">“<span class="quote">dstid_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "dstid_avp", "$avp(dsdstid)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. attrs_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.attrs_avp"></a>3.15. <code class="varname">attrs_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the avp storing destination's attributes value.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVP.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp39024"></a>
+              <p class="title">
+                <strong>Example 1.15. Set the <span class="quote">“<span class="quote">attrs_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "attrs_avp", "$avp(dsattrs)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. sock_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.sock_avp"></a>3.16. <code class="varname">sock_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the avp which will hold the list with the sockets associated to the addresses stored in dst_avp avp.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			If you want to do load balancing fail over, you have to set this parameter to use the correct socket for each gateway.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't add AVPs.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp42376"></a>
+              <p class="title">
+                <strong>Example 1.16. Set the <span class="quote">“<span class="quote">sock_avp</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "sock_avp", "$avp(dssocket)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. hash_pvar (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.hash_pvar"></a>3.17. <code class="varname">hash_pvar</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		String with PVs used for the hashing algorithm 7.
+ 		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you want do hashing over custom message
+		parts.
+ 		</p>
+            </div>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - disabled.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1873440"></a>
+              <p class="title">
+                <strong>Example 1.17. Use $avp(i:273) for hashing:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "hash_pvar", "$avp(i:273)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp1874296"></a>
+              <p class="title">
+                <strong>Example 1.18. Use combination of PVs for hashing:</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "hash_pvar", "hash the $fU@$ci")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. setid_pvname (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.setid_pvname"></a>3.18. <code class="varname">setid_pvname</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the PV where to store the set ID (group ID) when calling
+		ds_is_from_list() with no parameter.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't set PV.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1876848"></a>
+              <p class="title">
+                <strong>Example 1.19. Set the <span class="quote">“<span class="quote">setid_pvname</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "setid_pvname", "$var(setid)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. attrs_pvname (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.attrs_pvname"></a>3.19. <code class="varname">attrs_pvname</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the PV where to store the attributes of matching address
+		when calling ds_is_from_list().
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">null</span>”</span> - don't set PV.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1879664"></a>
+              <p class="title">
+                <strong>Example 1.20. Set the <span class="quote">“<span class="quote">attrs_pvname</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "attrs_pvname", "$var(attrs)")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20. ds_ping_method (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_ping_method"></a>3.20. <code class="varname">ds_ping_method</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		With this method you can define, with which method you want to probe the gateways.
+		Pinging gateways feature depends on ds_ping_interval parameter.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">OPTIONS</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1882512"></a>
+              <p class="title">
+                <strong>Example 1.21. Set the <span class="quote">“<span class="quote">ds_ping_method</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_ping_method", "INFO")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21. ds_ping_from (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_ping_from"></a>3.21. <code class="varname">ds_ping_from</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		With this Method you can define the "From:"-Line for the request, sent to the failed gateways. 		
+ 		This method is only available, if compiled with the probing of failed gateways enabled.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">sip:dispatcher@localhost</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1885392"></a>
+              <p class="title">
+                <strong>Example 1.22. Set the <span class="quote">“<span class="quote">ds_ping_from</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_ping_from", "sip:proxy@sip.somehost.com")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22. ds_ping_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_ping_interval"></a>3.22. <code class="varname">ds_ping_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		With this parameter you can define the interval for sending a request
+		to a gateway marked as inactive upon a failed request routing to it.
+ 		This parameter is only used, when the TM-Module is loaded.
+		If set to <span class="quote">“<span class="quote">0</span>”</span>, the pinging of inactive gateway is disabled.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1888704"></a>
+              <p class="title">
+                <strong>Example 1.23. Set the <span class="quote">“<span class="quote">ds_ping_interval</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_ping_interval", 30)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23. ds_probing_threshold (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_probing_threshold"></a>3.23. <code class="varname">ds_probing_threshold</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If you want to set a gateway into inactive mode, there can be
+		a specific number of failed requests until it will change from "active"
+		to "inactive". It is using the state "trying", that allows selection
+		of gateway but indicates there was a failure previously with the
+		gateway. The number of attempts can be set with this parameter.
+		This parameter can be modified via ser config framework.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+		Default value is <span class="quote">“<span class="quote">1</span>”</span> (set inactive with first failure).
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1891848"></a>
+              <p class="title">
+                <strong>Example 1.24. Set the <span class="quote">“<span class="quote">ds_probing_threshold</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_probing_threshold", 10)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24. ds_inactive_threshold (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_inactive_threshold"></a>3.24. <code class="varname">ds_inactive_threshold</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                If you want to set a gateway into active mode (after being inactive), there can be
+                a specific number of successful requests until it will change from "inactive"
+                to "active". The number of attempts can be set with this parameter.
+                This parameter can be modified via ser config framework.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                Default value is <span class="quote">“<span class="quote">1</span>”</span> (set active with first success).
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp1895032"></a>
+              <p class="title">
+                <strong>Example 1.25. Set the <span class="quote">“<span class="quote">ds_inactive_threshold</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_inactive_threshold", 10)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25. ds_ping_reply_codes (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_ping_reply_codes"></a>3.25. <code class="varname">ds_ping_reply_codes</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter defines the valid response codes, which are accepted as a valid reply to the PING-Method.
+		It is a list separated by colons, whery you may define either a single code (e.g. "code=202" would accept 202 as an additional, valid response) or a class of responses, you want to accept (e.g. "class=2" would accept everything from 200 to 299 as valid response).
+		This parameter can be modified via ser config framework.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote"></span>”</span> (only 200 OK is accepted).
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1898184"></a>
+              <p class="title">
+                <strong>Example 1.26. Set the <span class="quote">“<span class="quote">ds_ping_reply_codes</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_ping_reply_codes", "class=2;code=403;code=488;class=3")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.26. ds_probing_mode (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_probing_mode"></a>3.26. <code class="varname">ds_probing_mode</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Controls what gateways are tested to see if they are reachable. If set
+		to 0, only the gateways with state PROBING are tested; if set to 1, all
+		gateways are tested; if set to 2, only gateways in inactive state with
+		probing mode set are tested. If set to 1 and there is a failure of keepalive
+		to an active gateway, then it is set to TRYING state.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1901392"></a>
+              <p class="title">
+                <strong>Example 1.27. Set the <span class="quote">“<span class="quote">ds_probing_mode</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_probing_mode", 1)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.27. ds_hash_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_hash_size"></a>3.27. <code class="varname">ds_hash_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value to be used as power of two to set the number of slots
+		to hash table storing data for call load dispatching (e.g., value
+		8 will create a hash table with 256 slots).
+		It must be greater than 0 to enable call load dispatching feature
+		(alg 10).
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1904344"></a>
+              <p class="title">
+                <strong>Example 1.28. Set the <span class="quote">“<span class="quote">ds_hash_size</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_hash_size", 9)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.28. ds_hash_expire (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_hash_expire"></a>3.28. <code class="varname">ds_hash_expire</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Expiration time in seconds to remove the load on a destination if no
+		BYE was received meanwhile.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">7200</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1907136"></a>
+              <p class="title">
+                <strong>Example 1.29. Set the <span class="quote">“<span class="quote">ds_hash_expire</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_hash_expire", 3600)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.29. ds_hash_initexpire (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_hash_initexpires"></a>3.29. <code class="varname">ds_hash_initexpire</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Expiration time in seconds to remove the load on a destination if no
+		200 for INVITE was received meanwhile and state updated with
+		ds_load_update().
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">7200</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1910072"></a>
+              <p class="title">
+                <strong>Example 1.30. Set the <span class="quote">“<span class="quote">ds_hash_initexpire</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_hash_initexpire", 60)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.30. ds_hash_check_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_hash_check_interval"></a>3.30. <code class="varname">ds_hash_check_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Time interval in seconds to scan internal hash table with call load
+		dispatching data for expired items.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			Default value is <span class="quote">“<span class="quote">30</span>”</span>.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1912936"></a>
+              <p class="title">
+                <strong>Example 1.31. Set the <span class="quote">“<span class="quote">ds_hash_check_interval</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_hash_check_interval", 60)
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.31. outbound_proxy (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.outbound_proxy"></a>3.31. <code class="varname">outbound_proxy</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		SIP URI of outbound proxy to be used when sending pings.
+ 		</p>
+            <p>
+ 		<span class="emphasis"><em>
+ 			By default no outbound proxy is defined.
+ 		</em></span>
+ 		</p>
+            <div class="example">
+              <a id="idp1915504"></a>
+              <p class="title">
+                <strong>Example 1.32. Set the <span class="quote">“<span class="quote">outbound_proxy</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "outbound_proxy", "sip:outbound.example.com")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.32. ds_default_socket (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.p.ds_default_socket"></a>3.32. <code class="varname">ds_default_socket</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default socket to be used for sending pings and dispatching requests when a gateway has no send socket configured.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			By default no default socket is defined, the first configuration script <span class="emphasis"><em>listen</em></span> directive is used.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1918488"></a>
+              <p class="title">
+                <strong>Example 1.33. Set the <span class="quote">“<span class="quote">ds_default_socket</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> ...
+ modparam("dispatcher", "ds_default_socket", "udp:192.168.0.125:5060")
+ ...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1919768"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  ds_select_dst(set, alg[, limit])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_select_dst"></a>4.1. 
+		<code class="function">ds_select_dst(set, alg[, limit])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method selects a destination from addresses set. It returns true if
+		a new destination is set. The selected address is set to dst_uri field
+		(aka the outbound proxy address or the $du variable), not being visible
+		in the SIP request.
+		</p>
+            <p>
+		If the bit 2 in 'flags' parameter is set, the rest of the addresses from
+		the destination set is stored in AVP list (limited with an optional 'limit'
+		parameter). You can use 'ds_next_dst()' to use next address in order to
+		achieve serial forking to all possible destinations.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>set</em></span> - the id of the set from where to pick
+			up destination address. It is the first column in destination
+			list file. The parameter can be an integer or a variable holding
+			an integer.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>alg</em></span> - the algorithm used to select the
+			destination address. The parameter can be an integer or a
+			variable holding an interger.
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">0</span>”</span> - hash over callid
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">1</span>”</span> - hash over from URI.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">2</span>”</span> - hash over to URI.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">3</span>”</span> - hash over request-URI.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">4</span>”</span> - round-robin (next destination).
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">5</span>”</span> - hash over authorization-username
+				(Proxy-Authorization or "normal" authorization). If no
+				username is found, round robin is used.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">6</span>”</span> - random destination (using rand()).
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">7</span>”</span> - hash over the content of PVs string.
+				Note: This works only when the parameter hash_pvar is set.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">8</span>”</span> - select destination sorted by priority
+				attribute value (serial forking ordered by priority).
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">9</span>”</span> - use weight based load distribution. You
+				have to set the attribute 'weight' per each address in
+				destination set.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">10</span>”</span> - use call load distribution. You have
+				to set the attribute 'duid' (as an unique string id)
+				per each address in destination set. Also, you must set
+				parameters 'dstid_avp' and 'ds_hash_size'.
+				</p>
+                        <p>
+				The algorithm can be used even with stateless proxy mode,
+				there is no SIP dialog tracking depending on other modules,
+				just an internal lightweight call tracking by Call-Id, thus
+				is fast and suitable even for embedded systems.
+				</p>
+                        <p>
+				The first destination selected by this algorithm is the one
+				that has the least number of calls associated. The rest of
+				the destination list is taken in order of the entries in set
+				- anyhow, until a re-route to next destination happens, the
+				load on each address can change.
+				</p>
+                        <p>
+				This algorithm can be used only for dispatching INVITE
+				requests as it is the only SIP method creating a SIP call.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="quote">“<span class="quote">X</span>”</span> - if the algorithm is not implemented, the
+				first entry in set is chosen.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>limit</em></span> - the maximum number of items to be
+			stored in AVP list for further failovers (the first selected
+			destination and default destination are the first to be put in
+			the list)
+                        </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		If the bit 2 in 'flags' is set, the rest of the addresses from the
+		destination set is stored in AVP list. You can use 'ds_next_dst()' to
+		use next address to achieve serial forking to all possible
+		destinations.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1935896"></a>
+              <p class="title">
+                <strong>Example 1.34. <code class="function">ds_select_dst</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+ds_select_dst("1", "0");
+...
+$var(a) = 4;
+ds_select_dst("1", "$var(a)");
+...
+ds_select_dst("1", "4", "3");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  ds_select_domain(set, alg[, limit])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_select_domain"></a>4.2. 
+ 		<code class="function">ds_select_domain(set, alg[, limit])</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		The method selects a destination from addresses set and rewrites the
+ 		host and port from R-URI. The parameters have same meaning as for
+ 		ds_select_dst().
+ 		</p>
+            <p>
+		If the bit 2 in 'flags' is set, the rest of the addresses from the
+		destination set is stored in AVP list (limited with an optional 'limit'
+                parameter). You can use 'ds_next_domain()' to use next address to
+		achieve serial forking to all possible destinations.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="4.3.  ds_next_dst()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1939384"></a>4.3. 
+ 		<code class="function">ds_next_dst()</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		Takes the next destination address from the AVPs with id 'dst_avp_id'
+		and sets the dst_uri (outbound proxy address).
+ 		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="4.4.  ds_next_domain()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1940824"></a>4.4. 
+ 		<code class="function">ds_next_domain()</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+ 		Takes the next destination address from the AVPs with id 'dst_avp_id'
+		and sets the domain part of the request URI.
+ 		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="4.5.  ds_mark_dst([state])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_mark_dst"></a>4.5. 
+ 		<code class="function">ds_mark_dst([state])</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Mark the last used address from destination set as inactive
+		("i"/"I"), active ("a"/"A"), disabled ("d"/"D") or trying ("t"/"T").
+		Apart of disabled state, a destination can be set in probing mode by
+		adding ("p"/"P") flag. With this function, an automatic detection
+		of failed gateways can be implemented. When an address is marked as
+		inactive or disabled, it will be ignored by 'ds_select_dst' and
+		'ds_select_domain'.
+ 		</p>
+            <p>
+		The parameter state is optional, when it is missing, then
+		the destination will be marked inactive (i.e., same as 'i').
+ 		</p>
+            <p>Possible values for state parameter:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>"a" or "A"</em></span> - the last destination
+				should be set to active and the error-counter should set to "0".
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>"i" or "I"</em></span> - the last destination
+				should be set to inactive and will be ignored in future
+				requests.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>"t" or "T"</em></span> - the last destination
+				should be set to temporary trying state and failure counter
+				is incremented. When the failure counter reaches the threshold,
+				the destination will be set inactive.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>"p" and "P"</em></span> - this has to be used in
+				addition to one of the previous flags - the last destination
+				will be set to probing. This mean the destination will be pinged
+				with SIP OPTIONS requests from time to time to detect if it is
+				up running or down.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1947776"></a>
+              <p class="title">
+                <strong>Example 1.35. <code class="function">ds_mark_dst</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+failure_route[tryagain] {
+...
+   if(t_check_status("500"))
+      ds_mark_dst("ip"); # set to inactive and probing
+...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  ds_list_exist(groupid)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_list_exist"></a>4.6. 
+		<code class="function">ds_list_exist(groupid)</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if a specific group is defined in dispatcher list
+		or database.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>groupid</em></span> - A group ID to check.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1951264"></a>
+              <p class="title">
+                <strong>Example 1.36. <code class="function">ds_list_exist</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(ds_list_exist("10")) {
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  ds_is_from_list([groupid [, mode [, uri] ] ])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_is_from_list"></a>4.7. 
+		<code class="function">ds_is_from_list([groupid [, mode [, uri] ] ])</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function returns true, if there is a match of source address or uri
+		with an address in the given group of the dispatcher-list; otherwise false.
+		</p>
+            <p>Description of parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>groupid</em></span> (optional) - if not given or its
+				value is -1, the matching will be done over all addresses in
+				all dispacher groups. Otherwise the matching will be done only
+				against the addresses in the specific group id. The parameter
+				can be an integer or a variable holding an integer value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>mode</em></span> - (optional) - a bitmask to specify
+				how the matching should be done. If is 0, all ip, port and
+				proto are matched. If bit one is set, then port is ignored.
+				If bit two is set, then protocol is ignored. The parameter
+				can be an integer or a variable holding an integer value.
+				It must be provided if the uri parameter is provided.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>uri</em></span> (optional) - if is empty or missing,
+                the matching is done against source IP, port and protocol.
+                Otherwise the value has to be a valid SIP URI, used to match
+                against addresses in the dispatcher list. Only IP, port and
+                protocol are matches, any additional parameters are ignored.
+                The parameter can be a static or dynamic (with variables)
+                string. The domain part of the URI can be an IP address or
+                a hostname.
+            </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Upon a match, the variable specified by 'setid_pvname' parameter will
+		be set to groupid of matching address and the attributes will be set in
+		variable specified by 'attrs_pvname'.
+ 		</p>
+            <p>
+		Note that for backward compatibility mode, when no parameter is given
+		or only groupid is given, the matching is done only for IP address
+		and port (protocol is ignored).
+ 		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1958312"></a>
+              <p class="title">
+                <strong>Example 1.37. <code class="function">ds_is_from_list</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(ds_is_from_list()) {
+    ...
+}
+if(ds_is_from_list("10")) {
+    ...
+}
+if(ds_is_from_list("10", "3")) {
+    ...
+}
+if(ds_is_from_list("10", "3", "sip:127.0.0.1:5080")) {
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  ds_load_update()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.ds_load_update"></a>4.8. 
+ 		<code class="function">ds_load_update()</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Updates the load state:
+ 		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>if it is a BYE or CANCEL - remove the load from
+			destination address used to forward the INVITE</p>
+                </li>
+                <li class="listitem">
+                  <p>if it is a reply to INVITE - set internal state
+				to confirmed for call load structure when reply code is
+				2xx.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE and ONREPLY_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="4.9.  ds_load_unset()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1962464"></a>4.9. 
+ 		<code class="function">ds_load_unset()</code>
+ 		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove the call load for the destination that routed the call.
+ 		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE and ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1963808"></a>
+              <p class="title">
+                <strong>Example 1.38. <code class="function">ds_load_unset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+route {
+    ...
+	if(is_method("BYE|CANCEL"))
+        ds_load_update();
+    ...
+	ds_select_dst("1", "10");
+    ...
+}
+
+onreply_route {
+    ...
+    if(is_method("INVITE")
+	{
+        if(status=~"2[0-9][0-9]")
+            ds_load_update();
+        else if(status=~"[3-7][0-9][0-9]")
+            ds_load_unset();
+    }
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1965400"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  ds_set_state">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.mi.ds_set_state"></a>5.1. 
+		<code class="function">ds_set_state</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        Sets the status for a destination address (can be use to mark the destination 
+		as active or inactive).
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>ds_set_state</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_state_ : state of the destination address</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">a</span>”</span>: active</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">i</span>”</span>: inactive</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">t</span>”</span>: trying</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">d</span>”</span>: disabled</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>The states <span class="quote">“<span class="quote">a</span>”</span>, <span class="quote">“<span class="quote">i</span>”</span> or
+					  <span class="quote">“<span class="quote">t</span>”</span> can be followed by <span class="quote">“<span class="quote">p</span>”</span>
+					  to set probing mode (e.g. 'ap', 'ip' or 'tp').</p>
+                </li>
+                <li class="listitem">
+                  <p>_group_: destination group id</p>
+                </li>
+                <li class="listitem">
+                  <p>_address_: address of the destination in the _group_</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:ds_set_state:_reply_fifo_file_
+		_state_
+		_group_
+		_address_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.  ds_list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.mi.ds_list"></a>5.2. 
+		<code class="function">ds_list</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		It lists the groups and included destinations.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>ds_list</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:ds_list:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.3.  ds_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.mi.ds_reload"></a>5.3. 
+		<code class="function">ds_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		It reloads the groups and included destinations. For algorithm 10
+		(call load distribution), old internal list of active calls is
+		destroyed (because it is bould to the previous list of gateways),
+		meaning that the module is starting to count active calls again
+		from 0.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>ds_reload</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI DATAGRAM Command Format:
+		</p>
+            <pre class="programlisting">		":ds_reload:\n."</pre>
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1978704"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  dispatcher.set_state">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.rpc.set_state"></a>6.1. 
+		<code class="function">dispatcher.set_state</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the state for a destination address (can be use to mark the destination
+		as active or inactive).
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>dispatcher.set_state</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_state_ : state of the destination address</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">a</span>”</span>: active</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">i</span>”</span>: inactive</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">t</span>”</span>: trying</p>
+                      </li>
+                      <li class="listitem">
+                        <p> <span class="quote">“<span class="quote">d</span>”</span>: disabled</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>The states <span class="quote">“<span class="quote">a</span>”</span>, <span class="quote">“<span class="quote">i</span>”</span> or
+					  <span class="quote">“<span class="quote">t</span>”</span> can be followed by <span class="quote">“<span class="quote">p</span>”</span>
+					  to set probing mode (e.g. 'ap', 'ip' or 'tp').</p>
+                </li>
+                <li class="listitem">
+                  <p>_group_: destination group id</p>
+                </li>
+                <li class="listitem">
+                  <p>_address_: address of the destination in the _group_</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">...
+# prototype: kamcmd dispatcher.set_state _state_ _group_ _address_
+kamcmd dispatcher.set_state ip 2 sip:127.0.0.1:5080
+...</pre>
+          </div>
+          <div class="section" title="6.2.  dispatcher.list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.rpc.list"></a>6.2. 
+		<code class="function">dispatcher.list</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists the groups and included destinations.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>dispatcher.list</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd dispatcher.list</pre>
+          </div>
+          <div class="section" title="6.3.  dispatcher.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.f.reload"></a>6.3. 
+		<code class="function">dispatcher.reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reloads the groups and included destinations. The command is
+		disabled for call load based dispatching (algorithm 10) since
+		removal of destinations may leave the list of active
+		calls with broken references.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>dispatcher.reload</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		Example
+		</p>
+            <pre class="programlisting">		kamcmd dispatcher.reload</pre>
+          </div>
+        </div>
+        <div class="section" title="7. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dispatcher.ex.install"></a>7. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1. Destination List File">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1992504"></a>7.1. Destination List File</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Each destination point must be on one line. First token is the set
+		id (an integer value), followed by destination address
+		(s string value in SIP URI format).
+		</p>
+            <p>
+		Optionally, these fields can be followed by:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>flags (listed by index - can be bitwise mask of values):
+			0 (value 1) - inactive destination; 1 (value 2) - temporary trying
+			destination (in the way to become inactive if it does not reply to
+			keepalives - there is a module parameter to set the threshold of
+			failures); 2 (value 4)  - admin disabled destination; 3 (value 8)
+			- probing destination (sending keep alives);</p>
+                </li>
+                <li class="listitem">
+                  <p>priority: sets the priority in destination list (based on it
+			is done the initial ordering inside the set)</p>
+                </li>
+                <li class="listitem">
+                  <p>attributes: extra fields in form of
+				name1=value1;...;nameN=valueN.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <div class="section" title="7.1.1. Special Attributes">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="dispatcher.ex.attributes"></a>7.1.1. Special Attributes</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+			There are some predefined names:
+			</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+					'duid' - used for call load dispatching. It must be an
+					unique value to identify a destination (gateway address).
+					Practically the load within the group is associated with
+					this value.
+				</li>
+                  <li class="listitem">
+					'maxload' - used for call load dispatching. It must be
+					a positive integer, defining the upper limit of active
+					calls per destination. When the limit is reached, then
+					the gateway is no longer selected for new calls until
+					an exiting call via that gateway is terminated. If set
+					to 0, then no active call limit is used.
+				</li>
+                  <li class="listitem">
+					'weight' - used for weight based load distribution. It
+					must be set to a positive integer value beteen 0 and
+					100. The value represents the percent of calls to be
+					sent to that gateways.
+				</li>
+                  <li class="listitem">
+					'socket' - used to set the sending socket for the gateway.
+					It is used for sending the SIP traffic as well as
+					OPTIONS keepalives.
+				</li>
+                </ul>
+              </div>
+              <p>
+		</p>
+            </div>
+            <div class="section" title="7.1.2. File Format">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="dispatcher.ex.fileforma"></a>7.1.2. File Format</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Line format is:
+		</p>
+              <pre class="programlisting">...
+setid(int) destination(sip uri) flags(int,opt) priority(int,opt) attrs(str,opt)
+...</pre>
+              <p>
+		Full line example:
+		</p>
+              <pre class="programlisting">...
+1 sip:127.0.0.1:5080 0 0 duid=abc;socket=udp:192.168.0.125:5060;my=xyz
+...</pre>
+              <p>
+		For database, each element of a line resides in a different column.
+		Next is a dispatcher.list file example:
+		</p>
+              <div class="example">
+                <a id="idp3761392"></a>
+                <p class="title">
+                  <strong>Example 1.39. dispatcher list file</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+# $Id$
+# dispatcher destination sets
+#
+
+# line format
+# setit(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)
+
+# proxies
+2 sip:127.0.0.1:5080
+2 sip:127.0.0.1:5082
+
+# gateways
+1 sip:127.0.0.1:7070
+1 sip:127.0.0.1:7072
+1 sip:127.0.0.1:7074
+
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="7.2. Kamailio config file">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dispatcher.ex.config"></a>7.2. Kamailio config file</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Next picture shows a sample usage of the dispatcher module.
+		</p>
+            <div class="example">
+              <a id="idp3763696"></a>
+              <p class="title">
+                <strong>Example 1.40. Kamailio config script - sample dispatcher usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+#!KAMAILIO
+#
+# sample config file for dispatcher module
+# - load balancing of VoIP calls with round robin
+# - no TPC listening
+# - don't dispatch REGISTER and presence requests
+#
+# Kamailio (OpenSER) SIP Server v3.2
+#     - web: http://www.kamailio.org
+#     - git: http://sip-router.org
+#
+# Direct your questions about this file to: sr-users@lists.sip-router.org
+#
+# Refer to the Core CookBook at http://www.kamailio.org/dokuwiki/doku.php
+# for an explanation of possible statements, functions and parameters.
+#
+# Several features can be enabled using '#!define WITH_FEATURE' directives:
+#
+# *** To run in debug mode: 
+#     - define WITH_DEBUG
+#
+
+#!ifndef DBURL
+#!define DBURL "mysql://kamailio:kamailiorw@localhost/kamailio"
+#!endif
+
+####### Global Parameters #########
+
+#!ifdef WITH_DEBUG
+debug=4
+log_stderror=yes
+#!else
+debug=2
+log_stderror=no
+#!endif
+
+memdbg=5
+memlog=5
+
+log_facility=LOG_LOCAL0
+
+fork=yes
+children=4
+
+/* comment the next line to enable TCP */
+disable_tcp=yes
+
+/* uncomment the next line to disable the auto discovery of local aliases
+   based on revers DNS on IPs (default on) */
+auto_aliases=no
+
+/* add local domain aliases */
+# alias="mysipserver.com"
+
+port=5060
+
+/* uncomment and configure the following line if you want Kamailio to 
+   bind on a specific interface/port/proto (default bind on all available) */
+# listen=udp:127.0.0.1:5060
+
+sip_warning=no
+
+####### Modules Section ########
+
+#set module path
+mpath="/usr/local/lib/kamailio/modules_k/:/usr/local/lib/kamailio/modules/"
+
+loadmodule "db_mysql.so"
+loadmodule "mi_fifo.so"
+loadmodule "kex.so"
+loadmodule "tm.so"
+loadmodule "tmx.so"
+loadmodule "sl.so"
+loadmodule "rr.so"
+loadmodule "pv.so"
+loadmodule "maxfwd.so"
+loadmodule "textops.so"
+loadmodule "siputils.so"
+loadmodule "xlog.so"
+loadmodule "sanity.so"
+loadmodule "ctl.so"
+loadmodule "mi_rpc.so"
+loadmodule "acc.so"
+loadmodule "dispatcher.so"
+
+
+# ----------------- setting module-specific parameters ---------------
+
+
+# ----- mi_fifo params -----
+modparam("mi_fifo", "fifo_name", "/tmp/kamailio_fifo")
+
+
+# ----- rr params -----
+# add value to ;lr param to cope with most of the UAs
+modparam("rr", "enable_full_lr", 1)
+# do not append from tag to the RR (no need for this script)
+modparam("rr", "append_fromtag", 0)
+
+
+# ----- acc params -----
+modparam("acc", "log_flag", 1)
+modparam("acc", "failed_transaction_flag", 3)
+modparam("acc", "log_extra", 
+	"src_user=$fU;src_domain=$fd;dst_ouser=$tU;dst_user=$rU;dst_domain=$rd;src_ip=$si")
+
+# ----- tm params -----
+modparam("tm", "fr_timer", 2000)
+modparam("tm", "fr_inv_timer", 40000)
+
+# ----- dispatcher params -----
+modparam("dispatcher", "db_url", DBURL)
+modparam("dispatcher", "table_name", "dispatcher")
+modparam("dispatcher", "flags", 2)
+modparam("dispatcher", "dst_avp", "$avp(AVP_DST)")
+modparam("dispatcher", "grp_avp", "$avp(AVP_GRP)")
+modparam("dispatcher", "cnt_avp", "$avp(AVP_CNT)")
+
+####### Routing Logic ########
+
+
+# main request routing logic
+
+route {
+
+	# per request initial checks
+	route(REQINIT);
+
+	# handle requests within SIP dialogs
+	route(WITHINDLG);
+
+	### only initial requests (no To tag)
+
+	# CANCEL processing
+	if (is_method("CANCEL"))
+	{
+		if (t_check_trans())
+			t_relay();
+		exit;
+	}
+
+	t_check_trans();
+
+	# record routing for dialog forming requests (in case they are routed)
+	# - remove preloaded route headers
+	remove_hf("Route");
+	if (is_method("INVITE|SUBSCRIBE"))
+		record_route();
+
+	# account only INVITEs
+	if (is_method("INVITE"))
+	{
+		setflag(1); # do accounting
+	}
+
+	# handle presence related requests
+	route(PRESENCE);
+
+	# handle registrations
+	route(REGISTRAR);
+
+	if ($rU==$null)
+	{
+		# request with no Username in RURI
+		sl_send_reply("484","Address Incomplete");
+		exit;
+	}
+
+	# dispatch destinations
+	route(DISPATCH);
+}
+
+
+route[RELAY] {
+	if (!t_relay()) {
+		sl_reply_error();
+	}
+	exit;
+}
+
+# Per SIP request initial checks
+route[REQINIT] {
+	if (!mf_process_maxfwd_header("10")) {
+		sl_send_reply("483","Too Many Hops");
+		exit;
+	}
+
+	if(!sanity_check("1511", "7"))
+	{
+		xlog("Malformed SIP message from $si:$sp\n");
+		exit;
+	}
+}
+
+# Handle requests within SIP dialogs
+route[WITHINDLG] {
+	if (has_totag()) {
+		# sequential request withing a dialog should
+		# take the path determined by record-routing
+		if (loose_route()) {
+			if (is_method("BYE")) {
+				setflag(1); # do accounting ...
+				setflag(3); # ... even if the transaction fails
+			}
+			route(RELAY);
+		} else {
+			if (is_method("SUBSCRIBE") &amp;&amp; uri == myself) {
+				# in-dialog subscribe requests
+				route(PRESENCE);
+				exit;
+			}
+			if ( is_method("ACK") ) {
+				if ( t_check_trans() ) {
+					# non loose-route, but stateful ACK;
+					# must be ACK after a 487 or e.g. 404 from upstream server
+					t_relay();
+					exit;
+				} else {
+					# ACK without matching transaction ... ignore and discard.
+					exit;
+				}
+			}
+			sl_send_reply("404","Not here");
+		}
+		exit;
+	}
+}
+
+# Handle SIP registrations
+route[REGISTRAR] {
+	if(!is_method("REGISTER"))
+		return;
+	sl_send_reply("404", "No registrar");
+	exit;
+}
+
+# Presence server route
+route[PRESENCE] {
+	if(!is_method("PUBLISH|SUBSCRIBE"))
+		return;
+
+	sl_send_reply("404", "Not here");
+	exit;
+}
+
+# Dispatch requests
+route[DISPATCH] {
+	# round robin dispatching on gateways group '1'
+	if(!ds_select_dst("1", "4"))
+	{
+		send_reply("404", "No destination");
+		exit;
+	}
+	xlog("L_DBG", "--- SCRIPT: going to &lt;$ru&gt; via &lt;$du&gt;\n");
+	t_on_failure("RTF_DISPATCH");
+	route(RELAY);
+	exit;
+}
+
+# Sample failure route
+failure_route[RTF_DISPATCH] {
+	if (t_is_canceled()) {
+		exit;
+	}
+	# next DST - only for 500 or local timeout
+	if (t_check_status("500")
+			or (t_branch_timeout() and !t_branch_replied()))
+	{
+		if(ds_next_dst())
+		{
+			t_on_failure("RTF_DISPATCH");
+			route(RELAY);
+			exit;
+		}
+	}
+}
+
+
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="8. Event routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dispatcher.ex.event_routes"></a>8. Event routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="8.1.  dispatcher:dst-down">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3771240"></a>8.1. 
+                <code class="function">dispatcher:dst-down</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When defined, the module calls event_route[dispatcher:ds-down]
+			when a destination goes down (becomes probing). A typical use
+			case is to update NMC equipment as to the status of a destination.
+                </p>
+            <pre class="programlisting">...
+event_route[dispatcher:dst-down] {
+    xlog("L_ERR", "Destination down: $rm $ru ($du)\n");
+}
+...</pre>
+          </div>
+          <div class="section" title="8.2.  dispatcher:dst-up">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3772792"></a>8.2. 
+                <code class="function">dispatcher:dst-up</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			When defined, the module calls event_route[dispatcher:ds-up]
+			when a destination that was previously down (probing) comes up.
+			A typical use case is to update NMC equipment as to the status
+			of a destination.
+                </p>
+            <pre class="programlisting">...
+event_route[dispatcher:dst-up] {
+    xlog("L_ERR", "Destination up: $rm $ru\n");
+}
+...</pre>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3226200"></a>Chapter 2. Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp980512"></a>
+          <dl>
+            <dt>2.1. <a href="#idp562696">
+		Does dispatcher provide a fair distribution?
+		</a></dt>
+            <dt>2.2. <a href="#idp1005096">Is dispatcher dialog stateful?</a></dt>
+            <dt>2.3. <a href="#idp1684688">Where can I find more about Kamailio?</a></dt>
+            <dt>2.4. <a href="#idp2247392">Where can I post a question about this module?</a></dt>
+            <dt>2.5. <a href="#idp3539328">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp562696"></a>
+                  <a id="idp3749232"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>
+		Does <span class="emphasis"><em>dispatcher</em></span> provide a fair distribution?
+		</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			The algoritms doing hashing over parts of SIP message don't
+			guarantee a fair distribution. You should do some measurements
+			to decide what hashing algorithm fits better in your
+			environment.
+		</p>
+                  <p>
+			Other distribution algorithms such as round robin or call load
+			dispatching do a fair distribution in terms of delivered calls
+			to gateways.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp1005096"></a>
+                  <a id="idp2782208"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Is <span class="emphasis"><em>dispatcher</em></span> dialog stateful?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+		    No. Dispatcher is stateless, although some distribution algorithms
+			are designed to select same destination for subsequent requests of
+			the same dialog (e.g., hashing the call-id).
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp1684688"></a>
+                  <a id="idp1794760"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+		    Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp2247392"></a>
+                  <a id="idp927336"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+		    First at all check if your question was already answered on one of
+		    our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+		    E-mails regarding any stable version should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mail
+		    regarding development versions or GIT snapshots should be send to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+		    If you want to keep the mail private, send it to <code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.5.">
+                <td align="left" valign="top">
+                  <a id="idp3539328"></a>
+                  <a id="idp3539472"></a>
+                  <p>
+                    <strong>2.5.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+		    Please follow the guidelines provided at: <a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

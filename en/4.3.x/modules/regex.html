@@ -1,0 +1,968 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Regex Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4416368" title="Regex Module" />
+    <link rel="next" href="#idp6790232" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Regex Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4416368"></a>Regex Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">I√±aki</span> <span class="surname">Baz Castillo</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ibc@aliax.net">ibc@aliax.net</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">I√±aki</span> <span class="surname">Baz Castillo</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ibc@aliax.net">ibc@aliax.net</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2009 I√±aki Baz Castillo</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp6790232">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#regex.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp4417016">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp5834576">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7059360">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp6995880">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.file">3.1. <code class="varname">file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.max_groups">3.2. <code class="varname">max_groups</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.group_max_size">3.3. <code class="varname">group_max_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_caseless">3.4. <code class="varname">pcre_caseless</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_multiline">3.5. <code class="varname">pcre_multiline</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_dotall">3.6. <code class="varname">pcre_dotall</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_extended">3.7. <code class="varname">pcre_extended</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4484960">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_match">4.1. 
+				<code class="function">pcre_match (string, pcre_regex)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.p.pcre_match_group">4.2. 
+				<code class="function">pcre_match_group (string [, group])</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4538392">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#regex.m.regex_reload">5.1. 
+				<code class="function">regex_reload</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4541616">6. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#file-format-id">6.1. File format</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp6873912">Set <code class="varname">file</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4403920">Set <code class="varname">max_groups</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp4406616">Set <code class="varname">group_max_size</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp4409504">Set <code class="varname">pcre_caseless</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp4477480">Set <code class="varname">pcre_multiline</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp4480560">Set <code class="varname">pcre_dotall</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp4483712">Set <code class="varname">pcre_extended</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp4489192">
+					<code class="function">pcre_match</code> usage (forcing case insensitive)
+				</a></dt>
+          <dt>1.9. <a href="#idp4490416">
+					<code class="function">pcre_match</code> usage (using "end of line" symbol)
+				</a></dt>
+          <dt>1.10. <a href="#idp4495568">
+					<code class="function">pcre_match_group</code> usage
+				</a></dt>
+          <dt>1.11. <a href="#idp4536856">
+					<code class="function">pcre_match_group</code> usage (using a pseudo-variable as group)
+				</a></dt>
+          <dt>1.12. <a href="#idp4543344">regex file</a></dt>
+          <dt>1.13. <a href="#idp4545712">Using with pua_usrloc</a></dt>
+          <dt>1.14. <a href="#idp4547152">Incorrect groups file</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp6790232"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#regex.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp4417016">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp5834576">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7059360">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp6995880">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.file">3.1. <code class="varname">file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.max_groups">3.2. <code class="varname">max_groups</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.group_max_size">3.3. <code class="varname">group_max_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_caseless">3.4. <code class="varname">pcre_caseless</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_multiline">3.5. <code class="varname">pcre_multiline</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_dotall">3.6. <code class="varname">pcre_dotall</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_extended">3.7. <code class="varname">pcre_extended</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4484960">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_match">4.1. 
+				<code class="function">pcre_match (string, pcre_regex)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.p.pcre_match_group">4.2. 
+				<code class="function">pcre_match_group (string [, group])</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4538392">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#regex.m.regex_reload">5.1. 
+				<code class="function">regex_reload</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4541616">6. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#file-format-id">6.1. File format</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="regex.overview"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This module offers matching operations using regular expressions based on the
+			powerful <a class="ulink" href="javascript:if(confirm('http://www.pcre.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.pcre.org/'" tppabs="http://www.pcre.org/">PCRE</a> library.
+		</p>
+          <p>
+			A text file containing regular expressions categorized in groups is compiled
+			when the module is loaded,  the resulting PCRE objects are stored in an array. A
+			function to match a string or pseudo-variable against any of these groups is
+			provided. The text file can be modified and reloaded at any time via a MI command.
+			The module also offers a function to perform a PCRE matching operation against a
+			regular expression provided as function parameter.
+		</p>
+          <p>
+			For a detailed list of PCRE features read the
+			<a class="ulink" href="javascript:if(confirm('http://www.pcre.org/pcre.txt  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.pcre.org/pcre.txt'" tppabs="http://www.pcre.org/pcre.txt">man page</a> of the library.
+		</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4417016"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp5834576"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following modules must be loaded before this module:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+							<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+						</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7059360"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed before running
+				Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+							<span class="emphasis"><em>libpcre - the libraries of <a class="ulink" href="javascript:if(confirm('http://www.pcre.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.pcre.org/'" tppabs="http://www.pcre.org/">PCRE</a></em></span>.
+						</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6995880"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.file"></a>3.1.¬†<code class="varname">file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Text file containing the regular expression groups. It must be set in order
+				to enable the group matching function.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp6873912"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "file", "/etc/kamailio/regex_groups")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†max_groups (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.max_groups"></a>3.2.¬†<code class="varname">max_groups</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Max number of regular expression groups in the text file.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">20</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4403920"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">max_groups</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "max_groups", 40)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†group_max_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.group_max_size"></a>3.3.¬†<code class="varname">group_max_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Max content size of a group in the text file.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">8192</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4406616"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">group_max_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "group_max_size", 16384)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†pcre_caseless (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_caseless"></a>3.4.¬†<code class="varname">pcre_caseless</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				If this options is set, matching is done caseless. It is equivalent to
+				Perl's /i option, and it can be changed within a pattern by a (?i) or
+				(?-i) option setting.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4409504"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">pcre_caseless</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "pcre_caseless", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†pcre_multiline (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_multiline"></a>3.5.¬†<code class="varname">pcre_multiline</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				By default, PCRE treats the subject string as consisting of a single line
+				of characters (even if it actually contains newlines). The "start of line"
+				metacharacter (^) matches only at the start of the string, while the "end
+				of line" metacharacter ($) matches only at the end of the string, or before
+				a terminating newline.
+			</p>
+            <p>
+				When this option is set, the "start of line" and "end of line" constructs
+				match immediately following or immediately before internal newlines in the
+				subject string, respectively, as well as at the very start and end. This is
+				equivalent to Perl's /m option, and it can be changed within a pattern by a
+				(?m) or (?-m) option setting. If there are no newlines in a subject string,
+				or no occurrences of ^ or $ in a pattern, setting this option has no effect.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4477480"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">pcre_multiline</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "pcre_multiline", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†pcre_dotall (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_dotall"></a>3.6.¬†<code class="varname">pcre_dotall</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				If this option is set, a dot metacharater in the pattern matches all characters,
+				including those that indicate newline. Without it, a dot does not match when
+				the current position is at a newline. This option is equivalent to Perl's /s
+				option, and it can be changed within a pattern by a (?s) or (?-s) option setting.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4480560"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">pcre_dotall</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "pcre_dotall", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†pcre_extended (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_extended"></a>3.7.¬†<code class="varname">pcre_extended</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				If this option is set, whitespace data characters in the pattern are totally
+				ignored except when escaped or inside a character class. Whitespace does not
+				include the VT character (code 11). In addition, characters between an
+				unescaped # outside a character class and the next newline, inclusive, are
+				also ignored. This is equivalent to Perl's /x option, and it can be changed
+				within a pattern by a (?x) or (?-x) option setting.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>.</em></span>
+			</p>
+            <div class="example">
+              <a id="idp4483712"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">pcre_extended</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("regex", "pcre_extended", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4484960"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† pcre_match (string, pcre_regex)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_match"></a>4.1.¬†
+				<code class="function">pcre_match (string, pcre_regex)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Matches the given string parameter against the regular expression pcre_regex,
+				which is compiled in runtime into a PCRE object. Returns TRUE if it matches,
+				FALSE otherwise.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+						<span class="emphasis"><em>string</em></span> - String or pseudo-variable to compare.
+					</p>
+                </li>
+                <li class="listitem">
+                  <p>
+						<span class="emphasis"><em>pcre_regex</em></span> - Regular expression to be compiled
+						in a PCRE object. It can be a string or pseudo-variable.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+				NOTE: To use the "end of line" symbol '$' in the pcre_regex parameter use '$$'.
+			</p>
+            <p>
+				This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE,
+				BRANCH_ROUTE and LOCAL_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp4489192"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†
+					<code class="function">pcre_match</code> usage (forcing case insensitive)
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (pcre_match("$ua", "(?i)^twinkle")) {
+    xlog("L_INFO", "User-Agent matches\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp4490416"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†
+					<code class="function">pcre_match</code> usage (using "end of line" symbol)
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (pcre_match("$rU", "^user[1234]$$")) {  # Will be converted to "^user[1234]$"
+    xlog("L_INFO", "RURI username matches\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† pcre_match_group (string [, group])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.p.pcre_match_group"></a>4.2.¬†
+				<code class="function">pcre_match_group (string [, group])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Tries to match the given string against a specific group in the text
+				file (see <a class="xref" href="#file-format-id" title="6.1.¬†File format">Section¬†6.1, ‚ÄúFile format‚Äù</a>). Returns TRUE if it matches,
+				FALSE otherwise.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+						<span class="emphasis"><em>string</em></span> - String or pseudo-variable to compare.
+					</p>
+                </li>
+                <li class="listitem">
+                  <p>
+						<span class="emphasis"><em>group</em></span> - Number of group to use in the operation.
+						If not specified then 0 (the first group) is used. A pseudo-variable
+						containing an integer can also be used.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+				This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE,
+				BRANCH_ROUTE and LOCAL_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp4495568"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†
+					<code class="function">pcre_match_group</code> usage
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (pcre_match_group("$rU", "2")) {
+    xlog("L_INFO", "RURI username matches group 2\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp4536856"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†
+					<code class="function">pcre_match_group</code> usage (using a pseudo-variable as group)
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$avp(i:10) = 5;  # Maybe got from a DB query.
+if (pcre_match_group("$ua", "$avp(i:10)")) {
+    xlog("L_INFO", "User-Agent matches group 5\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4538392"></a>5.¬†MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† regex_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="regex.m.regex_reload"></a>5.1.¬†
+				<code class="function">regex_reload</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Causes regex module to re-read the content of the text file
+				and re-compile the regular expressions. The number of groups
+				in the file can be modified safely.
+			</p>
+            <p>
+				Name: <span class="emphasis"><em>regex_reload</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+				MI FIFO Command Format:
+			</p>
+            <pre class="programlisting">:regex_reload:_reply_fifo_file_
+_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4541616"></a>6.¬†Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†File format">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="file-format-id"></a>6.1.¬†File format</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The file contains regular expressions categorized in groups. Each
+				group starts with "[number]" line. Lines starting by space, tab,
+				CR, LF or # (comments) are ignored. Each regular expression must
+				take up just one line, this means that a regular expression can't
+				be splitted in various lines.
+			</p>
+            <p>
+				An example of the file format would be the following:
+			</p>
+            <div class="example">
+              <a id="idp4543344"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†regex file</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">### List of User-Agents publishing presence status
+[0]
+
+# Softphones
+^Twinkle/1
+^X-Lite
+^eyeBeam
+^Bria
+^SIP Communicator
+^Linphone
+
+# Deskphones
+^Snom
+
+# Others
+^SIPp
+^PJSUA
+
+
+### Blacklisted source IP's
+[1]
+
+^190\.232\.250\.226$
+^122\.5\.27\.125$
+^86\.92\.112\.
+
+
+### Free PSTN destinations in Spain
+[2]
+
+^1\d{3}$
+^((\+|00)34)?900\d{6}$</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+				The module compiles the text above to the following regular
+				expressions:
+			</p>
+            <pre class="programlisting">group 0: ((^Twinkle/1)|(^X-Lite)|(^eyeBeam)|(^Bria)|(^SIP Communicator)|
+          (^Linphone)|(^Snom)|(^SIPp)|(^PJSUA))
+group 1: ((^190\.232\.250\.226$)|(^122\.5\.27\.125$)|(^86\.92\.112\.))
+group 2: ((^1\d{3}$)|(^((\+|00)34)?900\d{6}$))</pre>
+            <p>
+				The first group can be used to avoid auto-generated PUBLISH (pua_usrloc
+				module) for UA's already supporting presence:
+			</p>
+            <div class="example">
+              <a id="idp4545712"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†Using with pua_usrloc</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">route[REGISTER] {
+    if (! pcre_match_group("$ua", "0")) {
+        xlog("L_INFO", "Auto-generated PUBLISH for $fu ($ua)\n");
+        pua_set_publish();
+    }
+    save("location");
+    exit;
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+				NOTE: It's important to understand that the numbers in each group
+				header ([number]) must start by 0. If not, the real group number
+				will not match the number appearing in the file. For example, the
+				following text file:
+			</p>
+            <div class="example">
+              <a id="idp4547152"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†Incorrect groups file</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">[1]
+^aaa
+^bbb
+
+[2]
+^ccc
+^ddd</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+				will generate the following regular expressions:
+			</p>
+            <pre class="programlisting">group 0: ((^aaa)|(^bbb))
+group 1: ((^ccc)|(^ddd))</pre>
+            <p>
+				Note that the real index doesn't match the group number in the file. This
+				is, compiled group 0 always points to the first group in the file, regardless
+				of its number in the file. In fact, the group number appearing in the file is
+				used for nothing but for delimiting different groups.
+			</p>
+            <p>
+				NOTE: A line containing a regular expression cannot start by '[' since it
+				would be treated as a new group. The same for lines starting by space, tab,
+				or '#' (they would be ignored by the parser). As a workaround, using brackets
+				would work:
+			</p>
+            <pre class="programlisting">[0]
+([0-9]{9})
+( #abcde)
+( qwerty)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

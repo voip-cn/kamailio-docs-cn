@@ -1,0 +1,2189 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UAC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11165984" title="UAC Module" />
+    <link rel="next" href="#idp17876456" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UAC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11165984"></a>UAC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ramona-Elena</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ramona-Elena</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009-2010 asipto.com</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005 Voice Sistem</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17876456">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17866800">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17864720">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17576760">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18067688">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15514240">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.rr_from_store_param">3.1. <code class="varname">rr_from_store_param</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.rr_to_store_param">3.2. <code class="varname">rr_to_store_param</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.restore_mode">3.3. <code class="varname">restore_mode</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.restore_dlg">3.4. <code class="varname">restore_dlg</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.restore_passwd">3.5. <code class="varname">restore_passwd</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.restore_from_avp">3.6. <code class="varname">restore_from_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.restore_to_avp">3.7. <code class="varname">restore_to_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.credential">3.8. <code class="varname">credential</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.auth-realm-avp-id">3.9. <code class="varname">auth_realm_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.auth-username-avp-id">3.10. <code class="varname">auth_username_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.auth-password-avp-id">3.11. <code class="varname">auth_password_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.reg-db-url-id">3.12. <code class="varname">reg_db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.reg-timer-interval-id">3.13. <code class="varname">reg_timer_interval</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.reg-retry-interval-id">3.14. <code class="varname">reg_retry_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.reg-db-table-id">3.15. <code class="varname">reg_db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.p.reg-contact-addr-id">3.16. <code class="varname">reg_contact_addr</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15573184">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_replace_from">4.1. 
+				<code class="function">uac_replace_from(display,uri)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_replace_from(uri)">4.2. 
+				<code class="function">uac_replace_from(uri)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_restore_from()">4.3. 
+				<code class="function">uac_restore_from()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_replace_to(display,uri)">4.4. 
+				<code class="function">uac_replace_to(display,uri)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_replace_to(uri)">4.5. 
+				<code class="function">uac_replace_to(uri)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_restore_to()">4.6. 
+				<code class="function">uac_restore_to()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_auth()">4.7. 
+				<code class="function">uac_auth()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_req_send()">4.8. 
+				<code class="function">uac_req_send()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_reg_lookup(uuid, dst)">4.9. 
+				<code class="function">uac_reg_lookup(uuid, dst)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.f.uac_reg_request_to(user, mode)">4.10. 
+				<code class="function">uac_reg_request_to(user, mode)</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17317616">5. Pseudo Variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17319488">6. Event Routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.ert.uac_reply">6.1. 
+				<code class="function">event_route[uac:reply]</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17322640">7. Counters</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17325000">8. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_dump">8.1. 
+				<code class="function">uac.reg_dump</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_info">8.2. 
+				<code class="function">uac.reg_info</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_enable">8.3. 
+				<code class="function">uac.reg_enable</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_disable">8.4. 
+				<code class="function">uac.reg_disable</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_reload">8.5. 
+				<code class="function">uac.reg_reload</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#uac.r.uac.reg_refresh">8.6. 
+				<code class="function">uac.reg_refresh</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17340584">9. Remote Registration</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15525032">Set <code class="varname">rr_from_store_param</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15527792">Set <code class="varname">rr_to_store_param</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15605880">Set <code class="varname">restore_mode</code> parameter
+				</a></dt>
+          <dt>1.4. <a href="#idp15608656">Set <code class="varname">restore_dlg</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15611256">Set <code class="varname">restore_passwd</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15614440">Set <code class="varname">restore_from_avp</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15617616">Set <code class="varname">restore_to_avp</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15620328">Set <code class="varname">credential</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15624224">Set <code class="varname">auth_realm_avp</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15556136">Set <code class="varname">auth_username_avp</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15559608">Set <code class="varname">auth_password_avp</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp15561768">Set <code class="varname">reg_db_url</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp15564336">Set <code class="varname">reg_timer_inteval</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp15566832">Set <code class="varname">reg_retry_interval</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp15569656">Set <code class="varname">reg_db_table</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp15571912">Set <code class="varname">reg_contact_addr</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp17284736"><code class="function">uac_replace_from</code> usage</a></dt>
+          <dt>1.18. <a href="#idp17288456"><code class="function">uac_replace_from</code> usage</a></dt>
+          <dt>1.19. <a href="#idp17291192"><code class="function">uac_restore_from</code> usage</a></dt>
+          <dt>1.20. <a href="#idp17295440"><code class="function">uac_replace_to</code> usage</a></dt>
+          <dt>1.21. <a href="#idp17300976"><code class="function">uac_replace_to</code> usage</a></dt>
+          <dt>1.22. <a href="#idp17303712"><code class="function">uac_restore_to</code> usage</a></dt>
+          <dt>1.23. <a href="#idp17306504"><code class="function">uac_auth</code> usage</a></dt>
+          <dt>1.24. <a href="#idp17309680"><code class="function">uac_req_send</code> usage</a></dt>
+          <dt>1.25. <a href="#idp17312624"><code class="function">uac_reg_lookup</code> usage</a></dt>
+          <dt>1.26. <a href="#idp17316040"><code class="function">uac_reg_request_to</code> usage</a></dt>
+          <dt>1.27. <a href="#idp17321128"><code class="function">event_route[uac:reply]</code> usage</a></dt>
+          <dt>1.28. <a href="#idp17326560"><code class="function">uac.reg_dump</code> usage</a></dt>
+          <dt>1.29. <a href="#idp17329208"><code class="function">uac.reg_info</code> usage</a></dt>
+          <dt>1.30. <a href="#idp17331816"><code class="function">uac.reg_enable</code> usage</a></dt>
+          <dt>1.31. <a href="#idp17334424"><code class="function">uac.reg_disable</code> usage</a></dt>
+          <dt>1.32. <a href="#idp17336792"><code class="function">uac.reg_reload</code> usage</a></dt>
+          <dt>1.33. <a href="#idp17339280"><code class="function">uac.reg_refresh</code> usage</a></dt>
+          <dt>1.34. <a href="#idp17349600"><code class="function">lookup remote registrations</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17876456"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17866800">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17864720">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17576760">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18067688">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15514240">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.rr_from_store_param">3.1. <code class="varname">rr_from_store_param</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.rr_to_store_param">3.2. <code class="varname">rr_to_store_param</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.restore_mode">3.3. <code class="varname">restore_mode</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.restore_dlg">3.4. <code class="varname">restore_dlg</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.restore_passwd">3.5. <code class="varname">restore_passwd</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.restore_from_avp">3.6. <code class="varname">restore_from_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.restore_to_avp">3.7. <code class="varname">restore_to_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.credential">3.8. <code class="varname">credential</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.auth-realm-avp-id">3.9. <code class="varname">auth_realm_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.auth-username-avp-id">3.10. <code class="varname">auth_username_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.auth-password-avp-id">3.11. <code class="varname">auth_password_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.reg-db-url-id">3.12. <code class="varname">reg_db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.reg-timer-interval-id">3.13. <code class="varname">reg_timer_interval</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.reg-retry-interval-id">3.14. <code class="varname">reg_retry_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.reg-db-table-id">3.15. <code class="varname">reg_db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.p.reg-contact-addr-id">3.16. <code class="varname">reg_contact_addr</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15573184">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_replace_from">4.1. 
+				<code class="function">uac_replace_from(display,uri)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_replace_from(uri)">4.2. 
+				<code class="function">uac_replace_from(uri)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_restore_from()">4.3. 
+				<code class="function">uac_restore_from()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_replace_to(display,uri)">4.4. 
+				<code class="function">uac_replace_to(display,uri)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_replace_to(uri)">4.5. 
+				<code class="function">uac_replace_to(uri)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_restore_to()">4.6. 
+				<code class="function">uac_restore_to()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_auth()">4.7. 
+				<code class="function">uac_auth()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_req_send()">4.8. 
+				<code class="function">uac_req_send()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_reg_lookup(uuid, dst)">4.9. 
+				<code class="function">uac_reg_lookup(uuid, dst)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.f.uac_reg_request_to(user, mode)">4.10. 
+				<code class="function">uac_reg_request_to(user, mode)</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17317616">5. Pseudo Variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17319488">6. Event Routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.ert.uac_reply">6.1. 
+				<code class="function">event_route[uac:reply]</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17322640">7. Counters</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17325000">8. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_dump">8.1. 
+				<code class="function">uac.reg_dump</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_info">8.2. 
+				<code class="function">uac.reg_info</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_enable">8.3. 
+				<code class="function">uac.reg_enable</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_disable">8.4. 
+				<code class="function">uac.reg_disable</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_reload">8.5. 
+				<code class="function">uac.reg_reload</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#uac.r.uac.reg_refresh">8.6. 
+				<code class="function">uac.reg_refresh</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17340584">9. Remote Registration</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17866800"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The <acronym class="acronym">UAC</acronym> (User Agent Client) module provides some basic UAC
+		functionalities like sending SIP requests, registering with a remote service,
+		From: header manipulation (anonymization) and client authentication.
+		</p>
+          <p>
+		The UAC module also supports sending a SIP request from the
+		configuration file. See variable $uac_req(name) and the function
+		uac_req_send().
+		</p>
+          <p>
+		In addition, the module supports database-driven SIP registration functionality. See
+		the uac_reg_lookup() function and dedicated section for remote
+		registration configuration.
+		</p>
+          <p>
+		Known limitations in this version:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				Authentication does not support qop auth-int, just qop auth;
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				CSeq is not increased automatically by uac_auth() during authentication
+				- the follow up request may be rejected. CSeq can be increased when
+				authenticating INVITE requests - dialog module has to be used, with
+				CSeq tracking feature enabled (see the readme of dialog module).
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				The <span class="quote">“<span class="quote">uac_replace_*</span>”</span> functions can only be run once on the same
+				SIP request. Try to save needed changes in a pseudovariable and
+				apply them once.
+			</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17864720"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17576760"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM - Transaction Module</em></span>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>RR - Record-Route Module</em></span>, but only if
+				restore mode for From: URI is set to <span class="quote">“<span class="quote">auto</span>”</span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Dialog Module</em></span>, but only if
+				restore mode for From: URI is set to <span class="quote">“<span class="quote">auto</span>”</span> and
+				you want uac_replace_from or uac_replace_to to store the values
+				of the URIs as dialog variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18067688"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed 
+				before running Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>None</em></span>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15514240"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. rr_from_store_param (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.rr_from_store_param"></a>3.1. <code class="varname">rr_from_store_param</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of Record-Route header parameter that will be used to store 
+			an encoded version of the original FROM URI.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being 
+					<span class="quote">“<span class="quote">vsf</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15525032"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">rr_from_store_param</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","rr_from_store_param","my_param")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. rr_to_store_param (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.rr_to_store_param"></a>3.2. <code class="varname">rr_to_store_param</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of Record-Route header parameter that will be used to store 
+			(encoded) the original TO URI.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being 
+					<span class="quote">“<span class="quote">vst</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15527792"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">rr_to_store_param</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","rr_to_store_param","my_param")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. restore_mode (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.restore_mode"></a>3.3. <code class="varname">restore_mode</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			There are 3 modes of restoring the original FROM URI and the original TO URI:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="quote">“<span class="quote">none</span>”</span> - no information about original URI is 
+				stored; restoration is not possible.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="quote">“<span class="quote">manual</span>”</span> - all following replies will be restored,
+				but not also the sequential requests - this must be manually 
+				updated based on original URI.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="quote">“<span class="quote">auto</span>”</span> - all sequential requests and replies will 
+				be automatically updated based on stored original URI. For this
+				option you have to set <span class="quote">“<span class="quote">modparam("rr", "append_fromtag", 1)</span>”</span>.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being 
+					<span class="quote">“<span class="quote">auto</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15605880"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">restore_mode</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","restore_mode","auto")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. restore_dlg (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.restore_dlg"></a>3.4. <code class="varname">restore_dlg</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to 1, the module uses dialog variables to store initial and
+			new values for From/To headers. The Dialog module has to be loaded and
+			all calls that involve changes to From/To headers must be tracked.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is 0.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15608656"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">restore_dlg</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "restore_dlg", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. restore_passwd (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.restore_passwd"></a>3.5. <code class="varname">restore_passwd</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			String password to be used to encrypt the RR storing parameters. If
+			empty, no encryption will be used.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is empty.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15611256"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">restore_passwd</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","restore_passwd","my_secret_passwd")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. restore_from_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.restore_from_avp"></a>3.6. <code class="varname">restore_from_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If defined and restore_mode is manual or auto, the avp is used to save
+			the original from uri in order to be able to restore it in replies.
+			That makes sense, if the original-uri can not be extracted from the original
+			request, e.g. if msg_apply_changes() was used after calling uac_replace_from()
+			or uac_replace_to().
+			</p>
+            <p>
+				If you create a dialog ( with dlg_manage() ) before calling uac_replace_from(),
+			this avp will not be needed. The values of the uris will be stored as dialog variables.
+			</p>
+            <p><span class="emphasis"><em>
+					Default value of this parameter is empty.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15614440"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">restore_from_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","restore_from_avp","$avp(original_uri_from)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. restore_to_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.restore_to_avp"></a>3.7. <code class="varname">restore_to_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If defined and restore_mode is manual or auto, the avp is used to save
+			the original To URI in order to be able to restore it in replies.
+			That makes sense if the original-uri can not be extracted from the original
+			request, e.g. if msg_apply_changes() was used after calling uac_replace_to()  
+			</p>
+            <p>
+				If you create a dialog ( with dlg_manage() ) before calling or uac_replace_to(),
+				this avp will not be needed. The values of the uris will be stored as dialog variables.
+			</p>
+            <p><span class="emphasis"><em>
+					Default value of this parameter is empty.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15617616"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">restore_to_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","restore_to_avp","$avp(original_uri_to)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. credential (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.credential"></a>3.8. <code class="varname">credential</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Contains a multiple definition of credentials used to perform
+			authentication.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is required if UAC authentication is used.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15620328"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">credential</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","credential","username:domain:password")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. auth_realm_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.auth-realm-avp-id"></a>3.9. <code class="varname">auth_realm_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The definition of an PV that might contain the realm to be used
+			to perform authentication.
+			</p>
+            <p>
+			When the PV value is an empty string or NULL when uac_auth() is called,
+			the realm is taken from the reply and only username matching is done.
+			This can be used if the realm upstream will be using is not known in advance.
+			</p>
+            <p>
+              <span class="emphasis">
+                <em>
+				If you define it, you also need to define 
+				<span class="quote">“<span class="quote">auth_username_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-username-avp-id" title="3.10. auth_username_avp (string)">Section 3.10, “<code class="varname">auth_username_avp</code> (string)”</a>) and 
+				<span class="quote">“<span class="quote">auth_username_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-password-avp-id" title="3.11. auth_password_avp (string)">Section 3.11, “<code class="varname">auth_password_avp</code> (string)”</a>).
+			</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15624224"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">auth_realm_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","auth_realm_avp","$avp(i:10)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. auth_username_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.auth-username-avp-id"></a>3.10. <code class="varname">auth_username_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The definition of an AVP that might contain the username to be used
+			to perform authentication.
+			</p>
+            <p>
+              <span class="emphasis">
+                <em>
+				If you define it, you also need to define 
+				<span class="quote">“<span class="quote">auth_realm_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-realm-avp-id" title="3.9. auth_realm_avp (string)">Section 3.9, “<code class="varname">auth_realm_avp</code> (string)”</a>) and 
+				<span class="quote">“<span class="quote">auth_username_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-password-avp-id" title="3.11. auth_password_avp (string)">Section 3.11, “<code class="varname">auth_password_avp</code> (string)”</a>).
+			</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15556136"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">auth_username_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","auth_username_avp","$avp(i:11)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. auth_password_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.auth-password-avp-id"></a>3.11. <code class="varname">auth_password_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The definition of an AVP that might contain the password to be used
+			to perform authentication.
+			</p>
+            <p>
+              <span class="emphasis">
+                <em>
+				If you define it, you also need to define 
+				<span class="quote">“<span class="quote">auth_password_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-password-avp-id" title="3.11. auth_password_avp (string)">Section 3.11, “<code class="varname">auth_password_avp</code> (string)”</a>) and 
+				<span class="quote">“<span class="quote">auth_username_avp</span>”</span> 
+				(<a class="xref" href="#uac.p.auth-password-avp-id" title="3.11. auth_password_avp (string)">Section 3.11, “<code class="varname">auth_password_avp</code> (string)”</a>).
+			</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15559608"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">auth_password_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","auth_password_avp","$avp(i:12)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. reg_db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.reg-db-url-id"></a>3.12. <code class="varname">reg_db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			DB URL to fetch account profiles for registration.
+			</p>
+            <div class="example">
+              <a id="idp15561768"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">reg_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "reg_db_url",
+    "mysql://kamailio:kamailiorw@localhost/kamailio")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. reg_timer_interval (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.reg-timer-interval-id"></a>3.13. <code class="varname">reg_timer_interval</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Timer interval (in seconds) at which registrations are managed, e.g. renewed as needed.  
+			</p>
+            <p>
+				<span class="emphasis"><em>
+				The default value is 90 seconds.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15564336"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">reg_timer_inteval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "reg_timer_interval", 60)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. reg_retry_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.reg-retry-interval-id"></a>3.14. <code class="varname">reg_retry_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Failed registration attempts will be retried after this interval
+			(in seconds). The interval is not exact, retries may be
+			attempted as much as reg_timer_interval secs earlier.
+			If set to 0, failed registrations will be disabled permanently.
+			</p>
+            <p>The default value is 0 sec (disabled)</p>
+            <div class="example">
+              <a id="idp15566832"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">reg_retry_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "reg_retry_interval", 300)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. reg_db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.reg-db-table-id"></a>3.15. <code class="varname">reg_db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			DB table name to fetch user profiles for registration.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being
+					<span class="quote">“<span class="quote">uacreg</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp15569656"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">reg_db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "reg_db_table", "uacreg")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. reg_contact_addr (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.p.reg-contact-addr-id"></a>3.16. <code class="varname">reg_contact_addr</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Address to be used to build contact address. Must be at least
+			host part, can have port and parameters. Must not include 'sip:'.
+			The username part of the Contact: URI will be the L_UUID field in the database.
+			</p>
+            <div class="example">
+              <a id="idp15571912"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">reg_contact_addr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac", "reg_contact_addr", "192.168.1.2:5080")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15573184"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  uac_replace_from(display,uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_replace_from"></a>4.1. 
+				<code class="function">uac_replace_from(display,uri)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Replace in FROM header the <span class="emphasis"><em>display</em></span> name and
+			the <span class="emphasis"><em>URI</em></span> part.
+			</p>
+            <p>
+			<span class="emphasis"><em>display</em></span> and <span class="emphasis"><em>URI</em></span> parameters
+			can include pseudo-variables.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE and from BRANCH_ROUTE.
+			</p>
+            <p>NOTE: Previous versions of this function added double quotes automatically to 
+			display variable. That is no longer the case, if you expect that behavior, you will 
+			have to add the quotes by yourself.
+			</p>
+            <p>
+			If you set restore_mode to AUTO, the URI will be modified automatically in
+			all subsequent requests and replies in that dialog.
+			</p>
+            <p>
+				There are two ways in which the AUTO mode can be achieved.
+			</p>
+            <p>
+				One uses the rr module and appends to the Record-Route header a parameter
+				containing some strings from which the original and new URI can be computed.
+				The problem with this mode is that it relies on the fact the parties will
+				send the Route exactly as it was received. In case there is a change, the
+				resulting URIs will not be correct.
+			</p>
+            <p>
+				The other one uses the dialog module to store the original and new URI.
+				If you already use dialog module in your configuration, this is the advisable mode.
+				All you need to do to use this is to call dlg_manage() before calling uac_replace_from().
+				It works by storing the URIs as dialog variables and registering callbacks in dialog 
+				module for in dialog requests.
+			</p>
+            <div class="example">
+              <a id="idp17284736"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">uac_replace_from</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# replace both display and uri
+uac_replace_from("$avp(s:display)","$avp(s:uri)");
+# replace only display and do not touch uri
+uac_replace_from("batman","");   # display is replaced with: batman
+uac_replace_from("\"batman\"","");  # display is replaced with: "batman"
+# remove display and replace uri
+uac_replace_from("","sip:robin@gotham.org");
+# remove display and do not touch uri
+uac_replace_from("","");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  uac_replace_from(uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_replace_from(uri)"></a>4.2. 
+				<code class="function">uac_replace_from(uri)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Replace in FROM header the <span class="emphasis"><em>URI</em></span> part
+				without altering the display name.
+			</p>
+            <p>
+			<span class="emphasis"><em>URI</em></span> parameter can include pseudo-variables.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE and from BRANCH_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17288456"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">uac_replace_from</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+uac_replace_from("sip:batman@gotham.org");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  uac_restore_from()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_restore_from()"></a>4.3. 
+				<code class="function">uac_restore_from()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function will check if the FROM URI was modified and will
+			use the information stored in header parameter to restore
+			the original FROM URI value.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17291192"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">uac_restore_from</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+uac_restore_from();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  uac_replace_to(display,uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_replace_to(display,uri)"></a>4.4. 
+				<code class="function">uac_replace_to(display,uri)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Replace in TO header the <span class="emphasis"><em>display</em></span> name and
+			the <span class="emphasis"><em>URI</em></span> part.
+			</p>
+            <p>
+			<span class="emphasis"><em>display</em></span> and <span class="emphasis"><em>URI</em></span> parameters
+			can include pseudo-variables.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE and from BRANCH_ROUTE.
+			</p>
+            <p>NOTE: Previous versions of this function added double quotes automatically to 
+			display variable. That is no longer the case, if you expect that behavior, you will 
+			have to add the quotes by yourself.
+			</p>
+            <div class="example">
+              <a id="idp17295440"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">uac_replace_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# replace both display and uri
+uac_replace_to("$avp(display)","$avp(uri)");
+# replace only display and do not touch uri
+uac_replace_to("batman","");   # display is replaced with: batman
+uac_replace_to("\"batman\"","");  # display is replaced with: "batman"
+# remove display and replace uri
+uac_replace_to("","sip:robin@gotham.org");
+# remove display and do not touch uri
+uac_replace_to("","");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  uac_replace_to(uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_replace_to(uri)"></a>4.5. 
+				<code class="function">uac_replace_to(uri)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Replace in TO header the <span class="emphasis"><em>URI</em></span> part
+				without altering the display name.
+			</p>
+            <p>
+			<span class="emphasis"><em>URI</em></span> parameter can include pseudo-variables.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE and from BRANCH_ROUTE.
+			</p>
+            <p>
+			If you set restore_mode to AUTO, the URI will be modified automatically in
+			all subsequent requests and replies in that dialog.
+			</p>
+            <p>
+				There are two ways in which the AUTO mode can be achieved.
+			</p>
+            <p>
+				One uses the rr module and appends to the Record-Route header a parameter
+				containing some strings from which the original and new URI can be computed.
+				The problem with this mode is that it relies on the fact the parties will
+				send the Route exactly as it was received. In case there is a change, the
+				resulting URIs will not be correct.
+			</p>
+            <p>
+				The other one uses the dialog module to store the original and new URI.
+				If you already use dialog module in your configuration, this is the advisable mode.
+				All you need to do to use this is to call dlg_manage() before calling uac_replace_to().
+				It works by storing the URIs as dialog variables and registering callbacks in dialog 
+				module for in dialog requests.
+			</p>
+            <div class="example">
+              <a id="idp17300976"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">uac_replace_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+uac_replace_to("sip:batman@gotham.org");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  uac_restore_to()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_restore_to()"></a>4.6. 
+				<code class="function">uac_restore_to()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function will check if the TO URI was modified and will
+			use the information stored in header parameter to restore
+			the original TO URI value.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17303712"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">uac_restore_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+uac_restore_to();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  uac_auth()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_auth()"></a>4.7. 
+				<code class="function">uac_auth()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function can be called only from failure route and will 
+			build the authentication response header and insert it into the
+			request without sending anything.
+			</p>
+            <p>
+			This function can be used from FAILURE_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17306504"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">uac_auth</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("uac","auth_username_avp","$avp(auser)")
+modparam("uac","auth_password_avp","$avp(apass)")
+modparam("uac","auth_realm_avp","$avp(arealm)")
+
+request_route {
+   ...
+   if(is_method("INVITE")) {
+      t_on_failure("TRUNKAUTH");
+   }
+   ...
+}
+
+failure_route[TRUNKAUTH] {
+
+    if (t_is_canceled()) {
+        exit;
+    }
+    if(t_check_status("401|407")) {
+        $avp(auser) = "test";
+        $avp(apass) = "test";
+        uac_auth();
+        t_relay();
+        exit;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.  uac_req_send()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_req_send()"></a>4.8. 
+				<code class="function">uac_req_send()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function sends a SIP message from the configuration file.
+			The message is built out of $uac_req(...) pseudo-variable.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, ONREPLY_ROUTE, LOCAL_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17309680"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">uac_req_send</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$uac_req(method)="OPTIONS";
+$uac_req(ruri)="sip:kamailio.org";
+$uac_req(furi)="sip:kamailio.org";
+$uac_req(turi)="sip:kamailio.org";
+$uac_req(callid)=$(mb{s.md5});
+uac_req_send();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.  uac_reg_lookup(uuid, dst)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_reg_lookup(uuid, dst)"></a>4.9. 
+				<code class="function">uac_reg_lookup(uuid, dst)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function sets the PV dst to SIP URI that correspond to uuid
+			in uac registations table. uuid and dst must be pseudo-variables.
+			</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17312624"></a>
+              <p class="title">
+                <strong>Example 1.25. <code class="function">uac_reg_lookup</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+if(uac_reg_lookup("$rU", "$ru"))
+{
+    lookup("location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.  uac_reg_request_to(user, mode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.f.uac_reg_request_to(user, mode)"></a>4.10. 
+				<code class="function">uac_reg_request_to(user, mode)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function can be used to send an authenticated request to a remote user in 
+			the uac registrations table. It sets the request-uri, dst-uri and auth_*_avp
+			pv's to the values that correspond to the supplied user.
+			</p>
+            <p>
+			The mode indicates whether the user should match the local uuid (mode=0), or the username (mode=1).
+			</p>
+            <p>
+			The auth_*_avp module parameters must be set to valid pv's.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17316040"></a>
+              <p class="title">
+                <strong>Example 1.26. <code class="function">uac_reg_request_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+if(uac_reg_request_to("$fU", 0))
+{
+	xlog("L_NOTICE", "Found remote user [$rU] on [$rd] via [$du]");
+	t_on_failure("REMOTE_AUTH");
+
+	t_relay()
+}
+...
+failure_route[REMOTE_AUTH] {
+	if ($T_reply_code == 401 or $T_reply_code == 407) {
+		xlog("L_NOTICE", "Remote asked for authentication");
+		uac_auth()
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17317616"></a>5. Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$uac_req(key)</em></span>
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+		</p>
+        </div>
+        <div class="section" title="6. Event Routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17319488"></a>6. Event Routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  event_route[uac:reply]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.ert.uac_reply"></a>6.1. 
+				<code class="function">event_route[uac:reply]</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Event route executed for the final reply to the request set with
+			uac_req_send(). The associated $uac_req(evroute) has to be set to
+			1.
+		</p>
+            <div class="example">
+              <a id="idp17321128"></a>
+              <p class="title">
+                <strong>Example 1.27. <code class="function">event_route[uac:reply]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$uac_req(method)="OPTIONS";
+$uac_req(ruri)="sip:kamailio.org";
+$uac_req(furi)="sip:kamailio.org";
+$uac_req(turi)="sip:kamailio.org";
+$uac_req(callid)=$(mb{s.md5});
+$uac_req(evroute)=1;
+uac_req_send();
+...
+event_route[uac:reply] {
+    xlog("received reply code is: $uac_req(evcode)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7. Counters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17322640"></a>7. Counters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>regtotal</em></span>: Total number of registrations
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>regactive</em></span>: Total number of active registrations (successfully registred with service)
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>regdisabled</em></span>: Total number of disabled registrations (no longer active)
+			</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="8. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17325000"></a>8. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="8.1.  uac.reg_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_dump"></a>8.1. 
+				<code class="function">uac.reg_dump</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Dump the content of remote registration table from memory.
+		</p>
+            <div class="example">
+              <a id="idp17326560"></a>
+              <p class="title">
+                <strong>Example 1.28. <code class="function">uac.reg_dump</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_dump
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="8.2.  uac.reg_info">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_info"></a>8.2. 
+				<code class="function">uac.reg_info</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return the details of a remote registration record based on
+			a filter. The command has two parameter: attribute and value.
+			The attribute can be: l_uuid, l_username, r_username or auth_username.
+			The value is what should be matcheg against the value of the attribute
+			in the remote registration record.
+		</p>
+            <div class="example">
+              <a id="idp17329208"></a>
+              <p class="title">
+                <strong>Example 1.29. <code class="function">uac.reg_info</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_info l_uuid account123
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="8.3.  uac.reg_enable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_enable"></a>8.3. 
+				<code class="function">uac.reg_enable</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Enable a remote registration record based on
+			a filter. The command has two parameter: attribute and value.
+			The attribute can be: l_uuid, l_username, r_username or auth_username.
+			The value is what should be matcheg against the value of the attribute
+			in the remote registration record.
+		</p>
+            <div class="example">
+              <a id="idp17331816"></a>
+              <p class="title">
+                <strong>Example 1.30. <code class="function">uac.reg_enable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_enable l_uuid account123
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="8.4.  uac.reg_disable">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_disable"></a>8.4. 
+				<code class="function">uac.reg_disable</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Disable a remote registration record based on
+			a filter. The command has two parameter: attribute and value.
+			The attribute can be: l_uuid, l_username, r_username or auth_username.
+			The value is what should be matcheg against the value of the attribute
+			in the remote registration record.
+		</p>
+            <div class="example">
+              <a id="idp17334424"></a>
+              <p class="title">
+                <strong>Example 1.31. <code class="function">uac.reg_disable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_disable l_uuid account123
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="8.5.  uac.reg_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_reload"></a>8.5. 
+				<code class="function">uac.reg_reload</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reload the records from database for remote registrations.
+		</p>
+            <div class="example">
+              <a id="idp17336792"></a>
+              <p class="title">
+                <strong>Example 1.32. <code class="function">uac.reg_reload</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_reload
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="8.6.  uac.reg_refresh">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="uac.r.uac.reg_refresh"></a>8.6. 
+				<code class="function">uac.reg_refresh</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Load one record by l_uuid from database for remote registrations.
+			If the record exists in memory, its authentication password is
+			updated, otherwise a new record is added. The command has a
+			parameter, which is the value of l_uuid field.
+		</p>
+            <div class="example">
+              <a id="idp17339280"></a>
+              <p class="title">
+                <strong>Example 1.33. <code class="function">uac.reg_refresh</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+   kamcmd uac.reg_refresh account123
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="9. Remote Registration">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17340584"></a>9. Remote Registration</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module can register contact addresses to remote REGISTRAR servers.
+		You have to add records to uacreg table. The table stores following
+		attributes:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>l_uuid</em></span> - local unique user id, e.g.,:
+			12345678
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>l_username</em></span> - local user name, e.g.,: test
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>l_domain</em></span> - local domain, e.g.,:
+			mysipserver.com
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>r_username</em></span> - remote username, e.g.,:
+			test123
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>r_domain</em></span> - remote domain, e.g.,:
+			sipprovider.com
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>realm</em></span> - remote relam, e.g.,:
+			sipprovider.com
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>auth_username</em></span> - authentication username,
+			e.g.,: test123
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>auth_password</em></span> - authentication password,
+			e.g.,: xxxxxx
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>auth_proxy</em></span> - SIP address of authentication
+			proxy, e.g.,: sip:sipprovider.com
+			</p>
+              </li>
+            </ul>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>expires</em></span> - expiration time for registration,
+			in seconds, e.g.,: 360
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		The module takes care of sending REGISTER and refresh registrations
+		before they expire.
+		</p>
+          <p>
+		When calls come in, you have to run uac_reg_lookup() that will detect
+		if the call is coming from a remote SIP provider and can change the
+		R-URI to local username@domain. Afterwards you can run location lookup.
+		</p>
+          <div class="example">
+            <a id="idp17349600"></a>
+            <p class="title">
+              <strong>Example 1.34. <code class="function">lookup remote registrations</code> usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+    if(uac_reg_lookup("$rU", "$ru")) {
+        xlog("request from a remote SIP provider [$ou =&gt; $ru]\n");
+    }
+    lookup("location");
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

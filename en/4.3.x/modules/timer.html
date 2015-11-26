@@ -1,0 +1,453 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>timer module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#timer" title="timer module" />
+    <link rel="next" href="#idp75600" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="timer module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="timer"></a>timer module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Tomas</span> <span class="surname">Mandys</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Iptel.org<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp75600">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#timer.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#timer.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#timer.syntax">3. ABNF syntax</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#timer.parameters">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#timer.p.declare_timer">4.1. <code class="varname">declare_timer</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#timer.functions">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#timer.p.timer_enable">5.1. 
+				<code class="function">timer_enable(timer_id, enable_disable)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#timer.timer.timer_id.enabled">5.2. 
+				<code class="function">@timer.timer.timer_id.enabled</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#timer.executed">5.3. 
+				<code class="function">@timer.executed</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#timer.examples">6. Examples</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp81600">Example <code class="varname">declare_timer</code></a></dt>
+          <dt>1.2. <a href="#idp85048"><code class="function">timer_enable</code> usage</a></dt>
+          <dt>1.3. <a href="#idp87080"><code class="function">timer.timer.timer_id.enabled</code> usage</a></dt>
+          <dt>1.4. <a href="#idp88920"><code class="function">timer.executed</code> usage</a></dt>
+          <dt>1.5. <a href="#idp90272">timer common example</a></dt>
+          <dt>1.6. <a href="#idp91304">Using timer module for testing a functionality</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp75600"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#timer.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#timer.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#timer.syntax">3. ABNF syntax</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#timer.parameters">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#timer.p.declare_timer">4.1. <code class="varname">declare_timer</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#timer.functions">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#timer.p.timer_enable">5.1. 
+				<code class="function">timer_enable(timer_id, enable_disable)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#timer.timer.timer_id.enabled">5.2. 
+				<code class="function">@timer.timer.timer_id.enabled</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#timer.executed">5.3. 
+				<code class="function">@timer.executed</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#timer.examples">6. Examples</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module supports triggering specific route block on timer.
+		</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		none
+		</p>
+        </div>
+        <div class="section" title="3. ABNF syntax">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.syntax"></a>3. ABNF syntax</h2>
+              </div>
+            </div>
+          </div>
+          <pre class="programlisting">	timer_id = alphanum
+	slow_fast = "slow" | "fast"
+	declare_timer_syntax = timer_id "=" (route#|route_name) "," interval "," slow_fast "," ["enable"]
+	enable_disable = "0" | "1"</pre>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.parameters"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. declare_timer (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="timer.p.declare_timer"></a>4.1. <code class="varname">declare_timer</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Declares timer route which will be called in specific interval.
+			</p>
+            <p>
+			The format is:
+			</p>
+            <pre class="programlisting">			declare_timer = declare_timer_syntax</pre>
+            <p>
+			<span class="emphasis"><em>timer_id</em></span> is timer identifier, <span class="emphasis"><em>route</em></span> is handler to be called when
+			timer is triggered, <span class="emphasis"><em>interval</em></span> is timer interval in milliseconds, <span class="emphasis"><em>slow_fast</em></span>
+			determines if handler will be hooked in slow or fast timer queue, fast timer handler returns
+			as quickly as possible, slow timer handler may spend longer time, see kamailio/doc/timers.txt documentation. Use <span class="emphasis"><em>enable</em></span>
+			to enable timer when Kamailio is starting, otherwise use <code class="function">timer_enable</code> to start it later.		
+			</p>
+            <div class="example">
+              <a id="idp81600"></a>
+              <p class="title">
+                <strong>Example 1.1. Example <code class="varname">declare_timer</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("timer", "declare_timer", "MY_TIMER=MY_TIMER_ROUTE,10,slow,enable");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.functions"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  timer_enable(timer_id, enable_disable)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="timer.p.timer_enable"></a>5.1. 
+				<code class="function">timer_enable(timer_id, enable_disable)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Enable/disable timer route specified by <code class="varname">timer_id</code>. Because of timer core API the callback
+				is not disabled immediately but is removed from handler by itself not to decrease performance.
+				Disabling and enabling in sequence may be tricky.
+								  
+				<span class="emphasis"><em>timer_id</em></span> references to timer declared by <code class="varname">declare_timer</code>.
+			</p>
+            <div class="example">
+              <a id="idp85048"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">timer_enable</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	timer_enable("MY_TIMER", 1);
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.  @timer.timer.timer_id.enabled">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="timer.timer.timer_id.enabled"></a>5.2. 
+				<code class="function">@timer.timer.timer_id.enabled</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Return true ("1") if timer specified by <code class="varname">timer_id</code> is enabled,
+				otherwise returns false ("0").
+			</p>
+            <div class="example">
+              <a id="idp87080"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">timer.timer.timer_id.enabled</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@timer.timer.MY_TIMER.enabled == "1") {
+	....
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.  @timer.executed">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="timer.executed"></a>5.3. 
+				<code class="function">@timer.executed</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns name of timer which has been executed, i.e. non empty value is returned only 
+				when handler is being processed.
+			</p>
+            <div class="example">
+              <a id="idp88920"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">timer.executed</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (@timer.executed != "") {
+		# timer is being handled
+	....
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="timer.examples"></a>6. Examples</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp90272"></a>
+            <p class="title">
+              <strong>Example 1.5. timer common example</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">loadmodule "modules/xprint/xprint.so"
+loadmodule "modules/timer/timer.so"
+
+modparam("timer", "declare_timer", "tmr1=ONTIMER,1000"); 
+modparam("timer", "declare_timer", "tmr2=ONTIMER2,2000,slow,enable");
+
+route["print"] {
+	xplog("L_INFO", "fired: %@timer.executed\n");
+}
+
+route["ONTIMER"] {
+	# do something
+	route("print");}
+
+
+route["ONTIMER2"] {
+	# do something
+	timer_enable("tmr1", 0);
+	route("print");
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp91304"></a>
+            <p class="title">
+              <strong>Example 1.6. Using timer module for testing a functionality</strong>
+            </p>
+            <div class="example-contents">
+              <p>
+				The timer module may be used to test a functionality being developed and 
+				not requiring real request.A developer may put tested code in route section
+				which is called once after Kamailio starts.
+			</p>
+              <pre class="programlisting">			
+loadmodule "timer"; 
+loadmodule "xprint";  
+
+modparam("timer", "declare_timer", "TIMER_TEST=TEST,100,,enable"); 
+
+route {  
+	xplog("L_E","main route"); 
+}  
+    
+route[TEST] {  
+	timer_enable("TIMER_TEST", "0");  
+	xplog("L_E","test start\n");    
+		
+	# add here tested functionality
+		
+	xplog("L_E","test end\n"); 
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

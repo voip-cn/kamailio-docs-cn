@@ -1,0 +1,380 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Statistics Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp47896" title="Statistics Module" />
+    <link rel="next" href="#idp6734424" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Statistics Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp47896"></a>Statistics Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp6734424">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#statistics.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#statistics.dependencies">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6902376">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6960504">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#statistics.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#statistics.p.variable">3.1. <code class="varname">variable</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#statistics.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#statistics.f.update_stat">4.1. <code class="function">update_stat(variable,value)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#statistics.f.reset_stat">4.2. <code class="function">reset_stat(variable)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp7185208">variable example</a></dt>
+          <dt>1.2. <a href="#idp4485584"><code class="function">update_stat</code> usage</a></dt>
+          <dt>1.3. <a href="#idp4489184"><code class="function">reset_stat</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp6734424"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#statistics.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#statistics.dependencies">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6902376">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6960504">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#statistics.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#statistics.p.variable">3.1. <code class="varname">variable</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#statistics.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#statistics.f.update_stat">4.1. <code class="function">update_stat(variable,value)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#statistics.f.reset_stat">4.2. <code class="function">reset_stat(variable)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="statistics.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The <acronym class="acronym">Statistics</acronym> module is a wrapper over the
+    internal statistics manager, allowing the script writer to dynamically
+    define and use of statistic variables.</p>
+          <p>By bringing the statistics support into the script, it takes
+    advantage of the script flexibility in defining logics, making possible
+    implementation of any kind of statistic scenario.</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="statistics.dependencies"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6902376"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded before this module:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>No dependencies on other Kamailio
+            modules</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6960504"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+      running Kamailio with this module loaded: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="statistics.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. variable (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statistics.p.variable"></a>3.1. <code class="varname">variable</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Name of a new statistic variable. The name may be followed by
+      additional flag which describe the variable behavior:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>no_reset</em></span> : variable cannot be
+          reset.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp7185208"></a>
+              <p class="title">
+                <strong>Example 1.1. variable example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("statistics", "variable", "register_counter")
+modparam("statistics", "variable", "active_calls/no_reset")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="statistics.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. update_stat(variable,value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statistics.f.update_stat"></a>4.1. <code class="function">update_stat(variable,value)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Updates the value of the statistic variable with the new
+      value.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>variable</em></span> - variable to be updated (it can
+          be a string or a pseudovariable);</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>value</em></span> - value to update with; it may be
+          also negative (it can be a string or pseudovariable).</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from ANY_ROUTE.</p>
+            <div class="example">
+              <a id="idp4485584"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">update_stat</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+update_stat("register_counter", "+1");
+...
+$var(a_calls) = "active_calls";
+update_stat("$var(a_calls)", "-1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. reset_stat(variable)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="statistics.f.reset_stat"></a>4.2. <code class="function">reset_stat(variable)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Resets to zero the value of the statistic variable.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>variable</em></span> - variable to be reset (it
+          can be a string or a pseudovariable).</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
+      FAILURE_ROUTE and ONREPLY_ROUTE.</p>
+            <div class="example">
+              <a id="idp4489184"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">reset_stat</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reset_stat("register_counter");
+...
+$var(reg_counter) = "register_counter";
+update_stat("$var(reg_counter)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

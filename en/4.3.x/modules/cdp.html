@@ -1,0 +1,1990 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The CDP Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15552664" title="The CDP Module" />
+    <link rel="next" href="#idp18025480" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The CDP Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15552664"></a>The CDP Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Dragos</span> <span class="surname">Vingarzan</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Fraunhofer<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jason</span> <span class="surname">Penton</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2006 FhG Fokus</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18025480">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18959392">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18289928">2. How it works</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18576152">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16851832">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18467000">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp16902200">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18567392">4.1. config_file (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18294888">4.2. latency_threshold (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17693696">4.3. workerq_length_threshold_percentage (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17402368">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17895048">5.1. cdp.disable_peer</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17578512">5.2. cdp.enable_peer</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18868776">6. Configuration Examples</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18342000">6.1. DiameterPeer.xml example</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18235760">6.2. </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17669688">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16124904">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17496312">1.1. <code class="function">load_cdp(struct cdp_binds
+      *cdpb)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18110896">1.2. <code class="function">AAACreateRequest(AAAApplicationId
+      app_id, AAACommandCode command_code, AAAMsgFlag flags, AAASession
+      *session)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15858808">1.3. <code class="function">AAACreateResponse(AAAMessage
+      *request)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16432584">1.4. <code class="function">AAAReturnCode AAAFreeMessage(AAAMessage
+      **msg)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18909696">1.5. <code class="function">AAAReturnCode AAASendMessage(AAAMessage
+      *message, AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18534368">1.6. <code class="function">AAAReturnCode
+      AAASendMessageToPeer(AAAMessage *message, str *peer_id,
+      AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18537832">1.7. <code class="function">AAAMessage*
+      AAASendRecvMessage(AAAMessage *message)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18494240">1.8. <code class="function">AAAMessage*
+      AAASendRecvMessageToPeer(AAAMessage *message, str
+      *peer_id)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18496880">1.9. <code class="function">AAASession* AAACreateSession(void
+      *generic_data)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18498816">1.10. <code class="function">AAASession* AAAMakeSession(int
+      app_id,int type,str session_id)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18501576">1.11. <code class="function">AAASession* AAAGetSession(str
+      id)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16757200">1.12. <code class="function">AAADropSession(AAASession
+      *s)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16759088">1.13. <code class="function">AAASessionLock(unsigned int
+      hash)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16761040">1.14. <code class="function">AAASessionUnLock(unsigned int
+      hash)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16762928">1.15. <code class="function">AAASession*
+      AAACreateClientAuthSession(int is_statefull,AAASessionCallback_f
+      *cb,void *generic_data)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18545288">1.16. <code class="function">AAASession*
+      AAACreateServerAuthSession(AAMessage *msg,int
+      is_statefull,AAASessionCallback_f *cb,void
+      *generic_data)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18548920">1.17. <code class="function">AAASession* AAAGetAuthSession(str
+      id)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18550856">1.18. <code class="function">AAADropAuthSession(AAASession
+      *s)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18552912">1.19. <code class="function">AAATerminateAuthSession(AAASession
+      *s)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18554960">1.20. <code class="function">AAATransaction*
+      AAACreateTransaction(AAAApplicationId app_id,AAACommandCode
+      cmd_code)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18557424">1.21. <code class="function">int AAADropTransaction(AAATransaction
+      *trans)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15715944">1.22. <code class="function">AAA_AVP* AAACreateAVP(AAA_AVPCode code,
+      AAA_AVPFlag flags, AAAVendorId vendorId, char *data, size_t length,
+      AVPDataStatus data_status)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15720512">1.23. <code class="function">AAAReturnCode
+      AAAAddAVPToMessage(AAAMessage *msg, AAA_AVP *avp, AAA_AVP
+      *position)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15723584">1.24. <code class="function">AAA_AVP* AAAFindMatchingAVP(AAAMessage
+      *msg, AAA_AVP *startAvp, AAA_AVPCode avpCode, AAAVendorId vendorId,
+      AAASearchType searchType)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15727600">1.25. <code class="function">AAA_AVP * AAAGetNextAVP(AAA_AVP
+      *avp)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15729496">1.26. <code class="function">AAAReturnCode AAAFreeAVP(AAA_AVP
+      **avp)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15731408">1.27. <code class="function">str AAAGroupAVPS(AAA_AVP_LIST
+      avps)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15555128">1.28. <code class="function">AAA_AVP_LIST AAAUnGroupAVPS(str
+      buf)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15557024">1.29. <code class="function">AAA_AVP*
+      AAAFindMatchingAVPList(AAA_AVP_LIST avpList, AAA_AVP *startAvp,
+      AAA_AVPCode avpCode, AAAVendorId vendorId, AAASearchType
+      searchType)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15560928">1.30. <code class="function">AAAFreeAVPList(AAA_AVP_LIST
+      *avpList)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15562816">1.31. <code class="function">int
+      AAAAddRequestHandler(AAARequestHandler_f *f,void
+      *param)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15565312">1.32. <code class="function">int
+      AAAAddResponseHandler(AAAResponseHandler_f *f,void
+      *param)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16733280">3. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17027888">Set <code class="varname">config_file</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp17944632">Set <code class="varname">latency_threshold</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp17709472">Set <code class="varname">workerq_length_threshold_percentage</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp18025616">DiameterPeer.xml example</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18025480"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18959392">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18289928">2. How it works</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18576152">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16851832">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18467000">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp16902200">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18567392">4.1. config_file (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18294888">4.2. latency_threshold (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17693696">4.3. workerq_length_threshold_percentage (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17402368">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17895048">5.1. cdp.disable_peer</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17578512">5.2. cdp.enable_peer</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18868776">6. Configuration Examples</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18342000">6.1. DiameterPeer.xml example</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18235760">6.2. </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18959392"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>CDP (C Diameter Peer) allows Diameter communication to and from
+    Kamailio. Most of the code is inherited from DISC
+    http://developer.berlios.de/projects/disc/ and OpenIMS and modified for
+    use within Kamailio. A few improvements and new functionality has been
+    added along the way, for example, threshold reporting on Diameter calls
+    that are serviced above a certain threshold.</p>
+        </div>
+        <div class="section" title="2.¬†How it works">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18289928"></a>2.¬†How it works</h2>
+              </div>
+            </div>
+          </div>
+          <p>CDP forks the following processes:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>1 x Timer</p>
+              </li>
+              <li class="listitem">
+                <p>1 x Acceptor</p>
+              </li>
+              <li class="listitem">
+                <p>k x Workers (k configurable through configuration)</p>
+              </li>
+              <li class="listitem">
+                <p>i x Receivers (one for each peer plus one for unknown
+        peers)</p>
+              </li>
+            </ul>
+          </div>
+          <p>CDP is really only an API and offers all of its methods to other
+    modules. No commands are made available to the main Kamailio configuration
+    file. The exported API can be seen in mod.c. The Full Diameter API is in
+    diameter.h and diameter_api.h. IMS-specific constants can be found in
+    diameter_ims.h. The protocol coding is implemented in diameter_avp.c and
+    diameter_msg.c. The diameter state machine is implemented in
+    peerstatemachine.c - there is one of these for each peer which maintains
+    all protocol/application state for each peer. peermanager.c is responsible
+    for peer administration. Diameter transactions are implemented in
+    transaction.c.</p>
+          <p>There are 2 configuration areas for CDP. Firstly it must be loaded
+    and configured in the Kamailio.cfg file (this is the normal task
+    associated with Kamailio modules). Then, an XML file is required to
+    configure various Diameter parameters and all related peers and the
+    associated routes.</p>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18576152"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16851832"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded before this module:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18467000"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+      running Kamailio with this module loaded: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16902200"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†config_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18567392"></a>4.1.¬†config_file (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the location of the XML configuration file.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is <span class="quote">‚Äú<span class="quote">DiameterPeer.xml</span>‚Äù</span>.
+      </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp17027888"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">config_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cdp", "config_file", "/etc/kamailio/diametercfg.xml")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†latency_threshold (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18294888"></a>4.2.¬†latency_threshold (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The time in ms above which a log error is wrtten to log file for
+      long CDP transactions.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is <span class="quote">‚Äú<span class="quote">500</span>‚Äù</span>. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp17944632"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">latency_threshold</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cdp", "latency_threshold", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†workerq_length_threshold_percentage (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17693696"></a>4.3.¬†workerq_length_threshold_percentage (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The threshold of the length of the worker queue as a percentage of 
+	  the maximum queue size - when exceeded a warning is written to the log
+	  file. 0  means disabled</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span>. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp17709472"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">workerq_length_threshold_percentage</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cdp", "workerq_length_threshold_percentage", 25)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17402368"></a>5.¬†RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>exported RPC commands.</p>
+          <div class="section" title="5.1.¬†cdp.disable_peer">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17895048"></a>5.1.¬†cdp.disable_peer</h3>
+                </div>
+              </div>
+            </div>
+            <p>instantly disable a particular diameter peer.</p>
+          </div>
+          <div class="section" title="5.2.¬†cdp.enable_peer">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17578512"></a>5.2.¬†cdp.enable_peer</h3>
+                </div>
+              </div>
+            </div>
+            <p>enabe/re-enable a diameter peer</p>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Configuration Examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18868776"></a>6.¬†Configuration Examples</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†DiameterPeer.xml example">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18342000"></a>6.1.¬†DiameterPeer.xml example</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is an example CDP configuration file. The location of this
+      file is configured as a CDP parameter (config_file) - See section 4.1
+      Above</p>
+            <div class="example">
+              <a id="idp18025616"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†DiameterPeer.xml example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!-- 
+
+ DiameterPeer Parameters 
+  - FQDN - FQDN of this peer, as it should apper in the Origin-Host AVP
+  - Realm - Realm of this peer, as it should apper in the Origin-Realm AVP
+  - Vendor_Id - Default Vendor-Id to appear in the Capabilities Exchange
+  - Product_Name - Product Name to appear in the Capabilities Exchange 
+  - AcceptUnknownPeers - Whether to accept (1) or deny (0) connections from peers with FQDN 
+    not configured below
+  - DropUnknownOnDisconnect - Whether to drop (1) or keep (0) and retry connections (until restart)
+    unknown peers in the list of peers after a disconnection.
+  - Tc - Value for the RFC3588 Tc timer - default 30 seconds
+  - Workers - Number of incoming messages processing workers forked processes.
+  - Queue - Length of queue of tasks for the workers:
+     - too small and the incoming messages will be blocked too often;
+     - too large and the senders of incoming messages will have a longer feedback loop to notice that
+     this Diameter peer is overloaded in processing incoming requests;
+     - a good choice is to have it about 2 times the number of workers. This will mean that each worker
+     will have about 2 tasks in the queue to process before new incoming messages will start to block.
+  - ConnectTimeout - time in seconds to wait for an outbound TCP connection to be established.
+  - TransactionTimeout - time in seconds after which the transaction timeout callback will be fired,
+    when using transactional processing.
+  - SessionsHashSize - size of the hash-table to use for the Diameter sessions. When searching for a 
+    session, the time required for this operation will be that of sequential searching in a list of 
+    NumberOfActiveSessions/SessionsHashSize. So higher the better, yet each hashslot will consume an
+    extra 2xsizeof(void*) bytes (typically 8 or 16 bytes extra).
+  - DefaultAuthSessionTimeout - default value to use when there is no Authorization Session Timeout 
+  AVP present.
+  - MaxAuthSessionTimeout - maximum Authorization Session Timeout as a cut-out measure meant to
+  enforce session refreshes.
+      
+ --&gt;
+&lt;DiameterPeer 
+        FQDN="pcscf.ims.smilecoms.com"
+        Realm="ims.smilecoms.com"
+        Vendor_Id="10415"
+        Product_Name="CDiameterPeer"
+        AcceptUnknownPeers="0"
+        DropUnknownOnDisconnect="1"
+        Tc="30"
+        Workers="4"
+        QueueLength="32"
+        ConnectTimeout="5"
+        TransactionTimeout="5"
+        SessionsHashSize="128"
+        DefaultAuthSessionTimeout="60"
+        MaxAuthSessionTimeout="300"
+&gt;
+
+        &lt;!--
+                Definition of peers to connect to and accept connections from. For each peer found in here
+                a dedicated receiver process will be forked. All other unkwnown peers will share a single
+                receiver. NB: You must have a peer definition for each peer listed in the realm routing section
+        --&gt;
+        &lt;Peer FQDN="pcrf1.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+        &lt;Peer FQDN="pcrf2.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+        &lt;Peer FQDN="pcrf3.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+        &lt;Peer FQDN="pcrf4.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+        &lt;Peer FQDN="pcrf5.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+        &lt;Peer FQDN="pcrf6.ims.smilecoms.com" Realm="ims.smilecoms.com" port="3868"/&gt;
+
+        &lt;!--
+                Definition of incoming connection acceptors. If no bind is specified, the acceptor will bind
+                on all available interfaces.
+        --&gt;
+        &lt;Acceptor port="3868"  /&gt;
+        &lt;Acceptor port="3869" bind="127.0.0.1" /&gt;
+        &lt;Acceptor port="3870" bind="192.168.1.1" /&gt;
+
+        &lt;!--
+                Definition of Auth (authorization) and Acct (accounting) supported applications. This
+                information is sent as part of the Capabilities Exchange procedures on connecting to
+                peers. If no common application is found, the peers will disconnect. Messages will only
+                be sent to a peer if that peer actually has declared support for the application id of 
+                the message.
+        --&gt;
+        &lt;Acct id="16777216" vendor="10415" /&gt;
+        &lt;Acct id="16777216" vendor="0" /&gt;
+        &lt;Auth id="16777216" vendor="10415"/&gt;
+        &lt;Auth id="16777216" vendor="0" /&gt;
+
+        &lt;!-- 
+                Supported Vendor IDs - list of values which will be sent in the CER/CEA in the
+                Supported-Vendor-ID AVPs
+        --&gt;
+        &lt;SupportedVendor vendor="10415" /&gt;
+
+        &lt;!--
+                Realm routing definition.
+                Each Realm can have a different table of peers to route towards. In case the Destination
+                Realm AVP contains a Realm not defined here, the DefaultRoute entries will be used.
+
+                Note: In case a message already contains a Destination-Host AVP, Realm Routeing will not be
+                applied.
+                Note: Routing will only happen towards connected and application id supporting peers.
+                
+                The metric is used to order the list of prefered peers, while looking for a connected and
+                application id supporting peer. In the end, of course, just one peer will be selected.
+        --&gt;
+        &lt;Realm name="ims.smilecoms.com"&gt;
+                &lt;Route FQDN="pcrf1.ims.smilecoms.com" metric="3"/&gt;
+                &lt;Route FQDN="pcrf2.ims.smilecoms.com" metric="5"/&gt;
+        &lt;/Realm&gt;
+
+        &lt;Realm name="temp.ims.smilecoms.com"&gt;
+                &lt;Route FQDN="pcrf3.ims.smilecoms.com" metric="7"/&gt;
+                &lt;Route FQDN="pcrf4.ims.smilecoms.com" metric="11"/&gt;
+        &lt;/Realm&gt;
+        &lt;DefaultRoute FQDN="pcrf5.ims.smilecoms.com" metric="15"/&gt;
+        &lt;DefaultRoute FQDN="pcrf6.ims.smilecoms.com" metric="13"/&gt;
+
+
+&lt;/DiameterPeer&gt;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.¬†">
+            <div class="titlepage"></div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17669688"></a>Chapter¬†2.¬†Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16124904">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17496312">1.1. <code class="function">load_cdp(struct cdp_binds
+      *cdpb)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18110896">1.2. <code class="function">AAACreateRequest(AAAApplicationId
+      app_id, AAACommandCode command_code, AAAMsgFlag flags, AAASession
+      *session)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15858808">1.3. <code class="function">AAACreateResponse(AAAMessage
+      *request)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16432584">1.4. <code class="function">AAAReturnCode AAAFreeMessage(AAAMessage
+      **msg)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18909696">1.5. <code class="function">AAAReturnCode AAASendMessage(AAAMessage
+      *message, AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18534368">1.6. <code class="function">AAAReturnCode
+      AAASendMessageToPeer(AAAMessage *message, str *peer_id,
+      AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18537832">1.7. <code class="function">AAAMessage*
+      AAASendRecvMessage(AAAMessage *message)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18494240">1.8. <code class="function">AAAMessage*
+      AAASendRecvMessageToPeer(AAAMessage *message, str
+      *peer_id)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18496880">1.9. <code class="function">AAASession* AAACreateSession(void
+      *generic_data)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18498816">1.10. <code class="function">AAASession* AAAMakeSession(int
+      app_id,int type,str session_id)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18501576">1.11. <code class="function">AAASession* AAAGetSession(str
+      id)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16757200">1.12. <code class="function">AAADropSession(AAASession
+      *s)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16759088">1.13. <code class="function">AAASessionLock(unsigned int
+      hash)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16761040">1.14. <code class="function">AAASessionUnLock(unsigned int
+      hash)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16762928">1.15. <code class="function">AAASession*
+      AAACreateClientAuthSession(int is_statefull,AAASessionCallback_f
+      *cb,void *generic_data)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18545288">1.16. <code class="function">AAASession*
+      AAACreateServerAuthSession(AAMessage *msg,int
+      is_statefull,AAASessionCallback_f *cb,void
+      *generic_data)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18548920">1.17. <code class="function">AAASession* AAAGetAuthSession(str
+      id)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18550856">1.18. <code class="function">AAADropAuthSession(AAASession
+      *s)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18552912">1.19. <code class="function">AAATerminateAuthSession(AAASession
+      *s)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18554960">1.20. <code class="function">AAATransaction*
+      AAACreateTransaction(AAAApplicationId app_id,AAACommandCode
+      cmd_code)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18557424">1.21. <code class="function">int AAADropTransaction(AAATransaction
+      *trans)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15715944">1.22. <code class="function">AAA_AVP* AAACreateAVP(AAA_AVPCode code,
+      AAA_AVPFlag flags, AAAVendorId vendorId, char *data, size_t length,
+      AVPDataStatus data_status)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15720512">1.23. <code class="function">AAAReturnCode
+      AAAAddAVPToMessage(AAAMessage *msg, AAA_AVP *avp, AAA_AVP
+      *position)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15723584">1.24. <code class="function">AAA_AVP* AAAFindMatchingAVP(AAAMessage
+      *msg, AAA_AVP *startAvp, AAA_AVPCode avpCode, AAAVendorId vendorId,
+      AAASearchType searchType)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15727600">1.25. <code class="function">AAA_AVP * AAAGetNextAVP(AAA_AVP
+      *avp)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15729496">1.26. <code class="function">AAAReturnCode AAAFreeAVP(AAA_AVP
+      **avp)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15731408">1.27. <code class="function">str AAAGroupAVPS(AAA_AVP_LIST
+      avps)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15555128">1.28. <code class="function">AAA_AVP_LIST AAAUnGroupAVPS(str
+      buf)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15557024">1.29. <code class="function">AAA_AVP*
+      AAAFindMatchingAVPList(AAA_AVP_LIST avpList, AAA_AVP *startAvp,
+      AAA_AVPCode avpCode, AAAVendorId vendorId, AAASearchType
+      searchType)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15560928">1.30. <code class="function">AAAFreeAVPList(AAA_AVP_LIST
+      *avpList)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15562816">1.31. <code class="function">int
+      AAAAddRequestHandler(AAARequestHandler_f *f,void
+      *param)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15565312">1.32. <code class="function">int
+      AAAAddResponseHandler(AAAResponseHandler_f *f,void
+      *param)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16124904"></a>1.¬†Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.¬†load_cdp(struct cdp_binds *cdpb)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17496312"></a>1.1.¬†<code class="function">load_cdp(struct cdp_binds
+      *cdpb)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find and load the CDiameterPeer function bindings</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct cdp_binds *cdpb</em></span> - structure
+          holding function pointers</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.2.¬†AAACreateRequest(AAAApplicationId app_id, AAACommandCode command_code, AAAMsgFlag flags, AAASession *session)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18110896"></a>1.2.¬†<code class="function">AAACreateRequest(AAAApplicationId
+      app_id, AAACommandCode command_code, AAAMsgFlag flags, AAASession
+      *session)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create a Diameter request</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAApplicationId app_id</em></span> - structure
+          holding function pointers</p>
+                </li>
+                <li class="listitem">
+                  <p>AAACommandCode command_code - command code for the
+          message</p>
+                </li>
+                <li class="listitem">
+                  <p>AAAMsgFlag flags - flags to be set</p>
+                </li>
+                <li class="listitem">
+                  <p>AAASession *session - session id to be set</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.3.¬†AAACreateResponse(AAAMessage *request)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15858808"></a>1.3.¬†<code class="function">AAACreateResponse(AAAMessage
+      *request)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create a Diameter response to a give request</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAMessage *request</em></span> - request that this
+          response is for</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.4.¬†AAAReturnCode AAAFreeMessage(AAAMessage **msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16432584"></a>1.4.¬†<code class="function">AAAReturnCode AAAFreeMessage(AAAMessage
+      **msg)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Free up memory used by Diameter message</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAMessage **msg</em></span> - pointer to the pointer
+          containing the message</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.5.¬†AAAReturnCode AAASendMessage(AAAMessage *message, AAATransactionCallback_f *callback_f, void *callback_param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18909696"></a>1.5.¬†<code class="function">AAAReturnCode AAASendMessage(AAAMessage
+      *message, AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Send Diameter message asynchronously</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAMessage *message</em></span> - request message to
+          be sent</p>
+                </li>
+                <li class="listitem">
+                  <p>AAATransactionCallback_f *callback_f - When the response is
+          received, the callback_f(callback_param,...) is called</p>
+                </li>
+                <li class="listitem">
+                  <p>void *callback_param - generic param for callback</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.6.¬†AAAReturnCode AAASendMessageToPeer(AAAMessage *message, str *peer_id, AAATransactionCallback_f *callback_f, void *callback_param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18534368"></a>1.6.¬†<code class="function">AAAReturnCode
+      AAASendMessageToPeer(AAAMessage *message, str *peer_id,
+      AAATransactionCallback_f *callback_f, void
+      *callback_param)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Send Diameter message to specific peer asynchronously</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAAMessage *message - request message to send</p>
+                </li>
+                <li class="listitem">
+                  <p>str *peer_id - FQDN of peer to send to</p>
+                </li>
+                <li class="listitem">
+                  <p>AAATransactionCallback_f *callback_f - When the response is
+          received, the callback_f(callback_param,...) is called</p>
+                </li>
+                <li class="listitem">
+                  <p>void *callback_param - generic param for callback</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.7.¬†AAAMessage* AAASendRecvMessage(AAAMessage *message)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18537832"></a>1.7.¬†<code class="function">AAAMessage*
+      AAASendRecvMessage(AAAMessage *message)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Send Diameter message synchronously. This blocks until a response
+      is received or a transactional time-out happens.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAAMessage *message - request message to be sent</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.8.¬†AAAMessage* AAASendRecvMessageToPeer(AAAMessage *message, str *peer_id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18494240"></a>1.8.¬†<code class="function">AAAMessage*
+      AAASendRecvMessageToPeer(AAAMessage *message, str
+      *peer_id)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Send Diameter message to specific peer synchronously. This blocks
+      until a response is received or a transactional time-out happens.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAMessage *message</em></span> - request message to
+          send</p>
+                </li>
+                <li class="listitem">
+                  <p>str *peer_id - FQDN of peer to send to.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.9.¬†AAASession* AAACreateSession(void *generic_data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18496880"></a>1.9.¬†<code class="function">AAASession* AAACreateSession(void
+      *generic_data)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create a generic Diameter session</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>void *generic_data - data to be save to session, useful for
+          attaching app specific data to the session</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.10.¬†AAASession* AAAMakeSession(int app_id,int type,str session_id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18498816"></a>1.10.¬†<code class="function">AAASession* AAAMakeSession(int
+      app_id,int type,str session_id)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create a Diameter session using already known params</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>int app_id - app id to use</p>
+                </li>
+                <li class="listitem">
+                  <p>int type - type of session</p>
+                </li>
+                <li class="listitem">
+                  <p>str session_id - session ID</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.11.¬†AAASession* AAAGetSession(str id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18501576"></a>1.11.¬†<code class="function">AAASession* AAAGetSession(str
+      id)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Retrieve a Diameter session. Returns with a lock on
+      AAASession-&gt;hash - Unlock when done working with result</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>str id - Diameter session ID to search for</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.12.¬†AAADropSession(AAASession *s)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16757200"></a>1.12.¬†<code class="function">AAADropSession(AAASession
+      *s)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Drop a Diameter session - deallocating all memory</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAASession *s - session to drop</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.13.¬†AAASessionLock(unsigned int hash)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16759088"></a>1.13.¬†<code class="function">AAASessionLock(unsigned int
+      hash)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Lock a Diameter session (hash table row)</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>unsigned int hash - hash to lock</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.14.¬†AAASessionUnLock(unsigned int hash)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16761040"></a>1.14.¬†<code class="function">AAASessionUnLock(unsigned int
+      hash)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Unlock a Diameter session (hash table row)</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>unsigned int hash - hash to unlock</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.15.¬†AAASession* AAACreateClientAuthSession(int is_statefull,AAASessionCallback_f *cb,void *generic_data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16762928"></a>1.15.¬†<code class="function">AAASession*
+      AAACreateClientAuthSession(int is_statefull,AAASessionCallback_f
+      *cb,void *generic_data)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Creates an Authorisation session for the Client. It generate a new
+      ID and adds to the list of CDP sessions. Returns with a lock on
+      AAASession-&gt;hash</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>int is_statefull - is session stateful or
+          not</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>AAASessionCallback_f *cb - callback function on session state
+          change</p>
+                </li>
+                <li class="listitem">
+                  <p>void *generic_data - generic callback data</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.16.¬†AAASession* AAACreateServerAuthSession(AAMessage *msg,int is_statefull,AAASessionCallback_f *cb,void *generic_data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18545288"></a>1.16.¬†<code class="function">AAASession*
+      AAACreateServerAuthSession(AAMessage *msg,int
+      is_statefull,AAASessionCallback_f *cb,void
+      *generic_data)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create authorisation session for the Server. Generates a new ID
+      and add to CDP list of sessions. Returns with a lock on
+      AAASession-&gt;hash.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAMessage *msg - request message from which to create server
+          session</p>
+                </li>
+                <li class="listitem">
+                  <p>int is_statefull - is session stateful or not</p>
+                </li>
+                <li class="listitem">
+                  <p>AAASessionCallback_f *cb - callback function on session state
+          change</p>
+                </li>
+                <li class="listitem">
+                  <p>void *generic_data - generic callback data</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.17.¬†AAASession* AAAGetAuthSession(str id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18548920"></a>1.17.¬†<code class="function">AAASession* AAAGetAuthSession(str
+      id)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Look for an authorisation session. Returns with lock on
+      AAASession-&gt;hash</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>str id - ID of Auth session to search for</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.18.¬†AAADropAuthSession(AAASession *s)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18550856"></a>1.18.¬†<code class="function">AAADropAuthSession(AAASession
+      *s)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Deallocates the memory taken by a Authorisation session</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAASession *s</em></span> - Session to drop and
+          deallocate memory for</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.19.¬†AAATerminateAuthSession(AAASession *s)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18552912"></a>1.19.¬†<code class="function">AAATerminateAuthSession(AAASession
+      *s)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Sends a service terminated event to the session</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAASession *s</em></span> - authhorisation session to
+          terminate</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.20.¬†AAATransaction* AAACreateTransaction(AAAApplicationId app_id,AAACommandCode cmd_code)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18554960"></a>1.20.¬†<code class="function">AAATransaction*
+      AAACreateTransaction(AAAApplicationId app_id,AAACommandCode
+      cmd_code)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create a AAATransaction for the given request</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAAApplicationId app_id - ID of the request's
+          application</p>
+                </li>
+                <li class="listitem">
+                  <p>AAACommandCode cmd_code - request's code</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.21.¬†int AAADropTransaction(AAATransaction *trans)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18557424"></a>1.21.¬†<code class="function">int AAADropTransaction(AAATransaction
+      *trans)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Deallocates the memory taken by AAA transaction</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAATransaction *trans - transaction to free</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.22.¬†AAA_AVP* AAACreateAVP(AAA_AVPCode code, AAA_AVPFlag flags, AAAVendorId vendorId, char *data, size_t length, AVPDataStatus data_status)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15715944"></a>1.22.¬†<code class="function">AAA_AVP* AAACreateAVP(AAA_AVPCode code,
+      AAA_AVPFlag flags, AAAVendorId vendorId, char *data, size_t length,
+      AVPDataStatus data_status)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Create new AVP and return pointer to it</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAA_AVPCode code</em></span> - code for new
+          AVP</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVPFlag flags - flags to set</p>
+                </li>
+                <li class="listitem">
+                  <p>AAAVendorId vendorId - vendor ID for AVP</p>
+                </li>
+                <li class="listitem">
+                  <p>char *data - generic payload data</p>
+                </li>
+                <li class="listitem">
+                  <p>size_t length - length of payload data</p>
+                </li>
+                <li class="listitem">
+                  <p>AVPDataStatus data_status - what to do with the payload,
+          duplicate, free with message, etc</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.23.¬†AAAReturnCode AAAAddAVPToMessage(AAAMessage *msg, AAA_AVP *avp, AAA_AVP *position)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15720512"></a>1.23.¬†<code class="function">AAAReturnCode
+      AAAAddAVPToMessage(AAAMessage *msg, AAA_AVP *avp, AAA_AVP
+      *position)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find and load the CDiameterPeer function bindings</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAMessage *msg</em></span> - the message to add
+          to</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVP *avp - the AVP to add</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVP *position - AVP to add after. if NULL, we add at
+          beginning</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.24.¬†AAA_AVP* AAAFindMatchingAVP(AAAMessage *msg, AAA_AVP *startAvp, AAA_AVPCode avpCode, AAAVendorId vendorId, AAASearchType searchType)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15723584"></a>1.24.¬†<code class="function">AAA_AVP* AAAFindMatchingAVP(AAAMessage
+      *msg, AAA_AVP *startAvp, AAA_AVPCode avpCode, AAAVendorId vendorId,
+      AAASearchType searchType)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find and load the CDiameterPeer function bindings</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAAMessage *msg - the message to search in</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVP *startAvp - at which AVP to start the search. usefull
+          for looking for more of the same name</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVPCode avpCode - AVP code to match</p>
+                </li>
+                <li class="listitem">
+                  <p>AAAVendorId vendorId - AVP vendor ID to match</p>
+                </li>
+                <li class="listitem">
+                  <p>AAASearchType searchType - look forward or backward</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.25.¬†AAA_AVP * AAAGetNextAVP(AAA_AVP *avp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15727600"></a>1.25.¬†<code class="function">AAA_AVP * AAAGetNextAVP(AAA_AVP
+      *avp)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find and load the CDiameterPeer function bindings</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAA_AVP *avp - reference AVP</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.26.¬†AAAReturnCode AAAFreeAVP(AAA_AVP **avp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15729496"></a>1.26.¬†<code class="function">AAAReturnCode AAAFreeAVP(AAA_AVP
+      **avp)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find and load the CDiameterPeer function bindings</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAA_AVP **avp - pointer memory to be freed</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.27.¬†str AAAGroupAVPS(AAA_AVP_LIST avps)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15731408"></a>1.27.¬†<code class="function">str AAAGroupAVPS(AAA_AVP_LIST
+      avps)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Groups a list of AVPS into a data buffer</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAA_AVP_LIST avps - list of AVPS to group</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.28.¬†AAA_AVP_LIST AAAUnGroupAVPS(str buf)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15555128"></a>1.28.¬†<code class="function">AAA_AVP_LIST AAAUnGroupAVPS(str
+      buf)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Ungroup a data buffer into a list of AVPs</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>str buf - payload to ungroup list from</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.29.¬†AAA_AVP* AAAFindMatchingAVPList(AAA_AVP_LIST avpList, AAA_AVP *startAvp, AAA_AVPCode avpCode, AAAVendorId vendorId, AAASearchType searchType)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15557024"></a>1.29.¬†<code class="function">AAA_AVP*
+      AAAFindMatchingAVPList(AAA_AVP_LIST avpList, AAA_AVP *startAvp,
+      AAA_AVPCode avpCode, AAAVendorId vendorId, AAASearchType
+      searchType)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Find an AVP in an AVP list</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAA_AVP_LIST avpList - AVP list to search</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVP *startAvp - where to start the search</p>
+                </li>
+                <li class="listitem">
+                  <p>AAA_AVPCode avpCode - AVP code to match</p>
+                </li>
+                <li class="listitem">
+                  <p>AAAVendorId vendorId - vendor ID to match</p>
+                </li>
+                <li class="listitem">
+                  <p>AAASearchType searchType - forwards or backwards</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.30.¬†AAAFreeAVPList(AAA_AVP_LIST *avpList)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15560928"></a>1.30.¬†<code class="function">AAAFreeAVPList(AAA_AVP_LIST
+      *avpList)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Free AVP list and all its members</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAA_AVP_LIST *avpList - list to be freed</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.31.¬†int AAAAddRequestHandler(AAARequestHandler_f *f,void *param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15562816"></a>1.31.¬†<code class="function">int
+      AAAAddRequestHandler(AAARequestHandler_f *f,void
+      *param)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>add a #AAARequestHandler_f callback to request being
+      received</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>AAARequestHandler_f *f - callback function to be called on
+          incoming requests</p>
+                </li>
+                <li class="listitem">
+                  <p>void *param - generic data passed to callback function</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.32.¬†int AAAAddResponseHandler(AAAResponseHandler_f *f,void *param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15565312"></a>1.32.¬†<code class="function">int
+      AAAAddResponseHandler(AAAResponseHandler_f *f,void
+      *param)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>add a #AAAResponseHandler_f callback to responses being
+      received</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>AAAResponseHandler_f *f</em></span> - callback
+          function to be called on incoming responses</p>
+                </li>
+                <li class="listitem">
+                  <p>void *param - generic data to be bassed to callback
+          function</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†3.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16733280"></a>Chapter¬†3.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp19035768"></a>
+          <dl>
+            <dt>3.1. <a href="#idp17926216">Where can I find more about Kamailio?</a></dt>
+            <dt>3.2. <a href="#idp18037056">Where can I post a question about this module?</a></dt>
+            <dt>3.3. <a href="#idp18798312">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="3.1.">
+                <td align="left" valign="top">
+                  <a id="idp17926216"></a>
+                  <a id="idp18988536"></a>
+                  <p>
+                    <strong>3.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="3.2.">
+                <td align="left" valign="top">
+                  <a id="idp18037056"></a>
+                  <a id="idp17293544"></a>
+                  <p>
+                    <strong>3.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="3.3.">
+                <td align="left" valign="top">
+                  <a id="idp18798312"></a>
+                  <a id="idp16010080"></a>
+                  <p>
+                    <strong>3.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

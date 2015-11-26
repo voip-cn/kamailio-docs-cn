@@ -1,0 +1,567 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Peering Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4303784" title="Peering Module" />
+    <link rel="next" href="#idp3412696" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Peering Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4303784"></a>Peering Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2008 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3412696">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3227088">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1649536">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3176336">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2347384">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1755632">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1522816">3.1. <code class="varname">radius_config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1704064">3.2. <code class="varname">verify_destination_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp263208">3.3. <code class="varname">verify_source_service_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3005192">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3005560">4.1. <code class="function">verify_destination()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3012688">4.2. <code class="function">verify_source()</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1745760"><code class="varname">radius_config</code> parameter usage</a></dt>
+          <dt>1.2. <a href="#idm20728"><code class="varname">verify_destination_service_type</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp264592"><code class="varname">verify_source_service_type</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp3011448"><code class="function">verify_destination()</code> usage</a></dt>
+          <dt>1.5. <a href="#idp3018160"><code class="function">verify_source()</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3412696"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3227088">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1649536">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3176336">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2347384">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1755632">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1522816">3.1. <code class="varname">radius_config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1704064">3.2. <code class="varname">verify_destination_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp263208">3.3. <code class="varname">verify_source_service_type</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3005192">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3005560">4.1. <code class="function">verify_destination()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3012688">4.2. <code class="function">verify_source()</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3227088"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The peering module allows SIP providers (operators or organizations) 
+	to verify from a broker if source or destination of a SIP request is a trusted peer.
+        </p>
+          <p>
+	In order to participate in the trust community provided by a
+	broker, each SIP provider registers the domains (host parts of SIP URIs) 
+	that they serve with the broker.  When a SIP proxy of a
+	provider needs to send a SIP request to a non-local domain, it
+	can find out from the broker using verify_destination() function
+	if the non-local domain is served by a trusted peer.  If so, the
+	provider receives from the broker a hash of the SIP request and
+	a timestamp that it includes in the request to the non-local
+	domain.  When a SIP proxy of the non-local domain receives the SIP request, it, in
+	turn, can verify from the broker using verify_source() function
+	if the request came from a trusted peer.
+        </p>
+          <p>
+        Verification functions communicate with the broker using Radius
+        protocol.  Sample FreeRADIUS configuration files for broker's
+	Radius server are available from http://www.wirlab.net/tsi/.
+        </p>
+          <p>
+        Comments and suggestions for improvements are welcome.
+        </p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1649536"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3176336"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The module depends on the following modules
+			(in the other words 
+			the listed modules must be loaded before this module):
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>none</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2347384"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed 
+			before compilling Kamailio with this module
+				loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>radiusclient-ng</em></span>
+				0.5.0 or higher -- 
+				library and development files. See <a class="ulink" href="javascript:if(confirm('http://developer.berlios.de/projects/radiusclient-ng/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://developer.berlios.de/projects/radiusclient-ng/'" tppabs="http://developer.berlios.de/projects/radiusclient-ng/">
+				http://developer.berlios.de/projects/radiusclient-ng/</a>.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1755632"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†radius_config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1522816"></a>3.1.¬†<code class="varname">radius_config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the location of the configuration file of Radius client 
+		libraries.
+		</p>
+            <p>
+		Default value is 
+			<span class="quote">‚Äú<span class="quote">/usr/local/etc/radiusclient-ng/radiusclient.conf</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp1745760"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†<code class="varname">radius_config</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("peering", "radius_config", "/etc/broker/radiusclient.conf")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†verify_destination_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1704064"></a>3.2.¬†<code class="varname">verify_destination_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of the Service-Type Radius attribute to be
+		used, when sender of SIP Request verifies the request's
+		destination using verify_destination() function.
+		</p>
+            <p>
+		Default value is the dictionary value of <span class="quote">‚Äú<span class="quote">Sip-Verify-Destination</span>‚Äù</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idm20728"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†<code class="varname">verify_destination_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("peering", "verify_destination_service_type", 21)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†verify_source_service_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp263208"></a>3.3.¬†<code class="varname">verify_source_service_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is the value of the Service-Type Radius attribute to be
+		used, when receiver of SIP Request verifies the request's
+		source using verify_source() function.
+		</p>
+            <p>
+		Default value is the dictionary value of <span class="quote">‚Äú<span class="quote">Sip-Verify-Source</span>‚Äù</span>
+		Service-Type.
+		</p>
+            <div class="example">
+              <a id="idp264592"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†<code class="varname">verify_source_service_type</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("peering", "verify_source_service_type", 22)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3005192"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†verify_destination()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3005560"></a>4.1.¬†<code class="function">verify_destination()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function verify_destination() queries from
+		broker's Radius server if domain (host part) of Request
+		URI is served by a trusted peer.  Radius request contains the
+		following attributes/values:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>User-Name - Request-URI host</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-URI-User - Request-URI user</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-From-Tag - From tag</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-Call-Id - Call id</p>
+                </li>
+                <li class="listitem">
+                  <p>Service-Type - verify_destination_service_type</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Function returns value 1 if domain of Request URI is
+		served by a trusted peer and -1 otherwise.  In case of positive
+		result, the Radius server returns a set of SIP-AVP reply attributes.
+		The value of each SIP-AVP is of form:
+		 </p>
+            <p>
+		 [#]name(:|#)value
+		 </p>
+            <p>
+		 Value of each SIP-AVP reply attribute is mapped to an
+		 Kamailio AVP.  Prefix # in front of name or value indicates a
+		 string name or string value, respectively.
+		 </p>
+            <p>
+		 One of the SIP-AVP reply attributes contains a string
+		 that the source peer must include "as is" in a 
+		 <span class="emphasis"><em>P-Request-Hash:</em></span> header when it sends the SIP request to
+		 the destination peer.  The string value may, for
+		 example, be of form hash@timestamp, where hash contains
+		 a hash calculated by the broker based on the attributes
+		 of the query and some local information and timestamp
+		 is the time when the calculation was done.
+		 </p>
+            <p>
+		 AVP names used in reply attributes are assigned by the
+		 broker.
+		 </p>
+            <p>
+		This function can be used from REQUEST_ROUTE and
+		FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3011448"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†<code class="function">verify_destination()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (verify_destination()) {
+   append_hf("P-Request-Hash: $avp(i:200)\r\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†verify_source()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3012688"></a>4.2.¬†<code class="function">verify_source()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function verify_source() queries the
+		broker's Radius server whether the SIP request was received from
+		a trusted peer.  The Radius request contains the
+		following attributes/values:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>User-Name - Request-URI host</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-URI-User - Request-URI user</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-From-Tag - From tag</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-Call-Id - Call id</p>
+                </li>
+                <li class="listitem">
+                  <p>SIP-Request-Hash - body of P-Request-Hash header</p>
+                </li>
+                <li class="listitem">
+                  <p>Service-Type - verify_source_service_type</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Function returns value 1 if SIP request was received
+		from a trusted peer and -1 otherwise.  In case of positive
+		result, Radius server may return a set of SIP-AVP reply
+		attributes.  Value of each SIP-AVP is of form:
+		 </p>
+            <p>
+		 [#]name(:|#)value
+		 </p>
+            <p>
+		 Value of each SIP-AVP reply attribute is mapped to an
+		 Kamailio 
+		 AVP.  Prefix # in front of name or value indicates a
+		string name or string value, respectively.
+		 </p>
+            <p>
+		 AVP names used in reply attributes are
+		 assigned by the broker.
+		 </p>
+            <p>
+		This function can be used from REQUEST_ROUTE and
+		FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3018160"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="function">verify_source()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_present_hf("P-Request-Hash")) {
+   if (verify_source()) {
+      xlog("L_INFO", "Request came from trusted peer\n")
+   }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

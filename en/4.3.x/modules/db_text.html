@@ -1,0 +1,957 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>DBTEXT Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11222432" title="DBTEXT Module" />
+    <link rel="next" href="#idp18195976" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="DBTEXT Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11222432"></a>DBTEXT Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:osas@voipembedded.com">osas@voipembedded.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Olle E.</span> <span class="surname">Johansson</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:oej@edvina.net">oej@edvina.net</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003, 2004 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18195976">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18178552">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18634160">1.1. Design of dbtext engine</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18777168">1.2. Internal format of a dbtext table</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17916056">1.3. Existing limitations</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18125192">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18396208">2.1. Kamailio modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18562616">2.2. External libraries or applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17389576">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18753424">3.1. <code class="varname">db_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17211792">3.2. <code class="varname">emptystring</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17614904">4. Exported RPC Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16810752">4.1. 
+		<code class="function">db_text.dump</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18276112">5. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17772128">5.1. Using db_text with a basic Kamailio configuration</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16364808">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18219600">Sample of a dbtext table</a></dt>
+          <dt>1.2. <a href="#idp17133320">Minimal Kamailio location dbtext table definition</a></dt>
+          <dt>1.3. <a href="#idp18276624">Minimal Kamailio subscriber dbtext table example</a></dt>
+          <dt>1.4. <a href="#idp18760776">Set <code class="varname">db_mode</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp17756696">Set <code class="varname">emptystring</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp17735816">Load the dbtext module</a></dt>
+          <dt>1.7. <a href="#idp18825392">Definition of 'subscriber' table (one line)</a></dt>
+          <dt>1.8. <a href="#idp17637648">Definition of 'location' and 'aliases' tables (one line)</a></dt>
+          <dt>1.9. <a href="#idp17137664">Definition of 'version' table and sample records</a></dt>
+          <dt>1.10. <a href="#idp16779360">Configuration file</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18195976"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18178552">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18634160">1.1. Design of dbtext engine</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18777168">1.2. Internal format of a dbtext table</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17916056">1.3. Existing limitations</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18125192">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18396208">2.1. Kamailio modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18562616">2.2. External libraries or applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17389576">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18753424">3.1. <code class="varname">db_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17211792">3.2. <code class="varname">emptystring</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17614904">4. Exported RPC Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16810752">4.1. 
+		<code class="function">db_text.dump</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18276112">5. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17772128">5.1. Using db_text with a basic Kamailio configuration</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18178552"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module implements a simplified database engine based on text
+		files. It can be used by Kamailio DB interface instead of other
+		database module (like MySQL).
+	</p>
+          <p>
+		The module is meant for use in demos or small devices that do not
+		support other DB modules. It keeps everything in memory and if you deal
+		with large amount of data you may run out of memory quickly. Also, it
+		does not implement all standard database facilities (like order by),
+		it includes minimal functionality to work properly (who knows ?!?)
+		with Kamailio.
+	</p>
+          <p>
+		NOTE: the timestamp is printed in an integer value from time_t
+		structure. If you use it in a system that cannot do this conversion,
+		it will fail (support for such situation is in to-do list).
+	</p>
+          <p>
+		NOTE: even when db_text is in non-caching mode, the module does not write
+		back to hard drive after changes. In this mode, the module checks if
+		the corresponding file on disk has changed, and reloads it. The write
+		to disk happens at Kamailio shut down. If db_text is in caching
+		mode, many "reload" functions in various modules will not work.
+	</p>
+          <div class="section" title="1.1. Design of dbtext engine">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18634160"></a>1.1. Design of dbtext engine</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The dbtext database system architecture:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				A database is represented by a directory in the local file
+				system.
+				</p>
+                  <p>
+				NOTE: when you use <span class="emphasis"><em>dbtext</em></span> in Kamailio,
+				the database URL for modules must be the path to the directory
+				where the table-files are located, prefixed by 
+				<span class="quote">“<span class="quote">text://</span>”</span>, e.g., 
+				<span class="quote">“<span class="quote">text:///var/dbtext/ser</span>”</span>. If there is no
+				<span class="quote">“<span class="quote">/</span>”</span> after <span class="quote">“<span class="quote">text://</span>”</span> then
+				<span class="quote">“<span class="quote">CFG_DIR/</span>”</span> is inserted at the beginning of the
+				database path. So, either you provide an absolute path to
+				database directory or a relative one to <span class="quote">“<span class="quote">CFG_DIR</span>”</span>
+				directory.
+				</p>
+                  <p>
+				Do not forget that all databases in Kamailio needs the <span class="quote">“<span class="quote">version</span>”</span>
+				table.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				A table is represented by a text file inside database directory.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="1.2. Internal format of a dbtext table">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18777168"></a>1.2. Internal format of a dbtext table</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The first line is the definition of the columns. Each column must be
+		declared in the following format:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				the name of column must not include white spaces.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				the format of a column definition is: 
+				<span class="emphasis"><em>name(type,attr)</em></span>.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				between two column definitions must be a white space, e.g., 
+				<span class="quote">“<span class="quote">first_name(str) last_name(str)</span>”</span>.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				the type of a column can be: 
+					</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>int</em></span> - integer numbers.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>double</em></span> - real numbers with two
+					decimals.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>str</em></span> - strings with maximum size of 4KB.
+					</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				a column can have one of the attributes: 
+					</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>auto</em></span> - only for 'int' columns,
+					the maximum value in that column is incremented and stored
+					in this field if it is not provided in queries.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>null</em></span> - accept null values in column
+					fields.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					if no attribute is set, the fields of the column cannot have
+					null value.
+					</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				each other line is a row with data. The line ends with
+				<span class="quote">“<span class="quote">\n</span>”</span>.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				the fields are separated by <span class="quote">“<span class="quote">:</span>”</span>.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				no value between two ':' (or between ':' and start/end of a row)
+				means <span class="quote">“<span class="quote">null</span>”</span> value. If the parameter "emptystring" is
+				enabled, db_text sets a NULL string to an empty string value.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				next characters must be escaped in strings: <span class="quote">“<span class="quote">\n</span>”</span>,
+				<span class="quote">“<span class="quote">\r</span>”</span>, <span class="quote">“<span class="quote">\t</span>”</span>, <span class="quote">“<span class="quote">:</span>”</span>.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				 <span class="emphasis"><em>0</em></span> -- the zero value must be escaped too.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp18219600"></a>
+              <p class="title">
+                <strong>Example 1.1. Sample of a dbtext table</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+id(int,auto) name(str) flag(double) desc(str,null)
+1:nick:0.34:a\tgood\: friend
+2:cole:-3.75:colleague
+3:bob:2.50:
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp17133320"></a>
+              <p class="title">
+                <strong>Example 1.2. Minimal Kamailio location dbtext table definition</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+username(str) contact(str) expires(int) q(double) callid(str) cseq(int)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp18276624"></a>
+              <p class="title">
+                <strong>Example 1.3. Minimal Kamailio subscriber dbtext table example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+username(str) password(str) ha1(str) domain(str) ha1b(str)
+suser:supasswd:xxx:alpha.org:xxx
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="1.3. Existing limitations">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17916056"></a>1.3. Existing limitations</h3>
+                </div>
+              </div>
+            </div>
+            <p>This database interface does not support data insertion with
+			default values. All such values specified in the database template
+			are ignored. So its advisable to specify all data for a column at
+			insertion operations.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18125192"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18396208"></a>2.1. Kamailio modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			These modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External libraries or applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18562616"></a>2.2. External libraries or applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			These libraries or applications must be installed before running
+			Kamailio with this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17389576"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18753424"></a>3.1. <code class="varname">db_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set caching mode (0) or non-caching mode (1). In caching mode, data
+			is loaded at startup. In non-caching mode, the module check every time
+			a table is requested whether the corresponding file on disk has
+			changed, and if yes, will re-load the table from file.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp18760776"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_text", "db_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. emptystring (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17211792"></a>3.2. <code class="varname">emptystring</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			db_text by default handles an empty string as a NULL value.
+			Some modules, like the dialplan module, does not accept
+			NULL strings. If you enable emptystring an empty string
+			will not be NULL, but an empty string.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">0</span>”</span> (off).
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp17756696"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">emptystring</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_text", "emptystring", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Exported RPC Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17614904"></a>4. Exported RPC Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  db_text.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16810752"></a>4.1. 
+		<code class="function">db_text.dump</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Write back to hard drive all modified tables.</p>
+            <p>Name: <span class="emphasis"><em>db_text.dump</em></span></p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>RPC Command Format:</p>
+            <pre class="programlisting">	kamcmd db_text.dump</pre>
+          </div>
+        </div>
+        <div class="section" title="5. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18276112"></a>5. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Compile the module and load it instead of mysql or other DB modules.
+		</p>
+          <p>
+		REMINDER: when you use <span class="emphasis"><em>text</em></span> in Kamailio,
+		the	database URL for modules must be the path to the directory
+		where the table-files are located, prefixed by
+		<span class="quote">“<span class="quote">text://</span>”</span>, e.g., 
+		<span class="quote">“<span class="quote">text:///var/dbtext/ser</span>”</span>. If there is no <span class="quote">“<span class="quote">/</span>”</span>
+		after <span class="quote">“<span class="quote">text://</span>”</span> then <span class="quote">“<span class="quote">CFG_DIR/</span>”</span> is inserted
+		at the beginning of the database path. So, either you provide an
+		absolute path to database directory or a relative one to 
+		<span class="quote">“<span class="quote">CFG_DIR</span>”</span> directory.
+		</p>
+          <div class="example">
+            <a id="idp17735816"></a>
+            <p class="title">
+              <strong>Example 1.6. Load the dbtext module</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+loadmodule "/path/to/kamailio/modules_k/db_text.so"
+...
+modparam("module_name", "db_url", "text:///path/to/dbtext/database")
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="section" title="5.1. Using db_text with a basic Kamailio configuration">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17772128"></a>5.1. Using db_text with a basic Kamailio configuration</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Here are definitions for the most important tables as well as a basic 
+		configuration file to use db_text with Kamailio. The table structures
+		may change in time and you will have to adjust these examples. Check the
+		source code directory <span class="quote">“<span class="quote">utils/kamctl/dbtxt/kamailio</span>”</span> for
+		current definitions.
+		</p>
+            <p>
+		You have to populate the table 'subscriber' by hand with user profiles 
+		in order to have authentication. To use with the given configuration
+		file, the table files must be placed in the '/tmp/serdb' directory.
+		</p>
+            <div class="example">
+              <a id="idp18825392"></a>
+              <p class="title">
+                <strong>Example 1.7. Definition of 'subscriber' table (one line)</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+username(str) domain(str) password(str) first_name(str) last_name(str) phone(str) email_address(str) datetime_created(int) datetime_modified(int) confirmation(str) flag(str) sendnotification(str) greeting(str) ha1(str) ha1b(str) perms(str) allow_find(str) timezone(str,null) rpid(str,null)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp17637648"></a>
+              <p class="title">
+                <strong>Example 1.8. Definition of 'location' and 'aliases' tables (one line)</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+username(str) domain(str,null) contact(str,null) received(str) expires(int,null) q(double,null) callid(str,null) cseq(int,null) last_modified(str) flags(int) user_agent(str) socket(str) 
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp17137664"></a>
+              <p class="title">
+                <strong>Example 1.9. Definition of 'version' table and sample records</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+table_name(str) table_version(int)
+subscriber:3
+location:6
+aliases:6
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp16779360"></a>
+              <p class="title">
+                <strong>Example 1.10. Configuration file</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+#
+# $Id$
+#
+# simple quick-start config script with dbtext
+#
+
+# ----------- global configuration parameters ------------------------
+
+#debug=9         # debug level (cmd line: -dddddddddd)
+#fork=yes
+#log_stderror=no        # (cmd line: -E)
+
+check_via=no    # (cmd. line: -v)
+dns=no          # (cmd. line: -r)
+rev_dns=no      # (cmd. line: -R)
+children=4
+
+listen=10.100.100.1
+port=5060
+
+# ------------------ module loading ----------------------------------
+
+# use dbtext database
+loadmodule "modules/dbtext/dbtext.so"
+
+loadmodule "modules/sl/sl.so"
+loadmodule "modules/tm/tm.so"
+loadmodule "modules/rr/rr.so"
+loadmodule "modules/maxfwd/maxfwd.so"
+loadmodule "modules/usrloc/usrloc.so"
+loadmodule "modules/registrar/registrar.so"
+loadmodule "modules/textops/textops.so"
+loadmodule "modules/textops/mi_fifo.so"
+
+# modules for digest authentication
+loadmodule "modules/auth/auth.so"
+loadmodule "modules/auth_db/auth_db.so"
+
+# ----------------- setting module-specific parameters ---------------
+
+# -- mi_fifo params --
+
+modparam("mi_fifo", "fifo_name", "/tmp/openser_fifo")
+
+# -- usrloc params --
+
+# use dbtext database for persistent storage
+modparam("usrloc", "db_mode", 2)
+modparam("usrloc|auth_db", "db_url", "dbtext:///tmp/openserdb")
+
+# -- auth params --
+#
+modparam("auth_db", "calculate_ha1", 1)
+modparam("auth_db", "password_column", "password")
+modparam("auth_db", "user_column", "username")
+modparam("auth_db", "domain_column", "domain")
+
+# -- rr params --
+# add value to ;lr param to make some broken UAs happy
+modparam("rr", "enable_full_lr", 1)
+
+# -------------------------  request routing logic -------------------
+
+# main routing logic
+
+route{
+    # initial sanity checks -- messages with
+    # max_forwards==0, or excessively long requests
+    if (!mf_process_maxfwd_header("10")) {
+        sl_send_reply("483","Too Many Hops");
+        exit;
+    };
+    if (msg:len &gt;=  max_len ) {
+        sl_send_reply("513", "Message too big");
+        exit;
+    };
+
+    # we record-route all messages -- to make sure that
+    # subsequent messages will go through our proxy; that's
+    # particularly good if upstream and downstream entities
+    # use different transport protocol
+    if (!method=="REGISTER") record_route();
+
+    # subsequent messages withing a dialog should take the
+    # path determined by record-routing
+    if (loose_route()) {
+        # mark routing logic in request
+        append_hf("P-hint: rr-enforced\r\n");
+        route(1);
+        exit;
+    };
+
+    if (!uri==myself) {
+        # mark routing logic in request
+        append_hf("P-hint: outbound\r\n");
+        route(1);
+        exit;
+    };
+
+    # if the request is for other domain use UsrLoc
+    # (in case, it does not work, use the following command
+    # with proper names and addresses in it)
+    if (uri==myself) {
+        if (method=="REGISTER") {
+            # digest authentication
+            if (!www_authorize("", "subscriber")) {
+                www_challenge("", "0");
+                exit;
+            };
+
+            save("location");
+            exit;
+        };
+
+        lookup("aliases");
+        if (!uri==myself) {
+            append_hf("P-hint: outbound alias\r\n");
+            route(1);
+            exit;
+        };
+
+        # native SIP destinations are handled using our USRLOC DB
+        if (!lookup("location")) {
+            sl_send_reply("404", "Not Found");
+            exit;
+        };
+    };
+    append_hf("P-hint: usrloc applied\r\n");
+    route(1);
+}
+
+route[1]
+{
+    # send it out now; use stateful forwarding as it works reliably
+    # even for UDP2TCP
+    if (!t_relay()) {
+        sl_reply_error();
+    };
+}
+
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16364808"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	Once you have the module loaded, you can use the API specified by Kamailio DB
+	interface.
+    </p>
+      </div>
+    </div>
+  </body>
+</html>

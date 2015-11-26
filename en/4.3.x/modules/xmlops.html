@@ -1,0 +1,361 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>XMLOPS Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#xmlops" title="XMLOPS Module" />
+    <link rel="next" href="#idp2408688" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="XMLOPS Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="xmlops"></a>XMLOPS Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2408688">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#xmlops.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#xmlops.deps">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2226784">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1516704">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#xmlops.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#xmlops.p.buf_size">3.1. <code class="varname">buf_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xmlops.p.xml_ns">3.2. <code class="varname">xml_ns</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#xmlops.pvs">4. Pseudo-Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp134208">4.1. 
+		<code class="function">$xml(name=&gt;spec)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm17552">Set <code class="varname">buf_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm7856">Set <code class="varname">xml_ns</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp135272"><code class="function">xml</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2408688"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#xmlops.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#xmlops.deps">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2226784">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1516704">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#xmlops.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#xmlops.p.buf_size">3.1. <code class="varname">buf_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xmlops.p.xml_ns">3.2. <code class="varname">xml_ns</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#xmlops.pvs">4. Pseudo-Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp134208">4.1. 
+		<code class="function">$xml(name=&gt;spec)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xmlops.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module implementing functions and pseudo-variables for
+		XML operations.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xmlops.deps"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2226784"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1516704"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed before running
+			kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span> - for compilation from source, the 
+				development headers from this library are needed as well.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xmlops.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. buf_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xmlops.p.buf_size"></a>3.1. <code class="varname">buf_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Maximum size of the XML buffer.
+	</p>
+            <p>
+	    Default value is 4096.
+	</p>
+            <div class="example">
+              <a id="idm17552"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">buf_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xmlops", "buf_size", 8192)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. xml_ns (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xmlops.p.xml_ns"></a>3.2. <code class="varname">xml_ns</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Register xml namespace prefix. Parameter value must have the format:
+		'prefix=uri'.</p>
+            <div class="example">
+              <a id="idm7856"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">xml_ns</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xmlops", "xml_ns", "rpid=urn:ietf:params:xml:ns:pidf:rpid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Pseudo-Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xmlops.pvs"></a>4. Pseudo-Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  $xml(name=&gt;spec)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp134208"></a>4.1. 
+		<code class="function">$xml(name=&gt;spec)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Pseudo-variable for XML document operations using xpath syntax. For
+		more see the Pseudo-Variables Cookbook.
+		</p>
+            <div class="example">
+              <a id="idp135272"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">xml</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$xml(x=&gt;doc)
+    = '&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;';
+xlog("content of node b: $xml(x=&gt;xpath:/a/b/text())\n");
+$xml(x=&gt;xpath:/a/b) = "1234";
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

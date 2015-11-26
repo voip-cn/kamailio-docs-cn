@@ -1,0 +1,455 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>prefix_route Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#blst" title="prefix_route Module" />
+    <link rel="next" href="#idp44224" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="prefix_route Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="blst"></a>prefix_route Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Alfred E.</span> <span class="surname">Heggestad</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Telio Telecom<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Alfred E. Heggestad</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 Telio Telecom AS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp44224">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#prefixroute.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#prefixroute.parameters">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.db_url">2.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.db_table">2.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.exit">2.3. <code class="varname">exit</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#prefixroute.functions">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.prefix_route">3.1. <code class="function">prefix_route([user])</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#prefixroute.rpc">4. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.reload">4.1. <code class="function">prefix_route.reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#prefixroute.dump">4.2. <code class="function">prefix_route.dump</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#prefixroute.extra">5. Database Structure</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1519752">Setting db_url parameter</a></dt>
+          <dt>1.2. <a href="#idp1524488">Setting db_table parameter</a></dt>
+          <dt>1.3. <a href="#idp2376608">Setting exit parameter</a></dt>
+          <dt>1.4. <a href="#idp752568">prefix_route() usage</a></dt>
+          <dt>1.5. <a href="#idp817304">Sample data</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp44224"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#prefixroute.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#prefixroute.parameters">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.db_url">2.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.db_table">2.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.exit">2.3. <code class="varname">exit</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#prefixroute.functions">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.prefix_route">3.1. <code class="function">prefix_route([user])</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#prefixroute.rpc">4. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.reload">4.1. <code class="function">prefix_route.reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#prefixroute.dump">4.2. <code class="function">prefix_route.dump</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#prefixroute.extra">5. Database Structure</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="prefixroute.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The prefix_route module does routing based on a set of prefixes from the
+	database. The prefix rule-set is loaded from the database into a binary
+	tree in memory, either on startup or when issuing the "prefix_route.reload" RPC
+	command. When calling the "prefix_route()" function from the ser.cfg
+	configuration script, it will try to match the user part of the request URI
+	with the best matching route. If a route is found, it will be used for
+	further processing. If not found normal processing will continue.
+	</p>
+          <p>
+	Development was sponsored by Telio Telecom.
+	</p>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="prefixroute.parameters"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.db_url"></a>2.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is <acronym class="acronym">URL</acronym> of the database to be used.
+		</p>
+            <p>
+			Default value is "mysql://ser@localhost/ser"
+		</p>
+            <div class="example">
+              <a id="idp1519752"></a>
+              <p class="title">
+                <strong>Example 1.1. Setting db_url parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("prefix_route", "db_url", "mysql://ser:pass@db_host/ser")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.db_table"></a>2.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of table where to read prefix route set.
+		</p>
+            <p>
+			Default value is "prefix_route".
+		</p>
+            <div class="example">
+              <a id="idp1524488"></a>
+              <p class="title">
+                <strong>Example 1.2. Setting db_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("prefix_route", "db_table", "new_prefix_route")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.3. exit (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.exit"></a>2.3. <code class="varname">exit</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set, exit the execution of the configuration file
+			when a route block is executed upon matching a prefix.
+			Otherwise return 1 (true).
+		</p>
+            <p>
+			Default value is 1 (on).
+		</p>
+            <div class="example">
+              <a id="idp2376608"></a>
+              <p class="title">
+                <strong>Example 1.3. Setting exit parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("prefix_route", "exit", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="prefixroute.functions"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. prefix_route([user])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.prefix_route"></a>3.1. <code class="function">prefix_route([user])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function tries to find a route from the user part of the request URI
+		(if no parameter is provided), or from the value of the parameter. The
+		parameter can contain config variables.
+		</p>
+            <p>
+		If a route is found, it will be used for further processing. Otherwise the
+		function will return false.
+		</p>
+            <div class="example">
+              <a id="idp752568"></a>
+              <p class="title">
+                <strong>Example 1.4. prefix_route() usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+  if (!prefix_route()) {
+      xlog("L_ERR", "prefix_route(): no matching routes\n");
+  }
+...
+  if (!prefix_route("$fU")) {
+      xlog("L_ERR", "prefix_route(): no matching routes\n");
+  }
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="prefixroute.rpc"></a>4. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. prefix_route.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.reload"></a>4.1. <code class="function">prefix_route.reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload prefix route tree from the database.
+		Validation is done and the prefix route tree will
+		only be reloaded if there are no errors.
+	</p>
+          </div>
+          <div class="section" title="4.2. prefix_route.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="prefixroute.dump"></a>4.2. <code class="function">prefix_route.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Dump the current prefix route tree.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="5. Database Structure">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="prefixroute.extra"></a>5. Database Structure</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	A prefix route set consists of three fields:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>prefix - varchar(64) - Prefix rule</p>
+              </li>
+              <li class="listitem">
+                <p>route - varchar(64) - Route name</p>
+              </li>
+              <li class="listitem">
+                <p>comment - varchar(64) - Free-form comment</p>
+              </li>
+            </ul>
+          </div>
+          <div class="example">
+            <a id="idp817304"></a>
+            <p class="title">
+              <strong>Example 1.5. Sample data</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+   +--------+-------+---------------+
+   | prefix | route | comment       |
+   +--------+-------+---------------+
+   | 46     | SE    | Sweden        | 
+   | 47     | NO    | Norway        | 
+   | 479    | NOMOB | Norway mobile | 
+   | 49     | DE    | Deutschland   | 
+   | 39     | IT    | Italy         | 
+   +--------+-------+---------------+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2301 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Seas Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp161192" title="Seas Module" />
+    <link rel="next" href="#user" title="Chapter 1. The Sip Express Application Server User's Guide" />
+  </head>
+  <body>
+    <div class="book" title="Seas Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp161192"></a>Seas Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elias</span> <span class="surname">Baixas</span></h3>
+                <div class="affiliation"><span class="orgname">VozTelecom Sistemas<br /></span> <span class="orgdiv"><a class="ulink" href="javascript:if(confirm('http://www.wesip.eu/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.wesip.eu/'" tppabs="http://www.wesip.eu/">www.wesip.eu</a><br /></span><div class="address"><p>Ronda Can Fatjo, 9, 1p Parc Tecnologic del Valles Cerdanyola, 08520 (SPAIN) <br />
+	  Phone:+34 933968800 <br />
+	  www.voztele.com<br />
+	  <code class="email">&lt;<a class="email" href="mailto:elias.baixas@voztele.com">elias.baixas@voztele.com</a>&gt;</code><br />
+	  </p></div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 VozTelecom Sistemas</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#user">1. The Sip Express Application Server User's Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp6946600">1. Application Servers</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6046184">1.1. Sip Express Application Server module overview</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ApplicationServer">1.2. Application Servers</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp5938944">1.3. Dependencies</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp5977752">1.3.1. Kamailio Modules</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp5835912">1.3.2. External Applications</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7051264">1.4. Parameters</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp7056256">1.4.1. <code class="varname">listen_sockets</code> (string)</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp6161272">1.5. Functions</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4464608">1.5.1. <code class="function">as_relay_t(String
+          name)</code></a>
+                        </span>
+                      </dt>
+                      <dd>
+                        <dl>
+                          <dt>
+                            <span class="section">
+                              <a href="#idp4400688">1.5.1.1. Return value</a>
+                            </span>
+                          </dt>
+                        </dl>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4402392">2. WeSIP Application Server</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4403296">2.1. The Servlet programming paradigm: Sip/Http Servlets</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4488016">2.1.1. Converged Http/Sip Servlet Containers</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4493344">2.2. Configuring WeSIP to work with SEAS</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4494632">2.2.1. Server</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4497000">2.2.2. Service</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4499424">2.2.3. Connector</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4442288">2.2.4. Engine</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4444112">2.2.5. Mapper</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4445552">2.2.6. Realm</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4447216">2.2.7. Host</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4449744">2.2.8. Mapper</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4450864">2.3. Configuration Examples</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4452424">2.3.1. kamailio.cfg in standalone</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4455336">2.3.2. kamailio.cfg working as WeSIP front-end</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4456896">2.3.3. Server.xml</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#devel">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp7774504">1. Internals</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp4935208">2. SEAS Protocol</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp7562320">2.1. The SEAS protocol</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4998856">2.2. General codification of a header</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp6513792">2.2.1. Codification of a generic URI</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp6180288">2.2.2. Codification of To and From headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp7008552">2.2.3. Codification of Contact</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp6733352">2.2.4. Codification of Route and Record Route headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp5102848">2.2.5. Codification of Accept and Content-Type headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp8044712">2.2.6. Codification of Authorization headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp7802384">2.2.7. Codification of Allow headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp6925880">2.2.8. Codification of Content-Disposition headers</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp6582040">2.2.9. Codification of Content-Length header</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp4481120">2.2.10. Codification of Cseq header</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp7832912">2.2.11. Codification of Expires header</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp5065152">2.2.12. Codification of a SIP message</a>
+                        </span>
+                      </dt>
+                      <dd>
+                        <dl>
+                          <dt>
+                            <span class="section">
+                              <a href="#idp6024488">2.2.12.1. The general message information section</a>
+                            </span>
+                          </dt>
+                          <dt>
+                            <span class="section">
+                              <a href="#idp7541040">2.2.12.2. The headers index section</a>
+                            </span>
+                          </dt>
+                        </dl>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-figures">
+        <p>
+          <strong>List of Figures</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp4485488">SipServlet UML diagram</a></dt>
+          <dt>2.1. <a href="#idp6328088">Overview of Seas Event Dispatcher process operation</a></dt>
+          <dt>2.2. <a href="#idp4811712">SIP Messages and control flow within SER</a></dt>
+          <dt>2.3. <a href="#idp4542424">General codification of a SIP header in SEAS
+            protocol</a></dt>
+          <dt>2.4. <a href="#idp5357552">Example of a from header SEAS-protocol codification</a></dt>
+          <dt>2.5. <a href="#idp7532448">SEAS-codification of a SIP URI (byte meanings are
+              shown)</a></dt>
+          <dt>2.6. <a href="#idp6083504">Example of a SEAS SIP URI codification</a></dt>
+          <dt>2.7. <a href="#idp7612064">SEAS codification of From and To headers</a></dt>
+          <dt>2.8. <a href="#idp7697968">SEAS codification of a Contact header</a></dt>
+          <dt>2.9. <a href="#idp5506568">SEAS codification of a Route Header</a></dt>
+          <dt>2.10. <a href="#idp7167792">SEAS codification of Authentication/Authorization
+              headers</a></dt>
+          <dt>2.11. <a href="#idp5431672">SEAS codification of a SIP First Line</a></dt>
+          <dt>2.12. <a href="#idp4710072">SEAS Headers Index section overview</a></dt>
+          <dt>2.13. <a href="#idp7317000">SEAS SIP-Message codification</a></dt>
+          <dt>2.14. <a href="#idp6198056">Different kinds of SEAS codified Events and
+                Actions</a></dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp6875320">Set <code class="varname">listen_sockets</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4399560"><code class="function">as_relay_t</code> usage</a></dt>
+          <dt>1.3. <a href="#idp4406112">Typical example of an HttpServlet</a></dt>
+          <dt>1.4. <a href="#idp4410744">Typical Sip Servlet Example</a></dt>
+          <dt>1.5. <a href="#idp4495552">Server</a></dt>
+          <dt>1.6. <a href="#idp4497840">Service</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. The Sip Express Application Server User's Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="user"></a>Chapter 1. The Sip Express Application Server User's Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp6946600">1. Application Servers</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6046184">1.1. Sip Express Application Server module overview</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ApplicationServer">1.2. Application Servers</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp5938944">1.3. Dependencies</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp5977752">1.3.1. Kamailio Modules</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp5835912">1.3.2. External Applications</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7051264">1.4. Parameters</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp7056256">1.4.1. <code class="varname">listen_sockets</code> (string)</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp6161272">1.5. Functions</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4464608">1.5.1. <code class="function">as_relay_t(String
+          name)</code></a>
+                      </span>
+                    </dt>
+                    <dd>
+                      <dl>
+                        <dt>
+                          <span class="section">
+                            <a href="#idp4400688">1.5.1.1. Return value</a>
+                          </span>
+                        </dt>
+                      </dl>
+                    </dd>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4402392">2. WeSIP Application Server</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4403296">2.1. The Servlet programming paradigm: Sip/Http Servlets</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4488016">2.1.1. Converged Http/Sip Servlet Containers</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4493344">2.2. Configuring WeSIP to work with SEAS</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4494632">2.2.1. Server</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4497000">2.2.2. Service</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4499424">2.2.3. Connector</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4442288">2.2.4. Engine</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4444112">2.2.5. Mapper</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4445552">2.2.6. Realm</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4447216">2.2.7. Host</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4449744">2.2.8. Mapper</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4450864">2.3. Configuration Examples</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4452424">2.3.1. kamailio.cfg in standalone</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4455336">2.3.2. kamailio.cfg working as WeSIP front-end</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4456896">2.3.3. Server.xml</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Application Servers">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp6946600"></a>1. Application Servers</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1. Sip Express Application Server module overview">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6046184"></a>1.1. Sip Express Application Server module overview</h3>
+                </div>
+              </div>
+            </div>
+            <p><acronym class="acronym">SEAS</acronym> module enables Kamailio to transfer the
+        execution logic control of a sip message to a given external entity,
+        called the Application Server. When the Kamailio script is being
+        executed on an incoming SIP message, invocation of the as_relay_t()
+        function makes this module send the message along with some
+        transaction information to the specified Application Server. The
+        Application Server then executes some call-control logic code, and
+        tells Kamailio to take some actions, ie. forward the message
+        downstream, or respond to the message with a SIP repy, etc.</p>
+            <p>The module acts implements a network protocol acting as the
+        interface between Kamailio internal API and the external Application
+        Server entity.</p>
+            <p>There's only one relevant function, as_relay_t, exported by this
+        module. This function receives as a parameter the name of the
+        application server to which the message should be relaied. Every
+        message relaied to an Application Server is automatically associated
+        to a SIP transaction (a transaction is created for it). Just after the
+        message is relaied to the Application Server, the script stops its
+        execution on the message, because the control of message-processing is
+        now in the Application Server.</p>
+            <p>In the context of SEAS module, relaying a message to an App
+        Server, is _not_ done in SIP protocol, but in a special protocol by
+        means of which the SEAS module and the Application Server comunicate
+        efficiently and seamlessly. This procotol is specially designed so
+        that a message doesn't need to be parsed again once it arrives at the
+        Application Server. This protocol carries information regarding the
+        internal structure of the SIP message (to avoid reparsing) and also
+        information about the associated transaction (recall that invoking
+        as_relay_t indirectly calls t_newtran). This way, all the
+        SIP-Transaction machinery, and the SIP-Message parsing, is handled at
+        the Kamailio core, while the execution of the Application Logic is
+        carried in the Application Server.</p>
+            <p>The SEAS module and protocol provide a means by which an
+        external entity can utilize Kamailio as a transaction-stateful
+        SIP-stack to act on behalf of it. This means that this external entity
+        (which we call the Application Server) is notified whenever a
+        SIP-Request enters Kamailio, and this external entity can then order
+        Kamailio to execute some actions, either replying the request, or
+        generating new UAC transactions.</p>
+            <p>This version of SEAS works with VozTelecom's WeSIP Application
+        Server. This Application Server is a SipServlet JAVA Container.</p>
+          </div>
+          <div class="section" title="1.2. Application Servers">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ApplicationServer"></a>1.2. Application Servers</h3>
+                </div>
+              </div>
+            </div>
+            <p>When Kamailio starts and SEAS module is loaded, a new process is
+        spawn which listens on a server-socket (IP and port are specified as a
+        parameter in the config script). From then on, the Application Servers
+        can connect to that socket so that Kamailio can relay messages to them.
+        When an Application Server connects to the socket, it sends its name
+        through the socket, so every App Server is identified with a name.
+        Within the Kamailio script, invoking as_relay_t() receives a string as
+        a parameter, which specifies the name of an application server to
+        which the message has to be sent. If that concrete application server
+        hasn't already connected to the module, the function returns a
+        negative value, otherwise (the Application Server is connected), the
+        message is relaied to it.</p>
+          </div>
+          <div class="section" title="1.3. Dependencies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp5938944"></a>1.3. Dependencies</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="1.3.1. Kamailio Modules">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp5977752"></a>1.3.1. Kamailio Modules</h4>
+                  </div>
+                </div>
+              </div>
+              <p>SEAS module relies on the Transaction Module (TM module) for
+          operation.</p>
+            </div>
+            <div class="section" title="1.3.2. External Applications">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp5835912"></a>1.3.2. External Applications</h4>
+                  </div>
+                </div>
+              </div>
+              <p>Using the SEAS module requires to have an Application Server
+          running and connected to a particular instance of Kamailio.</p>
+              <p>At the moment, the only Application Server that works with
+          SEAS is WeSIP Application Server, which can be downloaded from
+          www.wesip.eu, and used freely for non-comercial purposes.</p>
+            </div>
+          </div>
+          <div class="section" title="1.4. Parameters">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7051264"></a>1.4. Parameters</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="1.4.1. listen_sockets (string)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp7056256"></a>1.4.1. <code class="varname">listen_sockets</code> (string)</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The listen_sockets string tells SEAS where to listen for
+          incoming connections of Application Servers. It has the form:
+          "ip:port". SEAS will open two server-sockets on that IP, at the
+          specified port, and another at port+1. Application Servers must be
+          configured to connect to that port.</p>
+              <p>In case this parameter is ommited, SEAS listens on the default
+          IP which Kamailio is using, and opens the ports 5080 and 5081 to
+          listen for Application Servers.</p>
+              <div class="example">
+                <a id="idp6875320"></a>
+                <p class="title">
+                  <strong>Example 1.1. Set <code class="varname">listen_sockets</code> parameter</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+modparam("seas", "listen_sockets","127.0.0.1:5080")
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+          <div class="section" title="1.5. Functions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp6161272"></a>1.5. Functions</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="1.5.1. as_relay_t(String name)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4464608"></a>1.5.1. <code class="function">as_relay_t(String
+          name)</code></h4>
+                  </div>
+                </div>
+              </div>
+              <p>Creates a new transaction (if it isn't already created) and
+          sends the SIP Request and transaction information to the Application
+          Server specified in the parameter. Every Application Server
+          connected to Kamailio through the SEAS module, must be identified
+          with a different name.</p>
+              <p>This function can be used within REQUEST_ROUTE.</p>
+              <div class="example">
+                <a id="idp4399560"></a>
+                <p class="title">
+                  <strong>Example 1.2. <code class="function">as_relay_t</code> usage</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">...
+if (!as_relay_t("app_server_1")) { 
+log("Error sending to app server"); 
+t_reply("500","App Server not connected"); 
+}
+...</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+              <div class="section" title="1.5.1.1. Return value">
+                <div class="titlepage">
+                  <div>
+                    <div>
+                      <h5 class="title"><a id="idp4400688"></a>1.5.1.1. Return value</h5>
+                    </div>
+                  </div>
+                </div>
+                <p>In case the Application Server is connected to Kamailio, the
+            function does _not_ return, the Application Server is now in
+            charge of processing the request, and it may then reply to the
+            request, initiate new transactions, or whatever the application
+            being executed wants.</p>
+                <p>In case the Application Server identified by the string
+            parameter passed to as_relay_t() is not connected to Kamailio, the
+            function returns 0, so that the script can continue processing the
+            request.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2. WeSIP Application Server">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4402392"></a>2. WeSIP Application Server</h2>
+              </div>
+            </div>
+          </div>
+          <p>At the moment, the only Application Server known to work with SEAS
+      is WeSIP. You can download a copy from www.wesip.eu.</p>
+          <p>WeSIP is a converged Sip/Http Servlet Container.</p>
+          <div class="section" title="2.1. The Servlet programming paradigm: Sip/Http Servlets">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4403296"></a>2.1. The Servlet programming paradigm: Sip/Http Servlets</h3>
+                </div>
+              </div>
+            </div>
+            <p>Servlets are pieces of code that encapsulate the logic of an
+        application. Servlets are deployed into an Application Server.
+        Whenever a user requests service, the Application Server processes the
+        request, and passes control to the servlet. The servlet then executes
+        some logic, may it be a query to a database, the execution of a
+        business process, the creation of customized content for the user, or
+        whatever the service programmer could imagine. When the servlet
+        finishes the execution, it creates a response and gives it back to the
+        Application Server, which is in charge of making it reach back to the
+        user. The Application Server implements the network protocol, it takes
+        care of everything needed for a proper communication between user and
+        server, so the servlet doesn’t have to care about these things. The
+        servlet uses a set of resources from the Application Server, such as
+        Session management, service routing or chaining, and request/response
+        header composition.</p>
+            <p>In HttpServlets, a service programmer has to implement a method
+        in a JAVA class, which could be called doGet() or doPost(). Whenever
+        an HTTP request arrived at the server, one of these functions was
+        called with the request as a parameter, so the logic of the
+        application was executed over that particular request.</p>
+            <p>HttpServlet has been extensively used over the past years, in
+        all kinds of business and web services.</p>
+            <p>This is how a typical HttpServlet looks like:</p>
+            <div class="example">
+              <a id="idp4406112"></a>
+              <p class="title">
+                <strong>Example 1.3. Typical example of an HttpServlet</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">public final class Hello extends HttpServlet {
+protected void doGet(HttpServletRequest request,HttpServletResponse response)
+      throws IOException, ServletException 
+    {
+response.setContentType("text/html");
+PrintWriter writer = response.getWriter();
+writer.println("&lt;html&gt;");
+writer.println("&lt;head&gt;");
+writer.println("&lt;title&gt;Sample Application Servlet&lt;/title&gt;");
+writer.println("&lt;/head&gt;");
+writer.println("&lt;body bgcolor=white&gt;");
+writer.println("&lt;table border=\"0\" width=\"100%\"&gt;");
+Enumeration names = request.getHeaderNames();
+while (names.hasMoreElements()) {
+    String name = (String) names.nextElement();
+    writer.println("&lt;tr&gt;");
+    writer.println("&lt;th align=\"right\"&gt;"+name+":&lt;/th&gt;");
+    writer.println("&lt;td&gt;"+request.getHeader(name)+"&lt;/td&gt;");
+    writer.println("&lt;/tr&gt;");
+}
+writer.println("&lt;/table&gt;");
+writer.println("&lt;/body&gt;");
+writer.println("&lt;/html&gt;");
+    }
+}</pre>
+              </div>
+            </div>
+            <p>
+              <br class="example-break" />
+            </p>
+            <p>The successor of HttpServlet for SIP networks, is the SipServlet
+        API. Making most of the success of HttpServlet, the SipServlet API
+        follows the same programming paradigm, so that SIP application
+        programmers can reuse their knowledge in the field.</p>
+            <p>SipServlet API works the same way as HttpServlet: an Application
+        Server implements a SIP Stack and executes all the complex protocol
+        logic. It receives and pre-processes the requests from the network,
+        and at the right moment, passes control to the servlet doXxx() method,
+        where the programmer implemented the application logic. Depending on
+        what kind of SIP Message it was, a method or another will be executed.
+        For example, if an INVITE is received, the doInvite() method will be
+        invoked in the servlet.</p>
+            <p>The application can then access all the parts of the request and
+        do its work. When the service has been executed, it passes control
+        back to the Application Server with a response, so that it can be
+        forwarded to the user, and the service be satisfied.</p>
+            <p>Sip Servlets can be used to implement basic SIP network
+        functionalities (such as Proxy or Registrar servers), but their true
+        power emerges in the implementation of value-added services, which
+        greatly surpasses the basic service functionality of plain SIP
+        servers.</p>
+            <p>Examples of value-added services, are Virtual PBX or IPCentrex,
+        Attended call forwarding, Instant Messaging, etc.</p>
+            <p>This is the appearance a typical SipServlet:</p>
+            <div class="example">
+              <a id="idp4410744"></a>
+              <p class="title">
+                <strong>Example 1.4. Typical Sip Servlet Example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">public class ProxyServlet extends SipServlet {
+    protected void doInvite(SipServletRequest req) throws 
+ServletException, IOException
+    {
+        if (req.isInitial()) {
+            Proxy proxy = req.getProxy();
+            proxy.setRecordRoute(false);
+            proxy.setParallel(parallel);
+            proxy.setSupervised(supervised);
+            SipURI rrURI = proxy.getRecordRouteURI();
+            rrURI.setParameter("foo", "bar");
+            req.setContent("Method is INVITE", "text/plain");
+            proxy.proxyTo(uris);
+        } else {
+            log("re-INVITE");
+        }
+    }
+    protected void doAck(SipServletRequest req) throws 
+ServletException, IOException
+    {
+        log("doAck " + req.getRequestURI());
+        if (req.isInitial()) {
+            throw new ServletException("unexpectedly got initial ACK");</pre>
+              </div>
+            </div>
+            <p><br class="example-break" />The servlet programming API is event-ridden: every time a
+        request comes into the Application Server (may it be an Http or SIP
+        one), the specific servlet is executed and the service provided within
+        it.</p>
+            <p>It is a very straightforward way of programming services, and
+        the Servlet API provides very easy and powerful means to access
+        information about the SIP-session or Http-session, about the request
+        or response, about the state of the dialog, or whatever it is
+        needed.</p>
+            <p>The application programmer has a rich framework of resources
+        that allow him to focus only on the service logic, without having to
+        worry about the underlying protocol specifics (SIP or HTTP).</p>
+            <div class="figure">
+              <a id="idp4485488"></a>
+              <p class="title">
+                <strong>Figure 1.1. SipServlet UML diagram</strong>
+              </p>
+              <div class="figure-contents">
+                <div class="mediaobject">
+                  <img src="images/image024.png" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image024.png" alt="SipServlet UML diagram" />
+                </div>
+              </div>
+            </div>
+            <br class="figure-break" />
+            <p>The Servlet programming language is JAVA, which offers a
+        wide spectrum of programming API’s dealing with all kinds of
+        techniques, tools and resources, which also are available seamlessly
+        from the Servlet context.</p>
+            <p>This makes the SipServlet API very desirable for all kinds
+        application developers.</p>
+            <p>SipServlet allows a rapid SIP application development and
+        deployment, and also provides a reliable and secure framework of
+        service execution (the JAVA sandbox and the Application Server
+        execution environment).</p>
+            <div class="section" title="2.1.1. Converged Http/Sip Servlet Containers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4488016"></a>2.1.1. Converged Http/Sip Servlet Containers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>SipServlets achieve the most of it when they can be deployed
+          along with HttpServlets, in the same Application Server (also known
+          as Servlet Container). This environment truly realizes the power of
+          converged voice/data networks: Http protocol represents one of the
+          most powerful data transmission protocols used in modern networks
+          (think of the SOAP web-services protocol), and SIP is the protocol
+          of choice in most of the modern and future voice over IP (VoIP)
+          networks for the signaling part. So an Application Server capable of
+          combining and leveraging the power of these two APIs will be the
+          most successful.</p>
+              <p>Convergence of SIP and HTTP protocols into the same
+          Application Server offers, amongst others, the following key
+          advantages:</p>
+              <p>-It doesn’t require to have 2 different servers (Http and Sip)
+          so it relieves from maintenance problems, and eases user and
+          configuration provisioning.</p>
+              <p>-It offers great convenience to the application programmer to
+          have all the classes related to the different protocols handled
+          within the same code.</p>
+              <p>-As it eases development of interactive and multimedia
+          services, realizing the power of well-known web-services and
+          intermixing them with new voice services.</p>
+              <p>These are some simple, but suggestive examples of services
+          that could be developed within a converged Http/Sip servlet:</p>
+              <p>-IP Centrex: through the use of the Web-interface, users could
+          have a layout of the office in a web page, and see what phones were
+          ringing at a given moment, so they could pick-up a call ringing in
+          another phone in their own desktop. Or they could forward a call to
+          another party by clicking on the web page and selecting which of the
+          office phones it had to be transferred to.</p>
+              <p>-Voicemail: users could upload an audio file to the server
+          through a web-page, to be used as the automatic answering message,
+          and then also download their voicemail through the web-page, or
+          organize the messages and remove the old ones.</p>
+              <p>-Instant Messaging: users could continue a voice call by
+          starting or joining a new Instant Messaging session carried over a
+          web-page.</p>
+              <p>-Click-to-dial: users could initiate SIP sessions only by
+          clicking a link on a web page, without the need of the Web-Browser
+          being SIP-aware nor needing even a SIP phone: the server could
+          handle all the logic so the user who clicked could receive a call
+          from the server’s SIP network.</p>
+            </div>
+          </div>
+          <div class="section" title="2.2. Configuring WeSIP to work with SEAS">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4493344"></a>2.2. Configuring WeSIP to work with SEAS</h3>
+                </div>
+              </div>
+            </div>
+            <p>The WeSIP Application Server configuration file is based on the
+        Apache Tomcat configuration system: It is an XML-formatted file, in
+        which the different components of the server are specified.</p>
+            <p>The default config file that comes with the WeSIP distribution
+        package should be suitable for most of the deployment
+        configurations.</p>
+            <p></p>
+            <div class="section" title="2.2.1. Server">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4494632"></a>2.2.1. Server</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The topmost element in the XML configuration file is the
+          "server" which has 2 xml attributes, called "port" and "shutdown".
+          The former specifies a port on which the WeSIP AS will listen for
+          the shutdown command, and the latter is the magic word that will
+          make the server shutdown.</p>
+              <div class="example">
+                <a id="idp4495552"></a>
+                <p class="title">
+                  <strong>Example 1.5. Server</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">&lt;Server port="8005" shutdown="SHUTDOWN" &gt;</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+              <p>if you send the magic word "SHUTDOWN" to the port 8005 of the
+          localhost, the server will stop cleanly.</p>
+              <p></p>
+            </div>
+            <div class="section" title="2.2.2. Service">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4497000"></a>2.2.2. Service</h4>
+                  </div>
+                </div>
+              </div>
+              <p>Nested within the Server element, must be a "Service" element,
+          with an attribute called "name" which specifies the name for the
+          service. This attribute is not very relevant, you can call it
+          whatever you like.</p>
+              <div class="example">
+                <a id="idp4497840"></a>
+                <p class="title">
+                  <strong>Example 1.6. Service</strong>
+                </p>
+                <div class="example-contents">
+                  <p>&lt;Service name="WeSIP-Standalone"&gt;</p>
+                </div>
+              </div>
+              <br class="example-break" />
+              <p>Within the Service element must be two or more elements: the
+          connectors and the engines. A connector is the instance that will
+          receive messages from the network. You can specify HTTP connectors
+          and/or SIP connectors. Every connector needs an attribute called
+          "className" which specifies which class will be responsible for
+          receiving the messages from the network. For HTTP connectors, the
+          classname must be "org.apache.catalina.connector.http.HttpConnector"
+          and for SIP connectors
+          "com.voztele.sipservlet.connector.SipConnector".</p>
+            </div>
+            <div class="section" title="2.2.3. Connector">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4499424"></a>2.2.3. Connector</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The SIP Connector uses 4 attributes:</p>
+              <pre class="programlisting">className="com.voztele.sipservlet.connector.SipConnector"</pre>
+              <p>specifies the classname of the connector.</p>
+              <pre class="programlisting">minProcessors="5"</pre>
+              <p>specifies the minimum number of SIPprocessor instances (and
+          threads in the pool) to process incoming SIP messages. More
+          processors should allow more load to be processed. This is the
+          minimum number of instances, even if they are spare and not
+          working.</p>
+              <pre class="programlisting">maxProcessors="10"</pre>
+              <p>specifies the maximum number of SIP processors used (a
+          negative value specifies that there is no limit).</p>
+              <pre class="programlisting">addresses="localhost:5060"</pre>
+              <p>Specifies the SIP address and port in which the Application
+          Server from which the Application Server will process the SIP
+          messages. This Addres is where Kamailio listens for the messages, so
+          in fact, Kamailio is listening on them, but Kamailio passes the
+          messages to WeSIP, so WeSIP must be aware of this IP/port.</p>
+              <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+                <h3 class="title">Warning</h3>
+                <p>this attribute MUST match one of the listening points
+            declared within Kamailio in the "listen" parameters.</p>
+                <p>For example in kamailio.cfg:</p>
+                <pre class="programlisting">listen = tcp:localhost:5060
+listen = udp:localhost:5060</pre>
+              </div>
+              <p>Within the SIP Connector element there must be an
+          ExtraProperties element, containing nestes Property elements. Each
+          property element specifies a parameter for the SIP Stack. Each
+          property is specified by a key and a value. The most significant
+          keys are:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p>com.voztele.javax.sip.SER_ADDRESS</p>
+                    <p>This specifies the IP and port in which the Kamailio is
+              listening for Application Servers to connect and register.This
+              specifies the IP and port in which the Kamailio is listening for
+              Application Servers to connect and register.</p>
+                    <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+                      <h3 class="title">Warning</h3>
+                      <p>This needs to match the
+                  <code class="varname">listen_sockets</code> seas module parameter
+                  within the Kamailio configuration file. Ie.:</p>
+                      <pre class="programlisting">modparam("seas", "listen_sockets","127.0.0.1:5080")</pre>
+                    </div>
+                  </li>
+                  <li class="listitem">
+                    <p>javax.sip.STACK_NAME</p>
+                    <p>Specifies the name identifying this instance of the
+              Application Server.</p>
+                    <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+                      <h3 class="title">Warning</h3>
+                      <p>This is the name you will set in the Kamailio
+                  configuration script when you invoke the WeSIP Application
+                  Server, by calling the as_relay_t function. This is the name
+                  you pass as the parameter of the function. If you have
+                  different WeSIP instances all connecting to the same
+                  Kamailio, they must each one have a different STACK_NAME",
+                  and within Kamailio you can call each of them by invoking
+                  as_relay_t() with a different name. Example:</p>
+                      <pre class="programlisting">&lt;Property key="javax.sip.STACK_NAME" value="app_server_one" /&gt;</pre>
+                    </div>
+                  </li>
+                  <li class="listitem">
+                    <p>com.voztele.javax.sip.THREAD_POOL_SIZE (integer)</p>
+                    <p>Specifies the number of threads there must be in the pool
+              to process incoming SIP messages. If unspecificed, the default
+              is "infinity".</p>
+                  </li>
+                  <li class="listitem">
+                    <p>com.voztele.javax.sip.SPIRAL_HDR</p>
+                    <p>This property tells WeSIP and SEAS that every SipRequest
+              and UAC transaction generated from WeSIP, must spiral through
+              SER, and will be added a special Header called "X-WeSIP-SPIRAL:
+              true" this will make all the outgoing messages pass again
+              through the Kamailio script, so that they can be accounted or
+              whatever the configurator wants. For example, the configuration
+              script could go:</p>
+                    <pre class="programlisting">route{
+        if(is_present_hf("X-WeSIP-SPIRAL")){
+ /* account, log, register, or whatever */
+                t_relay();
+        }else{
+                as_relay_t("app_server_1");
+        }
+}</pre>
+                  </li>
+                </ul>
+              </div>
+              <p></p>
+            </div>
+            <div class="section" title="2.2.4. Engine">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4442288"></a>2.2.4. Engine</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The Engine must also be nested within the Server element,
+          along with the Connectors. It must have a "name" attribute with
+          whatever name you feel like. It needs to have another attribute
+          called "defaultHost" which will be the default host to which to pass
+          the incoming request (in HTTP/1.0 the requests dont have a Host
+          header, so they will be passed to this default host, in SIP, this
+          attribute doesn't have a meaning.). In order to have this Engine
+          handling also SIP messages, the "className" attribute of the Engine
+          <span class="emphasis"><em>must be
+          "com.voztele.sipservlet.core.ConvergedEngine".</em></span></p>
+              <p>Within the Engine, there can be one or more Hosts, each one
+          specified within a "Host" element nested in the engine.</p>
+            </div>
+            <div class="section" title="2.2.5. Mapper">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4444112"></a>2.2.5. Mapper</h4>
+                  </div>
+                </div>
+              </div>
+              <p>A mapper is used to map an incoming request to one or another
+          SIP or HTTP host. In case it is a SIP request, the mapping is done
+          based on the sip.xml deployment descriptor rules. The classname of
+          the SIP mapper MUST BE
+          "com.voztele.sipservlet.core.EngineSipMapper". The "mapper" element
+          must also have a "protocol" attribute, specifying which protocol
+          this mapper handles. In<span class="emphasis"><em> case of the SIP mapper it must be
+          "SIP/2.0". The HTTP mapper's classname must be
+          "org.apache.catalina.core.StandardEngineMapper" and the protocol
+          attribute "HTTP/1.1"</em></span></p>
+            </div>
+            <div class="section" title="2.2.6. Realm">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4445552"></a>2.2.6. Realm</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The authentication in HTTP is performed in Apache-Tomcat
+          through Realms. The memory realm is (textual copy from the
+          Apache-Tomcat javadoc"): "Simple implementation of Realm that reads
+          an XML file to configure the valid users, passwords, and
+          roles."</p>
+              <p>The classname must be
+          "org.apache.catalina.realm.MemoryRealm"</p>
+              <p>A "pathname" attribute can be specified to tell the Realm
+          which file contains the usernames, passwords and roles. If not
+          specified, it is "conf/wesip-users.xml"</p>
+            </div>
+            <div class="section" title="2.2.7. Host">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4447216"></a>2.2.7. Host</h4>
+                  </div>
+                </div>
+              </div>
+              <p>A Host represents a VirtualHost in HTTP/1.1 servers, so the
+          requests will be dispatched to one or another virtual host depending
+          on the Host: header. In SIP this doesn't make much sense, because
+          there's no such Host: header, and virtual hosting is not done in
+          this way. Every host must have a "name" attribute which specifies
+          the name of the virtual host, it must also have a "nameSip"
+          attribute which MUST MATCH the IP or hostname _and_ port" specified
+          in Kamailio listen parameters and in the Sip Connector the hostname
+          and the port must be separated with an underscore. for example:
+          nameSip="localhost_5060" or nameSip="192.168.1.1_5060" The next
+          important attribute that must have the Host element is "appBase"
+          which declares the directory where the WEB and SIP applications
+          reside. It usually is a directory called apps in the directory from
+          which the server runs. The attribute "unpackWARs" says the WeSIP
+          Application Server to unpack the Web or Sip Application Archives
+          (.war or .sar extensions) found inside the appBase directory. It
+          should usually be set to "true". The "port" attribute specifies the
+          port where this host is going to receive SIP messages . This only
+          has to do with the SIP protocol, not with HTTP. It must be the same
+          as the port specified in Kamailio parameter "listen_sockets" (for the
+          seas module). The "autoDeploy" attribute tells the host to monitor
+          the "appBase" directory for new application archives (.sar or .war)
+          so they can automatically be deployed. This parameter should be set
+          to "true". The "className" used for the Host _must_be_
+          "com.voztele.sipservlet.core.ConvergedHost"</p>
+            </div>
+            <div class="section" title="2.2.8. Mapper">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4449744"></a>2.2.8. Mapper</h4>
+                  </div>
+                </div>
+              </div>
+              <p>Hosts must also have a nested Mapper element, but when the
+          mapper is inside a Host (and not in an Engine) the classnames must
+          be "com.voztele.sipservlet.core.SipHostMapper" for the "SIP/2.0"
+          protocol and "org.apache.catalina.core.HttpHostMapper" for the
+          "HTTP/1.1" protocol. (2 mappers must be nested inside the
+          Host).</p>
+            </div>
+          </div>
+          <div class="section" title="2.3. Configuration Examples">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4450864"></a>2.3. Configuration Examples</h3>
+                </div>
+              </div>
+            </div>
+            <p>In general, you can configure WeSIP to work with your Kamailio in
+        two ways: have 2 Kamailio instances, the first acting as
+        Proxy/Registrar/Redirect and the second cooperating with WeSIP to act
+        as the Application Server. This is the preferred deployment layout, as
+        the first Kamailio works as usual, and the requests that need special
+        services are relaied to another Kamailio which acts on behalf of the
+        WeSIP AS. This configuration profile distributes load (call-routing
+        logic in one instance, and Application Services in the other), and is
+        also more fault-tolerant. On the other hand, you can have all your
+        call-routing logic and Application Server on the same Kamailio, having
+        one script handle all the logic, and then invoking the App Server at
+        any point.</p>
+            <p></p>
+            <div class="section" title="2.3.1. kamailio.cfg in standalone">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4452424"></a>2.3.1. kamailio.cfg in standalone</h4>
+                  </div>
+                </div>
+              </div>
+              <pre class="programlisting">debug=3            # debug level (cmd line: -dddddddddd)
+fork=yes
+log_stderror=no    # (cmd line: -E)
+check_via=no    # (cmd. line: -v)
+dns=no          # (cmd. line: -r)
+rev_dns=no      # (cmd. line: -R)
+port=5060
+children=4
+loadmodule "/usr/local/lib/kamailio/modules/sl.so"
+loadmodule "/usr/local/lib/kamailio/modules/tm.so"
+loadmodule "/usr/local/lib/kamailio/modules/rr.so"
+loadmodule "/usr/local/lib/kamailio/modules/maxfwd.so"
+loadmodule "/usr/local/lib/kamailio/modules/usrloc.so"
+loadmodule "/usr/local/lib/kamailio/modules/registrar.so"
+loadmodule "/usr/local/lib/kamailio/modules/textops.so"
+loadmodule "/usr/local/lib/kamailio/modules/seas.so"
+loadmodule "/usr/local/lib/kamailio/modules/mi_fifo.so"
+
+modparam("mi_fifo", "fifo_name", "/tmp/openser_fifo")
+modparam("usrloc", "db_mode",   0)
+modparam("rr", "enable_full_lr", 1)
+modparam("seas", "listen_sockets", "127.0.0.1:5080");
+
+route{
+       if (!mf_process_maxfwd_header("10")) {
+               sl_send_reply("483","Too Many Hops");
+               exit;
+       };
+       if (msg:len &gt;=  2048 ) {
+               sl_send_reply("513", "Message too big");
+               exit;
+       };
+       if (!method=="REGISTER")
+               record_route();
+       if (loose_route()) {
+               append_hf("P-hint: rr-enforced\r\n");
+               route(1);
+       };
+       if (uri==myself) {
+               if (method=="REGISTER") {
+                       save("location");
+                       exit;
+               };
+               lookup("aliases");
+               if (!uri==myself) {
+                       append_hf("P-hint: outbound alias\r\n");
+                       route(1);
+               };
+               if (!lookup("location")) {
+                       sl_send_reply("404", "Not Found");
+                       exit;
+               };
+               append_hf("P-hint: usrloc applied\r\n");
+       };
+       route(1);
+}
+route[1] {
+                if(!as_relay_t("app_server_one")){
+                       t_reply("500","Application Server error");
+               }
+}</pre>
+            </div>
+            <div class="section" title="2.3.2. kamailio.cfg working as WeSIP front-end">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4455336"></a>2.3.2. kamailio.cfg working as WeSIP front-end</h4>
+                  </div>
+                </div>
+              </div>
+              <pre class="programlisting">debug=9            # debug level (cmd line: -dddddddddd)
+fork=yes
+log_stderror=yes    # (cmd line: -E)
+
+check_via=no    # (cmd. line: -v)
+dns=no          # (cmd. line: -r)
+rev_dns=no      # (cmd. line: -R)
+port=5060
+children=4
+
+reply_to_via=1
+listen = tcp:localhost:5060 
+listen = udp:localhost:5060 
+
+mpath="/home/elias/src/sipservlet/seas"
+
+loadmodule "modules/tm/tm.so"
+loadmodule "modules/seas/seas.so"
+loadmodule "modules/mi_fifo/mi_fifo.so"
+
+modparam("mi_fifo", "fifo_name", "/tmp/openser_fifo")
+modparam("seas", "listen_sockets","127.0.0.1:5080")
+
+route{
+                if(!as_relay_t("app_server_1")){
+                        t_reply("500","Application Server error");
+                }
+
+}</pre>
+            </div>
+            <div class="section" title="2.3.3. Server.xml">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4456896"></a>2.3.3. Server.xml</h4>
+                  </div>
+                </div>
+              </div>
+              <pre class="programlisting">&lt;Server port="8005" shutdown="SHUTDOWN" debug="0"&gt;
+  &lt;Service name="WeSIP-Standalone"&gt;
+    &lt;Connector className="org.apache.catalina.connector.http.HttpConnector"
+        port="8080" minProcessors="5" maxProcessors="75"
+        enableLookups="true" address="localhost" acceptCount="10" debug="10" /&gt;
+        &lt;Connector className="com.voztele.sipservlet.connector.SipConnector"
+        minProcessors="5" maxProcessors="75"
+        addresses="localhost:5060" &gt;
+               &lt;ExtraProperties&gt;
+                       &lt;Property key="com.voztele.javax.sip.SER_ADDRESS" value="127.0.0.1:5080" /&gt;
+                       &lt;Property key="javax.sip.STACK_NAME" value="app_server_one" /&gt;
+                       &lt;Property key="com.voztele.javax.sip.THREAD_POOL_SIZE" value="10" /&gt;
+               &lt;/ExtraProperties&gt;
+       &lt;/Connector&gt;
+    &lt;Engine name="Standalone" defaultHost="localhost" debug="10"
+       className="com.voztele.sipservlet.core.ConvergedEngine"&gt;
+
+        &lt;Logger className="org.apache.catalina.logger.SystemOutLogger"
+           timestamp="true"/&gt;
+        &lt;Mapper className="org.apache.catalina.core.StandardEngineMapper" protocol="HTTP/1.1"/&gt;
+        &lt;Mapper className="com.voztele.sipservlet.core.EngineSipMapper" protocol="SIP/2.0"/&gt;
+        &lt;Realm  className="org.apache.catalina.realm.MemoryRealm" /&gt;
+        &lt;Host name="localhost" nameSip="localhost_5060" debug="10" appBase="webapps" unpackWARs="true"
+        port="5060" autoDeploy="true" className="com.voztele.sipservlet.core.ConvergedHost"&gt;
+               &lt;Mapper className="com.voztele.sipservlet.core.SipHostMapper" protocol="SIP/2.0"/&gt;
+               &lt;Mapper className="org.apache.catalina.core.HttpHostMapper" protocol="HTTP/1.1"/&gt;
+     &lt;/Host&gt;
+  &lt;/Engine&gt;
+&lt;/Service&gt;
+&lt;/Server&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="devel"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp7774504">1. Internals</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp4935208">2. SEAS Protocol</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp7562320">2.1. The SEAS protocol</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4998856">2.2. General codification of a header</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp6513792">2.2.1. Codification of a generic URI</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp6180288">2.2.2. Codification of To and From headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp7008552">2.2.3. Codification of Contact</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp6733352">2.2.4. Codification of Route and Record Route headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp5102848">2.2.5. Codification of Accept and Content-Type headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp8044712">2.2.6. Codification of Authorization headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp7802384">2.2.7. Codification of Allow headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp6925880">2.2.8. Codification of Content-Disposition headers</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp6582040">2.2.9. Codification of Content-Length header</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp4481120">2.2.10. Codification of Cseq header</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp7832912">2.2.11. Codification of Expires header</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp5065152">2.2.12. Codification of a SIP message</a>
+                      </span>
+                    </dt>
+                    <dd>
+                      <dl>
+                        <dt>
+                          <span class="section">
+                            <a href="#idp6024488">2.2.12.1. The general message information section</a>
+                          </span>
+                        </dt>
+                        <dt>
+                          <span class="section">
+                            <a href="#idp7541040">2.2.12.2. The headers index section</a>
+                          </span>
+                        </dt>
+                      </dl>
+                    </dd>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Internals">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7774504"></a>1. Internals</h2>
+              </div>
+            </div>
+          </div>
+          <p>The SEAS module runs within the Open Sip Express Router aka.
+      Kamailio. Kamailio uses a pool of processes to execute the script logic on
+      every new message received. These are called the worker processes. One
+      of these processes will be selected to process the script, and at some
+      point it will find a function invoking the relay of the SIP message to
+      one of the Application Servers registered. This function has been called
+      as_relay_t, which stands for Application Server relay (the _t stands for
+      TransactionStatefully), and receives as the only parameter the name of
+      the application server to be invoked.</p>
+          <p>The process will execute the as_relay_t function, which looks up
+      in a table if there is a registered Application Server with that name.
+      If there is one, the process will craft the SEAS header for the SIP
+      message being handled, put it in a shared memory segment, and write the
+      address of that segment to a pipe (4 bytes pointer in IA32).</p>
+          <p>This way, we will have all the Kamailio processes composing the
+      SEAS header along with the SIP message, and putting its shared memory
+      address into that pipe. This technique of inter-process communication
+      avoids race conditions because writing to a pipe is granted to be an
+      atomic operation if the data to write is less than _POSIX_PIPE_BUF,
+      which usually is 512 bytes.</p>
+          <p>At the initialization of Kamailio, the SEAS module creates the
+      discussed pipe, so that all the Kamailio worker processes inherit the
+      file descriptor associated to the pipe. Then it spawns a new process,
+      which will be the one to open two server sockets, and wait for the
+      Application Servers to connect and register.</p>
+          <p>Each Application Server wishing to receive events from Kamailio,
+      will have to open a socket to the module (the port and IP of the socket
+      are defined at start time in the script). After connection, it has to
+      print its identification name. The SEAS process (from now on, called
+      event dispatcher) will then register it in its internal structures, so
+      that the Kamailio processes can push events for it. The following
+      picture, shows the internals of the SEAS Event dispatcher
+      process:</p>
+          <div class="figure">
+            <a id="idp6328088"></a>
+            <p class="title">
+              <strong>Figure 2.1. Overview of Seas Event Dispatcher process operation</strong>
+            </p>
+            <div class="figure-contents">
+              <div class="mediaobject">
+                <img src="images/image056.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image056.gif" alt="Overview of Seas Event Dispatcher process operation" />
+              </div>
+            </div>
+          </div>
+          <br class="figure-break" />
+          <p>Within the SER server, the flowing of SIP Messages and
+      control flow, is depicted in the following diagram:</p>
+          <div class="figure">
+            <a id="idp4811712"></a>
+            <p class="title">
+              <strong>Figure 2.2. SIP Messages and control flow within SER</strong>
+            </p>
+            <div class="figure-contents">
+              <div class="mediaobject">
+                <img src="images/image058.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image058.gif" alt="SIP Messages and control flow within SER" />
+              </div>
+            </div>
+          </div>
+          <br class="figure-break" />
+        </div>
+        <div class="section" title="2. SEAS Protocol">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4935208"></a>2. SEAS Protocol</h2>
+              </div>
+            </div>
+          </div>
+          <p>SIP is a very flexible protocol. It can be very easily extended
+      with new features, and SIP entities have a high level of freedom in
+      composing the SIP messages, for example setting IPs or hostnames in
+      URIs, reordering header fields, folding headers, aggregating/scattering
+      headers, etc.</p>
+          <p>This flexibility, though, makes it difficult to implement
+      efficiently, because parsing of text headers requires a lot of
+      state.</p>
+          <p>Kamailio implements a very efficient parsing mechanism and
+      SIP-transaction machinery. The goal of the SEAS protocol is to keep all
+      this information that has been already extracted at Kamailio, so that it
+      can be reused at the Application Server.</p>
+          <div class="section" title="2.1. The SEAS protocol">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp7562320"></a>2.1. The SEAS protocol</h3>
+                </div>
+              </div>
+            </div>
+            <p>The SEAS protocol is a layer of information regarding the
+        internal structure of a SIP message that is added whenever SEAS sends
+        a SIP event to the Application Servers. The protocol is used for
+        communication between Kamailio and the Application Servers.</p>
+            <p>Once an incoming SIP message has reached the worker process
+        within Kamailio, it copies its content into a private memory area
+        (which is, a memory chunk not shared across processes). In this point,
+        the message first line is parsed to know whether it is a SIP request
+        or response.</p>
+            <p>Kamailio uses a technique called lazy-parsing, which consists in
+        delaying the parse of headers until some piece of the code requires
+        it.</p>
+            <p>As the SIP message goes traversing functions and the script
+        code, a function called parse_msg() gets called again and again, and
+        the SIP message gets parsed further and further. Each call to
+        parse_msg passes an integer value argument (32 bits) in which every
+        bit signals a header to be parsed, if they are already parsed (because
+        a previous invocation of parse_msg), the function returns immediately,
+        otherwise, the SIP message is scanned and parsed until all the headers
+        requested get parsed.</p>
+            <p>In each call to parse_msg, different parts of the message are
+        analyzed, and different SIP header-specific structures get filled.
+        Each one of this structures, give quick access to each of the parts of
+        a SIP message header.</p>
+            <p>For example, a Via header struct is called via_body, and has
+        these members: name, version, transport, host, proto, port, port_str,
+        params, comment, received, rport, etc. each of these members gives
+        quick access to each of the parts of the header. For example, a via
+        header like this: “Via: SIP/2.0/UDP
+        192.168.1.64:5070;branch=z9hG4bK-c02c60cc” would have the member proto
+        pointing to the “U” of “UDP”, and a length of 3, the host member would
+        be pointing to “192.168.1.64” and have a length of 12, the branch
+        member would be pointing to “z9hG4bK-c02c60cc” and a length of 16, and
+        so on.</p>
+            <p>This structure is the result of the parsing. All this
+        meta-information regarding the SIP message structure, is stored in a
+        sip_msg structure, using dynamically-allocated memory segments.</p>
+            <p>Kamailio defines different structure types describing different
+        SIP headers, such as via_body, to_body, cseq_body, via_param, and so
+        on. These structures are generally composed of another kind of
+        structure called str.</p>
+            <p>The str structure is a key component of Kamailio's high
+        performance. In the C programming language, a string's length is known
+        because a '0' (null-character) is found at the end of it. This forces
+        each of the string manipulation functions to keep looking for a '0' in
+        the byte stream, which is quite processor consuming. Instead of this,
+        Kamailio defines a structure composed of a char pointer and an integer.
+        The char points to the start of a string, and the integer gives its
+        length, thus avoiding the '0' lookup problem, and giving a significant
+        performance boost.</p>
+            <p>This structure has been quite useful to the design of the SEAS
+        protocol, because it enables the description of the SIP message
+        anatomy by giving pointers to each of its fields, and integers
+        describing each of its lengths.</p>
+            <p>Knowing that a SIP header does not usually occupy more than a
+        few characters (always less than 256), the pointer in the structure
+        has been relativized to the beginning of the SIP message or the
+        beginning of the SIP header, and the integer giving the length, has
+        been casted to an unsigned byte (256 values, so 256 characters maximum
+        length).</p>
+            <p>When messages get transferred from Kamailio to the Application
+        Server, it is optimum to keep this worthy meta-information regarding
+        the SIP message, so that it can be used at the AS part. For this to be
+        possible, it is needed to store the pointers to each of the syntactic
+        structures and their length.</p>
+            <p>In general, pointers are variables that point to a region in the
+        memory of a computer. The region of the memory is counted from the
+        0x00000000 address in IA32 architectures (from the beginning).</p>
+            <p>C provides functionality to do any kind of arithmetic operations
+        over pointers (add, subtract, multiply and divide), so that the
+        euclidean distance over the one-dimension address space can be
+        calculated just by subtracting a base address from another
+        pointer.</p>
+            <p>These pointers will have to be transmitted through the network,
+        along with the SIP message, so for the pointers to keep their meaning,
+        they need to be relativized to a known point, and the most meaningful
+        known point in a SIP message is its start.</p>
+            <p>So making the pointers relative to the message start, gives two
+        important features: first, it makes the pointers still valid when they
+        arrive at another computer (because they are relative to the beginning
+        of the message), and they occupy far less memory, because from a
+        4-byte pointer (in IA32) it gets translated to a 1 or 2 byte index,
+        because an important amount of redundant information is elicited (we
+        already know that each of the parts of the message belong to the
+        message, so why carry the message begin address in each of the
+        pointers ?).</p>
+            <p>The SIP messages are composed of protocol headers and a payload.
+        The headers section don't usually surpass the 1500 byte limit, amongst
+        other reasons, because the usual Maximum Transmission Unit in Ethernet
+        networks is 1500 bytes and the protocol was initially designed to work
+        on UDP. For that reason, 11 bits should be enough to address a
+        particular region within the SIP message, because it yields 2048
+        positions. The closest greater value to 11 bits multiple of a byte
+        (the basic TCP network transport unit) is 16 bits, or 2 bytes, which
+        makes it possible to address 65536 positions from the
+        beginning.</p>
+            <p>For the SEAS protocol to be extensible and platform-independent,
+        all the 2-byte pointers or indexes to each of the message regions are
+        sent in network-byte-order, or big endian. This is also useful in the
+        JAVA part to retrieve the indexes, because the JAVA natively uses a
+        big-endian representation of integers, regardless the architecture on
+        which it runs.</p>
+            <p>For each kind of standard SIP header (this is, the headers
+        referred to in the SIP specification) there is a code specification,
+        regarding the composition of the header. Each one of its parts points
+        to one the several components of the header. For example, a From
+        header always has a SipURI and may have several parameters, amongst
+        others, a tag. Then, the From header code has a field indicating where
+        the URI starts, a codification of the URI, and several pointers that
+        point to each one of the parameter names and values. This is the
+        codification of the From header. All the other headers have a similar
+        codification.</p>
+          </div>
+          <div class="section" title="2.2. General codification of a header">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4998856"></a>2.2. General codification of a header</h3>
+                </div>
+              </div>
+            </div>
+            <p>Every header codification, regardless it is known to the server
+        or not, begins with a 2-byte unsigned integer, which points to the
+        beginning of that header counted from the SIP message begin (a SIP
+        message start based pointer to the header). Following these two bytes
+        is another byte giving the length of the name, and another byte giving
+        the length of the entire header (including name and value).</p>
+            <div class="figure">
+              <a id="idp4542424"></a>
+              <p class="title">
+                <strong>Figure 2.3. General codification of a SIP header in SEAS
+            protocol</strong>
+              </p>
+              <div class="figure-contents">
+                <div class="mediaobject">
+                  <img src="images/image100.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image100.gif" alt="General codification of a SIP header in SEAS protocol" />
+                </div>
+              </div>
+            </div>
+            <br class="figure-break" />
+            <p>For example:</p>
+            <div class="figure">
+              <a id="idp5357552"></a>
+              <p class="title">
+                <strong>Figure 2.4. Example of a from header SEAS-protocol codification</strong>
+              </p>
+              <div class="figure-contents">
+                <div class="mediaobject">
+                  <img src="images/image101.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image101.gif" alt="Example of a from header SEAS-protocol codification" />
+                </div>
+              </div>
+            </div>
+            <br class="figure-break" />
+            <div class="section" title="2.2.1. Codification of a generic URI">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp6513792"></a>2.2.1. Codification of a generic URI</h4>
+                  </div>
+                </div>
+              </div>
+              <p>As the SIP URI is one of the most used types in a SIP message,
+          a special structure has been defined to describe the contents of it.
+          A URI is always included inside a SIP header, or may be in the first
+          line of a SIP Request (as the request URI).</p>
+              <p>The codification of any URI is as follows:</p>
+              <div class="figure">
+                <a id="idp7532448"></a>
+                <p class="title">
+                  <strong>Figure 2.5. SEAS-codification of a SIP URI (byte meanings are
+              shown)</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image102.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image102.gif" alt="SEAS-codification of a SIP URI (byte meanings are shown)" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+              <p>What follows is an example of a SIP URI codification with the
+          SEAS protocol.</p>
+              <div class="figure">
+                <a id="idp6083504"></a>
+                <p class="title">
+                  <strong>Figure 2.6. Example of a SEAS SIP URI codification</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image103.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image103.gif" alt="Example of a SEAS SIP URI codification" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+              <p>The first byte in the encoded-URI structure, gives the
+          index where the URI starts, counting from the beginning of the SIP
+          header where it appears. The next two bytes are flags indicating
+          known fields present in the URI (such as port, host, user,
+          etc.).</p>
+              <p>All the following bytes are uri-start based pointers to the
+          fields that are present in the URI, as specified by the flags. They
+          must appear in the same order shown in the flags, and only appear if
+          the flag was set to 1.</p>
+              <p>The end of the field, will be the place where the following
+          pointer points to, minus one (note that all the fields present in a
+          URI are preceded by 1 character, ie
+          sip[:user][:passwod][@host][:port][;param1=x][;param2=y][?hdr1=a][&amp;hdr2=b])
+          it will also be necessary to have a pointer at the end, pointing two
+          past the end of the URI, so that the length of the last header can
+          be computed.</p>
+              <p>The reason to have the “other parameters” and headers flags at
+          the beginning (just after the strictly URI stuff), is that it will
+          be necessary to know the length of the parameters section and the
+          headers section. The parameters can appear in an arbitrary order,
+          they won't be following the convention of
+          transport-ttl-user-method-maddr-lr, so we can't rely on the next
+          pointer to compute the length of the previous pointer field, as the
+          ttl parameter can appear before the transport parameter. So the
+          parameter pointers must have 2 bytes: pointer+length.</p>
+            </div>
+            <div class="section" title="2.2.2. Codification of To and From headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp6180288"></a>2.2.2. Codification of To and From headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>To and From headers follow the same structure, so the same
+          codification structure has been used to describe both. The structure
+          is depicted in the drawing:</p>
+              <div class="figure">
+                <a id="idp7612064"></a>
+                <p class="title">
+                  <strong>Figure 2.7. SEAS codification of From and To headers</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image104.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image104.gif" alt="SEAS codification of From and To headers" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+            </div>
+            <div class="section" title="2.2.3. Codification of Contact">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp7008552"></a>2.2.3. Codification of Contact</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The contact header is one of those SIP headers that can be
+          combined, which means that if several headers of the same type are
+          present in the message, they can be aggregated in a single header,
+          having the header values separated by a comma. Thus, a single
+          Contact header can contain more than one contact-value. For this
+          reason, the Contact codification is composed of a several Contact
+          codifications concatenated, and a byte at the beginning telling how
+          much Contact codifications are present. The code is depicted in the
+          following drawing:</p>
+              <div class="figure">
+                <a id="idp7697968"></a>
+                <p class="title">
+                  <strong>Figure 2.8. SEAS codification of a Contact header</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image105.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image105.gif" alt="SEAS codification of a Contact header" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+            </div>
+            <div class="section" title="2.2.4. Codification of Route and Record Route headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp6733352"></a>2.2.4. Codification of Route and Record Route headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>Both Route and Record-Route headers follow an identical
+          structure, and it is also permitted to combine several headers into
+          one, with their bodies (or header values) separated by commas. In
+          this case, both kinds of headers follow the same structure, defined
+          as follows:</p>
+              <div class="figure">
+                <a id="idp5506568"></a>
+                <p class="title">
+                  <strong>Figure 2.9. SEAS codification of a Route Header</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image106.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image106.gif" alt="SEAS codification of a Route Header" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+            </div>
+            <div class="section" title="2.2.5. Codification of Accept and Content-Type headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp5102848"></a>2.2.5. Codification of Accept and Content-Type headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>These two kinds of headers carry mime type and subtype
+          definitions in the form “type/subtype” (ie. text/xml,
+          application/sdp or whatever). For internal handling of this headers,
+          SER codifies the known types and subtypes into a single 32 bit
+          integer, with the highest two bytes giving the mime type, and the
+          lowest two bytes giving the subtype.</p>
+              <p>The difference is that Accept header can also be combined,
+          carrying more than one header value in a single header row. Thus the
+          Accept header has a leading byte giving the number of mime
+          type/subtype integers present, while the Content-Type only uses 4
+          bytes (a 32-bit integer) giving the type/subtype.</p>
+            </div>
+            <div class="section" title="2.2.6. Codification of Authorization headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp8044712"></a>2.2.6. Codification of Authorization headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>SIP has inherited the authentication scheme from HTTP, which
+          is based on a digest scheme. There are several headers regarding
+          these authorization scheme, namely Proxy-Authenticate,
+          WWW-Authenticate, Authorization and Proxy-Authorization. All of them
+          can be codified using the same schema, which is as follows:</p>
+              <div class="figure">
+                <a id="idp7167792"></a>
+                <p class="title">
+                  <strong>Figure 2.10. SEAS codification of Authentication/Authorization
+              headers</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/image107.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image107.gif" alt="SEAS codification of Authentication/Authorization headers" />
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+              <p>For each field present, there are 2 bytes, one pointing the
+          place where it starts, the next giving how long this field is. The
+          URI is a special case, and is composed of 1 byte telling how long is
+          the URI structure, and then the encoded URI structure.</p>
+            </div>
+            <div class="section" title="2.2.7. Codification of Allow headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp7802384"></a>2.2.7. Codification of Allow headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>Allow headers carry request methods that a user agent or proxy
+          understands or is willing to accept. In SER, request methods are
+          codified into a 32-bit integer, each of its bits signals a different
+          kind of header. The Allow header is codified copying that integer
+          into the payload of the header.</p>
+            </div>
+            <div class="section" title="2.2.8. Codification of Content-Disposition headers">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp6925880"></a>2.2.8. Codification of Content-Disposition headers</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The content-disposition is encoded within 2 bytes: the first
+          is a header-start based pointer to where the content-disposition
+          value starts, and the second is its length. If there are parameters
+          present, each of them uses 1 byte pointing to where the parameter
+          name starts, and 1 byte pointing to where the parameter value
+          starts. From these two values, the parameter name and value lengths
+          can be inferred.</p>
+            </div>
+            <div class="section" title="2.2.9. Codification of Content-Length header">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp6582040"></a>2.2.9. Codification of Content-Length header</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The content length header is codified as a 4-byte unsigned
+          integer, in network byte order.</p>
+            </div>
+            <div class="section" title="2.2.10. Codification of Cseq header">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp4481120"></a>2.2.10. Codification of Cseq header</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The Cseq header is codified using 9 bytes. The first one is a
+          number corresponding to the internal value that SER assigns to that
+          request method (the method ID). The following 4 bytes are an
+          unsigned 32-bit integer according to the Cseq number. The next two
+          bytes are the header based pointer to the beginning of the Cseq
+          number and its length, and two more bytes pointing to the beginning
+          of the method name and its length.</p>
+            </div>
+            <div class="section" title="2.2.11. Codification of Expires header">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp7832912"></a>2.2.11. Codification of Expires header</h4>
+                  </div>
+                </div>
+              </div>
+              <p>The expires header is composed of 6 bytes. The first four
+          bytes are an unsigned 32-bit integer with the parsed value of the
+          header (which is the number of seconds before a request expires).
+          Then follows 1 byte pointing to the beginning of the header value
+          (the expires value as a string) and a byte giving the length of the
+          value.</p>
+            </div>
+            <div class="section" title="2.2.12. Codification of a SIP message">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp5065152"></a>2.2.12. Codification of a SIP message</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="section" title="2.2.12.1. The general message information section">
+                <div class="titlepage">
+                  <div>
+                    <div>
+                      <h5 class="title"><a id="idp6024488"></a>2.2.12.1. The general message information section</h5>
+                    </div>
+                  </div>
+                </div>
+                <p>In SER, not only the headers are parsed with a high degree
+            of optimization, but also the first line is. So for the SEAS
+            protocol to realize this improvement, a codification for the first
+            line of every SIP messages has also been defined.</p>
+                <p>The first two bytes of the codification are a 2-byte
+            unsigned integer. If its value is equal or greater than 100, then
+            this is a response, and the integer represents its status code. If
+            its value is smaller than 100, then it is a request, and the
+            integer represents the method of the request being
+            transported.</p>
+                <div class="figure">
+                  <a id="idp5431672"></a>
+                  <p class="title">
+                    <strong>Figure 2.11. SEAS codification of a SIP First Line</strong>
+                  </p>
+                  <div class="figure-contents">
+                    <div class="mediaobject">
+                      <img src="images/image108.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image108.gif" alt="SEAS codification of a SIP First Line" />
+                    </div>
+                  </div>
+                </div>
+                <br class="figure-break" />
+                <p>The next two bytes are an unsigned integer which is a
+            pointer to where the actual SIP message starts, beginning from the
+            start of the codified payload.</p>
+                <p>The next two bytes are also an unsigned integer giving the
+            SIP message length.</p>
+                <p>The next bytes differ on the meaning depending on whether
+            the message is a SIP Request or Response.</p>
+                <p>In case it is a Request:</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the method begins, and the method length.</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the Request URI begins, and the request URI length.</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the version identifier begins, and the version identifier
+            length.</p>
+                <p>In case it was a Response:</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the response code begins, and the response code
+            length.</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the reason phrase begins, and the reason phrase
+            length.</p>
+                <p>The next two bytes, are a SIP-message-start based pointer to
+            where the version identifier begins, and the version identifier
+            length.</p>
+                <p>In case the message is a SIP response, the following bytes
+            correspond to the Request URI codification. The first byte is the
+            length of the URI codification, followed by the URI code.</p>
+                <p>The last byte in this set, is the number of headers present
+            in the SIP message. After this byte, goes a section, called the
+            Message Headers Index, which gives quick access to each of the
+            headers and their codifications present in the message.</p>
+              </div>
+              <div class="section" title="2.2.12.2. The headers index section">
+                <div class="titlepage">
+                  <div>
+                    <div>
+                      <h5 class="title"><a id="idp7541040"></a>2.2.12.2. The headers index section</h5>
+                    </div>
+                  </div>
+                </div>
+                <p>As it has been already discussed, the aim of SEAS project is
+            to achieve as high a performance as possible. One of the
+            techniques enabling high performance in text-based servers is the
+            so called lazy parsing. To enable the laziest possible parsing at
+            the Application Server endpoint, a mechanism has been used so that
+            access to a requested SIP header can be delayed until the
+            application requests it, and the access can be direct to that
+            header, without parsing the former headers present in the SIP
+            message. Recall that one of the performance drawbacks of the SIP
+            protocol is that headers of any type can be spread all along the
+            header section, not having the constraint of putting the most
+            critical sip-specific headers at the beginning and ordered (which
+            would be, in fact, very desirable).</p>
+                <p>For this to be possible, there is a section right after the
+            beginning of the payload (the general message information section)
+            which is a kind of hash table, giving quick access to the codes
+            (as explained in the previous sections) of each of the headers
+            present in the message.</p>
+                <p>This sort of hash table, is composed of triplets of bytes.
+            The first byte of each three is a code indicating which kind of
+            header it points to (whether it is a From, To, Call-ID, Route
+            header, etc). Then follows a 2 byte network-byte-order integer
+            that points to a section in the codified-header where the body of
+            this header is more specifically described.</p>
+                <p>This gives really fast access to any of the headers. For
+            example, if all the Route Headers were requested by the
+            application, then a lookup in this table would be necessary,
+            looking for the value '9' (corresponding to the Route header) in
+            each of the positions multiple of 3 (0,3,6,9,12, etc). This can be
+            done in a extremely fast and easy way, as this snipped of pseudo
+            code explains:</p>
+                <p>for(int j=0,int i=0;i&lt;table_length;i+=3){</p>
+                <p>if(payload[i]==9)</p>
+                <p>results[j++]=i;</p>
+                <p>}</p>
+                <p>this would let in the “results” array all the indexes in the
+            headers table that refer to a Route header. Then, the Route
+            codification for each of the headers could be reached thanks to
+            the two-byte unsigned integer that follows each of the header
+            identifiers.</p>
+                <div class="figure">
+                  <a id="idp4710072"></a>
+                  <p class="title">
+                    <strong>Figure 2.12. SEAS Headers Index section overview</strong>
+                  </p>
+                  <div class="figure-contents">
+                    <div class="mediaobject">
+                      <img src="images/image109.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image109.gif" alt="SEAS Headers Index section overview" />
+                    </div>
+                  </div>
+                </div>
+                <br class="figure-break" />
+                <p>So a SIP message codified by the SEAS protocol, has the
+            following layout:</p>
+                <div class="figure">
+                  <a id="idp7317000"></a>
+                  <p class="title">
+                    <strong>Figure 2.13. SEAS SIP-Message codification</strong>
+                  </p>
+                  <div class="figure-contents">
+                    <div class="mediaobject">
+                      <img src="images/image110.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image110.gif" alt="SEAS SIP-Message codification" />
+                    </div>
+                  </div>
+                </div>
+                <br class="figure-break" />
+                <p>SIP Messages are a fundamental part of the protocol, but
+            they are not the only one. Transaction play a very important role
+            in the SIP protocol, within SER and in any JAIN-SIP
+            implementation. For this reason, the SEAS protocol also needs to
+            define and implement some semantics regarding transaction
+            handling. The events related to a transaction are: Incoming
+            Request, Outgoing Request, Incoming Response, Outgoing Response,
+            Timeout and Transport Error.</p>
+                <p>So the SEAS protocol defines a specific format for each one
+            of these events. Internally, SER stores the transactions in a hash
+            table. This hash table generates an integer for each transaction
+            applying a hash function to its Via branch parameter, this integer
+            is the hash index, and it identifies in which slot within the hash
+            table the transaction is stored. The transaction table usually
+            uses 65536 entries, so the hash collision is pretty unlikely.
+            Anyway, every hash entry is in reality a linked list of
+            transactions, so in the case a hash collision (two transactions
+            being assigned to the same hash slot) the transactions are added
+            to the same slot, each one being identified by another integer
+            called the label. The label within a hash slot, is initially
+            generated randomly, and then increased by one each time a
+            transaction falls in the same slot. So every transaction is
+            identified by a hash index and a label.</p>
+                <p>For incoming SIP requests, a transaction is generated at
+            SER, and the SEAS module gets that transaction identifier (hash
+            index + label), then grabs the source and destination IP, port and
+            transport from every message, and crafts a SEAS RequestIn event.
+            This kind of event carries all this information within it.</p>
+                <p>In order to send Responses out for the Server Transactions,
+            JAIN can send a type of Action messages, that order SER to send
+            them to the network. These messages follow a structure very
+            similar to that of RequestIn events: they start with the Action
+            length in bytes, then follows a byte giving the type of action,
+            then follows the Hash Index and the Label associated with the
+            transaction that is being replied, and finally the SIP Message in
+            raw format. It doesn’t use the SEAS codification described above,
+            because SER can easily parse the JAIN provided Response to process
+            it and send it out, so the pre-parsing is not needed in that
+            direction.</p>
+                <p>In order to generate Client Transactions, that is, sending
+            SIP Requests out, JAIN utilizes another kind of action called Seas
+            Request Action. In this case, when JAIN generates the Request to
+            be sent out, it doesn’t have any means to know the transaction
+            identifier (hash index and label) that will be assigned to it by
+            SER, so a new mechanism has bee implemented to correlate JAIN
+            requests to SER transactions. Basically, JAIN-SIP assigns a unique
+            identifier (an integer) that is incremented by one for each new
+            Client Transaction generated. This identifier is passed to SER
+            along with the SIP Request, so when a SIP Response arrives to SER
+            regarding that transaction, SER sends a ResponseIn event to the
+            JAIN stack, containing both the initial integer identifying the
+            transaction at JAIN and the hash index and label that have been
+            assigned to the transaction. This way, JAIN can correlate its own
+            identifiers with the identifiers used within SER.</p>
+                <div class="figure">
+                  <a id="idp6198056"></a>
+                  <p class="title">
+                    <strong>Figure 2.14. Different kinds of SEAS codified Events and
+                Actions</strong>
+                  </p>
+                  <div class="figure-contents">
+                    <div class="mediaobject">
+                      <img src="images/image111.gif" tppabs="http://kamailio.org/docs/modules/4.3.x/modules/images/image111.gif" alt="Different kinds of SEAS codified Events and Actions" />
+                    </div>
+                  </div>
+                </div>
+                <br class="figure-break" />
+                <p>In case there is a Transaction Timeout, it is notified to
+            the JAIN SIP Stack by passing it a Seas Incoming Response with a
+            flag called Faked Reply, and a Response code number 408 (Request
+            Timeout).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

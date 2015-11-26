@@ -1,0 +1,1627 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Resource List Server</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4341784" title="Resource List Server" />
+    <link rel="next" href="#idp2275448" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Resource List Server">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4341784"></a>Resource List Server</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2275448">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2393032">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2113624">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2524440">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2471584">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2462928">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2552928">3.1. <code class="varname">db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3470016">3.2. <code class="varname">rlpres_db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3473576">3.3. <code class="varname">xcap_db_url</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3476312">3.4. <code class="varname">db_mode</code>(int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3479056">3.5. <code class="varname">xcap_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14552">3.6. <code class="varname">rlsubs_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11856">3.7. <code class="varname">rlpres_table</code>(str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9168">3.8. <code class="varname">clean_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6504">3.9. <code class="varname">rlpres_clean_period</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3600">3.10. <code class="varname">waitn_time</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm832">3.11. <code class="varname">notifier_poll_rate</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp70616">3.12. <code class="varname">notifier_processes</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp73560">3.13. <code class="varname">max_expires</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp76192">3.14. <code class="varname">expires_offset</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79328">3.15. <code class="varname">hash_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp82056">3.16. <code class="varname">xcap_root</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp84648">3.17. <code class="varname">integrated_xcap_server</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp87296">3.18. <code class="varname">to_presence_code</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp22912">3.19. <code class="varname">rls_event</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp25672">3.20. <code class="varname">outbound_proxy</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28376">3.21. <code class="varname">server_address</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp30496">3.22. <code class="varname">max_notify_body_length</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp32584">3.23. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp34968">3.24. <code class="varname">disable_remote_presence</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp37544">3.25. <code class="varname">max_backend_subs</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp40400">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp40768">4.1. 
+		<code class="function">rls_handle_subscribe([watcher_uri])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1821152">4.2. 
+		<code class="function">rls_handle_notify()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1823608">4.3. 
+		<code class="function">rls_update_subs(uri, event)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1828128">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1828496">5.1. 
+		<code class="function">rls_cleanup</code>
+	  </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1831416">6. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp937416">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3468520">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3472368">Set <code class="varname">rlpres_db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3475112">Set <code class="varname">xcap_db_url</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp3477952">Set <code class="varname">db_mode</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm15712">Set <code class="varname">xcap_table</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm13040">Set <code class="varname">rlsubs_table</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm10344">Set <code class="varname">rlpres_table</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm7672">Set <code class="varname">clean_period</code> parameter</a></dt>
+          <dt>1.9. <a href="#idm4776">Set <code class="varname">rlpres_clean_period</code> parameter</a></dt>
+          <dt>1.10. <a href="#idm1936">Set <code class="varname">waitn_time</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp69448">Set <code class="varname">notifier_poll_rate</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp72392">Set <code class="varname">notifier_processes</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp75032">Set <code class="varname">max_expires</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp78160">Set <code class="varname">expires_offset</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp80896">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp83456">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp86144">Set <code class="varname">integrated_xcap_server</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp21744">Set <code class="varname">to_presence_code</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp24504">Set <code class="varname">rls_event</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp27184">Set <code class="varname">outbound_proxy</code> parameter</a></dt>
+          <dt>1.21. <a href="#idp29288">Set <code class="varname">server_address</code> parameter</a></dt>
+          <dt>1.22. <a href="#idp31424">Set <code class="varname">max_notify_body_length</code> parameter</a></dt>
+          <dt>1.23. <a href="#idp33808">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.24. <a href="#idp36392">Set <code class="varname">disable_remote_presence</code> parameter</a></dt>
+          <dt>1.25. <a href="#idp39152">Set <code class="varname">max_backend_subs</code> parameter</a></dt>
+          <dt>1.26. <a href="#idp42712"><code class="function">rls_handle_subscribe</code> usage</a></dt>
+          <dt>1.27. <a href="#idp1822376"><code class="function">rls_handle_notify</code> usage</a></dt>
+          <dt>1.28. <a href="#idp1826456"><code class="function">rls_update_subs</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2275448"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2393032">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2113624">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2524440">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2471584">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2462928">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2552928">3.1. <code class="varname">db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3470016">3.2. <code class="varname">rlpres_db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3473576">3.3. <code class="varname">xcap_db_url</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3476312">3.4. <code class="varname">db_mode</code>(int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3479056">3.5. <code class="varname">xcap_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14552">3.6. <code class="varname">rlsubs_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11856">3.7. <code class="varname">rlpres_table</code>(str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9168">3.8. <code class="varname">clean_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6504">3.9. <code class="varname">rlpres_clean_period</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3600">3.10. <code class="varname">waitn_time</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm832">3.11. <code class="varname">notifier_poll_rate</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp70616">3.12. <code class="varname">notifier_processes</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp73560">3.13. <code class="varname">max_expires</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp76192">3.14. <code class="varname">expires_offset</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79328">3.15. <code class="varname">hash_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp82056">3.16. <code class="varname">xcap_root</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp84648">3.17. <code class="varname">integrated_xcap_server</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp87296">3.18. <code class="varname">to_presence_code</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp22912">3.19. <code class="varname">rls_event</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp25672">3.20. <code class="varname">outbound_proxy</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28376">3.21. <code class="varname">server_address</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp30496">3.22. <code class="varname">max_notify_body_length</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp32584">3.23. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp34968">3.24. <code class="varname">disable_remote_presence</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp37544">3.25. <code class="varname">max_backend_subs</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp40400">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp40768">4.1. 
+		<code class="function">rls_handle_subscribe([watcher_uri])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1821152">4.2. 
+		<code class="function">rls_handle_notify()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1823608">4.3. 
+		<code class="function">rls_update_subs(uri, event)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1828128">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1828496">5.1. 
+		<code class="function">rls_cleanup</code>
+	  </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1831416">6. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2393032"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The modules is a Resource List Server implementation following the
+	specification in RFC 4662 and RFC 4826. 
+	</p>
+          <p>
+	The server is independent from local presence servers, retrieving presence
+	information with Subscribe-Notify messages.
+	</p>
+          <p>
+	The module uses the presence module as a library, as it requires a resembling
+	mechanism for handling Subscribe. Therefore, in case the local presence server
+	is not collocated on the same machine with the RL server, the presence module
+	should be loaded in a library mode only (see doc for presence module).
+	</p>
+          <p>
+	It handles subscription to lists in an event independent way.The default event
+	is presence, but if some other events are to be handled by the server, they
+	should be added using the module parameter "rls_events".
+	</p>
+          <p>
+	It works with XCAP server for storage. There is also the possibility to
+	configure it to work in an integrated_xcap server mode, when it only
+	queries database for the resource lists documents. This is useful in a
+	small architecture when all the clients use an integrated server and there
+	are no references to exterior documents in their lists.
+	</p>
+          <p>
+	The same as presence module, it has a caching mode with periodical update
+	in database for subscribe information. The information retrieved with Notify
+	messages is stored in database only. 
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2113624"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2524440"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence- in a library mode</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pua</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2471584"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2462928"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2552928"></a>3.1. <code class="varname">db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The database url.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3468520"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. rlpres_db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3470016"></a>3.2. <code class="varname">rlpres_db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The rlpres (rls_presentity table) database url.
+		This parameter only needs to be specified if the rls_watchers table and 
+		rls_presentity tables are in different databases.
+		rls_presentity is used to cache the bodies of back-end NOTIFY requests
+		until an RLS NOTIFY can be sent.  On a multi-server system having a single
+		cache for all active servers can cause issues if both servers try to send
+		RLS NOTIFY requests at the same time.  This parameter enables each server
+		to have its own (possibly local) rls_presentity table.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is a mirror of the <span class="quote">“<span class="quote">db_url</span>”</span> setting.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3472368"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">rlpres_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "rlpres_db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. xcap_db_url(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3473576"></a>3.3. <code class="varname">xcap_db_url</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The xcap database url.
+		This parameter only needs to be specified if the rls db and integerated 
+		xcap server db have different urls. 
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is a mirror of the <span class="quote">“<span class="quote">db_url</span>”</span> setting.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3475112"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">xcap_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "xcap_db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. db_mode(int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3476312"></a>3.4. <code class="varname">db_mode</code>(int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module supports 2 modes of operation, high speed memory
+		based storage (mode 0), and database only (mode 2) where all 
+		data is stored in a database, allowing scalability at the
+		expense of speed. Mode 1 is reserved.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">0</span>”</span> 	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3477952"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">db_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "db_mode", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. xcap_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3479056"></a>3.5. <code class="varname">xcap_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the xcap table in which the integrated server
+		or the xcap_client module writes. If integrated_xcap_server
+		parameter not set, the name of the table must be the same as
+		the one set for the xcap_client module.
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">xcap</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm15712"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">xcap_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "xcap_table", "xcaps");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. rlsubs_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14552"></a>3.6. <code class="varname">rlsubs_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table where resource lists subscription 
+		information is stored. 
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">rls_watchers</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm13040"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">rlsubs_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "rlsubs_table", "rls_subscriptions")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. rlpres_table(str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11856"></a>3.7. <code class="varname">rlpres_table</code>(str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the db table where notified event specific
+		information is stored. 
+		</p>
+            <p>
+		<span class="emphasis"><em>	Default value is <span class="quote">“<span class="quote">rls_presentity</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm10344"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">rlpres_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "rlpres_table", "rls_notify")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. clean_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9168"></a>3.8. <code class="varname">clean_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The period at which to check for expired information.
+		0 means do not check.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">100</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm7672"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">clean_period</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "clean_period", 100)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. rlpres_clean_period (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6504"></a>3.9. <code class="varname">rlpres_clean_period</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The period at which to check for expired rls_presentity information.
+		-1 means do not use (clean_period) is used instead.
+		0 means do not check.
+		This option can be used when you want to check rls_presentity and
+		rls_watchers on different timeouts.  This is useful when they are
+		in different databases.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">-1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm4776"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">rlpres_clean_period</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "rlpres_clean_period", 100)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. waitn_time (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3600"></a>3.10. <code class="varname">waitn_time</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum time period that RLS NOTIFY requests will
+		be buffered for.  The server will attempt to send
+		NOTIFY requests with the updated presence state of the
+		subscribed list or watcher information within this
+		many seconds of a change occurring.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">5</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm1936"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">waitn_time</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "waitn_time", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. notifier_poll_rate (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm832"></a>3.11. <code class="varname">notifier_poll_rate</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of times per second that the notifier processes
+		should check for work.  Approximately
+		1/(waitn_time * notifier_poll_rate * notifier_processes) of the
+		pending updates will be sent each time a notifier process runs.
+		</p>
+            <p>
+		Separate notifier processes are only run when db_mode is 2
+		(DB only mode).
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">10</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp69448"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">notifier_poll_rate</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "notifier_poll_rate", 20)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. notifier_processes (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp70616"></a>3.12. <code class="varname">notifier_processes</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of notifier processes that should be started.
+		</p>
+            <p>
+		Separate notifier processes are only run when db_mode is 2
+		(DB only mode).
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">1</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp72392"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">notifier_processes</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "notifier_processes", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. max_expires (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp73560"></a>3.13. <code class="varname">max_expires</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum accepted expires for a subscription to a list. 
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">7200</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp75032"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">max_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "max_expires", 10800)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. expires_offset (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp76192"></a>3.14. <code class="varname">expires_offset</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This paramater only has an effect when the db_mode is DB_ONLY (mode 2).
+		When expired subscribers are checked for deletion from the database,
+		those that have a value in the expires column which is less than 
+		current_time - expires_offset are matched. Hence when an offset of zero
+		is used, all those that expire prior the current time will be deleted.
+		If an offset of 't' is used, only those that expired more than t seconds
+		ago are deleted from the database. 
+		Negative offsets are treated as though an offset of zero was specifed. 
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp78160"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">expires_offset</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "expires_offset", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. hash_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79328"></a>3.15. <code class="varname">hash_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        The dimension of the hash table used to store subscription to a list.
+        This parameter will be used as the power of 2 when computing table size.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">9 (512)</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp80896"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "hash_size", 11)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. xcap_root (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp82056"></a>3.16. <code class="varname">xcap_root</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The address of the xcap server.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp83456"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "xcap_root", "http://192.168.2.132/xcap-root:800")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. integrated_xcap_server (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp84648"></a>3.17. <code class="varname">integrated_xcap_server</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter should be set if only integrated xcap servers
+		are used to store resource lists.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp86144"></a>
+              <p class="title">
+                <strong>Example 1.17. Set <code class="varname">integrated_xcap_server</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "integrated_xcap_server", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. to_presence_code (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp87296"></a>3.18. <code class="varname">to_presence_code</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The code to be returned by rls_handle_subscribe function 
+		if the processed Subscribe is not a resource list Subscribe.
+		This code can be used in an architecture with presence and rls
+		servers collocated on the same machine, to call handle_subscribe
+		on the message causing this code.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp21744"></a>
+              <p class="title">
+                <strong>Example 1.18. Set <code class="varname">to_presence_code</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "to_presence_code", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19. rls_event (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp22912"></a>3.19. <code class="varname">rls_event</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The default event that RLS handles is presence. If some other
+		events should also be handled by RLS they should be added using
+		this parameter. It can be set more than once.
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">"presence"</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp24504"></a>
+              <p class="title">
+                <strong>Example 1.19. Set <code class="varname">rls_event</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "rls_event", "dialog;sla")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20. outbound_proxy (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp25672"></a>3.20. <code class="varname">outbound_proxy</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The SIP address where to send RLS subscriptions (outbound
+		proxy address as SIP URI).
+		</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">NULL</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp27184"></a>
+              <p class="title">
+                <strong>Example 1.20. Set <code class="varname">outbound_proxy</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "outbound_proxy", "sip:presence.kamailio.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21. server_address (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28376"></a>3.21. <code class="varname">server_address</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The address of the server that will be used as a contact in sent
+			Subscribe requests and 200 OK replies for Subscribe requests for RLS.
+			It is a mandatory parameter.
+		</p>
+            <div class="example">
+              <a id="idp29288"></a>
+              <p class="title">
+                <strong>Example 1.21. Set <code class="varname">server_address</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "server_address", "sip:rls@ip.address.ofyour.proxy:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22. max_notify_body_length (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp30496"></a>3.22. <code class="varname">max_notify_body_length</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The maximum size that the body of a NOTIFY message may be. 
+            If set to 0 (the default), no size limit is applied.
+            Note that this refers only to the body, not the complete NOTIFY message.
+		</p>
+            <div class="example">
+              <a id="idp31424"></a>
+              <p class="title">
+                <strong>Example 1.22. Set <code class="varname">max_notify_body_length</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "max_notify_body_length", 32000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp32584"></a>3.23. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rows to be loaded in one step from database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 500.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp33808"></a>
+              <p class="title">
+                <strong>Example 1.23. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "fetch_rows", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24. disable_remote_presence (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp34968"></a>3.24. <code class="varname">disable_remote_presence</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When set to a non-zero value RLS will not perform back-end SUBSCRIBEs
+		to non-local presentities.
+		When people have large contact lists RLS will make lots of back-end
+		subscriptions for each local subscriber.  This can be a lot of traffic,
+		and if the contact lists contain non-local (as in not on this Kamailio
+		server or cluster) contacts this can result in a lot of Internet traffic.
+		Setting this option to a non-zero value prevents RLS from performing
+		back-end SUBSCRIBEs for remote presentities.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp36392"></a>
+              <p class="title">
+                <strong>Example 1.24. Set <code class="varname">disable_remote_presence</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "disable_remote_presence", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25. max_backend_subs (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp37544"></a>3.25. <code class="varname">max_backend_subs</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When set to a non-zero value RLS will limit the number of back-end
+		SUBSCRIBEs for each RLS SUBSCRIBE to this value.
+		Leaving this at the default of zero means no limit.
+		When people have large contact lists RLS will make lots of back-end
+		subscriptions.  This can easily overload a system.  This option allows
+		you to limit the number of back-end SUBSCRIBEs to help prevent overload.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp39152"></a>
+              <p class="title">
+                <strong>Example 1.25. Set <code class="varname">max_backend_subs</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rls", "max_backend_subs", 30)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp40400"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  rls_handle_subscribe([watcher_uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp40768"></a>4.1. 
+		<code class="function">rls_handle_subscribe([watcher_uri])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function detects if a Subscribe message should be
+		handled by RLS. If not it replies with the configured 
+		to_presence_code. If it is, it extracts the dialog info and sends
+		aggregate Notify requests with information for the list.	
+		</p>
+            <p>
+		By default this function uses the From: URI from the SUBSCRIBE
+		request as the Watcher URI.  The optional watcher_uri parameter
+		can be used to specify a different Watcher URI, possibly taken
+		from a SIP header like P-Asserted-Identity:.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp42712"></a>
+              <p class="title">
+                <strong>Example 1.26. <code class="function">rls_handle_subscribe</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+For presence and rls on the same machine:
+	modparam("rls", "to_presence_code", 10)
+
+	if(is_method("SUBSCRIBE"))
+	{	
+		$var(ret_code)= rls_handle_subscribe();
+
+		if($var(ret_code)== 10)
+				handle_subscribe();
+
+		t_release();
+	}
+
+For rls only:
+	if(is_method("SUBSCRIBE"))
+	{
+		rls_handle_subscribe();
+		t_release();
+	}
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  rls_handle_notify()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1821152"></a>4.2. 
+		<code class="function">rls_handle_notify()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1822376"></a>
+              <p class="title">
+                <strong>Example 1.27. <code class="function">rls_handle_notify</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(method=="NOTIFY")
+    rls_handle_notify();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  rls_update_subs(uri, event)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1823608"></a>4.3. 
+		<code class="function">rls_update_subs(uri, event)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function can be used in configuration to trigger updates to
+		resource list subscriptions (for example, after the contents of a
+		resource list has changes).
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>uri - the uri of the user who made the change
+				and whose resource list subscriptions should be
+				updated</p>
+                </li>
+                <li class="listitem">
+                  <p>event - the event package (e.g. presence).
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1826456"></a>
+              <p class="title">
+                <strong>Example 1.28. <code class="function">rls_update_subs</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+Within event_route[xhttp:request]:
+	case "PUT":
+		xcaps_put("$var(uri)", "$var(doc_uri)", "$rb");
+		if($xcapuri(u=&gt;auid)=~"pres-rules") {
+			pres_update_watchers("$var(uri)", "presence");
+			pres_refresh_watchers("$var(uri)", "presence", 1);
+		} else if ($xcapuri(u=&gt;auid)=~"resource-lists"
+			   || $xcapuri(u=&gt;auid)=~"rls-services") {
+			rls_update_subs("$var(uri)", "presence");
+		}
+		exit;
+		break;
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1828128"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  rls_cleanup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1828496"></a>5.1. 
+		<code class="function">rls_cleanup</code>
+	  </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manually triggers the cleanup functions forthe rls_watchers and
+		rls_presentity tables. Useful if you have set
+		<code class="varname">clean_period</code> to zero or less.
+	  </p>
+            <p>
+		Name: <span class="emphasis"><em>rls_cleanup</em></span>
+	  </p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+	  </p>
+            <pre class="programlisting">		:rls_cleanup:fifo_reply
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1831416"></a>6. Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module requires 2 tables in Kamailio database: rls_presentity
+	and rls_watchers.The SQL syntax to create them can be found in
+	rls-create.sql script in the database directories in
+	the kamailio/scripts folder.
+	You can also find the complete database documentation on the
+	project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp937416"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+		The module provides no functions to be used	in other Kamailio modules.
+   </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,546 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mi_xmlrpc Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp1320" title="mi_xmlrpc Module" />
+    <link rel="next" href="#idp5355520" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mi_xmlrpc Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp1320"></a>mi_xmlrpc Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Lavinia-Andreea</span> <span class="surname">Andrei</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Lavinia-Andreea</span> <span class="surname">Andrei</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp5355520">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp7823296">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp7581112">2. To-do</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp5687800">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp5981272">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp5791848">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4463568">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp5562080">4.1. <code class="varname">port</code>(integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4675216">4.2. <code class="varname">log_file</code>(string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4677648">4.3. <code class="varname">reply_option</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp4592776">4.4. <code class="varname">buffer_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4595328">5. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp4596056">6. Example</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp4674056">Set <code class="varname">port</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp4676472">Set <code class="varname">log_file</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp4591608">Set <code class="varname">reply_option</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp4594072">Set <code class="varname">reply_option</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp4596888">XMLRPC request</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp5355520"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp7823296">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp7581112">2. To-do</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp5687800">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp5981272">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp5791848">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4463568">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp5562080">4.1. <code class="varname">port</code>(integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4675216">4.2. <code class="varname">log_file</code>(string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4677648">4.3. <code class="varname">reply_option</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp4592776">4.4. <code class="varname">buffer_size</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4595328">5. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp4596056">6. Example</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7823296"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		NOTE: this module depends on specific versions of libxmlrpc-c3, which may
+		not be available on your OS. You better use the 'xmlrpc' module located in
+		'modules/' folder. It can run any MI command by loading 'mi_rpc' module and
+		executing RPC command 'mi', with first parameter being the MI command,
+		then followed by other parameters that will be passed to the MI command.
+	</p>
+          <p>
+		This module implements a xmlrpc server that handles xmlrpc requests and
+		generates xmlrpc responses. When a xmlrpc message is received a default 
+		method is executed.
+	</p>
+          <p>
+		At first, it looks up the MI command. If found it parses the called 
+		procedure's parameters into a MI tree and the command is executed. A 
+		MI reply tree is returned that is formatted back in xmlrpc. The 
+		response is built in two ways - like a string that contains the MI 
+		tree nodes information (name, values and attributes) or like an array 
+		whose elements are consisted of each MI tree node stored information.
+	</p>
+          <p>
+		Implementation of mi_xmlrpc module's xmlrpc server is based on Abyss
+		XML-RPC server.  Current version of Abyss server
+		"normalizes" CRLF sequence in received XML-RPC strings
+		to LF character, which makes it impossible to pass CRLF
+		sequence from xmlrpc client application to Kamailio modules,
+		such as mi_fifo and pua_mi, that accept requests via MI
+		transport.  To overcome this limitation mi_xmlrpc module
+		implements a hack that coverts each LFLF sequence in
+	        received XML-RPC strings to CRLF sequence.
+	</p>
+        </div>
+        <div class="section" title="2.¬†To-do">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp7581112"></a>2.¬†To-do</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Features to be added in the future:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			possibility to select the listening IP address
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+			multiple ports per IP address
+			</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp5687800"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp5981272"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp5791848"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxmlrpc-c3</em></span> version 0.9.10 or version 1.06.[10-30].
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxmlrpc-c3-dev</em></span> version 0.9.10 or version 1.06.[10-30].
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		If libxmlrpc-c3[-dev] package is not available on your system, you may
+		check if packages for your OS are not available on the 
+		<span class="quote">‚Äú<span class="quote">xmlrpc-c</span>‚Äù</span>project 
+		(<a class="ulink" href="javascript:if(confirm('http://xmlrpc-c.sourceforge.net/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://xmlrpc-c.sourceforge.net/'" tppabs="http://xmlrpc-c.sourceforge.net/">
+		http://xmlrpc-c.sourceforge.net/</a>). Otherwise you need
+		to install the library and devel headers from the sources.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4463568"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†port(integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp5562080"></a>4.1.¬†<code class="varname">port</code>(integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The port number used by the XMLRPX server to listen for incoming 
+		requests.
+		</p>
+            <p>
+		<span class="emphasis"><em>The default value is 8080.</em></span>
+		Ports lower than 1024 are not accepted.
+		</p>
+            <div class="example">
+              <a id="idp4674056"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">port</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_xmlrpc", "port", 8000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†log_file(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4675216"></a>4.2.¬†<code class="varname">log_file</code>(string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		A log file to be used by the internal Abyss html server used by the 
+		XMLRPX library.
+		</p>
+            <p>
+		<span class="emphasis"><em>The default values NONE (no logging).</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4676472"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">log_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_xmlrpc", "log_file", "/var/log/abyss.log")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†reply_option (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4677648"></a>4.3.¬†<code class="varname">reply_option</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Given the xmlrpc response specifications that a methodResponse can 
+		contain a single params section with a single param section, there is 
+		the possibility to choose between a string built response or an 
+		array built one.
+		</p>
+            <p>
+		For a 0 value, a single string parameter will be replied (merging the 
+		whole response). For non-0 value, each line from the response will be 
+		encoded as an element into an array of strings.
+		</p>
+            <p>
+		<span class="emphasis"><em>The default option is a string built response (0).</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4591608"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">reply_option</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_xmlrpc", "reply_option", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†buffer_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp4592776"></a>4.4.¬†<code class="varname">buffer_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		It specifies the maximum length of the buffer used to write in the MI 
+		tree node information in order to build the xmlrpc response.
+		</p>
+            <p>
+		<span class="emphasis"><em> The default value is 8192.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp4594072"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">reply_option</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_xmlrpc", "buffer_size", 8192)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4595328"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		No function exported to be used from configuration file.
+		</p>
+        </div>
+        <div class="section" title="6.¬†Example">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4596056"></a>6.¬†Example</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is an example showing the xmlrpc format for the 
+		<span class="quote">‚Äú<span class="quote">get_statistics dialog: tm:</span>‚Äù</span> MI commad:
+		response.
+		</p>
+          <div class="example">
+            <a id="idp4596888"></a>
+            <p class="title">
+              <strong>Example¬†1.5.¬†XMLRPC request</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">POST /RPC2 HTTP/1.0
+Host: 127.0.0.1
+Connection: close
+User-Agent: OpenSIPg XML_RPC Client
+Content-Type: text/xml
+Content-Length: 1000
+
+&lt;?xml version="1.0" ?&gt;
+&lt;methodCall&gt;
+   &lt;methodName&gt;get_statistics&lt;/methodName&gt;
+   &lt;params&gt;
+       &lt;param&gt;
+           &lt;value&gt;&lt;string&gt;dialog:&lt;/string&gt;&lt;/value&gt;
+       &lt;/param&gt;
+       &lt;param&gt;
+           &lt;value&gt;&lt;string&gt;tm:&lt;/string&gt;&lt;/value&gt;
+       &lt;/param&gt;
+  &lt;/params&gt;
+&lt;/methodCall&gt;</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

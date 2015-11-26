@@ -1,0 +1,2477 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>LDAP Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11223608" title="LDAP Module" />
+    <link rel="next" href="#idp17360288" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="LDAP Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11223608"></a>LDAP Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Christian</span> <span class="surname">Schlatter</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">University of North Carolina<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:cs@unc.edu">cs@unc.edu</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007 University of North Carolina</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17360288">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17957248">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15442664">1.1. Usage Basics</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-urls">1.2. LDAP URLs</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15534856">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15535232">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15536736">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ldap-config">3. LDAP Configuration File</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15539544">3.1. Configuration File Syntax</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15543128">3.2. LDAP Session Settings</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15491416">3.3. Configuration File Example</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15493688">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15494056">4.1. config_file (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15496192">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-search-fn">5.1. ldap_search(ldap_url)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-result-fn">5.2. ldap_result("ldap_attr_name/avp_spec[/avp_type]" [, regex_subst])</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-result-check-fn">5.3. ldap_result_check("ldap_attr_name/string_to_match" [,
+        regex_subst])</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-result-next-fn">5.4. ldap_result_next()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ldap-filter-url-encode-fn">5.5. ldap_filter_url_encode(string, avp_spec)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17189328">6. Installation &amp; Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17189680">6.1. Compiling the LDAP module</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18687720">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18621408">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp16447832">2. API Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17618920">2.1. ldap_params_search</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16742168">2.2. ldap_url_search</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17027576">2.3. ldap_result_attr_vals</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18224176">2.4. ldap_value_free_len</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16116672">2.5. ldap_result_next</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16121424">2.6. ldap_str2scope</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17267328">2.7. ldap_rfc4515_escape</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17275720">2.8. get_ldap_handle</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15658344">2.9. get_last_ldap_result</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15662776">3. Example Usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="bibliography">
+              <a href="#idp18798024">Resources</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-tables">
+        <p>
+          <strong>List of Tables</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15529016">RFC 4515 Escaping Rules</a></dt>
+          <dt>1.2. <a href="#idp17173280">ldap_filter_url_encode() escaping rules</a></dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15545192"><code class="varname">ldap_server_url</code> examples</a></dt>
+          <dt>1.2. <a href="#idp15480216"><code class="varname">ldap_version</code> example</a></dt>
+          <dt>1.3. <a href="#idp15482728"><code class="varname">ldap_bind_dn</code> example</a></dt>
+          <dt>1.4. <a href="#idp15485208"><code class="varname">ldap_bind_password</code> example</a></dt>
+          <dt>1.5. <a href="#idp15487832"><code class="varname">ldap_network_timeout</code> example</a></dt>
+          <dt>1.6. <a href="#idp15490112"><code class="varname">ldap_client_bind_timeout</code>
+                example</a></dt>
+          <dt>1.7. <a href="#idp15492168">Example LDAP Configuration File</a></dt>
+          <dt>1.8. <a href="#idp15494992"><code class="varname">config_file</code> parameter usage</a></dt>
+          <dt>1.9. <a href="#idp15501200">Example Usage of ldap_url</a></dt>
+          <dt>1.10. <a href="#idp17134760">Example Usage</a></dt>
+          <dt>1.11. <a href="#idp17151224">Example Usage</a></dt>
+          <dt>1.12. <a href="#idp17164232">Example Usage</a></dt>
+          <dt>1.13. <a href="#idp17170888">Example Usage</a></dt>
+          <dt>1.14. <a href="#idp17188008">Example Usage</a></dt>
+          <dt>2.1. <a href="#idp18351064">Example code fragment to load LDAP module API</a></dt>
+          <dt>2.2. <a href="#idp17795352">Example LDAP module API function call</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17360288"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17957248">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15442664">1.1. Usage Basics</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-urls">1.2. LDAP URLs</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15534856">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15535232">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15536736">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ldap-config">3. LDAP Configuration File</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15539544">3.1. Configuration File Syntax</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15543128">3.2. LDAP Session Settings</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15491416">3.3. Configuration File Example</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15493688">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15494056">4.1. config_file (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15496192">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-search-fn">5.1. ldap_search(ldap_url)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-result-fn">5.2. ldap_result("ldap_attr_name/avp_spec[/avp_type]" [, regex_subst])</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-result-check-fn">5.3. ldap_result_check("ldap_attr_name/string_to_match" [,
+        regex_subst])</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-result-next-fn">5.4. ldap_result_next()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ldap-filter-url-encode-fn">5.5. ldap_filter_url_encode(string, avp_spec)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17189328">6. Installation &amp; Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17189680">6.1. Compiling the LDAP module</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17957248"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The LDAP module implements an LDAP search interface for Kamailio. 
+	It exports script functions to perform an LDAP search operation and to 
+	store the search results as Kamailio AVPs. This allows for using LDAP
+	directory data in the Kamailio SIP message routing script.</p>
+          <p>The following features are offered by the LDAP module:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>LDAP search function based on a LDAP URL</p>
+              </li>
+              <li class="listitem">
+                <p>LDAP result parsing functions to store LDAP data as AVP variables</p>
+              </li>
+              <li class="listitem">
+                <p>Support for accessing multiple LDAP servers</p>
+              </li>
+              <li class="listitem">
+                <p>LDAP SIMPLE authentication</p>
+              </li>
+              <li class="listitem">
+                <p>LDAP server failover and automatic reconnect</p>
+              </li>
+              <li class="listitem">
+                <p>Configurable LDAP connection and bind timeouts</p>
+              </li>
+              <li class="listitem">
+                <p>Module API for LDAP search operations that can be used by other Kamailio modules</p>
+              </li>
+            </ul>
+          </div>
+          <p>The module implementation makes use of the open source <span class="emphasis"><em>OpenLDAP</em></span> library available
+	on most UNIX/Linux platforms. Besides LDAP server failover and automatic reconnect, this module can handle
+	multiple LDAP sessions concurrently allowing access to data stored on different LDAP servers. Each Kamailio
+	worker process maintains one LDAP TCP connection per configured LDAP server. This enables parallel execution
+	of LDAP requests and offloads LDAP concurrency control to the LDAP server(s).</p>
+          <p>An LDAP search module API is provided that can be used by other Kamailio modules. A module using this
+	API does not have to implement LDAP connection management and configuration, while still having access
+	to the full OpenLDAP API for searching and result handling.</p>
+          <p>Since LDAP server implementations are optimized for fast read access they are a good choice to store SIP
+	provisioning data. Performance tests have shown that this module achieves lower data access times and higher
+	call rates than other database modules like e.g. the Kamailio MYSQL module.</p>
+          <div class="section" title="1.1.¬†Usage Basics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15442664"></a>1.1.¬†Usage Basics</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	LDAP sessions is specified in an external configuration file (as described in
+	<a class="xref" href="#ldap-config" title="3.¬†LDAP Configuration File">Section¬†3, ‚ÄúLDAP Configuration File‚Äù</a>). Each of these LDAP sessions includes
+	LDAP server access parameters like server hostname or connection timeouts. Normally only a single LDAP
+	session per process will be used unless there is a need to access more than one LDAP server. The LDAP
+	session name will then be used in the Kamailio configuration script to refer to a specific LDAP session.
+        </p>
+            <p>
+	The <code class="varname">ldap_search</code> function (<a class="xref" href="#ldap-search-fn" title="5.1.¬†ldap_search(ldap_url)">Section¬†5.1, ‚Äúldap_search(ldap_url)‚Äù</a>) performs an LDAP search
+	operation. It expects an LDAP URL as input which includes the LDAP session name and search parameters.
+	The section <a class="xref" href="#ldap-urls" title="1.2.¬†LDAP URLs">Section¬†1.2, ‚ÄúLDAP URLs‚Äù</a>  provides a quick overview on LDAP URLs.
+        </p>
+            <p>
+	The result of a LDAP search is stored internally and can be accessed with one of the
+	<code class="varname">ldap_result*</code> functions. <code class="varname">ldap_result</code> (<a class="xref" href="#ldap-result-fn" title="5.2.¬†ldap_result(&quot;ldap_attr_name/avp_spec[/avp_type]&quot; [, regex_subst])">Section¬†5.2, ‚Äúldap_result("ldap_attr_name/avp_spec[/avp_type]" [, regex_subst])‚Äù</a>)
+	stores resulting LDAP attribute values as AVPs. <code class="varname">ldap_result_check</code>
+	(<a class="xref" href="#ldap-result-check-fn" title="5.3.¬†ldap_result_check(&quot;ldap_attr_name/string_to_match&quot; [, regex_subst])">Section¬†5.3, ‚Äúldap_result_check("ldap_attr_name/string_to_match" [,
+        regex_subst])‚Äù</a>) is a convenience function to compare a string with LDAP attribute
+	values using regular expression matching. Finally, <code class="varname">ldap_result_next</code>
+	(<a class="xref" href="#ldap-result-next-fn" title="5.4.¬†ldap_result_next()">Section¬†5.4, ‚Äúldap_result_next()‚Äù</a>) allows using LDAP search queries that return more than one LDAP entry.
+        </p>
+            <p>
+        All <code class="varname">ldap_result*</code> functions always access the LDAP result set from the last
+	<code class="varname">ldap_search</code> call. This should be kept in mind when calling <code class="varname">ldap_search</code>
+	more than once in the Kamailio configuration script.
+        </p>
+          </div>
+          <div class="section" title="1.2.¬†LDAP URLs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-urls"></a>1.2.¬†LDAP URLs</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+        <code class="varname">ldap_search</code> expects an LDAP URL as argument. This section describes the format and semantics of
+	an LDAP URL.
+        </p>
+            <p>
+	RFC 4516 <a class="xref" href="#RFC4516" title="Lightweight Directory Access Protocol (LDAP): Uniform Resource Locator">[RFC4516]</a> describes the format of an LDAP Uniform Resource Locator (URL). An LDAP URL
+	represents an LDAP search operation in a compact format. The LDAP URL format is defined as follows (slightly
+	modified, refer to section 2 of <a class="xref" href="#RFC4516" title="Lightweight Directory Access Protocol (LDAP): Uniform Resource Locator">[RFC4516]</a> for ABNF notation):
+        </p>
+            <div class="blockquote">
+              <blockquote class="blockquote">
+                <p>
+                  <code class="literal">ldap://[ldap_session_name][/dn?attrs[?scope[?filter]]]]</code>
+                </p>
+              </blockquote>
+            </div>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>ldap_session_name</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>An LDAP session name as defined in the LDAP
+              configuration file.</p>
+                  <p>(RFC 4516 defines this as LDAP hostport parameter)</p>
+                </dd>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>dn</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>Base Distinguished Name (DN) of LDAP search or target of
+              non-search operation, as defined in RFC 4514 <a class="xref" href="#RFC4514" title="Lightweight Directory Access Protocol (LDAP): String Representation of Distinguished Names">[RFC4514]</a></p>
+                </dd>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>attrs</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>Comma separated list of LDAP attributes to be returned</p>
+                </dd>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>scope</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>Scope for LDAP search, valid values are
+              <span class="quote">‚Äú<span class="quote">base</span>‚Äù</span>, <span class="quote">‚Äú<span class="quote">one</span>‚Äù</span>, or
+              <span class="quote">‚Äú<span class="quote">sub</span>‚Äù</span></p>
+                </dd>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>filter</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>LDAP search filter definition following rules of RFC 4515
+		  <a class="xref" href="#RFC4515" title="Lightweight Directory Access Protocol (LDAP): String Representation of Search Filters">[RFC4515]</a></p>
+                  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                    <h3 class="title">Note</h3>
+                    <p>The following table lists characters that have to be
+                  escaped in LDAP search filters:</p>
+                    <div class="table">
+                      <a id="idp15529016"></a>
+                      <p class="title">
+                        <strong>Table¬†1.1.¬†RFC 4515 Escaping Rules</strong>
+                      </p>
+                      <div class="table-contents">
+                        <table summary="RFC 4515 Escaping Rules" border="1">
+                          <colgroup>
+                            <col />
+                            <col />
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code class="constant">*</code>
+                              </td>
+                              <td>
+                                <code class="constant">\2a</code>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code class="constant">(</code>
+                              </td>
+                              <td>
+                                <code class="constant">\28</code>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code class="constant">)</code>
+                              </td>
+                              <td>
+                                <code class="constant">\29</code>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code class="constant">\</code>
+                              </td>
+                              <td>
+                                <code class="constant">\5c</code>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <br class="table-break" />
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>Non-URL characters in an LDAP URL have to be escaped using
+          percent-encoding (refer to section 2.1 of RFC 4516). In particular 
+	  this means that any "?" character in an LDAP URL component must be
+	  written as "%3F", since "?" is used as a URL delimiter.</p>
+              <p>The exported function <code class="varname">ldap_filter_url_encode</code>
+	  (<a class="xref" href="#ldap-filter-url-encode-fn" title="5.5.¬†ldap_filter_url_encode(string, avp_spec)">Section¬†5.5, ‚Äúldap_filter_url_encode(string, avp_spec)‚Äù</a>) 
+	  implements RFC 4515/4516 LDAP search filter and URL escaping
+	  rules.</p>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15534856"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15535232"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The module depends on the following modules (the listed modules
+        must be loaded before this module):</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>No dependencies on other Kamailio modules.</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15536736"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+        running Kamailio with this module loaded:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>OpenLDAP library (libldap) v2.1 or greater, libldap header files
+            (libldap-dev) are needed for compilation</p>
+                  <p>OpenSSL library if you compile your OpenLDAP library with SSL/TLS support.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.¬†LDAP Configuration File">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ldap-config"></a>3.¬†LDAP Configuration File</h2>
+              </div>
+            </div>
+          </div>
+          <p>The module reads an external configuration file at module
+      initialization time that includes LDAP session definitions.</p>
+          <div class="section" title="3.1.¬†Configuration File Syntax">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15539544"></a>3.1.¬†Configuration File Syntax</h3>
+                </div>
+              </div>
+            </div>
+            <p>The configuration file follows the Windows INI file syntax,
+        section names are enclosed in square brackets:</p>
+            <pre class="programlisting">[Section_Name]</pre>
+            <p>Any
+        section can contain zero or more configuration key assignments of the
+        form </p>
+            <pre class="programlisting">key = value ; comment</pre>
+            <p> Values can
+        be given enclosed with quotes. If no quotes are present, the value is
+        understood as containing all characters between the first and the last
+        non-blank characters. Lines starting with a hash sign and blank lines
+        are treated as comments.</p>
+            <p>Each section describes one LDAP session that can be referred to
+        in the Kamailio configuration script. Using the section name as the
+        host part of an LDAP URL tells the module to use the LDAP session
+        specified in the respective section. An example LDAP session
+        specification looks like:
+</p>
+            <pre class="programlisting">[example_ldap]
+ldap_server_url            = "ldap://ldap1.example.com, ldap://ldap2.example.com"
+ldap_bind_dn               = "cn=sip_proxy,ou=accounts,dc=example,dc=com"
+ldap_bind_password         = "pwd"
+ldap_network_timeout       = 500
+ldap_client_bind_timeout   = 500</pre>
+            <p>
+        The configuration keys are explained in the following section.
+	This LDAP session can be referred to in the routing script by using an LDAP URL like
+        e.g.</p>
+            <pre class="programlisting">ldap://example_ldap/cn=admin,dc=example,dc=com</pre>
+            <p>
+        </p>
+          </div>
+          <div class="section" title="3.2.¬†LDAP Session Settings">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15543128"></a>3.2.¬†LDAP Session Settings</h3>
+                </div>
+              </div>
+            </div>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">ldap_server_url (mandatory)</span>
+                </dt>
+                <dd>
+                  <p>
+				LDAP URL including fully qualified domain name or IP address
+				of LDAP server optionally followed by a colon and TCP port to
+				connect: <code class="varname">ldap://&lt;FQDN/IP&gt;[:&lt;port&gt;]</code>.
+				Failover LDAP servers can be added, each separated by a comma.
+				In the event of connection errors, the module tries to connect
+				to servers in order of appearance. To connect over TLS/SSL, use ldaps://.
+			  </p>
+                  <p>Default value: none, this is a mandatory setting</p>
+                  <div class="example">
+                    <a id="idp15545192"></a>
+                    <p class="title">
+                      <strong>Example¬†1.1.¬†<code class="varname">ldap_server_url</code> examples</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_server_url = "ldap://localhost"
+ldap_server_url = "ldaps://ldap.example.com:7777"
+ldap_server_url = "ldap://ldap1.example.com, 
+                   ldap://ldap2.example.com:80389"</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+                <dt>
+                  <span class="term">ldap_version (optional)</span>
+                </dt>
+                <dd>
+                  <p>Supported LDAP versions are 2 and 3.</p>
+                  <p>Default value: <code class="varname">3</code> (LDAPv3)</p>
+                  <div class="example">
+                    <a id="idp15480216"></a>
+                    <p class="title">
+                      <strong>Example¬†1.2.¬†<code class="varname">ldap_version</code> example</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_version = 2</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+                <dt>
+                  <span class="term">ldap_bind_dn (optional)</span>
+                </dt>
+                <dd>
+                  <p>Authentication user DN used to bind to LDAP server (module
+              currently only supports SIMPLE_AUTH). Empty string enables
+              anonymous LDAP bind.</p>
+                  <p>Default value: <span class="quote">‚Äú<span class="quote"></span>‚Äù</span> (empty string --&gt;
+              anonymous bind)</p>
+                  <div class="example">
+                    <a id="idp15482728"></a>
+                    <p class="title">
+                      <strong>Example¬†1.3.¬†<code class="varname">ldap_bind_dn</code> example</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_bind_dn = "cn=root,dc=example,dc=com";</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+                <dt>
+                  <span class="term">ldap_bind_password (optional)</span>
+                </dt>
+                <dd>
+                  <p>Authentication password used to bind to LDAP server
+              (SIMPLE_AUTH). Empty string enables anonymous bind.</p>
+                  <p>Default value: <span class="quote">‚Äú<span class="quote"></span>‚Äù</span> (empty string --&gt;
+              anonymous bind)</p>
+                  <div class="example">
+                    <a id="idp15485208"></a>
+                    <p class="title">
+                      <strong>Example¬†1.4.¬†<code class="varname">ldap_bind_password</code> example</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_bind_password = "secret";</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+                <dt>
+                  <span class="term">ldap_network_timeout (optional)</span>
+                </dt>
+                <dd>
+                  <p>LDAP TCP connect timeout in milliseconds. Setting this
+              parameter to a low value enables fast failover if <code class="varname">ldap_server_url</code> contains more 
+		than one LDAP server addresses.</p>
+                  <p>Default value: 1000 (one second)</p>
+                  <div class="example">
+                    <a id="idp15487832"></a>
+                    <p class="title">
+                      <strong>Example¬†1.5.¬†<code class="varname">ldap_network_timeout</code> example</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_network_timeout = 500 ; setting TCP timeout to 500 ms</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+                <dt>
+                  <span class="term">ldap_client_bind_timeout (optional)</span>
+                </dt>
+                <dd>
+                  <p>LDAP bind operation timeout in milliseconds.</p>
+                  <p>Default value: 1000 (one second)</p>
+                  <div class="example">
+                    <a id="idp15490112"></a>
+                    <p class="title">
+                      <strong>Example¬†1.6.¬†<code class="varname">ldap_client_bind_timeout</code>
+                example</strong>
+                    </p>
+                    <div class="example-contents">
+                      <pre class="programlisting">ldap_client_bind_timeout = 1000</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="3.3.¬†Configuration File Example">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15491416"></a>3.3.¬†Configuration File Example</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following configuration file example includes two LDAP
+        session definitions that could be used e.g. for accessing H.350 data
+        and do phone number to name mappings.</p>
+            <div class="example">
+              <a id="idp15492168"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Example LDAP Configuration File</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># LDAP session "sipaccounts":
+#
+# - using LDAPv3 (default)
+# - two redundant LDAP servers
+#
+[sipaccounts]
+ldap_server_url = "ldap://h350-1.example.com, ldap://h350-2.example.com"
+ldap_bind_dn = "cn=sip_proxy,ou=accounts,dc=example,dc=com"
+ldap_bind_password = "pwd"
+ldap_network_timeout = 500
+ldap_client_bind_timeout = 500
+
+
+# LDAP session "campus":
+#
+# - using LDAPv2
+# - anonymous bind
+#
+[campus]
+ldap_version = 2
+ldap_server_url = "ldap://ldap.example.com"
+ldap_network_timeout = 500
+ldap_client_bind_timeout = 500</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15493688"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†config_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15494056"></a>4.1.¬†config_file (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Full path to LDAP configuration file.</p>
+            <p>Default value:
+        <code class="varname">/usr/local/etc/kamailio/ldap.cfg</code></p>
+            <div class="example">
+              <a id="idp15494992"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="varname">config_file</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("ldap", "config_file", "/usr/local/etc/kamailio/ldap.ini")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15496192"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†ldap_search(ldap_url)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-search-fn"></a>5.1.¬†ldap_search(ldap_url)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Performs an LDAP search operation using given LDAP URL and stores result
+        internally for later retrieval by <code class="varname">ldap_result*</code> functions. If one or
+        more LDAP entries are found the function returns the number of found
+        entries which evaluates to TRUE in the Kamailio configuration script.
+        It returns <code class="varname">-1</code> (<code class="varname">FALSE</code>) in case no
+        LDAP entry was found, and <code class="varname">-2</code>
+        (<code class="varname">FALSE</code>) if an internal error like e.g. an LDAP
+        error occurred.</p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>ldap_url</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>An LDAP URL defining the LDAP search operation (refer to
+			  <a class="xref" href="#ldap-urls" title="1.2.¬†LDAP URLs">Section¬†1.2, ‚ÄúLDAP URLs‚Äù</a> for a description of the LDAP URL
+              format). The hostport part must be one of the LDAP session names
+              declared in the LDAP configuration script.</p>
+                  <p>Kamailio pseudo variables and AVPs included in
+              <code class="varname">ldap_url</code> do get substituted with their
+              value.</p>
+                  <div class="example">
+                    <a id="idp15501200"></a>
+                    <p class="title">
+                      <strong>Example¬†1.9.¬†Example Usage of ldap_url</strong>
+                    </p>
+                    <div class="example-contents">
+                      <p>Search with LDAP session named
+                <code class="varname">sipaccounts</code>, base
+                <code class="varname">ou=sip,dc=example,dc=com</code>,
+                <code class="varname">one</code> level deep using search filter
+                <code class="varname">(cn=schlatter)</code> and returning all
+                attributes:</p>
+                      <pre class="programlisting">ldap://sipaccounts/ou=sip,dc=example,dc=com??one?(cn=schlatter)</pre>
+                      <p>Subtree search with LDAP session named
+                <code class="varname">ldap1</code>, base
+                <code class="varname">dc=example,dc=com</code> using search filter
+                <code class="varname">(cn=$(avp(s:name)))</code> and returning
+                <code class="varname">SIPIdentityUserName</code> and
+                <code class="varname">SIPIdentityServiceLevel</code> attributes</p>
+                      <pre class="programlisting">ldap://ldap_1/dc=example,dc=com?
+       SIPIdentityUserName,SIPIdentityServiceLevel?sub?(cn=$(avp(s:name)))</pre>
+                    </div>
+                  </div>
+                  <br class="example-break" />
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="varname">n</code> &gt; 0 (TRUE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>Found <code class="varname">n</code> matching LDAP
+                  entries</p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>No matching LDAP entries found</p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>LDAP error (e.g. LDAP server unavailable), or</p>
+                      </li>
+                      <li class="listitem">
+                        <p>internal error</p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+	</p>
+            <div class="example">
+              <a id="idp17134760"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# ldap search
+if (!ldap_search("ldap://sipaccounts/ou=sip,dc=example,dc=com??one?(cn=$rU)"))
+{
+    switch ($retcode)
+    {
+    case -1:
+        # no LDAP entry found
+        sl_send_reply("404", "User Not Found");
+        exit;
+    case -2:
+        # internal error
+        sl_send_reply("500", "Internal server error");
+        exit;
+    default:
+        exit;
+    }
+}
+xlog("L_INFO", "ldap_search: found [$retcode] entries for (cn=$rU)");
+
+# save telephone number in $avp(s:tel_number)
+ldap_result("telephoneNumber/$avp(s:tel_number)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬†ldap_result(&quot;ldap_attr_name/avp_spec[/avp_type]&quot; [, regex_subst])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-result-fn"></a>5.2.¬†ldap_result("ldap_attr_name/avp_spec[/avp_type]" [, regex_subst])</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function converts LDAP attribute values into AVPs for later
+        use in the message routing script. It accesses the LDAP result set
+        fetched by the last <code class="varname">ldap_search</code> call.
+        <code class="varname">ldap_attr_name</code> specifies the LDAP attribute name
+        who's value will be stored in AVP <code class="varname">avp_spec</code>. Multi
+        valued LDAP attributes generate an indexed AVP. The optional
+        <code class="varname">regex_subst</code> parameter allows to further define what
+        part of an attribute value should be stored as AVP.</p>
+            <p>
+	An AVP can either be of type string or integer. As default, 
+	<code class="varname">ldap_result</code> stores LDAP attribute values as AVP of type string.
+	The optional <code class="varname">avp_type</code> parameter can be used to explicitly specify
+	the type of the AVP. It can be either <code class="varname">str</code> for string, or
+	<code class="varname">int</code> for integer. If <code class="varname">avp_type</code> is specified as
+	<code class="varname">int</code> then <code class="varname">ldap_result</code> tries to convert the LDAP
+	attribute values to integer. In this case, the values are only stored as AVP if the
+	conversion to integer is succesfull. 
+	</p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">ldap_attr_name</span>
+                </dt>
+                <dd>
+                  <p>The name of the LDAP attribute who's value should be
+              stored, e.g. <code class="varname">SIPIdentityServiceLevel</code> or
+              <code class="varname">telephonenumber</code></p>
+                </dd>
+                <dt>
+                  <span class="term">avp_spec</span>
+                </dt>
+                <dd>
+                  <p>Specification of destination AVP, e.g.
+              <code class="varname">$avp(s:service_level)</code> or
+              <code class="varname">$avp(i:12)</code></p>
+                </dd>
+                <dt>
+                  <span class="term">avp_type</span>
+                </dt>
+                <dd>
+                  <p>
+		Opional specification of destination AVP type, either <code class="varname">str</code>
+		or <code class="varname">int</code>. If this parameter is not specified then the LDAP
+		attribute values are stored as AVP of type string.
+	      </p>
+                </dd>
+                <dt>
+                  <span class="term">regex_subst</span>
+                </dt>
+                <dd>
+                  <p>Regex substitution that gets applied to LDAP attribute
+              value before storing it as AVP, e.g.
+              <code class="varname">"/^sip:(.+)$/\1/"</code> to strip off "sip:" from
+              the beginning of an LDAP attribute value.</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="varname">n</code> &gt; 0 (TRUE)</span>
+                </dt>
+                <dd>
+                  <p>
+		LDAP attribute <code class="varname">ldap_attr_name</code> found in LDAP result
+		set and <code class="varname">n</code> LDAP attribute values stored in
+		<code class="varname">avp_spec</code>
+	      </p>
+                </dd>
+                <dt>
+                  <span class="term">-1 (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>No LDAP attribute <code class="varname">ldap_attr_name</code> found
+              in LDAP result set</p>
+                </dd>
+                <dt>
+                  <span class="term">-2 (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>Internal error occurred</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+	</p>
+            <div class="example">
+              <a id="idp17151224"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+# ldap_search call
+...
+
+# save SIPIdentityServiceLevel in $avp(s:service_level)
+if (!ldap_result("SIPIdentityServiceLevel/$avp(s:service_level)"))
+{
+    switch ($retcode)
+    {
+    case -1:
+        # no SIPIdentityServiceLevel found
+        sl_send_reply("403", "Forbidden");
+        exit;
+    case -2:
+        # internal error
+        sl_send_reply("500", "Internal server error");
+        exit;
+    default: 
+        exit;
+    }
+}
+
+# save SIP URI domain in $avp(i:10)
+ldap_result("SIPIdentitySIPURI/$avp(i:10)", "/^[^@]+@(.+)$/\1/");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬†ldap_result_check(&quot;ldap_attr_name/string_to_match&quot; [, regex_subst])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-result-check-fn"></a>5.3.¬†ldap_result_check("ldap_attr_name/string_to_match" [,
+        regex_subst])</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function compares <code class="varname">ldap_attr_name</code>'s value
+        with <code class="varname">string_to_match</code> for equality. It accesses the
+	LDAP result set fetched by the last <code class="varname">ldap_search</code> call. The
+        optional <code class="varname">regex_subst</code> parameter allows to further
+        define what part of the attribute value should be used for the
+        equality match. If <code class="varname">ldap_attr_name</code> is multi valued,
+        each value is checked against <code class="varname">string_to_match</code>. If
+        one or more of the values do match the function returns <code class="varname">1</code>
+        (TRUE).</p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">ldap_attr_name</span>
+                </dt>
+                <dd>
+                  <p>The name of the LDAP attribute who's value should be
+              matched, e.g. <code class="varname">SIPIdentitySIPURI</code></p>
+                </dd>
+                <dt>
+                  <span class="term">string_to_match</span>
+                </dt>
+                <dd>
+                  <p>String to be matched. Included AVPs and pseudo variabels
+              do get expanded.</p>
+                </dd>
+                <dt>
+                  <span class="term">regex_subst</span>
+                </dt>
+                <dd>
+                  <p>Regex substitution that gets applied to LDAP attribute
+              value before comparing it with string_to_match, e.g.
+              <code class="varname">"/^[^@]@+(.+)$/\1/"</code> to extract the domain part
+              of a SIP URI</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">1 (TRUE)</span>
+                </dt>
+                <dd>
+                  <p>One or more <code class="varname">ldap_attr_name</code> attribute values match
+              <code class="varname">string_to_match</code> (after
+              <code class="varname">regex_subst</code> is applied)</p>
+                </dd>
+                <dt>
+                  <span class="term">-1 (FALSE)</span>
+                </dt>
+                <dd>
+                  <p><code class="varname">ldap_attr_name</code> attribute not found or
+              attribute value doesn't match <code class="varname">string_to_match</code>
+              (after <code class="varname">regex_subst</code> is applied)</p>
+                </dd>
+                <dt>
+                  <span class="term">-2 (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>Internal error occurred</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp17164232"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# ldap_search call
+...
+
+# check if 'sn' ldap attribute value equals username part of R-URI,
+# the same could be achieved with ldap_result_check("sn/$rU")
+if (!ldap_result_check("sn/$ru", "/^sip:([^@]).*$/\1/"))
+{
+    switch ($retcode)
+    {
+    case -1:
+        # R-URI username doesn't match sn
+        sl_send_reply("401", "Unauthorized");
+        exit;
+    case -2:
+        # internal error
+        sl_send_reply("500", "Internal server error");
+        exit;
+    default:
+        exit;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬†ldap_result_next()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-result-next-fn"></a>5.4.¬†ldap_result_next()</h3>
+                </div>
+              </div>
+            </div>
+            <p>An LDAP search operation can return multiple LDAP entries. This
+        function can be used to cycle through all returned LDAP entries. It
+        returns 1 (TRUE) if there is another LDAP entry present in the LDAP
+        result set and causes <code class="varname">ldap_result*</code> functions to work on the next LDAP
+        entry. The function returns -1 (FALSE) if there are no more LDAP
+        entries in the LDAP result set.</p>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">1 (TRUE)</span>
+                </dt>
+                <dd>
+                  <p>Another LDAP entry is present in the LDAP result set and
+              result pointer is incremented by one</p>
+                </dd>
+                <dt>
+                  <span class="term">-1 (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>No more LDAP entries are available</p>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>Internal error</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp17170888"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# ldap_search call
+...
+
+ldap_result("telephonenumber/$avp(s:tel1)");
+if (ldap_result_next())
+{
+	ldap_result("telephonenumber/$avp(s:tel2)");
+}
+if (ldap_result_next())
+{
+	ldap_result("telephonenumber/$avp(s:tel3)");
+}
+if (ldap_result_next())
+{
+	ldap_result("telephonenumber/$avp(s:tel4)");
+}	
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬†ldap_filter_url_encode(string, avp_spec)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ldap-filter-url-encode-fn"></a>5.5.¬†ldap_filter_url_encode(string, avp_spec)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function applies the following escaping rules to
+        <code class="varname">string</code> and stores the result in AVP
+        <code class="varname">avp_spec</code>:</p>
+            <div class="table">
+              <a id="idp17173280"></a>
+              <p class="title">
+                <strong>Table¬†1.2.¬†ldap_filter_url_encode() escaping rules</strong>
+              </p>
+              <div class="table-contents">
+                <table summary="ldap_filter_url_encode() escaping rules" border="1">
+                  <colgroup>
+                    <col />
+                    <col />
+                    <col />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th align="center">character in
+                <code class="varname">string</code></th>
+                      <th align="center">gets replaced with</th>
+                      <th align="center">defined in</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>*</td>
+                      <td>\2a</td>
+                      <td>RFC 4515</td>
+                    </tr>
+                    <tr>
+                      <td>(</td>
+                      <td>\28</td>
+                      <td>RFC 4515</td>
+                    </tr>
+                    <tr>
+                      <td>)</td>
+                      <td>\29</td>
+                      <td>RFC 4515</td>
+                    </tr>
+                    <tr>
+                      <td>\</td>
+                      <td>\5c</td>
+                      <td>RFC 4515</td>
+                    </tr>
+                    <tr>
+                      <td>?</td>
+                      <td>%3F</td>
+                      <td>RFC 4516</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br class="table-break" />
+            <p>The string stored in AVP <code class="varname">avp_spec</code> can be safely used in an LDAP
+        URL filter string.</p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>string</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>String to apply RFC 4515 and URL escpaing rules to.
+	      AVPs and pseudo variables do get expanded. Example:
+              <code class="varname">"cn=$avp(s:name)"</code></p>
+                </dd>
+                <dt>
+                  <span class="term">
+                    <em class="parameter">
+                      <code>avp_spec</code>
+                    </em>
+                  </span>
+                </dt>
+                <dd>
+                  <p>Specification of AVP to store resulting RFC 4515
+	      and URL encoded string, e.g. <code class="varname">$avp(s:ldap_search)</code>
+	      or <code class="varname">$avp(i:10)</code></p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="constant">1</code> (TRUE)</span>
+                </dt>
+                <dd>
+                  <p>RFC 4515 and URL encoded
+              <code class="varname">filter_component</code> stored as AVP
+              <code class="varname">avp_name</code></p>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE)</span>
+                </dt>
+                <dd>
+                  <p>Internal error</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp17188008"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!ldap_filter_url_encode("cn=$avp(s:name)", "$avp(s:name_esc)"))
+{
+    # RFC 4515/URL encoding failed --&gt; silently discard request
+    exit;
+}
+
+xlog("L_INFO", "encoded LDAP filter component: [$avp(s:name_esc)]\n");
+
+if (ldap_search(
+     "ldap://h350/ou=commObjects,dc=example,dc=com??sub?($avp(s:name_esc))")) 
+    { ... }
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Installation &amp; Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17189328"></a>6.¬†Installation &amp; Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†Compiling the LDAP module">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17189680"></a>6.1.¬†Compiling the LDAP module</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	OpenLDAP library (libldap) and header files (libldap-dev) v2.1 or greater (this module was
+	tested with v2.1.3 and v2.3.32) are required for compiling the LDAP module. The OpenLDAP
+	source is available at <a class="ulink" href="javascript:if(confirm('http://www.openldap.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.openldap.org/'" tppabs="http://www.openldap.org/">http://www.openldap.org/</a>.
+	Note that TLS support needs to be added a compile time for the libraries.
+	</p>
+            <p>
+	The OpenLDAP library is available pre-compiled for most UNIX/Linux flavors. On Debian/Ubuntu,
+	the following packages must be installed: </p>
+            <pre class="programlisting"># apt-get install libldap2 libldap2-dev</pre>
+            <p>.
+	</p>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18687720"></a>Chapter¬†2.¬†Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18621408">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp16447832">2. API Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17618920">2.1. ldap_params_search</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16742168">2.2. ldap_url_search</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17027576">2.3. ldap_result_attr_vals</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18224176">2.4. ldap_value_free_len</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16116672">2.5. ldap_result_next</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16121424">2.6. ldap_str2scope</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17267328">2.7. ldap_rfc4515_escape</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17275720">2.8. get_ldap_handle</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15658344">2.9. get_last_ldap_result</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15662776">3. Example Usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18621408"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The LDAP module API can be used by other Kamailio modules to implement
+		LDAP search functionality. This frees the module implementer from having
+		to care about LDAP connection management and configuration. 
+		</p>
+          <p>
+		In order to use this API, a module has to load the API using the <code class="varname">load_ldap_api</code>
+		function which returns a pointer to a <code class="varname">ldap_api</code> structure. This structure
+		includes pointers to the API functions described below. The LDAP module source file
+		<code class="varname">api.h</code> includes all declarations needed to load the API, it has to
+		be included in the file that use the API. Loading the API is typically done inside a
+		module's <code class="varname">mod_init</code> call as the following example shows:			
+			</p>
+          <div class="example">
+            <a id="idp18351064"></a>
+            <p class="title">
+              <strong>Example¬†2.1.¬†Example code fragment to load LDAP module API</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">#include "../../sr_module.h"
+#include "../ldap/api.h"
+
+/*
+ * global pointer to ldap api
+ */
+extern ldap_api_t ldap_api;
+
+...
+
+static int mod_init(void)
+{
+    /*
+     * load the LDAP API
+     */
+    if (load_ldap_api(&amp;ldap_api) != 0)
+    {
+        LM_ERR("Unable to load LDAP API - this module requires ldap module\n");
+        return -1;
+    }
+
+    ...
+}
+
+...</pre>
+            </div>
+          </div>
+          <p><br class="example-break" />
+		</p>
+          <p>
+			The API functions can then be used like in the following example:
+			</p>
+          <div class="example">
+            <a id="idp17795352"></a>
+            <p class="title">
+              <strong>Example¬†2.2.¬†Example LDAP module API function call</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+	
+    rc = ldap_api.ldap_rfc4515_escape(str1, str2, 0);	
+				
+...</pre>
+            </div>
+          </div>
+          <p><br class="example-break" />	
+		</p>
+        </div>
+        <div class="section" title="2.¬†API Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16447832"></a>2.¬†API Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†ldap_params_search">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17618920"></a>2.1.¬†ldap_params_search</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Performs an LDAP search using the parameters given as function arguments.
+			</p>
+            <pre class="programlisting">typedef int (*ldap_params_search_t)(int* _ld_result_count,
+                                    char* _lds_name,
+                                    char* _dn,
+                                    int _scope,
+                                    char** _attrs,
+                                    char* _filter,
+                                    ...);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">int* _ld_result_count</span>
+                </dt>
+                <dd>
+                  <p>
+						The function stores the number of returned LDAP entries
+						in <code class="varname">_ld_result_count</code>. 
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">char* _lds_name</span>
+                </dt>
+                <dd>
+                  <p>
+						LDAP session name as configured in the LDAP
+						module configuration file.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">char* _dn</span>
+                </dt>
+                <dd>
+                  <p>
+							LDAP search DN.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">int _scope</span>
+                </dt>
+                <dd>
+                  <p>
+						LDAP search scope, one of <code class="varname">LDAP_SCOPE_ONELEVEL</code>,
+						<code class="varname">LDAP_SCOPE_BASE</code>, or <code class="varname">LDAP_SCOPE_SUBTREE</code>,
+						as defined in OpenLDAP's <code class="varname">ldap.h</code>.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">char** _attrs</span>
+                </dt>
+                <dd>
+                  <p>
+						A null-terminated  array  of attribute types to return from entries.
+						If empty (<code class="varname">NULL</code>), all attribute types are returned.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">char* _filter</span>
+                </dt>
+                <dd>
+                  <p>
+						LDAP search filter string according to RFC 4515. 
+						<code class="varname">printf</code> patterns in this string do get replaced with
+						the function arguments' values following the <code class="varname">_filter</code> argument.
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							Internal error.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+						Success, <code class="varname">_ld_result_count</code> includes the number of LDAP entries found.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.2.¬†ldap_url_search">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16742168"></a>2.2.¬†ldap_url_search</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Performs an LDAP search using an LDAP URL.
+			</p>
+            <pre class="programlisting">typedef int (*ldap_url_search_t)(char* _ldap_url,
+                                 int* _result_count);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">char* _ldap_url</span>
+                </dt>
+                <dd>
+                  <p>
+							LDAP URL as described in <a class="xref" href="#ldap-urls" title="1.2.¬†LDAP URLs">Section¬†1.2, ‚ÄúLDAP URLs‚Äù</a>.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">int* _result_count</span>
+                </dt>
+                <dd>
+                  <p>
+							The function stores the number of returned LDAP entries in <code class="varname">_ld_result_count</code>.
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							Internal error.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+							Success, <code class="varname">_ld_result_count</code> includes the number of LDAP entries found.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.3.¬†ldap_result_attr_vals">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17027576"></a>2.3.¬†ldap_result_attr_vals</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Retrieve the value(s) of a returned LDAP attribute. The function accesses
+				the LDAP result returned by the last call of <code class="varname">ldap_params_search</code>
+				or <code class="varname">ldap_url_search</code>. The <code class="varname">berval</code> structure is
+				defined in OpenLDAP's <code class="varname">ldap.h</code>, which has to be included.
+			</p>
+            <p>
+				This function allocates memory to store the LDAP attribute value(s). This memory
+				has to freed with the function <code class="varname">ldap_value_free_len</code> (see next section).
+			</p>
+            <pre class="programlisting">typedef int (*ldap_result_attr_vals_t)(str* _attr_name,
+                                       struct berval ***_vals);
+									   
+typedef struct berval {
+        ber_len_t       bv_len;
+        char            *bv_val;
+} BerValue;</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">str* _attr_name</span>
+                </dt>
+                <dd>
+                  <p>
+							<code class="varname">str</code> structure holding the LDAP attribute name.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">struct berval ***_vals</span>
+                </dt>
+                <dd>
+                  <p>
+							A null-terminated array of the attribute's value(s).
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							Internal error.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+							Success, <code class="varname">_vals</code> includes the attribute's value(s).
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">1</span>
+                </dt>
+                <dd>
+                  <p>
+							No attribute value found.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.4.¬†ldap_value_free_len">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18224176"></a>2.4.¬†ldap_value_free_len</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function used to free memory allocated by <code class="varname">ldap_result_attr_vals</code>.
+				The <code class="varname">berval</code> structure is defined in OpenLDAP's 
+				<code class="varname">ldap.h</code>, which has to be included.
+			</p>
+            <pre class="programlisting">typedef void (*ldap_value_free_len_t)(struct berval **_vals);
+
+typedef struct berval {
+        ber_len_t       bv_len;
+        char            *bv_val;
+} BerValue;</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">struct berval **_vals</span>
+                </dt>
+                <dd>
+                  <p>
+						<code class="varname">berval</code> array returned by <code class="varname">ldap_result_attr_vals</code>.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.5.¬†ldap_result_next">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16116672"></a>2.5.¬†ldap_result_next</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Increments the LDAP result pointer.
+			</p>
+            <pre class="programlisting">typedef int (*ldap_result_next_t)();</pre>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+						No LDAP result found, probably because <code class="varname">ldap_params_search</code>
+						or <code class="varname">ldap_url_search</code> was not called.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+							Success, LDAP result pointer points now to next result.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">1</span>
+                </dt>
+                <dd>
+                  <p>
+							No more results available.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.6.¬†ldap_str2scope">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16121424"></a>2.6.¬†ldap_str2scope</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Converts LDAP search scope string into integer value e.g. for <code class="varname">ldap_params_search</code>.
+			</p>
+            <pre class="programlisting">typedef int (*ldap_str2scope_t)(char* scope_str);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">char* scope_str</span>
+                </dt>
+                <dd>
+                  <p>
+							LDAP search scope string. One of "one", "onelevel", "base", "sub", or "subtree".
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							<code class="varname">scope_str</code> not recognized.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">n &gt;= 0</span>
+                </dt>
+                <dd>
+                  <p>
+							LDAP search scope integer.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.7.¬†ldap_rfc4515_escape">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17267328"></a>2.7.¬†ldap_rfc4515_escape</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Applies escaping rules described in <a class="xref" href="#ldap-filter-url-encode-fn" title="5.5.¬†ldap_filter_url_encode(string, avp_spec)">Section¬†5.5, ‚Äúldap_filter_url_encode(string, avp_spec)‚Äù</a>.
+			</p>
+            <pre class="programlisting">typedef int (*ldap_rfc4515_escape_t)(str *sin, str *sout, int url_encode);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">str *sin</span>
+                </dt>
+                <dd>
+                  <p>
+							<code class="varname">str</code> structure holding the string to apply the escaping rules.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">str *sout</span>
+                </dt>
+                <dd>
+                  <p>
+							<code class="varname">str</code> structure holding the escaped string. The length of this string must be at least three times the length of <code class="varname">sin</code> plus one.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">int url_encode</span>
+                </dt>
+                <dd>
+                  <p>
+							Flag that specifies if a '?' character gets escaped with '%3F' or not. If <code class="varname">url_encode</code> equals <code class="varname">0</code>, '?' does not get escaped.
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							Internal error.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+							Success, <code class="varname">sout</code> contains escaped string.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.8.¬†get_ldap_handle">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17275720"></a>2.8.¬†get_ldap_handle</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns the OpenLDAP LDAP handle for a specific LDAP session. This allows a module
+				implementor to use the OpenLDAP API functions directly, instead of using the API
+				functions exported by the Kamailio LDAP module. The <code class="varname">LDAP</code> structure
+				is defined in OpenLDAP's <code class="varname">ldap.h</code>, which has to be included.
+			</p>
+            <pre class="programlisting">typedef int (*get_ldap_handle_t)(char* _lds_name, LDAP** _ldap_handle);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">char* _lds_name</span>
+                </dt>
+                <dd>
+                  <p>
+						LDAP session name as specified in the LDAP module configuration file.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">LDAP** _ldap_handle</span>
+                </dt>
+                <dd>
+                  <p>
+						OpenLDAP LDAP handle returned by this function.
+						</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">-1</span>
+                </dt>
+                <dd>
+                  <p>
+							Internal error.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">0</span>
+                </dt>
+                <dd>
+                  <p>
+							Success, <code class="varname">_ldap_handle</code> contains the OpenLDAP LDAP handle.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="section" title="2.9.¬†get_last_ldap_result">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15658344"></a>2.9.¬†get_last_ldap_result</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Returns the OpenLDAP LDAP handle and OpenLDAP result handle of the last LDAP search 
+				operation. These handles can be used as input for OpenLDAP LDAP result API functions.
+				<code class="varname">LDAP</code> and <code class="varname">LDAPMessage</code> structures are defined in 
+				OpenLDAP's <code class="varname">ldap.h</code>, which has to be included.
+			</p>
+            <pre class="programlisting">typedef void (*get_last_ldap_result_t)
+	     (LDAP** _last_ldap_handle, LDAPMessage** _last_ldap_result);</pre>
+            <div class="variablelist" title="Function arguments:">
+              <p class="title">
+                <strong>Function arguments:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">LDAP** _last_ldap_handle</span>
+                </dt>
+                <dd>
+                  <p>
+							OpenLDAP LDAP handle returned by this function.
+						</p>
+                </dd>
+                <dt>
+                  <span class="term">LDAPMessage** _last_ldap_result</span>
+                </dt>
+                <dd>
+                  <p>
+							OpenLDAP result handle returned by this function.
+						</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Example Usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15662776"></a>3.¬†Example Usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The following example shows how this API can be used to perform an LDAP search operation.
+			It is assumed that the API is loaded and available through the <code class="varname">ldap_api</code> pointer.
+		</p>
+          <pre class="programlisting">...
+	
+int rc, ld_result_count, scope = 0;
+char* sip_username = "test";
+
+/*
+ * get LDAP search scope integer
+ */
+scope = ldap_api.ldap_str2scope("sub");
+if (scope == -1)
+{
+    LM_ERR("ldap_str2scope failed\n");
+    return -1;
+}
+
+/*
+ * perform LDAP search
+ */
+
+if (ldap_api.ldap_params_search(
+       &amp;ld_result_count,
+       "campus",
+       "dc=example,dc=com",
+       scope,
+       NULL,
+       "(&amp;(objectClass=SIPIdentity)(SIPIdentityUserName=%s))",
+       sip_username)
+     != 0)
+{
+    LM_ERR("LDAP search failed\n");
+    return -1;
+}
+
+/*
+ * check result count
+ */
+if (ld_result_count &lt; 1)
+{
+    LM_ERR("LDAP search returned no entry\n");
+    return 1;
+}
+
+/*
+ * get password attribute value 
+ */
+ 
+struct berval **attr_vals = NULL;
+str ldap_pwd_attr_name = str_init("SIPIdentityPassword");
+str res_password;
+
+rc = ldap_api.ldap_result_attr_vals(&amp;ldap_pwd_attr_name, &amp;attr_vals);
+if (rc &lt; 0)
+{
+    LM_ERR("ldap_result_attr_vals failed\n");
+    ldap_api.ldap_value_free_len(attr_vals);
+    return -1;
+}
+if (rc == 1)
+{
+    LM_INFO("No password attribute value found for [%s]\n", sip_username);
+    ldap_api.ldap_value_free_len(attr_vals);
+    return 2;
+}
+
+res_password.s = attr_vals[0]-&gt;bv_val;
+res_password.len = attr_vals[0]-&gt;bv_len;
+
+ldap_api.ldap_value_free_len(attr_vals);
+
+LM_INFO("Password for user [%s]: [%s]\n", sip_username, res_password.s);
+
+...
+
+return 0;</pre>
+        </div>
+      </div>
+      <div class="bibliography" title="Resources">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18798024"></a>Resources</h2>
+            </div>
+          </div>
+        </div>
+        <div class="bibliodiv">
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): Technical Specification Road Map">
+            <a id="RFC4510"></a>
+            <p>[<abbr class="abbrev">RFC4510</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4510  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc4510'" tppabs="http://tools.ietf.org/html/rfc4510">Lightweight
+        Directory Access Protocol (LDAP): Technical Specification Road
+        Map</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): The Protocol">
+            <a id="RFC4511"></a>
+            <p>[<abbr class="abbrev">RFC4511</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4511  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc4511'" tppabs="http://tools.ietf.org/html/rfc4511">Lightweight
+        Directory Access Protocol (LDAP): The Protocol</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): String Representation of Distinguished Names">
+            <a id="RFC4514"></a>
+            <p>[<abbr class="abbrev">RFC4514</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4514  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc4514'" tppabs="http://tools.ietf.org/html/rfc4514">Lightweight
+        Directory Access Protocol (LDAP): String Representation of
+        Distinguished Names</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): String Representation of Search Filters">
+            <a id="RFC4515"></a>
+            <p>[<abbr class="abbrev">RFC4515</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4515  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc4515'" tppabs="http://tools.ietf.org/html/rfc4515">Lightweight
+        Directory Access Protocol (LDAP): String Representation of Search
+        Filters</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): Uniform Resource Locator">
+            <a id="RFC4516"></a>
+            <p>[<abbr class="abbrev">RFC4516</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4516  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc4516'" tppabs="http://tools.ietf.org/html/rfc4516">Lightweight
+        Directory Access Protocol (LDAP): Uniform Resource
+        Locator</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="HTTP Authentication: Basic and Digest Access Authentication">
+            <a id="RFC2617"></a>
+            <p>[<abbr class="abbrev">RFC2617</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc2617  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc2617'" tppabs="http://tools.ietf.org/html/rfc2617">HTTP
+        Authentication: Basic and Digest Access Authentication</a></em>. </span><span class="date">June 1999. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="SIP: Session Initiation Protocol">
+            <a id="RFC3261"></a>
+            <p>[<abbr class="abbrev">RFC3261</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc3261  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://tools.ietf.org/html/rfc3261'" tppabs="http://tools.ietf.org/html/rfc3261">SIP: Session
+        Initiation Protocol</a></em>. </span><span class="date">June 2002. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Directory Services Architecture for Multimedia Conferencing">
+            <a id="H350"></a>
+            <p>[<abbr class="abbrev">H.350</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.itu.int/rec/T-REC-H.350/en  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.itu.int/rec/T-REC-H.350/en'" tppabs="http://www.itu.int/rec/T-REC-H.350/en">Directory
+        Services Architecture for Multimedia Conferencing</a></em>. </span><span class="date">August 2003. </span><span class="publisher"><span class="publishername">ITU-T. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Directory services architecture for SIP">
+            <a id="H350-4"></a>
+            <p>[<abbr class="abbrev">H.350.4</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.itu.int/rec/T-REC-H.350.4/en  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.itu.int/rec/T-REC-H.350.4/en'" tppabs="http://www.itu.int/rec/T-REC-H.350.4/en">Directory
+        services architecture for SIP</a></em>. </span><span class="date">August 2003. </span><span class="publisher"><span class="publishername">ITU-T. </span></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

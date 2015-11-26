@@ -1,0 +1,1570 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>pipelimit Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4326072" title="pipelimit Module" />
+    <link rel="next" href="#idp2648216" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="pipelimit Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4326072"></a>pipelimit Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Hendrik</span> <span class="surname">Scholz</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 <a class="ulink" href="javascript:if(confirm('http://www.voipembedded.com/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.voipembedded.com/'" tppabs="http://www.voipembedded.com/">VoIPEmbedded Inc.</a></p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 Asipto.com</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Freenet Cityline GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2648216">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3461448">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2276560">1.1. Algorithms</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp335104">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp335480">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp337720">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp339504">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.hash_size">3.1. <code class="varname">hash_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.db_url">3.2. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.plp_table_name">3.3. <code class="varname">plp_table_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.plp_pipeid_column">3.4. <code class="varname">plp_pipeid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.plp_limit_column">3.5. <code class="varname">plp_limit_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.plp_algorithm_column">3.6. <code class="varname">plp_algorithm_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.timer_interval">3.7. <code class="varname">timer_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.reply_code">3.8. <code class="varname">reply_code</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.p.reply_reason">3.9. <code class="varname">reply_reason</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp187960">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.f.pl_check">4.1. 
+		<code class="function">pl_check(name [, algorithm, limit])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.f.pl_drop">4.2. 
+		<code class="function">pl_drop([ [min ], max ])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp121712">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_stats">5.1. 
+		<code class="function">pl_stats</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_set_pipe">5.2. 
+		<code class="function">pl_set_pipe</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_get_pipes">5.3. 
+		<code class="function">pl_get_pipes</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_set_pid">5.4. 
+		<code class="function">pl_set_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_get_pid">5.5. 
+		<code class="function">pl_get_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.m.pl_push_load">5.6. 
+		<code class="function">pl_push_load</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp62040">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.stats">6.1. 
+		<code class="function">pl.stats</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.set_pipe">6.2. 
+		<code class="function">pl.set_pipe</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.get_pipes">6.3. 
+		<code class="function">pl.get_pipes</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.set_pid">6.4. 
+		<code class="function">pl.set_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.get_pid">6.5. 
+		<code class="function">pl.get_pid</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#pipelimit.r.pl.push_load">6.6. 
+		<code class="function">pl.push_load</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp27544">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp1551088">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp2389592">Set <code class="varname">plp_table_name</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp170408">Set <code class="varname">plp_pipeid_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp173216">Set <code class="varname">plp_limit_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp175992">Set <code class="varname">plp_algorithm_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp178912">Set <code class="varname">timer_interval</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp181432">Set <code class="varname">reply_code</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp182784"> Set <code class="varname">reply_code</code> parameter at runtime </a></dt>
+          <dt>1.10. <a href="#idp185344">Set <code class="varname">reply_reason</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp186712"> Set <code class="varname">reply_reason</code> parameter at runtime </a></dt>
+          <dt>1.12. <a href="#idp113272"><code class="function">pl_check</code> usage</a></dt>
+          <dt>1.13. <a href="#idp120328"><code class="function">pl_drop</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2648216"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3461448">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2276560">1.1. Algorithms</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp335104">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp335480">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp337720">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp339504">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.hash_size">3.1. <code class="varname">hash_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.db_url">3.2. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.plp_table_name">3.3. <code class="varname">plp_table_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.plp_pipeid_column">3.4. <code class="varname">plp_pipeid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.plp_limit_column">3.5. <code class="varname">plp_limit_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.plp_algorithm_column">3.6. <code class="varname">plp_algorithm_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.timer_interval">3.7. <code class="varname">timer_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.reply_code">3.8. <code class="varname">reply_code</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.p.reply_reason">3.9. <code class="varname">reply_reason</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp187960">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.f.pl_check">4.1. 
+		<code class="function">pl_check(name [, algorithm, limit])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.f.pl_drop">4.2. 
+		<code class="function">pl_drop([ [min ], max ])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp121712">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_stats">5.1. 
+		<code class="function">pl_stats</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_set_pipe">5.2. 
+		<code class="function">pl_set_pipe</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_get_pipes">5.3. 
+		<code class="function">pl_get_pipes</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_set_pid">5.4. 
+		<code class="function">pl_set_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_get_pid">5.5. 
+		<code class="function">pl_get_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.m.pl_push_load">5.6. 
+		<code class="function">pl_push_load</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp62040">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.stats">6.1. 
+		<code class="function">pl.stats</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.set_pipe">6.2. 
+		<code class="function">pl.set_pipe</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.get_pipes">6.3. 
+		<code class="function">pl.get_pipes</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.set_pid">6.4. 
+		<code class="function">pl.set_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.get_pid">6.5. 
+		<code class="function">pl.get_pid</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#pipelimit.r.pl.push_load">6.6. 
+		<code class="function">pl.push_load</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3461448"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module implements traffic limiting for SIP requests.
+	</p>
+          <p>
+		The module defines in an abstract mode the notion of 'pipe',
+		which can be a link to an IP address, to a network or a trunk.
+		The associtiation of traffic to a pipe is done in the config file,
+		therefore, a pipe could represent SIP traffic coming from a user or
+		the flow of specific SIP requests such as INVITE or REGISTER.
+	</p>
+          <p>
+		Pipelimit started from ratelimit module, adding support for definition
+		of pipes limits in database and dynamic names. Complexity of keeping
+		everything in a module and make it dual mode functional resulted in a
+		new module which is focused on just traffic shaping policies.
+	</p>
+          <div class="section" title="1.1. Algorithms">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2276560"></a>1.1. Algorithms</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Algorithms are based from the ratelimit module, which describes the
+			algorithms in more detail. The algorithms are used by the pipelimit
+			module to determine if a message should be blocked.
+		</p>
+            <p>
+			<span class="emphasis"><em>Tail Drop Algorithm (TAILDROP)</em></span>
+		</p>
+            <p>
+			This is a trivial algorithm that imposes some risks when used in
+			conjunction with long timer intervals. At the start of each interval an
+			internal counter is reset and incremented for each incoming message.
+			Once the counter hits the configured limit pl_check returns an error.
+		</p>
+            <p>
+			<span class="emphasis"><em>Random Early Detection Algorithm (RED)</em></span>
+		</p>
+            <p>
+			The Random Early Detection Algorithm tries to circumvent the
+			synchronization problem imposed by the tail drop algorithm by measuring
+			the average load and adapting the drop rate dynamically. When running
+			with the RED algorithm (enabled by default) Kamailio will return errors
+			to the Kamailio routing engine every n'th packet trying to evenly
+			spread the measured load of the last timer interval onto the current
+			interval. As a negative side effect Kamailio might drop messages
+			although the limit might not be reached within the interval. Decrease
+			the timer interval if you encounter this.
+		</p>
+            <p>
+			<span class="emphasis"><em>Network Algorithm (NETWORK)</em></span>
+		</p>
+            <p>
+			This algorithm relies on information provided by network interfaces.
+			The total amount of bytes waiting to be consumed on all the network
+			interfaces is retrieved once every timer_interval seconds. If the
+			returned amount exceeds the limit specified in the modparam, pl_check
+			returns an error.
+		</p>
+            <p>
+			<span class="emphasis"><em>Feedback Algorithm (FEEDBACK)</em></span>
+		</p>
+            <p>
+			Using the PID Controller model (see Wikipedia page), the drop rate is
+			adjusted dynamically based on the load factor so that the load factor
+			always drifts towards the specified limit (or setpoint, in PID terms).
+		</p>
+            <p>
+			As reading the CPU load average is relatively expensive (opening
+			/proc/stat, parsing it, etc), this only happens once every
+			timer_interval seconds and consequently the FEEDBACK value is only at
+			these intervals recomputed. This in turn makes it difficult for the
+			drop rate to adjust quickly. Worst case scenarios are request rates
+			going up/down instantly by thousands - it takes up to 20 seconds for
+			the controller to adapt to the new request rate.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp335104"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp335480"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database connection module</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl: Stateless Request Handling</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp337720"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp339504"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. hash_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.hash_size"></a>3.1. <code class="varname">hash_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Used to compute the number of slots for the internal hash table,
+		as power of 2 (number of slots = 2^hash_size, aka 1&lt;&lt;hash_size).
+		If you have many pipes, increase this value for proper performances,
+		but don't go too high (hash_size=10 means 1024 slots).
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">6</span>”</span> (64 slots).
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp27544"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "hash_size", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.db_url"></a>3.2. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		URL of the database server to be used.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1551088"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. plp_table_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.plp_table_name"></a>3.3. <code class="varname">plp_table_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of DB table where data definition for pipes is stores.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">pl_pipes</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp2389592"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">plp_table_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "plp_table_name", "mypipes")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. plp_pipeid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.plp_pipeid_column"></a>3.4. <code class="varname">plp_pipeid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'pipeid' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">pipeid</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp170408"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">plp_pipeid_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "plp_pipeid_column", "name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. plp_limit_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.plp_limit_column"></a>3.5. <code class="varname">plp_limit_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'limit' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">limit</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp173216"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">plp_limit_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "plp_limit_column", "name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. plp_algorithm_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.plp_algorithm_column"></a>3.6. <code class="varname">plp_algorithm_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'algorithm' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">algorithm</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp175992"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">plp_algorithm_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "plp_algorithm_column", "name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. timer_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.timer_interval"></a>3.7. <code class="varname">timer_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The initial length of a timer interval in seconds. All amounts of
+		messages have to be divided by this timer to get a messages per second
+		value.
+		</p>
+            <p>
+		IMPORTANT: A too small value may lead to performance penalties due to
+		timer process overloading.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 10.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp178912"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">timer_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "timer_interval", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. reply_code (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.reply_code"></a>3.8. <code class="varname">reply_code</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The code of the reply sent by Kamailio while limiting.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 503.
+		</em></span>
+
+		</p>
+            <div class="example">
+              <a id="idp181432"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">reply_code</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "reply_code", 505)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		This value can be modified at runtime using kamcmd
+		</p>
+            <div class="example">
+              <a id="idp182784"></a>
+              <p class="title">
+                <strong>Example 1.9.  Set <code class="varname">reply_code</code> parameter at runtime </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">kamcmd cfg.set_now_int pipelimit reply_code 505</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. reply_reason (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.p.reply_reason"></a>3.9. <code class="varname">reply_reason</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The reason of the reply sent by Kamailio while limiting.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "Server Unavailable".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp185344"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">reply_reason</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pipelimit", "reply_reason", "Limiting")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		This value can be modified at runtime using kamcmd
+		</p>
+            <div class="example">
+              <a id="idp186712"></a>
+              <p class="title">
+                <strong>Example 1.11.  Set <code class="varname">reply_reason</code> parameter at runtime </strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">kamcmd cfg.set_now_string pipelimit reply_reason "Limiting"</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp187960"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  pl_check(name [, algorithm, limit])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.f.pl_check"></a>4.1. 
+		<code class="function">pl_check(name [, algorithm, limit])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check the current request against the 'name' pipe.
+		</p>
+            <p>	
+		If algorithm and limit are provided, the function attempts to create a
+		new pipe of one with that name doesn't exit. If it exists, no changes
+		to algorithm and limit are done. Algorithm is case sensitive.
+		</p>
+            <p>	
+		The pipe name can be provided via a pseudo variabile.
+		</p>
+            <p>The method will return:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-2</em></span> if no pipe was found</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-1</em></span> if pipe limit was reached</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> if pipe limit was NOT reached</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>2</em></span> if pipe has NOP algorithm</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>name</em></span> - the string or pseudovariable with the pipe name.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>algorithm</em></span> - the string or pseudovariable with the
+			algorithm. The values can be: TAILDROP, RED, NETWORK, or FEEDBACK - see
+			readme of ratelimit module for details on each algorithm.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>limit</em></span> - the integer or pseudovariable with the limit value.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp113272"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">pl_check</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	# perform pipe match for current method
+	if (!pl_check("one")) {
+		pl_drop();
+		exit;
+	}
+...
+	# use pipe 'one' for the current method via PV
+	$var(p) = "one";
+	$var(check_result) = pl_check("$var(p)");
+	switch($var(check_result)) {
+	case -2:
+		xlog("L_ALERT","pl_check(\"$var(p)\") drop -pipe NOT found\n");
+		pl_drop();
+		exit;
+		break;
+	case -1:
+		xlog("L_ALERT","pl_check(\"$var(p)\") drop\n");
+		pl_drop();
+		exit;
+		break;
+	case 1:
+		xlog("L_INFO", "pl_check(\"$var(p)\") pass\n");
+		break;
+	case 2:
+		xlog("L_ALERT","pl_check(\"$var(p)\") pass -NOP algorithm\n");
+		break;
+	default:
+		xlog("L_ERR","pl_check(\"$var(p)\") dropping \
+with unexpected retcode=$var(check_result)\n");
+		pl_drop();
+		exit;
+	}
+...
+	# perform pipe match for authenticated user
+	$var(limit) = 20;
+	if (!pl_check("$au", "TAILDROP", "$var(limit)")) {
+		pl_drop();
+		exit;
+	}
+...
+	# perform pipe match for INVITE
+	if (is_method("INVITE")) {
+		$var(invlimit) = 10;
+		if (!pl_check("$si", "TAILDROP", "$var(invlimit)")) {
+			pl_drop();
+			exit;
+		}
+	}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  pl_drop([ [min ], max ])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.f.pl_drop"></a>4.2. 
+		<code class="function">pl_drop([ [min ], max ])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		For the current request, a "503 - Server Unavailable" reply is sent back.
+		The reply may or may not have a "Retry-After" header.  If no parameter is given,
+		there will be no "Retry-After" header.  If only the
+		<span class="emphasis"><em>max</em></span> parameter is given, the
+		reply will contain a "Retry-After: <span class="emphasis"><em>max</em></span>" header.  If both
+		<span class="emphasis"><em>min</em></span> and <span class="emphasis"><em>max</em></span> params are given, the
+		reply will contain a "Retry-After: <span class="emphasis"><em>random</em></span>" header with
+		<span class="emphasis"><em>random</em></span> being a random value between the given min and max.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>min</em></span> - the minimum value of "Retry-After" header.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>max</em></span> - the maximum value of "Retry-After" header.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp120328"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">pl_drop</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+	if (!pl_check("one")) {
+		# send back a "503 - Server Unavailable"
+		# with a "Retry-After: 5"
+		pl_drop("5");
+		exit;
+	}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp121712"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  pl_stats">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_stats"></a>5.1. 
+		<code class="function">pl_stats</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists the parameters and variables in the pipelimit module.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_stats</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_stats:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.  pl_set_pipe">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_set_pipe"></a>5.2. 
+		<code class="function">pl_set_pipe</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the pipe parameters for the given pipe id.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_set_pipe</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_id</em></span> - pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_algorithm</em></span> - the
+			algorithm assigned to the given pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_limit</em></span> - the limit
+			assigned to the given pipe id.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_set_pipe:_reply_fifo_file_
+		2
+		RED
+		10
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.3.  pl_get_pipes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_get_pipes"></a>5.3. 
+		<code class="function">pl_get_pipes</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use pipes.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_get_pipes</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_get_pipes:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.4.  pl_set_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_set_pid"></a>5.4. 
+		<code class="function">pl_set_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the PID Controller parameters for the Feedback Algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_set_pid</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ki</em></span> - the integral parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kp</em></span> - the proportional parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kd</em></span> - the derivative parameter.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_set_pid:_reply_fifo_file_
+		0.5
+		0.5
+		0.5
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.5.  pl_get_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_get_pid"></a>5.5. 
+		<code class="function">pl_get_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use PID Controller parameters.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_get_pid</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_get_pid:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.6.  pl_push_load">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.m.pl_push_load"></a>5.6. 
+		<code class="function">pl_push_load</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Force the value of the load parameter. This command is useful
+		for testing the Feedback algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl_push_load</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>load</em></span> - the forced value of load
+			(it must be greater then 0.0 and smaller then 1.0).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pl_push_load:_reply_fifo_file_
+		0.85
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp62040"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  pl.stats">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.stats"></a>6.1. 
+		<code class="function">pl.stats</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists the parameters and variabiles in the pipelimit module:
+		pipe id, pipe load and pipe couter.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.stats</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.stats</pre>
+          </div>
+          <div class="section" title="6.2.  pl.set_pipe">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.set_pipe"></a>6.2. 
+		<code class="function">pl.set_pipe</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the pipe parameters for the given pipe id.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.set_pipe</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_id</em></span> - pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_algorithm</em></span> - the
+			algorithm assigned to the given pipe id.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>pipe_limit</em></span> - the limit
+			assigned to the given pipe id.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.set_pipe 2 RED 10</pre>
+          </div>
+          <div class="section" title="6.3.  pl.get_pipes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.get_pipes"></a>6.3. 
+		<code class="function">pl.get_pipes</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use pipes.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.get_pipes</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.get_pipes</pre>
+          </div>
+          <div class="section" title="6.4.  pl.set_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.set_pid"></a>6.4. 
+		<code class="function">pl.set_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the PID Controller parameters for the Feedback Algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.set_pid</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ki</em></span> - the integral parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kp</em></span> - the proportional parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>kd</em></span> - the derivative parameter.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.set_pid 0.5 0.5 0.5</pre>
+          </div>
+          <div class="section" title="6.5.  pl.get_pid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.get_pid"></a>6.5. 
+		<code class="function">pl.get_pid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets the list of in use PID Controller parameters.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.get_pid</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.get_pid</pre>
+          </div>
+          <div class="section" title="6.6.  pl.push_load">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="pipelimit.r.pl.push_load"></a>6.6. 
+		<code class="function">pl.push_load</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Force the value of the load parameter. This command is useful
+		for testing the Feedback algorithm.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pl.push_load</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>load</em></span> - the forced value of load
+			(it must be greater then 0.0 and smaller then 1.0).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		RPC Command Format:
+		</p>
+            <pre class="programlisting">	kamcmd pl.push_load 0.85</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,813 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>utils</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4351640" title="utils" />
+    <link rel="next" href="#idp1544312" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="utils">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4351640"></a>utils</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TutPro Inc.<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008-2009 Juha Heinanen</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Carsten Bock, ng-voice GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1544312">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3404936">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3088792">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2538880">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1215336">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2590464">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.p.http_query_timeout">3.1. <code class="varname">http_query_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.p.forward_active">3.2. <code class="varname">forward_active</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.p.pres_db_url">3.3. <code class="varname">pres_db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.p.xcap_table">3.4. <code class="varname">xcap_table</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3078736">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.f.http_query">4.1. 
+				<code class="function">http_query(url, [post-data], result)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.f.xcap_auth_status">4.2. 
+				<code class="function">xcap_auth_status(watcher_uri, presentity_uri)</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp19368">5. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.m.forward_list">5.1. <code class="function">forward_list</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.m.forward_switch">5.2. <code class="function">forward_switch</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.m.forward_filter">5.3. <code class="function">forward_filter</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#utils.m.forward_proxy">5.4. <code class="function">forward_proxy</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp103056">6. Configuration syntax</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1813736">Set <code class="varname">http_query_timeout</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3072040">Set <code class="varname">forward_active</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3074624">Set <code class="varname">pres_db_url</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp3077512">Set <code class="varname">xcap_table</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp13784"><code class="function">http_query()</code> usage</a></dt>
+          <dt>1.6. <a href="#idp17936"><code class="function">xcap_auth_status()</code> usage</a></dt>
+          <dt>1.7. <a href="#idp20992"><code class="function">forward_list</code> usage</a></dt>
+          <dt>1.8. <a href="#idp23384"><code class="function">forward_switch</code> usage</a></dt>
+          <dt>1.9. <a href="#idp26984"><code class="function">forward_filter</code> usage</a></dt>
+          <dt>1.10. <a href="#idp101736"><code class="function">forward_proxy</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1544312"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3404936">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3088792">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2538880">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1215336">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2590464">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.p.http_query_timeout">3.1. <code class="varname">http_query_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.p.forward_active">3.2. <code class="varname">forward_active</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.p.pres_db_url">3.3. <code class="varname">pres_db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.p.xcap_table">3.4. <code class="varname">xcap_table</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3078736">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.f.http_query">4.1. 
+				<code class="function">http_query(url, [post-data], result)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.f.xcap_auth_status">4.2. 
+				<code class="function">xcap_auth_status(watcher_uri, presentity_uri)</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp19368">5. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.m.forward_list">5.1. <code class="function">forward_list</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.m.forward_switch">5.2. <code class="function">forward_switch</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.m.forward_filter">5.3. <code class="function">forward_filter</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#utils.m.forward_proxy">5.4. <code class="function">forward_proxy</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp103056">6. Configuration syntax</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3404936"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module implements various utility functions that are not SIP
+	related.
+	</p>
+          <p>
+	Function http_query allows Kamailio to issue an HTTP GET
+	request and get access to parts of the reply.
+	</p>
+          <p>
+	The forward functionality allows Kamailio to configure forwarding
+	at runtime with FIFO commands. The forwarding is executed in the pre
+	script call back and therefore handled before the routing script is
+	executed on the current message. The callback is not installed on
+	default, thus this functionality has no runtime overhead when its
+	deactivated.
+	</p>
+          <p>
+	Function xcap_auth_status can be used to check from presence
+	server database, if watcher is authorized to subscribe event
+	<span class="quote">“<span class="quote">presence</span>”</span> of presentity.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3088792"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2538880"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a database module if
+	xcap_auth_status function is enabled</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1215336"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be
+		installed before  
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libcurl</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2590464"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. http_query_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.p.http_query_timeout"></a>3.1. <code class="varname">http_query_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Defines in seconds how long Kamailio waits for response
+			from HTTP server.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is zero, i.e.,
+				that the http_query_timeout function is disabled.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp1813736"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">http_query_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("utils", "http_query_timeout", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. forward_active (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.p.forward_active"></a>3.2. <code class="varname">forward_active</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Defines if the forwarding callback should be installed.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">0</span>”</span> - disabled.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp3072040"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">forward_active</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">					...
+					modparam("utils", "forward_active", 1)
+					...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. pres_db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.p.pres_db_url"></a>3.3. <code class="varname">pres_db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Defines presence server database URL. If not
+			given, the xcap_auth_status function is disabled.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				There is no default value.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp3074624"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">pres_db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("utils", "pres_db_url", "mysql://foo:secret@localhost/pres")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. xcap_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.p.xcap_table"></a>3.4. <code class="varname">xcap_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Defines the name of the xcap table in the presence server database.
+			See the xcap_server module documentation for more information.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">xcap</span>”</span>.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp3077512"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">xcap_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("utils", "xcap_table", "pres_xcap")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3078736"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  http_query(url, [post-data], result)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.f.http_query"></a>4.1. 
+				<code class="function">http_query(url, [post-data], result)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Sends HTTP GET or POST request according to URL given in
+			<span class="quote">“<span class="quote">url</span>”</span> parameter, which is a string that may
+			contain pseudo variables.
+	    	        </p>
+            <p>
+			If you want to make a POST-Request, you have to define
+			the <span class="quote">“<span class="quote">post</span>”</span>-data, that should be submitted
+			in that request as the second parameter.
+	    	        </p>
+            <p>
+			If HTTP server returns a class 2xx, 3xx or 4xx reply,
+			the first line of the reply's body (if any) is
+			stored in <span class="quote">“<span class="quote">result</span>”</span> parameter,
+			which must be a	writable pseudo	variable.
+			</p>
+            <p>
+			Function returns reply code of HTTP reply or -1
+			if something went wrong.
+	   	     	</p>
+            <p>
+			This function can be used from REQUEST_ROUTE,
+			ONREPLY_ROUTE, FAILURE_ROUTE, and BRANCH_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp13784"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">http_query()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# GET-Request
+http_query("http://tutpro.com/index.php?r_uri=$(ru{s.escape.param})&amp;f_uri=$(fu{s.escape.param})",
+           "$var(result)")
+switch ($retcode) {
+       ...
+}
+...</pre>
+                <pre class="programlisting">...
+# POST-Request
+http_query("http://tutpro.com/index.php", "r_uri=$(ru{s.escape.param})&amp;f_uri=$(fu{s.escape.param})",
+           "$var(result)")
+switch ($retcode) {
+       ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  xcap_auth_status(watcher_uri, presentity_uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.f.xcap_auth_status"></a>4.2. 
+				<code class="function">xcap_auth_status(watcher_uri, presentity_uri)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Function checks in the presence server database if
+			a watcher is authorized to subscribe to event
+			<span class="quote">“<span class="quote">presence</span>”</span> of presentity.  Sphere
+			checking is not included.
+			</p>
+            <p>
+			Both watcher_uri and presentity_uri are
+			pseudo variables. The function returns
+			ACTIVE_STATUS, if a subscription is 
+			allowed and PENDING_STATUS, TERMINATED_STATUS,
+			or WAITING_STATUS otherwise. See
+			presence/subscribe.h for the corresponding integer
+			codes. In case of error, function returns -1.
+	    	        </p>
+            <p>
+			Function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp17936"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">xcap_auth_status()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="MESSAGE") {
+    xcap_auth_status("$fu", $ru");
+    if ($retcode == 1) {
+        t_relay();
+    } else {
+        send_reply("403", "Forbidden");
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19368"></a>5. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. forward_list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.m.forward_list"></a>5.1. <code class="function">forward_list</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		List active forward rules.
+	    </p>
+            <p>
+		No parameters.
+		</p>
+            <div class="example">
+              <a id="idp20992"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">forward_list</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo forward_list
+id switch                         filter proxy
+ 0    off      REGISTER:INVITE:SUBSCRIBE host-a.domain-a:5060
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. forward_switch">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.m.forward_switch"></a>5.2. <code class="function">forward_switch</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This command can be used to activate or deactivate forwarding rules.
+		The syntax of this configuration string is described in 1.6. (switch_setting_list).
+	    </p>
+            <div class="example">
+              <a id="idp23384"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">forward_switch</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo forward_switch 0=on
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3. forward_filter">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.m.forward_filter"></a>5.3. <code class="function">forward_filter</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Can be used to specify the filter for a certain id. Messages will only be
+		forwarded if one of the filters matches the message.
+		</p>
+            <p>
+		There are special filters and regular filters.
+		Special filters are:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">REQUEST (matches on every request)</li>
+                <li class="listitem">REPLY   (matches on every reply)</li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		Regular filters are arbitrary strings not containing the
+	 	delimiter ':'. They are matched against the request method
+		names of the sip messages. The syntax of this configuration
+		string is described in 1.6. (filter_setting_list).
+	    </p>
+            <div class="example">
+              <a id="idp26984"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">forward_filter</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo forward_filter 0=REGISTER:INVITE
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. forward_proxy">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="utils.m.forward_proxy"></a>5.4. <code class="function">forward_proxy</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This command can be used to configure forwarding rules. Specifies
+		the destination for a certain id. Messages will be forwarded to
+		this destination if the preconditions hold (matching id, filter, and
+		switch). The syntax of this configuration string is described in 1.6.
+		(proxy_setting_list).
+	    </p>
+            <div class="example">
+              <a id="idp101736"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">forward_proxy</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamctl fifo forward_proxy 0=host-c.domain-c:5060
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Configuration syntax">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp103056"></a>6. Configuration syntax</h2>
+              </div>
+            </div>
+          </div>
+          <p>This grammar specify the usable configuration syntax</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">switch_setting_list ::= switch_setting { "," switch_setting }</li>
+              <li class="listitem">filter_setting_list ::= switch_setting { "," switch_setting }</li>
+              <li class="listitem">proxy_setting_list  ::= proxy_setting  { "," proxy_setting  }</li>
+              <li class="listitem">switch_setting      ::= id "=" switch</li>
+              <li class="listitem">filter_setting      ::= id "=" filter_list</li>
+              <li class="listitem">proxy_setting       ::= id "=" proxy</li>
+              <li class="listitem">switch              ::= ( "off" | "on" )</li>
+              <li class="listitem">filter_list         ::= filter { ":" filter }</li>
+              <li class="listitem">proxy               ::= host ":" port</li>
+              <li class="listitem">filter              ::= ( special_filter | regular_filter )</li>
+              <li class="listitem">special_filter      ::= ( "REQUEST" | "REPLY" )</li>
+              <li class="listitem">regular_filter      ::= ? [^:]* ?</li>
+              <li class="listitem">host                ::= char { char }</li>
+              <li class="listitem">char                ::= ? A-Za-z0-9.-_ ?</li>
+              <li class="listitem">id                  ::= number</li>
+              <li class="listitem">port                ::= number</li>
+              <li class="listitem">number              ::= digit {digit}</li>
+              <li class="listitem">digit               ::= ? 0-9 ?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

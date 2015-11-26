@@ -1,0 +1,1921 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>rtpproxy Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15553152" title="rtpproxy Module" />
+    <link rel="next" href="#idp18108504" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="rtpproxy Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15553152"></a>rtpproxy Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Sippy Software, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TuTPro, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Sas</span> <span class="surname">Ovidiu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2003-2008 Sippy Software, Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2005 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2009-2012 TuTPro Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2010 <a class="ulink" href="javascript:if(confirm('http://www.voipembedded.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.voipembedded.com/'" tppabs="http://www.voipembedded.com/">VoIPEmbedded Inc.</a></p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18108504">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17140696">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18171744">2. Multiple RTPProxy usage</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18035000">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18293312">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17505136">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18179168">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18021816">4.1. <code class="varname">rtpproxy_sock</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15612320">4.2. <code class="varname">rtpproxy_disable_tout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15614776">4.3. <code class="varname">rtpproxy_tout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15617392">4.4. <code class="varname">rtpproxy_retr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19037456">4.5. <code class="varname">nortpproxy_str</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19040800">4.6. <code class="varname">timeout_socket</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19043800">4.7. <code class="varname">ice_candidate_priority_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15520224">4.8. <code class="varname">extra_id_pv</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15522856">4.9. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15525256">4.10. <code class="varname">table_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15527648">4.11. <code class="varname">rtp_inst_pvar</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15531304">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15531672">5.1. 
+		<code class="function">set_rtp_proxy_set(setid)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15555616">5.2. 
+                <code class="function">rtpproxy_offer([flags [, ip_address]])</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15654648">5.3. 
+                <code class="function">rtpproxy_answer([flags [, ip_address]])</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15657936">5.4. 
+		<code class="function">rtpproxy_destroy([flags])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15666248">5.5. 
+		<code class="function">unforce_rtp_proxy()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15667272">5.6. 
+        <code class="function">rtpproxy_manage([flags [, ip_address]])</code>
+        </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpproxy_stream2uac">5.7. 
+	    <code class="function">rtpproxy_stream2uac(prompt_name, count)</code>,
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpproxy_stream2uas">5.8. 
+	    <code class="function">rtpproxy_stream2uas(prompt_name, count)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpproxy_stop_stream2uac">5.9. 
+	    <code class="function">rtpproxy_stop_stream2uac()</code>,
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17313744">5.10. 
+		<code class="function">start_recording()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpproxy_stop_stream2uas">5.11. 
+	    <code class="function">rtpproxy_stop_stream2uas(prompt_name, count)</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17318216">6. Exported Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17318568">6.1. <code class="function">$rtpstat</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17321000">7. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17321512">7.1. <code class="function">nh_enable_rtpp</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17324672">7.2. <code class="function">nh_show_rtpp</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp16859224">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15610864">Set <code class="varname">rtpproxy_sock</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15613680">Set <code class="varname">rtpproxy_disable_tout</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15616224">Set <code class="varname">rtpproxy_tout</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp19036288">Set <code class="varname">rtpproxy_retr</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp19039608">Set <code class="varname">nortpproxy_str</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp19042592">Set <code class="varname">timeout_socket</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15519048">Set <code class="varname">ice_candidate_priority_avp</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15521680">Set <code class="varname">extra_id_pv</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15524064">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15526472">Set <code class="varname">table_name</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15528792">Set <code class="varname">rtp_inst_pvar</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp15529904"><code class="varname">rtp_inst_pvar</code> usage</a></dt>
+          <dt>1.13. <a href="#idp15554392"><code class="function">set_rtp_proxy_set</code> usage</a></dt>
+          <dt>1.14. <a href="#idp15652968"><code class="function">rtpproxy_offer</code> usage</a></dt>
+          <dt>1.15. <a href="#idp15656840"><code class="function">rtpproxy_answer</code> usage</a></dt>
+          <dt>1.16. <a href="#idp15665080"><code class="function">rtpproxy_destroy</code> usage</a></dt>
+          <dt>1.17. <a href="#idp17294488"><code class="function">rtpproxy_manage</code> usage</a></dt>
+          <dt>1.18. <a href="#idp17308784"><code class="function">rtpproxy_stream2xxx</code> usage</a></dt>
+          <dt>1.19. <a href="#idp17315368"><code class="function">start_recording</code> usage</a></dt>
+          <dt>1.20. <a href="#idp17319960">$rtpstat-Usage</a></dt>
+          <dt>1.21. <a href="#idp17323352">
+			<code class="function">nh_enable_rtpp</code> usage</a></dt>
+          <dt>1.22. <a href="#idp17325792">
+				<code class="function">nh_show_rtpp</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18108504"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17140696">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18171744">2. Multiple RTPProxy usage</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18035000">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18293312">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17505136">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18179168">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18021816">4.1. <code class="varname">rtpproxy_sock</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15612320">4.2. <code class="varname">rtpproxy_disable_tout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15614776">4.3. <code class="varname">rtpproxy_tout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15617392">4.4. <code class="varname">rtpproxy_retr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19037456">4.5. <code class="varname">nortpproxy_str</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19040800">4.6. <code class="varname">timeout_socket</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19043800">4.7. <code class="varname">ice_candidate_priority_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15520224">4.8. <code class="varname">extra_id_pv</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15522856">4.9. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15525256">4.10. <code class="varname">table_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15527648">4.11. <code class="varname">rtp_inst_pvar</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15531304">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15531672">5.1. 
+		<code class="function">set_rtp_proxy_set(setid)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15555616">5.2. 
+                <code class="function">rtpproxy_offer([flags [, ip_address]])</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15654648">5.3. 
+                <code class="function">rtpproxy_answer([flags [, ip_address]])</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15657936">5.4. 
+		<code class="function">rtpproxy_destroy([flags])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15666248">5.5. 
+		<code class="function">unforce_rtp_proxy()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15667272">5.6. 
+        <code class="function">rtpproxy_manage([flags [, ip_address]])</code>
+        </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpproxy_stream2uac">5.7. 
+	    <code class="function">rtpproxy_stream2uac(prompt_name, count)</code>,
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpproxy_stream2uas">5.8. 
+	    <code class="function">rtpproxy_stream2uas(prompt_name, count)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpproxy_stop_stream2uac">5.9. 
+	    <code class="function">rtpproxy_stop_stream2uac()</code>,
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17313744">5.10. 
+		<code class="function">start_recording()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpproxy_stop_stream2uas">5.11. 
+	    <code class="function">rtpproxy_stop_stream2uas(prompt_name, count)</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17318216">6. Exported Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17318568">6.1. <code class="function">$rtpstat</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17321000">7. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17321512">7.1. <code class="function">nh_enable_rtpp</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17324672">7.2. <code class="function">nh_show_rtpp</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17140696"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module that enables media streams to be proxied
+		via an rtpproxy.  Rtpproxies know to work with this module
+		are Sippy RTPproxy <a class="ulink" href="javascript:if(confirm('http://www.rtpproxy.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.rtpproxy.org/'" tppabs="http://www.rtpproxy.org/">http://www.rtpproxy.org</a>
+		and ngcp-rtpproxy-ng 
+		<a class="ulink" href="javascript:if(confirm('http://deb.sipwise.com/spce/2.6/pool/main/n/ngcp-mediaproxy-ng  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://deb.sipwise.com/spce/2.6/pool/main/n/ngcp-mediaproxy-ng'" tppabs="http://deb.sipwise.com/spce/2.6/pool/main/n/ngcp-mediaproxy-ng">http://deb.sipwise.com/spce/2.6/pool/main/n/ngcp-mediaproxy-ng</a>.
+		Some features of the rtpproxy module apply only to one of the two rtpproxies.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Multiple RTPProxy usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18171744"></a>2.¬†Multiple RTPProxy usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The rtpproxy module can support multiple rtpproxies for
+		balancing/distribution and control/selection purposes.
+	</p>
+          <p>
+		The module allows definition of several sets of rtpproxies.
+		Load-balancing will be performed over a set and the admin has the
+		ability to choose what set should be used. The set is selected via
+		its id - the id being defined with the set. Refer to the
+		<span class="quote">‚Äú<span class="quote">rtpproxy_sock</span>‚Äù</span> module parameter definition for syntax
+		description.
+	</p>
+          <p>
+		The balancing inside a set is done automatically by the module based on
+		the weight of each rtpproxy from the set.
+	</p>
+          <p>
+		The selection of the set is done from script prior using
+		unforce_rtp_proxy(), rtpproxy_offer() or rtpproxy_answer()
+		functions - see the set_rtp_proxy_set() function.
+	</p>
+          <p>
+		For backward compatibility reasons, a set with no id take by default
+		the id 0. Also if no set is explicitly set before
+		unforce_rtp_proxy(), rtpproxy_offer() or rtpproxy_answer()
+		the 0 id set will be used.
+	</p>
+          <p>
+		IMPORTANT: if you use multiple sets, take care and use the same set for
+		both rtpproxy_offer()/rtpproxy_answer() and unforce_rtpproxy()!!
+	</p>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18035000"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18293312"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm module</em></span> - (optional) if you want to
+				have rtpproxy_manage() fully functional
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17505136"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18179168"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†rtpproxy_sock (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18021816"></a>4.1.¬†<code class="varname">rtpproxy_sock</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Used to define the list of RTPPRoxy instances to connect to.
+		These can be UNIX sockets or IPv4/IPv6 UDP sockets.
+
+		Each modparam entry will insert sockets into a single set. If no set ID is given, the default set ID '0' will be used. To define multiple sets add the set number at the beginning of each parameter followed by '=='.
+		Sockets can be weighted by adding '=#' to a socket where # is an integer. A socket with a weight of 2 will be chosen twice as often as one with a weight of 1.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">NONE</span>‚Äù</span> (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15610864"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">rtpproxy_sock</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# single rtproxy
+modparam("rtpproxy", "rtpproxy_sock", "udp:localhost:12221")
+
+# multiple rtproxies for LB
+modparam("rtpproxy", "rtpproxy_sock",
+	"udp:localhost:12221 udp:localhost:12222")
+
+# multiple sets of multiple rtproxies
+modparam("rtpproxy", "rtpproxy_sock",
+	"1 == udp:localhost:12221 udp:localhost:12222")
+modparam("rtpproxy", "rtpproxy_sock",
+	"2 == udp:localhost:12225")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†rtpproxy_disable_tout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15612320"></a>4.2.¬†<code class="varname">rtpproxy_disable_tout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Once RTPProxy was found unreachable and marked as disabled, the rtpproxy
+		module will not attempt to establish communication to RTPProxy for
+		rtpproxy_disable_tout seconds.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">60</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15613680"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">rtpproxy_disable_tout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "rtpproxy_disable_tout", 20)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†rtpproxy_tout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15614776"></a>4.3.¬†<code class="varname">rtpproxy_tout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Timeout value in waiting for reply from RTPProxy.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15616224"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">rtpproxy_tout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "rtpproxy_tout", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†rtpproxy_retr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15617392"></a>4.4.¬†<code class="varname">rtpproxy_retr</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		How many times the module should retry to send and receive after
+		timeout was generated.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">5</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp19036288"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">rtpproxy_retr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "rtpproxy_retr", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†nortpproxy_str (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19037456"></a>4.5.¬†<code class="varname">nortpproxy_str</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter sets the SDP attribute used by rtpproxy to mark
+		the message's SDP attachemnt with information that it have 
+		already been changed.
+		</p>
+            <p>
+		If empty string, no marker will be added or checked.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		The string must be a complete SDP line, including the EOH (\r\n).
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">a=nortpproxy:yes\r\n</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp19039608"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">nortpproxy_str</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "nortpproxy_str", "a=sdpmangled:yes\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†timeout_socket (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19040800"></a>4.6.¬†<code class="varname">timeout_socket</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter sets the RTP timeout socket, which is transmitted to the RTP-Proxy.
+		It will be used by the RTP proxy to signal back that a media stream timed
+		out.
+		</p>
+            <p>
+		If it is an empty string, no timeout socket will be transmitted to the RTP-Proxy.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote"></span>‚Äù</span> (nothing).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp19042592"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">timeout_socket</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "timeout_socket", "xmlrpc:http://127.0.0.1:8000/RPC2")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†ice_candidate_priority_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19043800"></a>4.7.¬†<code class="varname">ice_candidate_priority_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If specified and if value of the avp value is not 0,
+		<code class="function">rtpproxy_manage</code> function adds
+		ICE relay candidate attributes
+		to sdp stream(s) containing ICE candidate attributes.
+		</p>
+            <p>
+		If value of the avp is 1, added candidates
+		have high priority.  If value of the avp is 2 (default),
+		added candidates have low priority.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		There is no default value meaning that no ICE relay
+		candidates are added in any circumstance.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15519048"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">ice_candidate_priority_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "ice_candidate_priority_avp", "$avp(ice_priority)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬†extra_id_pv (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15520224"></a>4.8.¬†<code class="varname">extra_id_pv</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The parameter sets the PV defination to use when the <span class="quote">‚Äú<span class="quote">b</span>‚Äù</span>
+			parameter is used on unforce_rtp_proxy(), rtpproxy_offer(),
+			rtpproxy_answer() or rtpproxy_manage() command.
+		</p>
+            <p>
+			Default is empty, the <span class="quote">‚Äú<span class="quote">b</span>‚Äù</span> parameter may not be used then.
+		</p>
+            <div class="example">
+              <a id="idp15521680"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">extra_id_pv</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "extra_id_pv", "$avp(extra_id)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬†db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15522856"></a>4.9.¬†<code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The database URL to load rtp_proxy sets from.
+			If this parameter is set, the module will attempt to load the rtpproxy sets from the specified database and will ignore any 'rtpproxy_sock' modparams.
+		</p>
+            <p>
+			Default is empty, a database will not be used.
+		</p>
+            <div class="example">
+              <a id="idp15524064"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "db_url", "mysql://user:passwb@localhost/database")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬†table_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15525256"></a>4.10.¬†<code class="varname">table_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of the table containing the rtpproxy sets.
+		</p>
+            <p>
+			Default value is <span class="quote">‚Äú<span class="quote">rtpproxy</span>‚Äù</span>.
+		</p>
+            <div class="example">
+              <a id="idp15526472"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">table_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "table_name", "my_rtpp_sets")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.¬†rtp_inst_pvar (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15527648"></a>4.11.¬†<code class="varname">rtp_inst_pvar</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			A pseudo variable to store the chosen RTPProxy address.
+			If this parameter is set, the instance URL will be stored in the given variable.
+		</p>
+            <p>
+			By default, this parameter is not set.
+		</p>
+            <div class="example">
+              <a id="idp15528792"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Set <code class="varname">rtp_inst_pvar</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "rtp_inst_pvar", "$avp(RTP_INSTANCE)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp15529904"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="varname">rtp_inst_pvar</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("rtpproxy", "rtpproxy_sock",
+	"udp:localhost:12221 udp:localhost:12222")
+modparam("rtpproxy", "rtp_inst_pvar", "$var(RTP_INSTANCE)")
+...
+rtpproxy_manage("eiro");
+xlog("L_INFO", "Chose rtpp instance $var(RTP_INSTANCE)\n");
+# This will display 'udp:localhost:12222'
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15531304"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† set_rtp_proxy_set(setid)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15531672"></a>5.1.¬†
+		<code class="function">set_rtp_proxy_set(setid)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the Id of the rtpproxy set to be used for the next
+		unforce_rtp_proxy(), rtpproxy_offer(), rtpproxy_answer()
+		or rtpproxy_manage() command. The parameter can be an integer or
+		a config variable holding an integer.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
+		BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15554392"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†<code class="function">set_rtp_proxy_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_rtp_proxy_set("2");
+rtpproxy_offer();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬† rtpproxy_offer([flags [, ip_address]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15555616"></a>5.2.¬†
+                <code class="function">rtpproxy_offer([flags [, ip_address]])</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Rewrites <acronym class="acronym">SDP</acronym> body to ensure that media is passed through
+                an <acronym class="acronym">RTP</acronym> proxy. To be invoked
+		on INVITE for the cases the SDPs are in INVITE and 200 OK and on 200 OK
+		when SDPs are in 200 OK and ACK.
+                </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flags</em></span> - flags to turn on some features.
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>1</em></span> - append first Via branch to Call-ID when sending
+				command to rtpproxy. This can be used to create one media session per branch
+				on the rtpproxy. When sending a subsequent <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command to
+				the rtpproxy, you can then stop just the session for a specific branch when
+				passing the flag '1' or '2' in the <span class="quote">‚Äú<span class="quote">unforce_rtpproxy</span>‚Äù</span>, or stop
+				all sessions for a call when not passing one of those two flags there. This is
+				especially useful if you have serially forked call scenarios where rtpproxy
+				gets an <span class="quote">‚Äú<span class="quote">update</span>‚Äù</span> command for a new branch, and then a 
+				<span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command for the previous branch, which would otherwise
+				delete the full call, breaking the subsequent <span class="quote">‚Äú<span class="quote">lookup</span>‚Äù</span> for the
+				new branch. <span class="emphasis"><em>This flag is only supported by the ngcp-mediaproxy-ng 
+				rtpproxy at the moment!</em></span>
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>2</em></span> - append second Via branch to Call-ID when sending
+				command to rtpproxy. See flag '1' for its meaning.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>3</em></span> - behave like flag 1 is set for a request and
+				like flag 2 is set for a reply.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>a</em></span> - flags that UA from which message is
+				received doesn't support symmetric RTP. (automatically sets the 'r' flag)
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>b</em></span> - append branch specific variable to Call-ID when sending
+				command to rtpproxy. This creates one rtpproxy session per unique variable.
+
+				Works similar to the 1, 2 and 3 parameter, but is usefull when forking to multiple
+				destinations on different address families or network segments, requiring different
+				rtpproxy parameters.
+
+				The variable value is taken from the <span class="quote">‚Äú<span class="quote">extra_id_pv</span>‚Äù</span>.
+
+				When used, it must be used in every call to rtpproxy_manage(), rtpproxy_offer(),
+				rtpproxy_answer() and rtpproxy_destroy() with the same contents of the PV.
+				The b parameter may not be used in conjunction with the 1, 2 or 3 parameter
+				to use the Via branch in the Call-ID.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>l</em></span> - force <span class="quote">‚Äú<span class="quote">lookup</span>‚Äù</span>, that is,
+				only rewrite SDP when corresponding session already exists
+				in the RTP proxy. By default is on when the session is to be
+				completed.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>i, e</em></span> - these flags specify the direction of the SIP
+				message. These flags only make sense when rtpproxy is running in bridge mode.
+				'i' means internal network (LAN), 'e' means external network (WAN). 'i'
+				corresponds to rtpproxy's first interface, 'e' corresponds to rtpproxy's
+				second interface. You always have to specify two flags to define
+				the incoming network and the outgoing network. For example, 'ie' should be
+				used for SIP message received from the local interface and sent out on the
+				external interface, and 'ei' vice versa. Other options are 'ii' and 'ee'.
+				So, for example if a SIP requests is processed with 'ie' flags, the corresponding
+				response must be processed with 'ie' flags.
+				</p>
+                        <p>
+				Note: As rtpproxy in bridge mode s per default asymmetric, you have to specify
+				the 'w' flag for clients behind NAT! See also above notes!
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>x</em></span> - this flag a shortcut for using the "ie" or "ei"-flags of RTP-Proxy,
+				in order to do automatic bridging between IPv4 on the
+				"internal network" and IPv6 on the "external network". The distinction is done by
+				the given IP in the SDP, e.g. a IPv4 Address will always call "ie" to the RTPProxy
+				(IPv4(i) to IPv6(e)) and an IPv6Address will always call "ei" to the RTPProxy (IPv6(e)
+				to IPv4(i)).
+				</p>
+                        <p>
+				Note: Please note, that this will only work properly with non-dual-stack user-agents or with
+				dual-stack clients according to RFC6157 (which suggest ICE for Dual-Stack implementations).
+				This short-cut will not work properly with RFC4091 (ANAT) compatible clients, which suggests
+				having different m-lines with different IP-protocols grouped together.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>f</em></span> - instructs rtpproxy to ignore marks
+				inserted by another rtpproxy in transit to indicate that the
+				session is already goes through another proxy. Allows creating
+				a chain of proxies.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>r</em></span> - flags that IP address in SDP should
+				be trusted. Without this flag, rtpproxy ignores address in
+				the SDP and uses source address of the SIP message as media
+				address which is passed to the RTP proxy.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>o</em></span> - flags that IP from the origin
+				description (o=) should be also changed.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>c</em></span> - flags to change the session-level
+				SDP connection (c=) IP if media-description also includes
+				connection information.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>w</em></span> - flags that for the UA from which
+				message is received, support symmetric RTP must be forced.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>zNN</em></span> - requests the RTPproxy to perform
+				re-packetization of RTP traffic coming from the UA which
+				has sent the current message to increase or decrease payload
+				size per each RTP packet forwarded if possible.  The NN is the
+				target payload size in ms, for the most codecs its value should
+				be in 10ms increments, however for some codecs the increment
+				could differ (e.g. 30ms for GSM or 20ms for G.723).  The
+				RTPproxy would select the closest value supported by the codec.
+				This feature could be used for significantly reducing bandwith
+				overhead for low bitrate codecs, for example with G.729 going
+				from 10ms to 100ms saves two thirds of the network bandwith.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>ip_address</em></span> - new SDP IP address.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+                </p>
+            <div class="example">
+              <a id="idp15652968"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†<code class="function">rtpproxy_offer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">route {
+...
+    if (is_method("INVITE")) {
+        if (has_body("application/sdp")) {
+            if (rtpproxy_offer())
+                t_on_reply("1");
+        } else {
+            t_on_reply("2");
+        }
+    }
+    if (is_method("ACK") &amp;&amp; has_body("application/sdp"))
+        rtpproxy_answer();
+...
+}
+
+onreply_route[1]
+{
+...
+    if (has_body("application/sdp"))
+        rtpproxy_answer();
+...
+}
+
+onreply_route[2]
+{
+...
+    if (has_body("application/sdp"))
+        rtpproxy_offer();
+...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬† rtpproxy_answer([flags [, ip_address]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15654648"></a>5.3.¬†
+                <code class="function">rtpproxy_answer([flags [, ip_address]])</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Rewrites <acronym class="acronym">SDP</acronym> body to ensure that media is passed through
+		an <acronym class="acronym">RTP</acronym> proxy. To be invoked
+		on 200 OK for the cases the SDPs are in INVITE and 200 OK and on ACK
+		when SDPs are in 200 OK and ACK.
+		</p>
+            <p>
+		See rtpproxy_answer() function description above for the meaning of the
+		parameters.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15656840"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">rtpproxy_answer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <p>
+		See rtpproxy_offer() function example above for example.
+		</p>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬† rtpproxy_destroy([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15657936"></a>5.4.¬†
+		<code class="function">rtpproxy_destroy([flags])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tears down the RTPProxy session for the current call.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flags</em></span> - flags to turn on some features.
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>1</em></span> - append first Via branch to Call-ID when sending
+				command to rtpproxy. This can be used to create one media session per branch
+				on the rtpproxy. When sending a subsequent <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command to
+				the rtpproxy, you can then stop just the session for a specific branch when
+				passing the flag '1' or '2' in the <span class="quote">‚Äú<span class="quote">unforce_rtpproxy</span>‚Äù</span>, or stop
+				all sessions for a call when not passing one of those two flags there. This is
+				especially useful if you have serially forked call scenarios where rtpproxy
+				gets an <span class="quote">‚Äú<span class="quote">update</span>‚Äù</span> command for a new branch, and then a 
+				<span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command for the previous branch, which would otherwise
+				delete the full call, breaking the subsequent <span class="quote">‚Äú<span class="quote">lookup</span>‚Äù</span> for the
+				new branch. <span class="emphasis"><em>This flag is only supported by the ngcp-mediaproxy-ng 
+				rtpproxy at the moment!</em></span>
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>2</em></span> - append second Via branch to Call-ID when sending
+				command to rtpproxy. See flag '1' for its meaning.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>b</em></span> - append branch specific variable to Call-ID when sending
+				command to rtpproxy. See rtpproxy_offer() for details.
+				<span style="color: red">&lt;listitem&gt;<p>
+				</p>&lt;/listitem&gt;</span>
+				<span class="emphasis"><em>t</em></span> - do not include To tag to <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command to rtpproxy thus causing full call to be deleted. Useful for deleting unused rtpproxy call when 200 OK is received on a branch, where rtpproxy is not needed.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp15665080"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†<code class="function">rtpproxy_destroy</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rtpproxy_destroy();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬† unforce_rtp_proxy()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15666248"></a>5.5.¬†
+		<code class="function">unforce_rtp_proxy()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Same as rtpproxy_destroy().
+		</p>
+          </div>
+          <div class="section" title="5.6.¬† rtpproxy_manage([flags [, ip_address]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15667272"></a>5.6.¬†
+        <code class="function">rtpproxy_manage([flags [, ip_address]])</code>
+        </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manage the RTPProxy session - it combines the functionality of
+		rtpproxy_offer(), rtpproxy_answer() and unforce_rtpproxy(), detecting
+		internally based on message type and method which one to execute.
+		</p>
+            <p>
+		It can take the same parameters as <code class="function">rtpproxy_offer().</code>
+		The flags parameter to rtpproxy_manage() can be a configuration variable
+		containing the flags as a string.
+		</p>
+            <p>
+		Functionality:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			If INVITE with SDP, then do <code class="function">rtpproxy_offer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If INVITE with SDP, when the tm module is loaded, mark transaction with
+			internal flag FL_SDP_BODY to know that the 1xx and 2xx are for
+			<code class="function">rtpproxy_answer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If ACK with SDP, then do <code class="function">rtpproxy_answer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If BYE or CANCEL, or called within a FAILURE_ROUTE[], then do <code class="function">unforce_rtpproxy()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If reply to INVITE with code &gt;= 300 do <code class="function">unforce_rtpproxy()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If reply with SDP to INVITE having code 1xx and 2xx, then
+			do <code class="function">rtpproxy_answer()</code> if the request had SDP or tm is not loaded,
+			otherwise do <code class="function">rtpproxy_offer()</code>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17294488"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†<code class="function">rtpproxy_manage</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rtpproxy_manage();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7.¬† rtpproxy_stream2uac(prompt_name, count),">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpproxy_stream2uac"></a>5.7.¬†
+	    <code class="function">rtpproxy_stream2uac(prompt_name, count)</code>,
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Instruct the RTPproxy to stream prompt/announcement pre-encoded with
+	    the makeann command from the RTPproxy distribution. The uac/uas
+	    suffix selects who will hear the announcement relatively to the current
+	    transaction - UAC or UAS. For example invoking the
+	    <code class="function">rtpproxy_stream2uac</code> in the request processing
+	    block on ACK transaction will play the prompt to the UA that has
+	    generated original INVITE and ACK while
+	    <code class="function">rtpproxy_stop_stream2uas</code> on 183 in reply
+	    processing block will play the prompt to the UA that has generated 183.
+	</p>
+            <p>
+	    Apart from generating announcements, another possible application
+	    of this function is implementing music on hold (MOH) functionality.
+	    When count is -1, the streaming will be in loop indefinitely until
+	    the appropriate <code class="function">rtpproxy_stop_stream2xxx</code> is issued.
+	</p>
+            <p>
+	    In order to work correctly, these functions require that a session in the
+	    RTPproxy already exists. Also those functions don't alter the SDP, so that
+	    they are not a substitute for calling <code class="function">rtpproxy_offer</code>
+	    or <code class="function">rtpproxy_answer</code>.
+	</p>
+            <p>
+	    This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>prompt_name</em></span> - name of the prompt to
+		    stream. Should be either absolute pathname or pathname
+		    relative to the directory where RTPproxy runs.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		    <span class="emphasis"><em>count</em></span> - number of times the prompt
+		    should be repeated. A value of -1 means that it will
+		    be streaming in a loop indefinitely, until the appropriate
+		    <code class="function">rtpproxy_stop_stream2xxx</code> is issued.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp17308784"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†<code class="function">rtpproxy_stream2xxx</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (is_method("INVITE")) {
+        rtpproxy_offer();
+        if (detect_hold()) {
+            rtpproxy_stream2uas("/var/rtpproxy/prompts/music_on_hold", "-1");
+        } else {
+            rtpproxy_stop_stream2uas();
+        };
+    };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8.¬† rtpproxy_stream2uas(prompt_name, count)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpproxy_stream2uas"></a>5.8.¬†
+	    <code class="function">rtpproxy_stream2uas(prompt_name, count)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		See function <code class="function">rtpproxy_stream2uac(prompt_name, count)</code>.
+	</p>
+          </div>
+          <div class="section" title="5.9.¬† rtpproxy_stop_stream2uac(),">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpproxy_stop_stream2uac"></a>5.9.¬†
+	    <code class="function">rtpproxy_stop_stream2uac()</code>,
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Stop streaming of announcement/prompt/MOH started previously by the
+	    respective <code class="function">rtpproxy_stream2xxx</code>.  The uac/uas
+	    suffix selects whose announcement relatively to tha current
+	    transaction should be stopped - UAC or UAS.
+	</p>
+            <p>
+	    These functions can be used from REQUEST_ROUTE, ONREPLY_ROUTE.
+	</p>
+          </div>
+          <div class="section" title="5.10.¬† start_recording()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17313744"></a>5.10.¬†
+		<code class="function">start_recording()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function will send a signal to the RTP-Proxy to record
+		the RTP stream on the RTP-Proxy. 
+		<span class="emphasis"><em>This function is only supported by Sippy RTPproxy at the moment!</em></span>
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17315368"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†<code class="function">start_recording</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+start_recording();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.11.¬† rtpproxy_stop_stream2uas(prompt_name, count)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpproxy_stop_stream2uas"></a>5.11.¬†
+	    <code class="function">rtpproxy_stop_stream2uas(prompt_name, count)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		See function <code class="function">rtpproxy_stop_stream2uac(prompt_name, count)</code>.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Exported Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17318216"></a>6.¬†Exported Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†$rtpstat">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17318568"></a>6.1.¬†<code class="function">$rtpstat</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the RTP-Statistics from the RTP-Proxy. The RTP-Statistics from the RTP-Proxy
+			are provided as a string and it does contain several packet-counters. The statistics
+			must be retrieved before the session is deleted	(before <code class="function">unforce_rtpproxy()</code>).
+			</p>
+            <div class="example">
+              <a id="idp17319960"></a>
+              <p class="title">
+                <strong>Example¬†1.20.¬†$rtpstat-Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    append_hf("X-RTP-Statistics: $rtpstat\r\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17321000"></a>7.¬†<acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬†nh_enable_rtpp">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17321512"></a>7.1.¬†<code class="function">nh_enable_rtpp</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Enables a rtp proxy if parameter value is greater than 0.
+			Disables it if a zero value is given.
+			</p>
+            <p>
+			The first parameter is the rtp proxy url (exactly as defined in
+			the config file).
+			</p>
+            <p>
+			The second parameter value must be a number in decimal.
+			</p>
+            <p>
+			NOTE: if a rtpproxy is defined multiple times (in the same or
+			different sets), all of its instances will be enabled/disabled.
+			</p>
+            <div class="example">
+              <a id="idp17323352"></a>
+              <p class="title">
+                <strong>Example¬†1.21.¬†
+			<code class="function">nh_enable_rtpp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo nh_enable_rtpp udp:192.168.2.133:8081 0
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.2.¬†nh_show_rtpp">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17324672"></a>7.2.¬†<code class="function">nh_show_rtpp</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Displays all the rtp proxies and their information: set and
+			status (disabled or not, weight and recheck_ticks).
+			</p>
+            <p>
+			No parameter.
+			</p>
+            <div class="example">
+              <a id="idp17325792"></a>
+              <p class="title">
+                <strong>Example¬†1.22.¬†
+				<code class="function">nh_show_rtpp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo nh_show_rtpp
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp16859224"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp18423344"></a>
+          <dl>
+            <dt>2.1. <a href="#idp17756904">What happend with ‚Äúrtpproxy_disable‚Äù parameter?</a></dt>
+            <dt>2.2. <a href="#idp17961848">Where can I find more about Kamailio?</a></dt>
+            <dt>2.3. <a href="#idp16309632">Where can I post a question about this module?</a></dt>
+            <dt>2.4. <a href="#idp18562352">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp17756904"></a>
+                  <a id="idp18355552"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with <span class="quote">‚Äú<span class="quote">rtpproxy_disable</span>‚Äù</span> parameter?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			It was removed as it became obsolete - now 
+			<span class="quote">‚Äú<span class="quote">rtpproxy_sock</span>‚Äù</span> can take empty value to disable the
+			rtpproxy functionality.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp17961848"></a>
+                  <a id="idp18066424"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp16309632"></a>
+                  <a id="idp16000816"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp18562352"></a>
+                  <a id="idp15860888"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

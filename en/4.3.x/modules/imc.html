@@ -1,0 +1,923 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>imc Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4346792" title="imc Module" />
+    <link rel="next" href="#idp2710832" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="imc Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4346792"></a>imc Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Stefan</span> <span class="surname">Popescu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2710832">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2410512">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3015248">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2998128">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2256968">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1825760">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2265832">3.1. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1965400">3.2. <code class="varname">rooms_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2362744">3.3. <code class="varname">members_table</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2334976">3.4. <code class="varname">hash_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2947792">3.5. <code class="varname">imc_cmd_start_char</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2878544">3.6. <code class="varname">outbound_proxy</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2596144">3.7. <code class="varname">extra_hdrs</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2958488">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp255944">4.1. 
+		<code class="function">imc_manager()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2693152">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2559176">5.1. 
+		<code class="function">imc_list_rooms</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2637288">5.2. 
+		<code class="function">imc_list_members</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp261272">6. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1859176">6.1. 
+		<code class="function">active_rooms</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2667304">7. IMC Commands</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1551960">8. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1651440">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp2136824">Set <code class="varname">rooms_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3423640">Set <code class="varname">members_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp2695504">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp3061696">Set <code class="varname">imc_cmd_start_char</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp1372936">Set <code class="varname">outbound_proxy</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp3461520">Set <code class="varname">extra_hdrs</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp3283888">Usage of <code class="varname">imc_manager()</code> function</a></dt>
+          <dt>1.9. <a href="#idp2464488">List of commands</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2710832"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2410512">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3015248">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2998128">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2256968">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1825760">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2265832">3.1. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1965400">3.2. <code class="varname">rooms_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2362744">3.3. <code class="varname">members_table</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2334976">3.4. <code class="varname">hash_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2947792">3.5. <code class="varname">imc_cmd_start_char</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2878544">3.6. <code class="varname">outbound_proxy</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2596144">3.7. <code class="varname">extra_hdrs</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2958488">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp255944">4.1. 
+		<code class="function">imc_manager()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2693152">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2559176">5.1. 
+		<code class="function">imc_list_rooms</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2637288">5.2. 
+		<code class="function">imc_list_members</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp261272">6. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1859176">6.1. 
+		<code class="function">active_rooms</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2667304">7. IMC Commands</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1551960">8. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2410512"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module offers support for instant message conference. It
+		follows the architecture of IRC channels, you can send commands
+		embedded in MESSAGE body, because there are just a few SIP UA clients
+		which have GUI for IM conferencing.
+	</p>
+          <p>
+	You have to define an URI corresponding to im conferencing manager, where
+	user can send commands to create a new conference room. Once the conference
+	room is created, users can send commands directly to conferece's URI.
+	</p>
+          <p>
+	To ease the integration in the configuration file, the interpreter of
+	the IMC commands are embeded in the module. From a configuration point of
+	view, there is only one function which has to be executed for both
+	messages and commands.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3015248"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2998128"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>db_mysql</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2256968"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1825760"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2265832"></a>3.1.¬†<code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The database url.
+		</p>
+            <p>
+		<span class="emphasis"><em>	
+		The default value is <span class="quote">‚Äú<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1651440"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†rooms_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1965400"></a>3.2.¬†<code class="varname">rooms_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the table storing IMC rooms.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		The default value is "imc_rooms".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2136824"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">rooms_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "rooms_table", "rooms")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†members_table (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2362744"></a>3.3.¬†<code class="varname">members_table</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the table storing IMC members.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		The default value is "imc_members".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3423640"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">members_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "members_table", "members")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†hash_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2334976"></a>3.4.¬†<code class="varname">hash_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The power of 2 to get the size of the hash table used for storing
+		members and rooms.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		The default value is 4 (resultimg in hash size 16).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2695504"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "hash_size", 8)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†imc_cmd_start_char (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2947792"></a>3.5.¬†<code class="varname">imc_cmd_start_char</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The character which indicates that the body of the message is a command.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		The default value is "#".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3061696"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">imc_cmd_start_char</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "imc_cmd_start_char", "#")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†outbound_proxy (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2878544"></a>3.6.¬†<code class="varname">outbound_proxy</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	   The SIP address used as next hop when sending the message. Very
+   useful when using Kamailio with a domain name not in DNS, or
+   when using a separate Kamailio instance for imc processing. If
+   not set, the message will be sent to the address in destination
+   URI.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1372936"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">outbound_proxy</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "outbound_proxy", "sip:kamailio.org;transport=tcp")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†extra_hdrs (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2596144"></a>3.7.¬†<code class="varname">extra_hdrs</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Extra headers (each ending with \r\n) to be added in
+		messages sent out from imc server.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3461520"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">extra_hdrs</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("imc", "extra_hdrs", "P-Flags: 3\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2958488"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† imc_manager()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp255944"></a>4.1.¬†
+		<code class="function">imc_manager()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handles Message method.It detects if the body of the message is a
+		conference command.If so it executes it, otherwise it sends the
+		message to all the members in the room. 
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE. See command description
+		for error codes returned by this function.
+		</p>
+            <div class="example">
+              <a id="idp3283888"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Usage of <code class="varname">imc_manager()</code> function</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# the rooms will be named chat-xyz to avoid overlapping
+# with usernames
+if(is_method("MESSAGE)
+    &amp;&amp; (uri=~ "sip:chat-[0-9]+@" || (uri=~ "sip:chat-manager@"))
+{
+    if(imc_manager())
+        sl_send_reply("200", "ok");
+    else
+        sl_send_reply("500", "command error");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2693152"></a>5.¬†MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† imc_list_rooms">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2559176"></a>5.1.¬†
+		<code class="function">imc_list_rooms</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Lists of the IM Conferencing rooms.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>imc_list_rooms</em></span>
+		</p>
+            <p>Parameters: none</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:imc_list_rooms:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.¬† imc_list_members">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2637288"></a>5.2.¬†
+		<code class="function">imc_list_members</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Listing of the members in IM Conferencing rooms.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>imc_list_members</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_room_ : the room for which you want to list the members</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:imc_list_members:_reply_fifo_file_
+		_room_
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp261272"></a>6.¬†Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† active_rooms">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1859176"></a>6.1.¬†
+		<code class="function">active_rooms</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of active IM Conferencing rooms.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="7.¬†IMC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2667304"></a>7.¬†IMC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		A command is identified by the starting character. A command must be
+		written in one line. By default, the starting character is '#'. You
+		can change it via "imc_cmd_start_char" parameter.
+		</p>
+          <p>
+		Next picture presents the list of commands and their parameters.
+		</p>
+          <div class="example">
+            <a id="idp2464488"></a>
+            <p class="title">
+              <strong>Example¬†1.9.¬†List of commands</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+
+1.create
+  -creates a conference room
+  -takes 2 parameters:
+     1) the name of the room
+     2)optional- "private" -if present the created room is private
+	   and new members can be added only though invitations
+  -the user is added as the first member and owner of the room
+  -eg:  #create chat-000 private
+  -error case: return codes: -30 -- -39
+
+2.join
+  -makes the user member of a room
+  -takes one optional parameter - the address of the room -if not
+    present it will be considered to be the address in the To
+    header of the message
+  -if the room does not exist the command is treated as create
+  -eg:join sip:chat-000@kamailio.org,
+      or just, #join, sent to sip:chat-000@kamailio.org
+  -error case: return codes: -40 -- -49
+
+3.invite
+  -invites a user to become a member of a room
+  -takes 2 parameters:
+     1)the complete address of the user
+     2)the address of the room -if not present it will be considered
+	   to be the address in the To header of the message
+  -only certain users have the right to invite other user: the owner
+    and the administrators
+  -eg: #invite sip:john@kamailio.org sip:chat-000@kamailio.org
+    or  #invite john@kamailio.org sent to sip:chat-000@kamailio.org
+  -error case: return codes: -50 -- -59
+
+4.accept
+  -accepting an invitation
+  -takes one optional parameter - the address of the room - if not
+    present it will be considered to be the address in the To header
+    of the message
+  -eg: #accept sip:john@kamailio.org
+  -error case: return codes: -60 -- -69
+
+5.deny
+  -rejects an invitation
+  -the parameter is the same as for accept
+  -error case: return codes: -70 -- -79
+
+6.remove
+  -deletes a member from a room
+  -takes 2 parameters:
+    1)the complete address of the member
+    2)the address of the room -if not present it will be considered
+	  to be the address in the To header of the message
+  -only certain members have the right to remove other members
+  -eg: #remove sip:john@kamailio.org, sent to sip:chat-000@kamailio.org
+  -error case: return codes: -80 -- -89
+
+7.exit
+  -leaving a room
+  -takes one optional parameter - the address of the room - if not
+    present it will be considered to be the address in the To header
+    of the message
+  -if the user is the owner of the room, the room will be destroyed
+  -error case: return codes: -90 -- -99
+
+8.destroy
+  -removing a room
+  -the parameter is the same as for exit
+  -only the owner of a room has the right to destroy it
+  -error case: return codes: -110 -- -119
+
+9.list
+  -list members in a room
+  -error case: return codes: -100 -- -109
+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="8.¬†Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1551960"></a>8.¬†Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Before running Kamailio with IMC, you have to setup the database 
+		tables where the module will store the data. For that, if the 
+		tables were not created by the installation script or you choose
+		to install everything by yourself you can use the imc-create.sql
+		<acronym class="acronym">SQL</acronym> script in the database directories in the 
+		kamailio/scripts folder as template. 
+		You can also find the complete database documentation on the
+		project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

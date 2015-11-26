@@ -1,0 +1,559 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>TSILO Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4376" title="TSILO Module" />
+    <link rel="next" href="#idp3314272" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="TSILO Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4376"></a>TSILO Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Federico</span> <span class="surname">Cabiddu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:federico.cabiddu@gmail.com">federico.cabiddu@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Federico</span> <span class="surname">Cabiddu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:federico.cabiddu@gmail.com">federico.cabiddu@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2015 Federico Cabiddu</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3314272">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2410536">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1832432">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2467584">2.1. Kamailio modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1815400">2.2. External libraries or applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm20712">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp219840">3.1. <code class="varname">hash_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp177648">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp178016">4.1. <code class="function">ts_store()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp180288">4.2. <code class="function">ts_append(domain, ruri)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp185040">4.3. <code class="function">ts_append_to(tindex, tlabel, domain)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp190424">5. Exported RPC Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp190776">5.1. <code class="varname">ts.dump</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp192448">5.2. <code class="varname">ts.lookup</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp221464">Set <code class="varname">hash_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp179104"><code class="function">ts_store</code> usage</a></dt>
+          <dt>1.3. <a href="#idp183800"><code class="function">ts_append</code> usage</a></dt>
+          <dt>1.4. <a href="#idp189032"><code class="function">ts_append_to</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3314272"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2410536">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1832432">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2467584">2.1. Kamailio modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1815400">2.2. External libraries or applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm20712">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp219840">3.1. <code class="varname">hash_size</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp177648">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp178016">4.1. <code class="function">ts_store()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp180288">4.2. <code class="function">ts_append(domain, ruri)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp185040">4.3. <code class="function">ts_append_to(tindex, tlabel, domain)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp190424">5. Exported RPC Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp190776">5.1. <code class="varname">ts.dump</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp192448">5.2. <code class="varname">ts.lookup</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2410536"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides transaction storage for the Kamailio SIP Server Platform. It
+		stores in an internal table transactions for a Request-URI (R-URI) and add branches
+		to them later if new contacts for the AOR are added.
+	</p>
+          <p>
+		When the <span class="emphasis"><em>ts_store</em></span> function is called, the module stores the current transaction R-URI <acronym class="acronym">URI</acronym>, index and label. Two functions (<span class="emphasis"><em>ts_append</em></span> and <span class="emphasis"><em>ts_append_to</em></span>) provide the ability to add new branches either to a specific transaction or to all of the transactions stored for a given R-URI. If USRLOC's <span class="emphasis"><em>use_domain</em></span> option is true, the domain part of the R-URI is used to store the transaction, otherwise only the username part is used.
+	</p>
+          <p>
+		When a transaction is destroyed by the <span class="emphasis"><em>TM</em></span> module,
+		it is removed from the module's table too.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1832432"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2467584"></a>2.1. Kamailio modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>REGISTRAR</em></span>--registrar module-- used to lookup
+				for new contacts and update the dset for the r-uri.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM</em></span>--transaction module-- used to
+				send <acronym class="acronym">SIP</acronym> requests.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>USRLOC</em></span>--usrloc module-- according to the value of <span class="emphasis"><em>use_domain</em></span> option, domain part of the r-uri will be used to store the transaction.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SL</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External libraries or applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1815400"></a>2.2. External libraries or applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before
+		running Kamailio with this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm20712"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. hash_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp219840"></a>3.1. <code class="varname">hash_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The size of the hash table internally used to keep the transaction. A
+		larger table is much faster but consumes more memory. The hash size
+		must be a power of two, otherwise it will be rounded down to the nearest
+		power of two.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">2048</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp221464"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">hash_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tsilo", "hash_size", 1024)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp177648"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. ts_store()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp178016"></a>4.1. <code class="function">ts_store()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method stores r-uri, tindex and tlabel of the current transaction.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp179104"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">ts_store</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_method("INVITE")) {
+	if (t_newtran()) {
+		ts_store();
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. ts_append(domain, ruri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp180288"></a>4.2. <code class="function">ts_append(domain, ruri)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method add branches to all the stored transactions for the <acronym class="acronym">SIP</acronym>
+		ruri passed as parameter, performing a contact lookup on the table specified by
+		the domain parameter. The method should be called when a REGISTER
+		request is received.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be used for looking
+			up new contacts for r-uri.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ruri</em></span> - The r-uri for which we want to check existing
+			transactions and add them new branches. Can be a static string value or a
+			dynamic string with pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp183800"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">ts_append</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_method("REGISTER")) {
+	ts_append("location", "$tU");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. ts_append_to(tindex, tlabel, domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp185040"></a>4.3. <code class="function">ts_append_to(tindex, tlabel, domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method add branches to the transaction identified by tindex and tlabel,
+		performing a contacts lookup on the table specified by the domain parameter.
+		The method should be called when a REGISTER request is received.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                        <span class="emphasis"><em>tindex</em></span> - internal index of transaction.
+                        Can be an integer or a pseudo-variable.
+                        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                        <span class="emphasis"><em>tlabel</em></span> - internal label of transaction.
+                        Can be an integer or a pseudo-variable.
+                        </p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be used for looking
+			up new contacts for r-uri.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp189032"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">ts_append_to</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_method("REGISTER")) {
+	$var(tindex) = ...
+	$var(tlabel) = ...
+	ts_append_to("$var(tindex)", "$var(tlabel", "location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported RPC Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp190424"></a>5. Exported RPC Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. ts.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp190776"></a>5.1. <code class="varname">ts.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Dumps the content of the TSILO table</p>
+            <p>Name: <span class="emphasis"><em>ts.dump</em></span></p>
+            <p>RPC Command Format:</p>
+            <pre class="programlisting">			kamcmd ts.dump</pre>
+          </div>
+          <div class="section" title="5.2. ts.lookup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp192448"></a>5.2. <code class="varname">ts.lookup</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Dumps the transactions stored for the given RURI</p>
+            <p>Name: <span class="emphasis"><em>ts.lookup</em></span></p>
+            <p>RPC Command Format:</p>
+            <pre class="programlisting">			kamcmd ts.lookup sip:abcd@example.com</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

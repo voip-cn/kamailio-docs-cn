@@ -1,0 +1,1762 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>rtpengine Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11289680" title="rtpengine Module" />
+    <link rel="next" href="#idp17872128" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="rtpengine Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11289680"></a>rtpengine Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Sippy Software, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TuTPro, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Sas</span> <span class="surname">Ovidiu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Richard</span> <span class="surname">Fuchs</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Sipwise GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2003-2008 Sippy Software, Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2005 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2009-2014 TuTPro Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2010 <a class="ulink" href="javascript:if(confirm('http://www.voipembedded.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.voipembedded.com/'" tppabs="http://www.voipembedded.com/">VoIPEmbedded Inc.</a></p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2013-2014 Sipwise GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17872128">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17175416">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17459136">2. Multiple <acronym class="acronym">RTP</acronym> proxy usage</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp19056784">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19057136">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19058840">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp19060576">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.rtpengine_sock">4.1. <code class="varname">rtpengine_sock</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.rtpengine_disable_tout">4.2. <code class="varname">rtpengine_disable_tout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.rtpengine_tout_ms">4.3. <code class="varname">rtpengine_tout_ms</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.queried_nodes_limit">4.4. <code class="varname">queried_nodes_limit</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.rtpengine_retr">4.5. <code class="varname">rtpengine_retr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.extra_id_pv">4.6. <code class="varname">extra_id_pv</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.setid_pv">4.7. <code class="varname">setid_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.force_send_interface">4.8. <code class="varname">force_send_interface</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.write_sdp_pv">4.9. <code class="varname">write_sdp_pv</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.p.rtp_inst_pvar">4.10. <code class="varname">rtp_inst_pvar</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15619504">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.set_rtpengine_set">5.1. 
+		<code class="function">set_rtpengine_set(setid[, setid])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.rtpengine_offer">5.2. 
+                <code class="function">rtpengine_offer([flags])</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.rtpengine_answer">5.3. 
+                <code class="function">rtpengine_answer([flags])</code>
+                </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.rtpengine_delete">5.4. 
+		<code class="function">rtpengine_delete([flags])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.rtpengine_manage">5.5. 
+        <code class="function">rtpengine_manage([flags])</code>
+        </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.f.start_recording">5.6. 
+		<code class="function">start_recording()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17231456">6. Exported Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17231808">6.1. <code class="function">$rtpstat</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17235032">7. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.m.nh_enable_rtpp">7.1. <code class="function">nh_enable_rtpp</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rtpengine.m.nh_show_rtpp">7.2. <code class="function">nh_show_rtpp</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17669136">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18081688">Set <code class="varname">rtpengine_sock</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp18187472">Set <code class="varname">rtpengine_disable_tout</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp19062720">Set <code class="varname">rtpengine_tout_ms</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15518048">Set <code class="varname">queried_nodes_limit</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15520832">Set <code class="varname">rtpengine_retr</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15523584">Set <code class="varname">extra_id_pv</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15526256">Set <code class="varname">setid_avp</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15529576">Set <code class="varname">force_send_interface</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15615688">Set <code class="varname">write_sdp_pv</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15618232">Set <code class="varname">rtp_inst_pvar</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15624560"><code class="function">set_rtpengine_set</code> usage</a></dt>
+          <dt>1.12. <a href="#idp17208544"><code class="function">rtpengine_offer</code> usage</a></dt>
+          <dt>1.13. <a href="#idp17213056"><code class="function">rtpengine_answer</code> usage</a></dt>
+          <dt>1.14. <a href="#idp17216208"><code class="function">rtpengine_delete</code> usage</a></dt>
+          <dt>1.15. <a href="#idp17226704"><code class="function">rtpengine_manage</code> usage</a></dt>
+          <dt>1.16. <a href="#idp17230168"><code class="function">start_recording</code> usage</a></dt>
+          <dt>1.17. <a href="#idp17233992">$rtpstat Usage</a></dt>
+          <dt>1.18. <a href="#idp17238144">
+			<code class="function">nh_enable_rtpp</code> usage</a></dt>
+          <dt>1.19. <a href="#idp17241120">
+				<code class="function">nh_show_rtpp</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17872128"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17175416">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17459136">2. Multiple <acronym class="acronym">RTP</acronym> proxy usage</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp19056784">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19057136">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19058840">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp19060576">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.rtpengine_sock">4.1. <code class="varname">rtpengine_sock</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.rtpengine_disable_tout">4.2. <code class="varname">rtpengine_disable_tout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.rtpengine_tout_ms">4.3. <code class="varname">rtpengine_tout_ms</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.queried_nodes_limit">4.4. <code class="varname">queried_nodes_limit</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.rtpengine_retr">4.5. <code class="varname">rtpengine_retr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.extra_id_pv">4.6. <code class="varname">extra_id_pv</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.setid_pv">4.7. <code class="varname">setid_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.force_send_interface">4.8. <code class="varname">force_send_interface</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.write_sdp_pv">4.9. <code class="varname">write_sdp_pv</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.p.rtp_inst_pvar">4.10. <code class="varname">rtp_inst_pvar</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15619504">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.set_rtpengine_set">5.1. 
+		<code class="function">set_rtpengine_set(setid[, setid])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.rtpengine_offer">5.2. 
+                <code class="function">rtpengine_offer([flags])</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.rtpengine_answer">5.3. 
+                <code class="function">rtpengine_answer([flags])</code>
+                </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.rtpengine_delete">5.4. 
+		<code class="function">rtpengine_delete([flags])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.rtpengine_manage">5.5. 
+        <code class="function">rtpengine_manage([flags])</code>
+        </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.f.start_recording">5.6. 
+		<code class="function">start_recording()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17231456">6. Exported Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17231808">6.1. <code class="function">$rtpstat</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17235032">7. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.m.nh_enable_rtpp">7.1. <code class="function">nh_enable_rtpp</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rtpengine.m.nh_show_rtpp">7.2. <code class="function">nh_show_rtpp</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17175416"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module that enables media streams to be proxied
+		via an <acronym class="acronym">RTP</acronym> proxy. The only <acronym class="acronym">RTP</acronym> proxy currently known to work
+		with this module is the Sipwise rtpengine
+		<a class="ulink" href="javascript:if(confirm('https://github.com/sipwise/rtpengine  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/sipwise/rtpengine'" tppabs="https://github.com/sipwise/rtpengine">https://github.com/sipwise/rtpengine</a>.
+		The rtpengine module is a modified version of the original
+		rtpproxy module using a new control protocol. The module is
+		designed to be a drop-in replacement for the old module from
+		a configuration file point of view, however due to the
+		incompatible control protocol, it only works with <acronym class="acronym">RTP</acronym> proxies
+		which specifically support it.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Multiple RTP proxy usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17459136"></a>2.¬†Multiple <acronym class="acronym">RTP</acronym> proxy usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The rtpengine module can support multiple <acronym class="acronym">RTP</acronym> proxies for
+		balancing/distribution and control/selection purposes.
+	</p>
+          <p>
+		The module allows definition of several sets of rtpproxies.
+		Load-balancing will be performed over a set and the admin has the
+		ability to choose what set should be used. The set is selected via
+		its id - the id being defined with the set. Refer to the
+		<span class="quote">‚Äú<span class="quote">rtpengine_sock</span>‚Äù</span> module parameter definition for syntax
+		description.
+	</p>
+          <p>
+		The balancing inside a set is done automatically by the module based on
+		the weight of each <acronym class="acronym">RTP</acronym> proxy from the set.
+	</p>
+          <p>
+		The selection of the set is done from script prior using
+		rtpengine_delete(), rtpengine_offer() or rtpengine_answer()
+		functions - see the set_rtpengine_set() function.
+	</p>
+          <p>
+	        Another way to select the set is to define setid_avp
+	        module parameter and assign setid to the defined avp
+	        before calling rtpengine_offer() or rtpengine_manage()
+	        function.  If forwarding of the requests fails and
+	        there is another branch to try, remember to unset the
+	        avp after calling rtpengine_delete() function.
+	</p>
+          <p>
+		For backward compatibility reasons, a set with no id take by default
+		the id 0. Also if no set is explicitly set before
+		rtpengine_delete(), rtpengine_offer() or rtpengine_answer()
+		the 0 id set will be used.
+	</p>
+          <p>
+		IMPORTANT: if you use multiple sets, take care and use the same set for
+		both rtpengine_offer()/rtpengine_answer() and rtpengine_delete()!!
+		If the set was selected using setid_avp, the avp needs to be
+		set only once before rtpengine_offer() or rtpengine_manage() call.
+	</p>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19056784"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19057136"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm module</em></span> - (optional) if you want to
+				have rtpengine_manage() fully functional
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19058840"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp19060576"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†rtpengine_sock (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.rtpengine_sock"></a>4.1.¬†<code class="varname">rtpengine_sock</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Definition of socket(s) used to connect to (a set) <acronym class="acronym">RTP</acronym> proxy. It may
+		specify a UNIX socket or an IPv4/IPv6 UDP socket.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">NONE</span>‚Äù</span> (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18081688"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">rtpengine_sock</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# single rtproxy
+modparam("rtpengine", "rtpengine_sock", "udp:localhost:12221")
+# multiple rtproxies for LB with weights (missing weight defaults to 1)
+modparam("rtpengine", "rtpengine_sock",
+	"udp:localhost:12221=2 udp:localhost:12222=1")
+# multiple sets of multiple rtproxies
+modparam("rtpengine", "rtpengine_sock",
+	"1 == udp:localhost:12221 udp:localhost:12222")
+modparam("rtpengine", "rtpengine_sock",
+	"2 == udp:localhost:12225")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†rtpengine_disable_tout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.rtpengine_disable_tout"></a>4.2.¬†<code class="varname">rtpengine_disable_tout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Once an <acronym class="acronym">RTP</acronym> proxy was found unreachable and marked as disabled, the rtpengine
+		module will not attempt to establish communication to that <acronym class="acronym">RTP</acronym> proxy for
+		rtpengine_disable_tout seconds.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">60</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp18187472"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">rtpengine_disable_tout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "rtpengine_disable_tout", 20)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†rtpengine_tout_ms (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.rtpengine_tout_ms"></a>4.3.¬†<code class="varname">rtpengine_tout_ms</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Timeout value expressed in milliseconds in waiting for reply from <acronym class="acronym">RTP</acronym> proxy.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1000</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp19062720"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">rtpengine_tout_ms</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "rtpengine_tout_ms", 2000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†queried_nodes_limit (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.queried_nodes_limit"></a>4.4.¬†<code class="varname">queried_nodes_limit</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The total number of nodes inside a set (sets are configurable via rtpengine_sock function) to be queried 
+		before giving up establishing a session. This brings more flexibility in case checking all rtpengines
+		would take too long. Max limit is 50.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			By default all nodes in a set are tried before giving up communicating with the rtpengines.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15518048"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">queried_nodes_limit</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "queried_nodes_limit", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†rtpengine_retr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.rtpengine_retr"></a>4.5.¬†<code class="varname">rtpengine_retr</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		How many times the module should retry to send and receive after
+		timeout was generated.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">5</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15520832"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">rtpengine_retr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "rtpengine_retr", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†extra_id_pv (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.extra_id_pv"></a>4.6.¬†<code class="varname">extra_id_pv</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The parameter sets the PV defination to use when the <span class="quote">‚Äú<span class="quote">b</span>‚Äù</span>
+			parameter is used on rtpengine_delete(), rtpengine_offer(),
+			rtpengine_answer() or rtpengine_manage() command.
+		</p>
+            <p>
+			Default is empty, the <span class="quote">‚Äú<span class="quote">b</span>‚Äù</span> parameter may not be used then.
+		</p>
+            <div class="example">
+              <a id="idp15523584"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">extra_id_pv</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "extra_id_pv", "$avp(extra_id)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†setid_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.setid_pv"></a>4.7.¬†<code class="varname">setid_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The parameter defines an AVP that, if set,
+			determines which <acronym class="acronym">RTP</acronym> proxy set
+			rtpengine_offer(), rtpengine_answer(),
+			rtpengine_delete(), and rtpengine_manage()
+			functions use.
+		</p>
+            <p>
+			There is no default value.
+		</p>
+            <div class="example">
+              <a id="idp15526256"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">setid_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "setid_avp", "$avp(setid)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬†force_send_interface (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.force_send_interface"></a>4.8.¬†<code class="varname">force_send_interface</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Forces all control messages between the <acronym class="acronym">SIP</acronym> proxy and
+			the <acronym class="acronym">RTP</acronym> proxy to be sent from the specified local
+			interface. Both IPv4 and IPv6 addresses are supported. If
+			not specified, the default interface selected by the
+			operating system will be used.
+			Note: when rtpengine_sock is a IPv6 link-local address,
+			one _must_ set this parameter in order to successfully connect to RTP engine.
+			This is necessarely because OS needs additional scope_id hint to communicate
+			over IPv6 link locals. The scope_id is resolved based on the given IPv6.
+		</p>
+            <p>
+			There is no default value.
+		</p>
+            <div class="example">
+              <a id="idp15529576"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">force_send_interface</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "force_send_interface", "10.3.7.123")
+modparam("rtpengine", "force_send_interface", "2001:8d8:1ff:10c0:9a90:96ff:fea8:fd99")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬†write_sdp_pv (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.write_sdp_pv"></a>4.9.¬†<code class="varname">write_sdp_pv</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If this parameter is set to a valid AVP or script var specifier, the
+            SDP returned by rtpengine in the offer/answer operations
+            is returned in the specified variable instead of the
+            message body.
+		</p>
+            <p>
+			There is no default value.
+		</p>
+            <div class="example">
+              <a id="idp15615688"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">write_sdp_pv</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpengine", "write_sdp_pv", "$avp(sdp)")
+  ...  or
+modparam("rtpengine", "write_sdp_pv", "$pv(sdp)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬†rtp_inst_pvar (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.p.rtp_inst_pvar"></a>4.10.¬†<code class="varname">rtp_inst_pvar</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			A pseudo variable to store the chosen RTP Engine IP address.
+			If this parameter is set, the IP address and port of the instance chosen will be stored in the given variable.
+		</p>
+            <p>
+			By default, this parameter is not set.
+		</p>
+            <div class="example">
+              <a id="idp15618232"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">rtp_inst_pvar</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rtpproxy", "rtp_inst_pvar", "$avp(RTP_INSTANCE)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15619504"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† set_rtpengine_set(setid[, setid])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.set_rtpengine_set"></a>5.1.¬†
+		<code class="function">set_rtpengine_set(setid[, setid])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the ID of the <acronym class="acronym">RTP</acronym> proxy set to be used for the next
+		rtpengine_delete(), rtpengine_offer(), rtpengine_answer()
+		or rtpengine_manage() command. The parameter can be an integer or
+		a config variable holding an integer.
+		</p>
+            <p>
+		A second set ID can be specified to daisy-chain two <acronym class="acronym">RTP</acronym> proxies.
+		The two set IDs must be distinct from each other and there must not
+		be any overlap in the proxies present in both sets. In this use case,
+		the request (offer, answer, etc) is first sent to an <acronym class="acronym">RTP</acronym> proxy from
+		the first set, which rewrites the <acronym class="acronym">SDP</acronym> body and sends it back to the
+		module. The rewritten <acronym class="acronym">SDP</acronym> body is then used to make another request
+		to an <acronym class="acronym">RTP</acronym> proxy from the second set, which rewrites the <acronym class="acronym">SDP</acronym> body
+		another time and sends it back to the module to be placed back into the
+		<acronym class="acronym">SIP</acronym> message. This is useful if you have a set of <acronym class="acronym">RTP</acronym> proxies that
+		the caller must use, and another distinct set of <acronym class="acronym">RTP</acronym> proxies that the
+		callee must use. This is supported by all rtpengine commands except
+		rtpengine_manage().
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
+		BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp15624560"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†<code class="function">set_rtpengine_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_rtpengine_set("2");
+rtpengine_offer();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬† rtpengine_offer([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.rtpengine_offer"></a>5.2.¬†
+                <code class="function">rtpengine_offer([flags])</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Rewrites <acronym class="acronym">SDP</acronym> body to ensure that media is passed through
+                an <acronym class="acronym">RTP</acronym> proxy. To be invoked
+		on INVITE for the cases the <acronym class="acronym">SDP</acronym> bodies are in INVITE and 200 OK and on 200 OK
+		when <acronym class="acronym">SDP</acronym> bodies are in 200 OK and ACK.
+                </p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flags</em></span> - flags to turn on some features.
+			</p>
+                  <p>The <span class="quote">‚Äú<span class="quote">flags</span>‚Äù</span> string is a list of space-separated items. Each item
+			is either an individual token, or a token in <span class="quote">‚Äú<span class="quote">key=value</span>‚Äù</span> format. The
+			possible tokens are described below.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>via-branch=...</em></span> - Include the <span class="quote">‚Äú<span class="quote">branch</span>‚Äù</span>
+				value of one of the <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> headers in the request to the
+				<acronym class="acronym">RTP</acronym> proxy. Possible values are:
+				<span class="quote">‚Äú<span class="quote">1</span>‚Äù</span> - use the first <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> header;
+				<span class="quote">‚Äú<span class="quote">2</span>‚Äù</span> - use the second <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> header;
+				<span class="quote">‚Äú<span class="quote">auto</span>‚Äù</span> - use the first <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> header if this is
+				a request, or the second one if this is a reply;
+				<span class="quote">‚Äú<span class="quote">extra</span>‚Äù</span> - don't take the value from a header, but instead use
+				the value of the <span class="quote">‚Äú<span class="quote">extra_id_pv</span>‚Äù</span> variable.
+				This can be used to create one media session per branch
+				on the <acronym class="acronym">RTP</acronym> proxy. When sending a subsequent <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command to
+				the <acronym class="acronym">RTP</acronym> proxy, you can then stop just the session for a specific branch when
+				passing the flag '1' or '2' in the <span class="quote">‚Äú<span class="quote">rtpengine_delete</span>‚Äù</span>, or stop
+				all sessions for a call when not passing one of those two flags there. This is
+				especially useful if you have serially forked call scenarios where the <acronym class="acronym">RTP</acronym> proxy
+				gets an <span class="quote">‚Äú<span class="quote">offer</span>‚Äù</span> command for a new branch, and then a
+				<span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> command for the previous branch, which would otherwise
+				delete the full call, breaking the subsequent <span class="quote">‚Äú<span class="quote">answer</span>‚Äù</span> for the
+				new branch. <span class="emphasis"><em>This flag is only supported by the Sipwise rtpengine
+				<acronym class="acronym">RTP</acronym> proxy at the moment!</em></span>
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>asymmetric</em></span> - flags that UA from which message is
+				received doesn't support symmetric <acronym class="acronym">RTP</acronym>. Disables learning of endpoint addresses
+				in the Sipwise rtpengine proxy.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>force-answer</em></span> - force <span class="quote">‚Äú<span class="quote">answer</span>‚Äù</span>, that is,
+				only rewrite <acronym class="acronym">SDP</acronym> when corresponding session already exists
+				in the <acronym class="acronym">RTP</acronym> proxy. By default is on when the session is to be
+				completed.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>direction=...</em></span> - this option specifies a logical network
+				interface and should be given exactly twice. It enables <acronym class="acronym">RTP</acronym> bridging between
+				different addresses or networks of the same family (e.g. IPv4 to IPv4). The
+				first instance of the option
+				specifies the interface that the originator of this message should be using,
+				while the second instance specifies the interface that the target should be
+				using. For example, if the <acronym class="acronym">SIP</acronym> message was sent by an endpoint on a private
+				network and will be sent to an endpoint on the public internet, you would use
+				<span class="quote">‚Äú<span class="quote">direction=priv direction=pub</span>‚Äù</span> if those two logical network
+				interfaces were called <span class="quote">‚Äú<span class="quote">priv</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">pub</span>‚Äù</span> in your
+				<acronym class="acronym">RTP</acronym> proxy's configuration respectively. The direction must only be specified
+				in for initial <acronym class="acronym">SDP</acronym> offer; answers or subsequent offers can omit this option.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>internal, external</em></span> - shorthand for
+				<span class="quote">‚Äú<span class="quote">direction=internal</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">direction=external</span>‚Äù</span>
+				respectively. Useful for brevity or as legacy option if the <acronym class="acronym">RTP</acronym> proxy only
+				supports two network interfaces instead of multiple, arbitrarily named ones.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>auto-bridge</em></span> - this flag an alternative to the
+				<span class="quote">‚Äú<span class="quote">internal</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">external</span>‚Äù</span> flags
+				in order to do automatic bridging between IPv4 on the
+				"internal network" and IPv6 on the "external network". Instead of
+				explicitly instructing the <acronym class="acronym">RTP</acronym> proxy to select a particular address
+				family, the distinction is done by the given IP in the <acronym class="acronym">SDP</acronym> body by
+				the <acronym class="acronym">RTP</acronym> proxy itself. Not supported by Sipwise rtpengine.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>address-family=...</em></span> - instructs the <acronym class="acronym">RTP</acronym> proxy that the
+				recipient of this <acronym class="acronym">SDP</acronym> body expects to see addresses of a particular family.
+				Possible values are <span class="quote">‚Äú<span class="quote">IP4</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">IP6</span>‚Äù</span>. For example,
+				if the <acronym class="acronym">SDP</acronym> body contains IPv4 addresses but the recipient only speaks IPv6,
+				you would use <span class="quote">‚Äú<span class="quote">address-family=IP6</span>‚Äù</span> to bridge between the two
+				address families.
+				</p>
+                        <p>
+				Sipwise rtpengine remembers the address family preference of each party after
+				it has seen an <acronym class="acronym">SDP</acronym> body from them. This means that normally it is only
+				necessary to explicitly specify the address family in the <span class="quote">‚Äú<span class="quote">offer</span>‚Äù</span>,
+				but not in the <span class="quote">‚Äú<span class="quote">answer</span>‚Äù</span>.
+				</p>
+                        <p>
+				Note: Please note, that this will only work properly with non-dual-stack user-agents or with
+				dual-stack clients according to RFC6157 (which suggest ICE for Dual-Stack implementations).
+				This short-cut will not work properly with RFC4091 (ANAT) compatible clients, which suggests
+				having different m-lines with different IP-protocols grouped together.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>force</em></span> - instructs the <acronym class="acronym">RTP</acronym> proxy to ignore marks
+				inserted by another <acronym class="acronym">RTP</acronym> proxy in transit to indicate that the
+				session is already goes through another proxy. Allows creating
+				a chain of proxies. Not supported and ignored by Sipwise rtpengine.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>trust-address</em></span> - flags that IP address in <acronym class="acronym">SDP</acronym> should
+				be trusted. Without this flag, the <acronym class="acronym">RTP</acronym> proxy ignores address in
+				the <acronym class="acronym">SDP</acronym> and uses source address of the <acronym class="acronym">SIP</acronym> message as media
+				address which is passed to the <acronym class="acronym">RTP</acronym> proxy.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>replace-origin</em></span> - flags that IP from the origin
+				description (o=) should be also changed.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>replace-session-connection</em></span> - flags to change the session-level
+				<acronym class="acronym">SDP</acronym> connection (c=) IP if media description also includes
+				connection information.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>symmetric</em></span> - flags that for the UA from which
+				message is received, support symmetric <acronym class="acronym">RTP</acronym> must be forced. Does nothing with
+				the Sipwise rtpengine proxy as it is the default.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>repacketize=NN</em></span> - requests the <acronym class="acronym">RTP</acronym> proxy to perform
+				re-packetization of <acronym class="acronym">RTP</acronym> traffic coming from the UA which
+				has sent the current message to increase or decrease payload
+				size per each <acronym class="acronym">RTP</acronym> packet forwarded if possible.  The NN is the
+				target payload size in ms, for the most codecs its value should
+				be in 10ms increments, however for some codecs the increment
+				could differ (e.g. 30ms for GSM or 20ms for G.723).  The
+				<acronym class="acronym">RTP</acronym> proxy would select the closest value supported by the codec.
+				This feature could be used for significantly reducing bandwith
+				overhead for low bitrate codecs, for example with G.729 going
+				from 10ms to 100ms saves two thirds of the network bandwith.
+				Not supported by Sipwise rtpengine.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>ICE=...</em></span> - controls the <acronym class="acronym">RTP</acronym> proxy's behaviour
+				regarding ICE attributes within the <acronym class="acronym">SDP</acronym> body. Possible values
+				are: <span class="quote">‚Äú<span class="quote">force</span>‚Äù</span> -
+				discard any ICE attributes already present in the <acronym class="acronym">SDP</acronym> body
+				and then generate and insert new ICE data, leaving itself
+				as the <span class="emphasis"><em>only</em></span> ICE candidates;
+				<span class="quote">‚Äú<span class="quote">force-relay</span>‚Äù</span> -
+				discard any <span class="quote">‚Äú<span class="quote">relay</span>‚Äù</span> type ICE attributes already present
+				in the <acronym class="acronym">SDP</acronym> body and then generate and insert itself
+				as the <span class="emphasis"><em>only</em></span> ICE <span class="quote">‚Äú<span class="quote">relay</span>‚Äù</span> candidates;
+				<span class="quote">‚Äú<span class="quote">remove</span>‚Äù</span> instructs the <acronym class="acronym">RTP</acronym> proxy to discard
+				any ICE attributes and not insert any new ones into the <acronym class="acronym">SDP</acronym>.
+				The default (if no <span class="quote">‚Äú<span class="quote">ICE=...</span>‚Äù</span> is given at all),
+				new ICE data will only be generated
+				if no ICE was present in the <acronym class="acronym">SDP</acronym> originally; otherwise
+				the <acronym class="acronym">RTP</acronym> proxy will only insert itself as
+				<span class="emphasis"><em>additional</em></span> ICE candidate. Other
+				<acronym class="acronym">SDP</acronym> substitutions (c=, m=, etc) are unaffected by this flag.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>RTP, SRTP, AVP, AVPF</em></span> - These flags control the <acronym class="acronym">RTP</acronym>
+				transport protocol that should be used towards the recipient of
+				the <acronym class="acronym">SDP</acronym>. If none of them are specified, the protocol given in
+				the <acronym class="acronym">SDP</acronym> is left untouched. Otherwise, the <span class="quote">‚Äú<span class="quote">SRTP</span>‚Äù</span> flag indicates that
+				SRTP should be used, while <span class="quote">‚Äú<span class="quote">RTP</span>‚Äù</span> indicates that SRTP should not be used.
+				<span class="quote">‚Äú<span class="quote">AVPF</span>‚Äù</span> indicates that the advanced RTCP profile with feedback messages
+				should be used, and <span class="quote">‚Äú<span class="quote">AVP</span>‚Äù</span> indicates that the regular RTCP profile
+				should be used. See also the next set of flags below.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>RTP/AVP, RTP/SAVP, RTP/AVPF, RTP/SAVPF</em></span> - these serve as
+				an alternative, more explicit way to select between the different <acronym class="acronym">RTP</acronym> protocols
+				and profiles supported by the <acronym class="acronym">RTP</acronym> proxy. For example, giving the flag
+				<span class="quote">‚Äú<span class="quote">RTP/SAVPF</span>‚Äù</span> has the same effect as giving the two flags
+				<span class="quote">‚Äú<span class="quote">SRTP AVPF</span>‚Äù</span>.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>to-tag</em></span> - force inclusion of the <span class="quote">‚Äú<span class="quote">To</span>‚Äù</span> tag.
+				Normally, the <span class="quote">‚Äú<span class="quote">To</span>‚Äù</span> tag is always included when present, except
+				for <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> messages. Including the <span class="quote">‚Äú<span class="quote">To</span>‚Äù</span> tag in
+				a <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span> messages allows you to be more selective about which
+				dialogues within a call are being torn down.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>rtcp-mux-demux</em></span> - if rtcp-mux (RFC 5761) was
+				offered, make the <acronym class="acronym">RTP</acronym> proxy accept the offer, but not offer it to the
+				recipient of this message.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>rtcp-mux-reject</em></span> - if rtcp-mux was offered, make the
+				<acronym class="acronym">RTP</acronym> proxy reject the offer, but still offer it to the recipient. Can be
+				combined with <span class="quote">‚Äú<span class="quote">rtcp-mux-offer</span>‚Äù</span> to always offer it.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>rtcp-mux-offer</em></span> - make the <acronym class="acronym">RTP</acronym> proxy offer rtcp-mux
+				to the recipient of this message, regardless of whether it was offered
+				originally or not.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>rtcp-mux-accept</em></span> - if rtcp-mux was offered, make the
+				<acronym class="acronym">RTP</acronym> proxy accept the offer and also offer it to the recipient of this
+				message. Can be combined with <span class="quote">‚Äú<span class="quote">rtcp-mux-offer</span>‚Äù</span> to always offer it.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>media-address=...</em></span> - force a particular media address to
+				be used in the <acronym class="acronym">SDP</acronym> body. Address family is detected automatically.
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				<span class="emphasis"><em>TOS=...</em></span> - change the IP TOS value for all outgoing <acronym class="acronym">RTP</acronym>
+				packets within the entire call in both directions. Only honoured in an
+				<span class="quote">‚Äú<span class="quote">offer</span>‚Äù</span>, ignored for an <span class="quote">‚Äú<span class="quote">answer</span>‚Äù</span>. Valid values are
+				0 through 255, given in decimal. If this option is not specified, the TOS
+				value will revert to the default TOS (normally 184). A value of -1 may be used
+				to leave the currently used TOS unchanged.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+                </p>
+            <div class="example">
+              <a id="idp17208544"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="function">rtpengine_offer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">route {
+...
+    if (is_method("INVITE")) {
+        if (has_body("application/sdp")) {
+            if (rtpengine_offer())
+                t_on_reply("1");
+        } else {
+            t_on_reply("2");
+        }
+    }
+    if (is_method("ACK") &amp;&amp; has_body("application/sdp"))
+        rtpengine_answer();
+...
+}
+
+onreply_route[1]
+{
+...
+    if (has_body("application/sdp"))
+        rtpengine_answer();
+...
+}
+
+onreply_route[2]
+{
+...
+    if (has_body("application/sdp"))
+        rtpengine_offer();
+...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬† rtpengine_answer([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.rtpengine_answer"></a>5.3.¬†
+                <code class="function">rtpengine_answer([flags])</code>
+                </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Rewrites <acronym class="acronym">SDP</acronym> body to ensure that media is passed through
+		an <acronym class="acronym">RTP</acronym> proxy. To be invoked
+		on 200 OK for the cases the <acronym class="acronym">SDP</acronym> bodies are in INVITE and 200 OK and on ACK
+		when <acronym class="acronym">SDP</acronym> bodies are in 200 OK and ACK.
+		</p>
+            <p>
+		See rtpengine_offer() function description above for the meaning of the
+		parameters.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17213056"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†<code class="function">rtpengine_answer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <p>
+		See rtpengine_offer() function example above for example.
+		</p>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬† rtpengine_delete([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.rtpengine_delete"></a>5.4.¬†
+		<code class="function">rtpengine_delete([flags])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tears down the RTPProxy session for the current call.
+		</p>
+            <p>
+		See rtpengine_offer() function description above for the meaning of the
+		parameters. Note that not all flags make sense for a <span class="quote">‚Äú<span class="quote">delete</span>‚Äù</span>.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17216208"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†<code class="function">rtpengine_delete</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rtpengine_delete();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬† rtpengine_manage([flags])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.rtpengine_manage"></a>5.5.¬†
+        <code class="function">rtpengine_manage([flags])</code>
+        </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Manage the RTPProxy session - it combines the functionality of
+		rtpengine_offer(), rtpengine_answer() and rtpengine_delete(), detecting
+		internally based on message type and method which one to execute.
+		</p>
+            <p>
+		It can take the same parameters as <code class="function">rtpengine_offer().</code>
+		The flags parameter to rtpengine_manage() can be a configuration variable
+		containing the flags as a string.
+		</p>
+            <p>
+		Functionality:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			If INVITE with <acronym class="acronym">SDP</acronym>, then do <code class="function">rtpengine_offer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If INVITE with <acronym class="acronym">SDP</acronym>, when the tm module is loaded, mark transaction with
+			internal flag FL_SDP_BODY to know that the 1xx and 2xx are for
+			<code class="function">rtpengine_answer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If ACK with <acronym class="acronym">SDP</acronym>, then do <code class="function">rtpengine_answer()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If BYE or CANCEL, or called within a FAILURE_ROUTE[], then do <code class="function">rtpengine_delete()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If reply to INVITE with code &gt;= 300 do <code class="function">rtpengine_delete()</code>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			If reply with <acronym class="acronym">SDP</acronym> to INVITE having code 1xx and 2xx, then
+			do <code class="function">rtpengine_answer()</code> if the request had <acronym class="acronym">SDP</acronym> or tm is not loaded,
+			otherwise do <code class="function">rtpengine_offer()</code>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17226704"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">rtpengine_manage</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+rtpengine_manage();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6.¬† start_recording()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.f.start_recording"></a>5.6.¬†
+		<code class="function">start_recording()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function will send a signal to the <acronym class="acronym">RTP</acronym> proxy to record
+		the <acronym class="acronym">RTP</acronym> stream on the <acronym class="acronym">RTP</acronym> proxy.
+		<span class="emphasis"><em>This function is not supported by Sipwise rtpengine at the moment!</em></span>
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE and ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp17230168"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†<code class="function">start_recording</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+start_recording();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Exported Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17231456"></a>6.¬†Exported Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†$rtpstat">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17231808"></a>6.1.¬†<code class="function">$rtpstat</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns the <acronym class="acronym">RTP</acronym> statistics from the <acronym class="acronym">RTP</acronym> proxy. The <acronym class="acronym">RTP</acronym> statistics from the <acronym class="acronym">RTP</acronym> proxy
+			are provided as a string and it does contain several packet counters. The statistics
+			must be retrieved before the session is deleted	(before <code class="function">rtpengine_delete()</code>).
+			</p>
+            <div class="example">
+              <a id="idp17233992"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†$rtpstat Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    append_hf("X-RTP-Statistics: $rtpstat\r\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17235032"></a>7.¬†<acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬†nh_enable_rtpp">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.m.nh_enable_rtpp"></a>7.1.¬†<code class="function">nh_enable_rtpp</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Enables a <acronym class="acronym">RTP</acronym> proxy if parameter value is greater than 0.
+			Disables it if a zero value is given.
+			</p>
+            <p>
+			The first parameter is the <acronym class="acronym">RTP</acronym> proxy url (exactly as defined in
+			the config file).
+			</p>
+            <p>
+			The second parameter value must be a number in decimal.
+			</p>
+            <p>
+			NOTE: if a <acronym class="acronym">RTP</acronym> proxy is defined multiple times (in the same or
+			diferente sete), all of its instances will be enables/disabled.
+			</p>
+            <div class="example">
+              <a id="idp17238144"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†
+			<code class="function">nh_enable_rtpp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo nh_enable_rtpp udp:192.168.2.133:8081 0
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.2.¬†nh_show_rtpp">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rtpengine.m.nh_show_rtpp"></a>7.2.¬†<code class="function">nh_show_rtpp</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Displays all the <acronym class="acronym">RTP</acronym> proxies and their information: set and
+			status (disabled or not, weight and recheck_ticks). If a RTP proxy has been disabled by a mi command
+			a "(permanent)" quote will appear when printing the disabled status. This is to differentiate from
+			a temporary disable due to the proxy being not found responsive by kamailio.
+			</p>
+            <p>
+			No parameter.
+			</p>
+            <div class="example">
+              <a id="idp17241120"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†
+				<code class="function">nh_show_rtpp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo nh_show_rtpp
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17669136"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp17115472"></a>
+          <dl>
+            <dt>2.1. <a href="#idp16535840">How do I migrate from ‚Äúrtpproxy‚Äù or ‚Äúrtpproxy-ng‚Äù to
+		    ‚Äúrtpengine‚Äù?</a></dt>
+            <dt>2.2. <a href="#idp15848264">Where can I find more about Kamailio?</a></dt>
+            <dt>2.3. <a href="#idp18221704">Where can I post a question about this module?</a></dt>
+            <dt>2.4. <a href="#idp18575984">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp16535840"></a>
+                  <a id="idp16838216"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How do I migrate from <span class="quote">‚Äú<span class="quote">rtpproxy</span>‚Äù</span> or <span class="quote">‚Äú<span class="quote">rtpproxy-ng</span>‚Äù</span> to
+		    <span class="quote">‚Äú<span class="quote">rtpengine</span>‚Äù</span>?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			For the most part, only the names of the functions have changed, with
+			<span class="quote">‚Äú<span class="quote">rtpproxy</span>‚Äù</span> in each name replaced with <span class="quote">‚Äú<span class="quote">rtpengine</span>‚Äù</span>.
+			For example, <span class="quote">‚Äú<span class="quote">rtpproxy_manage()</span>‚Äù</span> has become
+			<span class="quote">‚Äú<span class="quote">rtpengine_manage()</span>‚Äù</span>. A few name duplications have also been resolved,
+			for example there is now a single <span class="quote">‚Äú<span class="quote">rtpengine_delete()</span>‚Äù</span> instead of
+			<span class="quote">‚Äú<span class="quote">unforce_rtp_proxy()</span>‚Äù</span> and the identical <span class="quote">‚Äú<span class="quote">rtpproxy_destroy()</span>‚Äù</span>.
+		</p>
+                  <p>
+			The largest difference to the old module is how flags are passed to
+			<span class="quote">‚Äú<span class="quote">rtpengine_offer()</span>‚Äù</span>, <span class="quote">‚Äú<span class="quote">rtpengine_answer()</span>‚Äù</span>,
+			<span class="quote">‚Äú<span class="quote">rtpengine_manage()</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">rtpengine_delete()</span>‚Äù</span>. Instead of
+			having a string of single-letter flags, they now take a string of space-separated
+			items, with each item being either a single token (word) or a <span class="quote">‚Äú<span class="quote">key=value</span>‚Äù</span>
+			pair.
+		</p>
+                  <p>
+			For example, if you had a call <span class="quote">‚Äú<span class="quote">rtpproxy_offer("FRWOC+PS");</span>‚Äù</span>, this would
+			then become:
+		</p>
+                  <pre class="programlisting">rtpengine_offer("force trust-address symmetric replace-origin replace-session-connection ICE=force RTP/SAVPF");</pre>
+                  <p>
+			Finally, if you were using the second paramater (explicit media address) to any of
+			these functions, this has been replaced by the <span class="quote">‚Äú<span class="quote">media-address=...</span>‚Äù</span>
+			option within the first string of flags.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp15848264"></a>
+                  <a id="idp16920656"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp18221704"></a>
+                  <a id="idp18130728"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists:
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp18575984"></a>
+                  <a id="idp18576128"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

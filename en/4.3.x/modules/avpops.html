@@ -1,0 +1,2275 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>AVPops Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4250064" title="AVPops Module" />
+    <link rel="next" href="#idp3026088" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="AVPops Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4250064"></a>AVPops Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ramona-Elena</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ramona-Elena</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2004, 2005 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3026088">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1645624">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2917568">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1134608">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2632752">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1770344">3. AVP naming format</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idm28208">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.avp_table">4.2. <code class="varname">avp_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.use_domain">4.3. <code class="varname">use_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.uuid_column">4.4. <code class="varname">uuid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.username_column">4.5. <code class="varname">username_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.domain_column">4.6. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.attribute_column">4.7. <code class="varname">attribute_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.value_column">4.8. <code class="varname">value_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.type_column">4.9. <code class="varname">type_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.p.db_scheme">4.10. <code class="varname">db_scheme</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp11648">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_db_load">5.1. 
+				<code class="function">avp_db_load(source,name)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_db_store">5.2. 
+				<code class="function">avp_db_store(source,name)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_db_delete">5.3. 
+				<code class="function">avp_db_delete(source,name)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_db_query">5.4. 
+				<code class="function">avp_db_query(query[,dest])</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_delete">5.5. 
+				<code class="function">avp_delete(name)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_pushto">5.6. 
+				<code class="function">avp_pushto(destination,name)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_check">5.7. 
+				<code class="function">avp_check(name,op_value)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_copy">5.8. 
+				<code class="function">avp_copy(old_name,new_name)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_printf">5.9. 
+				<code class="function">avp_printf(dest, format)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_subst">5.10. 
+				<code class="function">avp_subst(avps, subst)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_op">5.11. 
+				<code class="function">avp_op(name,op_value)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.is_avp_set">5.12. 
+				<code class="function">is_avp_set(name)
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#avpops.f.avp_print">5.13. 
+				<code class="function">avp_print()
+				</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idm29304">AVP naming examples</a></dt>
+          <dt>1.2. <a href="#idm20264">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm17608">Set <code class="varname">avp_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp56528">Set <code class="varname">use_domain</code> parameter
+				</a></dt>
+          <dt>1.5. <a href="#idp59264">Set <code class="varname">uuid_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp62016">Set <code class="varname">username_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp64784">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp67560">Set <code class="varname">attribute_column</code> parameter
+				</a></dt>
+          <dt>1.9. <a href="#idp70336">Set <code class="varname">value_column</code> parameter
+				</a></dt>
+          <dt>1.10. <a href="#idp75112">Set <code class="varname">type_column</code> parameter
+				</a></dt>
+          <dt>1.11. <a href="#idp10344">Set <code class="varname">db_scheme</code> parameter
+				</a></dt>
+          <dt>1.12. <a href="#idp18808"><code class="function">avp_db_load</code> usage</a></dt>
+          <dt>1.13. <a href="#idp22360"><code class="function">avp_db_store</code> usage</a></dt>
+          <dt>1.14. <a href="#idp25824"><code class="function">avp_db_delete</code> usage</a></dt>
+          <dt>1.15. <a href="#idp1483368"><code class="function">avp_db_query</code> usage</a></dt>
+          <dt>1.16. <a href="#idp1488960"><code class="function">avp_delete</code> usage</a></dt>
+          <dt>1.17. <a href="#idp1496520"><code class="function">avp_pushto</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1509720"><code class="function">avp_check</code> usage</a></dt>
+          <dt>1.19. <a href="#idp1517096"><code class="function">avp_copy</code> usage</a></dt>
+          <dt>1.20. <a href="#idp1523088"><code class="function">avp_printf</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1531424"><code class="function">avp_subst</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1541136"><code class="function">avp_op</code> usage</a></dt>
+          <dt>1.23. <a href="#idp1546152"><code class="function">is_avp_set</code> usage</a></dt>
+          <dt>1.24. <a href="#idp1548960"><code class="function">avp_print</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3026088"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1645624">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2917568">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1134608">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2632752">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1770344">3. AVP naming format</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idm28208">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.avp_table">4.2. <code class="varname">avp_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.use_domain">4.3. <code class="varname">use_domain</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.uuid_column">4.4. <code class="varname">uuid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.username_column">4.5. <code class="varname">username_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.domain_column">4.6. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.attribute_column">4.7. <code class="varname">attribute_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.value_column">4.8. <code class="varname">value_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.type_column">4.9. <code class="varname">type_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.p.db_scheme">4.10. <code class="varname">db_scheme</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp11648">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_db_load">5.1. 
+				<code class="function">avp_db_load(source,name)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_db_store">5.2. 
+				<code class="function">avp_db_store(source,name)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_db_delete">5.3. 
+				<code class="function">avp_db_delete(source,name)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_db_query">5.4. 
+				<code class="function">avp_db_query(query[,dest])</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_delete">5.5. 
+				<code class="function">avp_delete(name)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_pushto">5.6. 
+				<code class="function">avp_pushto(destination,name)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_check">5.7. 
+				<code class="function">avp_check(name,op_value)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_copy">5.8. 
+				<code class="function">avp_copy(old_name,new_name)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_printf">5.9. 
+				<code class="function">avp_printf(dest, format)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_subst">5.10. 
+				<code class="function">avp_subst(avps, subst)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_op">5.11. 
+				<code class="function">avp_op(name,op_value)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.is_avp_set">5.12. 
+				<code class="function">is_avp_set(name)
+				</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#avpops.f.avp_print">5.13. 
+				<code class="function">avp_print()
+				</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1645624"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The AVPops (AVP-operations) module implements a set of script
+		functions which allow access and manipulation of user attribute-value pairs (AVPs,
+		preferences) and pseudo-variables. AVPs are a powerful tool
+		for implementing services/preferences per user/domain. With this module, they
+		are usable directly from configuration script. </p>
+          <p>The module implement functions for
+		interfacing DB resources (loading/storing/removing), functions
+		for swapping information between AVPs and SIP messages and a function for 
+		testing/checking the value of an AVP.
+		</p>
+          <p>
+		If you just need a way to execute SQL statements in a
+		Kamailio configuration script, please consider use the
+		<span class="emphasis"><em>sqlops</em></span> module instead.
+		</p>
+          <p>
+		AVPs are persistent per SIP transaction, being available in "route", 
+		"branch_route" and "failure_route". A tutorial providing more information (detailed
+		explanations and commented examples) can be found on the SIP-router web site.
+		</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2917568"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1134608"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Optionally a database module</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2632752"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed 
+				before running Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>None</em></span>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†AVP naming format">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1770344"></a>3.¬†AVP naming format</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The format of the parameters specifying an AVP in functions exported
+		by this module is:
+			<span class="bold"><strong>$avp(avp_flags:avp_name)</strong></span> or
+			<span class="bold"><strong>$avp(avp_alias)</strong></span>.
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>avp_flags</em></span> = type_flags [script_flags]; type_flags = 'I' | 'i' | 'S' | 's'; script_flags = 0..255
+		</p>
+                <p>
+		'I' or 'i' means that the type of avp name is an integer (ID)
+		</p>
+                <p>
+		'S' or 's' means that the type of avp name is string
+		</p>
+                <p>
+		The type flag is mandatory.
+		Please note that the type flag only indicates type of name, not type of variable. An avp with name type "i" may very well contain text strings.
+		</p>
+                <p>
+		script_flags must be an 8 bit unsigned number, therefore can be set
+		up to 8 flags. If no script flag is provided, the name will
+		match all AVPs, regardless they have or not a script flag set (preserves
+		the compatibility with the old naming schema).
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>avp_name</em></span> = string | integer
+		</p>
+                <p>
+		string - might be any alphanumeric string, wich contain following
+		characters: [a-z] [A-Z] [0-9] '_'
+		</p>
+                <p>
+		integer - might be an unsigned integer, greater than zero, up to 2^16-1
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>avp_alias</em></span> = string
+		</p>
+                <p>
+		string - might be any alphanumeric string, wich contain following
+		characters: [a-z] [A-Z] [0-9] '_'
+		</p>
+              </li>
+            </ul>
+          </div>
+          <div class="example">
+            <a id="idm29304"></a>
+            <p class="title">
+              <strong>Example¬†1.1.¬†AVP naming examples</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+$avp(i:11) - the AVP identified by integer 11
+$avp(s:foo) - the AVP identified by the string 'foo'
+$avp(bar) - the AVP identified by the AVP alias 'bar'
+$avp(i3:123) - the AVP identified by the integer 123 which has script flags 1
+    and 2 set
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm28208"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.db_url"></a>4.1.¬†<code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			DB URL for database connection.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm20264"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","db_url","mysql://user:passwd@host/database")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†avp_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.avp_table"></a>4.2.¬†<code class="varname">avp_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			DB table to be used.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is optional, it's default value being NULL. But if
+					you specify a db_url, you need also setup this parameter.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm17608"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">avp_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","avp_table","avptable")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†use_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.use_domain"></a>4.3.¬†<code class="varname">use_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				If the domain part of the URI should be used for 
+				identifying an AVP in DB operations.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is 0 (no).
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp56528"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">use_domain</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","use_domain",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†uuid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.uuid_column"></a>4.4.¬†<code class="varname">uuid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of column containing the uuid (unique user id).
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">uuid</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp59264"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">uuid_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","uuid_column","uuid")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†username_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.username_column"></a>4.5.¬†<code class="varname">username_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of column containing the username.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">username</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp62016"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">username_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","username_column","username")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.domain_column"></a>4.6.¬†<code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of column containing the domain name.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">domain</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp64784"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","domain_column","domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†attribute_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.attribute_column"></a>4.7.¬†<code class="varname">attribute_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of column containing the attribute name (AVP name).
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">attribute</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp67560"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">attribute_column</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","attribute_column","attribute")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬†value_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.value_column"></a>4.8.¬†<code class="varname">value_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of column containing the AVP value.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">value</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp70336"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">value_column</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","value_column","value")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬†type_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.type_column"></a>4.9.¬†<code class="varname">type_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Name of integer column containing the AVP type.
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">type</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <p>
+			Possible column values are 
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				0 - AVP with string name and string value
+			</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				1 - AVP with string name and integer value
+			</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				2 - AVP with integer name and string value
+			</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				3 - AVP with integer name and integer value
+			</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <div class="example">
+              <a id="idp75112"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">type_column</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","type_column","type")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬†db_scheme (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.p.db_scheme"></a>4.10.¬†<code class="varname">db_scheme</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Definition of a DB scheme to be used for non-standard
+				access to Database information.
+			</p>
+            <p>
+			Definition of a DB scheme. Scheme syntax is:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>
+				db_scheme = name':'element[';'element]*
+				</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>element</em></span> =
+					</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>'uuid_col='string
+						</p>
+                      </li>
+                      <li class="listitem">
+                        <p>'username_col='string
+						</p>
+                      </li>
+                      <li class="listitem">
+                        <p>'domain_col='string
+						</p>
+                      </li>
+                      <li class="listitem">
+                        <p>'value_col='string
+						</p>
+                      </li>
+                      <li class="listitem">
+                        <p>'value_type='('integer'|'string')
+						</p>
+                      </li>
+                      <li class="listitem">
+                        <p>'table='string
+						</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+				<span class="emphasis"><em>Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp10344"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Set <code class="varname">db_scheme</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("avpops","db_scheme",
+"scheme1:table=subscriber;uuid_col=uuid;value_col=first_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp11648"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† avp_db_load(source,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_db_load"></a>5.1.¬†
+				<code class="function">avp_db_load(source,name)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Loads from DB into memory the AVPs corresponding to the given
+			<span class="emphasis"><em>source</em></span>. If given, it sets the script flags
+			for loaded AVPs. It returns true if it loaded some values 
+			in AVPs, false otherwise (db error, no avp loaded ...).
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>source</em></span> - what info is used for 
+				identifying the AVPs. Parameter syntax:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					source = (pvar|str_value)
+					['/'('username'|'domain'|'uri'|'uuid')])
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					pvar = any pseudo variable defined in Kamailio. If
+					the pvar is $ru (request uri), $fu (from uri), $tu (to uri)
+					or $ou (original uri), then the implicit flag is 'uri'.
+					Otherwise, the implicit flag is 'uuid'.
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - which AVPs will be loaded
+				from DB into memory. Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = avp_spec['/'(table_name|'$'db_scheme)]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					avp_spec = matching_flags|$avp(avp_name)|$avp(avp_alias)
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					matching_flags = 'a' | 'A' | 'i' | 'I' | 's' | 'S'
+					[script_flags]
+					</em>
+                          </span>
+                        </p>
+                        <p>'a' or 'A' means matching any of
+					AVP name types ('i' and 's') (NOTE: matching_flags cannot
+					be used with $db_scheme because the name of AVP to save in 
+					cannot be specified), the rest have the
+					meaning descriped in 'AVP naming format' chapter.</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp18808"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="function">avp_db_load</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_db_load("$fu","$(i:678)");
+avp_db_load("$ru/domain","i:/domain_preferences");
+avp_db_load("$uuid","$avp(s:404fwd)/fwd_table");
+avp_db_load("$ru","$avp(i1:123)/$some_scheme");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬† avp_db_store(source,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_db_store"></a>5.2.¬†
+				<code class="function">avp_db_store(source,name)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Stores to DB the AVPs corresponding to the given
+			<span class="emphasis"><em>source</em></span>.
+			</p>
+            <p>The meaning and usage of the parameters are identical as for
+			<span class="emphasis"><em>avp_db_load(source,name)</em></span>
+			function. Please refer to its description.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp22360"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†<code class="function">avp_db_store</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_db_store("$tu","$avp(i:678)");
+avp_db_store("$ru/username","$avp(email)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬† avp_db_delete(source,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_db_delete"></a>5.3.¬†
+				<code class="function">avp_db_delete(source,name)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Deletes from DB the AVPs corresponding to the given
+			<span class="emphasis"><em>source</em></span>.
+			</p>
+            <p>The meaning and usage of the parameters are identical as for
+			<span class="emphasis"><em>avp_db_load(source,name)</em></span>
+			function. Please refer to its description.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp25824"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†<code class="function">avp_db_delete</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_db_delete("$tu","$avp(i:678)");
+avp_db_delete("$ru/username","$avp(email)");
+avp_db_delete("$uuid","$avp(s:404fwd)/fwd_table");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬† avp_db_query(query[,dest])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_db_query"></a>5.4.¬†
+				<code class="function">avp_db_query(query[,dest])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Make a database query and store the result in AVPs.
+			This command is deprecated, please use the more
+			flexible and advanced <span class="emphasis"><em>sqlops</em></span> module instead.
+			</p>
+            <p>
+			The meaning and usage of the parameters:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>query</em></span> - must be a valid SQL
+				query. The parameter can contain pseudo-variables.</p>
+                  <p>You must escape any pseudo-variables manually to prevent
+				SQL injection attacks. You can use the existing transformations
+				<span class="emphasis"><em>escape.common</em></span> and 
+				<span class="emphasis"><em>unescape.common</em></span>
+				to escape and unescape the content of any pseudo-variable.
+				Failing to escape the variables used in the query makes you 
+				vulnerable to SQL injection, e.g. make it possible for an 
+				outside attacker to alter your database content.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dest</em></span> - a list with AVP names where
+				to store the result. The format is
+				<span class="quote">‚Äú<span class="quote">$avp(name1);$avp(name2);...</span>‚Äù</span>. If this parameter
+				is ommited, the result is stored in 
+				<span class="quote">‚Äú<span class="quote">$avp(i:1);$avp(i:2);...</span>‚Äù</span>. If the result gives
+				many rows, then multiple AVPs with corresponding name will
+				be added. The value type of the AVP (string or integer) will
+				be derived from the type of the columns. Please note that only
+				this two datatypes are supported, so its not possible for
+				example to return floating point or big integer values this way.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>The function delivers the following return-codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-1</em></span> - An error occured while querying the database
+			(e.g. wrong SQL or database error)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>1</em></span> - Query was successful
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-2</em></span> - Query was successful, but no rows where returned.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1483368"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">avp_db_query</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_db_query("select password, ha1 from subscriber where username='$tu'",
+	"$avp(i:678);$avp(i:679)");
+avp_db_query("delete from subscriber");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬† avp_delete(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_delete"></a>5.5.¬†
+				<code class="function">avp_delete(name)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Deletes from memory the AVPs with <span class="emphasis"><em>name</em></span> or,
+			if empty, all AVPs.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - which AVPs will be deleted
+				from memory.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = (matching_flags|avp_name|avp_alias)['/'flag]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					matching_flags = please refer to avp_db_load() function
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flag = 'g'|'G' = deletes not only the last value but the complete AVP.
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1488960"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†<code class="function">avp_delete</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_delete("$avp(i:678)/g");
+avp_delete("$avp(email)");
+avp_delete("i");
+avp_delete("a3");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6.¬† avp_pushto(destination,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_pushto"></a>5.6.¬†
+				<code class="function">avp_pushto(destination,name)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Pushes the value of AVP(s) into the SIP message.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>destination</em></span> - as what will be the
+				AVP value pushed into SIP message.
+				Parameter syntax:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					destination = '$ru' ['/'('username'|'domain')] | '$du' |
+					'$br'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					$ru '['/'('username'|'domain')] - write the AVP in the
+					request URI or in username/domain part of it
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					$du - write the AVP in 'dst_uri' field
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					$br - write the AVP directly as a new branch (does not 
+					affect RURI)
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - which AVP(s)/pseudo-variable
+				should be pushed
+				into the SIP message.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( avp_name | avp_alias | pvar_name )['/'flags]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = 'g' - effective only with AVPs
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1496520"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†<code class="function">avp_pushto</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_pushto("$ru/domain","$fd");
+avp_pushto("$ru","$avp(i:678)");
+avp_pushto("$ru/domain","$avp(s:backup_domains)/g");
+avp_pushto("$du","$avp(i:679)");
+avp_pushto("$br","$avp(i:680)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7.¬† avp_check(name,op_value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_check"></a>5.7.¬†
+				<code class="function">avp_check(name,op_value)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Checks the value of the AVP(s) against an operator and value.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - which AVP(s) should be 
+				checked.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( pseudo-variable )
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>op_value</em></span> - define the operator, 
+				the value and flags for checking.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					op_value = operator '/' value ['/'flags]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					operator = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge'
+					| 're' | 'fm' | 'and' | 'or' | 'xor'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					value = pseudo-variable | fix_value
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					fix_value = 'i:'integer | 's:'string | string
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = 'g' | 'G' | 'i' | 'I'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				Operator meaning:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>eq
+					</em></span> - equal</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>ne
+					</em></span> - not equal</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>lt
+					</em></span> - less than</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>le
+					</em></span> - less or equal</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>gt
+					</em></span> - greater than</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>ge
+					</em></span> - greater or equal</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>re
+					</em></span> - regexp (regular exression match)</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>fm
+					</em></span> - fast match (see: man fnmatch)</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>and
+					</em></span> - bitwise 'and'</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>or
+					</em></span> - bitwise 'or'</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>xor
+					</em></span> - bitwise 'xor'</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				Integer values can be given in hexadecimal using notation:
+				'i:0xhex_number' (e.g.,: 'i:0xabcd');
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1509720"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†<code class="function">avp_check</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_check("$avp(i:678)", "lt/i:345/g");
+avp_check("$fd","eq/$td/I");
+avp_check("$avp(s:foo)","gt/$avp($var(bar))/g");
+avp_check("$avp(s:foo)","re/sip:.*@bar.net/g");
+avp_check("$avp(s:foo)","fm/$avp(fm_avp)/g");
+...</pre>
+                <p>NOTE: you can use a xavp variable ($xavp(key1[indx1]=&gt;key2[indx2]))
+				as first or second parameter.
+				If you want to check all the values of the key2 you should
+				use [*] at indx2. The [*] index is not allowed at indx1.
+				</p>
+                <pre class="programlisting">...
+avp_check("$xavp(op[0]=&gt;lt[0])", "lt/i:345/g");
+avp_check("$xavp(op=&gt;fd","eq/$td/I");
+avp_check("$xavp(op[1]=&gt;foo[*])","gt/$avp($var(bar))/g");
+avp_check("$avp(s:foo)","re/$xavp(op[0]=&gt;re[*]/g");
+$var(id)=2;
+avp_check("$xavp(op=&gt;foo[*])","fm/$xavp(op=&gt;fm[$var(id)])/g");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8.¬† avp_copy(old_name,new_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_copy"></a>5.8.¬†
+				<code class="function">avp_copy(old_name,new_name)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Copy / move an avp under a new name.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name1</em></span> - which AVP(s) should be 
+				copied/moved.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( avp_name | avp_alias )
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name2</em></span> - the new name of the 
+				copied/moved AVP(s).
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( avp_name | avp_alias ) ['/'flags]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = 'g' | 'G' | 'd' | 'D' | 'n' | 'N' | 's' | 'S'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1517096"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†<code class="function">avp_copy</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_copy("$avp(i:678)", "$avp(s:345)/g");
+avp_copy("$avp(old)","$avp(new)/gd");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9.¬† avp_printf(dest, format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_printf"></a>5.9.¬†
+				<code class="function">avp_printf(dest, format)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			NOTE: since Kamailio 1.3.0 the function has been moved to core
+			and it is an alias to pv_printf().
+			</p>
+            <p>
+			Prints the formatted string 'format' in the AVP 'dest'. The
+			'format' parameter can include any pseudo-variable defined in
+			Kamailio. The list with all pseudo-variables in Kamailio can
+			be found at:	
+			<a class="ulink" href="javascript:if(confirm('http://kamailio.org/dokuwiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÎÀ¸µƒ∆Ù ºµÿ÷∑∫‹‘∂µƒ¡¥Ω”°£»Áπ˚ƒ„‘ˆ¥Û∆Ù ºµÿ÷∑”Úƒ⁄…Ó∂»…Ë÷√, ∏√Œƒº˛Ω´±ªº”»Îœ¬‘ÿ∂”¡–°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://kamailio.org/dokuwiki/'" tppabs="http://kamailio.org/dokuwiki/">
+			http://kamailio.org/dokuwiki/</a>.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dest</em></span> - in which AVP should be 
+				stored the result.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( avp_name | avp_alias )
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>format</em></span> - the formatted string
+				to be printed in 'dest' AVP.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1523088"></a>
+              <p class="title">
+                <strong>Example¬†1.20.¬†<code class="function">avp_printf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_printf("$avp(i:20)", "This is a $rm request with call-id $hdr(call-id)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.10.¬† avp_subst(avps, subst)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_subst"></a>5.10.¬†
+				<code class="function">avp_subst(avps, subst)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Perl/sed-like subst applied to AVPs having string value.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>avps</em></span> - source AVP, destination AVP
+				and flags. Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					avps = src_avp [ '/' dst_avp [ '/' flags ] ]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					src_avp = ( avp_name | avp_alias )
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					dst_avp = ( avp_name | avp_alias ) - if dst_avp is missing
+					then the value of src_avp will be replaced
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = ( d | D | g | G ) -- (d, D - delete source avp;
+					g, G - apply to all avps matching src_avp name)
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>subst</em></span> - perl/sed-like reqular expression.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					subst = "/regexp/replacement/flags"
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					regexp - regular expression
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					replacement - replacement string, can include 
+					pseudo-variables and \1, ..., \9 for matching tokens, 
+					\0 for whole matching text
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = 'g' | 'G' | 'i' | 'i' (g, G - replace all 
+					matching tokens; i, I - match ignore case)
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1531424"></a>
+              <p class="title">
+                <strong>Example¬†1.21.¬†<code class="function">avp_subst</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# if avp i:678 has a string value in e-mail format, replace the
+# domain part with the value of domain part from R-URI
+avp_subst("$avp(i:678)", "/(.*)@(.*)/\1@$rd/");
+
+# if any avp i:678 has a string value in e-mail format, replace the
+# domain part with the value of domain part from R-URI
+# and place the result in avp i:679
+avp_subst("$avp(i:678)/$avp(i:679)/g", "/(.*)@(.*)/\1@$rd/");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+			IMPORTANT NOTE: if the replacement string includes src_avp
+			or dst_avp you will get something that you may not expect.
+			In case you have many src_avp and you make the substitution
+			to be applied to all of them, after the first src_avp is
+			processed, it will be added in avp list and next
+			processing will use it.
+			</p>
+          </div>
+          <div class="section" title="5.11.¬† avp_op(name,op_value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_op"></a>5.11.¬†
+				<code class="function">avp_op(name,op_value)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Different integer operations with avps.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span>
+				- 'source_avp/destination_avp' - which AVP(s) should be 
+				processed and where to store the result. If 'destination_avp'
+				is missing, same name as 'source_avp' is used to store the
+				result.
+				</p>
+                  <p>
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = ( source_avp[/destination_avp] )
+					</em>
+                          </span>
+                        </p>
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					source_avp = ( avp_name | avp_alias )
+					</em>
+                          </span>
+                        </p>
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					destination_avp = ( avp_name | avp_alias )
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>op_value</em></span> - define the operation, 
+				the value and flags.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					op_value = operator '/' value ['/'flags]
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					operator = 'add' | 'sub' | 'mul' | 'div' | 'mod'
+					| 'and' | 'or' | 'xor' | 'not'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					value = pseudo-variable | fix_value
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					fix_value = 'i:'integer
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = 'g' | 'G' | 'd' | 'D'
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                  <p>
+				Integer values can be given in hexadecimal using notation
+				'i:0xhex_number' (e.g.,: 'i:0xabcd');
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1541136"></a>
+              <p class="title">
+                <strong>Example¬†1.22.¬†<code class="function">avp_op</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_op("$avp(i:678)", "add/i:345/g");
+avp_op("$avp(number)","sub/$avp(number2)/d");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.12.¬† is_avp_set(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.is_avp_set"></a>5.12.¬†
+				<code class="function">is_avp_set(name)
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Check if any AVP with <span class="emphasis"><em>name</em></span> is set.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - name of AVP to look for.
+				Parameter syntax is:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					name = avp_name|avp_alias [ '/' flags ])
+					</em>
+                          </span>
+                        </p>
+                        <p>
+                          <span class="emphasis">
+                            <em>
+					flags = ('e'|'s'|'n') - e = empty value; s = value string;
+					n = value number (int)
+					</em>
+                          </span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1546152"></a>
+              <p class="title">
+                <strong>Example¬†1.23.¬†<code class="function">is_avp_set</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_avp_set("$avp(i:678)"))
+    log("AVP with integer id 678 exists\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.13.¬† avp_print()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avpops.f.avp_print"></a>5.13.¬†
+				<code class="function">avp_print()
+				</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Prints the list with all the AVPs from memory. This is only a
+			helper/debug function.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp1548960"></a>
+              <p class="title">
+                <strong>Example¬†1.24.¬†<code class="function">avp_print</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+avp_print();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

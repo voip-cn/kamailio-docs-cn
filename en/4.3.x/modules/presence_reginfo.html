@@ -1,0 +1,215 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>presence_reginfo Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15460328" title="presence_reginfo Module" />
+    <link rel="next" href="#idp17036464" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="presence_reginfo Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15460328"></a>presence_reginfo Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:carsten@ng-voice.com">carsten@ng-voice.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:carsten@ng-voice.com">carsten@ng-voice.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Carsten Bock, carsten@ng-voice.com, http://www.ng-voice.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17036464">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17230280">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17593864">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18006976">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18617064">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17815328">3. Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17036464"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17230280">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17593864">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18006976">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18617064">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17815328">3. Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17230280"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+	      The module enables the handling of "Event: reg" (as defined 
+	      in RFC 3680) inside of the presence module. This can be used
+	      distribute the registration-info status to the subscribed watchers.
+	    </p>
+          <p>
+ 	      The module does not currently implement any authorization
+	      rules.  It assumes that publish requests are only issued by
+	      an authorized application and subscribe requests only by
+	      authorized users.  Authorization can thus be easily done in 
+	      Kamailio configuration file before calling handle_publish() 
+	      and handle_subscribe() functions.
+	    </p>
+          <p>
+	      Note: This module only activates the processing of the "reg" 
+	      in the presence module. To send dialog-info to watchers you also 
+	      need a source which PUBLISH the reg info to the presence module.
+	      For example you can use the pua_reginfo module or any external
+	      component. This approach allows to have the presence server and the
+	      reg-info aware publisher (e.g. the main proxy) on different 
+	      Kamailio instances.
+	    </p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17593864"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18006976"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18617064"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		None.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17815328"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			None to be used in configuration file.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

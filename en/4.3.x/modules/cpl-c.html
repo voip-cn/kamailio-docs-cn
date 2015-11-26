@@ -1,0 +1,1439 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>cpl-c Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4247736" title="cpl-c Module" />
+    <link rel="next" href="#idp2100056" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="cpl-c Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4247736"></a>cpl-c Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2100056">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2042584">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2774544">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2076296">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1349032">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2745304">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2463600">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm20568">3.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp141688">3.3. <code class="varname">username_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp144328">3.4. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp146968">3.5. <code class="varname">cpl_xml_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm17112">3.6. <code class="varname">cpl_bin_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14416">3.7. <code class="varname">cpl_dtd_file</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11816">3.8. <code class="varname">log_dir</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9168">3.9. <code class="varname">proxy_recurse</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6416">3.10. <code class="varname">proxy_route</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3928">3.11. <code class="varname">case_sensitive</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm1368">3.12. <code class="varname">realm_prefix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp72248">3.13. <code class="varname">timer_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp75136">3.14. <code class="varname">lookup_domain</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp78032">3.15. <code class="varname">lookup_append_branches</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp80616">3.16. <code class="varname">use_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp83336">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp83704">4.1. 
+				<code class="function">cpl_run_script(type,mode, [uri])</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp24112">4.2. 
+				<code class="function">cpl_process_register()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp27680">4.3. 
+				<code class="function">cpl_process_register_norpl()
+					</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp30944">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp31312">5.1. 
+				<code class="function">LOAD_CPL</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp34608">5.2. 
+				<code class="function">REMOVE_CPL</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp37616">5.3. 
+				<code class="function">GET_CPL</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp40624">6. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp40976">6.1. Database setup</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1540400">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp140272">Set <code class="varname">db_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp143152">Set <code class="varname">username_column</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp145792">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp148464">Set <code class="varname">cpl_xml_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm15592">Set <code class="varname">cpl_bin_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm13008">Set <code class="varname">cpl_dtd_file</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm10344">Set <code class="varname">log_dir</code> parameter</a></dt>
+          <dt>1.9. <a href="#idm7584">Set <code class="varname">proxy_recurse</code> parameter</a></dt>
+          <dt>1.10. <a href="#idm5032">Set <code class="varname">proxy_route</code> parameter</a></dt>
+          <dt>1.11. <a href="#idm2536">Set <code class="varname">case_sensitive</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp71080">Set <code class="varname">realm_prefix</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp73968">Set <code class="varname">timer_avp</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp76856">Set <code class="varname">lookup_domain</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp79456">Set <code class="varname">lookup_append_branches</code> 
+					parameter</a></dt>
+          <dt>1.16. <a href="#idp82152">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp22936"><code class="function">cpl_run_script</code> usage</a></dt>
+          <dt>1.18. <a href="#idp26464"><code class="function">cpl_process_register</code> usage</a></dt>
+          <dt>1.19. <a href="#idp29584"><code class="function">cpl_process_register_norpl</code> usage
+					</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2100056"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2042584">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2774544">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2076296">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1349032">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2745304">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2463600">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm20568">3.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp141688">3.3. <code class="varname">username_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp144328">3.4. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp146968">3.5. <code class="varname">cpl_xml_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm17112">3.6. <code class="varname">cpl_bin_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14416">3.7. <code class="varname">cpl_dtd_file</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11816">3.8. <code class="varname">log_dir</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9168">3.9. <code class="varname">proxy_recurse</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6416">3.10. <code class="varname">proxy_route</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3928">3.11. <code class="varname">case_sensitive</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm1368">3.12. <code class="varname">realm_prefix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp72248">3.13. <code class="varname">timer_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp75136">3.14. <code class="varname">lookup_domain</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp78032">3.15. <code class="varname">lookup_append_branches</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp80616">3.16. <code class="varname">use_domain</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp83336">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp83704">4.1. 
+				<code class="function">cpl_run_script(type,mode, [uri])</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp24112">4.2. 
+				<code class="function">cpl_process_register()</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp27680">4.3. 
+				<code class="function">cpl_process_register_norpl()
+					</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp30944">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp31312">5.1. 
+				<code class="function">LOAD_CPL</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp34608">5.2. 
+				<code class="function">REMOVE_CPL</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp37616">5.3. 
+				<code class="function">GET_CPL</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp40624">6. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp40976">6.1. Database setup</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2042584"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>cpl-c modules implements a CPL (Call Processing Language) 
+		interpreter. Support for uploading/downloading/removing scripts via 
+		SIP REGISTER method is present.
+		</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2774544"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2076296"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>any DB module- a DB module for interfacing the DB 
+				operations (modules like mysql, postgres, dbtext, etc)
+				</em></span>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TM (Transaction) module- used for proxying/forking 
+				requests
+				</em></span>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SL (StateLess) module - used for sending stateless 
+				reply when responding to REGISTER request or for sending back 
+				error responses
+				</em></span>
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>USRLOC (User Location) module - used for implementing
+				lookup("registration") tag (adding into location set of the
+				users' contact)
+				</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1349032"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following libraries or applications must be installed 
+				before running Kamailio with this module loaded:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>libxml2 and libxml2-devel - on some SO, these to 
+					packages are merged into libxml2. This library contains an 
+					engine for XML parsing, DTD validation and
+					DOM manipulation.
+					</em></span>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2745304"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2463600"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				A SQL URL have to be given to the module for knowing where the 
+				database containing the table with CPL scripts is locates. If 
+				required a user name and password can be specified for allowing 
+				the module to connect to the database server.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp1540400"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","db_url","dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm20568"></a>3.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates the name of the table that store the CPL scripts. 
+				This table must be locate into the database specified by 
+				<span class="quote">“<span class="quote">db_url</span>”</span> parameter. For more about the format of the CPL
+				table please see the modules/cpl-c/init.mysql file.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is <span class="quote">“<span class="quote">cpl</span>”</span>.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp140272"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","cpl_table","cpl")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. username_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp141688"></a>3.3. <code class="varname">username_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates the name of the column used for storing the username.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">username</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp143152"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">username_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","username_column","username")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp144328"></a>3.4. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates the name of the column used for storing the domain.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp145792"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","domain_column","domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. cpl_xml_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp146968"></a>3.5. <code class="varname">cpl_xml_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates the name of the column used for storing the 
+				the XML version of the cpl script.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">cpl_xml</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp148464"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">cpl_xml_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","cpl_xml_column","cpl_xml")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. cpl_bin_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm17112"></a>3.6. <code class="varname">cpl_bin_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates the name of the column used for storing the 
+				the binary version of the cpl script (compiled version).
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">cpl_bin</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm15592"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">cpl_bin_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","cpl_bin_column","cpl_bin")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. cpl_dtd_file (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14416"></a>3.7. <code class="varname">cpl_dtd_file</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Points to the DTD file describing the CPL grammar. The file 
+				name may include also the path to the file. This path can be 
+				absolute or relative (be careful the path will be relative 
+				to the starting directory of Kamailio).
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					This parameter is MANDATORY!
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm13008"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">cpl_dtd_file</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","cpl_dtd_file","/etc/kamailio/cpl-06.dtd")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. log_dir (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11816"></a>3.8. <code class="varname">log_dir</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Points to a directory where should be created all the log file 
+				generated by the LOG CPL node. A log file per user will be 
+				created (on demand) having the name username.log.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					If this parameter is absent, the logging will be disabled 
+					without generating error on execution.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm10344"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">log_dir</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","log_dir","/var/log/kamailio/cpl")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. proxy_recurse (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9168"></a>3.9. <code class="varname">proxy_recurse</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Tells for how many time is allow to have recurse for PROXY CPL 
+				node If it has value 2, when doing proxy, only twice the proxy 
+				action will be re-triggered by  a redirect response; the third 
+				time, the proxy execution will end by going on REDIRECTION 
+				branch. The recurse feature can be disable by setting this 
+				parameter to 0 
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is 0.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm7584"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">proxy_recurse</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","proxy_recurse",2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. proxy_route (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6416"></a>3.10. <code class="varname">proxy_route</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Before doing proxy (forward), a script route can be executed.
+				All modifications made by that route will be reflected only for
+				the current branch.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is 0 (none).
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm5032"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">proxy_route</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","proxy_route",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. case_sensitive (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3928"></a>3.11. <code class="varname">case_sensitive</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Tells if the username matching should be perform case 
+				sensitive or not. Set it to a non zero value to force
+				a case sensitive handling of usernames.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is 0.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idm2536"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">case_sensitive</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","case_sensitive",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. realm_prefix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm1368"></a>3.12. <code class="varname">realm_prefix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Defines a prefix for the domain part which should be ignored 
+				in handling users and scripts.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is empty string.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp71080"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">realm_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","realm_prefix","sip.")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. timer_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp72248"></a>3.13. <code class="varname">timer_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Full specification (ID, NAME, ALIAS) of the AVP to be used to 
+				set the value of the Final Response INVITE timeout - it's 
+				used by the TIMEOUT attribute from the PROXY tag.
+			</p>
+            <p>
+				NOTE: take care and syncronize this value with the similar
+				parameters in TM module.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp73968"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">timer_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","timer_avp","$avp(i:14)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. lookup_domain (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp75136"></a>3.14. <code class="varname">lookup_domain</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Used by lookup tag to indicate where to perform user location.
+				Basically this is the name of the usrloc domain (table) where
+				the user registrations are kept.
+			</p>
+            <p>
+				If set to empty string, the lookup node will be disabled - no
+				user location will be performed.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is NULL.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp76856"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">lookup_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","lookup_domain","location")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. lookup_append_branches (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp78032"></a>3.15. <code class="varname">lookup_append_branches</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Tells if the lookup tag should append branches (to do parallel
+				forking) if user_location lookup returns more than one contact.
+				Set it to a non zero value to enable parallel forking for
+				location lookup tag.
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value of this parameter is 0.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp79456"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">lookup_append_branches</code> 
+					parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","lookup_append_branches",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. use_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp80616"></a>3.16. <code class="varname">use_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Indicates if the domain part of the URI should be used in 
+				user identification (otherwise only username part will be
+				used).
+			</p>
+            <p>
+				<span class="emphasis"><em>
+					Default value is <span class="quote">“<span class="quote">0 (disabled)</span>”</span>.
+				</em></span>
+			</p>
+            <div class="example">
+              <a id="idp82152"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("cpl-c","use_domain",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp83336"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  cpl_run_script(type,mode, [uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp83704"></a>4.1. 
+				<code class="function">cpl_run_script(type,mode, [uri])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Starts the execution of the CPL script. The user name is 
+				fetched from new_uri or requested uri or from To header -in 
+				this order- (for incoming execution) or from FROM header (for 
+				outgoing execution).
+				Regarding the stateful/stateless message processing, the
+				function  is very flexible, being able to run in different 
+				modes (see below the"mode" parameter).
+				Normally this function will end script execution.  There is no 
+				guaranty that the CPL script interpretation ended when Kamailio 
+				script ended also (for the same INVITE ;-)) - this can happen 
+				when the CPL script does a PROXY and the script interpretation 
+				pause after proxying and it will be resume when some reply is
+				received (this can happen in a different process of SER). 
+				If the function returns to script, the SIP server should 
+				continue with the normal behavior as if no script existed.
+				When some error is returned, the function itself haven't sent 
+				any SIP error reply (this can be done from script).
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>type</em></span> - which part of the script 
+				should be run; set it to "incoming" for having the incoming 
+				part of script executed (when an INVITE is received) or to 
+				"outgoing" for running the outgoing part of script (when a 
+				user is generating an INVITE - call).
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>mode</em></span> - sets the interpreter mode as
+				stateless/stateful behavior. The following modes are accepted:
+				</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>IS_STATELESS</em></span> - the current INVITE has 
+					no transaction created yet. All replies (redirection or 
+					deny) will be done is a stateless way. The execution will 
+					switch to stateful only when proxy is done. So, if the 
+					function returns, will be in stateless mode.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>IS_STATEFUL</em></span> - the current INVITE has 
+					already a transaction associated. All signaling operations
+					(replies or proxy) will be done in stateful way.So, if
+					the function returns, will be in stateful mode.
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+					<span class="emphasis"><em>FORCE_STATEFUL</em></span> - the current INVITE 
+					has no transaction created yet. All signaling operations
+					will be done is a stateful way (on signaling, the
+					transaction will be created from within the interpreter).
+					So, if the function returns, will be in stateless mode.
+					</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+				<span class="emphasis"><em>HINT</em></span>: is_stateful is very 
+				difficult to manage from the routing script (script processing
+				can continue in stateful mode); is_stateless is the fastest and
+				less resources consumer (transaction is created only if
+				proxying is done), but there is minimal protection against
+				retransmissions (since replies are send stateless);
+				force_stateful is a good compromise - all signaling is done
+				stateful (retransmission protection) and in the same time, if
+				returning to script, it will be in stateless mode (easy to
+				continue the routing script execution)
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>uri</em></span> - optional - provide the SIP URI
+				to be used for loading the CPL script, instead of taking it from
+				R-URI or headers.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp22936"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">cpl_run_script</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+cpl_run_script("incoming","force_stateful");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  cpl_process_register()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp24112"></a>4.2. 
+				<code class="function">cpl_process_register()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function MUST be called only for REGISTER requests. It 
+				checks if the current REGISTER request is related or not with 
+				CPL script upload/download/ remove. If it is, all the needed 
+				operation will be done. For checking if the REGISTER is CPL 
+				related, the function looks fist to "Content-Type" header. If 
+				it exists and has a the mime type set to "application/cpl+xml" 
+				means this is a CPL script upload/remove operation. The 
+				distinction between to case is made by looking at 
+				"Content-Disposition" header; id its value is 
+				"script;action=store", means it's an upload; if it's 
+				"script;action=remove", means it's a remove operation; other 
+				values are considered to be errors. If no "Content-Type" 
+				header is present, the function looks to "Accept" header and 
+				if it contains the "*" or "application/cpl-xml" the request 
+				it will be consider one for downloading CPL scripts.
+				The functions returns to script only if the REGISTER is 
+				not related to CPL. In other case, the function will send by 
+				itself the necessary replies (stateless - using sl), including 
+				for errors.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp26464"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">cpl_process_register</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="REGISTER") {
+    cpl_process_register();
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  cpl_process_register_norpl()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp27680"></a>4.3. 
+				<code class="function">cpl_process_register_norpl()
+					</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Same as <span class="quote">“<span class="quote">cpl_process_register</span>”</span> without 
+				internally generating the reply. All information (script) is
+				appended to the reply but without sending it out.
+			</p>
+            <p>
+				Main purpose of this function is to allow integration 
+				between CPL and UserLocation services via same REGISTER
+				messages.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idp29584"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">cpl_process_register_norpl</code> usage
+					</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="REGISTER") {
+    cpl_process_register();
+    # continue with usrloc part
+    save("location");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp30944"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  LOAD_CPL">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp31312"></a>5.1. 
+				<code class="function">LOAD_CPL</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For the given user, loads the XML cpl file, compiles it into 
+			binary format and stores both format into database.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>LOAD_CPL</em></span>
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>username : name of the user</p>
+                </li>
+                <li class="listitem">
+                  <p>cpl_filename: file name </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			MI FIFO Command format:
+			</p>
+            <pre class="programlisting">                 :LOAD_CPL:_reply_fifo_file_
+                 username
+                 cpl_filename
+                 _empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.  REMOVE_CPL">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp34608"></a>5.2. 
+				<code class="function">REMOVE_CPL</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For the given user, removes the entire database record 
+			(XML cpl and binary cpl); user with empty cpl scripts are not 
+			accepted.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>REMOVE_CPL</em></span>
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>username : name of the user</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			MI FIFO Command format:
+			</p>
+            <pre class="programlisting">                 :REMOVE_CPL:_reply_fifo_file_
+                 username
+                 _empty_line_</pre>
+          </div>
+          <div class="section" title="5.3.  GET_CPL">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp37616"></a>5.3. 
+				<code class="function">GET_CPL</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For the given user, returns the CPL script in XML format.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>GET_CPL</em></span>
+			</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>username : name of the user</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			MI FIFO Command format:
+			</p>
+            <pre class="programlisting">                 :GET_CPL:_reply_fifo_file_
+                 username
+                 _empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp40624"></a>6. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. Database setup">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp40976"></a>6.1. Database setup</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Before running Kamailio with cpl-c, you have to setup the database 
+			table where the module will store the CPL scripts. For that, if 
+			the table was not created by the installation script or you choose
+			to install everything by yourself you can use the cpc-create.sql
+			<acronym class="acronym">SQL</acronym> script in the database directories in the 
+			kamailio/scripts folder as template. 
+			Database and table name can be set with module parameters so they 
+			can be changed, but the name of the columns must be as they are 
+			in the <acronym class="acronym">SQL</acronym> script.
+			You can also find the complete database documentation on the
+			project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+			</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

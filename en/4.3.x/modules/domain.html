@@ -1,0 +1,1038 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Domain Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15457016" title="Domain Module" />
+    <link rel="next" href="#idp2976080" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Domain Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15457016"></a>Domain Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2002-2012 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2976080">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1861136">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1568528">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2605120">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1787584">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2491032">3.2. <code class="varname">domain_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1901768">3.3. <code class="varname">domain_attrs_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp194800">3.4. <code class="varname">did_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3006200">3.5. <code class="varname">domain_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3008344">3.6. <code class="varname">name_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3010496">3.7. <code class="varname">type_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3012696">3.8. <code class="varname">value_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3014848">3.9. <code class="varname">register_myself</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3016872">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3017240">4.1. <code class="function">is_from_local()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3019360">4.2. <code class="function">is_uri_host_local()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3021744">4.3. <code class="function">is_domain_local(pseudo_variable)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm14328">4.4. <code class="function">lookup_domain(domain[, prefix])</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm11808">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11440">5.1. <code class="function">domain_reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9024">5.2. <code class="function">domain_dump</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm6512">6. Exported RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6160">6.1. <code class="function">domain.reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3784">6.2. <code class="function">domain.dump</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm1360">7. Known Limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2633832">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3277608">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2115800">1.1. 
+		<code class="function">is_domain_local(domain)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1818304">Setting db_url parameter</a></dt>
+          <dt>1.2. <a href="#idp2460272">Setting domain_table parameter</a></dt>
+          <dt>1.3. <a href="#idp193912">Setting domain_attrs_table parameter</a></dt>
+          <dt>1.4. <a href="#idp196160">Setting did_col parameter</a></dt>
+          <dt>1.5. <a href="#idp3007424">Setting domain_col parameter</a></dt>
+          <dt>1.6. <a href="#idp3009576">Setting name_col parameter</a></dt>
+          <dt>1.7. <a href="#idp3011776">Setting name_col parameter</a></dt>
+          <dt>1.8. <a href="#idp3013928">Setting value_col parameter</a></dt>
+          <dt>1.9. <a href="#idp3015928">register_myself example</a></dt>
+          <dt>1.10. <a href="#idp3018472">is_from_local usage</a></dt>
+          <dt>1.11. <a href="#idp3020824">is_uri_host_local usage</a></dt>
+          <dt>1.12. <a href="#idm15440">is_domain_local usage</a></dt>
+          <dt>1.13. <a href="#idm12896">lookup_domain</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2976080"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1861136">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1568528">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2605120">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1787584">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2491032">3.2. <code class="varname">domain_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1901768">3.3. <code class="varname">domain_attrs_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp194800">3.4. <code class="varname">did_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3006200">3.5. <code class="varname">domain_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3008344">3.6. <code class="varname">name_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3010496">3.7. <code class="varname">type_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3012696">3.8. <code class="varname">value_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3014848">3.9. <code class="varname">register_myself</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3016872">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3017240">4.1. <code class="function">is_from_local()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3019360">4.2. <code class="function">is_uri_host_local()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3021744">4.3. <code class="function">is_domain_local(pseudo_variable)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm14328">4.4. <code class="function">lookup_domain(domain[, prefix])</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm11808">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11440">5.1. <code class="function">domain_reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9024">5.2. <code class="function">domain_dump</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm6512">6. Exported RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6160">6.1. <code class="function">domain.reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3784">6.2. <code class="function">domain.dump</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm1360">7. Known Limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1861136"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Domain module implements checks that based on domain table
+		determine if a domain is <span class="quote">“<span class="quote">local</span>”</span>.
+		A <span class="quote">“<span class="quote">local</span>”</span> domain is one that the proxy is
+		responsible for.  SIP URIs of local users must have hostpart
+		that is equal to one of these domains.
+	</p>
+          <p>
+		Domain module reads the contents of domain and domain_attrs
+		tables into cache memory when the module is loaded.
+		Any changes in domain or domain_attrs tables must thus be
+		followed by <span class="quote">“<span class="quote">domain.reload</span>”</span> rpc command in
+		order to reflect them in module behavior.
+	</p>
+          <p>
+		Caching is implemented using a hash table. The size of
+		the hash table is given by HASH_SIZE constant defined in
+		domain_mod.h. Its <span class="quote">“<span class="quote">factory default</span>”</span> value is 128.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1568528"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module depends on the following modules (in the other words the 
+		listed modules must be loaded before this module):
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>database</em></span> -- Any database module</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2605120"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1787584"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This is <acronym class="acronym">URL</acronym> of the database to be used.
+		</p>
+            <p>
+		Default value is 
+			<span class="quote">“<span class="quote">mysql://kamailioro:kamailioro@localhost/kamailio</span>”</span>
+		</p>
+            <div class="example">
+              <a id="idp1818304"></a>
+              <p class="title">
+                <strong>Example 1.1. Setting db_url parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "db_url", "mysql://ser:pass@db_host/ser")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. domain_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2491032"></a>3.2. <code class="varname">domain_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of table containing names of local domains that the proxy is 
+		responsible for.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp2460272"></a>
+              <p class="title">
+                <strong>Example 1.2. Setting domain_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domain_table", "new_name")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. domain_attrs_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1901768"></a>3.3. <code class="varname">domain_attrs_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of table containing attributes of local domains.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domain_attrs</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp193912"></a>
+              <p class="title">
+                <strong>Example 1.3. Setting domain_attrs_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domain_attrs_table", "local_domain_attributes")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. did_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp194800"></a>3.4. <code class="varname">did_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing domain id (did) of domain in domain
+		and domain_attrs tables.  In domain table, a did column value
+		may be NULL, which means that it has same value as
+		domain column.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">did</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp196160"></a>
+              <p class="title">
+                <strong>Example 1.4. Setting did_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "did_col", "domain_did")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. domain_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3006200"></a>3.5. <code class="varname">domain_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing domain name in domain table.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp3007424"></a>
+              <p class="title">
+                <strong>Example 1.5. Setting domain_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domain_col", "domain_name")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. name_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3008344"></a>3.6. <code class="varname">name_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing attribute name in domain_attrs table.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">name</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp3009576"></a>
+              <p class="title">
+                <strong>Example 1.6. Setting name_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "name_col", "attr_name")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. type_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3010496"></a>3.7. <code class="varname">type_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing attribute type in domain_attrs table.
+		Type value 0 is integer and type value 2 is string.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">type</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp3011776"></a>
+              <p class="title">
+                <strong>Example 1.7. Setting name_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "type_col", "attr_type")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. value_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3012696"></a>3.8. <code class="varname">value_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of column containing attribute value in domain_attrs table.
+		</p>
+            <p>
+		Default value is <span class="quote">“<span class="quote">value</span>”</span>.
+		</p>
+            <div class="example">
+              <a id="idp3013928"></a>
+              <p class="title">
+                <strong>Example 1.8. Setting value_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "value_col", "attr_value")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. register_myself (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3014848"></a>3.9. <code class="varname">register_myself</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Register the list of domains to match 'myself' check:
+			0 means no myself registration, 1 means enable myself
+			registration.
+		</p>
+            <p>
+		Default value is 0 (disable).
+		</p>
+            <div class="example">
+              <a id="idp3015928"></a>
+              <p class="title">
+                <strong>Example 1.9. register_myself example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "register_myself", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3016872"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. is_from_local()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3017240"></a>4.1. <code class="function">is_from_local()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks based on domain table if host part of From header uri is
+		one of the local domains that the proxy is responsible for
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3018472"></a>
+              <p class="title">
+                <strong>Example 1.10. is_from_local usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_from_local()) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. is_uri_host_local()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3019360"></a>4.2. <code class="function">is_uri_host_local()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If called from route or failure route block, checks
+		based on domain table if host part of Request-URI is one
+		of the local domains that the proxy is responsible for.
+		If called from branch route, the test is made on host
+		part of URI of first branch, which thus must have been
+		appended to the transaction before is_uri_host_local()
+		is called.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3020824"></a>
+              <p class="title">
+                <strong>Example 1.11. is_uri_host_local usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_uri_host_local()) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. is_domain_local(pseudo_variable)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3021744"></a>4.3. <code class="function">is_domain_local(pseudo_variable)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function checks if the domain contained in the
+		pseudo_variable is local.
+		</p>
+            <p>
+		This function is a generalized form of the is_from_local()
+		and is_uri_host_local() functions, being able to completely
+		replace them and also extends them by allowing the domain to
+		be taken from any of the above mentioned sources.
+                The following equivalences exist:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			is_domain_local("$rd") is same as is_uri_host_local()
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			is_domain_local("$fd") is same as is_from_local()
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm15440"></a>
+              <p class="title">
+                <strong>Example 1.12. is_domain_local usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_domain_local("$rd")) {
+	...
+};
+if (is_domain_local("$fd")) {
+	...
+};
+if (is_domain_local("$avp(some_avp_alias)")) {
+	...
+};
+if (is_domain_local("$avp(i:850)")) {
+	...
+};
+if (is_domain_local("$avp(s:some_avp)")) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. lookup_domain(domain[, prefix])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm14328"></a>4.4. <code class="function">lookup_domain(domain[, prefix])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function checks if domain given in
+		domain argument (pseudo variable) is local and, if so,
+		adds attributes
+		associated with domain's id (did) to AVPs.  If prefix
+		argument (string) is given, names of attributes are prefixes by
+		it.  In addition to attributes given in domain_attrs
+		table, AVP did containing did of domain is added.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+		BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm12896"></a>
+              <p class="title">
+                <strong>Example 1.13. lookup_domain</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (lookup_domain("$fd", "from_")) {
+    xlog("L_INFO", "did of domain $fd is $avp(from_did)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm11808"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. domain_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11440"></a>5.1. <code class="function">domain_reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes domain module to re-read the contents of domain table
+		into cache memory.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>domain_reload</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:domain_reload:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2. domain_dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm9024"></a>5.2. <code class="function">domain_dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes domain module to dump hash indexes and domain names in
+		its cache memory.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>domain_dump</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:domain_dump:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Exported RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm6512"></a>6. Exported RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. domain.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6160"></a>6.1. <code class="function">domain.reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes domain module to re-read the contents of domain table
+		into cache memory.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>domain.reload</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd domain.reload</pre>
+          </div>
+          <div class="section" title="6.2. domain.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3784"></a>6.2. <code class="function">domain.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Causes domain module to dump domain names in
+		its cache memory.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>domain.dump</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd domain.dump</pre>
+          </div>
+        </div>
+        <div class="section" title="7. Known Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm1360"></a>7. Known Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		There is an unlikely race condition on domain reload.  If a 
+		process uses a table, which is reloaded at the same time twice 
+		through <acronym class="acronym">FIFO</acronym> or <acronym class="acronym">RPC</acronym>,
+		the second reload will delete the  
+		original table still in use by the process.
+	</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2633832"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3277608">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2115800">1.1. 
+		<code class="function">is_domain_local(domain)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <p>
+	The module provides is_domain_local <acronym class="acronym">API</acronym>
+    function for use by other Kamailio modules.
+    </p>
+        <div class="section" title="1. Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3277608"></a>1. Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.  is_domain_local(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2115800"></a>1.1. 
+		<code class="function">is_domain_local(domain)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks if domain given in str* parameter is local.
+		</p>
+            <p>
+		The function returns 1 if domain is local and -1 if
+		domain is not local or if an error occurred.
+		</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

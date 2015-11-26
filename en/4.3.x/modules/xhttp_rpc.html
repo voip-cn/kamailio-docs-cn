@@ -1,0 +1,455 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>xHTTP_RPC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4235568" title="xHTTP_RPC Module" />
+    <link rel="next" href="#idp2730032" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="xHTTP_RPC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4235568"></a>xHTTP_RPC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:osas@voipembedded.com">osas@voipembedded.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:osas@voipembedded.com">osas@voipembedded.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alex</span> <span class="surname">Balashov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:abalashov@evaristesys.com">abalashov@evaristesys.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2011 <a class="ulink" href="javascript:if(confirm('http://www.voipembedded.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.voipembedded.com/'" tppabs="http://www.voipembedded.com/">VoIPEmbedded Inc.</a></p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2730032">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1896616">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2547072">1.1. Limitations</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1890504">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2219288">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2717152">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2247056">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2389968">3.1. <code class="varname">xhttp_rpc_root</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3103832">3.2. <code class="varname">xhttp_rpc_buf_size</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1905312">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2264944">4.1. 
+		<code class="function">dispatch_xhttp_rpc()</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1163080">Set <code class="varname">xhttp_rpc_root</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp2602632">Set <code class="varname">xhttp_rpc_buf_size</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp1951496"><code class="function">dispatch_xhttp_rpc</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2730032"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1896616">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2547072">1.1. Limitations</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1890504">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2219288">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2717152">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2247056">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2389968">3.1. <code class="varname">xhttp_rpc_root</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3103832">3.2. <code class="varname">xhttp_rpc_buf_size</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1905312">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2264944">4.1. 
+		<code class="function">dispatch_xhttp_rpc()</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1896616"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides an HTTP transport layer implementation for
+		the RPC management interface in a human-readable format.
+	</p>
+          <p>
+	</p>
+          <p>
+		The xHTTP_RPC module uses the xHTTP module to handle HTTP requests.
+		Read the documentation of the xHTTP module for more details.
+	</p>
+          <div class="section" title="1.1.聽Limitations">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2547072"></a>1.1.聽Limitations</h3>
+                </div>
+              </div>
+            </div>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		This module does not implement asynchronous RPC commands.
+		It is unlikely that asynchronous RPC commands will be executed
+		from an RPC web interface.
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		This module does not accept parameters embedded in a structure
+		(see RPC documentation for more info about how parameters can be
+		passed to RPC).
+	</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		At startup, all RPC commands are sorted and grouped based on
+		their format. The expected format is [group].[subcommand].
+		The initial xhttp_rpc webpage displays all the retrieved groups.
+		All RPC commands are available as sub-menus of each [group].
+		If an RPC command is not in the expected format, it will be
+		dropped from the initial xhttp_rpc home page menu.
+	</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1890504"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2219288"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xhttp</em></span> - xHTTP.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2717152"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2247056"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽xhttp_rpc_root (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2389968"></a>3.1.聽<code class="varname">xhttp_rpc_root</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specifies the root path for RPC http requests.
+			The link to the RPC web interface must be constructed
+			using the following pattern:
+			http://[server_IP]:[tcp_port]/[xhttp_rpc_root] 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "rpc".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1163080"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">xhttp_rpc_root</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xhttp_rpc", "xhttp_rpc_root", "http_rpc")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽xhttp_rpc_buf_size (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3103832"></a>3.2.聽<code class="varname">xhttp_rpc_buf_size</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Specifies the maximum length of the buffer (in bytes) used
+			to write the RPC reply information in order to
+			build the HTML response.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (auto set to 1/3 of the size of the configured pkg mem).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2602632"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set <code class="varname">xhttp_rpc_buf_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xhttp", "xhttp_rpc_buf_size", 1024)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1905312"></a>4.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽 dispatch_xhttp_rpc()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2264944"></a>4.1.聽
+		<code class="function">dispatch_xhttp_rpc()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handle the HTTP request and generate a response.
+	    </p>
+            <div class="example">
+              <a id="idp1951496"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽<code class="function">dispatch_xhttp_rpc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+tcp_accept_no_cl=yes
+...
+loadmodule "sl.so"
+loadmodule "xhttp.so"
+loadmodule "xhttp_rpc.so"
+...
+modparam("xhttp_rpc", "xhttp_rpc_root", "http_rpc")
+...
+event_route[xhttp:request] {
+	$var(xhttp_rpc_root) = $(hu{s.substr,0,9});
+	if ($var(xhttp_rpc_root) == "/http_rpc")
+		dispatch_xhttp_rpc();
+	else
+		xhttp_reply("200", "OK", "text/html",
+        		"&lt;html&gt;&lt;body&gt;Wrong URL $hu&lt;/body&gt;&lt;/html&gt;");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

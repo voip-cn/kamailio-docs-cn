@@ -1,0 +1,1060 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The Xprint Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#xprint" title="The Xprint Module" />
+    <link rel="next" href="#idp44552" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The Xprint Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="xprint"></a>The Xprint Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Asipto<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp44552">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#xprint.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#implemented_specifiers">2. Implemented Specifiers</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#xprint.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#buf_size">3.1. <code class="varname">buf_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#xprint.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#xprint.xplog">4.1. 
+	    <code class="function">xplog(level, format)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xprint.xpdbg">4.2. 
+	    <code class="function">xpdbg(format)</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp68144">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#xprint.api">1. Module API</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2009496">1.1. Functions</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp934784">1.1.1. 
+		<code class="function">int xbind(xl_api_t *xl_api)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2104104">1.1.2. 
+		<code class="function">int xparse(char *s, xl_elog_p *el)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1268056">1.1.3. 
+		<code class="function">int shm_xparse(char *s, xl_elog_p *el)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2258440">1.1.4. 
+		<code class="function">int xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp3155648">1.1.5. 
+		<code class="function">int shm_xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp3156808">1.1.6. 
+		<code class="function">xfree(xl_elog_p el)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2617880">1.1.7. 
+		<code class="function">shm_xfree(xl_elog_p el)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2619912">1.1.8. 
+		<code class="function">int xprint(struct sip_msg* msg, xl_elog_p el, char *buf, int *len)</code>
+	    </a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2624184">1.1.9. 
+		<code class="function">str *xnulstr()</code>
+	    </a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1437080">Set <code class="varname">buf_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp736008"><code class="function">xplog</code> usage</a></dt>
+          <dt>1.3. <a href="#idp1362688"><code class="function">xpdbg</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp44552"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#xprint.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#implemented_specifiers">2. Implemented Specifiers</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#xprint.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#buf_size">3.1. <code class="varname">buf_size</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#xprint.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#xprint.xplog">4.1. 
+	    <code class="function">xplog(level, format)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xprint.xpdbg">4.2. 
+	    <code class="function">xpdbg(format)</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xprint.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		IMPORTANT: this is former xlog module from SIP Express Router (SER)
+		kept because it is used by other modules via API to get the value
+		for strings with specifiers. If you want to print log messages
+		from configuration file, use the real module named 'xlog'.
+	</p>
+          <p>
+	    This module provides the possibility to print user formatted log or
+	    debug messages from SER scripts, similar to printf function but now
+	    a specifier is replaced with a part of the SIP request. <a class="xref" href="#implemented_specifiers" title="2. Implemented Specifiers">Section 2, “Implemented Specifiers”</a> shows what can be printed out.
+	</p>
+        </div>
+        <div class="section" title="2. Implemented Specifiers">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="implemented_specifiers"></a>2. Implemented Specifiers</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		    %% : '%'
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %br : request's first branch
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %bR : request's all branches
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ci : call-id
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %cs : cseq
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ct : contact header
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Cxy : color printing based on escape sequences (x - foreground
+			color, y - background color). The values for colors: x - default
+			color of the terminal; s - Black; r - Red; g - Green; y - Yellow;
+			b - Blue; p - Purple; c - Cyan; w - White 
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ds : destination set
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %fu : 'From' uri
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ft : 'From' tag
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Hn : host's hostname (if system hostname is FQDN, part before first .)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Hd : host's domain (if system hosntame is FQDN, part behind first .)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Hf : host's FQDN hostname
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Hi : host's IP address
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %mb : whole SIP message buffer
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %mf : flags set for current SIP request
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %mi : SIP message id
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ml : SIP message length
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %mx : SIP message id (in hex notation)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %nh : message's next hop
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %pp : process id (pid)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %px : process id (pid) (in hex notation)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %rm : request's method
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ru : request's r-uri
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %rr : reply's reason
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %rs : reply's status
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %rt : 'Refer-To' uri
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Ri : IP address of the interface where the request
+		    has been received
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Rp : received port
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %si : IP source address 
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %sp : source port
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %tu : 'To' uri
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %tt : 'To' tag
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Ts : unix time stamp
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Tf : string formatted time
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %Tx : unix time stamp (in hex notation)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %ua : User agent header field
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %uq : unique id (per SER's process) - to make really unique id use
+			%uq-%px-%mx or %uq-%px-%Tx
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %{name[N]} : print the body of the Nth header identified by
+		    'name'. If [N] is omitted then the body of the first header
+		    is printed. The first header is got when N=0, for the
+		    second N=1, a.s.o. To print the last header of that type,
+		    use -1, no other negative values are supported now. No
+		    white spaces are allowed inside the specifier (before },
+		    before or after {, [, ] symbols). When N='*', all headers
+		    of that type are printed.
+		</p>
+                <p>
+		    The module should identify most of compact header names
+		    (the ones recognized by ser which should be all at this
+		    moment), if not, the compact form has to be specified
+		    explicitely. It is recommended to use dedicated specifiers
+		    for headers (e.g., %ua for user agent header), if they are
+		    available -- they are faster.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			%&lt;name[N]&gt; : print the value of AVP optionally
+			%indexed by the [N] value
+			It uses AVPs subindexing, e.g. if you don't specify
+			subindex and there are more AVPs with the same name, the
+			result is NULL. To specify first AVP use [1], negative
+			values are indexes counted backward through the list.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %@select.framework[N].value : print the value of select
+			framework call. For detailed info what calls are available
+			see select framework documentation (and modules
+			documentation, as modules can extend select framework
+			calls).
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    %| or %(space) : end of %@select.framework identifier.
+			If you need to concatenate select framework call and
+			another non-whitespace literal, you need to explicitelly
+			set the end of the select framework identifier.
+		</p>
+                <p>
+			E.g. %@ruri.user%|@%@ruri.host converts all featured request
+			uri into user@host form only.
+		</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xprint.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. buf_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="buf_size"></a>3.1. <code class="varname">buf_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Maximum size of the log message.
+	</p>
+            <p>
+	    Default value is 4096.
+	</p>
+            <div class="example">
+              <a id="idp1437080"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">buf_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xprint", "buf_size", 8192)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xprint.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  xplog(level, format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xprint.xplog"></a>4.1. 
+	    <code class="function">xplog(level, format)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Print a formated message using LOG function.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>level</em></span> - The level that will be used in LOG function. It can be:
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+			    L_ALERT
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_CRIT
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_ERR
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_WARN
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_NOTICE
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_INFO
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+			    L_DBG
+			</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+		    What really matters is the third letter of the value.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>format</em></span> - The formatted string to be printed. 
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp736008"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">xplog</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xplog("L_ERR", "time [%Tf] method &lt;%rm&gt; r-uri &lt;%ru&gt; 2nd via &lt;%{via[1]}&gt;\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  xpdbg(format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xprint.xpdbg"></a>4.2. 
+	    <code class="function">xpdbg(format)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Print a formatted message using DBG function.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>format</em></span> - The formatted string to be printed.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1362688"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">xpdbg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xpdbg("time [%Tf] method &lt;%rm&gt; r-uri &lt;%ru&gt;\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp68144"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#xprint.api">1. Module API</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2009496">1.1. Functions</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp934784">1.1.1. 
+		<code class="function">int xbind(xl_api_t *xl_api)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2104104">1.1.2. 
+		<code class="function">int xparse(char *s, xl_elog_p *el)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1268056">1.1.3. 
+		<code class="function">int shm_xparse(char *s, xl_elog_p *el)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2258440">1.1.4. 
+		<code class="function">int xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp3155648">1.1.5. 
+		<code class="function">int shm_xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp3156808">1.1.6. 
+		<code class="function">xfree(xl_elog_p el)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2617880">1.1.7. 
+		<code class="function">shm_xfree(xl_elog_p el)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2619912">1.1.8. 
+		<code class="function">int xprint(struct sip_msg* msg, xl_elog_p el, char *buf, int *len)</code>
+	    </a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2624184">1.1.9. 
+		<code class="function">str *xnulstr()</code>
+	    </a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Module API">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xprint.api"></a>1. Module API</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1. Functions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2009496"></a>1.1. Functions</h3>
+                </div>
+              </div>
+            </div>
+            <div class="section" title="1.1.1.  int xbind(xl_api_t *xl_api)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp934784"></a>1.1.1. 
+		<code class="function">int xbind(xl_api_t *xl_api)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Bind to the xprint module API.
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>xl_api</em></span> - structure that
+			the xprint module functions are bind to. The functions
+			can be executed as xl_api.xparse(), xl_api.xprint()...
+		    </p>
+                  </li>
+                </ul>
+              </div>
+              <p>Return value: 0 - success, &lt;0 - error.</p>
+            </div>
+            <div class="section" title="1.1.2.  int xparse(char *s, xl_elog_p *el)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2104104"></a>1.1.2. 
+		<code class="function">int xparse(char *s, xl_elog_p *el)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Parse an xl-formatted string in private memory.
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>s</em></span> - string to be parsed.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - returned xl-lib list.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+              <p>Return value: 0 - success, &lt;0 - error.</p>
+            </div>
+            <div class="section" title="1.1.3.  int shm_xparse(char *s, xl_elog_p *el)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1268056"></a>1.1.3. 
+		<code class="function">int shm_xparse(char *s, xl_elog_p *el)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Parse an xl-formatted string in shared memory.
+		See xparse() function for details.
+	    </p>
+            </div>
+            <div class="section" title="1.1.4.  int xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2258440"></a>1.1.4. 
+		<code class="function">int xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Parse an xl-formatted string in private memory.
+		This function is able to identify regular expression back references,
+		for example \1, \2, \3... When a back reference is found the callback
+		function is called that is supposed to farther parse the back reference
+		and fill in the xl_elog structure. 
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>s</em></span> - string to be parsed.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - returned xl-lib list.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>cb</em></span> - callback function for parsing
+			the regular expression back references.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+              <p>The prototype of the callback function is:
+		typedef int (*xl_parse_cb) (str *s, int shm, xl_elog_p el);
+	    </p>
+              <p>Parameters of the callback function:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>s</em></span> - regular expression back reference
+			to be parsed (without the leading '\' character).
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>shm</em></span> - indicates whether or not shared
+			memory needs to be used. (1: shared memory, 0: private memory)
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - pointer to the xl-lib list item that
+			is supposed to be filled in.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+              <p>Return value: 0 - success, &lt;0 - error.</p>
+            </div>
+            <div class="section" title="1.1.5.  int shm_xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp3155648"></a>1.1.5. 
+		<code class="function">int shm_xparse2(char *s, xl_elog_p *el, xl_parse_cb cb)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Parse an xl-formatted string in shared memory supporting regular
+		expression back references.
+		See xparse2() function for details.
+	    </p>
+            </div>
+            <div class="section" title="1.1.6.  xfree(xl_elog_p el)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp3156808"></a>1.1.6. 
+		<code class="function">xfree(xl_elog_p el)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Free the xl-lib list allocated by xparse() or xparse2().
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - xl-lib list to be freed.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="section" title="1.1.7.  shm_xfree(xl_elog_p el)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2617880"></a>1.1.7. 
+		<code class="function">shm_xfree(xl_elog_p el)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Free the xl-lib list allocated by shm_xparse() or shm_xparse2().
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - xl-lib list to be freed.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="section" title="1.1.8.  int xprint(struct sip_msg* msg, xl_elog_p el, char *buf, int *len)">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2619912"></a>1.1.8. 
+		<code class="function">int xprint(struct sip_msg* msg, xl_elog_p el, char *buf, int *len)</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Evaluate the xl-formatted string and print the result into a buffer.
+	    </p>
+              <p>Meaning of the parameters is as follows:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>msg</em></span> - SIP message pointer.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>el</em></span> - xl-lib list to be evaluated.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>buf</em></span> - pre-allocated buffer that is filled in
+			with the result.
+		    </p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>len</em></span> - length of the printed string. len needs
+			to be set to the maximum length of the result buffer before calling
+			this function.
+		    </p>
+                  </li>
+                </ul>
+              </div>
+              <p>Return value: 0 - success, &lt;0 - error.</p>
+            </div>
+            <div class="section" title="1.1.9.  str *xnulstr()">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2624184"></a>1.1.9. 
+		<code class="function">str *xnulstr()</code>
+	    </h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+		Return the string "&lt;null&gt;".
+	    </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

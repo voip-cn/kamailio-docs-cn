@@ -1,0 +1,501 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>app_mono Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4408" title="app_mono Module" />
+    <link rel="next" href="#idp2486648" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="app_mono Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4408"></a>app_mono Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alex</span> <span class="surname">Balashov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:abalashov@evaristesys.com">abalashov@evaristesys.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 Daniel-Constantin Mierla (asipto.com)</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2486648">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1095352">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idm20472">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2739352">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1511040">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2543736">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2634960">3.1. <code class="varname">load</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp253912">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp254280">4.1. 
+		<code class="function">mono_exec(path [, param])</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp257040">4.2. 
+		<code class="function">mono_run([param])</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp259896">5. Usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2682008">Set <code class="varname">load</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp255808"><code class="function">mono_exec</code> usage</a></dt>
+          <dt>1.3. <a href="#idp258552"><code class="function">mono_run</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2486648"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1095352">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idm20472">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2739352">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1511040">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2543736">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2634960">3.1. <code class="varname">load</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp253912">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp254280">4.1. 
+		<code class="function">mono_exec(path [, param])</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp257040">4.2. 
+		<code class="function">mono_run([param])</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp259896">5. Usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1095352"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module allows the execution of assemblies of managed code, among 
+		the most popular of which is C# (.NET).
+		It uses the Mono project (http://www.mono-project.com/) to embed the managed
+		code interpreter inside the SIP server, providing fast execution.
+	</p>
+          <p>
+		Besides C#, other languages can be used to build managed assemblies,
+		such as: Java, Python, VisualBasic.NET, JavaScript. For more details on 
+		what kind of languages can be used to build managed
+		assemblies, see: http://www.mono-project.com/Languages
+	</p>
+          <p>
+		A managed assembly can get access to any Kamailio config variables
+		and set them.  It can also perform many other functions implemented inside
+		Kamailio itself, allowing easier handling of SIP from managed code.
+	</p>
+          <p>
+		There are two ways to execute managed code assemblies: load the code at
+		startup and only execute at runtime, or load and execute at runtime. Only
+		one mode at a time may be used.  The mode is determined by the 'load' 
+		parameter and the function used to execute the code.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm20472"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2739352"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1511040"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>mono-devel</em></span> - Mono devel toolkit.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2543736"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. load (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2634960"></a>3.1. <code class="varname">load</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the path to the Mono assembly to be loaded at startup.  You
+			can use mono_run(param) to execute the assembly at runtime.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">null</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp2682008"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">load</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_mono", "load", "/usr/local/etc/kamailio/mono/myscript.exe")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp253912"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  mono_exec(path [, param])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp254280"></a>4.1. 
+		<code class="function">mono_exec(path [, param])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the managed code assembly stored in 'path'. The path can be
+		a string with pseudo-variables evaluated at runtime. A second parameter
+		can optionally be provided; it will be passed to the assembly.
+	    </p>
+            <p>
+		Note that the assembly is loaded every time from the file, so any change
+		to it is immediately live. This function cannot be used if 'load'
+		parameter is set.
+		</p>
+            <div class="example">
+              <a id="idp255808"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">mono_exec</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mono_exec("/usr/local/etc/kamailio/mono/myscript.exe");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  mono_run([param])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp257040"></a>4.2. 
+		<code class="function">mono_run([param])</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute the assembly specified by 'load' module parameter. The assembly
+		is loaded at startup, so changes to it will be effective only after Kamailio
+		restart.
+	    </p>
+            <p>
+			An optional parameter can be given and it will be passed over to the
+			assembly. It can be a string with pseudo-variables; these will be
+			evaluated at runtime.
+	    </p>
+            <div class="example">
+              <a id="idp258552"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">mono_run</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!mono_run("myparam"))
+{
+    xdbg("SCRIPT: failed to execute mono assembly!\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp259896"></a>5. Usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	First, create a library from the 'SR.cs' file provided
+	in the folder 'modules/app_mono/lib/'. The examples uses the folder
+	/usr/local/etc/kamailio/mono/ to store the Mono-specific assemblies
+	to be used by Kamailio.
+	</p>
+          <pre class="programlisting">...
+mkdir -p /usr/local/etc/kamailio/mono/
+cp modules/app_mono/lib/SR.cs /usr/local/etc/kamailio/mono/
+gmcs -t:library SR.cs
+...</pre>
+          <p>
+	You should see the 'SR.dll' file generated.
+	</p>
+          <p>
+	Create your application in C#/.NET and save it
+	in the same folder with SR.dll. You have to use the SR package in your
+	managed source code file -- say you named MySRTest.cs. Also, be
+	aware that the Main() function from the managed assembly is executed;
+	thus, be sure that you have it defined.
+    </p>
+          <pre class="programlisting">...
+using SR;
+
+namespace MySRTest {
+	class Test {
+		static int Main(string[] args) {
+			SR.Core.Log(1, "Kamailio API Version: " + SR.Core.APIVersion() + "\n");
+			if (args.Length == 1) {
+				SR.Core.Log(1, "Parameter from Kamailio config: "
+					+ args[0] + "\n");
+			}
+			SR.Core.Dbg("Request URI is: " + SR.PV.GetS("$ru") + "\n");
+			SR.PV.SetS("$rU", "123");
+			SR.HDR.AppendToReply("My-Mono-Hdr: ok\r\n");
+			SR.Core.ModF("sl_reply_error");
+			return 1;
+		}
+	}
+}
+...</pre>
+          <p>
+	You have to compile the 'SR.dll' file generated.
+	</p>
+          <pre class="programlisting">...
+$ gmcs -r:SR.dll MySRTest.cs
+...</pre>
+          <p>
+		You should see the file 'MySRTest.exe' generated in the folder.
+    </p>
+          <p>
+		In the Kamailio config file, load the app_mono.so module and use
+		its functions inside the routing blocks.
+    </p>
+          <pre class="programlisting">...
+loadmodule "app_mono.so"
+...
+route {
+    ...
+    mono_exec("/usr/local/etc/kamailio/mono/MySRTest.exe");
+    ...
+}
+...</pre>
+          <p>
+		The API exported by the SR package to Mono applications is documented
+		on the Kamailio wiki site. Also, it is easy to figure out by looking
+		in the source code tree inside the file modules/app_mono/lib/SR.cs.
+    </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1488 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>KEx Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4289776" title="KEx Module" />
+    <link rel="next" href="#idp3092856" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="KEx Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4289776"></a>KEx Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">VoIP Embedded, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:osas@voipembedded.com.com">osas@voipembedded.com.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2009 Daniel-Constantin Mierla</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2014 
+		<a class="ulink" href="javascript:if(confirm('http://www.voipembedded.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.voipembedded.com/'" tppabs="http://www.voipembedded.com/">VoIP Embedded, Inc.</a>
+		</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3092856">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2685448">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2961880">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3462448">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1680504">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1860136">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.setsflag">3.1. <code class="function">setsflag(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.issflagset">3.2. <code class="function">issflagset(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.resetsflag">3.3. <code class="function">resetsflag(flag)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.setbflag">3.4. <code class="function">setbflag(flag [, branch])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.isbflagset">3.5. <code class="function">isbflagset(flag [, branch])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.resetbflag">3.6. <code class="function">resetbflag(flag [, branch])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.setdsturi">3.7. <code class="function">setdsturi(uri)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.resetdsturi">3.8. <code class="function">resetdsturi()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.isdsturiset">3.9. <code class="function">isdsturiset()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.pv_printf">3.10. <code class="function">pv_printf(var, str)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.is_myself">3.11. <code class="function">is_myself(uri)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.setdebug">3.12. <code class="function">setdebug(level)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.resetdebug">3.13. <code class="function">resetdebug()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.f.km_append_branch">3.14. <code class="function">km_append_branch([uri])</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp29480">4. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.arg">4.1. 
+		<code class="function">arg</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.kill">4.2. 
+		<code class="function">kill</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.pwd">4.3. 
+		<code class="function">pwd</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.uptime">4.4. 
+		<code class="function">uptime</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.version">4.5. 
+		<code class="function">version</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.which">4.6. 
+		<code class="function">which</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.get_statistics">4.7. 
+		<code class="function">get_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.reset_statistics">4.8. 
+		<code class="function">reset_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.m.clear_statistics">4.9. 
+		<code class="function">clear_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1487592">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.r.pkg.stats">5.1. 
+		<code class="function">pkg.stats</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.r.stats.get_statistics">5.2. 
+		<code class="function">stats.get_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.r.stats.reset_statistics">5.3. 
+		<code class="function">stats.reset_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#kex.r.stats.clear_statistics">5.4. 
+		<code class="function">stats.clear_statistics</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2508448"><code class="function">setsflag</code> usage</a></dt>
+          <dt>1.2. <a href="#idp3505304"><code class="function">issflagset</code> usage</a></dt>
+          <dt>1.3. <a href="#idm11032"><code class="function">resetsflag</code> usage</a></dt>
+          <dt>1.4. <a href="#idm6632"><code class="function">setbflag</code> usage</a></dt>
+          <dt>1.5. <a href="#idm2120"><code class="function">isbflagset</code> usage</a></dt>
+          <dt>1.6. <a href="#idp73704"><code class="function">resetbflag</code> usage</a></dt>
+          <dt>1.7. <a href="#idp77680"><code class="function">setdsturi</code> usage</a></dt>
+          <dt>1.8. <a href="#idp80128"><code class="function">resetdsturi</code> usage</a></dt>
+          <dt>1.9. <a href="#idp82592"><code class="function">isdsturiset</code> usage</a></dt>
+          <dt>1.10. <a href="#idp87024"><code class="function">pv_printf</code> usage</a></dt>
+          <dt>1.11. <a href="#idp21048"><code class="function">is_myself</code> usage</a></dt>
+          <dt>1.12. <a href="#idp24616"><code class="function">setdebug</code> usage</a></dt>
+          <dt>1.13. <a href="#idp27168"><code class="function">resetdebug</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3092856"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2685448">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2961880">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3462448">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1680504">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1860136">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.setsflag">3.1. <code class="function">setsflag(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.issflagset">3.2. <code class="function">issflagset(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.resetsflag">3.3. <code class="function">resetsflag(flag)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.setbflag">3.4. <code class="function">setbflag(flag [, branch])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.isbflagset">3.5. <code class="function">isbflagset(flag [, branch])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.resetbflag">3.6. <code class="function">resetbflag(flag [, branch])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.setdsturi">3.7. <code class="function">setdsturi(uri)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.resetdsturi">3.8. <code class="function">resetdsturi()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.isdsturiset">3.9. <code class="function">isdsturiset()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.pv_printf">3.10. <code class="function">pv_printf(var, str)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.is_myself">3.11. <code class="function">is_myself(uri)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.setdebug">3.12. <code class="function">setdebug(level)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.resetdebug">3.13. <code class="function">resetdebug()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.f.km_append_branch">3.14. <code class="function">km_append_branch([uri])</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp29480">4. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.arg">4.1. 
+		<code class="function">arg</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.kill">4.2. 
+		<code class="function">kill</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.pwd">4.3. 
+		<code class="function">pwd</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.uptime">4.4. 
+		<code class="function">uptime</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.version">4.5. 
+		<code class="function">version</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.which">4.6. 
+		<code class="function">which</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.get_statistics">4.7. 
+		<code class="function">get_statistics</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.reset_statistics">4.8. 
+		<code class="function">reset_statistics</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.m.clear_statistics">4.9. 
+		<code class="function">clear_statistics</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1487592">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.r.pkg.stats">5.1. 
+		<code class="function">pkg.stats</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.r.stats.get_statistics">5.2. 
+		<code class="function">stats.get_statistics</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.r.stats.reset_statistics">5.3. 
+		<code class="function">stats.reset_statistics</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#kex.r.stats.clear_statistics">5.4. 
+		<code class="function">stats.clear_statistics</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2685448"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module collects extensions from Kamailio core.
+	</p>
+          <p>
+	Kamailio Core CookBook is available at:
+	<a class="ulink" href="javascript:if(confirm('http://kamailio.org/dokuwiki/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个与它的启始地址很远的链接。如果你增大启始地址域内深度设置, 该文件将被加入下载队列。  \n\n你想在服务器上打开它?'))window.location='http://kamailio.org/dokuwiki/'" tppabs="http://kamailio.org/dokuwiki/">
+	http://kamailio.org/dokuwiki/</a>
+	</p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2961880"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3462448"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1680504"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1860136"></a>3.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽setsflag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.setsflag"></a>3.1.聽<code class="function">setsflag(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the script flag.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the script flag to
+				be set. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp2508448"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽<code class="function">setsflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+setsflag("1");
+...
+$var(flag) = 11;
+setsflag("$var(flag)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽issflagset(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.issflagset"></a>3.2.聽<code class="function">issflagset(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return true of the script flag is set.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the script flag to
+				be tested. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3505304"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽<code class="function">issflagset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(issflagset("1"))
+{
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽resetsflag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.resetsflag"></a>3.3.聽<code class="function">resetsflag(flag)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reset the script flag.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the script flag to
+				be reset. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm11032"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽<code class="function">resetsflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+resetsflag("1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽setbflag(flag [, branch])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.setbflag"></a>3.4.聽<code class="function">setbflag(flag [, branch])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the branch flag.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the branch flag to
+				be set. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>branch</em></span> - the index of the branch whose
+				flag to be set. Can be integer or pseudo-variable with integer
+				value. If omitted, then branch 0 is used (R-URI).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm6632"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽<code class="function">setbflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+setbflag("1");
+...
+$var(flag) = 11;
+setbflag("$var(flag)", "1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.聽isbflagset(flag [, branch])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.isbflagset"></a>3.5.聽<code class="function">isbflagset(flag [, branch])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return true of the branch flag is set.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the branch flag to
+				be tested. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>branch</em></span> - the index of the branch whose
+				flag to be set. Can be integer or pseudo-variable with integer
+				value. If omitted, then branch 0 is used (R-URI).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm2120"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽<code class="function">isbflagset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(isbflagset("1"))
+{
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.聽resetbflag(flag [, branch])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.resetbflag"></a>3.6.聽<code class="function">resetbflag(flag [, branch])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reset the branch flag.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - the index of the branch flag to
+				be reset. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>branch</em></span> - the index of the branch whose
+				flag to be set. Can be integer or pseudo-variable with integer
+				value. If omitted, then branch 0 is used (R-URI).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp73704"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽<code class="function">resetbflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+resetbflag("1");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.聽setdsturi(uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.setdsturi"></a>3.7.聽<code class="function">setdsturi(uri)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the destination address URI (outbound proxy address).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>uri</em></span> - Valid SIP URI representing the
+				address where to send the request. It must be a static string,
+				no variables are evaluated at runtime. If you need to set
+				outbound proxy address via a variable, use assginment to
+				<span class="emphasis"><em>$du</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp77680"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽<code class="function">setdsturi</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+setdsturi("sip:10.0.0.10");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.聽resetdsturi()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.resetdsturi"></a>3.8.聽<code class="function">resetdsturi()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reset the destination address URI (outbound proxy address).
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp80128"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽<code class="function">resetdsturi</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+resetdsturi();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.聽isdsturiset()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.isdsturiset"></a>3.9.聽<code class="function">isdsturiset()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Check if the destination address URI (outbound proxy address)
+			is set.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp82592"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽<code class="function">isdsturiset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(isdsturiset())
+{
+   ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.聽pv_printf(var, str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.pv_printf"></a>3.10.聽<code class="function">pv_printf(var, str)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Evalues the str and sets the resulting value to variable var. For
+			backward compatibility reasons, the same function can be executed via
+			'avp_printf(var, str)'.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>var</em></span> - name of a writable variable
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>str</em></span> - string that may contain variables
+				which will be evaluated at runtime.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp87024"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽<code class="function">pv_printf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pv_printf("$ru", "sip:$rU@$fd");
+pv_printf("$avp(x)", "From: $fU - To: $tU");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.聽is_myself(uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.is_myself"></a>3.11.聽<code class="function">is_myself(uri)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Check if the parameter matches the 'myself' condition (i.e., is
+			a local IP or domain).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>uri</em></span> - Valid SIP URI or IP address to
+				check against the list of local IP addresses or domains.
+				The parameter value can contain pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp21048"></a>
+              <p class="title">
+                <strong>Example聽1.11.聽<code class="function">is_myself</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_myself("$fu")) {
+    ...
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.聽setdebug(level)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.setdebug"></a>3.12.聽<code class="function">setdebug(level)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set the debug log level per process.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>level</em></span> - the debug log level to
+				be set. Can be integer or pseudo-variable with integer value.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp24616"></a>
+              <p class="title">
+                <strong>Example聽1.12.聽<code class="function">setdebug</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+setdebug("1");
+...
+$var(level) = 2;
+setdebug("$var(level)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.聽resetdebug()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.resetdebug"></a>3.13.聽<code class="function">resetdebug()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reset the local debug log level back to the value of core parameter
+		'debug'.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp27168"></a>
+              <p class="title">
+                <strong>Example聽1.13.聽<code class="function">resetdebug</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+resetdebug();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.聽km_append_branch([uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.f.km_append_branch"></a>3.14.聽<code class="function">km_append_branch([uri])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function was replaced by append_branch() from corex module, starting with
+			version 4.0.0.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.聽MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp29480"></a>4.聽MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽 arg">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.arg"></a>4.1.聽
+		<code class="function">arg</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print command line arguments.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>arg</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:arg:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.2.聽 kill">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.kill"></a>4.2.聽
+		<code class="function">kill</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Kill the application.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>kill</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:kill:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.3.聽 pwd">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.pwd"></a>4.3.聽
+		<code class="function">pwd</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print working directory.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pwd</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pwd:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.4.聽 uptime">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.uptime"></a>4.4.聽
+		<code class="function">uptime</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print uptime.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>uptime</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:uptime:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.5.聽 version">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.version"></a>4.5.聽
+		<code class="function">version</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print version information.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>version</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:version:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.6.聽 which">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.which"></a>4.6.聽
+		<code class="function">which</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print list of available MI commands.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>which</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span>.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:which:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.7.聽 get_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.get_statistics"></a>4.7.聽
+		<code class="function">get_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print the list of available internal statistics.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>get_statistics</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>statsid</em></span> - which statistics to
+			be printed. If set to 'all' then all statistics are printed; if
+			set to 'statsgroup:' then all statistics in the group are printed;
+			if set to 'statsname' then the statistics identified by the name
+			is printed.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:get_statistics:_reply_fifo_file_
+		_statsid_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.8.聽 reset_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.reset_statistics"></a>4.8.聽
+		<code class="function">reset_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reset internal statistics.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>reset_statistics</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>statsid</em></span> - which statistics to
+			be reset, give as name.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:reset_statistics:_reply_fifo_file_
+		_statsid_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="4.9.聽 clear_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.m.clear_statistics"></a>4.9.聽
+		<code class="function">clear_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Return statistics and reset their value in one command.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>get_statistics</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>statsid</em></span> - same as for
+			get_statistics.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:clear_statistics:_reply_fifo_file_
+		_statsid_
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="5.聽RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1487592"></a>5.聽RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.聽 pkg.stats">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.r.pkg.stats"></a>5.1.聽
+		<code class="function">pkg.stats</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Print private memory (pkg) usage statistics per process. It
+			can take optinally a filter to print statistics only for a
+			specific process or set of processes. If no filter is given,
+			it prints statistics for all processes.
+		</p>
+            <p>The filter can be:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pid value</em></span> - print statistics for
+				specific process pid.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>rank value</em></span> - print statistics for
+				specific process rank.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>index value</em></span> - print statistics for
+				specific index in process table.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Examples:
+		</p>
+            <pre class="programlisting">		kamcmd pkg.stats
+		kamcmd pkg.stats pid 1234
+		kamcmd pkg.stats rank 1
+		kamcmd pkg.stats index 10</pre>
+          </div>
+          <div class="section" title="5.2.聽 stats.get_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.r.stats.get_statistics"></a>5.2.聽
+		<code class="function">stats.get_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Print the list of available internal statistics.</p>
+            <p>Parameters: <span class="emphasis"><em>statsid</em></span> - which statistics to
+			be printed. If set to 'all' then all statistics are printed; if
+			set to 'statsgroup:' then all statistics in the group are printed;
+			if set to 'statsname' then the statistics identified by the name
+			is printed.</p>
+            <p>Examples:</p>
+            <pre class="programlisting">		kamcmd stats.get_statistics all
+		kamcmd stats.get_statistics core:
+		kamcmd stats.get_statistics unsupported_methods
+		kamcmd stats.get_statistics shmem: fwd_requests fwd_replies</pre>
+          </div>
+          <div class="section" title="5.3.聽 stats.reset_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.r.stats.reset_statistics"></a>5.3.聽
+		<code class="function">stats.reset_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Reset internal statistics.</p>
+            <p>
+		Parameters: <span class="emphasis"><em>statsid</em></span> - same as for get_statistics.
+		</p>
+            <p>Examples:</p>
+            <pre class="programlisting">		kamcmd stats.reset_statistics all
+		kamcmd stats.reset_statistics core:
+		kamcmd stats.reset_statistics unsupported_methods
+		kamcmd stats.reset_statistics shmem: fwd_requests fwd_replies</pre>
+          </div>
+          <div class="section" title="5.4.聽 stats.clear_statistics">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="kex.r.stats.clear_statistics"></a>5.4.聽
+		<code class="function">stats.clear_statistics</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>Return statistics and reset their value in one command.</p>
+            <p>
+		Parameters: <span class="emphasis"><em>statsid</em></span> - same as for get_statistics.
+		</p>
+            <p>Examples:</p>
+            <pre class="programlisting">		kamcmd stats.reset_statistics all
+		kamcmd stats.reset_statistics core:
+		kamcmd stats.reset_statistics unsupported_methods
+		kamcmd stats.reset_statistics shmem: fwd_requests fwd_replies</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,973 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SQLOps Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4260808" title="SQLOps Module" />
+    <link rel="next" href="#idp3194536" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SQLOps Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4260808"></a>SQLOps Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 http://www.asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3194536">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1691184">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3214328">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2462112">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2060488">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2438744">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2219904">3.1. <code class="varname">sqlcon</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2116560">3.2. <code class="varname">sqlres</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3512384">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2170696">4.1. 
+		<code class="function">sql_query(connection, query[, result])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3148432">4.2. 
+		<code class="function">sql_xquery(connection, query, result)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3247200">4.3. 
+		<code class="function">sql_pvquery(connection, query, result)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1704584">4.4. 
+		<code class="function">sql_result_free(result)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sqlops.f.sql_query_async">4.5. 
+		<code class="function">sql_query_async(connection, query)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2116016">5. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3400496">5.1. <code class="varname">$dbr(result=&gt;key)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3160432">5.2. <code class="varname">$sqlrows(con)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3456632">Set <code class="varname">sqlcon</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp2306448">Set <code class="varname">sqlres</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp3557000"><code class="function">sql_query()</code> usage</a></dt>
+          <dt>1.4. <a href="#idp2588024"><code class="function">sql_xquery()</code> usage</a></dt>
+          <dt>1.5. <a href="#idp2918536"><code class="function">sql_pvquery()</code> usage</a></dt>
+          <dt>1.6. <a href="#idp3616336"><code class="function">sql_result_free()</code> usage</a></dt>
+          <dt>1.7. <a href="#idp2675064"><code class="function">sql_query_async()</code> usage</a></dt>
+          <dt>1.8. <a href="#idp2967616"><code class="function">$dbr(result=&gt;key)</code> usage</a></dt>
+          <dt>1.9. <a href="#idp2912272"><code class="function">$sqlrows(con)</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3194536"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1691184">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3214328">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2462112">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2060488">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2438744">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2219904">3.1. <code class="varname">sqlcon</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2116560">3.2. <code class="varname">sqlres</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3512384">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2170696">4.1. 
+		<code class="function">sql_query(connection, query[, result])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3148432">4.2. 
+		<code class="function">sql_xquery(connection, query, result)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3247200">4.3. 
+		<code class="function">sql_pvquery(connection, query, result)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1704584">4.4. 
+		<code class="function">sql_result_free(result)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sqlops.f.sql_query_async">4.5. 
+		<code class="function">sql_query_async(connection, query)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2116016">5. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3400496">5.1. <code class="varname">$dbr(result=&gt;key)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3160432">5.2. <code class="varname">$sqlrows(con)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1691184"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The SQLOPS module adds support for raw SQL queries in the configuration file.
+	</p>
+          <p>
+		Among the features:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Multiple database connections</em></span> - the sqlops module
+			can connect to many databases on different servers using different DB
+			driver modules at the same time.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Many query results</em></span> - the module can store
+			many results of different SQL queries in separate structures at
+			the same time. Thus it is possible to work in parallel with several
+			queries and results.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Access via pseudo-variables</em></span> - the content
+			of the SQL query result is accessible via pseudo-variables. Please
+			note that only integer and string variables are supported at the
+			moment because of the internal usage of <span class="quote">“<span class="quote">AVPs</span>”</span> to hold
+			the values. So it is not possible for example to return floating
+			point or big integer values this way.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Array indexes</em></span> - fast access to result values
+			via array position: [row,column].
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Persistence in process space</em></span> - a result can
+			be used many times in the same worker process. Query once, use many
+			times.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>Results can be stored in xavps</em></span>
+			- columns are accessed by their names, rows by xavp index. Xavp's
+			are available during the transactions lifetime and don't need to
+			be destroyed manually.
+		</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3214328"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2462112"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>a DB SQL module (mysql, postgres, ...)</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2060488"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2438744"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. sqlcon (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2219904"></a>3.1. <code class="varname">sqlcon</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The definition of a DB connection. The value of the parameter must have
+		the following format:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		"connection_name=&gt;database_url"
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This parameter may be set multiple times to get many DB connections
+			in the same configuration file.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>connection_name</em></span> - string specifying the name
+			of a database connection. This string is used by the <span class="quote">“<span class="quote">sql_query()</span>”</span>
+			function to refer to the DB connection.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>database_url</em></span> - Standardized Kamailio database URL
+			used to connect to database.
+		</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3456632"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">sqlcon</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","cb=&gt;mysql://kamailio:abc@10.10.1.1/testdb")
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. sqlres (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2116560"></a>3.2. <code class="varname">sqlres</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The definition of a database result ID. The value of the parameter can be
+		any string. Results IDs are also added at fixup time when sql_query()
+		parameters are parsed, so there is no need to decalare them via module
+		parameter unless you want to use them from within other modules and be
+		available in all application processes.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2306448"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">sqlres</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops", "sqlres", "ra")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3512384"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Note that sql_query(), sql_xquery() and sql_pvquery() functions have
+		the following return values:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>-1</em></span> - error in parameters or query execution
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>1</em></span> - query successful, at least one row in resultset (for SELECTs)
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>2</em></span> - query successful, no rows returned
+		</p>
+              </li>
+            </ul>
+          </div>
+          <div class="section" title="4.1.  sql_query(connection, query[, result])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2170696"></a>4.1. 
+		<code class="function">sql_query(connection, query[, result])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Make an SQL query using 'connection' and store data in 'result'.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>connection</em></span> - the name of the connection
+				to be used for the query (defined via the <span class="quote">“<span class="quote">sqlcon</span>”</span> parameter).
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>query</em></span> - SQL query string or pseudo-variables containing SQL query.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>result</em></span> - string name to identify the
+				result. Will be used by $dbr(...) pseudo-variable to access
+				result attributes.
+				If omitted, any resultset will be discarded. The result parameter should
+				normally only be omitted when no result is expected (INSERT, UPDATE, DELETE).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3557000"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">sql_query()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_query("ca", "select * from domain", "ra");
+xlog("number of rows in table domain: $dbr(ra=&gt;rows)\n");
+sql_result_free("ra");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  sql_xquery(connection, query, result)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3148432"></a>4.2. 
+		<code class="function">sql_xquery(connection, query, result)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Make an SQL query using 'connection' and store data in 'result' xavp.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>connection</em></span> - the name of the connection
+				to be used for the query (defined via the <span class="quote">“<span class="quote">sqlcon</span>”</span> parameter).
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>query</em></span> - SQL query string or pseudo-variables containing SQL query.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>result</em></span> - string name to identify the
+				result xavp. Each row will be added to this xavp, each column can 
+				be accessed by its name.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp2588024"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">sql_xquery()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_xquery("ca", "select * from domain", "ra");
+xlog("first domain: $xavp(ra=&gt;domain) with id: $xavp(ra=&gt;domain_id)\n");
+...
+if (sql_xquery("ca", "select * from domain", "ra") == 1) {
+    xlog("domain: $xavp(ra=&gt;domain) with id: $xavp(ra=&gt;domain_id)\n");
+}
+..</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  sql_pvquery(connection, query, result)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3247200"></a>4.3. 
+		<code class="function">sql_pvquery(connection, query, result)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Make an SQL query using 'connection' and store data in arbitrary
+			pseudo variables specified by 'result' parameter.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>connection</em></span> - the name of the connection
+				to be used for query (defined via the <span class="quote">“<span class="quote">sqlcon</span>”</span> parameter).
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>query</em></span> - SQL query string or pseudo-variables containing SQL query.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>result</em></span> - a list with PV names where
+				to store the result. The format is
+				<span class="quote">“<span class="quote">$pv;$pv;...</span>”</span>. Every PV that is writable may 
+				be used (for example $var, $avp, $xavp, $ru, $du, $sht, etc).
+			</p>
+                  <p>
+				The PV are assigned values in the following order: last row
+				to first row, first field to last field. Assignment has the
+				same behavior as assigning in the script itself with one
+				exception for avp's, a NULL value will not delete an avp, but
+				will be skipped over.
+			</p>
+                  <p>
+				Beware that if multiple rows are returned, non-(x)avp variables
+				will only hold the last added value, which corresponds to the 
+				first returned row.
+			</p>
+                  <p>
+				The value type of the PV (string or integer) will
+				be derived from the type of the columns. Please note that only
+				these two datatypes are supported, other datatypes will/may be
+				converted to string.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp2918536"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">sql_pvquery()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_pvquery("ca", "select 'col1', 2, NULL, 'sip:test@example.com'",
+	"$var(a), $avp(col2), $xavp(item[0]=&gt;s), $ru");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  sql_result_free(result)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1704584"></a>4.4. 
+		<code class="function">sql_result_free(result)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Free data in SQL 'result'.
+		</p>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3616336"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">sql_result_free()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_query("ca", "select * from domain", "ra");
+xlog("number of rows in table domain: $dbr(ra=&gt;rows)\n");
+...
+sql_result_free("ra");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  sql_query_async(connection, query)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sqlops.f.sql_query_async"></a>4.5. 
+		<code class="function">sql_query_async(connection, query)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Make an async SQL query using 'connection', if implemented by db
+			driver module (e.g., db_mysql). The query is executed in another
+			process and result is not available back to config, thus it should
+			be used only for sql statements that don't return values (e.g.,
+			insert, delete, update...). Note that async_workers core parameter
+			must be set in order to enable the asyncronous framework
+			needed by this function.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>connection</em></span> - the name of the connection
+				to be used for the query (defined via <span class="quote">“<span class="quote">sqlcon</span>”</span>
+				parameter).
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>query</em></span> - SQL query string or
+				pseudo-variables containing SQL query.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp2675064"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">sql_query_async()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_query_async("ca", "delete from domain");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2116016"></a>5. Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. $dbr(result=&gt;key)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3400496"></a>5.1. <code class="varname">$dbr(result=&gt;key)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Access hash table entries.
+			</p>
+            <p>
+				The <span class="quote">“<span class="quote">result</span>”</span> must be the name identifying a SQL
+				result (third parameter of sql_query(...)).
+			</p>
+            <p>
+			The <span class="quote">“<span class="quote">key</span>”</span> can be:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>rows</em></span> - return the number of rows in
+						query result</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>cols</em></span> - return the number of
+						columns in the result.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>[row,col]</em></span> - return the value
+					at position (row,col) in the result set. 'row' and 'col' must
+					be integer or pseudo-variable holding an integer.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>colname[N]</em></span> - return the name
+					of the N-th column in the result set.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp2967616"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">$dbr(result=&gt;key)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_query("ca", "select * from domain", "ra");
+xlog("rows: $dbr(ra=&gt;rows) cols: $dbr(ra=&gt;cols)\n");
+if($dbr(ra=&gt;rows)&gt;0)
+{
+    $var(i) = 0;
+    while($var(i)&lt;$dbr(ra=&gt;cols))
+    {
+        xlog("--- SCRIPT: column[$var(i)] = $dbr(ra=&gt;colname[$var(i)])\n");
+        $var(i) = $var(i) + 1;
+    }
+    $var(i) = 0;
+    while($var(i)&lt;$dbr(ra=&gt;rows))
+    {
+        $var(j) = 0;
+        while($var(j)&lt;$dbr(ra=&gt;cols))
+        {
+            xlog("[$var(i),$var(j)] = $dbr(ra=&gt;[$var(i),$var(j)])\n");
+            $var(j) = $var(j) + 1;
+        }
+        $var(i) = $var(i) + 1;
+    }
+}
+sql_result_free("ra");
+...
+
+
+...
+if (sql_xquery("ca", "select * from domain", "ra") == 1)
+{
+# non-destructive iteration
+    $var(i) = 0;
+    while($xavp(ra[$var(i)]) != $null)
+    {
+        xlog("[id, domain] = [$xavp(ra[$var(i)]=&gt;id), $xavp(ra[$var(i)]=&gt;domain)]\n");
+        $var(i) = $var(i) + 1;
+    }
+
+# destructive iteration
+    while($xavp(ra) != $null)
+    {
+        xlog("[id, domain] = [$xavp(ra=&gt;id), $xavp(ra=&gt;domain)]\n");
+        pv_unset("$xavp(ra)");
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. $sqlrows(con)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3160432"></a>5.2. <code class="varname">$sqlrows(con)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Number of affected rows of the previous query on the
+				specified connection. It's primary use is to get the number
+				of rows affected by UPDATE, INSERT and DELETE queries.
+			</p>
+            <p>
+				<span class="quote">“<span class="quote">con</span>”</span> must be the name identifying a DB
+				connection.
+			</p>
+            <div class="example">
+              <a id="idp2912272"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">$sqlrows(con)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sqlops","sqlcon","ca=&gt;dbdriver://username:password@dbhost/dbname")
+...
+sql_query("ca", "update domain set domain='mydomain' where id=5");
+xlog("Affected rows: $sqlrows(ca)\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

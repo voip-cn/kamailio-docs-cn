@@ -1,0 +1,494 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>presence_dialoginfo Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4234168" title="presence_dialoginfo Module" />
+    <link rel="next" href="#idp1399656" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="presence_dialoginfo Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4234168"></a>presence_dialoginfo Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <span class="firstname">Klaus<br /></span>
+              <span class="surname">Darilion<br /></span>
+              <code class="email">&lt;<a class="email" href="mailto:klaus.darilion@mailinglists@pernau.at">klaus.darilion@mailinglists@pernau.at</a>&gt;</code>
+              <div class="author">
+                <h3 class="author"></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Klaus</span> <span class="surname">Darilion</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:klaus.darilion@mailinglists@pernau.at">klaus.darilion@mailinglists@pernau.at</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Juha Heinanen</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 Klaus Darilion, IPCom (Module implementation was partly sponsored by Silver Server (www.sil.at))</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1399656">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2585296">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1568488">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2693808">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1580408">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2662648">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2516464">3.1. <code class="varname">force_single_dialog</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp245880">3.2. <code class="varname">force_dummy_dialog</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp211376">4. Functions</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp94784">Set <code class="varname"></code> parameter</a></dt>
+          <dt>1.2. <a href="#idp210240">Set <code class="varname"></code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1399656"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2585296">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1568488">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2693808">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1580408">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2662648">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2516464">3.1. <code class="varname">force_single_dialog</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp245880">3.2. <code class="varname">force_dummy_dialog</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp211376">4. Functions</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2585296"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p> 
+	      The module enables the handling of "Event: dialog" (as defined 
+	      in RFC 4235) inside of the presence module. This can be used
+	      distribute the dialog-info status to the subscribed watchers.
+	    </p>
+          <p>
+ 	      The module does not currently implement any authorization
+	      rules.  It assumes that publish requests are only issued by
+	      an authorized application and subscribe requests only by
+	      authorized users.  Authorization can thus be easily done in 
+	      Kamailio configuration file before calling handle_publish() 
+	      and handle_subscribe() functions.
+	    </p>
+          <p>
+	      Note: This module only activates the processing of the "dialog" 
+	      in the presence module. To send dialog-info to watchers you also 
+	      need a source which PUBLISH the dialog info to the presence module.
+	      For example you can use the pua_dialoginfo module or any external
+	      component. This approach allows to have the presence server and the
+	      dialog-info aware publisher (e.g. the main proxy) on different 
+	      Kamailio instances.
+	    </p>
+          <p>
+			This module by default does body aggregation. That means, if the presence 
+			module received PUBLISH from multiple presentities (e.g. if the entity has
+			multiple dialogs the pua_dialoginfo will send multiple PUBLISH), the
+			module will parse all the received (and still valid, depending on the Expires 
+			header in the PUBLISH request) XML documents and generate a single 
+			XML document with multiple "dialog" elements. This is perfectly valid, but
+			unfortunately not supported by all SIP phones, e.g. Linksys SPA962 crashes
+			when it receives dialog-info with multiple dialog elements. In this case use
+			the ..... module parameter.
+	    </p>
+          <p>
+			To get better understanding how all the module works together please take a
+			look at the follwing figure:
+        </p>
+          <pre class="programlisting">    Main Proxy and Presence Server on the same Instance
+
+   caller        proxy &amp;      callee         watcher
+alice@example   presence   bob@example   watcher@example
+                 server
+     |             |            |               |
+     |             |&lt;-------SUBSCRIBE bob-------|
+     |             |--------200 OK-------------&gt;|
+     |             |--------NOTIFY-------------&gt;|
+     |             |&lt;-------200 OK--------------|
+     |             |            |               |
+     |--INV bob---&gt;|            |               |
+     |             |--INV bob--&gt;|               |
+     |             |&lt;-100-------|               |
+     |             |            |               |
+     |             |&lt;-180 ring--|               |
+     |&lt;--180 ring--|            |               |
+     |             |--          |               |
+     |             |   \        |               |
+     |             | PUBLISH bob|               |
+     |             |   /        |               |
+     |             |&lt;-          |               |
+     |             |            |               |
+     |             |--          |               |
+     |             |   \        |               |
+     |             | 200 ok     |               |
+     |             |   /        |               |
+     |             |&lt;-          |               |
+     |             |--------NOTIFY-------------&gt;|
+     |             |&lt;-------200 OK--------------|
+     |             |            |               |</pre>
+          <p>
+
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+					The watcher subscribes the "Event: dialog" of Bob.
+				</p>
+              </li>
+              <li class="listitem">
+                <p>
+					Alice calls Bob.
+				</p>
+              </li>
+              <li class="listitem">
+                <p>
+					Bob replies with ringing, the dialog in the dialog module
+					transits to "early". The callback in pua_dialoginfo is executed.
+					The pua_dialoginfo module creates the XML document and uses the
+					pua module to send the PUBLISH. (pua module itself uses tm module
+					to send the PUBLISH stateful)
+				</p>
+              </li>
+              <li class="listitem">
+                <p>
+					PUBLISH is received and handled by presence module. Presence
+					module updates the "presentity". Presence module checks for active watchers
+					of the presentity. It gives all the XML dcouments to presence_dialoginfo
+					module to aggregate them into a single XML document. Then it sends the 
+					NOTIFY with the aggregated XML document to all active watchers.
+				</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+
+			The presence server can also be separated from the main proxy by using a separate 
+			Kamailio instance as shown in the following figure. (Either set the outbound_proxy
+			parameter of pua module or make sure to route the "looped" PUBLISH requests from the 
+			main proxy to the presence server).
+
+        </p>
+          <pre class="programlisting">    Main Proxy and Presence Server use a separate Instance
+
+   caller        proxy &amp;   presence      callee         watcher
+alice@example    server     server     bob@example   watcher@example
+     |             |            |               |            |
+     |             |&lt;--------------------SUBSCRIBE bob-------|
+     |             |-SUBSC bob-&gt;|               |            |
+     |             |&lt;-200 ok----|               |            |
+     |             |---------------------200 OK-------------&gt;|
+     |             |          .... NOTIFY ... 200 OK ...     |
+     |             |            |               |            |
+     |             |            |               |            |
+     |--INV bob---&gt;|            |               |            |
+     |             |--INV bob------------------&gt;|            |
+     |             |&lt;-100-----------------------|            |
+     |             |            |               |            |
+     |             |&lt;-180 ring------------------|            |
+     |&lt;--180 ring--|            |               |            |
+     |             |--PUBL bob-&gt;|               |            |
+     |             |&lt;-200 ok----|               |            |
+     |             |            |--------NOTIFY-------------&gt;|
+     |             |            |&lt;-------200 OK--------------|
+     |             |            |               |            |</pre>
+          <p>
+
+	    </p>
+          <p>
+			Known issues:
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+					The "version" attribute is increased for every NOTIFY, even 
+					if the XML document has not changed. This is of course valid,
+					but not very smart.
+				</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+
+
+
+	    </p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1568488"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2693808"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>presence</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1580408"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		None.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2662648"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. force_single_dialog (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2516464"></a>3.1. <code class="varname">force_single_dialog</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			By default the module aggregates all available dialog info
+			into a single dialog-info document containing multiple
+			"dialog" elements. If the phone does not support this, you
+			can activate this parameter.
+		</p>
+            <p>
+			If this parameter is set, only the dialog element with the
+			currently most interesting dialog state will be put into the 
+			dialog-info document. Thus, the dialog-info element will contain
+			only a single "dialog" element. The algorithm chooses the state
+			based onf the following order of priority (least important first):
+			terminated, trying, proceeding, confirmed, early. Note: I consider
+			the "early" state more intersting than confirmed as often you might
+			want to pickup a call if the originall callee is already busy in a 
+			call.
+		</p>
+            <p>
+			<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.</em></span>
+		</p>
+            <div class="example">
+              <a id="idp94784"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname"></code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_dialoginfo", "force_single_dialog", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. force_dummy_dialog (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp245880"></a>3.2. <code class="varname">force_dummy_dialog</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            By default the module returns null body 
+            if there are no bodies to aggregate. 
+            some sip clients like Bria expect at least one dialog.
+            you can activate this parameter to send a dummy dialog.
+        </p>
+            <p>
+            If this parameter is set and there are no dialog bodies to aggregate,
+            it will return a dummy dialog.
+        </p>
+            <p>
+            <span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.</em></span>
+        </p>
+            <div class="example">
+              <a id="idp210240"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname"></code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("presence_dialoginfo", "force_dummy_dialog", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp211376"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			None to be used in configuration file.
+		</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

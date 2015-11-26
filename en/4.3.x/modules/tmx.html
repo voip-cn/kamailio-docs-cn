@@ -1,0 +1,1643 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>TMX Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4340304" title="TMX Module" />
+    <link rel="next" href="#idp3242232" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="TMX Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4340304"></a>TMX Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TutPro Inc.<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2009 Daniel-Constantin Mierla</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3242232">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2090008">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3014152">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2747392">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1789760">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2018024">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.p.precheck_trans">3.1. 
+		<code class="function">precheck_trans</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1775864">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_cancel_branches">4.1. 
+		<code class="function">t_cancel_branches(which)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_cancel_callid">4.2. 
+			<code class="function">t_cancel_callid(callid, cseq, flag [, rcode])
+			</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_reply_callid">4.3. 
+			<code class="function">t_reply_callid(callid, cseq, code, reason)
+			</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_flush_flags">4.4. 
+		<code class="function">t_flush_flags()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_is_failure_route">4.5. 
+		<code class="function">t_is_failure_route()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_is_branch_route">4.6. 
+		<code class="function">t_is_branch_route()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_is_reply_route">4.7. 
+		<code class="function">t_is_reply_route()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_suspend">4.8. 
+		<code class="function">t_suspend()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_continue">4.9. 
+			<code class="function">t_continue(tindex, tlabel, rtname)
+			</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_reuse_branch">4.10. 
+		<code class="function">t_reuse_branch()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.f.t_precheck_trans">4.11. 
+		<code class="function">t_precheck_trans()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp28528">5. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp34944">6. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.mi.t_uac_dlg">6.1. 
+		<code class="function">t_uac_dlg</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.mi.t_uac_cancel">6.2. 
+		<code class="function">t_uac_cancel</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.mi.t_hash">6.3. 
+		<code class="function">t_hash</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.mi.t_reply">6.4. 
+		<code class="function">t_reply</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tmx.mi.t_reply_callid">6.5. 
+		<code class="function">t_reply_callid</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1873432">7. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1874336">7.1. received_replies</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1875072">7.2. relayed_replies</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1875808">7.3. local_replies</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1876544">7.4. UAS_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1877280">7.5. UAC_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1878024">7.6. 2xx_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1878760">7.7. 3xx_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1879496">7.8. 4xx_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1880232">7.9. 5xx_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1880968">7.10. 6xx_transactions</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1881704">7.11. inuse_transactions</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2552832"><code class="function">precheck_trans</code> usage</a></dt>
+          <dt>1.2. <a href="#idm8528"><code class="function">t_cancel_branches</code> usage</a></dt>
+          <dt>1.3. <a href="#idm3184"><code class="function">t_cancel_callid</code> usage</a></dt>
+          <dt>1.4. <a href="#idp74128"><code class="function">t_reply_callid</code> usage</a></dt>
+          <dt>1.5. <a href="#idp77000"><code class="function">t_flush_flags</code> usage</a></dt>
+          <dt>1.6. <a href="#idp79552"><code class="function">t_is_failure_route</code> usage</a></dt>
+          <dt>1.7. <a href="#idp82232"><code class="function">t_is_branch_route</code> usage</a></dt>
+          <dt>1.8. <a href="#idp84904"><code class="function">t_is_reply_route</code> usage</a></dt>
+          <dt>1.9. <a href="#idp87832"><code class="function">t_suspend</code> usage</a></dt>
+          <dt>1.10. <a href="#idp21152"><code class="function">t_continue</code> usage</a></dt>
+          <dt>1.11. <a href="#idp23944"><code class="function">t_reuse_branch</code> usage</a></dt>
+          <dt>1.12. <a href="#idp27136"><code class="function">t_precheck_trans</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3242232"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2090008">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3014152">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2747392">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1789760">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2018024">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.p.precheck_trans">3.1. 
+		<code class="function">precheck_trans</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1775864">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_cancel_branches">4.1. 
+		<code class="function">t_cancel_branches(which)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_cancel_callid">4.2. 
+			<code class="function">t_cancel_callid(callid, cseq, flag [, rcode])
+			</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_reply_callid">4.3. 
+			<code class="function">t_reply_callid(callid, cseq, code, reason)
+			</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_flush_flags">4.4. 
+		<code class="function">t_flush_flags()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_is_failure_route">4.5. 
+		<code class="function">t_is_failure_route()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_is_branch_route">4.6. 
+		<code class="function">t_is_branch_route()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_is_reply_route">4.7. 
+		<code class="function">t_is_reply_route()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_suspend">4.8. 
+		<code class="function">t_suspend()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_continue">4.9. 
+			<code class="function">t_continue(tindex, tlabel, rtname)
+			</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_reuse_branch">4.10. 
+		<code class="function">t_reuse_branch()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.f.t_precheck_trans">4.11. 
+		<code class="function">t_precheck_trans()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp28528">5. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp34944">6. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.mi.t_uac_dlg">6.1. 
+		<code class="function">t_uac_dlg</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.mi.t_uac_cancel">6.2. 
+		<code class="function">t_uac_cancel</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.mi.t_hash">6.3. 
+		<code class="function">t_hash</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.mi.t_reply">6.4. 
+		<code class="function">t_reply</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tmx.mi.t_reply_callid">6.5. 
+		<code class="function">t_reply_callid</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1873432">7. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1874336">7.1. received_replies</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1875072">7.2. relayed_replies</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1875808">7.3. local_replies</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1876544">7.4. UAS_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1877280">7.5. UAC_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1878024">7.6. 2xx_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1878760">7.7. 3xx_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1879496">7.8. 4xx_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1880232">7.9. 5xx_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1880968">7.10. 6xx_transactions</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1881704">7.11. inuse_transactions</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2090008"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module collects extensions from Kamailio TM module.
+	</p>
+          <p>
+	Kamailio TM (Transaction Management) module documentation is available at:
+	<a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/modules/stable/tm.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/docs/modules/stable/tm.html'" tppabs="http://www.kamailio.org/docs/modules/stable/tm.html">
+	http://www.kamailio.org/docs/modules/stable/tm.html</a>
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3014152"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2747392"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tm</em></span> -  transaction management.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1789760"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2018024"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬† precheck_trans">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.p.precheck_trans"></a>3.1.¬†
+		<code class="function">precheck_trans</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable/disable transaction pre-check via t_precheck_trans()
+		function. If set to 0, the internal structures are not created
+		at startup and the funcation will return false always.
+		</p>
+            <p>
+		Default value is <span class="emphasis"><em>1</em></span> (enabled).
+		</p>
+            <div class="example">
+              <a id="idp2552832"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†<code class="function">precheck_trans</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tmx", "precheck_trans", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1775864"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† t_cancel_branches(which)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_cancel_branches"></a>4.1.¬†
+		<code class="function">t_cancel_branches(which)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Cancel branches of an active SIP transaction. The function can be
+		called for a SIP reply that will identify the current branch.
+		</p>
+            <p>
+		Parameter can be:.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>all</em></span> - cancel all branches.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>others</em></span> - cancel all branches but
+				the current one.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>this</em></span> - cancel current branch.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used in ONREPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm8528"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†<code class="function">t_cancel_branches</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (t_cancel_branches("all")) {
+	xlog("cancelled all branches\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† t_cancel_callid(callid, cseq, flag [, rcode])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_cancel_callid"></a>4.2.¬†
+			<code class="function">t_cancel_callid(callid, cseq, flag [, rcode])
+			</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Cancel first INVITE transaction identified by callid and cseq. It sets
+		the flag if the value is greater than zero
+		</p>
+            <p>
+		Parameters:.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>callid</em></span> - call-id value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>cseq</em></span> - cseq number.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>flag</em></span> - index of the flag to set.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>rcode</em></span> - code to be added as
+					cause attribute in Reason header for generated
+					CANCEL request. This parameter is optional.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used in ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm3184"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†<code class="function">t_cancel_callid</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (t_cancel_callid("123qaz", "5", "22")) {
+	xlog("transaction cancelled\n");
+}
+...
+if (t_cancel_callid("123qaz", "5", "22", "200")) {
+	xlog("transaction cancelled with [Reason: cause=200]\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬† t_reply_callid(callid, cseq, code, reason)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_reply_callid"></a>4.3.¬†
+			<code class="function">t_reply_callid(callid, cseq, code, reason)
+			</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Send reply to first transaction identified by callid and cseq.
+		</p>
+            <p>
+		Parameters:.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>callid</em></span> - call-id value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>cseq</em></span> - cseq number.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>code</em></span> - reply code.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>reason</em></span> - reply reason.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used in ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp74128"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†<code class="function">t_reply_callid</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (t_reply_callid("123qaz", "5", "458", "Replied remotely")) {
+	xlog("transaction replied\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬† t_flush_flags()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_flush_flags"></a>4.4.¬†
+		<code class="function">t_flush_flags()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Flush the flags from current SIP message into the already created 
+		transaction. It make sense only in routing block if the transaction was
+		created via t_newtran() and the flags have been altered since.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp77000"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="function">t_flush_flags</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+t_flush_flags();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬† t_is_failure_route()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_is_failure_route"></a>4.5.¬†
+		<code class="function">t_is_failure_route()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the top-executed route block is failure_route.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp79552"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†<code class="function">t_is_failure_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+failure_route[xyz] {
+    route(abc);
+}
+
+route[abc] {
+    if(t_is_failure_route()) { ... }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬† t_is_branch_route()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_is_branch_route"></a>4.6.¬†
+		<code class="function">t_is_branch_route()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the top-executed route block is branch_route.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp82232"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†<code class="function">t_is_branch_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+branch_route[xyz] {
+    route(abc);
+}
+
+route[abc] {
+    if(t_is_branch_route()) { ... }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬† t_is_reply_route()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_is_reply_route"></a>4.7.¬†
+		<code class="function">t_is_reply_route()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns true if the top-executed route block is reply_route.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp84904"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">t_is_reply_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reply_route[xyz] {
+    route(abc);
+}
+
+route[abc] {
+    if(t_is_reply_route()) { ... }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬† t_suspend()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_suspend"></a>4.8.¬†
+		<code class="function">t_suspend()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Suspend the execution of SIP request in a transaction. If transaction
+		was not created yet, it is created by this function. Returns true in
+		case of success and internal transaction index and label are available
+		via $T(id_index) and $T(id_label).
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp87832"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="function">t_suspend</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(t_suspend())
+{
+    xlog("proceesing suspended in trasaction [$T(id_index):$T(id_label)]\n");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬† t_continue(tindex, tlabel, rtname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_continue"></a>4.9.¬†
+			<code class="function">t_continue(tindex, tlabel, rtname)
+			</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Continue the execution of the transaction identified by tindex and
+		tlabel with the actions defined in route[rtname].
+		</p>
+            <p>
+		Parameters:.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tindex</em></span> - internal index of transaction.
+				Can be an integer or a pseudo-variable.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>tlabel</em></span> - internal label of transaction.
+				Can be an integer or a pseudo-variable.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>rtname</em></span> - the name of the route block to
+				execute. Can be a static string value or a dynamic string with
+				pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used in ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp21152"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†<code class="function">t_continue</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+t_continue('123', '456', 'MYROUTE');
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬† t_reuse_branch()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_reuse_branch"></a>4.10.¬†
+		<code class="function">t_reuse_branch()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Creates new "main" branch by making copy of branch-failure
+                branch. Currently the following branch attributes are copied
+		from branch-failure branch: request-uri, ruid, path, instance,
+		and branch flags.
+		</p>
+            <p>
+		This function can be used from tm:branch-failure event_route.
+		</p>
+            <div class="example">
+              <a id="idp23944"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†<code class="function">t_reuse_branch</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route [tm:branch-failure:contact] {
+    t_reuse_branch();
+    setbflag(10);
+    t_relay();
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.¬† t_precheck_trans()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.f.t_precheck_trans"></a>4.11.¬†
+		<code class="function">t_precheck_trans()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if current processed message is handled by other process.
+		This function is useful to catch retransmissions before transaction
+		is created. The function returns true if the request is handled by
+		another process.
+		</p>
+            <p>
+		Note that ACK and CANCEL requests are not tracked by this function,
+		the return code being false for them.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE .
+		</p>
+            <div class="example">
+              <a id="idp27136"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†<code class="function">t_precheck_trans</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    # handle retransmissions
+    if(t_precheck_trans()) {
+        t_check_trans();
+        exit;
+    }
+    t_check_trans();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp28528"></a>5.¬†Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_branch_idx</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_reply_code</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_reply_reason</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_reply_last</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_req(pv)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_rpl(pv)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_reply_ruid</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_branch(name)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T_inv(pv)</em></span>
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$T(name)</em></span>
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+		</p>
+        </div>
+        <div class="section" title="6.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp34944"></a>6.¬†MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† t_uac_dlg">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.mi.t_uac_dlg"></a>6.1.¬†
+		<code class="function">t_uac_dlg</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Generates and sends a local SIP request.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>method</em></span> - request method
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>RURI</em></span> - request SIP URI
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>NEXT HOP</em></span> - next hop SIP URI (OBP);
+				use <span class="quote">‚Äú<span class="quote">.</span>‚Äù</span> if no value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>socket</em></span> - local socket to be used for
+				sending the request; use <span class="quote">‚Äú<span class="quote">.</span>‚Äù</span> if no value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>headers</em></span> - set of additional headers to
+				be added to the request; at least 
+				<span class="quote">‚Äú<span class="quote">From</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">To</span>‚Äù</span> headers must be
+				specify)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>body</em></span> - (optional, may not be present)
+				request body (if present, requires the 
+				<span class="quote">‚Äú<span class="quote">Content-Type</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">Content-length</span>‚Äù</span>
+				headers)
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.2.¬† t_uac_cancel">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.mi.t_uac_cancel"></a>6.2.¬†
+		<code class="function">t_uac_cancel</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Generates and sends a CANCEL for an existing local SIP request.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>callid</em></span> - callid of the INVITE request
+				to be cancelled.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>cseq</em></span> - cseq of the INVITE request to be
+				cancelled.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.3.¬† t_hash">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.mi.t_hash"></a>6.3.¬†
+		<code class="function">t_hash</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Gets information about the load of TM internal hash table.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.4.¬† t_reply">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.mi.t_reply"></a>6.4.¬†
+		<code class="function">t_reply</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Generates and sends a reply for an existing inbound SIP transaction.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>code</em></span> - reply code
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>reason</em></span> - reason phrase.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>trans_id</em></span> - transaction identifier
+				(has the hash_entry:label format)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>to_tag</em></span> - To tag to be added to TO header
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>new_headers</em></span> - extra headers to be
+				appended to the reply; use a dot (<span class="quote">‚Äú<span class="quote">.</span>‚Äù</span>) char 
+				only if there are no headers;
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>body</em></span> - (optional, may not be present)
+				reply body (if present, requires the 
+				<span class="quote">‚Äú<span class="quote">Content-Type</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">Content-length</span>‚Äù</span>
+				headers)
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.5.¬† t_reply_callid">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tmx.mi.t_reply_callid"></a>6.5.¬†
+		<code class="function">t_reply_callid</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Generates and sends a reply for an existing inbound SIP transaction.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>code</em></span> - reply code
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>reason</em></span> - reason phrase.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>callid</em></span> - SIP Call-ID header
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>cseq</em></span> - SIP CSeq header
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>to_tag</em></span> - To tag to be added to TO header
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>new_headers</em></span> - extra headers to be
+				appended to the reply; use a dot (<span class="quote">‚Äú<span class="quote">.</span>‚Äù</span>) char 
+				only if there are no headers;
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>body</em></span> - (optional, may not be present)
+				reply body (if present, requires the 
+				<span class="quote">‚Äú<span class="quote">Content-Type</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">Content-length</span>‚Äù</span>
+				headers)
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="7.¬†Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1873432"></a>7.¬†Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Exported statistics are listed in the next sections. All statistics
+		except <span class="quote">‚Äú<span class="quote">inuse_transactions</span>‚Äù</span> can be reset.
+		</p>
+          <div class="section" title="7.1.¬†received_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1874336"></a>7.1.¬†received_replies</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of total replies received by TM module.
+			</p>
+          </div>
+          <div class="section" title="7.2.¬†relayed_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1875072"></a>7.2.¬†relayed_replies</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of replies received and relayed by TM module.
+			</p>
+          </div>
+          <div class="section" title="7.3.¬†local_replies">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1875808"></a>7.3.¬†local_replies</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of replies local generated by TM module.
+			</p>
+          </div>
+          <div class="section" title="7.4.¬†UAS_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1876544"></a>7.4.¬†UAS_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions created by received requests.
+			</p>
+          </div>
+          <div class="section" title="7.5.¬†UAC_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1877280"></a>7.5.¬†UAC_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions created by local generated requests.
+			</p>
+          </div>
+          <div class="section" title="7.6.¬†2xx_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1878024"></a>7.6.¬†2xx_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions completed with 2xx replies.
+			</p>
+          </div>
+          <div class="section" title="7.7.¬†3xx_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1878760"></a>7.7.¬†3xx_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions completed with 3xx replies.
+			</p>
+          </div>
+          <div class="section" title="7.8.¬†4xx_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1879496"></a>7.8.¬†4xx_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions completed with 4xx replies.
+			</p>
+          </div>
+          <div class="section" title="7.9.¬†5xx_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1880232"></a>7.9.¬†5xx_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions completed with 5xx replies.
+			</p>
+          </div>
+          <div class="section" title="7.10.¬†6xx_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1880968"></a>7.10.¬†6xx_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Total number of transactions completed with 6xx replies.
+			</p>
+          </div>
+          <div class="section" title="7.11.¬†inuse_transactions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1881704"></a>7.11.¬†inuse_transactions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of transactions existing in memory at current time.
+			</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

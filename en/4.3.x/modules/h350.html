@@ -1,0 +1,1175 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>H350 Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11297744" title="H350 Module" />
+    <link rel="next" href="#idp18809656" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="H350 Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11297744"></a>H350 Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Christian</span> <span class="surname">Schlatter</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">University of North Carolina<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:cs@unc.edu">cs@unc.edu</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2007 University of North Carolina</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18809656">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17509096">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18054328">1.1. Example H.350 commObject LDAP Entry</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17055592">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18105664">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17992360">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp17311264">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15685184">3.1. ldap_session (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15520472">3.2. base_dn (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15522504">3.3. search_scope (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15524512">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15524880">4.1. h350_sipuri_lookup(sip_uri)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15604952">4.2. h350_auth_lookup(auth_username, "username_avp_spec/pwd_avp_spec")</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15621072">4.3. h350_result_call_preferences(avp_name_prefix)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15575840">4.4. h350_result_service_level(avp_name_prefix)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="bibliography">
+              <a href="#idp18784096">Resources</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17597416">Example H.350 commObject storing SIP account data</a></dt>
+          <dt>1.2. <a href="#idp15519424"><code class="varname">ldap_session</code> parameter usage</a></dt>
+          <dt>1.3. <a href="#idp15521432"><code class="varname">base_dn</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp15523368"><code class="varname">search_scope</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp15603712">Example Usage</a></dt>
+          <dt>1.6. <a href="#idp15618064">Example Usage</a></dt>
+          <dt>1.7. <a href="#idp15559592">Example H.350 callPreferenceURI simple call forwarding rules</a></dt>
+          <dt>1.8. <a href="#idp15573968">Example Usage</a></dt>
+          <dt>1.9. <a href="#idp17320344">Example SIPIdentityServiceLevel values and resulting AVPs</a></dt>
+          <dt>1.10. <a href="#idp17329800">Example Usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18809656"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17509096">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18054328">1.1. Example H.350 commObject LDAP Entry</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17055592">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18105664">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17992360">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp17311264">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15685184">3.1. ldap_session (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15520472">3.2. base_dn (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15522504">3.3. search_scope (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15524512">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15524880">4.1. h350_sipuri_lookup(sip_uri)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15604952">4.2. h350_auth_lookup(auth_username, "username_avp_spec/pwd_avp_spec")</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15621072">4.3. h350_result_call_preferences(avp_name_prefix)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15575840">4.4. h350_result_service_level(avp_name_prefix)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17509096"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The Kamailio H350 module enables an Kamailio SIP proxy server to access SIP account data stored in an LDAP <a class="xref" href="#RFC4510" title="Lightweight Directory Access Protocol (LDAP): Technical Specification Road Map">[RFC4510]</a> directory containing H.350 <a class="xref" href="#H350" title="Directory Services Architecture for Multimedia Conferencing">[H.350]</a> <span class="emphasis"><em>commObjects</em></span>. ITU-T Recommendation H.350 standardizes LDAP object classes to store Real-Time Communication (RTC) account data. In particular, <span class="emphasis"><em>H.350.4</em></span> <a class="xref" href="#H350-4" title="Directory services architecture for SIP">[H.350.4]</a> defines an object class called <span class="emphasis"><em>sipIdentity</em></span> that includes attribute specifications for SIP account data like SIP URI, SIP digest username/password, or service level. This allows to store SIP account data in a vendor neutral way and lets different entities, like SIP proxies, provisioning, or billing applications, access the data in a standardized format.  
+        </p>
+          <p>
+			The <span class="emphasis"><em>ViDe H.350 Cookbook</em></span> <a class="xref" href="#vide-H350-cookbook" title="ViDe H.350 Cookbook">[vide-h.350-cb]</a>  is a good reference for deploying an H.350 directory. Besides general information on H.350, LDAP, and related standards, this document explains how to set up an H.350/LDAP directory and discusses different deployment scenarios.    
+        </p>
+          <p>
+            The H350 module uses the Kamailio LDAP module to import H.350 attribute values into the Kamailio routing script variable space. The module exports functions to parse and store the H.350 attribute values from the Kamailio routing script. It allows a script writer to implement H.350 based SIP digest authentication, call forwarding, SIP URI alias to AOR rewriting, and service level parsing. 
+        </p>
+          <div class="section" title="1.1.聽Example H.350 commObject LDAP Entry">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18054328"></a>1.1.聽Example H.350 commObject LDAP Entry</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            The following example shows a typical H.350 commObject LDAP entry storing SIP account data.
+        </p>
+            <div class="example">
+              <a id="idp17597416"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Example H.350 commObject storing SIP account data</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">Attribute Name                Attribute Value(s)
+--------------                -----------------
+
+# LDAP URI identifying the owner of this commObject, typically 
+# points to an entry in the enterprise directory
+commOwner	ldap://dir.example.com/dc=example,dc=com??one?(uid=bob)	
+
+# Unique identifier for this commObject, used for referencing 
+# this object e.g. from the enterprise directory 
+commUniqueId                  298217asdjgj213	
+
+# Determines if this commObject should be listed on white pages
+commPrivate                   false
+
+# Valid SIP URIs for this account (can be used to store alias SIP URIs 
+# like DIDs as well)
+SIPIdentitySIPURI             sip:bob@example.com                 
+                              sip:bob@alias.example.com
+                              sip:+1919123456@alias.example.com
+# SIP digest username	
+SIPIdentityUserName           bob
+
+# SIP digest password
+SIPIdentityPassword           pwd
+
+# SIP proxy address
+SIPIdentityProxyAddress       sip.example.com
+
+# SIP registrar address
+SIPIdentityRegistrarAddress   sip.example.com
+
+# Call preferences: Forward to voicemail on no response 
+# after 20 seconds and on busy
+callPreferenceURI             sip:bob@voicemail.example.com n:20000
+                              sip:bob@voicemail.example.com b
+	
+# Account service level(s)
+SIPIdentityServiceLevel	      long_distance
+                              conferencing
+                              
+# H.350 object classes
+objectClass                   top
+                              commObject
+                              SIPIdentity
+                              callPreferenceURIObject</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17055592"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18105664"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The module depends on the following modules (the listed modules
+        must be loaded before this module):</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>LDAP</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17992360"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+        running Kamailio with this module loaded:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>OpenLDAP library (libldap), libldap header files
+            (libldap-dev) are needed for compilation</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17311264"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽ldap_session (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15685184"></a>3.1.聽ldap_session (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Name of the LDAP session to be used for H.350 queries, as defined in the LDAP module configuration file.
+        </p>
+            <p>
+            Default value: ""
+        </p>
+            <div class="example">
+              <a id="idp15519424"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽<code class="varname">ldap_session</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("h350", "ldap_session", "h350");</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽base_dn (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15520472"></a>3.2.聽base_dn (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Base LDAP DN to start LDAP search for H.350 entries. For best performance, this should be set to the direct ancestor of the H.350 objects.
+        </p>
+            <p>
+            Default value: ""
+        </p>
+            <div class="example">
+              <a id="idp15521432"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽<code class="varname">base_dn</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("h350", "base_dn", "ou=h350,dc=example,dc=com");</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽search_scope (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15522504"></a>3.3.聽search_scope (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            LDAP search scope for H.350 queries, one of "one", "base", or "sub".
+        </p>
+            <p>
+            Default value: "one"
+        </p>
+            <div class="example">
+              <a id="idp15523368"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽<code class="varname">search_scope</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("h350", "search_scope", "sub");</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15524512"></a>4.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽h350_sipuri_lookup(sip_uri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15524880"></a>4.1.聽h350_sipuri_lookup(sip_uri)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            This function performs an LDAP search query for an H.350 commObject with a SIPIdentitySIPURI of <code class="varname">sip_uri</code>. The <code class="varname">sip_uri</code> parameter first gets escaped according the rules for LDAP filter strings. The result of the LDAP search is stored internally and can be accessed either by one of the <span class="emphasis"><em>h350_result*</em></span> or one of the <span class="emphasis"><em>ldap_result*</em></span> functions from the Kamailio LDAP module.
+        </p>
+            <p>
+            The function returns <code class="varname">-1</code> (FALSE) for internal errors, and <code class="varname">-2</code> (FALSE) if no H.350 commObject was found with a matching <code class="varname">sip_uri</code>. <code class="varname">n</code> &gt; 0 (TRUE) is returned if <code class="varname">n</code> H.350 commObjects were found.
+        </p>
+            <p>
+            This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE and BRANCH_ROUTE.
+        </p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">sip_uri</span>
+                </dt>
+                <dd>
+                  <p>
+                        H.350 SIPIdentitySIPURI to search for in directory. Included Kamailio variables do get expanded.
+                    </p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="varname">n</code> &gt; 0 (TRUE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                <code class="varname">n</code> H.350 commObjects found.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                Internal error occurred.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                No H.350 commObject found.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp15603712"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">#
+# H.350 lookup for callee
+#
+
+if (!h350_sipuri_lookup("sip:$rU@$rd"))
+{
+    switch ($retcode)
+    {
+    case -2:
+        xlog("L_INFO", 
+             "h350 callee lookup: no entry found in H.350 directory");
+        exit;
+    case -1:
+        sl_send_reply("500", "Internal server error");
+        exit;
+    }
+}
+
+# now h350_result* or ldap_result* functions can be used</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.聽h350_auth_lookup(auth_username, &quot;username_avp_spec/pwd_avp_spec&quot;)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15604952"></a>4.2.聽h350_auth_lookup(auth_username, "username_avp_spec/pwd_avp_spec")</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            This function performs an LDAP search query for SIP digest authentication credentials in an H.350 directory. The H.350 directory is searched for a commObject with SIPIdentityUserName of <code class="varname">auth_username</code>. If such a commObject is found, the SIP digest authentication username and password are stored in AVPs <code class="varname">username_avp_spec</code> and <code class="varname">pwd_avp_spec</code>, respectively. <span class="emphasis"><em>pv_*_authorize</em></span> functions from AUTH module can then be used to perform SIP digest authentication.
+        </p>
+            <p>
+            The function returns <code class="constant">1</code> (TRUE) if an H.350 commObject was found, <code class="constant">-1</code> (FALSE) in case of an internal error, and <code class="constant">-2</code> (FALSE) if no matching commObject was found.
+        </p>
+            <p>
+            This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE and BRANCH_ROUTE.
+        </p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">auth_username</span>
+                </dt>
+                <dd>
+                  <p>
+                        H.350 SIPIdentityUserName to search for in directory. Included Kamailio variables do get expanded.
+                    </p>
+                </dd>
+                <dt>
+                  <span class="term">username_avp_spec</span>
+                </dt>
+                <dd>
+                  <p>
+                        Specification for authentication username AVP, e.g. <code class="varname">$avp(s:username)</code>.
+                    </p>
+                </dd>
+                <dt>
+                  <span class="term">pwd_avp_spec</span>
+                </dt>
+                <dd>
+                  <p>
+                        Specification for authentication password AVP, e.g. <code class="varname">$avp(s:pwd)</code>.
+                    </p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="constant">1</code> (TRUE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                H.350 commObject found and SIP digest authentication credentials stored in <code class="varname">username_avp_spec</code> and <code class="varname">pwd_avp_spec</code>.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                Internal error occurred.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                No H.350 commObject found.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp15618064"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># -- auth params --
+modparam("auth", "username_spec", "$avp(s:auth_user)")
+modparam("auth", "password_spec", "$avp(s:auth_pwd)")
+modparam("auth", "calculate_ha1", 1)
+
+# -- h350 params --
+modparam("h350", "ldap_session", "h350")
+modparam("h350", "base_dn", "ou=h350,dc=example,dc=com")
+modparam("h350", "search_scope", "one")
+
+
+route[1]
+{
+    #
+    # H.350 based SIP digest authentication 
+    #
+     
+    # challenge all requests not including an Auth header
+    if (!(is_present_hf("Authorization") || 
+          is_present_hf("Proxy-Authorization")))
+    {
+        if (is_method("REGISTER"))
+        {
+            www_challenge("example.com", "0");
+            exit;
+        }
+        proxy_challenge("example.com", "0");
+        exit;
+    }
+
+    # get digest password from H.350 using auth username ($au)
+    if (!h350_auth_lookup("$au", 
+                          "$avp(s:auth_user)/$avp(s:auth_pwd)"))
+    {
+        switch ($retcode)
+        {
+        case -2:
+            sl_send_reply("401", "Unauthorized");
+            exit;
+        case -1:
+            sl_send_reply("500", "Internal server error");
+            exit;
+        }
+    }
+
+    # REGISTER requests
+    if (is_method("REGISTER"))
+    {
+        if (!pv_www_authorize("example.com"))
+        {
+            if ($retcode == -5)
+            {
+                sl_send_reply("500", "Internal server error");
+                exit;    
+            }
+            else {
+                www_challenge("example.com", "0");
+                exit;
+            }
+        }
+
+        consume_credentials();
+        xlog("L_INFO", 
+             "REGISTER request successfully authenticated");
+        return(1);
+    }
+
+    # non-REGISTER requests
+    if (!pv_proxy_authorize("example.com"))
+    {
+        if ($retcode == -5)
+        {
+            sl_send_reply("500", "Internal server error");
+            exit;    
+        }
+        else {
+            proxy_challenge("example.com", "0");
+            exit;
+        }
+    }
+
+    consume_credentials();
+    xlog("L_INFO", "$rm request successfully authenticated");
+    return(1);
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.聽h350_result_call_preferences(avp_name_prefix)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15621072"></a>4.3.聽h350_result_call_preferences(avp_name_prefix)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function parses the callPreferenceURI attribute of an H.350 commObject, which must have been fetched through <span class="emphasis"><em>h350_*_lookup</em></span> or <span class="emphasis"><em>ldap_search</em></span>. callPreferenceURI is a multi-valued attribute that stores call preference rules like e.g. forward-on-busy or forward-unconditionally. <span class="emphasis"><em>Directory services architecture for call forwarding and preferences</em></span> <a class="xref" href="#H350-6" title="Directory services architecture for call forwarding and preferences">[H.350.6]</a> defines a format for simple call forwarding rules:
+        </p>
+            <div class="blockquote">
+              <blockquote class="blockquote">
+                <p>
+                <code class="literal">target_uri type[:argument]</code>
+            </p>
+              </blockquote>
+            </div>
+            <p>
+            In a SIP environment, <code class="literal">target_uri</code> is typically the call forwarding rule's target SIP URI, although it could be any type of URI, e.g. an HTTP pointer to a CPL script. Four different values are specified for <code class="literal">type</code>: <code class="literal">b</code> for "forward on busy", <code class="literal">n</code> for "forward on no answer", <code class="literal">u</code> for "forward unconditionally", and <code class="literal">f</code> for "forward on destination not found". The optional <code class="literal">argument</code> is a string indicating the time in milliseconds after which the call forwarding should occur.
+        </p>
+            <div class="example">
+              <a id="idp15559592"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Example H.350 callPreferenceURI simple call forwarding rules</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"># Example 1:
+# forward to sip:voicemail@example.com on no answer after 15 seconds:
+
+callPreferenceURI: sip:voicemail@example.com n:15000
+
+# Example 2:
+# unconditionally forward to sip:alice@example.com:
+
+callPreferenceURI: sip:alice@example.com u
+
+# Example 3:
+# forward to sip:bob@example.com and sip:alice@example.com
+# (forking) on destination not found:
+
+callPreferenceURI: sip:bob@example.com f
+callPreferenceURI: sip:alice@example.com f</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+            <span class="emphasis"><em>h350_result_call_preferences</em></span> stores these call forwarding rules as AVPs according to the following rules:
+        </p>
+            <div class="blockquote">
+              <blockquote class="blockquote">
+                <pre class="programlisting">#
+# AVP storing a forwarding rule's target URI
+#
+            
+AVP name  = avp_name_prefix + '_' + type
+AVP value = target_uri
+
+#
+# AVP storing a forwarding rule's argument
+#
+
+AVP name  = avp_name_prefix + '_' + type + '_t'
+AVP value = argument / 1000</pre>
+              </blockquote>
+            </div>
+            <p>
+            Example 1 from above would result in two AVPs: <code class="literal">$avp("s:prefix_n") = "sip:voicemail@example.com"</code> and <code class="literal">$avp("s:prefix_n_t") = 15</code>.
+        </p>
+            <p>
+            Example 2: <code class="literal">$avp("s:prefix_u") = "sip:alice@example.com"</code>.
+        </p>
+            <p>
+            Example 3: <code class="literal">$avp("s:prefix_f[1]") = "sip:bob@example.com"</code> and <code class="literal">$avp("s:prefix_f[2]]") = "sip:alice@example.com"</code>.
+        </p>
+            <p>
+            These AVPs can then be used to implement the desired behavior in the Kamailio routing script.
+        </p>
+            <p>
+            This function returns the number of successfully parsed simple call forwarding rules (TRUE), in case the H.350 callPreferenceURI attribute contained one or multiple values matching the simple call forwarding rule syntax described above. It returns <code class="constant">-1</code> (FALSE) for internal errors, and <code class="constant">-2</code> (FALSE) if none of the rules matched or if no callPreferenceURI attribute was found.
+        </p>
+            <p>
+            This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE and BRANCH_ROUTE.
+        </p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">avp_name_prefix</span>
+                </dt>
+                <dd>
+                  <p>
+                        Name prefix for call forwarding rule AVPs, as described above.
+                    </p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="varname">n</code> &gt; 0 (TRUE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                <code class="varname">n</code> simple call forwarding rules found.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                Internal error occurred.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                No simple call forwarding rule found, or callPreferenceURI not present.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp15573968"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">#
+# H.350 lookup for callee
+#
+
+... h350_sipuri_lookup("sip:$rU@$rd") ...
+
+#
+# store H.350 call preferences in AVP
+#
+
+if (!h350_result_call_preferences("callee_pref_") &amp;&amp; ($retcode == -1))
+{
+    sl_send_reply("500", "Internal server error");
+    exit;
+}
+
+# $avp(s:callee_pref_u)   == CFU URI(s)
+# $avp(s:callee_pref_n)   == CFNR URI(s)
+# $avp(s:callee_pref_n_t) == CFNR timeout in seconds
+# $avp(s:callee_pref_b)   == CFB URI(s)
+# $avp(s:callee_pref_f)   == CFOFFLINE URI(s)
+
+#
+# Example for forward-unconditionally (CFU)
+#
+
+if (is_avp_set("$avp(s:callee_pref_u)"))
+{
+    # replace R-URI with CFU URI, g will fetch all CFU URIs 
+    # --&gt; request can fork
+    if (avp_pushto("$ru", "$avp(s:callee_pref_u)/g"))
+    {
+            avp_delete("$avp(s:callee_pref_u)");
+    } else
+    {
+            sl_send_reply("500", "Internal server error");
+            exit;
+    }
+    sl_send_reply("181", "Call is being forwarded");
+    t_relay();
+    exit;
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.聽h350_result_service_level(avp_name_prefix)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15575840"></a>4.4.聽h350_result_service_level(avp_name_prefix)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			<span class="emphasis"><em>Directory services architecture for SIP</em></span> <a class="xref" href="#H350-4" title="Directory services architecture for SIP">[H.350.4]</a> defines a multi-valued LDAP attribute named SIPIdentityServiceLevel, which can be used to store SIP account service level values in an LDAP directory. This function parses the SIPIdentityServiceLevel attribute and stores all service level values as AVPs for later retrieval in the Kamailio routing script. The function accesses the H.350 commObject fetched by a call to <span class="emphasis"><em>h350_*_lookup</em></span> or <span class="emphasis"><em>ldap_search</em></span>. 
+        </p>
+            <p>
+            The resulting AVPs have a name of the form <code class="literal">avp_name_prefix + SIPIdentityServiceLevel attribute value</code>, and an integer value of <code class="constant">1</code>. 
+        </p>
+            <div class="example">
+              <a id="idp17320344"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽Example SIPIdentityServiceLevel values and resulting AVPs</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">SIPIdentityServiceLevel: longdistance
+SIPIdentityServiceLevel: international
+SIPIdentityServiceLevel: 900
+
+after calling h350_result_service_level("sl_"), the following AVPs 
+will be available in the routing script:
+
+$avp("s:sl_longdistance") = 1
+$avp("s:sl_international") = 1
+$avp("s:sl_900") = 1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+            This function returns the number of added AVPs (TRUE), <code class="constant">-1</code> (FALSE)for internal errors, and <code class="constant">-2</code> (FALSE)if no SIPIdentityServiceLevel attribute was found.
+        </p>
+            <p>
+            The function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE and BRANCH_ROUTE.
+        </p>
+            <div class="variablelist" title="Function Parameters:">
+              <p class="title">
+                <strong>Function Parameters:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term">avp_name_prefix</span>
+                </dt>
+                <dd>
+                  <p>
+                        Name prefix for service level AVPs, as described above.
+                    </p>
+                </dd>
+              </dl>
+            </div>
+            <div class="variablelist" title="Return Values:">
+              <p class="title">
+                <strong>Return Values:</strong>
+              </p>
+              <dl>
+                <dt>
+                  <span class="term"><code class="varname">n</code> &gt; 0 (TRUE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                <code class="varname">n</code> AVPs added.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-1</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                Internal error occurred.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+                <dt>
+                  <span class="term"><code class="constant">-2</code> (FALSE):</span>
+                </dt>
+                <dd>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                                No SIPIdentityServiceLevel attribute found.
+                            </p>
+                      </li>
+                    </ul>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <p>
+        This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE, and ONREPLY_ROUTE.
+        </p>
+            <div class="example">
+              <a id="idp17329800"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽Example Usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">#
+# H.350 SIP digest authentication for caller
+#
+
+... h350_auth_lookup("$au", ...) ...
+
+#
+# store caller's service level as AVP
+#
+
+if (!h350_result_service_level("caller_sl_") &amp;&amp; ($retcode == -1))
+{
+    sl_send_reply("500", "Internal server error");
+    exit;
+}
+
+#
+# make routing decision based on service level AVPs
+#
+
+if (is_avp_set("$avp(s:caller_sl_international)"))
+{
+    t_relay();
+} 
+else {
+    sl_send_reply("403", "Forbidden");    
+}
+exit;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="bibliography" title="Resources">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18784096"></a>Resources</h2>
+            </div>
+          </div>
+        </div>
+        <div class="bibliodiv">
+          <div class="biblioentry" title="Directory Services Architecture for Multimedia Conferencing">
+            <a id="H350"></a>
+            <p>[<abbr class="abbrev">H.350</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.itu.int/rec/T-REC-H.350/en  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.itu.int/rec/T-REC-H.350/en'" tppabs="http://www.itu.int/rec/T-REC-H.350/en">Directory
+        Services Architecture for Multimedia Conferencing</a></em>. </span><span class="date">August 2003. </span><span class="publisher"><span class="publishername">ITU-T. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Directory services architecture for SIP">
+            <a id="H350-4"></a>
+            <p>[<abbr class="abbrev">H.350.4</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.itu.int/rec/T-REC-H.350.4/en  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.itu.int/rec/T-REC-H.350.4/en'" tppabs="http://www.itu.int/rec/T-REC-H.350.4/en">Directory
+        services architecture for SIP</a></em>. </span><span class="date">August 2003. </span><span class="publisher"><span class="publishername">ITU-T. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Directory services architecture for call forwarding and preferences">
+            <a id="H350-6"></a>
+            <p>[<abbr class="abbrev">H.350.6</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.itu.int/rec/T-REC-H.350.6/en  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.itu.int/rec/T-REC-H.350.6/en'" tppabs="http://www.itu.int/rec/T-REC-H.350.6/en">Directory services architecture for call forwarding and preferences</a></em>. </span><span class="date">March 2004. </span><span class="publisher"><span class="publishername">ITU-T. </span></span></p>
+          </div>
+          <div class="biblioentry" title="ViDe H.350 Cookbook">
+            <a id="vide-H350-cookbook"></a>
+            <p>[<abbr class="abbrev">ViDe-H.350-Cookbook</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://www.vide.net/cookbookh350/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.vide.net/cookbookh350/'" tppabs="http://www.vide.net/cookbookh350/">ViDe H.350 Cookbook</a></em>. </span><span class="date">2005. </span><span class="publisher"><span class="publishername">ViDe. </span></span></p>
+          </div>
+          <div class="biblioentry" title="Lightweight Directory Access Protocol (LDAP): Technical Specification Road Map">
+            <a id="RFC4510"></a>
+            <p>[<abbr class="abbrev">RFC4510</abbr>] <span class="title"><em><a class="ulink" href="javascript:if(confirm('http://tools.ietf.org/html/rfc4510  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://tools.ietf.org/html/rfc4510'" tppabs="http://tools.ietf.org/html/rfc4510">Lightweight
+        Directory Access Protocol (LDAP): Technical Specification Road
+        Map</a></em>. </span><span class="date">June 2006. </span><span class="publisher"><span class="publishername">Internet Engineering Task Force. </span></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

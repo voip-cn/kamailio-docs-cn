@@ -1,0 +1,507 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>unixodbc Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4234408" title="unixodbc Module" />
+    <link rel="next" href="#idp2933448" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="unixodbc Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4234408"></a>unixodbc Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Marco</span> <span class="surname">Lorrai</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">abbeynet.it<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Marco</span> <span class="surname">Lorrai</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2005, 2006 Marco Lorrai</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2933448">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2783120">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1940936">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm4247920">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1706688">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2463384">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1153816">3.1. <code class="varname">ping_interval</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2568520">3.2. <code class="varname">auto_reconnect</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp252000">3.3. <code class="varname">use_escape_common</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp255232">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp255904">5. Installation and Running</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp256256">5.1. Installing</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp257176">5.2. Configuring and Running</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2160632">2. Developer Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2675440">Set the <span class="quote">‚Äú<span class="quote">ping_interval</span>‚Äù</span> parameter</a></dt>
+          <dt>1.2. <a href="#idp51672">Set the <span class="quote">‚Äú<span class="quote">auto_reconnect</span>‚Äù</span> parameter</a></dt>
+          <dt>1.3. <a href="#idp253976">Set the <span class="quote">‚Äú<span class="quote">use_escape_common</span>‚Äù</span> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2933448"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2783120">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1940936">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm4247920">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1706688">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2463384">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1153816">3.1. <code class="varname">ping_interval</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2568520">3.2. <code class="varname">auto_reconnect</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp252000">3.3. <code class="varname">use_escape_common</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp255232">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp255904">5. Installation and Running</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp256256">5.1. Installing</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp257176">5.2. Configuring and Running</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2783120"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module allows to use the unixodbc package with Kamailio. It have been 
+	tested with mysql and the odbc connector, but it should work also with 
+	other database. The auth_db module works.
+	</p>
+          <p>
+	For more information, see the <a class="ulink" href="javascript:if(confirm('http://www.unixodbc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.unixodbc.org/'" tppabs="http://www.unixodbc.org/">
+	http://www.unixodbc.org/</a> project web page.
+	</p>
+          <p>
+	To see what DB engines can be used via unixodbc, look at 
+	<a class="ulink" href="javascript:if(confirm('http://www.unixodbc.org/drivers.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.unixodbc.org/drivers.html'" tppabs="http://www.unixodbc.org/drivers.html">
+	http://www.unixodbc.org/drivers.html</a>.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1940936"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm4247920"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1706688"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2463384"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†ping_interval (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1153816"></a>3.1.¬†<code class="varname">ping_interval</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the ping time interval.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">300</span>‚Äù</span> seconds.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2675440"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set the <span class="quote">‚Äú<span class="quote">ping_interval</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_unixodbc", "ping_interval", 600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†auto_reconnect (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2568520"></a>3.2.¬†<code class="varname">auto_reconnect</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Turns on or off the auto_reconnect mode.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1</span>‚Äù</span>, this means it is enabled.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp51672"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set the <span class="quote">‚Äú<span class="quote">auto_reconnect</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_unixodbc", "auto_reconnect", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†use_escape_common (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp252000"></a>3.3.¬†<code class="varname">use_escape_common</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Escape values in query using internal escape_common() function.
+		It escapes single quote ''', double quote '"', backslash '\',
+		and NULL characters.
+		</p>
+            <p>
+		You should enable this parameter if you know that the ODBC driver
+		considers the above characters as special (for marking begin and end
+		of a value, escape other characters ...). It prevents against SQL
+		injection.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (0 = disabled; 1 = enabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp253976"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set the <span class="quote">‚Äú<span class="quote">use_escape_common</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("db_unixodbc", "use_escape_common", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp255232"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		NONE
+		</p>
+        </div>
+        <div class="section" title="5.¬†Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp255904"></a>5.¬†Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†Installing">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp256256"></a>5.1.¬†Installing</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Prerequirement: you should first install unixodbc (or another program that 
+	implements the odbc standard, such iodbc), your database, and the right 
+	connector. Set the DSN in the odbc.ini file and the connector drivers in 
+	the odbcinst.ini file.
+	</p>
+          </div>
+          <div class="section" title="5.2.¬†Configuring and Running">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp257176"></a>5.2.¬†Configuring and Running</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	In the openser.conf file, add the line:
+	</p>
+            <pre class="programlisting">....
+loadmodule "/usr/local/lib/kamailio/modules/db_unixodbc.so"
+....</pre>
+            <p>
+	You should also uncomment this:
+	</p>
+            <pre class="programlisting">....
+loadmodule "/usr/local/lib/kamailio/modules/auth.so"
+loadmodule "/usr/local/lib/kamailio/modules/auth_db.so"
+modparam("usrloc", "db_mode", 2)
+modparam("auth_db", "calculate_ha1", yes)
+modparam("auth_db", "password_column", "password")
+....</pre>
+            <p>
+	and setting the DSN specified in the odbc.ini, inserting this with the 
+	url adding this line:
+	</p>
+            <pre class="programlisting">....
+modparam("usrloc|auth_db", "db_url", 
+    "unixodbc://openser:openserrw@localhost/my_dsn")
+....</pre>
+            <p>
+	replacing my_dsn with the correct value.
+	</p>
+            <p>
+	HINT: if unixodbc don't want to connect to mysql server, try restarting 
+	mysql server with:
+	</p>
+            <pre class="programlisting">shell&gt;safe_mysqld --user=mysql --socket=/var/lib/mysql/mysql.sock</pre>
+            <p>
+	The connector search the socket in /var/lib/mysql/mysql.sock and not 
+	in /tmp/mysql.sock
+	</p>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2160632"></a>Chapter¬†2.¬†Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	The module implements the Kamailio DB <acronym class="acronym">API</acronym>, in order to 
+	be used by other modules.
+	</p>
+      </div>
+    </div>
+  </body>
+</html>

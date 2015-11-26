@@ -1,0 +1,619 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>exec Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4341272" title="exec Module" />
+    <link rel="next" href="#idp2566488" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="exec Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4341272"></a>exec Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2566488">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#exec.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1568168">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2780944">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2542408">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp189032">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#exec.p.setvars">3.1. <code class="varname">setvars</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#exec.p.time_to_kill">3.2. 
+			<code class="varname">time_to_kill</code> (integer)
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp288952">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#exec.f.exec_dset">4.1. 
+		<code class="function">exec_dset(command)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#exec.f.exec_msg">4.2. 
+		<code class="function">exec_msg(command)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#exec.f.exec_avp">4.3. 
+		<code class="function">exec_avp(command [, avplist])</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#exec.known_issues">5. Known Issues</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp285096">Set <span class="quote">“<span class="quote">setvars</span>”</span> parameter</a></dt>
+          <dt>1.2. <a href="#idp287704">Set <span class="quote">“<span class="quote">time_to_kill</span>”</span> parameter</a></dt>
+          <dt>1.3. <a href="#idp292688"><code class="function">exec_dset</code> usage</a></dt>
+          <dt>1.4. <a href="#idp297520"><code class="function">exec_msg</code> usage</a></dt>
+          <dt>1.5. <a href="#idm15720"><code class="function">exec_avp</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2566488"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#exec.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1568168">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2780944">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2542408">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp189032">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#exec.p.setvars">3.1. <code class="varname">setvars</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#exec.p.time_to_kill">3.2. 
+			<code class="varname">time_to_kill</code> (integer)
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp288952">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#exec.f.exec_dset">4.1. 
+		<code class="function">exec_dset(command)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#exec.f.exec_msg">4.2. 
+		<code class="function">exec_msg(command)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#exec.f.exec_avp">4.3. 
+		<code class="function">exec_avp(command [, avplist])</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#exec.known_issues">5. Known Issues</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="exec.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The exec module allows external commands to be executed from a Kamailio 
+		script. The commands may be any valid shell commands--the command string is 
+		passed to the shell using <span class="quote">“<span class="quote">popen</span>”</span> command. Kamailio passes 
+		additional information about the request in environment variables:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			SIP_HF_&lt;hf_name&gt; contains value of each header field in 
+			request. If a header field occurred multiple times, values are 
+			concatenated and comma-separated. &lt;hf_name&gt; is in capital 
+			letters. Ff a header-field name occurred in compact form, 
+			&lt;hf_name&gt; is canonical.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_TID is transaction identifier. All request retransmissions or 
+			CANCELs/ACKs associated with a previous INVITE result in the same 
+			value.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_DID is dialog identifier, which is the same as to-tag. 
+			Initially, it is empty.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_SRCIP is source <acronym class="acronym">IP</acronym> address from which request came.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_ORURI is the original request <acronym class="acronym">URI</acronym>.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_RURI is <span class="emphasis"><em>current</em></span> request <acronym class="acronym">URI</acronym> (if 
+			unchanged, equal to original).
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_USER is userpart of <span class="emphasis"><em>current</em></span> request <acronym class="acronym">URI</acronym>.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			SIP_OUSER is userpart of original request <acronym class="acronym">URI</acronym>.
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		NOTE: The environment variables must be specified with double $
+		(e.g., $$SIP_OUSER) in the parameters given to exec functions.
+		Otherwise they will be evaluated as Kamailio pseudo-variables,
+		throwing errors.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1568168"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2780944"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2542408"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp189032"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. setvars (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="exec.p.setvars"></a>3.1. <code class="varname">setvars</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Turn off to disable setting environment variables for executed commands.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp285096"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <span class="quote">“<span class="quote">setvars</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("exec", "setvars", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.  time_to_kill (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="exec.p.time_to_kill"></a>3.2. 
+			<code class="varname">time_to_kill</code> (integer)
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies the longest time a program is allowed to execute. If the 
+		time is exceeded, the program is killed.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp287704"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <span class="quote">“<span class="quote">time_to_kill</span>”</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("exec", "time_to_kill", 20)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp288952"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  exec_dset(command)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="exec.f.exec_dset"></a>4.1. 
+		<code class="function">exec_dset(command)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Executes an external command. Current <acronym class="acronym">URI</acronym> is passed to the command 
+		as parameter. Output of the command is considered <acronym class="acronym">URI</acronym> set 
+		(separated by lines).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>command</em></span> - Command to be executed. It can
+			include pseudo- variabes;
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		WARNING: if the var you are passing out has a bash special
+		character in it, the var needs to be placed inside quotes, for example:
+		exec_dset("print-contact.sh '$ct'");
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp292688"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">exec_dset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+exec_dset("echo TEST &gt; /tmp/test.txt");
+exec_dset("echo TEST &gt; /tmp/$rU.txt");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  exec_msg(command)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="exec.f.exec_msg"></a>4.2. 
+		<code class="function">exec_msg(command)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Executes an external command. The whole message is passed to it in 
+		input, no command-line parameters are added, output of the command is 
+		not processed.
+		</p>
+            <p>
+		The <span class="quote">“<span class="quote">examples</span>”</span> directory in the source tarball contains several examples
+		that shows how to use this function.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>command</em></span> - Command to be executed. It
+			can include pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		WARNING: if the var you are passing out has a bash special
+		character in it, the var needs to be placed inside quotes, for example:
+		exec_msg("print-contact.sh '$ct'");
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp297520"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">exec_msg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+exec_msg("echo TEST &gt; /tmp/test.txt");
+exec_msg("echo TEST &gt; /tmp/$rU.txt");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  exec_avp(command [, avplist])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="exec.f.exec_avp"></a>4.3. 
+		<code class="function">exec_avp(command [, avplist])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Executes an external command. Each line from output of the command
+		is saved in an AVP from 'avplist'. If 'avplist' is missing, the
+		AVPs are named 1, 2, 3, ...
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>command</em></span> - Command to be executed. It can
+			include pseudo- variabes;
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>avplist</em></span> - comma separated list with AVP 
+			names to store the result in;
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		WARNING: if the var you are passing out has a bash special
+		character in it, the var needs to be placed inside quotes, for example:
+		exec_avp("print-contact.sh '$ct'");
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm15720"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">exec_avp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+exec_avp("echo TEST");
+exec_avp("echo TEST", "$avp(s:test)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Known Issues">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="exec.known_issues"></a>5. Known Issues</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		There is currently no guarantee that scripts ever return and stop 
+		blocking the <acronym class="acronym">SIP</acronym> server. (There is kill.c but it is not used along with 
+		the current mechanisms based on popen. Besides that kill.c is ugly).
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,4076 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>perl Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4291904" title="perl Module" />
+    <link rel="next" href="#idp1974032" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="perl Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4291904"></a>perl Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Collax GmbH<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bastian</span> <span class="surname">Friedrich</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007 Collax GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1974032">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3456424">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2665248">2. Installing the module</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2648288">3. Using the module</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2887680">4. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1543560">4.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2643736">4.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3011720">5. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.p.filename">5.1. <code class="varname">filename</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.p.modpath">5.2. <code class="varname">modpath</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.p.reset_cycles">5.3. <code class="varname">reset_cycles</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.p.perl_destroy_func">5.4. <code class="varname">perl_destroy_func</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm12848">6. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.f.perl_exec_simple">6.1. 
+			<code class="function">perl_exec_simple(func, [param])</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.f.perl_exec">6.2. 
+			<code class="function">perl_exec(func, [param])</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm5704">7. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.r.set_reset_cycles">7.1. 
+			<code class="function">app_perl.set_reset_cycles</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#app_perl.r.get_reset_cycles">7.2. 
+			<code class="function">app_perl.get_reset_cycles</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2762688">2. Kamailio Perl API</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#ID-d83a4c83b0cd455aef9602128b87c323">1. Kamailio</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-3ae476990b7b1fe73d972e68eb52f93c">1.1. log(level,message)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-949656abaac653354242d1d0e9b418be">2. Kamailio::Message</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-4462b43922a45955436db6a77eff1274">2.1. getType()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-48eb6f3897940320d3dca81eee99e60f">2.2. getStatus()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-06ad673da0ada52b0d53a16dc5edf3c7">2.3. getReason()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-defa3c4593f2232a246f800880c3db8d">2.4. getVersion()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-40655f47473dfd0b09ab79f021379661">2.5. getRURI()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-09d760cb43aa35ee3338a63959e1ad52">2.6. getMethod()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-29a7bfa2b533d46b900690c15e89dac0">2.7. getFullHeader()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-d4227612556f15885224f8d7c9baa63d">2.8. getBody()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-5c55b75dca8e197bf8d4e9195f3fc78b">2.9. getMessage()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-2cd2368ec9da09ded819e54da7ed7e56">2.10. getHeader(name)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-e6f4b718fa39a84855f41d5048abfd17">2.11. getHeaderNames()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-7b0efd72c8ec89bc43dad940590b40c6">2.12. moduleFunction(func,string1,string2)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9fb36151aa2a86585e66dc19227b7d92">2.13. log(level,message) (deprecated type)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-b6b5403d6a2b667316e7ce7ddd0937d0">2.14. rewrite_ruri(newruri)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-43bdd45f2267be3165993d728ae6ac58">2.15. setFlag(flag)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-d3f836fca6d5be320332751cb544a50b">2.16. resetFlag(flag)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9df30424b7e93814c7928cf5899a12cc">2.17. isFlagSet(flag)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cfb8c8675a6620394b21ab786379acfa">2.18. pseudoVar(string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-098e67bc760ef445343eb9e8f93ece8b">2.19. append_branch(branch,qval)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-f20c57aaa92a757d7152aa0479ee1fc0">2.20. getParsedRURI()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-ea7b3e8a4dc6ddf7af0e02f7cec8eef1">3. Kamailio::URI</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-f0b0fe573c97823c7db7e6d2f763eecd">3.1. user()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-13f823f4d5d264262256ce6c13ebda7f">3.2. host()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-f16f4d3590aeadbb89be6381c63d31ba">3.3. passwd()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-0e78ab3771467ade60bb813acff96e1f">3.4. port()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-f09a07f5c225a4cdc0c8cf1b562feca5">3.5. params()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-6ac4960ecbb77b9b208182e39c3fced6">3.6. headers()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-edbeee75601887c5522ec606864fcf06">3.7. transport()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9b062529593a90fa98b8fdaf147d9625">3.8. ttl()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-af281c7d5fa29dfa3d059c93e2ece82f">3.9. user_param()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cc3ad600892aefceee9bb7f7d083b9eb">3.10. maddr()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-bcde93cc9055b03c23ac61f4f7aba922">3.11. method()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-ffda2446aa820304039c53eaca5c1383">3.12. lr()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-e07722a580a9e670d428835b7efacfaf">3.13. r2()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-20d6cdc41465025baceba8056215ac58">3.14. transport_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-6643223dbdb425407fe9801fd4d2fa5b">3.15. ttl_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-aa87e27dd0cce4de62a0f32a7ecb7a33">3.16. user_param_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-85b278e13c1c6169d612921b32a42c3a">3.17. maddr_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-64d75002d2db35d7a66847e0c92f37a9">3.18. method_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cdb1f6d4201cd9b6ee19e6f58236a900">3.19. lr_val()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-af30e585b8decaf3e377375210e977b6">3.20. r2_val()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-f092a1ce520e2e575c41702289adf85e">4. Kamailio::AVP</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-d4453222c49e08dc556c25a6586a00bc">4.1. add(name,val)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-ad3f402b1c78426a3a1de4d0c1d9ad6c">4.2. get(name)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-15db533161502fc4591ec9acdd990ef4">4.3. destroy(name)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-b2dcbd51ac3a3e6208edd5e4f6a5ef63">5. Kamailio::Utils::PhoneNumbers</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-bd49dfdfc2284e87abd95fbce2d63cbd">5.1. new(publicAccessPrefix,internationalPrefix,longDistancePrefix,countryCode,areaCode,pbxCode)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-aa52786fee82fe6e26ac766b30a1a4fa">5.2. canonicalForm( number [, context] )</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-31479dee3ae037c27cd7a84aa7358bd2">5.3. dialNumber( number [, context] )</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-05a2ba8f92ec3fe3d26bcb69d169a1b1">6. Kamailio::LDAPUtils::LDAPConf</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-77bbb24cd07a34db564171c3072c9f8c">6.1. Constructor new()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-09b3942c6aa316dd4659cc1d84cfab21">6.2. Method base()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cabd9882c784cf96cf68ca988c1dae0f">6.3. Method host()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-467ec702bbcdb63e337bbff9e3a5bf01">6.4. Method port()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-1a047746515766cf720b5cc0f154c783">6.5. Method uri()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-35ebbd3612d026b4176d2eb8eae428b0">6.6. Method rootbindpw()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-5e0c4c1de34f9247439d8d10d6734b9e">6.7. Method rootbinddn()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cdb5e3ce4599d0613db43f1f387f7ea6">6.8. Method binddn()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-3c51d4eeaae6feb7498a2f562b176df3">6.9. Method bindpw()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-10d643239760bcd4a2286051808d077e">7. Kamailio::LDAPUtils::LDAPConnection</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-58e29437b48125a88033370afe8fa32b">7.1. Constructor new( [config, [authenticated]] )</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-129bd2634f1c36a401321f2fa34be026">7.2. Function/Method search( conf, filter, base, [requested_attributes ...])</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#ID-fb371aca693935a2ea3467c59473c78f">7.2.1. Arguments:</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#ID-5c0875c73d1d44335ab71b50d8930584">7.2.2. Result:</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-94fdb1e4103544a567ac38ee23c8a4d1">8. Kamailio::VDB</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-d97df315e2044f430319fc4cd9937aa5">9. Kamailio::Constants</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-9658bbad14831f685cca13a5c9bb4335">10. Kamailio::VDB::Adapter::Speeddial</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-5cdb14839de18c32782e3d768e170da7">11. Kamailio::VDB::Adapter::Alias</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-748da8d11c20576948ef68d62753a06a">11.1. query(conds,retkeys,order)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-8165ac0b808b36ff72ee4032e0f62881">12. Kamailio::VDB::Adapter::AccountingSIPtrace</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-048913e15394a9675cfe02af5c340528">13. Kamailio::VDB::Adapter::Describe</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-682dd320dd536e7fb0de4a24e9d1e46e">14. Kamailio::VDB::Adapter::Auth</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#ID-f245c032bf4b4837415c871537a63e3b">15. Kamailio::VDB::ReqCond</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-c50f7cee51ceffdb7253101a36d6b7b3">15.1. new(key,op,type,name)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-cb5f02a3144f3af620484048b11472af">15.2. op()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-4be9a5fa03b11c2c2dad3594fc3b585d">16. Kamailio::VDB::Pair</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-e6cc5b1a997ea8e29d2a00b986784dc0">16.1. new(key,type,name)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9c70856322a870405521ad299a6785d6">16.2. key()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-41cd8a9b5b94c05139d2a7f62d5a967b">17. Kamailio::VDB::VTab</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-a42ddb87d67983028cf8d1b7d6f46baa">17.1. new()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-c00e2c0b9abc7cd56be59f2b051a538c">17.2. call(op,[args])</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-dd87abbf6c21bba656e60f50bf1db81b">18. Kamailio::VDB::Value</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-f8210a055e2dc48b7cd31acfbe483ef9">18.1. stringification</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-246aa300bb8cb062e3126e6eddd094c4">18.2. new(type,data)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-1b24f490feaba7e8ffde5919a34a3ea5">18.3. type()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-8ed1b290ce747e1e6fc97d5c253d67eb">18.4. data()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#ID-01b04d0ae14c862d7543534782702100">19. Kamailio::VDB::Column</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-c1f63ab2d499e0ffb0eff65d3d1bcaa3">19.1. Stringification</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9be0a542b4be1d36c09e57a0a7785b8b">19.2. new(type,name)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-9e27faa58b7b4659e2d511fd4ed58ccd">19.3. type( )</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-e3219d620b6d1b4f5656ee466ef3cf22">19.4. name()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-07e232dc068e186782a8d0c0bbae91d3">19.5. Kamailio::VDB::Result</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-54e80aeec6aaaa66afb9548d25388dea">19.6. new(coldefs,[row, row, ...])</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-c77fe41ba24f3f04c12254c9f001bb27">19.7. coldefs()</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#ID-a20f0baefcdf46a3e923bb02203b3792">19.8. rows()</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2562192">3. Perl samples</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1752200">1. Sample directory</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2582856">1.1. Script descriptions</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp327904">1.1.1. branches.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1655792">1.1.2. firstline.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1682104">1.1.3. flags.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1395952">1.1.4. functions.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp310896">1.1.5. headers.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2530016">1.1.6. logging.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2787328">1.1.7. messagedump.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2387296">1.1.8. persistence.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2388328">1.1.9. phonenumbers.pl</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2389168">1.1.10. pseudovars.pl</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp268400">4. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3019872">Set <code class="varname">filename</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3022824">Set <code class="varname">modpath</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm16392">Set <code class="varname">reset_cycles</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm14120">Set <code class="varname">perl_destroy_func</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm10360"><code class="function">perl_exec_simple()</code> usage</a></dt>
+          <dt>1.6. <a href="#idm7000"><code class="function">perl_exec()</code> usage</a></dt>
+          <dt>1.7. <a href="#idm4288"><code class="function">app_perl.set_reset_cycles</code> usage</a></dt>
+          <dt>1.8. <a href="#idm1992"><code class="function">app_perl.get_reset_cycles</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1974032"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3456424">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2665248">2. Installing the module</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2648288">3. Using the module</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2887680">4. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1543560">4.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2643736">4.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3011720">5. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.p.filename">5.1. <code class="varname">filename</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.p.modpath">5.2. <code class="varname">modpath</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.p.reset_cycles">5.3. <code class="varname">reset_cycles</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.p.perl_destroy_func">5.4. <code class="varname">perl_destroy_func</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm12848">6. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.f.perl_exec_simple">6.1. 
+			<code class="function">perl_exec_simple(func, [param])</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.f.perl_exec">6.2. 
+			<code class="function">perl_exec(func, [param])</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm5704">7. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.r.set_reset_cycles">7.1. 
+			<code class="function">app_perl.set_reset_cycles</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#app_perl.r.get_reset_cycles">7.2. 
+			<code class="function">app_perl.get_reset_cycles</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3456424"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The time needed when writing a new Kamailio module unfortunately is quite high, while the
+		options provided by the configuration file are limited to the features implemented in the
+		modules.
+		</p>
+          <p>
+		With this Perl module, you can easily implement your own Kamailio extensions in Perl. This allows
+		for simple access to the full world of CPAN modules. SIP URI rewriting could be implemented
+		based on regular expressions; accessing arbitrary data backends, e.g. LDAP or Berkeley DB files,
+		is now extremely simple.
+		</p>
+        </div>
+        <div class="section" title="2.¬†Installing the module">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2665248"></a>2.¬†Installing the module</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This Perl module is loaded in kamailio.cfg (just like all the other modules) with
+		loadmodule("/path/to/perl.so");.
+		</p>
+          <p>
+		For the Perl module to compile, you need a reasonably recent version of perl (tested
+		with 5.8.8) linked dynamically. It is strongly advised to use a threaded version.
+		The default binary packages from your favorite Linux distribution should work fine.
+		</p>
+          <p>
+		Cross compilation is supported by the Makefile. You need to set the environment variables
+		PERLLDOPTS, PERLCCOPTS and TYPEMAP to values similar to the output of
+		</p>
+          <pre class="programlisting">PERLLDOPTS: perl -MExtUtils::Embed -e ldopts
+PERLCCOPTS: perl -MExtUtils::Embed -e ccopts
+TYPEMAP:    echo "`perl -MConfig -e 'print $Config{installprivlib}'`/ExtUtils/typemap"</pre>
+          <p>
+		The exact position of your (precompiled!) perl libraries depends on the setup of your
+		environment.
+		</p>
+        </div>
+        <div class="section" title="3.¬†Using the module">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2648288"></a>3.¬†Using the module</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The Perl module has two interfaces: The perl side, and the Kamailio side. Once a Perl
+		function is defined and loaded via the module parameters (see below), it may be
+		called in Kamailio's configuration at an arbitary point. E.g., you could write
+		a function "ldap_alias" in Perl, and then execute </p>
+          <pre class="programlisting">...
+if (perl_exec("ldap_alias")) {
+	...
+}	
+...</pre>
+          <p>
+		just as you would have done with the current alias_db module.
+		</p>
+          <p>
+		The functions you can use are listed in the "Exported Functions" section below.
+		</p>
+          <p>
+		On the Perl side, there are a number of functions that let you read and modify the
+		current SIP message, such as the RURI or the message flags. An introduction
+		to the Perl interface and the full reference documentation can be found below.
+		</p>
+        </div>
+        <div class="section" title="4.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2887680"></a>4.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1543560"></a>4.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				The "sl" module is needed for sending replies uppon fatal errors. All other modules
+				can be accessed from the Perl module, though.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="4.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2643736"></a>4.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>Perl 5.8.x or later</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Additionally, a number of perl modules should be installed. The Kamailio::LDAPUtils package
+		relies on Net::LDAP to be installed. One of the sample scripts needs IPC::Shareable
+		</p>
+            <p>
+		This module has been developed and tested with Perl 5.8.8, but should work with any
+		5.8.x release. Compilation is possible with 5.6.x, but its behavior is unsupported.
+		Earlier versions do not work.
+		</p>
+            <p>
+		On current Debian systems, at least the following packages should be installed:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>perl</p>
+                </li>
+                <li class="listitem">
+                  <p>perl-base</p>
+                </li>
+                <li class="listitem">
+                  <p>perl-modules</p>
+                </li>
+                <li class="listitem">
+                  <p>libperl5.8</p>
+                </li>
+                <li class="listitem">
+                  <p>libperl-dev</p>
+                </li>
+                <li class="listitem">
+                  <p>libnet-ldap-perl</p>
+                </li>
+                <li class="listitem">
+                  <p>libipc-shareable-perl</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		It was reported that other Debian-style distributions (such as Ubuntu) need the
+		same packages.
+		</p>
+            <p>
+		On SuSE systems, at least the following packages should be installed:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>perl</p>
+                </li>
+                <li class="listitem">
+                  <p>perl-ldap</p>
+                </li>
+                <li class="listitem">
+                  <p>IPC::Shareable perl module from CPAN</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Although SuSE delivers a lot of perl modules, others may have to be fetched
+		from CPAN. Consider using the program <span class="quote">‚Äú<span class="quote">cpan2rpm</span>‚Äù</span> - which, in turn,
+		is available on CPAN. It creates RPM files from CPAN.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3011720"></a>5.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†filename (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.p.filename"></a>5.1.¬†<code class="varname">filename</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is the file name of your script. This may be set once only, but it may include an arbitary
+			number of functions and <span class="quote">‚Äú<span class="quote">use</span>‚Äù</span> as many Perl module as necessary.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Must not be empty!
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp3019872"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">filename</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_perl", "filename", "/home/test/kamailio/myperl.pl")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬†modpath (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.p.modpath"></a>5.2.¬†<code class="varname">modpath</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The path to the Perl modules included (Kamailio.pm et.al). It is not absolutely
+			crucial to set this path,
+			as you <span class="emphasis"><em>may</em></span> install the Modules in Perl's standard path, or update
+			the <span class="quote">‚Äú<span class="quote">%INC</span>‚Äù</span> variable from within your script. Using this module parameter
+			is the standard behavior, though. Multiple paths may be specified by separating them with
+			a <span class="quote">‚Äú<span class="quote">:</span>‚Äù</span> character. The maximum is 10 paths.
+			</p>
+            <div class="example">
+              <a id="idp3022824"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">modpath</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_perl", "modpath", "/usr/local/lib/kamailio/perl/")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬†reset_cycles (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.p.reset_cycles"></a>5.3.¬†<code class="varname">reset_cycles</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The number of execution cycles after which the embedded perl interpreter
+			is reset. Sometimes is hard to track the scope of variables in all used
+			perl modules and that can result in leaks of system memory. Resetting the
+			interpreter cleans the memory space.
+			</p>
+            <p>
+			When the interpreter is reset, the perl script is loaded again. Note that
+			not all Kamailio processes will reset the interpreter at the same time.
+			Each will do it when it has executed the script for the number of
+			reset_cycles. Also, be aware that the reset of the interpreter is taking
+			a bit of time (in the order of tens of mili-seconds).
+			</p>
+            <p>
+			Default value is <span class="emphasis"><em>0</em></span> - never reset the interpreter.
+			</p>
+            <div class="example">
+              <a id="idm16392"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">reset_cycles</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_perl", "reset_cycles", 100000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬†perl_destroy_func (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.p.perl_destroy_func"></a>5.4.¬†<code class="varname">perl_destroy_func</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The name of Perl function to be executed before the interpreter is
+			re-initialized (reset -- see reset_cycles parameter) at runtime.
+			This could be useful to clean global variables or file descriptors
+			from the Perl script.
+			</p>
+            <div class="example">
+              <a id="idm14120"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">perl_destroy_func</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("app_perl", "perl_destroy_func", "my_perl_destroy")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm12848"></a>6.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† perl_exec_simple(func, [param])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.f.perl_exec_simple"></a>6.1.¬†
+			<code class="function">perl_exec_simple(func, [param])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Calls a perl function <span class="emphasis"><em>without</em></span> passing it the current SIP message.
+			May be used for very simple simple requests that do not have to fiddle with the message
+			themselves, but rather return information values about the environment.
+			</p>
+            <p>
+			The first parameter is the function to be called.
+			An arbitrary string may optionally be passed as a parameter.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE and BRANCH_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idm10360"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†<code class="function">perl_exec_simple()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (method=="INVITE") {
+	perl_exec_simple("dosomething", "on invite messages");
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.¬† perl_exec(func, [param])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.f.perl_exec"></a>6.2.¬†
+			<code class="function">perl_exec(func, [param])</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Calls a perl function <span class="emphasis"><em>with</em></span> passing it the current SIP message.
+			The SIP message is reflected by a Perl module that gives you access to the information
+			in the current SIP message (Kamailio::Message).
+			</p>
+            <p>
+			The first parameter is the function to be called.
+			An arbitrary string may be passed as a parameter.
+			</p>
+            <p>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, ONREPLY_ROUTE and BRANCH_ROUTE.
+			</p>
+            <div class="example">
+              <a id="idm7000"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†<code class="function">perl_exec()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (perl_exec("ldapalias")) {
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm5704"></a>7.¬†RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬† app_perl.set_reset_cycles">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.r.set_reset_cycles"></a>7.1.¬†
+			<code class="function">app_perl.set_reset_cycles</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Set the value of the reset_cycle. The command has one integer
+				parameter.
+			</p>
+            <div class="example">
+              <a id="idm4288"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†<code class="function">app_perl.set_reset_cycles</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamcmd app_perl.set_reset_cycles 20000
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="7.2.¬† app_perl.get_reset_cycles">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="app_perl.r.get_reset_cycles"></a>7.2.¬†
+			<code class="function">app_perl.get_reset_cycles</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Return the value of the reset_cycle.
+			</p>
+            <div class="example">
+              <a id="idm1992"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">app_perl.get_reset_cycles</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+kamcmd app_perl.get_reset_cycles
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Kamailio Perl API">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2762688"></a>Chapter¬†2.¬†Kamailio Perl API</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#ID-d83a4c83b0cd455aef9602128b87c323">1. Kamailio</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-3ae476990b7b1fe73d972e68eb52f93c">1.1. log(level,message)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-949656abaac653354242d1d0e9b418be">2. Kamailio::Message</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-4462b43922a45955436db6a77eff1274">2.1. getType()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-48eb6f3897940320d3dca81eee99e60f">2.2. getStatus()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-06ad673da0ada52b0d53a16dc5edf3c7">2.3. getReason()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-defa3c4593f2232a246f800880c3db8d">2.4. getVersion()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-40655f47473dfd0b09ab79f021379661">2.5. getRURI()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-09d760cb43aa35ee3338a63959e1ad52">2.6. getMethod()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-29a7bfa2b533d46b900690c15e89dac0">2.7. getFullHeader()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-d4227612556f15885224f8d7c9baa63d">2.8. getBody()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-5c55b75dca8e197bf8d4e9195f3fc78b">2.9. getMessage()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-2cd2368ec9da09ded819e54da7ed7e56">2.10. getHeader(name)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-e6f4b718fa39a84855f41d5048abfd17">2.11. getHeaderNames()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-7b0efd72c8ec89bc43dad940590b40c6">2.12. moduleFunction(func,string1,string2)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9fb36151aa2a86585e66dc19227b7d92">2.13. log(level,message) (deprecated type)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-b6b5403d6a2b667316e7ce7ddd0937d0">2.14. rewrite_ruri(newruri)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-43bdd45f2267be3165993d728ae6ac58">2.15. setFlag(flag)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-d3f836fca6d5be320332751cb544a50b">2.16. resetFlag(flag)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9df30424b7e93814c7928cf5899a12cc">2.17. isFlagSet(flag)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cfb8c8675a6620394b21ab786379acfa">2.18. pseudoVar(string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-098e67bc760ef445343eb9e8f93ece8b">2.19. append_branch(branch,qval)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-f20c57aaa92a757d7152aa0479ee1fc0">2.20. getParsedRURI()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-ea7b3e8a4dc6ddf7af0e02f7cec8eef1">3. Kamailio::URI</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-f0b0fe573c97823c7db7e6d2f763eecd">3.1. user()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-13f823f4d5d264262256ce6c13ebda7f">3.2. host()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-f16f4d3590aeadbb89be6381c63d31ba">3.3. passwd()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-0e78ab3771467ade60bb813acff96e1f">3.4. port()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-f09a07f5c225a4cdc0c8cf1b562feca5">3.5. params()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-6ac4960ecbb77b9b208182e39c3fced6">3.6. headers()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-edbeee75601887c5522ec606864fcf06">3.7. transport()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9b062529593a90fa98b8fdaf147d9625">3.8. ttl()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-af281c7d5fa29dfa3d059c93e2ece82f">3.9. user_param()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cc3ad600892aefceee9bb7f7d083b9eb">3.10. maddr()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-bcde93cc9055b03c23ac61f4f7aba922">3.11. method()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-ffda2446aa820304039c53eaca5c1383">3.12. lr()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-e07722a580a9e670d428835b7efacfaf">3.13. r2()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-20d6cdc41465025baceba8056215ac58">3.14. transport_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-6643223dbdb425407fe9801fd4d2fa5b">3.15. ttl_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-aa87e27dd0cce4de62a0f32a7ecb7a33">3.16. user_param_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-85b278e13c1c6169d612921b32a42c3a">3.17. maddr_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-64d75002d2db35d7a66847e0c92f37a9">3.18. method_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cdb1f6d4201cd9b6ee19e6f58236a900">3.19. lr_val()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-af30e585b8decaf3e377375210e977b6">3.20. r2_val()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-f092a1ce520e2e575c41702289adf85e">4. Kamailio::AVP</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-d4453222c49e08dc556c25a6586a00bc">4.1. add(name,val)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-ad3f402b1c78426a3a1de4d0c1d9ad6c">4.2. get(name)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-15db533161502fc4591ec9acdd990ef4">4.3. destroy(name)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-b2dcbd51ac3a3e6208edd5e4f6a5ef63">5. Kamailio::Utils::PhoneNumbers</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-bd49dfdfc2284e87abd95fbce2d63cbd">5.1. new(publicAccessPrefix,internationalPrefix,longDistancePrefix,countryCode,areaCode,pbxCode)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-aa52786fee82fe6e26ac766b30a1a4fa">5.2. canonicalForm( number [, context] )</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-31479dee3ae037c27cd7a84aa7358bd2">5.3. dialNumber( number [, context] )</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-05a2ba8f92ec3fe3d26bcb69d169a1b1">6. Kamailio::LDAPUtils::LDAPConf</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-77bbb24cd07a34db564171c3072c9f8c">6.1. Constructor new()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-09b3942c6aa316dd4659cc1d84cfab21">6.2. Method base()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cabd9882c784cf96cf68ca988c1dae0f">6.3. Method host()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-467ec702bbcdb63e337bbff9e3a5bf01">6.4. Method port()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-1a047746515766cf720b5cc0f154c783">6.5. Method uri()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-35ebbd3612d026b4176d2eb8eae428b0">6.6. Method rootbindpw()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-5e0c4c1de34f9247439d8d10d6734b9e">6.7. Method rootbinddn()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cdb5e3ce4599d0613db43f1f387f7ea6">6.8. Method binddn()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-3c51d4eeaae6feb7498a2f562b176df3">6.9. Method bindpw()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-10d643239760bcd4a2286051808d077e">7. Kamailio::LDAPUtils::LDAPConnection</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-58e29437b48125a88033370afe8fa32b">7.1. Constructor new( [config, [authenticated]] )</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-129bd2634f1c36a401321f2fa34be026">7.2. Function/Method search( conf, filter, base, [requested_attributes ...])</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#ID-fb371aca693935a2ea3467c59473c78f">7.2.1. Arguments:</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#ID-5c0875c73d1d44335ab71b50d8930584">7.2.2. Result:</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-94fdb1e4103544a567ac38ee23c8a4d1">8. Kamailio::VDB</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-d97df315e2044f430319fc4cd9937aa5">9. Kamailio::Constants</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-9658bbad14831f685cca13a5c9bb4335">10. Kamailio::VDB::Adapter::Speeddial</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-5cdb14839de18c32782e3d768e170da7">11. Kamailio::VDB::Adapter::Alias</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-748da8d11c20576948ef68d62753a06a">11.1. query(conds,retkeys,order)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-8165ac0b808b36ff72ee4032e0f62881">12. Kamailio::VDB::Adapter::AccountingSIPtrace</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-048913e15394a9675cfe02af5c340528">13. Kamailio::VDB::Adapter::Describe</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-682dd320dd536e7fb0de4a24e9d1e46e">14. Kamailio::VDB::Adapter::Auth</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#ID-f245c032bf4b4837415c871537a63e3b">15. Kamailio::VDB::ReqCond</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-c50f7cee51ceffdb7253101a36d6b7b3">15.1. new(key,op,type,name)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-cb5f02a3144f3af620484048b11472af">15.2. op()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-4be9a5fa03b11c2c2dad3594fc3b585d">16. Kamailio::VDB::Pair</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-e6cc5b1a997ea8e29d2a00b986784dc0">16.1. new(key,type,name)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9c70856322a870405521ad299a6785d6">16.2. key()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-41cd8a9b5b94c05139d2a7f62d5a967b">17. Kamailio::VDB::VTab</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-a42ddb87d67983028cf8d1b7d6f46baa">17.1. new()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-c00e2c0b9abc7cd56be59f2b051a538c">17.2. call(op,[args])</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-dd87abbf6c21bba656e60f50bf1db81b">18. Kamailio::VDB::Value</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-f8210a055e2dc48b7cd31acfbe483ef9">18.1. stringification</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-246aa300bb8cb062e3126e6eddd094c4">18.2. new(type,data)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-1b24f490feaba7e8ffde5919a34a3ea5">18.3. type()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-8ed1b290ce747e1e6fc97d5c253d67eb">18.4. data()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#ID-01b04d0ae14c862d7543534782702100">19. Kamailio::VDB::Column</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-c1f63ab2d499e0ffb0eff65d3d1bcaa3">19.1. Stringification</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9be0a542b4be1d36c09e57a0a7785b8b">19.2. new(type,name)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-9e27faa58b7b4659e2d511fd4ed58ccd">19.3. type( )</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-e3219d620b6d1b4f5656ee466ef3cf22">19.4. name()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-07e232dc068e186782a8d0c0bbae91d3">19.5. Kamailio::VDB::Result</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-54e80aeec6aaaa66afb9548d25388dea">19.6. new(coldefs,[row, row, ...])</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-c77fe41ba24f3f04c12254c9f001bb27">19.7. coldefs()</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#ID-a20f0baefcdf46a3e923bb02203b3792">19.8. rows()</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Kamailio">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-d83a4c83b0cd455aef9602128b87c323"></a>1.¬†Kamailio</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This module provides access to a limited number of Kamailio core
+      functions. As the most interesting functions deal with SIP messages,
+      they are located in the Kamailio::Message class below.
+    </p>
+          <div class="section" title="1.1.¬†log(level,message)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-3ae476990b7b1fe73d972e68eb52f93c"></a>1.1.¬†log(level,message)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Logs the message with Kamailio's logging facility. The logging level
+	is one of the following:
+      </p>
+            <pre class="screen">* L_ALERT
+* L_CRIT
+* L_ERR
+* L_WARN
+* L_NOTICE
+* L_INFO
+* L_DBG</pre>
+            <p>
+	Please note that this method is <span class="italic">NOT</span> automatically exported, as it collides
+	with the perl function log (which calculates the logarithm). Either
+	explicitly import the function (via <code class="literal">use Kamailio qw ( log );</code>), or call
+	it with its full name:
+      </p>
+            <pre class="screen">Kamailio::log(L_INFO, "foobar");</pre>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Kamailio::Message">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-949656abaac653354242d1d0e9b418be"></a>2.¬†Kamailio::Message</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package provides access functions for an Kamailio <code class="literal">sip_msg</code> structure and its
+      sub-components. Through its means it is possible to fully configure
+      alternative routing decisions.
+    </p>
+          <div class="section" title="2.1.¬†getType()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-4462b43922a45955436db6a77eff1274"></a>2.1.¬†getType()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns one of the constants SIP_REQUEST, SIP_REPLY, SIP_INVALID
+	stating the type of the current message.
+      </p>
+          </div>
+          <div class="section" title="2.2.¬†getStatus()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-48eb6f3897940320d3dca81eee99e60f"></a>2.2.¬†getStatus()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the status code of the current Reply message. This function
+	is invalid in Request context!
+      </p>
+          </div>
+          <div class="section" title="2.3.¬†getReason()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-06ad673da0ada52b0d53a16dc5edf3c7"></a>2.3.¬†getReason()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the reason of the current Reply message. This function is
+	invalid in Request context!
+      </p>
+          </div>
+          <div class="section" title="2.4.¬†getVersion()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-defa3c4593f2232a246f800880c3db8d"></a>2.4.¬†getVersion()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the version string of the current SIP message.
+      </p>
+          </div>
+          <div class="section" title="2.5.¬†getRURI()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-40655f47473dfd0b09ab79f021379661"></a>2.5.¬†getRURI()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	This function returns the recipient URI of the present SIP message:
+      </p>
+            <p>
+	<code class="literal">my $ruri =
+	$m-&gt;getRURI();</code>
+      </p>
+            <p>
+	getRURI returns a string. See <a class="link" href="#ID-f20c57aaa92a757d7152aa0479ee1fc0" title="2.20.¬†getParsedRURI()"><span class="quote">‚Äú<span class="quote">getParsedRURI()</span>‚Äù</span></a>
+	below how to receive a parsed structure.
+      </p>
+            <p>
+	This function is valid in request messages only.
+      </p>
+          </div>
+          <div class="section" title="2.6.¬†getMethod()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-09d760cb43aa35ee3338a63959e1ad52"></a>2.6.¬†getMethod()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the current method, such as <code class="literal">INVITE</code>, <code class="literal">REGISTER</code>, <code class="literal">ACK</code> and so on.
+      </p>
+            <p>
+	<code class="literal">my $method =
+	$m-&gt;getMethod();</code>
+      </p>
+            <p>
+	This function is valid in request messages only.
+      </p>
+          </div>
+          <div class="section" title="2.7.¬†getFullHeader()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-29a7bfa2b533d46b900690c15e89dac0"></a>2.7.¬†getFullHeader()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the full message header as present in the current message.
+	You might use this header to further work with it with your
+	favorite MIME package.
+      </p>
+            <p>
+	<code class="literal">my $hdr =
+	$m-&gt;getFullHeader();</code>
+      </p>
+          </div>
+          <div class="section" title="2.8.¬†getBody()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-d4227612556f15885224f8d7c9baa63d"></a>2.8.¬†getBody()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the message body.
+      </p>
+          </div>
+          <div class="section" title="2.9.¬†getMessage()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-5c55b75dca8e197bf8d4e9195f3fc78b"></a>2.9.¬†getMessage()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the whole message including headers and body.
+      </p>
+          </div>
+          <div class="section" title="2.10.¬†getHeader(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-2cd2368ec9da09ded819e54da7ed7e56"></a>2.10.¬†getHeader(name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the body of the first message header with this name.
+      </p>
+            <p>
+	<code class="literal">print
+	$m-&gt;getHeader("To");</code>
+      </p>
+            <p>
+	<span class="bold"><strong><code class="literal">"John"
+	&lt;sip:john@doe.example&gt;</code></strong></span>
+      </p>
+          </div>
+          <div class="section" title="2.11.¬†getHeaderNames()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-e6f4b718fa39a84855f41d5048abfd17"></a>2.11.¬†getHeaderNames()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns an array of all header names. Duplicates possible!
+      </p>
+          </div>
+          <div class="section" title="2.12.¬†moduleFunction(func,string1,string2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-7b0efd72c8ec89bc43dad940590b40c6"></a>2.12.¬†moduleFunction(func,string1,string2)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Search for an arbitrary function in module exports and call it with
+	the parameters self, string1, string2.
+      </p>
+            <p>
+	<code class="literal">string1</code> and/or <code class="literal">string2</code> may be omitted.
+      </p>
+            <p>
+	As this function provides access to the functions that are exported
+	to the Kamailio configuration file, it is autoloaded for unknown
+	functions. Instead of writing
+      </p>
+            <pre class="screen">$m-&gt;moduleFunction("sl_send_reply", "500", "Internal Error");
+$m-&gt;moduleFunction("xlog", "L_INFO", "foo");</pre>
+            <p>
+	you may as well write
+      </p>
+            <pre class="screen">$m-&gt;sl_send_reply("500", "Internal Error");
+$m-&gt;xlog("L_INFO", "foo");</pre>
+            <p>
+	WARNING
+      </p>
+            <p>
+	In Kamailio 1.2, only a limited subset of module functions is
+	available. This restriction will be removed in a later version.
+      </p>
+            <p>
+	Here is a list of functions that are expected to be working (not
+	claiming completeness):
+      </p>
+            <pre class="screen">* alias_db_lookup
+* consume_credentials
+* is_rpid_user_e164
+* append_rpid_hf
+* bind_auth
+* avp_print
+* cpl_process_register
+* cpl_process_register_norpl
+* load_dlg
+* ds_next_dst
+* ds_next_domain
+* ds_mark_dst
+* ds_mark_dst
+* is_from_local
+* is_uri_host_local
+* dp_can_connect
+* dp_apply_policy
+* enum_query (without parameters)
+* enum_fquery (without parameters)
+* is_from_user_enum (without parameters)
+* i_enum_query (without parameters)
+* imc_manager
+* jab_* (all functions from the jabber module)
+* load_gws (without parameters)
+* next_gw
+* from_gw (without parameters)
+* to_gw (without parameters)
+* load_contacts
+* next_contacts
+* sdp_mangle_ip
+* sdp_mangle_port
+* encode_contact
+* decode_contact
+* decode_contact_header
+* fix_contact
+* use_media_proxy
+* end_media_session
+* m_store
+* m_dump
+* fix_nated_contact
+* unforce_rtp_proxy
+* force_rtp_proxy
+* fix_nated_register
+* add_rcv_param
+* options_reply
+* checkospheader
+* validateospheader
+* requestosprouting
+* checkosproute
+* prepareosproute
+* prepareallosproutes
+* checkcallingtranslation
+* reportospusage
+* mangle_pidf
+* mangle_message_cpim
+* add_path (without parameters)
+* add_path_received (without parameters)
+* prefix2domain
+* allow_routing (without parameters)
+* allow_trusted
+* pike_check_req
+* handle_publish
+* handle_subscribe
+* stored_pres_info
+* bind_pua
+* send_publish
+* send_subscribe
+* pua_set_publish
+* loose_route
+* record_route
+* load_rr
+* sip_trace
+* sl_reply_error
+* sms_send_msg
+* sd_lookup
+* sstCheckMin
+* append_time
+* has_body (without parameters)
+* is_peer_verified
+* t_newtran
+* t_release
+* t_relay (without parameters)
+* t_flush_flags
+* t_check_trans
+* t_was_cancelled
+* t_load_contacts
+* t_next_contacts
+* uac_restore_from
+* uac_auth
+* has_totag
+* tel2sip
+* check_to
+* check_from
+* radius_does_uri_exist
+* ul_* (All functions exported by the usrloc module for user access)
+* xmpp_send_message</pre>
+          </div>
+          <div class="section" title="2.13.¬†log(level,message) (deprecated type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9fb36151aa2a86585e66dc19227b7d92"></a>2.13.¬†log(level,message) (deprecated type)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Logs the message with Kamailio's logging facility. The logging level
+	is one of the following:
+      </p>
+            <pre class="screen">* L_ALERT
+* L_CRIT
+* L_ERR
+* L_WARN
+* L_NOTICE
+* L_INFO
+* L_DBG</pre>
+            <p>
+	The logging function should be accessed via the Kamailio module
+	variant. This one, located in Kamailio::Message, is deprecated.
+      </p>
+          </div>
+          <div class="section" title="2.14.¬†rewrite_ruri(newruri)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-b6b5403d6a2b667316e7ce7ddd0937d0"></a>2.14.¬†rewrite_ruri(newruri)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Sets a new destination (recipient) URI. Useful for rerouting the
+	current message/call.
+      </p>
+            <pre class="screen">if ($m-&gt;getRURI() =~ m/\@somedomain.net/) {
+  $m-&gt;rewrite_ruri("sip:dispatcher\@organization.net");
+}</pre>
+          </div>
+          <div class="section" title="2.15.¬†setFlag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-43bdd45f2267be3165993d728ae6ac58"></a>2.15.¬†setFlag(flag)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Sets a message flag. The constants as known from the C API may be
+	used, when Constants.pm is included.
+      </p>
+          </div>
+          <div class="section" title="2.16.¬†resetFlag(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-d3f836fca6d5be320332751cb544a50b"></a>2.16.¬†resetFlag(flag)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Resets a message flag.
+      </p>
+          </div>
+          <div class="section" title="2.17.¬†isFlagSet(flag)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9df30424b7e93814c7928cf5899a12cc"></a>2.17.¬†isFlagSet(flag)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns whether a message flag is set or not.
+      </p>
+          </div>
+          <div class="section" title="2.18.¬†pseudoVar(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cfb8c8675a6620394b21ab786379acfa"></a>2.18.¬†pseudoVar(string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns a new string where all pseudo variables are substituted by
+	their values. Can be used to receive the values of single
+	variables, too.
+      </p>
+            <p>
+	<span class="bold"><strong>Please remember that you need to escape the
+	'$' sign in perl strings!</strong></span>
+      </p>
+          </div>
+          <div class="section" title="2.19.¬†append_branch(branch,qval)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-098e67bc760ef445343eb9e8f93ece8b"></a>2.19.¬†append_branch(branch,qval)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Append a branch to current message.
+      </p>
+          </div>
+          <div class="section" title="2.20.¬†getParsedRURI()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-f20c57aaa92a757d7152aa0479ee1fc0"></a>2.20.¬†getParsedRURI()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the current destination URI as an Kamailio::URI object.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Kamailio::URI">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-ea7b3e8a4dc6ddf7af0e02f7cec8eef1"></a>3.¬†Kamailio::URI</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package provides functions for access to sip_uri structures.
+    </p>
+          <div class="section" title="3.1.¬†user()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-f0b0fe573c97823c7db7e6d2f763eecd"></a>3.1.¬†user()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the user part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.2.¬†host()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-13f823f4d5d264262256ce6c13ebda7f"></a>3.2.¬†host()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the host part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.3.¬†passwd()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-f16f4d3590aeadbb89be6381c63d31ba"></a>3.3.¬†passwd()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the passwd part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.4.¬†port()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-0e78ab3771467ade60bb813acff96e1f"></a>3.4.¬†port()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the port part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.5.¬†params()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-f09a07f5c225a4cdc0c8cf1b562feca5"></a>3.5.¬†params()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the params part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.6.¬†headers()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-6ac4960ecbb77b9b208182e39c3fced6"></a>3.6.¬†headers()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the headers part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.7.¬†transport()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-edbeee75601887c5522ec606864fcf06"></a>3.7.¬†transport()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the transport part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.8.¬†ttl()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9b062529593a90fa98b8fdaf147d9625"></a>3.8.¬†ttl()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the ttl part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.9.¬†user_param()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-af281c7d5fa29dfa3d059c93e2ece82f"></a>3.9.¬†user_param()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the user_param part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.10.¬†maddr()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cc3ad600892aefceee9bb7f7d083b9eb"></a>3.10.¬†maddr()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the maddr part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.11.¬†method()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-bcde93cc9055b03c23ac61f4f7aba922"></a>3.11.¬†method()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the method part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.12.¬†lr()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-ffda2446aa820304039c53eaca5c1383"></a>3.12.¬†lr()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the lr part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.13.¬†r2()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-e07722a580a9e670d428835b7efacfaf"></a>3.13.¬†r2()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the r2 part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.14.¬†transport_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-20d6cdc41465025baceba8056215ac58"></a>3.14.¬†transport_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the transport_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.15.¬†ttl_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-6643223dbdb425407fe9801fd4d2fa5b"></a>3.15.¬†ttl_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the ttl_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.16.¬†user_param_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-aa87e27dd0cce4de62a0f32a7ecb7a33"></a>3.16.¬†user_param_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the user_param_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.17.¬†maddr_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-85b278e13c1c6169d612921b32a42c3a"></a>3.17.¬†maddr_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the maddr_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.18.¬†method_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-64d75002d2db35d7a66847e0c92f37a9"></a>3.18.¬†method_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the method_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.19.¬†lr_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cdb1f6d4201cd9b6ee19e6f58236a900"></a>3.19.¬†lr_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the lr_val part of this URI.
+      </p>
+          </div>
+          <div class="section" title="3.20.¬†r2_val()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-af30e585b8decaf3e377375210e977b6"></a>3.20.¬†r2_val()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the r2_val part of this URI.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Kamailio::AVP">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-f092a1ce520e2e575c41702289adf85e"></a>4.¬†Kamailio::AVP</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package provides access functions for Kamailio's AVPs. These
+      variables can be created, evaluated, modified and removed through
+      this package.
+    </p>
+          <p>
+      Please note that these functions do NOT support the notation used in
+      the configuration file, but directly work on strings or numbers. See
+      documentation of add method below.
+    </p>
+          <div class="section" title="4.1.¬†add(name,val)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-d4453222c49e08dc556c25a6586a00bc"></a>4.1.¬†add(name,val)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Add an AVP.
+      </p>
+            <p>
+	Add an Kamailio AVP to its environment. name and val may both be
+	integers or strings; this function will try to guess what is
+	correct. Please note that
+      </p>
+            <pre class="screen">Kamailio::AVP::add("10", "10")</pre>
+            <p>
+	is something different than
+      </p>
+            <pre class="screen">Kamailio::AVP::add(10, 10)</pre>
+            <p>
+	due to this evaluation: The first will create _string_ AVPs with
+	the name 10, while the latter will create a numerical AVP.
+      </p>
+            <p>
+	You can modify/overwrite AVPs with this function.
+      </p>
+          </div>
+          <div class="section" title="4.2.¬†get(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-ad3f402b1c78426a3a1de4d0c1d9ad6c"></a>4.2.¬†get(name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	get an Kamailio AVP:
+      </p>
+            <pre class="screen">my $numavp = Kamailio::AVP::get(5);
+my $stravp = Kamailio::AVP::get("foo");</pre>
+          </div>
+          <div class="section" title="4.3.¬†destroy(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-15db533161502fc4591ec9acdd990ef4"></a>4.3.¬†destroy(name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Destroy an AVP.
+      </p>
+            <pre class="screen">Kamailio::AVP::destroy(5);
+Kamailio::AVP::destroy("foo");</pre>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Kamailio::Utils::PhoneNumbers">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-b2dcbd51ac3a3e6208edd5e4f6a5ef63"></a>5.¬†Kamailio::Utils::PhoneNumbers</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      Kamailio::Utils::PhoneNumbers - Functions for canonical forms of phone
+      numbers.
+    </p>
+          <pre class="screen">use Kamailio::Utils::PhoneNumbers;
+
+my $phonenumbers = new Kamailio::Utils::PhoneNumbers(
+     publicAccessPrefix =&gt; "0",
+     internationalPrefix =&gt; "+",
+     longDistancePrefix =&gt; "0",
+     areaCode =&gt; "761",
+     pbxCode =&gt; "456842",
+     countryCode =&gt; "49"
+   );
+
+$canonical = $phonenumbers-&gt;canonicalForm("07612034567");
+$number    = $phonenumbers-&gt;dialNumber("+497612034567");</pre>
+          <p>
+      A telphone number starting with a plus sign and containing all dial
+      prefixes is in canonical form. This is usally not the number to dial
+      at any location, so the dialing number depends on the context of the
+      user/system.
+    </p>
+          <p>
+      The idea to canonicalize numbers were taken from hylafax.
+    </p>
+          <p>
+      Example: +497614514829 is the canonical form of my phone number, 829
+      is the number to dial at Pyramid, 4514829 is the dialing number from
+      Freiburg are and so on.
+    </p>
+          <p>
+      To canonicalize any number, we strip off any dial prefix we find and
+      then add the prefixes for the location. So, when the user enters the
+      number 04514829 in context pyramid, we remove the publicAccessPrefix
+      (at Pyramid this is 0) and the  pbxPrefix (4514 here). The result is
+      829. Then we add all the general dial prefixes - 49 (country) 761
+      (area) 4514 (pbx) and 829, the number itself =&gt; +497614514829
+    </p>
+          <p>
+      To get the dialing number from a canonical phone number, we substract
+      all general prefixes until we have something
+    </p>
+          <p>
+      As said before, the interpretation of a phone number depends on the
+      context of the location. For the functions in this package, the
+      context is created through the <code class="literal">new</code> operator.
+    </p>
+          <p>
+      The following fields should be set:
+    </p>
+          <pre class="screen">'longDistancePrefix' 
+'areaCode'
+'pbxCode' 
+'internationalPrefix'
+'publicAccessPrefix'
+'countryCode'</pre>
+          <p>
+      This module exports the following functions when <code class="literal">use</code>ed:
+    </p>
+          <div class="section" title="5.1.¬†new(publicAccessPrefix,internationalPrefix,longDistancePrefix,countryCode,areaCode,pbxCode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-bd49dfdfc2284e87abd95fbce2d63cbd"></a>5.1.¬†new(publicAccessPrefix,internationalPrefix,longDistancePrefix,countryCode,areaCode,pbxCode)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The new operator returns an object of this type and sets its
+	locational context according to the passed parameters. See
+	<span class="citerefentry"><span class="refentrytitle">Kamailio::Utils::PhoneNumbers</span></span> above.
+      </p>
+          </div>
+          <div class="section" title="5.2.¬†canonicalForm( number [, context] )">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-aa52786fee82fe6e26ac766b30a1a4fa"></a>5.2.¬†canonicalForm( number [, context] )</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Convert a phone number (given as first argument) into its canonical
+	form. When no context is passed in as the second argument, the
+	default context from the systems configuration file is used.
+      </p>
+          </div>
+          <div class="section" title="5.3.¬†dialNumber( number [, context] )">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-31479dee3ae037c27cd7a84aa7358bd2"></a>5.3.¬†dialNumber( number [, context] )</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Convert a canonical phone number (given in the first argument) into
+	a number to to dial.  WHen no context is given in the second
+	argument, a default context from the systems configuration is used.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Kamailio::LDAPUtils::LDAPConf">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-05a2ba8f92ec3fe3d26bcb69d169a1b1"></a>6.¬†Kamailio::LDAPUtils::LDAPConf</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      Kamailio::LDAPUtils::LDAPConf - Read openldap config from standard
+      config files.
+    </p>
+          <pre class="screen">use Kamailio::LDAPUtils::LDAPConf;
+my $conf = new Kamailio::LDAPUtils::LDAPConf();</pre>
+          <p>
+      This module may be used to retrieve the global LDAP configuration as
+      used by other LDAP software, such as <code class="literal">nsswitch.ldap</code> and <code class="literal">pam-ldap</code>. The configuration is
+      usualy stored in <code class="literal">/etc/openldap/ldap.conf</code>
+    </p>
+          <p>
+      When used from an account with sufficient privilegs (e.g. root), the
+      ldap manager passwort is also retrieved.
+    </p>
+          <div class="section" title="6.1.¬†Constructor new()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-77bbb24cd07a34db564171c3072c9f8c"></a>6.1.¬†Constructor new()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns a new, initialized <code class="literal">Kamailio::LDAPUtils::LDAPConf</code>
+	object.
+      </p>
+          </div>
+          <div class="section" title="6.2.¬†Method base()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-09b3942c6aa316dd4659cc1d84cfab21"></a>6.2.¬†Method base()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the servers base-dn to use when doing queries.
+      </p>
+          </div>
+          <div class="section" title="6.3.¬†Method host()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cabd9882c784cf96cf68ca988c1dae0f"></a>6.3.¬†Method host()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the ldap host to contact.
+      </p>
+          </div>
+          <div class="section" title="6.4.¬†Method port()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-467ec702bbcdb63e337bbff9e3a5bf01"></a>6.4.¬†Method port()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the ldap servers port.
+      </p>
+          </div>
+          <div class="section" title="6.5.¬†Method uri()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-1a047746515766cf720b5cc0f154c783"></a>6.5.¬†Method uri()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns an uri to contact the ldap server. When there is no
+	ldap_uri in the configuration file, an <code class="literal">ldap:</code> uri is constucted from host
+	and port.
+      </p>
+          </div>
+          <div class="section" title="6.6.¬†Method rootbindpw()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-35ebbd3612d026b4176d2eb8eae428b0"></a>6.6.¬†Method rootbindpw()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the ldap "root" password.
+      </p>
+            <p>
+	Note that the <code class="literal">rootbindpw</code>
+	is only available when the current account has sufficient privilegs
+	to access <code class="literal">/etc/openldap/ldap.secret</code>.
+      </p>
+          </div>
+          <div class="section" title="6.7.¬†Method rootbinddn()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-5e0c4c1de34f9247439d8d10d6734b9e"></a>6.7.¬†Method rootbinddn()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the DN to use for "root"-access to the ldap server.
+      </p>
+          </div>
+          <div class="section" title="6.8.¬†Method binddn()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cdb5e3ce4599d0613db43f1f387f7ea6"></a>6.8.¬†Method binddn()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the DN to use for authentication to the ldap server. When
+	no bind dn has been specified in the configuration file, returns
+	the <code class="literal">rootbinddn</code>.
+      </p>
+          </div>
+          <div class="section" title="6.9.¬†Method bindpw()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-3c51d4eeaae6feb7498a2f562b176df3"></a>6.9.¬†Method bindpw()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns the password to use for authentication to the ldap server.
+	When no bind password has been specified, returns the <code class="literal">rootbindpw</code> if any.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="7.¬†Kamailio::LDAPUtils::LDAPConnection">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-10d643239760bcd4a2286051808d077e"></a>7.¬†Kamailio::LDAPUtils::LDAPConnection</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      Kamailio::LDAPUtils::LDAPConnection - Perl module to perform simple
+      LDAP queries.
+    </p>
+          <p>
+      OO-Style interface:
+    </p>
+          <pre class="screen">use Kamailio::LDAPUtils::LDAPConnection;
+my $ldap = new Kamailio::LDAPUtils::LDAPConnection;
+my @rows = $ldap-search("uid=andi","ou=people,ou=coreworks,ou=de");</pre>
+          <p>
+      Procedural interface:
+    </p>
+          <pre class="screen">use Kamailio::LDAPUtils::LDAPConnection;
+my @rows = $ldap-&gt;search(
+      new Kamailio::LDAPUtils::LDAPConfig(), "uid=andi","ou=people,ou=coreworks,ou=de");</pre>
+          <p>
+      This perl module offers a somewhat simplified interface to the
+      <code class="literal">Net::LDAP</code> functionality.
+      It is intended for cases where just a few attributes should be
+      retrieved without the overhead of the full featured <code class="literal">Net::LDAP</code>.
+    </p>
+          <div class="section" title="7.1.¬†Constructor new( [config, [authenticated]] )">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-58e29437b48125a88033370afe8fa32b"></a>7.1.¬†Constructor new( [config, [authenticated]] )</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Set up a new LDAP connection.
+      </p>
+            <p>
+	The first argument, when given, should be a hash reference pointing
+	to to the connection parameters, possibly an <code class="literal">Kamailio::LDAPUtils::LDAPConfig</code>
+	object. This argument may be <code class="literal">undef</code> in which case a new
+	(default) <code class="literal">Kamailio::LDAPUtils::LDAPConfig</code>
+	object is used.
+      </p>
+            <p>
+	When the optional second argument is a true value, the connection
+	will be authenticated. Otherwise an anonymous bind is done.
+      </p>
+            <p>
+	On success, a new <code class="literal">LDAPConnection</code> object is
+	returned, otherwise the result is <code class="literal">undef</code>.
+      </p>
+          </div>
+          <div class="section" title="7.2.¬†Function/Method search( conf, filter, base, [requested_attributes ...])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-129bd2634f1c36a401321f2fa34be026"></a>7.2.¬†Function/Method search( conf, filter, base, [requested_attributes ...])</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	perform an ldap search, return the dn of the first matching
+	directory entry, unless a specific attribute has been requested, in
+	wich case the values(s) fot this attribute are returned.
+      </p>
+            <p>
+	When the first argument (conf) is a <code class="literal">Kamailio::LDAPUtils::LDAPConnection</code>,
+	it will be used to perform the queries. You can pass the first
+	argument implicitly by using the "method" syntax.
+      </p>
+            <p>
+	Otherwise the <code class="literal">conf</code>
+	argument should be a reference to a hash containing the connection
+	setup parameters as contained in a <code class="literal">Kamailio::LDAPUtils::LDAPConf</code>
+	object. In this mode, the <code class="literal">Kamailio::LDAPUtils::LDAPConnection</code>
+	from previous queries will be reused.
+      </p>
+            <div class="section" title="7.2.1.¬†Arguments:">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="ID-fb371aca693935a2ea3467c59473c78f"></a>7.2.1.¬†Arguments:</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+          </p>
+              <div class="variablelist">
+                <dl>
+                  <dt>
+                    <span class="term"><a id="ID-08e27c41a71d449b64a8b443ae34bdb2"></a>conf</span>
+                  </dt>
+                  <dd>
+                    <p>
+		  configuration object, used to find host,port,suffix and
+		  use_ldap_checks
+                </p>
+                  </dd>
+                  <dt>
+                    <span class="term"><a id="ID-e6b91204102eda9679a64633dadda9cb"></a>filter</span>
+                  </dt>
+                  <dd>
+                    <p>
+		  ldap search filter, eg '(mail=some@domain)'
+                </p>
+                  </dd>
+                  <dt>
+                    <span class="term"><a id="ID-1067b3f87b6da6a8f5e87238609c1802"></a>base</span>
+                  </dt>
+                  <dd>
+                    <p>
+		  search base for this query. If undef use default suffix,
+		  concat base with default suffix if the last char is a ','
+                </p>
+                  </dd>
+                  <dt>
+                    <span class="term"><a id="ID-1c7c9132da5e8bb2a9c24aec3df86e47"></a>requested_attributes</span>
+                  </dt>
+                  <dd>
+                    <p>
+		  retrieve the given attributes instead of the dn from the
+		  ldap directory.
+                </p>
+                  </dd>
+                </dl>
+              </div>
+              <p>
+        </p>
+            </div>
+            <div class="section" title="7.2.2.¬†Result:">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="ID-5c0875c73d1d44335ab71b50d8930584"></a>7.2.2.¬†Result:</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	  Without any specific <code class="literal">requested_attributes</code>, return
+	  the dn of all matching entries in the LDAP directory.
+        </p>
+              <p>
+	  When some <code class="literal">requested_attributes</code> are given,
+	  return an array with those attibutes. When multiple entries match
+	  the query, the attribute lists are concatenated.
+        </p>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="8.¬†Kamailio::VDB">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-94fdb1e4103544a567ac38ee23c8a4d1"></a>8.¬†Kamailio::VDB</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package is an (abstract) base class for all virtual databases.
+      Derived packages can be configured to be used by Kamailio as a
+      database.
+    </p>
+          <p>
+      The base class itself should NOT be used in this context, as it does
+      not provide any functionality.
+    </p>
+        </div>
+        <div class="section" title="9.¬†Kamailio::Constants">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-d97df315e2044f430319fc4cd9937aa5"></a>9.¬†Kamailio::Constants</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package provides a number of constants taken from enums and
+      defines of Kamailio header files. Unfortunately, there is no mechanism
+      for updating the constants automatically, so check the values if you
+      are in doubt.
+    </p>
+        </div>
+        <div class="section" title="10.¬†Kamailio::VDB::Adapter::Speeddial">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-9658bbad14831f685cca13a5c9bb4335"></a>10.¬†Kamailio::VDB::Adapter::Speeddial</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This adapter can be used with the speeddial module.
+    </p>
+        </div>
+        <div class="section" title="11.¬†Kamailio::VDB::Adapter::Alias">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-5cdb14839de18c32782e3d768e170da7"></a>11.¬†Kamailio::VDB::Adapter::Alias</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package is intended for usage with the alias_db module. The
+      query VTab has to take two arguments and return an array of two
+      arguments (user name/domain).
+    </p>
+          <div class="section" title="11.1.¬†query(conds,retkeys,order)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-748da8d11c20576948ef68d62753a06a"></a>11.1.¬†query(conds,retkeys,order)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Queries the vtab with the given arguments for request conditions,
+	keys to return and sort order column name.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="12.¬†Kamailio::VDB::Adapter::AccountingSIPtrace">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-8165ac0b808b36ff72ee4032e0f62881"></a>12.¬†Kamailio::VDB::Adapter::AccountingSIPtrace</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package is an Adapter for the acc and siptrace modules,
+      featuring only an insert operation.
+    </p>
+        </div>
+        <div class="section" title="13.¬†Kamailio::VDB::Adapter::Describe">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-048913e15394a9675cfe02af5c340528"></a>13.¬†Kamailio::VDB::Adapter::Describe</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package is intended for debug usage. It will print information
+      about requested functions and operations of a client module.
+    </p>
+          <p>
+      Use this module to request schema information when creating new
+      adapters.
+    </p>
+        </div>
+        <div class="section" title="14.¬†Kamailio::VDB::Adapter::Auth">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-682dd320dd536e7fb0de4a24e9d1e46e"></a>14.¬†Kamailio::VDB::Adapter::Auth</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This adapter is intended for usage with the auth_db module. The VTab
+      should take a username as an argument and return a (plain text!)
+      password.
+    </p>
+        </div>
+        <div class="section" title="15.¬†Kamailio::VDB::ReqCond">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-f245c032bf4b4837415c871537a63e3b"></a>15.¬†Kamailio::VDB::ReqCond</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package represents a request condition for database access,
+      consisting of a column name, an operator (=, &lt;, &gt;, ...), a data
+      type and a value.
+    </p>
+          <p>
+      This package inherits from Kamailio::VDB::Pair and thus includes its
+      methods.
+    </p>
+          <div class="section" title="15.1.¬†new(key,op,type,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-c50f7cee51ceffdb7253101a36d6b7b3"></a>15.1.¬†new(key,op,type,name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Constructs a new Column object.
+      </p>
+          </div>
+          <div class="section" title="15.2.¬†op()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-cb5f02a3144f3af620484048b11472af"></a>15.2.¬†op()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current operator.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="16.¬†Kamailio::VDB::Pair">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-4be9a5fa03b11c2c2dad3594fc3b585d"></a>16.¬†Kamailio::VDB::Pair</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package represents database key/value pairs, consisting of a
+      key, a value type, and the value.
+    </p>
+          <p>
+      This package inherits from Kamailio::VDB::Value and thus has the same
+      methods.
+    </p>
+          <div class="section" title="16.1.¬†new(key,type,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-e6cc5b1a997ea8e29d2a00b986784dc0"></a>16.1.¬†new(key,type,name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Constructs a new Column object.
+      </p>
+          </div>
+          <div class="section" title="16.2.¬†key()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9c70856322a870405521ad299a6785d6"></a>16.2.¬†key()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current key.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="17.¬†Kamailio::VDB::VTab">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-41cd8a9b5b94c05139d2a7f62d5a967b"></a>17.¬†Kamailio::VDB::VTab</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package handles virtual tables and is used by the Kamailio::VDB
+      class to store information about valid tables. The package is not
+      inteded for end user access.
+    </p>
+          <div class="section" title="17.1.¬†new()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-a42ddb87d67983028cf8d1b7d6f46baa"></a>17.1.¬†new()</h3>
+                </div>
+              </div>
+            </div>
+            <pre class="screen">Constructs a new VTab object</pre>
+          </div>
+          <div class="section" title="17.2.¬†call(op,[args])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-c00e2c0b9abc7cd56be59f2b051a538c"></a>17.2.¬†call(op,[args])</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Invokes an operation on the table (insert, update, ...) with the
+	given arguments.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="18.¬†Kamailio::VDB::Value">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-dd87abbf6c21bba656e60f50bf1db81b"></a>18.¬†Kamailio::VDB::Value</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package represents a database value. Additional to the data
+      itself, information about its type is stored.
+    </p>
+          <div class="section" title="18.1.¬†stringification">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-f8210a055e2dc48b7cd31acfbe483ef9"></a>18.1.¬†stringification</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	When accessing a Kamailio::VDB::Value object as a string, it simply
+	returns its data regardless of its type. =cut
+      </p>
+            <p>
+	use strict;
+      </p>
+            <p>
+	package Kamailio::VDB::Value;
+      </p>
+            <p>
+	use overload '""' =&gt; \&amp;stringify;
+      </p>
+            <p>
+	sub stringify { shift-&gt;{data} }
+      </p>
+            <p>
+	use Kamailio; use Kamailio::Constants;
+      </p>
+            <p>
+	our @ISA = qw ( Kamailio::Utils::Debug );
+      </p>
+          </div>
+          <div class="section" title="18.2.¬†new(type,data)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-246aa300bb8cb062e3126e6eddd094c4"></a>18.2.¬†new(type,data)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Constructs a new Value object. Its data type and the data are
+	passed as parameters.
+      </p>
+          </div>
+          <div class="section" title="18.3.¬†type()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-1b24f490feaba7e8ffde5919a34a3ea5"></a>18.3.¬†type()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current data type. Please consider using the
+	constants from Kamailio::Constants
+      </p>
+          </div>
+          <div class="section" title="18.4.¬†data()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-8ed1b290ce747e1e6fc97d5c253d67eb"></a>18.4.¬†data()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current data.
+      </p>
+          </div>
+        </div>
+        <div class="section" title="19.¬†Kamailio::VDB::Column">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="ID-01b04d0ae14c862d7543534782702100"></a>19.¬†Kamailio::VDB::Column</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+      This package represents database column definition, consisting of a
+      column name and its data type.
+    </p>
+          <div class="section" title="19.1.¬†Stringification">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-c1f63ab2d499e0ffb0eff65d3d1bcaa3"></a>19.1.¬†Stringification</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	When accessing a Kamailio::VDB::Column object as a string, it simply
+	returns its column name regardless of its type. =cut
+      </p>
+            <p>
+	package Kamailio::VDB::Column;
+      </p>
+            <p>
+	use overload '""' =&gt; \&amp;stringify;
+      </p>
+            <p>
+	sub stringify { shift-&gt;{name} }
+      </p>
+            <p>
+	use Kamailio; use Kamailio::Constants;
+      </p>
+            <p>
+	our @ISA = qw ( Kamailio::Utils::Debug );
+      </p>
+          </div>
+          <div class="section" title="19.2.¬†new(type,name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9be0a542b4be1d36c09e57a0a7785b8b"></a>19.2.¬†new(type,name)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Constructs a new Column object. Its type and the name are passed as
+	parameters.
+      </p>
+          </div>
+          <div class="section" title="19.3.¬†type( )">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-9e27faa58b7b4659e2d511fd4ed58ccd"></a>19.3.¬†type( )</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current type. Please consider using the
+	constants from Kamailio::Constants
+      </p>
+          </div>
+          <div class="section" title="19.4.¬†name()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-e3219d620b6d1b4f5656ee466ef3cf22"></a>19.4.¬†name()</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Returns or sets the current column name.
+      </p>
+          </div>
+          <div class="section" title="19.5.¬†Kamailio::VDB::Result">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-07e232dc068e186782a8d0c0bbae91d3"></a>19.5.¬†Kamailio::VDB::Result</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	This class represents a VDB result set. It contains a column
+	definition, plus an array of rows. Rows themselves are simply
+	references to arrays of scalars.
+      </p>
+          </div>
+          <div class="section" title="19.6.¬†new(coldefs,[row, row, ...])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-54e80aeec6aaaa66afb9548d25388dea"></a>19.6.¬†new(coldefs,[row, row, ...])</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	The constructor creates a new Result object. Its first parameter is
+	a reference to an array of Kamailio::VDB::Column objects. Additional
+	parameters may be passed to provide initial rows, which are
+	references to arrays of scalars.
+      </p>
+          </div>
+          <div class="section" title="19.7.¬†coldefs()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-c77fe41ba24f3f04c12254c9f001bb27"></a>19.7.¬†coldefs()</h3>
+                </div>
+              </div>
+            </div>
+            <pre class="screen">Returns or sets the column definition of the object.</pre>
+          </div>
+          <div class="section" title="19.8.¬†rows()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="ID-a20f0baefcdf46a3e923bb02203b3792"></a>19.8.¬†rows()</h3>
+                </div>
+              </div>
+            </div>
+            <pre class="screen">Returns or sets the rows of the object.</pre>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†3.¬†Perl samples">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2562192"></a>Chapter¬†3.¬†Perl samples</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1752200">1. Sample directory</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2582856">1.1. Script descriptions</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp327904">1.1.1. branches.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1655792">1.1.2. firstline.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1682104">1.1.3. flags.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1395952">1.1.4. functions.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp310896">1.1.5. headers.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2530016">1.1.6. logging.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2787328">1.1.7. messagedump.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2387296">1.1.8. persistence.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2388328">1.1.9. phonenumbers.pl</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2389168">1.1.10. pseudovars.pl</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Sample directory">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1752200"></a>1.¬†Sample directory</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		There are a number of example scripts in the <span class="quote">‚Äú<span class="quote">samples/</span>‚Äù</span>. They are
+		documented well. Read them, it will explain a lot to you :)
+		</p>
+          <p>
+		If you want to use any of these scripts directly in your implementation, you
+		can use Perl's <span class="quote">‚Äú<span class="quote">require</span>‚Äù</span> mechanism to import them (just remember
+		that you need to use quotes when require'ing .pl files).
+		</p>
+          <div class="section" title="1.1.¬†Script descriptions">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2582856"></a>1.1.¬†Script descriptions</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The included sample scripts are described below:
+			</p>
+            <div class="section" title="1.1.1.¬†branches.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp327904"></a>1.1.1.¬†branches.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				The minimal function in branches.pl demonstrates that you can access the "append_branch"
+				function from within perl, just as you would have done from your normal configuration file.
+				You'll find documentation on the concepts of branching in the Kamailio documentation.
+				</p>
+            </div>
+            <div class="section" title="1.1.2.¬†firstline.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1655792"></a>1.1.2.¬†firstline.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				Message's first_line structure may be evaluated. Message can be either of
+				SIP_REQUEST or SIP_REPLY. Depending on that, different information can be received.
+				This script demonstrates these functions.
+				</p>
+            </div>
+            <div class="section" title="1.1.3.¬†flags.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1682104"></a>1.1.3.¬†flags.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				The perl module provides access to Kamailio's flagging mechanism. The flag names available
+				for Kamailio modules are made available through the Kamailio::Constants package, so you can
+				flag messages as "green", "magenta" etc.
+				</p>
+              <p>
+				The first function, setflag, demonstrates how the "green" flag is set. In the second function,
+				readflag, the "green" and "magenta" flags are evaluated.
+				</p>
+            </div>
+            <div class="section" title="1.1.4.¬†functions.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1395952"></a>1.1.4.¬†functions.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				This sample script demonstrates different things related to calling functions from within perl,
+				and the different types of functions you can offer for Kamailio access.
+				</p>
+              <p>
+				<span class="quote">‚Äú<span class="quote">exportedfuncs</span>‚Äù</span> simply demonstrates that you can use the moduleFunction method
+				to call functions offered by other modules. The results are equivalent to calling these
+				functions from your config file. In the demonstrated case, telephone calls with a destination
+				number beginning with 555... are rejected with an internal server error. Other destination
+				addresses are passed to the alias_db module.
+				</p>
+              <p>
+				Please note that the moduleFunction method is not fully available in Kamailio 1.2. See the method's
+				documentation for details.
+				</p>
+              <p>
+				<span class="quote">‚Äú<span class="quote">paramfunc</span>‚Äù</span> shows that you can pass arbitrary strings to perl functions. Do with
+				them whatever you want :)
+				</p>
+              <p>
+				<span class="quote">‚Äú<span class="quote">autotest</span>‚Äù</span> demonstrates that unknown functions in Kamailio::Message objects are
+				automatically transformed into calls to module functions.
+				</p>
+              <p>
+				The <span class="quote">‚Äú<span class="quote">diefunc</span>‚Äù</span>s show that dying perl scripts - by "manual" dying, or because of script
+				errors - are handled by the Kamailio package. The error message is logged through Kamailio's logging
+				mechanism. Please note that this only works correctly if you do NOT overwrite the default die handler.
+				Oh, yes, that works for warnings, too.
+				</p>
+            </div>
+            <div class="section" title="1.1.5.¬†headers.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp310896"></a>1.1.5.¬†headers.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				Header extraction is among the most crucial functionalities while processing SIP messages. This
+				sample script demonstrates access to header names and values within two sample functions.
+				</p>
+              <p>
+				<span class="quote">‚Äú<span class="quote">headernames</span>‚Äù</span> extracts all header names and logs their names.
+				</p>
+              <p>
+				<span class="quote">‚Äú<span class="quote">someheaders</span>‚Äù</span> logs the contents of the two headers, <span class="quote">‚Äú<span class="quote">To</span>‚Äù</span> and
+				<span class="quote">‚Äú<span class="quote">WWW-Contact</span>‚Äù</span>. As you can see, headers that occur more than once are retrieved
+				as an array, which may be accessed by Perl's array accessing methods.
+				</p>
+            </div>
+            <div class="section" title="1.1.6.¬†logging.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2530016"></a>1.1.6.¬†logging.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				For debugging purposes, you probably want to write messages to the syslog. The <span class="quote">‚Äú<span class="quote">logdemo</span>‚Äù</span>
+				shows three ways to access the Kamailio log function: it is available through the Kamailio class as well
+				as through the Kamailio::Message class.
+				</p>
+              <p>
+				Remember that you can use exported functions from other modules. You may thus as well use the
+				<span class="quote">‚Äú<span class="quote">xlog</span>‚Äù</span> module and it's xlog function.
+				</p>
+              <p>
+				The L_INFO, L_DBG, L_ERR, L_CRIT... constants are available through the Kamailio::Constants package.
+				</p>
+            </div>
+            <div class="section" title="1.1.7.¬†messagedump.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2787328"></a>1.1.7.¬†messagedump.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				This script demonstrates how to access the whole message header of the current message. Please note that
+				modifications on the message made by earlier function calls in your configuration script may NOT be
+				reflected in this dump.
+				</p>
+            </div>
+            <div class="section" title="1.1.8.¬†persistence.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2387296"></a>1.1.8.¬†persistence.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				When processing SIP messages, you may want to use persistent data across multiple calls to your
+				Perl functions. Your first option is to use global variables in your script. Unfortunately,
+				these globals are not visible from the mulitple instances of Kamailio. You may want to use a
+				mechanism such as the IPC::Shareable shared memory access package to correct this.
+				</p>
+            </div>
+            <div class="section" title="1.1.9.¬†phonenumbers.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2388328"></a>1.1.9.¬†phonenumbers.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				The Kamailio::Utils::PhoneNumbers package provides two methods for the transformation of local to
+				canonical telephone numbers, and vice versa. This script demonstrates it's use.
+				</p>
+            </div>
+            <div class="section" title="1.1.10.¬†pseudovars.pl">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2389168"></a>1.1.10.¬†pseudovars.pl</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+				This script demonstrates the Perl module's <span class="quote">‚Äú<span class="quote">pseudoVar</span>‚Äù</span> method. It may be used to
+				retrieve the values of current pseudo variables.
+				</p>
+              <p>
+				You might notice that there is no particular function for setting pseudo variables; you may use
+				the exported functions from the avpops module, though.
+				</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†4.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp268400"></a>Chapter¬†4.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp1140464"></a>
+          <dl>
+            <dt>4.1. <a href="#idp1464032">Are there known bugs in the Perl module?</a></dt>
+            <dt>4.2. <a href="#idp2827576">Where can I find more about Kamailio?</a></dt>
+            <dt>4.3. <a href="#idp767192">Where can I post a question about this module?</a></dt>
+            <dt>4.4. <a href="#idp2498160">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="4.1.">
+                <td align="left" valign="top">
+                  <a id="idp1464032"></a>
+                  <a id="idp1026152"></a>
+                  <p>
+                    <strong>4.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Are there known bugs in the Perl module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+		    The Perl module does have a few shortcomings that may be regarded as bugs.
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>Missing module functions. Not all functions of other modules are
+			available for Perl access. The reason for this is a design property of
+			Kamailio. Making available more functions is work in progress.</p>
+                      </li>
+                      <li class="listitem">
+                        <p>Perl and threads. Perl itself is, when compiled with the correct
+			parameters, thread safe; unfortunately, not all Perl modules are.
+			The DBI modules, especially (but not restricted to) DBI::ODBC are known
+			NOT to be thread safe.</p>
+                        <p>Using DBI::ODBC -- and possibly other non-thread-safe Perl
+			extensions -- may result in erroneous behavior of Kamailio, including
+			(but not restricted to) server crashes and wrong routing.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr class="question" title="4.2.">
+                <td align="left" valign="top">
+                  <a id="idp2827576"></a>
+                  <a id="idp1856656"></a>
+                  <p>
+                    <strong>4.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="4.3.">
+                <td align="left" valign="top">
+                  <a id="idp767192"></a>
+                  <a id="idp3065008"></a>
+                  <p>
+                    <strong>4.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="4.4.">
+                <td align="left" valign="top">
+                  <a id="idp2498160"></a>
+                  <a id="idp2824848"></a>
+                  <p>
+                    <strong>4.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

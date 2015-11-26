@@ -1,0 +1,622 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Counters Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#counters" title="Counters Module" />
+    <link rel="next" href="#idm4319688" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Counters Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="counters"></a>Counters Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 iptelorg GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idm4319688">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#cnts.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#cnts.parameters">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#scrip_counter">2.1. <code class="varname">script_counter</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#scrip_cnt_grp_name">2.2. <code class="varname">script_cnt_grp_name</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#cnts.functions">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt_inc">3.1. 
+		<code class="function">cnt_inc([group.]name)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt_add">3.2. 
+		<code class="function">cnt_add([group.]name, number)</code>
+	</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt_reset">3.3. 
+		<code class="function">cnt_reset([group.]name)</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#cnts.rpcs">4. counters RPC Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.get">4.1.  <code class="function">cnt.get group counter_name</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.reset">4.2.  <code class="function">cnt.reset group counter_name</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.grps_list">4.3.  <code class="function">cnt.grps_list</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.var_list">4.4.  <code class="function">cnt.var_list group</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.grp_get_all">4.5.  <code class="function">cnt.grp_get_all</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cnt.help">4.6.  <code class="function">cnt.help group counter_name</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1440528">
+				Create a new <code class="varname">script_counter</code>
+			</a></dt>
+          <dt>1.2. <a href="#idp2409256">
+				Set <code class="varname">script_cnt_grp_name</code> in the config file
+			</a></dt>
+          <dt>1.3. <a href="#idp568320"><code class="function">cnt_inc</code> usage</a></dt>
+          <dt>1.4. <a href="#idp2813032"><code class="function">cnt_add</code> usage</a></dt>
+          <dt>1.5. <a href="#idp1163400"><code class="function">cnt_reset</code> usage</a></dt>
+          <dt>1.6. <a href="#idp1545816"><code class="function">cnt.get grp counter_name</code> usage</a></dt>
+          <dt>1.7. <a href="#idp1017760"><code class="function">cnt.reset grp name</code> usage</a></dt>
+          <dt>1.8. <a href="#idp2215728"><code class="function">cnt.grps_list</code> usage</a></dt>
+          <dt>1.9. <a href="#idp2652696"><code class="function">cnt.var_list group</code> usage</a></dt>
+          <dt>1.10. <a href="#idp2654864"><code class="function">cnt.var_list group</code> usage</a></dt>
+          <dt>1.11. <a href="#idp2806240"><code class="function">cnt.help grp name</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idm4319688"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#cnts.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#cnts.parameters">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#scrip_counter">2.1. <code class="varname">script_counter</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#scrip_cnt_grp_name">2.2. <code class="varname">script_cnt_grp_name</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#cnts.functions">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt_inc">3.1. 
+		<code class="function">cnt_inc([group.]name)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt_add">3.2. 
+		<code class="function">cnt_add([group.]name, number)</code>
+	</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt_reset">3.3. 
+		<code class="function">cnt_reset([group.]name)</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#cnts.rpcs">4. counters RPC Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.get">4.1.  <code class="function">cnt.get group counter_name</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.reset">4.2.  <code class="function">cnt.reset group counter_name</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.grps_list">4.3.  <code class="function">cnt.grps_list</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.var_list">4.4.  <code class="function">cnt.var_list group</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.grp_get_all">4.5.  <code class="function">cnt.grp_get_all</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cnt.help">4.6.  <code class="function">cnt.help group counter_name</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="cnts.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module exports counters/statistics manipulating script functions
+		and RPCs.
+	</p>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="cnts.parameters"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. script_counter">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="scrip_counter"></a>2.1. <code class="varname">script_counter</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Define a new counter that can be used from the script.
+			The declaration might include a group in front of the counter
+			name, separated with '.'. It might also include a counter
+			description string (help message), separated from the name
+			with a ' ' or  ':'.
+			If the group is missing, the group defined in the
+			<code class="varname">script_cnt_grp_name</code> module parameter will
+			be used (the default is "script").
+			If the description is missing, the default is
+			"custom script counter".
+			The format of the declaration is: [group.]name[( |:)description].
+		</p>
+            <div class="example">
+              <a id="idp1440528"></a>
+              <p class="title">
+                <strong>Example 1.1. 
+				Create a new <code class="varname">script_counter</code>
+			</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("counters", "script_counter", "foo")  # script.foo
+modparam("counters", "script_counter", "test.bar")  # test.bar
+modparam("counters", "script_counter", "baz example counter")  # script.baz
+modparam("counters", "script_counter", "test.x:another example") # test.x</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="2.2. script_cnt_grp_name">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="scrip_cnt_grp_name"></a>2.2. <code class="varname">script_cnt_grp_name</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Group name that will be used for the counters defined
+			via the <code class="varname">script_counter</code> module parameter which
+			do not have a specified group.
+		</p>
+            <p>
+			Default: "script".
+		</p>
+            <div class="example">
+              <a id="idp2409256"></a>
+              <p class="title">
+                <strong>Example 1.2. 
+				Set <code class="varname">script_cnt_grp_name</code> in the config file
+			</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("counters", "script_cnt_grp_name", "my_counters")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="cnts.functions"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.  cnt_inc([group.]name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt_inc"></a>3.1. 
+		<code class="function">cnt_inc([group.]name)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Increments the counter <span class="emphasis"><em>group.name</em></span>. The counter
+		must be defined using the <code class="varname">script_counter</code>
+		module parameter.
+		If the group name is missing, the group specified by the
+		<code class="varname">script_cnt_grp_name</code>  modparam will be used.
+	</p>
+            <div class="example">
+              <a id="idp568320"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">cnt_inc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("counters", "script_counter", "reqs")
+modparam("counters", "script_counter", "out.reqs  forwarded requests")
+...
+route {
+	cnt_inc("reqs");
+	if (forward(uri:host, uri:port))
+		cnt_inc("out.reqs");
+...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.  cnt_add([group.]name, number)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt_add"></a>3.2. 
+		<code class="function">cnt_add([group.]name, number)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds <span class="emphasis"><em>number</em></span> the counter
+		<span class="emphasis"><em>group.name</em></span>.
+		The counter must be defined using the
+		<code class="varname">script_counter</code> module parameter.
+		If the group name is missing, the group specified by the
+		<code class="varname">script_cnt_grp_name</code>  modparam will be used.
+	</p>
+            <div class="example">
+              <a id="idp2813032"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">cnt_add</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("counters", "script_counter", "reqs10  reqs times 10")
+...
+route {
+	cnt_add("reqs10", 10);
+...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.  cnt_reset([group.]name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt_reset"></a>3.3. 
+		<code class="function">cnt_reset([group.]name)</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Resets the counter <span class="emphasis"><em>group.name</em></span>. The counter
+		must be defined using the <code class="varname">script_counter</code>
+		module parameter.
+		If the group name is missing, the group specified by the
+		<code class="varname">script_cnt_grp_name</code>  modparam will be used.
+	</p>
+            <div class="example">
+              <a id="idp1163400"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">cnt_reset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("counters", "script_counter", "reqs")
+...
+route {
+	if (...)
+		cnt_reset("reqs");
+...
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. counters RPC Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="cnts.rpcs"></a>4. counters RPC Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  cnt.get group counter_name">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.get"></a>4.1.  <code class="function">cnt.get group counter_name</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Get the value of the counter identified by group.counter_name.
+		</p>
+            <div class="example">
+              <a id="idp1545816"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">cnt.get grp counter_name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.get script foo</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  cnt.reset group counter_name">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.reset"></a>4.2.  <code class="function">cnt.reset group counter_name</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Resets the counter identified by group.counter_name.
+		</p>
+            <div class="example">
+              <a id="idp1017760"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">cnt.reset grp name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.reset script foo</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  cnt.grps_list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.grps_list"></a>4.3.  <code class="function">cnt.grps_list</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Lists all the declared counter groups.
+		</p>
+            <div class="example">
+              <a id="idp2215728"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">cnt.grps_list</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.grps_list</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  cnt.var_list group">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.var_list"></a>4.4.  <code class="function">cnt.var_list group</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Lists all the names of all the counters belonging to the
+			specified group.
+		</p>
+            <div class="example">
+              <a id="idp2652696"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">cnt.var_list group</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.var_list script</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  cnt.grp_get_all">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.grp_get_all"></a>4.5.  <code class="function">cnt.grp_get_all</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Lists all the counter names and their values in the
+			specified group.
+		</p>
+            <div class="example">
+              <a id="idp2654864"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">cnt.var_list group</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.grp_get_all script</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  cnt.help group counter_name">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cnt.help"></a>4.6.  <code class="function">cnt.help group counter_name</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Displays the counter description.
+		</p>
+            <div class="example">
+              <a id="idp2806240"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">cnt.help grp name</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cnt.help script foo</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

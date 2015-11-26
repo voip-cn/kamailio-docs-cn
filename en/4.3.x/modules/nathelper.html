@@ -1,0 +1,1909 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>nathelper Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4420488" title="nathelper Module" />
+    <link rel="next" href="#idp2299648" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="nathelper Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4420488"></a>nathelper Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Sippy Software, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">TuTPro, Inc.<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Maxim</span> <span class="surname">Sobolev</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Ovidiu</span> <span class="surname">Sas</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2003-2008 Sippy Software, Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2005 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2009 TuTPro Inc.</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2010 VoIPEmbedded Inc.</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2299648">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2838432">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1930048">2. NAT pinging types</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp3451040">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3451392">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3453056">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3454800">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.force_socket">4.1. <code class="varname">force_socket</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.natping_interval">4.2. <code class="varname">natping_interval</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.ping_nated_only">4.3. <code class="varname">ping_nated_only</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.natping_processes">4.4. <code class="varname">natping_processes</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.natping_socket">4.5. <code class="varname">natping_socket</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.received_avp">4.6. <code class="varname">received_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.sipping_bflag">4.7. <code class="varname">sipping_bflag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.sipping_from">4.8. <code class="varname">sipping_from</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.sipping_method">4.9. <code class="varname">sipping_method</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.natping_disable_bflag">4.10. <code class="varname">natping_disable_bflag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.nortpproxy_str">4.11. <code class="varname">nortpproxy_str</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.keepalive_timeout">4.12. <code class="varname">keepalive_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.udpping_from_path">4.13. <code class="varname">udpping_from_path</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.p.append_sdp_oldmediaip">4.14. <code class="varname">append_sdp_oldmediaip</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm19960">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.fix_nated_contact">5.1. 
+		<code class="function">fix_nated_contact()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.fix_nated_sdp">5.2. 
+		<code class="function">fix_nated_sdp(flags [, ip_address])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.add_rcv_param">5.3. 
+		<code class="function">add_rcv_param([flag])</code>,
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.fix_nated_register">5.4. 
+		<code class="function">fix_nated_register()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.nat_uac_test">5.5. 
+			<code class="function">nat_uac_test(flags)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.is_rfc1918">5.6. 
+		<code class="function">is_rfc1918(ip_address)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.add_contact_alias">5.7. 
+		<code class="function">add_contact_alias([ip_addr, port, proto])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.f.handle_ruri_alias">5.8. 
+		<code class="function">handle_ruri_alias()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.set_contact_alias">5.9. 
+		<code class="function">set_contact_alias()</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1823408">6. Exported Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1823760">6.1. <code class="function">$rr_count</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1825504">6.2. <code class="function">$rr_top_count</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1827632">7. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.m.nh_enable_ping">7.1. <code class="function">nh_enable_ping</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1830696">8. Selects</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#nathelper.s.rewrite_contact">8.1. @nathelper.rewrite_contact[n]</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp550144">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3456768">Set <code class="varname">force_socket</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm56864">Set <code class="varname">natping_interval</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm54072">Set <code class="varname">ping_nated_only</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm51456">Set <code class="varname">natping_processes</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm48920">Set <code class="varname">natping_socket</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp30608">Set <code class="varname">received_avp</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp33248">Set <code class="varname">sipping_bflag</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp36176">Set <code class="varname">sipping_from</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp38984">Set <code class="varname">sipping_method</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp41784">Set <code class="varname">natping_disable_bflag</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp45184">Set <code class="varname">nortpproxy_str</code> parameter</a></dt>
+          <dt>1.12. <a href="#idm26832">Set <code class="varname">keepalive_timeout</code> parameter</a></dt>
+          <dt>1.13. <a href="#idm24000">Set <code class="varname">udpping_from_path</code> parameter</a></dt>
+          <dt>1.14. <a href="#idm21192">Set <code class="varname">append_sdp_oldmediaip</code> parameter</a></dt>
+          <dt>1.15. <a href="#idm17856"><code class="function">fix_nated_contact</code> usage</a></dt>
+          <dt>1.16. <a href="#idm9272"><code class="function">fix_nated_sdp</code> usage</a></dt>
+          <dt>1.17. <a href="#idp1795536"><code class="function">add_rcv_paramer</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1799128"><code class="function">fix_nated_register</code> usage</a></dt>
+          <dt>1.19. <a href="#idp1812264"><code class="function">add_contact_alias</code> usage</a></dt>
+          <dt>1.20. <a href="#idp1818136"><code class="function">handle_ruri_alias</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1821920"><code class="function">set_contact_alias</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1824616">$rr_count usage</a></dt>
+          <dt>1.23. <a href="#idp1826552">$rr_top_count usage</a></dt>
+          <dt>1.24. <a href="#idp1829448"><code class="function">nh_enable_ping</code> usage</a></dt>
+          <dt>1.25. <a href="#idp1831944">@nathelper.rewrite_contact usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2299648"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2838432">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1930048">2. NAT pinging types</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp3451040">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3451392">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3453056">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3454800">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.force_socket">4.1. <code class="varname">force_socket</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.natping_interval">4.2. <code class="varname">natping_interval</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.ping_nated_only">4.3. <code class="varname">ping_nated_only</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.natping_processes">4.4. <code class="varname">natping_processes</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.natping_socket">4.5. <code class="varname">natping_socket</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.received_avp">4.6. <code class="varname">received_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.sipping_bflag">4.7. <code class="varname">sipping_bflag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.sipping_from">4.8. <code class="varname">sipping_from</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.sipping_method">4.9. <code class="varname">sipping_method</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.natping_disable_bflag">4.10. <code class="varname">natping_disable_bflag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.nortpproxy_str">4.11. <code class="varname">nortpproxy_str</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.keepalive_timeout">4.12. <code class="varname">keepalive_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.udpping_from_path">4.13. <code class="varname">udpping_from_path</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.p.append_sdp_oldmediaip">4.14. <code class="varname">append_sdp_oldmediaip</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm19960">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.fix_nated_contact">5.1. 
+		<code class="function">fix_nated_contact()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.fix_nated_sdp">5.2. 
+		<code class="function">fix_nated_sdp(flags [, ip_address])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.add_rcv_param">5.3. 
+		<code class="function">add_rcv_param([flag])</code>,
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.fix_nated_register">5.4. 
+		<code class="function">fix_nated_register()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.nat_uac_test">5.5. 
+			<code class="function">nat_uac_test(flags)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.is_rfc1918">5.6. 
+		<code class="function">is_rfc1918(ip_address)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.add_contact_alias">5.7. 
+		<code class="function">add_contact_alias([ip_addr, port, proto])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.f.handle_ruri_alias">5.8. 
+		<code class="function">handle_ruri_alias()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.set_contact_alias">5.9. 
+		<code class="function">set_contact_alias()</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1823408">6. Exported Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1823760">6.1. <code class="function">$rr_count</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1825504">6.2. <code class="function">$rr_top_count</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1827632">7. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.m.nh_enable_ping">7.1. <code class="function">nh_enable_ping</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1830696">8. Selects</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#nathelper.s.rewrite_contact">8.1. @nathelper.rewrite_contact[n]</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2838432"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module to help with <acronym class="acronym">NAT</acronym> traversal and reuse
+		of <acronym class="acronym">TCP</acronym> connections. In particular, 
+		it helps symmetric <acronym class="acronym">UA</acronym>s that don't advertise they are symmetric 
+		and are not able to determine their public address. 
+	</p>
+          <p>
+		The function <code class="function">fix_nated_contact()</code> rewrites the <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span>
+		header field with request's source address:port pair. The function
+		<code class="function">fix_nated_sdp()</code> adds the active direction indication 
+		to <acronym class="acronym">SDP</acronym> (flag 0x01) and updates the source <acronym class="acronym">IP</acronym> address too (flag 0x02). The function
+		<code class="function">fix_nated_register()</code> exports exports the request's source
+		address:port into an AVP to be used during <code class="function">save()</code> and should
+		be used for <span class="quote">‚Äú<span class="quote">REGISTER</span>‚Äù</span> requests.
+	</p>
+          <p>
+		Note: <code class="function">fix_nated_contact</code> changes the <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span>
+		header, thus it breaks the RFC. Although usually this is not an issue, it may
+		cause problems with strict SIP clients.  An alternative is to use
+		<code class="function">add_contact_alias()</code> that together with
+		the <code class="function">handle_ruri_alias()</code> is standards conforming and also
+		supports reuse of TCP/TLS connections.
+	</p>
+        </div>
+        <div class="section" title="2.¬†NAT pinging types">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1930048"></a>2.¬†NAT pinging types</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Currently, the nathelper module supports two types of NAT pings:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>UDP package</em></span> - 4 bytes (zero filled) UDP 
+			packages are sent to the contact address.
+			</p>
+                <div class="itemizedlist">
+                  <ul class="itemizedlist">
+                    <li class="listitem">
+                      <p><span class="emphasis"><em>Advantages:</em></span> low bandwitdh traffic,
+				easy to generate by Kamailio;
+				</p>
+                    </li>
+                    <li class="listitem">
+                      <p><span class="emphasis"><em>Disadvantages:</em></span> unidirectional 
+				traffic through NAT (inbound - from outside to inside); As 
+				many NATs do update the bind timeout only on outbound traffic,
+				the bind may expire and closed.
+				</p>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="listitem">
+                <p>
+			<span class="emphasis"><em>SIP request</em></span> - a stateless SIP request is 
+			sent to the contact address.
+			</p>
+                <div class="itemizedlist">
+                  <ul class="itemizedlist">
+                    <li class="listitem">
+                      <p><span class="emphasis"><em>Advantages:</em></span> bidirectional traffic
+				through NAT, since each PING request from Kamailio (inbound 
+				traffic) will force the SIP client to generate a SIP reply 
+				(outbound traffic) - the NAT bind will be surely kept open.
+				</p>
+                    </li>
+                    <li class="listitem">
+                      <p><span class="emphasis"><em>Disadvantages:</em></span> higher bandwitdh 
+				traffic, more expensive (as time) to generate by Kamailio;
+				</p>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3451040"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3451392"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>usrloc</em></span> module - only if the NATed 
+				contacts are to be pinged.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3453056"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3454800"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†force_socket (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.force_socket"></a>4.1.¬†<code class="varname">force_socket</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Socket to be used when sending NAT pings for UDP communication.
+		If no one specified, the OS will choose a socket.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3456768"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">force_socket</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "force_socket", "localhost:33333")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†natping_interval (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.natping_interval"></a>4.2.¬†<code class="varname">natping_interval</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Period of time in seconds between sending the NAT pings to all 
+		currently registered <acronym class="acronym">UA</acronym>s to keep their <acronym class="acronym">NAT</acronym> bindings alive. 
+		Value of 0 disables this functionality.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		Enabling the NAT pinging functionality will force the module to
+		bind itself to USRLOC module.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm56864"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">natping_interval</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "natping_interval", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†ping_nated_only (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.ping_nated_only"></a>4.3.¬†<code class="varname">ping_nated_only</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If this variable is set then only contacts that have 
+		<span class="quote">‚Äú<span class="quote">behind_NAT</span>‚Äù</span> flag in user location database set will 
+		get ping.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm54072"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">ping_nated_only</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "ping_nated_only", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†natping_processes (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.natping_processes"></a>4.4.¬†<code class="varname">natping_processes</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		How many timer processes should be created by the module for the
+		exclusive task of sending the NAT pings.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm51456"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">natping_processes</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "natping_processes", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†natping_socket (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.natping_socket"></a>4.5.¬†<code class="varname">natping_socket</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Spoof the natping's source-ip to this address. Works only for IPv4.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm48920"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">natping_socket</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "natping_socket", "192.168.1.1:5006")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†received_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.received_avp"></a>4.6.¬†<code class="varname">received_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the Attribute-Value-Pair (AVP) used to store the URI 
+		containing the received IP, port, and protocol. The URI is created 
+		by fix_nated_register function of nathelper module and the attribute 
+		is then used by the registrar to store the received parameters. Do 
+		not forget to change the value of corresponding parameter in
+		registrar module if you change the value of this parameter.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		You must set this parameter if you use <code class="function">fix_nated_register</code>. In such
+		case you must set the parameter with same name in the <span class="quote">‚Äú<span class="quote">registrar</span>‚Äù</span>
+		module to same value.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "NULL" (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp30608"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">received_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "received_avp", "$avp(i:42)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†sipping_bflag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.sipping_bflag"></a>4.7.¬†<code class="varname">sipping_bflag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Which branch flag should be used by the module to identify NATed 
+		contacts for which it should perform NAT ping via a SIP request 
+		instead if dummy UDP package.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is -1 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp33248"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">sipping_bflag</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "sipping_bflag", 7)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬†sipping_from (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.sipping_from"></a>4.8.¬†<code class="varname">sipping_from</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter sets the SIP URI to be used in generating the SIP
+		requests for NAT ping purposes. To enable the SIP request pinging
+		feature, you have to set this parameter. The SIP request pinging 
+		will be used only for requests marked so.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp36176"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">sipping_from</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "sipping_from", "sip:pinger@siphub.net")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9.¬†sipping_method (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.sipping_method"></a>4.9.¬†<code class="varname">sipping_method</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter sets the SIP method to be used in generating the SIP
+		requests for NAT ping purposes.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">OPTIONS</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp38984"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">sipping_method</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "sipping_method", "INFO")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10.¬†natping_disable_bflag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.natping_disable_bflag"></a>4.10.¬†<code class="varname">natping_disable_bflag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		What branch flag should be used by the module to disable NAT pings
+		on a per-registration basis. If the given flag is set for a
+		particular registration, then no NAT pings will be sent at all,
+		regardless of any other conditions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is -1 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp41784"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">natping_disable_bflag</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "natping_disable_bflag", 8)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11.¬†nortpproxy_str (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.nortpproxy_str"></a>4.11.¬†<code class="varname">nortpproxy_str</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter sets the SDP attribute used by nathelper to mark
+		the packet SDP that information have already been mangled.
+		</p>
+            <p>
+		If empty string, no marker will be added or checked.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		The string must be a complete SDP line, including the EOH (\r\n).
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">a=nortpproxy:yes\r\n</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp45184"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Set <code class="varname">nortpproxy_str</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "nortpproxy_str", "a=sdpmangled:yes\r\n")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12.¬†keepalive_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.keepalive_timeout"></a>4.12.¬†<code class="varname">keepalive_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter sets the interval in secods after which a natted
+		contact is removed from location table if it does not reply to SIP
+		keepalives (usually OPTIONS ping requests).
+		</p>
+            <p>
+		The features is available only for UDP contacts that are stored in memory
+		(not working for db only mode for usrloc module).
+		</p>
+            <p>
+		Keepalives are sent stateless, not using TM module. The value of this
+		parameter has to be few times higher than natping_interval.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (feature disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm26832"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†Set <code class="varname">keepalive_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "keepalive_timeout", 120)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13.¬†udpping_from_path (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.udpping_from_path"></a>4.13.¬†<code class="varname">udpping_from_path</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enable sending UDP pings (keepalives) using raw socket from Path
+		address.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (feature disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm24000"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†Set <code class="varname">udpping_from_path</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "udpping_from_path", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.14.¬†append_sdp_oldmediaip (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.p.append_sdp_oldmediaip"></a>4.14.¬†<code class="varname">append_sdp_oldmediaip</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter controls if oldmediaip field should be appended to the SDP.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1</span>‚Äù</span> (feature enabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm21192"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†Set <code class="varname">append_sdp_oldmediaip</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("nathelper", "append_sdp_oldmediaip", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm19960"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† fix_nated_contact()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.fix_nated_contact"></a>5.1.¬†
+		<code class="function">fix_nated_contact()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Rewrites the <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span> header to contain the request's source 
+		address:port.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm17856"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">fix_nated_contact</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (search("User-Agent: Cisco ATA.*") {fix_nated_contact();};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬† fix_nated_sdp(flags [, ip_address])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.fix_nated_sdp"></a>5.2.¬†
+		<code class="function">fix_nated_sdp(flags [, ip_address])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Alters the SDP information in orer to facilitate NAT traversal. What
+		changes to be performed may be controled via the 
+		<span class="quote">‚Äú<span class="quote">flags</span>‚Äù</span> parameter. Return value is -1 if error occurred,
+		1 if ip's were replaced, 2 if no ip's were replaced.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flags</em></span> - the value may be a bitwise OR of 
+			the following flags:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x01</em></span> - adds 
+					<span class="quote">‚Äú<span class="quote">a=direction:active</span>‚Äù</span> SDP line;
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x02</em></span> - rewrite media
+					<acronym class="acronym">IP</acronym> address (c=) with source address of the message
+					or the provided IP address (the provide IP address take
+					precedence over the source address).</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x04</em></span> - adds 
+						<span class="quote">‚Äú<span class="quote">a=nortpproxy:yes</span>‚Äù</span> SDP line;</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x08</em></span> - rewrite IP from
+					origin description (o=) with source address of the message
+					or the provided IP address (the provide IP address take
+					precedence over the source address).</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ip_address</em></span> - IP to be used for rewritting SDP.
+			If not specified, the received signalling IP will be used. The
+			parameter allows pseudo-variables usage. NOTE: For the IP to be
+			used, you need to use 0x02 or 0x08 flags, otherwise it will have
+			no effect.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm9272"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†<code class="function">fix_nated_sdp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (search("User-Agent: Cisco ATA.*") {fix_nated_sdp("3");};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬† add_rcv_param([flag]),">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.add_rcv_param"></a>5.3.¬†
+		<code class="function">add_rcv_param([flag])</code>,
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Add a received parameter to the <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span> header fields
+		or the Contact URI. The parameter will contain the URI created from the
+		source IP, port, and protocol of the packet containing the SIP message.
+		The parameter can be then processed by another registrar. This is useful,
+		for example, when replicating register messages using <code class="function">t_replicate</code>
+		function to another registrar.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flag</em></span> - flags to indicate if the parameter
+			should be added to Contact URI or Contact header. If the flag is
+			non-zero, the parameter will be added to the Contact URI. If not
+			used or equal to zero, the parameter will go to the Contact 
+			header.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1795536"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†<code class="function">add_rcv_paramer</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+add_rcv_param(); # add the parameter to the Contact header
+....
+add_rcv_param("1"); # add the parameter to the Contact URI
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬† fix_nated_register()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.fix_nated_register"></a>5.4.¬†
+		<code class="function">fix_nated_register()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function creates a URI consisting of the source IP, port, and 
+		protocol and stores the URI in an Attribute-Value-Pair. The URI will 
+		be appended as "received" parameter to Contact in 200 OK and 
+		registrar will store it in the received cloumn in the location table.
+		</p>
+            <p>
+		Note: You have to set the <span class="quote">‚Äú<span class="quote">received_avp</span>‚Äù</span> parameter of the
+		nathelper module and the registrar module (both module parameters must
+		have the same value) to use this function.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1799128"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†<code class="function">fix_nated_register</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+fix_nated_register();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬† nat_uac_test(flags)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.nat_uac_test"></a>5.5.¬†
+			<code class="function">nat_uac_test(flags)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Tries to guess if client's request originated behind a nat.
+			The parameter determines what heuristics is used.
+		</p>
+            <p>Meaning of the flags is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>1</em></span> -  The <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span> header field is searched 
+			for occurrence of RFC1918 or RFC6598 addresses.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>2</em></span> -  the "received" test is used: address
+			in the <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> header is compared against source
+			IP address of signaling
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>4</em></span> -  The Top Most <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> is searched 
+			for occurrence of RFC1918 or RFC6598 addresses
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>8</em></span> -  The SDP is searched for occurrence of 
+			RFC1918 or RFC6598 addresses
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>16</em></span> -  Test if the source port is different
+			from the port in the <span class="quote">‚Äú<span class="quote">Via</span>‚Äù</span> header
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>32</em></span> -  Test if the source IP address of
+			signaling is a RFC1918 or RFC6598 address
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>64</em></span> -  Test if the source connection of
+			signaling is a WebSocket
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>128</em></span> -  Test if the <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span> header
+			URI port differs from the source port of the request (Warning: this is
+			might be legal or even intended combination in non NATted scenarios)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		All flags can be bitwise combined, the test returns true if any of 
+		the tests identified a NAT.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="5.6.¬† is_rfc1918(ip_address)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.is_rfc1918"></a>5.6.¬†
+		<code class="function">is_rfc1918(ip_address)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Determines if the address in the parameter is an rfc1918 or rfc6598 address.
+			The parameter allows pseudo-variables usage.
+		</p>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+          </div>
+          <div class="section" title="5.7.¬† add_contact_alias([ip_addr, port, proto])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.add_contact_alias"></a>5.7.¬†
+		<code class="function">add_contact_alias([ip_addr, port, proto])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds an <span class="quote">‚Äú<span class="quote">;alias=ip~port~transport</span>‚Äù</span> parameter to
+		the contact URI containing either received ip, port, and
+		transport protocol or those given as parameters.  If called
+		without parameters, <span class="quote">‚Äú<span class="quote">;alias</span>‚Äù</span> parameter is
+		only added if received ip and port differ from those in
+		contact URI.
+		</p>
+            <p>
+		This function can be used from
+		REQUEST_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1812264"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†<code class="function">add_contact_alias</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (!is_present_hf("Record-Route")) {
+        if (!add_contact_alias("$var(src_ip)", "$Rp", "tcp")) {
+            xlog("L_ERR", "Error in aliasing contact $ct\n");
+            send_reply("400", "Bad request");
+            exit;
+        };
+    };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8.¬† handle_ruri_alias()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.f.handle_ruri_alias"></a>5.8.¬†
+		<code class="function">handle_ruri_alias()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Checks if the Request URI has an <span class="quote">‚Äú<span class="quote">alias</span>‚Äù</span>
+		parameter and if so, removes it and sets the <span class="quote">‚Äú<span class="quote">$du</span>‚Äù</span> based
+		on its value.  Note that this means that routing of request is based on 
+		<span class="quote">‚Äú<span class="quote">;alias</span>‚Äù</span> parameter value of the Request URI rather than 
+		the Request URI itself. If you call <code class="function">handle_ruri_alias()</code>
+		on a request, make sure that you screen the alias parameter value of
+		Request URI the same way as you would screen the
+		Request URI itself.
+		</p>
+            <p>
+		Returns <span class="emphasis"><em>1</em></span> if <span class="quote">‚Äú<span class="quote">;alias</span>‚Äù</span> parameter was
+		found and <span class="quote">‚Äú<span class="quote">$du</span>‚Äù</span> was set and the <span class="quote">‚Äú<span class="quote">$ru</span>‚Äù</span> rewritten,
+		<span class="emphasis"><em>2</em></span> if the alias parameter was not found and
+		nothing was done, or <span class="emphasis"><em>-1</em></span> in case of error.
+		</p>
+            <p>
+		This function can be used from
+		REQUEST_ROUTE, BRANCH_ROUTE, and LOCAL_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1818136"></a>
+              <p class="title">
+                <strong>Example¬†1.20.¬†<code class="function">handle_ruri_alias</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if ($du == "") {
+        handle_ruri_alias();
+        switch ($rc) {
+        case -1:
+            xlog("L_ERR", "Failed to handle alias of R-URI $ru\n");
+            send_reply("400", "Bad request");
+            exit;
+        case 1:
+            xlog("L_INFO", "Routing in-dialog $rm from $fu to $du\n");
+            break;
+        case 2:
+            xlog("L_INFO", "Routing in-dialog $rm from $fu to $ru\n");
+            break;
+         };
+    };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9.¬† set_contact_alias()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.set_contact_alias"></a>5.9.¬†
+		<code class="function">set_contact_alias()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds an <span class="quote">‚Äú<span class="quote">;alias=ip~port~transport</span>‚Äù</span> parameter to the
+		contact URI containing the received ip, port, and transport protocol.
+		The new contact URI is immediately visible to other modules in the
+		way the <code class="function">fix_nated_contact()</code> does it.
+		</p>
+            <p>
+		This function can be used from
+		REQUEST_ROUTE, ONREPLY_ROUTE, BRANCH_ROUTE, and FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1821920"></a>
+              <p class="title">
+                <strong>Example¬†1.21.¬†<code class="function">set_contact_alias</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if (!is_present_hf("Record-Route")) {
+        if (!set_contact_alias()) {
+            xlog("L_ERR", "Error in aliasing contact $ct\n");
+            send_reply("400", "Bad request");
+            exit;
+        };
+    };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Exported Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1823408"></a>6.¬†Exported Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†$rr_count">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1823760"></a>6.1.¬†<code class="function">$rr_count</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Number of Record Routes in received SIP request
+			or reply.
+			</p>
+            <div class="example">
+              <a id="idp1824616"></a>
+              <p class="title">
+                <strong>Example¬†1.22.¬†$rr_count usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    $avp(rr_count) = $rr_count;
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.¬†$rr_top_count">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1825504"></a>6.2.¬†<code class="function">$rr_top_count</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If topmost Record Route in received SIP request
+			or reply is a double Record Route, value of
+			$rr_top_count is 2.  If it a single Record
+			Route, value of $rr_top_count 
+			is 1.  If there is no Record Route(s), value of
+			$rr_top_count is 0.
+			</p>
+            <div class="example">
+              <a id="idp1826552"></a>
+              <p class="title">
+                <strong>Example¬†1.23.¬†$rr_top_count usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    if ($rr_count == $avp(rr_count) + $rr_top_count) {
+        route(ADD_CONTACT_ALIAS);
+    };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1827632"></a>7.¬†<acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬†nh_enable_ping">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.m.nh_enable_ping"></a>7.1.¬†<code class="function">nh_enable_ping</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Enables natping if parameter value greater than 0.
+			Disables natping if parameter value is 0.
+			</p>
+            <p>
+			The function takes only one parameter - a number in decimal format.
+			</p>
+            <div class="example">
+              <a id="idp1829448"></a>
+              <p class="title">
+                <strong>Example¬†1.24.¬†<code class="function">nh_enable_ping</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$ kamctl fifo nh_enable_ping 1
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="8.¬†Selects">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1830696"></a>8.¬†Selects</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="8.1.¬†@nathelper.rewrite_contact[n]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="nathelper.s.rewrite_contact"></a>8.1.¬†@nathelper.rewrite_contact[n]</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Get n-th Contact value with IP:Port rewritten to source ip:port. N is counted from 1.
+		    Only IP:port is rewritten, remaining part are left unchanged. Full nameaddr is supported.
+		</p>
+            <div class="example">
+              <a id="idp1831944"></a>
+              <p class="title">
+                <strong>Example¬†1.25.¬†@nathelper.rewrite_contact usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$c = @nathelper.rewrite_contact[1];
+...
+$c2 = @nathelper.rewrite_contact[1].nameaddr.uri;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp550144"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp2601480"></a>
+          <dl>
+            <dt>2.1. <a href="#idp3356400">What happend with ‚Äúrtpproxy_disable‚Äù parameter?</a></dt>
+            <dt>2.2. <a href="#idp210672">Where can I find more about Kamailio?</a></dt>
+            <dt>2.3. <a href="#idp2118992">Where can I post a question about this module?</a></dt>
+            <dt>2.4. <a href="#idp3169296">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp3356400"></a>
+                  <a id="idp2709736"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with <span class="quote">‚Äú<span class="quote">rtpproxy_disable</span>‚Äù</span> parameter?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			It was removed as it became obsolete - now 
+			<span class="quote">‚Äú<span class="quote">rtpproxy_sock</span>‚Äù</span> can take empty value to disable the
+			rtpproxy functionality.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp210672"></a>
+                  <a id="idp195000"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp2118992"></a>
+                  <a id="idp2523328"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp3169296"></a>
+                  <a id="idp86080"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,611 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>topoh Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4376" title="topoh Module" />
+    <link rel="next" href="#idp2654176" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="topoh Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4376"></a>topoh Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2654176">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2814456">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2282384">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2857176">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2026264">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2580696">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2534736">3.1. <code class="varname">mask_key</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2421224">3.2. <code class="varname">mask_ip</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp220360">3.3. <code class="varname">mask_callid</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp178448">3.4. <code class="varname">uparam_name</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp180832">3.5. <code class="varname">uparam_prefix</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp183216">3.6. <code class="varname">vparam_name</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp185592">3.7. <code class="varname">vparam_prefix</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp187984">3.8. <code class="varname">callid_prefix</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp190376">3.9. <code class="varname">sanity_checks</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2557184">Set <code class="varname">mask_key</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp251800">Set <code class="varname">mask_ip</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp177288">Set <code class="varname">mask_callid</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp179664">Set <code class="varname">uparam_name</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp182048">Set <code class="varname">uparam_prefix</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp184432">Set <code class="varname">vparam_name</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp186816">Set <code class="varname">vparam_prefix</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp189208">Set <code class="varname">callid_prefix</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp191872">Set <code class="varname">sanity_checks</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2654176"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2814456">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2282384">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2857176">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2026264">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2580696">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2534736">3.1. <code class="varname">mask_key</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2421224">3.2. <code class="varname">mask_ip</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp220360">3.3. <code class="varname">mask_callid</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp178448">3.4. <code class="varname">uparam_name</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp180832">3.5. <code class="varname">uparam_prefix</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp183216">3.6. <code class="varname">vparam_name</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp185592">3.7. <code class="varname">vparam_prefix</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp187984">3.8. <code class="varname">callid_prefix</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp190376">3.9. <code class="varname">sanity_checks</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2814456"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module hides the SIP routing headers that show topology details.
+		It it is not affected by the server being transaction stateless or
+		stateful. The script interpreter gets the SIP messages decoded,
+		so all existing functionality is preserved.
+	</p>
+          <p>
+		The module is transparent for the configuration writer. It only needs to be
+		loaded (tune the parameters if needed). The SIP server can be restarted
+		whitout affecting ongoing calls - once it is up, can encode/decode
+		topology details, thus no call will be lost.
+	</p>
+          <p>
+		By using same mask_key, many SIP servers can decode the message,
+		for example, applicable for servers behind load balancers.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2282384"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2857176"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>rr module</em></span> - server must perform record
+				routing to ensure in-dialog requests are encoded/decoded.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2026264"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>. In the future the module can be
+				enhanced to use a stronger encryption algorithm.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2580696"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. mask_key (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2534736"></a>3.1. <code class="varname">mask_key</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Keyword to mask the headers.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "_static_value_".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2557184"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">mask_key</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "mask_key", "some secret here")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. mask_ip (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2421224"></a>3.2. <code class="varname">mask_ip</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		IP address to be used in masked headers to build valid
+		SIP URIs. Can be any IP address, even a private-space or non-existing
+		IP address (e.g., 192.168.1.1, 127.0.0.2), including the SIP server
+		address, but must not be an address potentially used by clients.
+		It is not used at all for SIP routing.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "127.0.0.8".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp251800"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">mask_ip</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "mask_ip", "192.168.0.1")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. mask_callid (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp220360"></a>3.3. <code class="varname">mask_callid</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Whether to encode the Call-id: header. Some SIP extensions include
+			the Call-id in the SIP message payload or header, so it is safe to
+			not encode Call-id in such cases. Well-known extensions such as
+			call transfer or conference join will be added to work with encoded
+			Call-id.
+		</p>
+            <p>
+			NOTE: if you are using dialog module to terminate calls and this
+			parameter is enabled, you must set the dialog module parameter
+			'lreq_callee_headers' to include the header: 'TH: dlh\r\n'.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (do not mask).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp177288"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">mask_callid</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "mask_callid", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. uparam_name (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp178448"></a>3.4. <code class="varname">uparam_name</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of URI parameter where to store encoded value.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "line".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp179664"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">uparam_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "uparam_name", "myparam")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. uparam_prefix (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp180832"></a>3.5. <code class="varname">uparam_prefix</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Prefix to be added in encoded URI parameters.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "sr-".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp182048"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">uparam_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "uparam_prefix", "xyz")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. vparam_name (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp183216"></a>3.6. <code class="varname">vparam_name</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of Via: parameter used to store encoded value.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "branch".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp184432"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">vparam_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "vparam_name", "myv")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. vparam_prefix (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp185592"></a>3.7. <code class="varname">vparam_prefix</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Prefix to be added in encoded Via: parameters.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "z9hG4bKsr-".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp186816"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">vparam_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "vparam_prefix", "xyz")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. callid_prefix (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp187984"></a>3.8. <code class="varname">callid_prefix</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Prefix to be added in encoded Call-ID: headers.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "!!:".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp189208"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">callid_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "callid_prefix", "***")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. sanity_checks (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp190376"></a>3.9. <code class="varname">sanity_checks</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If set to 1, topoh module will bind to sanity module in order
+			to perform sanity checks over received SIP request. Default
+			sanity checks are done. It is useful to check if received request
+			is well formated before proceeding to encoding/decoding.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (do not bind to sanity module).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp191872"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">sanity_checks</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("topoh", "sanity_checks", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

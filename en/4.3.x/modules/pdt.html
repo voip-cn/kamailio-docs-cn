@@ -1,0 +1,1123 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>pdt Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4249704" title="pdt Module" />
+    <link rel="next" href="#idp2048264" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="pdt Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4249704"></a>pdt Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@asipto.com">ramona@asipto.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@asipto.com">ramona@asipto.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2008 Elena-Ramona Modroiu</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2048264">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2937856">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1747656">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2681600">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2493832">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm16688">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm16320">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13712">3.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm11176">3.3. <code class="varname">sdomain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm8616">3.4. <code class="varname">prefix_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6016">3.5. <code class="varname">domain_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm3416">3.6. <code class="varname">prefix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp71160">3.7. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp73584">3.8. <code class="varname">char_list</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp76184">3.9. <code class="varname">check_domain</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp78760">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp79128">4.1. 
+		<code class="function">prefix2domain(rewrite_mode, multidomain_mode)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp89608">4.2. 
+		<code class="function">prefix2domain(rewrite_mode)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp127192">4.3. 
+		<code class="function">prefix2domain()</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp128568">4.4. 
+		<code class="function">pd_translate(sdomain, rewrite_mode)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp134928">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp135832">5.1. 
+		<code class="function">pdt_list</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp142056">5.2. 
+		<code class="function">pdt_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp145064">6. Installation and Running</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp948216">prefix-domain translation</a></dt>
+          <dt>1.2. <a href="#idm14904">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm12336">Set <code class="varname">db_table</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm9792">Set <code class="varname">sdomain_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm7192">Set <code class="varname">prefix_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm4592">Set <code class="varname">domain_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp70056">Set <code class="varname">prefix</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp72424">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp75016">Set <code class="varname">char_list</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp77512">Set <code class="varname">check_domain</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp88352"><code class="function">prefix2domain</code> usage</a></dt>
+          <dt>1.12. <a href="#idp133600"><code class="function">pd_translate</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2048264"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2937856">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1747656">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2681600">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2493832">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm16688">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm16320">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13712">3.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm11176">3.3. <code class="varname">sdomain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm8616">3.4. <code class="varname">prefix_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6016">3.5. <code class="varname">domain_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm3416">3.6. <code class="varname">prefix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp71160">3.7. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp73584">3.8. <code class="varname">char_list</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp76184">3.9. <code class="varname">check_domain</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp78760">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp79128">4.1. 
+		<code class="function">prefix2domain(rewrite_mode, multidomain_mode)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp89608">4.2. 
+		<code class="function">prefix2domain(rewrite_mode)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp127192">4.3. 
+		<code class="function">prefix2domain()</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp128568">4.4. 
+		<code class="function">pd_translate(sdomain, rewrite_mode)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp134928">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp135832">5.1. 
+		<code class="function">pdt_list</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp142056">5.2. 
+		<code class="function">pdt_reload</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp145064">6. Installation and Running</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2937856"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    This module translates a numerical prefix into a domain and updates
+		accordingly the request <acronym class="acronym">URI</acronym>.
+	</p>
+          <p>
+	    The module looks up at the R-<acronym class="acronym">URI</acronym> part of a message and if the user
+		part begins with an established prefix it will update the <acronym class="acronym">URI</acronym>.
+		Updating the uri consists of: remove the prefix from the user part of
+		the uri and keep the rest as the user part of the new uri. The host
+		and port are changed with the domain matched for the leading prefix and
+		the domain in From URI.
+	</p>
+          <p>
+	    &lt;prefix&gt;&lt;userid&gt;&lt;:password&gt;@&lt;mydomain.com&gt; ...
+	</p>
+          <p>
+	    and the result will be:
+	</p>
+          <p>
+	    &lt;userid&gt;&lt;:password&gt;@&lt;domain[:port]&gt;...
+	</p>
+          <div class="example">
+            <a id="idp948216"></a>
+            <p class="title">
+              <strong>Example 1.1. prefix-domain translation</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">prefix=123, domain(FROM)=siphub.org
+
+entry in database:
+ sdomain=siphub.org
+    domain[123]=alpha.org
+    domain[124]=beta.org
+    domain[125]=gamma.org
+	
+The RURI will be updated in the following way"
+sip:12391001@mydomain.com  =&gt; sip:91001@alpha.org</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+	    The prefix could be prefixed by other digits. These digits
+	    will not be used to look up the domain (the classic example, 00 used
+		for international calls, then follows the country prefix). For more
+		information on this, see 'prefix' parameter.
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		    A sample config file is located in './doc/'.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			<acronym class="acronym">MySQL</acronym> script to create the database needed by
+			PDT is located in '../../scripts/mysql/pdt-create.sql'
+		</p>
+                <p>
+			The database is loaded by Kamailio only at start up time and 
+			only cache is used to lookup domains. Check the MI Functions for
+			adding/deleting prefix-domain pairs or reloading from database
+			at runtime.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		    Sample shell scripts to manage prefix-domain pairs are also located
+			in './doc/' (pdt_fifo_list.sh).
+		</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1747656"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2681600"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>A Kamailio database module (e.g., mysql,
+				dbtext)</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2493832"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm16688"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm16320"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		URL of the database table to be used.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm14904"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13712"></a>3.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Table name.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">pdt</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm12336"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "db_table", "pdt")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. sdomain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm11176"></a>3.3. <code class="varname">sdomain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'sdomain' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">sdomain</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm9792"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">sdomain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "domain_column", "source_domain")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. prefix_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm8616"></a>3.4. <code class="varname">prefix_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'prefix' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">prefix</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm7192"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">prefix_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "prefix_column", "prefix")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. domain_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6016"></a>3.5. <code class="varname">domain_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'domain' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">domain</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idm4592"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">domain_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "domain_column", "hostname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. prefix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm3416"></a>3.6. <code class="varname">prefix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default leading prefix who denotes what <acronym class="acronym">URI</acronym> needs to be translated
+		- if it is NULL the module will not check the R-<acronym class="acronym">URI</acronym> against it and
+		the PDT prefix is considered starting from the first digit. Otherwise,
+		the module will check first if the R-<acronym class="acronym">URI</acronym> starts with it and will
+		skip it to look up the domain.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is NULL.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp70056"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "prefix", "00")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp71160"></a>3.7. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rows to be loaded in one step from database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 1000.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp72424"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "fetch_rows", 4000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. char_list (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp73584"></a>3.8. <code class="varname">char_list</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The list with characters allowed in prefix.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0123456789</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp75016"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">char_list</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "char_list", "0123456789*+")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. check_domain (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp76184"></a>3.9. <code class="varname">check_domain</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Module will check if destination domain is duplicated for same
+		source domain (1 - check; 0 - don't check).
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 1.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp77512"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">check_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pdt", "check_domain", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp78760"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  prefix2domain(rewrite_mode, multidomain_mode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp79128"></a>4.1. 
+		<code class="function">prefix2domain(rewrite_mode, multidomain_mode)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Build a new <acronym class="acronym">URI</acronym> if it is necessary. Returns 1 when the translation
+		was made or there was nothing to translate (user part of the <acronym class="acronym">URI</acronym> is
+		empty, it does not match the prefix parameter or there is no domain
+		associated with a possible prefix from user part).
+		Returns -1 in error cases.
+	    </p>
+            <p>
+		The translation is done based on lookup up for a entry in the database
+		where the sdomain equals the domain in FROM uri, and the prefix matches
+		the beginning of the user part of the RURI. If such an entry is found,
+		then the domain in RURI is updated with the domain of this entry
+		(sdomain, prefix, domain).
+		</p>
+            <p>
+		There is also the possibility to have the translation of <acronym class="acronym">URI</acronym> regardless of
+		source domain. This can be achieved inserting in the database entries where
+		sdomain has the value "*".
+		</p>
+            <p>
+		The <span class="quote">“<span class="quote">rewrite_mode</span>”</span> parameter specifies whether to strip or not
+		the prefix from user part. The possible values are:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0: the prefix is removed along with the leading prefix.</p>
+                </li>
+                <li class="listitem">
+                  <p>1: only the leading prefix is removed.</p>
+                </li>
+                <li class="listitem">
+                  <p>2: the user part of the URI is not changed.</p>
+                </li>
+                <li class="listitem">
+                  <p>$PV : any PV holding one of the above values.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		The <span class="quote">“<span class="quote">multidomain_mode</span>”</span> parameter specifies the kind of multidomain
+		support to use. The possible values are:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 : Translation of <acronym class="acronym">URI</acronym> regardless of source domain.</p>
+                </li>
+                <li class="listitem">
+                  <p>1 :  Translation of <acronym class="acronym">URI</acronym> using as source domain the domain
+					in From-URI.</p>
+                </li>
+                <li class="listitem">
+                  <p>2 :  Translation of <acronym class="acronym">URI</acronym> using as source domain the domain
+				in From-URI. In case there is no entry for the required sdomain,
+				it tries the translation using "*" as sdomain.</p>
+                </li>
+                <li class="listitem">
+                  <p>$PV : any PV holding one of the above values.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp88352"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">prefix2domain</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+prefix2domain("2", "2");
+...
+$var(a) = 1;
+prefix2domain("$var(a)", "2");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  prefix2domain(rewrite_mode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp89608"></a>4.2. 
+		<code class="function">prefix2domain(rewrite_mode)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>The same as prefix2domain(rewrite_mode, "0"), that is without 
+		multidomain support, translation of  <acronym class="acronym">URI</acronym> being done regardless of 
+		the source domain.
+		</p>
+            <pre class="programlisting">...
+prefix2domain("2");
+...</pre>
+          </div>
+          <div class="section" title="4.3.  prefix2domain()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp127192"></a>4.3. 
+		<code class="function">prefix2domain()</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>The same as prefix2domain("0", "0").</p>
+            <pre class="programlisting">...
+prefix2domain();
+...</pre>
+          </div>
+          <div class="section" title="4.4.  pd_translate(sdomain, rewrite_mode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp128568"></a>4.4. 
+		<code class="function">pd_translate(sdomain, rewrite_mode)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Translate R-URI based on source domain and longest prefix matching.
+		Returns 1 when the translation was made or there was nothing to translate.
+		Returns -1 in error cases.
+	    </p>
+            <p>
+		The translation is done based on lookup up for an entry in the database
+		where the sdomain parameter equals the sdomain in database table.
+		</p>
+            <p>
+		The <span class="quote">“<span class="quote">sdomain</span>”</span> parameter specifies the source domain to be
+		used to match the longest prefix. Can be a static string or dynamic parameter
+		with variables inside.
+		</p>
+            <p>
+		The <span class="quote">“<span class="quote">rewrite_mode</span>”</span> parameter specifies whether to strip or not
+		the prefix from user part. The possible values are:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0: the prefix is removed along with the leading prefix.</p>
+                </li>
+                <li class="listitem">
+                  <p>1: only the leading prefix is removed.</p>
+                </li>
+                <li class="listitem">
+                  <p>2: the user part of the URI is not changed.</p>
+                </li>
+                <li class="listitem">
+                  <p>$PV : any PV holding one of the above values.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE or
+		BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp133600"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">pd_translate</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+pd_translate("$fd", "2");
+...
+pd_translate("*", "$var(a)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp134928"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The database is loaded by Kamailio at start up time.
+		The module uses only the cache to look up domains. If you want to
+		add or delete a new prefix-domain pair at runtime you have to use
+		MI FIFO commands. All changes made via these commands are applied to
+		database and the cache is updated correspondingly. 
+		</p>
+          <div class="section" title="5.1.  pdt_list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp135832"></a>5.1. 
+		<code class="function">pdt_list</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Produces a listing of the entries prefixes/domains/sdomains.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pdt_list</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_sdomain_ : a source domain value. </p>
+                </li>
+                <li class="listitem">
+                  <p>_prefix_ : a prefix value</p>
+                </li>
+                <li class="listitem">
+                  <p>_domain_: a domain value </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		"." (dot) means NULL value
+		</p>
+            <p>
+		The comparison operation is 'START WITH' -- if domain is 'a' then all domains 
+		starting with 'a' are listed.
+		</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pdt_list:_reply_fifo_file_
+		_sdomain_
+		_prefix_
+		_domain_
+		_empty_line_</pre>
+            <p>
+		 Examples:
+		 </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">pdt_list siph 2 .</span>”</span>  : Lists the entries where sdomain is 
+			starting with 'siph', prefix is starting with '2' and domain is anything
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">pdt_list siph 2</span>”</span>  : Lists the entries where sdomain is 
+			starting with 'siph', prefix is starting with '2' and domain is anything
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">pdt_list . 2 open</span>”</span>  : Lists the entries where sdomain 
+			 is anything, prefix starts with '2' and domain starts with 'open'.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="5.2.  pdt_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp142056"></a>5.2. 
+		<code class="function">pdt_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload all sdomain-prefix-domain records from database.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>pdt_reload</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>none</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:pdt_reload:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp145064"></a>6. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	Example shell scripts for MI FIFO commands are placed in './doc/'
+	(pdt_fifo_add.sh, pdt_fifo_delete.sh, pdt_fifo_list.sh). 
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

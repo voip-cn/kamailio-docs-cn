@@ -1,0 +1,441 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MI_RPC Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11284248" title="MI_RPC Module" />
+    <link rel="next" href="#idp18531232" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="MI_RPC Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11284248"></a>MI_RPC Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2009 http://www.asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18531232">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17534624">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17917504">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17849528">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18277240">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18053688">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18167784">3.1. <code class="varname">rpc_url</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18109208">4. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18040040">5. Exported RPC commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17338696">5.1. 
+		<code class="function">mi</code>
+		<code class="function">mi_dg</code>
+		<code class="function">mi_fifo</code>
+		<code class="function">mi_xmlrpc</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15609616">6. <acronym class="acronym">MI</acronym> Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15610128">6.1. <code class="function">rpc</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18004920">Set <code class="varname">rpc_url</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18531232"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17534624">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17917504">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17849528">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18277240">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18053688">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18167784">3.1. <code class="varname">rpc_url</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18109208">4. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18040040">5. Exported RPC commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17338696">5.1. 
+		<code class="function">mi</code>
+		<code class="function">mi_dg</code>
+		<code class="function">mi_fifo</code>
+		<code class="function">mi_xmlrpc</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15609616">6. <acronym class="acronym">MI</acronym> Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15610128">6.1. <code class="function">rpc</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17534624"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module exports a RPC command to execute MI commands and
+        an MI command to run RPC commands.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17917504"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17849528"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18277240"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18053688"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. rpc_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18167784"></a>3.1. <code class="varname">rpc_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is used for MI to RPC connections.</p>
+            <p>
+				This parameters specifies the connection to use for running RPC commands from the mangement interface.
+			</p>
+            <p>
+				This parameter is required if you need to run RPC commands from the MI. It must match a URL to which the RPC is bound.
+			</p>
+            <div class="example">
+              <a id="idp18004920"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">rpc_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_rpc","rpc_url","tcp:localhost:2046")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18109208"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>none</p>
+        </div>
+        <div class="section" title="5. Exported RPC commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18040040"></a>5. Exported RPC commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  mi mi_dg mi_fifo mi_xmlrpc">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17338696"></a>5.1. 
+		<code class="function">mi</code>
+		<code class="function">mi_dg</code>
+		<code class="function">mi_fifo</code>
+		<code class="function">mi_xmlrpc</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Execute a MI command.
+		</p>
+            <p>
+		Depending on the version (e.g. mi, mi_dg) it formats the output in a
+		similar way to the corresponding kamailio mi module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><code class="function">mi</code> - uses a special, "pretty" format
+				which generates nicer (more readable) output when used with
+				sercmd.
+			</li>
+                <li class="listitem"><code class="function">mi_dg</code> - uses an output format similar to
+				the kamailio mi_datagram module.
+			</li>
+                <li class="listitem"><code class="function">mi_fifo</code> - uses an output format similar
+				to the kamailio mi_fifo module.
+			</li>
+                <li class="listitem"><code class="function">mi_xmlrpc</code> - uses an output format similar
+				to the kamailio mi_xmlrpc module.
+			</li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>mi</em></span>
+		</p>
+            <p>Parameters:</p>
+            <p>
+			<span class="emphasis"><em>_mi_command_</em></span> - the MI command to execute
+			(mandatory).
+		</p>
+            <p>
+			<span class="emphasis"><em>_parameters_</em></span> - the MI command parameters
+			(optional).
+		</p>
+            <p>
+		Example using 'sercmd':
+		</p>
+            <pre class="programlisting">sercmd&gt; mi uptime
+Now:: Thu Sep 24 18:17:15 2009
+Up since:: Thu Sep 24 17:35:45 2009
+Up time:: 2490 [sec]</pre>
+          </div>
+        </div>
+        <div class="section" title="6. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15609616"></a>6. <acronym class="acronym">MI</acronym> Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. rpc">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15610128"></a>6.1. <code class="function">rpc</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            This MI commands runs a RPC command.
+            </p>
+            <p>
+            It must be passed the name of the RPC command, and any parameters that the RPC command requires.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

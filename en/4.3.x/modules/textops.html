@@ -1,0 +1,2823 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>textops Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm15456648" title="textops Module" />
+    <link rel="next" href="#idp3008016" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="textops Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm15456648"></a>textops Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:pelinescu-onciul@fokus.fraunhofer.de">pelinescu-onciul@fokus.fraunhofer.de</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:pelinescu-onciul@fokus.fraunhofer.de">pelinescu-onciul@fokus.fraunhofer.de</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3008016">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3387600">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2018528">1.1. Known Limitations</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp3554040">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2472640">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1160392">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2957368">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.search">3.1. 
+		<code class="function">search(re)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.search_body">3.2. 
+		<code class="function">search_body(re)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.search_hf">3.3. 
+		<code class="function">search_hf(hf, re, flags)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.search_append">3.4. 
+		<code class="function">search_append(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.search_append_body">3.5. 
+		<code class="function">search_append_body(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.replace">3.6. 
+		<code class="function">replace(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.replace_body">3.7. 
+		<code class="function">replace_body(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.replace_all">3.8. 
+		<code class="function">replace_all(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.replace_body_all">3.9. 
+		<code class="function">replace_body_all(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.replace_body_atonce">3.10. 
+		<code class="function">replace_body_atonce(re, txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.subst">3.11. 
+		<code class="function">subst('/re/repl/flags')</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.subst_uri">3.12. 
+		<code class="function">subst_uri('/re/repl/flags')</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.subst_user">3.13. 
+		<code class="function">subst_user('/re/repl/flags')</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.subst_body">3.14. 
+		<code class="function">subst_body('/re/repl/flags')</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.subst_hf">3.15. 
+		<code class="function">subst_hf(hf, subexp, flags)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.set_body">3.16. 
+		<code class="function">set_body(txt,content_type)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.set_reply_body">3.17. 
+		<code class="function">set_reply_body(txt,content_type)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.filter_body">3.18. 
+		<code class="function">filter_body(content_type)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_to_reply">3.19. 
+		<code class="function">append_to_reply(txt)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_hf">3.20. 
+		<code class="function">append_hf(txt[, hdr])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.insert_hf">3.21. 
+		<code class="function">insert_hf(txt[, hdr])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_urihf">3.22. 
+		<code class="function">append_urihf(prefix, suffix)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.is_present_hf">3.23. 
+		<code class="function">is_present_hf(hf_name)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.is_present_hf_re">3.24. 
+		<code class="function">is_present_hf_re(hf_name_re)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_time">3.25. 
+		<code class="function">append_time()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_time_to_request">3.26. 
+		<code class="function">append_time_to_request()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.is_method">3.27. 
+		<code class="function">is_method(name)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.remove_hf">3.28. 
+		<code class="function">remove_hf(hname)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.remove_hf_re">3.29. 
+		<code class="function">remove_hf_re(re)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.has_body">3.30. 
+		<code class="function">has_body()</code>,
+		<code class="function">has_body(mime)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.is_audio_on_hold">3.31. 
+		<code class="function">is_audio_on_hold()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.is_privacy">3.32. 
+		<code class="function">is_privacy(privacy_type)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.in_list">3.33. 
+			<code class="function">in_list(subject, list, separator)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.cmp_str">3.34. 
+		<code class="function">cmp_str(str1, str2)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.cmp_istr">3.35. 
+		<code class="function">cmp_istr(str1, str2)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.starts_with">3.36. 
+		<code class="function">starts_with(str1, str2)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.set_body_multipart">3.37. 
+		<code class="function">set_body_multipart([txt,content_type][,boundary])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.append_body_part">3.38. 
+		<code class="function">append_body_part(txt,content_type[, content_disposition])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#textops.f.remove_body_part">3.39. 
+		<code class="function">remove_body_part(content_type)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1922616">4. Known Limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3304856">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3096280">1. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1153912">1.1. 
+			<code class="function">load_textops(*import_structure)</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp51592"><code class="function">search</code> usage</a></dt>
+          <dt>1.2. <a href="#idm9144"><code class="function">search_body</code> usage</a></dt>
+          <dt>1.3. <a href="#idm4088"><code class="function">search_hf</code> usage</a></dt>
+          <dt>1.4. <a href="#idp72512"><code class="function">search_append</code> usage</a></dt>
+          <dt>1.5. <a href="#idp76824"><code class="function">search_append_body</code> usage</a></dt>
+          <dt>1.6. <a href="#idp81152"><code class="function">replace</code> usage</a></dt>
+          <dt>1.7. <a href="#idp85416"><code class="function">replace_body</code> usage</a></dt>
+          <dt>1.8. <a href="#idp89664"><code class="function">replace_all</code> usage</a></dt>
+          <dt>1.9. <a href="#idp23152"><code class="function">replace_body_all</code> usage</a></dt>
+          <dt>1.10. <a href="#idp27592"><code class="function">replace_body_atonce</code> usage</a></dt>
+          <dt>1.11. <a href="#idp32360"><code class="function">subst</code> usage</a></dt>
+          <dt>1.12. <a href="#idp37328"><code class="function">subst_uri</code> usage</a></dt>
+          <dt>1.13. <a href="#idp42424"><code class="function">subst</code> usage</a></dt>
+          <dt>1.14. <a href="#idp1807728"><code class="function">subst_body</code> usage</a></dt>
+          <dt>1.15. <a href="#idp1812888"><code class="function">subst_hf</code> usage</a></dt>
+          <dt>1.16. <a href="#idp1817280"><code class="function">set_body</code> usage</a></dt>
+          <dt>1.17. <a href="#idp1821664"><code class="function">set_reply_body</code> usage</a></dt>
+          <dt>1.18. <a href="#idp1825480"><code class="function">filter_body</code> usage</a></dt>
+          <dt>1.19. <a href="#idp1829424"><code class="function">append_to_reply</code> usage</a></dt>
+          <dt>1.20. <a href="#idp1834024"><code class="function">append_hf</code> usage</a></dt>
+          <dt>1.21. <a href="#idp1838632"><code class="function">insert_hf</code> usage</a></dt>
+          <dt>1.22. <a href="#idp1843368"><code class="function">append_urihf</code> usage</a></dt>
+          <dt>1.23. <a href="#idp1848096"><code class="function">is_present_hf</code> usage</a></dt>
+          <dt>1.24. <a href="#idp1851968"><code class="function">is_present_hf_re</code> usage</a></dt>
+          <dt>1.25. <a href="#idp1859744"><code class="function">append_time</code> usage</a></dt>
+          <dt>1.26. <a href="#idp1867360"><code class="function">append_time_to_request</code> usage</a></dt>
+          <dt>1.27. <a href="#idp1872712"><code class="function">is_method</code> usage</a></dt>
+          <dt>1.28. <a href="#idp1877192"><code class="function">remove_hf</code> usage</a></dt>
+          <dt>1.29. <a href="#idp1881672"><code class="function">remove_hf_re</code> usage</a></dt>
+          <dt>1.30. <a href="#idp1887192"><code class="function">has_body</code> usage</a></dt>
+          <dt>1.31. <a href="#idp1890128"><code class="function">is_audio_on_hold</code> usage</a></dt>
+          <dt>1.32. <a href="#idp1893608"><code class="function">is_privacy</code> usage</a></dt>
+          <dt>1.33. <a href="#idp1896552"><code class="function">in_list()</code> usage</a></dt>
+          <dt>1.34. <a href="#idp1899584"><code class="function">cmp_str</code> usage</a></dt>
+          <dt>1.35. <a href="#idp1902552"><code class="function">cmp_str</code> usage</a></dt>
+          <dt>1.36. <a href="#idp1905416"><code class="function">starts_with</code> usage</a></dt>
+          <dt>1.37. <a href="#idp1911104"><code class="function">set_body_multipart</code> usage</a></dt>
+          <dt>1.38. <a href="#idp1916816"><code class="function">append_body_part</code> usage</a></dt>
+          <dt>1.39. <a href="#idp1921296"><code class="function">remove_body_part</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3008016"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3387600">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2018528">1.1. Known Limitations</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp3554040">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2472640">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1160392">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2957368">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.search">3.1. 
+		<code class="function">search(re)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.search_body">3.2. 
+		<code class="function">search_body(re)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.search_hf">3.3. 
+		<code class="function">search_hf(hf, re, flags)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.search_append">3.4. 
+		<code class="function">search_append(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.search_append_body">3.5. 
+		<code class="function">search_append_body(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.replace">3.6. 
+		<code class="function">replace(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.replace_body">3.7. 
+		<code class="function">replace_body(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.replace_all">3.8. 
+		<code class="function">replace_all(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.replace_body_all">3.9. 
+		<code class="function">replace_body_all(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.replace_body_atonce">3.10. 
+		<code class="function">replace_body_atonce(re, txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.subst">3.11. 
+		<code class="function">subst('/re/repl/flags')</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.subst_uri">3.12. 
+		<code class="function">subst_uri('/re/repl/flags')</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.subst_user">3.13. 
+		<code class="function">subst_user('/re/repl/flags')</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.subst_body">3.14. 
+		<code class="function">subst_body('/re/repl/flags')</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.subst_hf">3.15. 
+		<code class="function">subst_hf(hf, subexp, flags)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.set_body">3.16. 
+		<code class="function">set_body(txt,content_type)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.set_reply_body">3.17. 
+		<code class="function">set_reply_body(txt,content_type)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.filter_body">3.18. 
+		<code class="function">filter_body(content_type)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_to_reply">3.19. 
+		<code class="function">append_to_reply(txt)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_hf">3.20. 
+		<code class="function">append_hf(txt[, hdr])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.insert_hf">3.21. 
+		<code class="function">insert_hf(txt[, hdr])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_urihf">3.22. 
+		<code class="function">append_urihf(prefix, suffix)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.is_present_hf">3.23. 
+		<code class="function">is_present_hf(hf_name)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.is_present_hf_re">3.24. 
+		<code class="function">is_present_hf_re(hf_name_re)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_time">3.25. 
+		<code class="function">append_time()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_time_to_request">3.26. 
+		<code class="function">append_time_to_request()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.is_method">3.27. 
+		<code class="function">is_method(name)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.remove_hf">3.28. 
+		<code class="function">remove_hf(hname)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.remove_hf_re">3.29. 
+		<code class="function">remove_hf_re(re)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.has_body">3.30. 
+		<code class="function">has_body()</code>,
+		<code class="function">has_body(mime)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.is_audio_on_hold">3.31. 
+		<code class="function">is_audio_on_hold()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.is_privacy">3.32. 
+		<code class="function">is_privacy(privacy_type)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.in_list">3.33. 
+			<code class="function">in_list(subject, list, separator)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.cmp_str">3.34. 
+		<code class="function">cmp_str(str1, str2)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.cmp_istr">3.35. 
+		<code class="function">cmp_istr(str1, str2)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.starts_with">3.36. 
+		<code class="function">starts_with(str1, str2)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.set_body_multipart">3.37. 
+		<code class="function">set_body_multipart([txt,content_type][,boundary])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.append_body_part">3.38. 
+		<code class="function">append_body_part(txt,content_type[, content_disposition])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#textops.f.remove_body_part">3.39. 
+		<code class="function">remove_body_part(content_type)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1922616">4. Known Limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3387600"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The module implements text based operations over the SIP message
+		processed by Kamailio. SIP is a text based protocol and the module
+		provides a large set of very useful functions to manipulate the
+		message at text level, e.g., regular expression search and replace,
+		Perl-like substitutions, checks for method type, header presence,
+		insert of new header and date, etc.
+	</p>
+          <div class="section" title="1.1. Known Limitations">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2018528"></a>1.1. Known Limitations</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		search ignores folded lines. For example, 
+		search(<span class="quote">“<span class="quote">(From|f):.*@foo.bar</span>”</span>)
+		doesn't match the following From header field:
+		</p>
+            <pre class="programlisting">From: medabeda 
+ &lt;sip:medameda@foo.bar&gt;;tag=1234</pre>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3554040"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2472640"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1160392"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2957368"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.  search(re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.search"></a>3.1. 
+		<code class="function">search(re)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Searches for the re in the message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp51592"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">search</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( search("[Ss][Ii][Pp]") ) { /*....*/ };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.  search_body(re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.search_body"></a>3.2. 
+		<code class="function">search_body(re)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Searches for the re in the body of the message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm9144"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">search_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( search_body("[Ss][Ii][Pp]") ) { /*....*/ };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.  search_hf(hf, re, flags)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.search_hf"></a>3.3. 
+		<code class="function">search_hf(hf, re, flags)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Searches for the re in the body of a header field.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - header field name.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>flags</em></span> - control flags - it
+				has to be one of: a - all headers matching the
+				name; f - only first header matching the name;
+				l - only the last header matching the name.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm4088"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">search_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( search_hf("From", ":test@", "a") ) { /*....*/ };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.  search_append(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.search_append"></a>3.4. 
+		<code class="function">search_append(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Searches for the first match of re and appends txt after it.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String to be appended.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp72512"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">search_append</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+search_append("[Oo]pen[Ss]er", " SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.  search_append_body(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.search_append_body"></a>3.5. 
+		<code class="function">search_append_body(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Searches for the first match of re in the body of the message
+		and appends txt after it.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String to be appended.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp76824"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">search_append_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+search_append_body("[Oo]pen[Ss]er", " SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.  replace(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.replace"></a>3.6. 
+		<code class="function">replace(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces the first occurrence of re with txt.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp81152"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">replace</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+replace("openser", "Kamailio SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.  replace_body(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.replace_body"></a>3.7. 
+		<code class="function">replace_body(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces the first occurrence of re in the body of the message
+		with txt.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp85416"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">replace_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+replace_body("openser", "Kamailio SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.  replace_all(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.replace_all"></a>3.8. 
+		<code class="function">replace_all(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces all occurrence of re with txt.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp89664"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">replace_all</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+replace_all("openser", "Kamailio SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.  replace_body_all(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.replace_body_all"></a>3.9. 
+		<code class="function">replace_body_all(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces all occurrence of re in the body of the message
+		with txt. Matching is done on a per-line basis.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp23152"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">replace_body_all</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+replace_body_all("openser", "Kamailio SIP Proxy");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10.  replace_body_atonce(re, txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.replace_body_atonce"></a>3.10. 
+		<code class="function">replace_body_atonce(re, txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces all occurrence of re in the body of the message
+		with txt. Matching is done over the whole body.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - Regular expression.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp27592"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">replace_body_atonce</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# strip the whole body from the message:
+if(has_body() &amp;&amp; replace_body_atonce("^.+$", ""))
+        remove_hf("Content-Type"); 
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.  subst('/re/repl/flags')">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.subst"></a>3.11. 
+		<code class="function">subst('/re/repl/flags')</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces re with repl (sed or perl like).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>'/re/repl/flags'</em></span> - sed like regular 
+				expression. flags can be a combination of i (case insensitive),
+				g (global) or s (match newline don't treat it as end of line).
+			</p>
+                  <p>
+			're' - is regular expresion
+			</p>
+                  <p>
+			'repl' - is replacement string - may contain pseudo-varibales
+			</p>
+                  <p>
+			'flags' - substitution flags (i - ignore case, g - global)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp32360"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">subst</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# replace the uri in to: with the message uri (just an example)
+if ( subst('/^To:(.*)sip:[^@]*@[a-zA-Z0-9.]+(.*)$/t:\1\u\2/ig') ) {};
+
+# replace the uri in to: with the value of avp sip_address (just an example)
+if ( subst('/^To:(.*)sip:[^@]*@[a-zA-Z0-9.]+(.*)$/t:\1$avp(sip_address)\2/ig') ) {};
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.  subst_uri('/re/repl/flags')">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.subst_uri"></a>3.12. 
+		<code class="function">subst_uri('/re/repl/flags')</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Runs the re substitution on the message uri (like subst but works
+		 only on the uri)
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>'/re/repl/flags'</em></span> - sed like regular 
+				expression. flags can be a combination of i (case insensitive),
+				g (global) or s (match newline don't treat it as end of line).
+			</p>
+                  <p>
+			're' - is regular expresion
+			</p>
+                  <p>
+			'repl' - is replacement string - may contain pseudo-varibales
+			</p>
+                  <p>
+			'flags' - substitution flags (i - ignore case, g - global)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp37328"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">subst_uri</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# adds 3463 prefix to numeric uris, and save the original uri (\0 match)
+# as a parameter: orig_uri (just an example)
+if (subst_uri('/^sip:([0-9]+)@(.*)$/sip:3463\1@\2;orig_uri=\0/i')){$
+
+# adds the avp 'uri_prefix' as prefix to numeric uris, and save the original
+# uri (\0 match) as a parameter: orig_uri (just an example)
+if (subst_uri('/^sip:([0-9]+)@(.*)$/sip:$avp(uri_prefix)\1@\2;orig_uri=\0/i')){$
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.  subst_user('/re/repl/flags')">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.subst_user"></a>3.13. 
+		<code class="function">subst_user('/re/repl/flags')</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Runs the re substitution on the message uri (like subst_uri but works
+		 only on the user portion of the uri)
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>'/re/repl/flags'</em></span> - sed like regular
+				expression. flags can be a combination of i (case insensitive),
+				g (global) or s (match newline don't treat it as end of line).
+			</p>
+                  <p>
+			're' - is regular expresion
+			</p>
+                  <p>
+			'repl' - is replacement string - may contain pseudo-varibales
+			</p>
+                  <p>
+			'flags' - substitution flags (i - ignore case, g - global)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp42424"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">subst</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# adds 3463 prefix to uris ending with 3642 (just an example)
+if (subst_user('/3642$/36423463/')){$
+
+...
+# adds avp 'user_prefix' as prefix to username in r-uri ending with 3642
+if (subst_user('/(.*)3642$/$avp(user_prefix)\13642/')){$
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.  subst_body('/re/repl/flags')">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.subst_body"></a>3.14. 
+		<code class="function">subst_body('/re/repl/flags')</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Replaces re with repl (sed or perl like) in the body of the message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>'/re/repl/flags'</em></span> - sed like regular 
+				expression. flags can be a combination of i (case insensitive),
+				g (global) or s (match newline don't treat it as end of line).
+			</p>
+                  <p>
+			're' - is regular expresion
+			</p>
+                  <p>
+			'repl' - is replacement string - may contain pseudo-varibales
+			</p>
+                  <p>
+			'flags' - substitution flags (i - ignore case, g - global)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1807728"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">subst_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( subst_body('/^o=(.*) /o=$fU /') ) {};
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15.  subst_hf(hf, subexp, flags)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.subst_hf"></a>3.15. 
+		<code class="function">subst_hf(hf, subexp, flags)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Perl-like substitutions in the body of a header field.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf</em></span> - header field name.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>subexp</em></span> - substitution expression
+				in the same format as of the 'subst' function parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>flags</em></span> - control flags - it
+				has to be one of: a - all headers matching the
+				name; f - only first header matching the name;
+				l - only the last header matching the name.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1812888"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">subst_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ( subst_hf("From", "/:test@/:best@/", "a") ) { /*....*/ };
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16.  set_body(txt,content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.set_body"></a>3.16. 
+		<code class="function">set_body(txt,content_type)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set body to a SIP message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - text for the body, can include
+				pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> - value of Content-Type header,
+				can include pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1817280"></a>
+              <p class="title">
+                <strong>Example 1.16. <code class="function">set_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_body("test", "text/plain");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17.  set_reply_body(txt,content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.set_reply_body"></a>3.17. 
+		<code class="function">set_reply_body(txt,content_type)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set body to a SIP reply to be generated by Kamailio.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - text for the body, can include
+				pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> - value of Content-Type header,
+				can include pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1821664"></a>
+              <p class="title">
+                <strong>Example 1.17. <code class="function">set_reply_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_reply_body("test", "text/plain");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18.  filter_body(content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.filter_body"></a>3.18. 
+		<code class="function">filter_body(content_type)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Filters multipart/mixed body by leaving out all other body
+		parts except the first body part of given type.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> -
+				Content type to be left in the body.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1825480"></a>
+              <p class="title">
+                <strong>Example 1.18. <code class="function">filter_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (has_body("multipart/mixed")) {
+    if (filter_body("application/sdp") {
+        remove_hf("Content-Type");
+        append_hf("Content-Type: application/sdp\r\n");
+    } else {
+        xlog("Body part application/sdp not found\n");
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19.  append_to_reply(txt)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_to_reply"></a>3.19. 
+		<code class="function">append_to_reply(txt)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Append txt as header to the reply.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - String which may contains
+			pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
+		FAILURE_ROUTE, ERROR_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1829424"></a>
+              <p class="title">
+                <strong>Example 1.19. <code class="function">append_to_reply</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_to_reply("Foo: bar\r\n");
+append_to_reply("Foo: $rm at $Ts\r\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20.  append_hf(txt[, hdr])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_hf"></a>3.20. 
+		<code class="function">append_hf(txt[, hdr])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Appends 'txt' as header after first header field or after
+		last 'hdr' header field.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - Header field to be appended. The
+			value can contain pseudo-variables which will be replaced at run
+			time.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hdr</em></span> - Header name after which the 'txt'
+			is appended.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1834024"></a>
+              <p class="title">
+                <strong>Example 1.20. <code class="function">append_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_hf("P-hint: VOICEMAIL\r\n");
+append_hf("From-username: $fU\r\n", "Call-ID");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21.  insert_hf(txt[, hdr])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.insert_hf"></a>3.21. 
+		<code class="function">insert_hf(txt[, hdr])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Inserts 'txt' as header before the first header field or before
+		first 'hdr' header field if 'hdr' is given.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - Header field to be inserted. The
+			value can contain pseudo-variables which will be replaced at run
+			time.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hdr</em></span> - Header name before which the 'txt'
+			is inserted.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1838632"></a>
+              <p class="title">
+                <strong>Example 1.21. <code class="function">insert_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+insert_hf("P-hint: VOICEMAIL\r\n");
+insert_hf("To-username: $tU\r\n");
+insert_hf("P-hint: VOICEMAIL\r\n", "Call-ID");
+insert_hf("To-username: $tU\r\n", "Call-ID");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22.  append_urihf(prefix, suffix)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_urihf"></a>3.22. 
+		<code class="function">append_urihf(prefix, suffix)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Append header field name with original <acronym class="acronym">Request-URI</acronym> 
+		in middle.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>prefix</em></span> - string (usually at least 
+			header field name).
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>suffix</em></span> - string (usually at least 
+			line terminator).
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, 
+		BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1843368"></a>
+              <p class="title">
+                <strong>Example 1.22. <code class="function">append_urihf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_urihf("CC-Diversion: ", "\r\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23.  is_present_hf(hf_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.is_present_hf"></a>3.23. 
+		<code class="function">is_present_hf(hf_name)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true if a header field is present in message.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			The function is also able to distinguish the compact names. For
+			exmaple <span class="quote">“<span class="quote">From</span>”</span> will match with <span class="quote">“<span class="quote">f</span>”</span>
+		</p>
+            </div>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_name</em></span> - Header field name.(long or 
+			compact form)
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1848096"></a>
+              <p class="title">
+                <strong>Example 1.23. <code class="function">is_present_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_present_hf("From")) log(1, "From HF Present");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24.  is_present_hf_re(hf_name_re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.is_present_hf_re"></a>3.24. 
+		<code class="function">is_present_hf_re(hf_name_re)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return true if a header field whose name matches regular expression
+		'hf_name_re' is present in message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hf_name_re</em></span> - Regular expression to
+				match header field name.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1851968"></a>
+              <p class="title">
+                <strong>Example 1.24. <code class="function">is_present_hf_re</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_present_hf_re("^P-")) log(1, "There are headers starting with P-\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25.  append_time()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_time"></a>3.25. 
+		<code class="function">append_time()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds a time header to the reply of the request. You must use it
+		before functions that are likely to send a reply, e.g., save()
+		from 'registrar' module. Header format is: 
+		<span class="quote">“<span class="quote">Date: %a, %d %b %Y %H:%M:%S GMT</span>”</span>, with the legend:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%a</em></span> abbreviated week of day name (locale)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%d</em></span> day of month as decimal number
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%b</em></span> abbreviated month name (locale)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%Y</em></span> year with century
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%H</em></span> hour
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%M</em></span> minutes
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%S</em></span> seconds
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		Return true if a header was succesfully appended.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, 
+		BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1859744"></a>
+              <p class="title">
+                <strong>Example 1.25. <code class="function">append_time</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+append_time();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.26.  append_time_to_request()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_time_to_request"></a>3.26. 
+		<code class="function">append_time_to_request()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds a time header to the request. Header format is: 
+		<span class="quote">“<span class="quote">Date: %a, %d %b %Y %H:%M:%S GMT</span>”</span>, with the legend:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%a</em></span> abbreviated week of day name (locale)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%d</em></span> day of month as decimal number
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%b</em></span> abbreviated month name (locale)
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%Y</em></span> year with century
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%H</em></span> hour
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%M</em></span> minutes
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>%S</em></span> seconds
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <p>
+		Return true if a header was succesfully appended.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
+		FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1867360"></a>
+              <p class="title">
+                <strong>Example 1.26. <code class="function">append_time_to_request</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!is_present_hf("Date"))
+    append_time_to_request();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.27.  is_method(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.is_method"></a>3.27. 
+		<code class="function">is_method(name)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Check if the method of the message matches the name. If name is a
+		known method (invite, cancel, ack, bye, options, info, update, register,
+		message, subscribe, notify, refer, prack), the function performs method
+		ID testing (integer comparison) instead of ignore case string
+		comparison.
+		</p>
+            <p>
+		The 'name' can be a list of methods in the form of
+		'method1|method2|...'. In this case, the function returns true if the
+		SIP message's method is one from the list. IMPORTANT NOTE: in the list
+		must be only methods defined in Kamailio with ID (invite, cancel, ack,
+		bye, options, info, update, register, message, subscribe, notify,
+		refer, prack, publish; for more see:
+		<a class="ulink" href="javascript:if(confirm('http://www.iana.org/assignments/sip-parameters  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.iana.org/assignments/sip-parameters'" tppabs="http://www.iana.org/assignments/sip-parameters">
+			http://www.iana.org/assignments/sip-parameters</a>).
+		</p>
+            <p>
+		If used for replies, the function tests the value of method field from
+		CSeq header.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>name</em></span> - SIP method name
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE, and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1872712"></a>
+              <p class="title">
+                <strong>Example 1.27. <code class="function">is_method</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_method("INVITE"))
+{
+    # process INVITEs here
+}
+if(is_method("OPTION|UPDATE"))
+{
+    # process OPTIONs and UPDATEs here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.28.  remove_hf(hname)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.remove_hf"></a>3.28. 
+		<code class="function">remove_hf(hname)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove from message all headers with name <span class="quote">“<span class="quote">hname</span>”</span>. 
+		Header matching is case-insensitive. Matches and removes also
+		the compact header forms.
+		</p>
+            <p>
+		Returns true if at least one header is found and removed.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>hname</em></span> - header name to be removed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1877192"></a>
+              <p class="title">
+                <strong>Example 1.28. <code class="function">remove_hf</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(remove_hf("User-Agent"))
+{
+    # User Agent header removed
+}
+# compact form: remove "Contact" or "m" header
+remove_hf("Contact")
+# compact form: remove "Contact" or "m" header
+remove_hf("m")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.29.  remove_hf_re(re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.remove_hf_re"></a>3.29. 
+		<code class="function">remove_hf_re(re)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Remove from message all headers with name matching regular
+			expression <span class="quote">“<span class="quote">re</span>”</span>
+		</p>
+            <p>
+		Returns true if at least one header is found and removed.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - regular expression to match
+				the header name to be removed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1881672"></a>
+              <p class="title">
+                <strong>Example 1.29. <code class="function">remove_hf_re</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(remove_hf_re("^P-"))
+{
+    # All headers starting with "P-" removed
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.30.  has_body(), has_body(mime)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.has_body"></a>3.30. 
+		<code class="function">has_body()</code>,
+		<code class="function">has_body(mime)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if the SIP message
+		has a body attached. The checked includes also the 
+		<span class="quote">“<span class="quote">Content-Length</span>”</span> header presence and value.
+		</p>
+            <p>
+		If a parameter is given, the mime described will be also checked against
+		the <span class="quote">“<span class="quote">Content-Type</span>”</span> header.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>mime</em></span> - mime to be checked against the 
+				<span class="quote">“<span class="quote">Content-Type</span>”</span> header. If not present or 0, this
+				check will be disabled.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1887192"></a>
+              <p class="title">
+                <strong>Example 1.30. <code class="function">has_body</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(has_body("application/sdp"))
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.31.  is_audio_on_hold()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.is_audio_on_hold"></a>3.31. 
+		<code class="function">is_audio_on_hold()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if the SIP message
+		has a body attached and at least one audio stream in on hold.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1890128"></a>
+              <p class="title">
+                <strong>Example 1.31. <code class="function">is_audio_on_hold</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_audio_on_hold())
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.32.  is_privacy(privacy_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.is_privacy"></a>3.32. 
+		<code class="function">is_privacy(privacy_type)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if 
+                the SIP message has a Privacy header field that includes
+                the given privacy_type among its privacy values.  See
+				<a class="ulink" href="javascript:if(confirm('http://www.iana.org/assignments/sip-priv-values  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.iana.org/assignments/sip-priv-values'" tppabs="http://www.iana.org/assignments/sip-priv-values">
+                http://www.iana.org/assignments/sip-priv-values</a>
+                for possible privacy type values.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1893608"></a>
+              <p class="title">
+                <strong>Example 1.32. <code class="function">is_privacy</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(is_privacy("id"))
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.33.  in_list(subject, list, separator)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.in_list"></a>3.33. 
+			<code class="function">in_list(subject, list, separator)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Function checks if subject string is found in list string where list items are separated by separator string.  Subject and list strings may contain pseudo variables.  Separator string needs to be one character long.  Returns 1 if subject is found and -1 otherwise.
+    	        </p>
+            <p>
+		Function can be used from all kinds of routes.
+		</p>
+            <div class="example">
+              <a id="idp1896552"></a>
+              <p class="title">
+                <strong>Example 1.33. <code class="function">in_list()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$var(subject) = "fi";
+$var(list) = "dk,fi,no,se";
+if (in_list("$var(subject)", "$var(list)", ",") {
+    xlog("L_INFO", "subject is found in list\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.34.  cmp_str(str1, str2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.cmp_str"></a>3.34. 
+		<code class="function">cmp_str(str1, str2)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if 
+		the two parameters matches as string case sensitive comparison.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1899584"></a>
+              <p class="title">
+                <strong>Example 1.34. <code class="function">cmp_str</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(cmp_str("$rU", "kamailio"))
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.35.  cmp_istr(str1, str2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.cmp_istr"></a>3.35. 
+		<code class="function">cmp_istr(str1, str2)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if 
+		the two parameters matches as string case insensitive comparison.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1902552"></a>
+              <p class="title">
+                <strong>Example 1.35. <code class="function">cmp_str</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(cmp_istr("$rU@you", "kamailio@YOU"))
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.36.  starts_with(str1, str2)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.starts_with"></a>3.36. 
+		<code class="function">starts_with(str1, str2)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns <span class="emphasis"><em>true</em></span> if 
+		the first string starts with the second string.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, 
+		FAILURE_ROUTE and BRANCH_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1905416"></a>
+              <p class="title">
+                <strong>Example 1.36. <code class="function">starts_with</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (starts_with("$rU", "+358"))
+{
+    # do interesting stuff here
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.37.  set_body_multipart([txt,content_type][,boundary])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.set_body_multipart"></a>3.37. 
+		<code class="function">set_body_multipart([txt,content_type][,boundary])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Set multipart body to a SIP message. If called with no parameters, will convert
+		present body to multipart.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - text for the body, can include
+				pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> - value of Content-Type header,
+				can include pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>boundary</em></span> - string to use as boundary,
+				can include pseudo-variables. Default: unique-boundary-1
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <p>
+		The core will take care of the last boundary ending "--". Detecting wich one is
+		the last and fixing the others if needed.
+		</p>
+            <div class="example">
+              <a id="idp1911104"></a>
+              <p class="title">
+                <strong>Example 1.37. <code class="function">set_body_multipart</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_body_multipart("test", "text/plain", "delimiter");
+...
+Will produce:
+...
+Content-Type: multipart/mixed;boundary="delimiter"
+Mime-Version: 1.0
+
+--delimiter
+Content-Type: text/plain
+
+text
+
+--delimiter
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.38.  append_body_part(txt,content_type[, content_disposition])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.append_body_part"></a>3.38. 
+		<code class="function">append_body_part(txt,content_type[, content_disposition])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Append a part on multipart body SIP message. Will use "unique-boundary-1" as boundary.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>txt</em></span> - text for the multipart body, can include
+				pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> - value of Content-Type header,
+				can include pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_disposition</em></span> - value of Content-Disposition header,
+				can include pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <p>
+		The core will take care of the last boundary ending "--". Detecting wich one is
+		the last and fixing the others if needed.
+		</p>
+            <div class="example">
+              <a id="idp1916816"></a>
+              <p class="title">
+                <strong>Example 1.38. <code class="function">append_body_part</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$var(b) = "7e Od 04 55 75 69 20 4d 61 6b 65 43 61 6c 6c"
+append_body_part("$var(b)", "application/vnd.cirpack.isdn-ext", "signal;handling=required");
+...
+Will append this the body:
+...
+Content-Type: application/vnd.cirpack.isdn-ext
+Content-Disposition: signal;handling=required
+
+7e Od 04 55 75 69 20 4d 61 6b 65 43 61 6c 6c
+
+--unique-boundary-1
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.39.  remove_body_part(content_type)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="textops.f.remove_body_part"></a>3.39. 
+		<code class="function">remove_body_part(content_type)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Remove a part on a multipart body SIP message.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>content_type</em></span> - value of Content-Type header
+				of the part to be removed. If more than one exists the first
+				occurrence will be removed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
+		</p>
+            <p>
+		The core will take care of the last boundary ending "--". Detecting wich one is
+		the last and fixing the others if needed.
+		</p>
+            <div class="example">
+              <a id="idp1921296"></a>
+              <p class="title">
+                <strong>Example 1.39. <code class="function">remove_body_part</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+remove_body_part("application/vnd.cirpack.isdn-ext");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Known Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1922616"></a>4. Known Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Search functions are applied to the original request,
+			i.e., they ignore all changes resulting from message
+			processing in Kamailio script.
+		</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3304856"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3096280">1. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1153912">1.1. 
+			<code class="function">load_textops(*import_structure)</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3096280"></a>1. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.  load_textops(*import_structure)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1153912"></a>1.1. 
+			<code class="function">load_textops(*import_structure)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For programmatic use only--import the  <acronym class="acronym">Textops</acronym> API.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>import_structure</em></span> - Pointer to 
+				the import structure - see <span class="quote">“<span class="quote">struct textops_binds</span>”</span> in 
+				modules/textops/api.h
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

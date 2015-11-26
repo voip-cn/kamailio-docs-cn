@@ -1,0 +1,1209 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mtree Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11165704" title="mtree Module" />
+    <link rel="next" href="#idp18174440" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mtree Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11165704"></a>mtree Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">asipto.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">tutpro.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2010 Daniel-Constantin Mierla (asipto.com)</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18174440">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18143736">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17519280">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18064592">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17282224">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18266280">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18072704">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18005520">3.2. <code class="varname">db_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18424424">3.3. <code class="varname">mtree</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15518264">3.4. <code class="varname">tname_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15520816">3.5. <code class="varname">tprefix_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15523376">3.6. <code class="varname">tvalue_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15525936">3.7. <code class="varname">fetch_rows</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15528320">3.8. <code class="varname">char_list</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15530920">3.9. <code class="varname">pv_value</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15606400">3.10. <code class="varname">pv_values</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15609056">3.11. <code class="varname">mt_tree_type</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15611536">3.12. <code class="varname">mt_ignore_duplicates</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15613888">3.13. <code class="varname">mt_allow_duplicates</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15616368">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15616736">4.1. 
+		<code class="function">mt_match(mtree, pv, mode)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15619672">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15620040">5.1. 
+		<code class="function">mt_list</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15622848">5.2. 
+		<code class="function">mt_reload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15625808">5.3. 
+		<code class="function">mt_summary</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15662152">5.4. 
+		<code class="function">mt_match</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15666704">6. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15667080">6.1. 
+		<code class="function">mtree.summary</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15668928">6.2. 
+		<code class="function">mtree.reload</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15670808">6.3. 
+		<code class="function">mtree.match</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18068040">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15515104">Set <code class="varname">db_table</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp18426456">Set <code class="varname">mtree</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15519648">Set <code class="varname">tname_column</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15522200">Set <code class="varname">tprefix_column</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15524760">Set <code class="varname">tvalue_column</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15527160">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp15529752">Set <code class="varname">char_list</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15532392">Set <code class="varname">pv_value</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15607888">Set <code class="varname">pv_values</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15610368">Set <code class="varname">mt_tree_type</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp15612736">Set <code class="varname">mt_ignore_duplicates</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp15615112">Set <code class="varname">mt_allow_duplicates</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp15618432"><code class="function">mt_match</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18174440"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18143736">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17519280">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18064592">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17282224">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18266280">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18072704">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18005520">3.2. <code class="varname">db_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18424424">3.3. <code class="varname">mtree</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15518264">3.4. <code class="varname">tname_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15520816">3.5. <code class="varname">tprefix_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15523376">3.6. <code class="varname">tvalue_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15525936">3.7. <code class="varname">fetch_rows</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15528320">3.8. <code class="varname">char_list</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15530920">3.9. <code class="varname">pv_value</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15606400">3.10. <code class="varname">pv_values</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15609056">3.11. <code class="varname">mt_tree_type</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15611536">3.12. <code class="varname">mt_ignore_duplicates</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15613888">3.13. <code class="varname">mt_allow_duplicates</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15616368">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15616736">4.1. 
+		<code class="function">mt_match(mtree, pv, mode)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15619672">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15620040">5.1. 
+		<code class="function">mt_list</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15622848">5.2. 
+		<code class="function">mt_reload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15625808">5.3. 
+		<code class="function">mt_summary</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15662152">5.4. 
+		<code class="function">mt_match</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15666704">6. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15667080">6.1. 
+		<code class="function">mtree.summary</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15668928">6.2. 
+		<code class="function">mtree.reload</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15670808">6.3. 
+		<code class="function">mtree.match</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18143736"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module loads (prefix, value) records from database and indexes
+		them in a named memory tree. Name of the tree is specified for each
+		record or as module parameter.
+	</p>
+          <p>	
+		It exports to configuration file functions to match against in-memory
+		trees and return the values (raw or precompiled) associated with
+		matched prefixes.
+	</p>
+          <p>	
+		The maximum size of the prefix is limited internally to 63, database
+		table definition may enforce lower maximum size.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17519280"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18064592"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>A Kamailio database module (e.g., mysql)</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17282224"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+	    	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			    <span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18266280"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18072704"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		URL of the database server to be used.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp18068040"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "db_url", "dbdriver://username:password@dbhost/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. db_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18005520"></a>3.2. <code class="varname">db_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of database table where data for trees is stored. It is ignored if a
+		'mtree' parameter is defined.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">mtrees</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15515104"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">db_table</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "db_table", "mymtrees")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. mtree (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18424424"></a>3.3. <code class="varname">mtree</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Definition of memory tree with parameters name, dbtable,
+		type, and multi.  Name is name of the tree, dbtable is name
+		of dbtable where tree is stored, type is type of tree elements
+		(0 = string, 2 = integer), and multi tells if dbtable can
+		contain more than one tree (0 = one tree, 1 = more than
+		one tree identified by tname column). 
+	    </p>
+            <p>
+	    This parameter can be set many times to add more trees in
+	    memory.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">none</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp18426456"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">mtree</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "mtree", "name=mytree1;dbtable=routes1;type=0")
+modparam("mtree", "mtree", "name=mytree2;dbtable=routes2;type=0;multi=1")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. tname_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15518264"></a>3.4. <code class="varname">tname_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'tname' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">tname</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15519648"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">tname_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "tname_column", "name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. tprefix_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15520816"></a>3.5. <code class="varname">tprefix_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'tprefix' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">tprefix</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15522200"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">tprefix_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "tprefix_column", "prefix")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. tvalue_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15523376"></a>3.6. <code class="varname">tvalue_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of 'tvalue' column.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">tvalue</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15524760"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">tvalue_column</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "tvalue_column", "ipaddr")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. fetch_rows (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15525936"></a>3.7. <code class="varname">fetch_rows</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rows to be loaded in one step from database.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 1000.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15527160"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "fetch_rows", 4000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. char_list (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15528320"></a>3.8. <code class="varname">char_list</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The list with characters allowed in prefix.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">0123456789</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15529752"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">char_list</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "char_list", "0123456789*+")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. pv_value (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15530920"></a>3.9. <code class="varname">pv_value</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The PV spec where to store the matched value. It can be any
+		writable PV.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">$avp(s:tvalue)</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15532392"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">pv_value</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "pv_value", "$var(mtval)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. pv_values (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15606400"></a>3.10. <code class="varname">pv_values</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The AVP where to store the matched values when mtree is of type
+		0 or 2 and mode of mt_match() call has value 2.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">“<span class="quote">$avp(s:tvalues)</span>”</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15607888"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">pv_values</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "pv_values", "$avp(mtvals)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. mt_tree_type (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15609056"></a>3.11. <code class="varname">mt_tree_type</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Default payload type for trees data stored in 'db_table'. Documented
+		values are 0 for string payloads and 2 for integer payloads.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15610368"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">mt_tree_type</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "mt_tree_type", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. mt_ignore_duplicates (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15611536"></a>3.12. <code class="varname">mt_ignore_duplicates</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Ignore duplicated prefixes when loading data.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15612736"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">mt_ignore_duplicates</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "mt_ignore_duplicates", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. mt_allow_duplicates (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15613888"></a>3.13. <code class="varname">mt_allow_duplicates</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Allow duplicate prefixes when loading data.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is 0.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp15615112"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">mt_allow_duplicates</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mtree", "mt_allow_duplicates", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15616368"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  mt_match(mtree, pv, mode)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15616736"></a>4.1. 
+		<code class="function">mt_match(mtree, pv, mode)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Match 'pv' value against 'mtree'. If 'mtree' type is 0 or 2 and value
+		of 'mode' is NOT 2, sets a value of the longest matching prefix to
+		pseudo variable specified by pv_value parameter. If 'mtree' type is 
+		0 or 2 and value of 'mode' is 2, sets values of all matching prefixes
+		to avp specified by pv_values parameter so that a value of longest
+		matching prefix is in avp index 0.  Parameter 'mode' can be an integer
+		constant or a pseudo variable with integer value.
+	    </p>
+            <p>
+	      Returns 1 if match succeeded and -1 otherwise.
+	    </p>
+            <div class="example">
+              <a id="idp15618432"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">mt_match</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+mt_match("mytree", "$rU", "0");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15619672"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  mt_list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15620040"></a>5.1. 
+		<code class="function">mt_list</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		List content of a tree.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>mt_list</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_mtree_ : name of tree to list. </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:mt_list:_reply_fifo_file_
+		_mtname_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2.  mt_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15622848"></a>5.2. 
+		<code class="function">mt_reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload mtree from database.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>mt_mtree</em></span>
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><p>_mtname_</p> - name of mem tree</li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:mt_reload:_reply_fifo_file_
+		_mtname_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.3.  mt_summary">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15625808"></a>5.3. 
+		<code class="function">mt_summary</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		List usage summary for all trees.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>mt_summary</em></span>
+		</p>
+            <p>Parameters: none.</p>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:mt_summary:_reply_fifo_file_
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="5.4.  mt_match">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15662152"></a>5.4. 
+		<code class="function">mt_match</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Match prefix value against mtree.
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>mt_match</em></span>
+		</p>
+            <p>Parameters: <span class="emphasis"><em>3</em></span></p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Name of mtree</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Prefix to match</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Mode of matching</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:mt_match:_reply_fifo_file_
+		_mtree_
+		_prefix_
+		_mode_
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="6. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15666704"></a>6. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  mtree.summary">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15667080"></a>6.1. 
+		<code class="function">mtree.summary</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			List usage summary for all trees or for the tree whose name is
+			given as parameter.
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>_mtree_ - (optional) the name of the tree.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.2.  mtree.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15668928"></a>6.2. 
+		<code class="function">mtree.reload</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Reload mtree from database to memory.
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><p>_mtree_</p> - name of mtree or empty string meaning all mtrees</li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="6.3.  mtree.match">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15670808"></a>6.3. 
+		<code class="function">mtree.match</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Match prefix value against mtree
+		</p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem"><p>_mtree_</p> - name of mtree</li>
+                <li class="listitem"><p>_prefix_</p> - match prefix</li>
+                <li class="listitem"><p>_mode_</p> - matching mode</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

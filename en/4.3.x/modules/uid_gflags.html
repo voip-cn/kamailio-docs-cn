@@ -1,0 +1,407 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UID Gflags Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#gflags" title="UID Gflags Module" />
+    <link rel="next" href="#idp15585576" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UID Gflags Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="gflags"></a>UID Gflags Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jiri@iptel.org">jiri@iptel.org</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp15585576">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#uid_gflags.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#gflags.parameters">2. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#gflags.p.initial">2.1. <code class="varname">initial</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#uid_gflags.functions">3. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#set_ugflag">3.1. <code class="function">set_gflag(flag_num)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#reset_ugflag">3.2. <code class="function">reset_ugflag(flag_num)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#is_ugflag">3.3. <code class="function">is_ugflag(flag_num)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#gflags.fifo">4. FIFO Interface</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#gflags.xmlrpc">5. RPC Interface</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17090368"><code class="function">set_ugflag</code> usage</a></dt>
+          <dt>1.2. <a href="#idp17739064"><code class="function">reset_ugflag</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp15585576"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#uid_gflags.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#gflags.parameters">2. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#gflags.p.initial">2.1. <code class="varname">initial</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#uid_gflags.functions">3. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#set_ugflag">3.1. <code class="function">set_gflag(flag_num)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#reset_ugflag">3.2. <code class="function">reset_ugflag(flag_num)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#is_ugflag">3.3. <code class="function">is_ugflag(flag_num)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#gflags.fifo">4. FIFO Interface</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#gflags.xmlrpc">5. RPC Interface</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_gflags.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    The module implements global flags. The difference between the
+	    global flags and flags that can be used in the configuration file
+	    or AVPs is that they the scope of the global flags is not limited
+	    to the SIP message or transaction being processed. Global flags are
+	    always available, their contents is not forgotten when a SIP
+	    transaction gets destroyed in Kamailio.
+	</p>
+          <p>
+	    Global flags can be accessed from the configuration script, for example:
+	</p>
+          <pre class="programlisting">if (is_ugflag("1")) {
+    t_relay_to_udp("10.0.0.1", "5060");
+} else {
+    t_relay_to_udp("10.0.0.2", "5060");
+};</pre>
+          <p>
+	    The value of the global flags can be manipulated by external tools
+	    such as the web interface of Kamailio or cmd line administration
+	    tools. One particular application of global flags could be runtime
+	    configuration changes without the need to restart Kamailio.
+	</p>
+        </div>
+        <div class="section" title="2. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="gflags.parameters"></a>2. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. initial (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="gflags.p.initial"></a>2.1. <code class="varname">initial</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The initial value of global flags. Each bit in the integer
+	    represents one flag.
+	</p>
+            <p>
+	    Default value is 0.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="3. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_gflags.functions"></a>3. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. set_gflag(flag_num)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="set_ugflag"></a>3.1. <code class="function">set_gflag(flag_num)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Set the flag identified by flag_num to 1. The range of
+	    flag_num is 0 to 31.
+	</p>
+            <div class="example">
+              <a id="idp17090368"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="function">set_ugflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+set_ugflag("2");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. reset_ugflag(flag_num)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="reset_ugflag"></a>3.2. <code class="function">reset_ugflag(flag_num)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Set the flag identified by flag_num to 0. The range of
+	    flag_num is 0 to 31.
+	</p>
+            <div class="example">
+              <a id="idp17739064"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">reset_ugflag</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reset_ugflag("2");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. is_ugflag(flag_num)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="is_ugflag"></a>3.3. <code class="function">is_ugflag(flag_num)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Returns 1 when flag identified by flag_num is set, 0
+	    otherwise. The range of flag_num parameter is 0 to 31.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="4. FIFO Interface">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="gflags.fifo"></a>4. FIFO Interface</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The state of the global flags can be read and modified over the FIFO
+	interface of Kamailio. This module implements the following FIFO interface
+	functions:
+    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>set_gflag</em></span> - Set the value of a flag to
+		1. The function accepts one parameter which is the number of
+		the flag to be set.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>reset_gflag</em></span> - Reset the value of a flag to
+		0. The function accepts one parameter which is the number of
+		the flag to be reset.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>is_gflag</em></span> - Return the status of a
+		flag. The FIFO function would return TRUE if the flag is set
+		and FALSE if it is not set. The only parameter of this function
+		is the number of the flag.
+	    </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="5. RPC Interface">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="gflags.xmlrpc"></a>5. RPC Interface</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The state of the global flags can be read and modified over the RPC
+	interface. This module implements the following RPC interface commands:
+    </p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>gflags.set</em></span> - Set the value of a flag to
+		1. The function accepts one parameter which is the number of
+		the flag to be set.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>gflags.reset</em></span> - Reset the value of a flag to
+		0. The function accepts one parameter which is the number of
+		the flag to be reset.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>gflags.is_set</em></span> - Return the status of a
+		flag. The FIFO function would return TRUE if the flag is set
+		and FALSE if it is not set. The only parameter of this function
+		is the number of the flag.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>gflags.flush</em></span> - Flush the state of global flags
+		 into database.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>gflags.dump</em></span> - Return the status of all flags. The 
+		value is TRUE if the flag is set and FALSE if the flag is not set. The 
+		function has no parameters.
+	    </p>
+              </li>
+              <li class="listitem">
+                <p>
+		<span class="emphasis"><em>global.reload</em></span> - Reload values from global_attrs 
+		DB table. This function does not have any parameters. There is no return 
+		value on success.  
+	    </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

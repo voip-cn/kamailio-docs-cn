@@ -1,0 +1,434 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>NDB_CASSANDRA Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp3704" title="NDB_CASSANDRA Module" />
+    <link rel="next" href="#idp3035392" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="NDB_CASSANDRA Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp3704"></a>NDB_CASSANDRA Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Luis</span> <span class="surname">Martin Gil</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:martingil.luis@gmail.com">martingil.luis@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Luis</span> <span class="surname">Martin Gil</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:martingil.luis@gmail.com">martingil.luis@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 www.indigital.net</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3035392">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2886456">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2343896">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2407208">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp49392">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1964776">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2746176">3.1. <code class="varname">host</code> (str)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2522280">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2636760">4.1. 
+		<code class="function">cass_insert(keyspace, column_family, key, column, value)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp68608">4.2. 
+		<code class="function">cass_retrieve(keyspace, column_family, key, column, value)</code>
+	      </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1706752">Set <code class="varname">host</code> and <code class="varname">port</code> parameters</a></dt>
+          <dt>1.2. <a href="#idp71744">Example usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3035392"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2886456">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2343896">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2407208">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp49392">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1964776">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2746176">3.1. <code class="varname">host</code> (str)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2522280">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2636760">4.1. 
+		<code class="function">cass_insert(keyspace, column_family, key, column, value)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp68608">4.2. 
+		<code class="function">cass_retrieve(keyspace, column_family, key, column, value)</code>
+	      </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2886456"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	  Apache Cassandra is an open source distributed database management system.
+	  It is designed to handle very large amounts of data spread out across many
+	  servers. It is a NoSQL solution.
+	</p>
+          <p>
+	  The module allows the insertion and retrieval of information from Cassandra
+	  clusters. This is not a DB driver module.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2343896"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2407208"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp49392"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  This module depends on the thrift library version 0.7.0. Please install this
+		  library in order to be able to successful compile this module. You can find
+		  this library at http://thrift.apache.org/
+		  </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>thrift 0.7.0</em></span> - available at
+			http://thrift.apache.org/
+		      </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1964776"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. host (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2746176"></a>3.1. <code class="varname">host</code> (str)</h3>
+                </div>
+                <div>
+                  <h3 class="title"><a id="idp2746176"></a>3.1. <code class="varname">host</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		  Host of Cassandra node.
+		</p>
+            <p>
+		  Port of Cassandra node.
+		</p>
+            <div class="example">
+              <a id="idp1706752"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">host</code> and <code class="varname">port</code> parameters</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ndb_cassandra", "host", "10.22.22.190")
+modparam("ndb_cassandra", "port", 9160)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2522280"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  cass_insert(keyspace, column_family, key, column, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2636760"></a>4.1. 
+		<code class="function">cass_insert(keyspace, column_family, key, column, value)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	      Inserts the value for the given key, column, column_family and keyspace.
+	      There must be an existing keyspace called 'keyspace' with a column_family
+	      called 'column_family' in the targeted Cassandra node.
+	    </p>
+            <p>
+	      Return integer needs to be checked:
+	      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>ret &lt; 0, error</p>
+                </li>
+                <li class="listitem">
+                  <p>ret &gt; 0, success</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	      </p>
+          </div>
+          <div class="section" title="4.2.  cass_retrieve(keyspace, column_family, key, column, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp68608"></a>4.2. 
+		<code class="function">cass_retrieve(keyspace, column_family, key, column, value)</code>
+	      </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Retrieves the value for the given key, column, column_family and keyspace.
+		There must be an existing keyspace called 'keyspace' with a column_family
+		called 'column_family' in the targeted Cassandra node.
+	      </p>
+            <p>
+	    <code class="varname">value</code> will be returned as well as a integer return code.
+	  </p>
+            <p>
+	    Return integer needs to be checked:
+	    </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		  ret &lt; 0, error
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		  ret &gt; 0, success
+		  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+	    </p>
+          </div>
+          <div class="example">
+            <a id="idp71744"></a>
+            <p class="title">
+              <strong>Example 1.2. Example usage</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">	      ...
+    loadmodule "ndb_cassandra.so"
+    # (...)
+    modparam("ndb_cassandra", "host", "10.22.22.190")
+    modparam("ndb_cassandra", "port", 9160)
+    # (...)
+    xlog("L_DBG", "Testing ndb_cassandra module.");
+    # Inserting to cassandra
+    $var(keyspace) = "indigital";
+    $var(column_family) = "employees";
+    $var(column) = "name";
+    $var(val_write) = "TestMyName"; # To be written
+    if (cass_insert("$var(keyspace)", "$var(column_family)", "$ru", "$var(column)", "$var(val_write)") &gt; 0) {
+       xlog("L_DBG", "ndb_cassandra. Sucess while inserting to Cassandra. val_write: \"$var(val_write)\"");
+    } else {
+       xlog("L_DBG", "ndb_cassandra. Error while inserting to Cassandra");
+    }
+
+    # Retrieving from cassandra
+    $var(keyspace) = "indigital";
+    $var(column_family) = "employees";
+    $var(key) = "sip:10.22.22.110"; # Before we saved our $ru, which was 'sip:10.22.22.110'
+    $var(column) = "name";
+    $var(val_read) = ""; # To be read
+    if (cass_retrieve("$var(keyspace)", "$var(column_family)", "$var(key)", "$var(column)", "$var(val_read)") &gt; 0) {
+       xlog("L_DBG", "ndb_cassandra. Sucess while reading from Cassandra. val_read: \"$var(val_read)\"");
+    } else {
+       xlog("L_DBG", "ndb_cassandra. Error while reading from Cassandra");
+    }
+	      ...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

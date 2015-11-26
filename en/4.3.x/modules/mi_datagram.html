@@ -1,0 +1,817 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mi_datagram Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4440" title="mi_datagram Module" />
+    <link rel="next" href="#idp3443640" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="mi_datagram Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4440"></a>mi_datagram Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andreea-Ancuta</span> <span class="surname">Onofrei</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Andreea-Ancuta</span> <span class="surname">Onofrei</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp3443640">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3313248">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2413248">2. DATAGRAM command syntax</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2543280">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2634120">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1419344">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1758672">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2571064">4.1. <code class="varname">socket_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm20552">4.2. <code class="varname">children_count</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp263208">4.3. <code class="varname">unix_socket_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp178224">4.4. <code class="varname">unix_socket_group</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp180928">4.5. <code class="varname">unix_socket_user</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp183632">4.6. <code class="varname">socket_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp186064">4.7. <code class="varname">reply_indent</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp188840">5. Functions</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp189568">6. Example</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1946080">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp284336">Set <code class="varname">socket_name</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp262032">Set <code class="varname">children_count</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp177048">Set <code class="varname">unix_socket_mode</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp179696">Set <code class="varname">unix_socket_group</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp182400">Set <code class="varname">unix_socket_user</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp184888">Set <code class="varname">socket_timeout</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp187592">Set <code class="varname">reply_ident</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp190408">DATAGRAM request</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp3443640"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3313248">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2413248">2. DATAGRAM command syntax</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2543280">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2634120">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1419344">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1758672">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2571064">4.1. <code class="varname">socket_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm20552">4.2. <code class="varname">children_count</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp263208">4.3. <code class="varname">unix_socket_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp178224">4.4. <code class="varname">unix_socket_group</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp180928">4.5. <code class="varname">unix_socket_user</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp183632">4.6. <code class="varname">socket_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp186064">4.7. <code class="varname">reply_indent</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp188840">5. Functions</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp189568">6. Example</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3313248"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is a module which provides a UNIX/UDP SOCKET transport layer 
+		implementation for the Management Interface. 
+	</p>
+        </div>
+        <div class="section" title="2.¬†DATAGRAM command syntax">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2413248"></a>2.¬†DATAGRAM command syntax</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The external commands issued via DATAGRAM interface must follow the
+		following syntax:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			request = first_line (argument '\n')*
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			first_line = ':'command_name':''\n'
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			argument = (arg_name '::' (arg_value)? ) | (arg_value)
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			arg_name = not-quoted_string
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			arg_value = not-quoted_string | '"' string '"'
+			</em>
+                  </span>
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  <span class="emphasis">
+                    <em>
+			not-quoted_string = string - {',",\n,\r}
+			</em>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2543280"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2634120"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1419344"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1758672"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†socket_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2571064"></a>4.1.¬†<code class="varname">socket_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of a UNIX SOCKET or an IP address. 
+		The UNIX datagram or UDP socket will be created using this parameter 
+		in order to read the external commands.
+		Both IPv4 and IPv6 are supported. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NONE.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp284336"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">socket_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "socket_name", "/tmp/kamailio.sock")
+...
+modparam("mi_datagram", "socket_name", "udp:192.168.2.133:8080")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†children_count (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm20552"></a>4.2.¬†<code class="varname">children_count</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of child processes to be created. Each child process
+		will be a datagram server.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp262032"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">children_count</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "children_count", 3)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†unix_socket_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp263208"></a>4.3.¬†<code class="varname">unix_socket_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Permission to be used for creating the listening UNIX datagram socket. 
+		Not necessary for a UDP socket.
+		It follows the UNIX conventions.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0660 (rw-rw----).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp177048"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">unix_socket_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "unix_socket_mode", 0600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†unix_socket_group (integer) unix_socket_group (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp178224"></a>4.4.¬†<code class="varname">unix_socket_group</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Group to be used for creating the listening UNIX socket.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp179696"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">unix_socket_group</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "unix_socket_group", 0)
+modparam("mi_datagram", "unix_socket_group", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†unix_socket_user (integer) unix_socket_group (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp180928"></a>4.5.¬†<code class="varname">unix_socket_user</code> (integer)
+		<code class="varname">unix_socket_group</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		User to be used for creating the listening UNIX socket.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is the inherited one.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp182400"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">unix_socket_user</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "unix_socket_user", 0)
+modparam("mi_datagram", "unix_socket_user", "root")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†socket_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp183632"></a>4.6.¬†<code class="varname">socket_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The reply will expire after trying to sent it for socket_timeout 
+		miliseconds. 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 2000.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp184888"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">socket_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "socket_timeout", 2000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†reply_indent (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp186064"></a>4.7.¬†<code class="varname">reply_indent</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Strings to be used for line indentation. As the MI data structure 
+		is tree oriendeted, the depth level will printed as identation.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">"\t" (TAB)</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp187592"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">reply_ident</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("mi_datagram", "reply_ident", "    ")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp188840"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		No function exported to be used from configuration file.
+		</p>
+        </div>
+        <div class="section" title="6.¬†Example">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp189568"></a>6.¬†Example</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This is an example showing the DATAGRAM format for the 
+		<span class="quote">‚Äú<span class="quote">get_statistics dialog: tm:</span>‚Äù</span> MI commad:
+		response.
+		</p>
+          <div class="example">
+            <a id="idp190408"></a>
+            <p class="title">
+              <strong>Example¬†1.8.¬†DATAGRAM request</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">:get_statistics:\n
+dialog:\n
+tm:\n</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1946080"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp3041624"></a>
+          <dl>
+            <dt>2.1. <a href="#idp2479600">Both UNIX and UDP type of socket can be created 
+			simultaneusly?</a></dt>
+            <dt>2.2. <a href="#idp2685016">Is there a limit in the datagram request's size?</a></dt>
+            <dt>2.3. <a href="#idp1504768">Where can I find more about Kamailio?</a></dt>
+            <dt>2.4. <a href="#idp963920">Where can I post a question about this module?</a></dt>
+            <dt>2.5. <a href="#idp2521496">How can I report a bug?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp2479600"></a>
+                  <a id="idp2712320"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Both UNIX and UDP type of socket can be created 
+			simultaneusly?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			This version supports only one kind of socket at a time.
+			If there are more than one value set for socket_name the last one
+			will take effect.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp2685016"></a>
+                  <a id="idp1720808"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Is there a limit in the datagram request's size?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			The maximum length of a datagram request or reply is 65457 bytes.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp1504768"></a>
+                  <a id="idp382056"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp963920"></a>
+                  <a id="idp202472"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.5.">
+                <td align="left" valign="top">
+                  <a id="idp2521496"></a>
+                  <a id="idp3294336"></a>
+                  <p>
+                    <strong>2.5.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

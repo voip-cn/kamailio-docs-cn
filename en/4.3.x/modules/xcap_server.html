@@ -1,0 +1,1042 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>XCAP Server Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp4480" title="XCAP Server Module" />
+    <link rel="next" href="#idp2309592" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="XCAP Server Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp4480"></a>XCAP Server Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2010 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2309592">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2215832">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp1968416">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1925064">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2683968">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp190320">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp190992">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2870928">3.2. <code class="varname">xcap_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2873480">3.3. <code class="varname">xcap_root</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm15624">3.4. <code class="varname">buf_size</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13024">3.5. <code class="varname">xml_ns</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10448">3.6. <code class="varname">directory_scheme (int)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm6096">3.7. <code class="varname">directory_hostname (str)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm2984">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm2616">4.1. 
+		<code class="function">xcaps_put(uri, path, doc)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp69336">4.2. 
+		<code class="function">xcaps_get(uri, path)</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp71600">4.3. 
+		<code class="function">xcaps_del(uri, path)</code>
+	    </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp73952">5. Exported pseudo-variables</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp76784">6. Simple XCAP Server Config</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp192600">Set the <span class="quote">‚Äú<span class="quote">db_url</span>‚Äù</span> parameter</a></dt>
+          <dt>1.2. <a href="#idp2872368">Set the <span class="quote">‚Äú<span class="quote">xcap_table</span>‚Äù</span> parameter</a></dt>
+          <dt>1.3. <a href="#idm16800">Set <code class="varname">url_match</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm14184">Set the <span class="quote">‚Äú<span class="quote">buf_size</span>‚Äù</span> parameter</a></dt>
+          <dt>1.5. <a href="#idm11712">Set <code class="varname">xml_ns</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm7272">Set <code class="varname">directory_scheme</code> parameter</a></dt>
+          <dt>1.7. <a href="#idm4256">Set <code class="varname">directory_hostname</code> parameter</a></dt>
+          <dt>1.8. <a href="#idm1696"><code class="function">xcaps_put</code> usage</a></dt>
+          <dt>1.9. <a href="#idp70256"><code class="function">xcaps_get</code> usage</a></dt>
+          <dt>1.10. <a href="#idp72520"><code class="function">xcaps_del</code> usage</a></dt>
+          <dt>1.11. <a href="#idp75776">$xcapuri(...) PV</a></dt>
+          <dt>1.12. <a href="#idp77136">sample xcap server</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2309592"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2215832">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp1968416">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1925064">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2683968">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp190320">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp190992">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2870928">3.2. <code class="varname">xcap_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2873480">3.3. <code class="varname">xcap_root</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm15624">3.4. <code class="varname">buf_size</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13024">3.5. <code class="varname">xml_ns</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10448">3.6. <code class="varname">directory_scheme (int)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm6096">3.7. <code class="varname">directory_hostname (str)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm2984">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm2616">4.1. 
+		<code class="function">xcaps_put(uri, path, doc)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp69336">4.2. 
+		<code class="function">xcaps_get(uri, path)</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp71600">4.3. 
+		<code class="function">xcaps_del(uri, path)</code>
+	    </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp73952">5. Exported pseudo-variables</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp76784">6. Simple XCAP Server Config</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2215832"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides an XCAP server functionaly inside Kamailio
+		and SER SIP servers.
+	</p>
+          <p>
+		Benefits brought by this integrated XCAP server:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			reuse of SIP router transport layer - XCAP documents can be sent
+			via SIP (UDP, TCP, TLS and SCTP) and via HTTP (TCP or TLS (HTTPS)).
+			For HTTP/S, you neet to load XHTTP module to handle HTTP/S
+			requests.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			the Presence server has access imediatelly to the latest version
+			of XCAP documents. No more need to trigger refresh of XCAP
+			documents via MI command
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			can be used stand-alone, with a different Presence server. It is not
+			specific for Kamailio or SER. Documents can be fetched via GET
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			no exotic dependencies, it is written in C. It depends on
+			libxml2, sl module and a database module (required to store the
+			xcap documents).
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			you can do digest authentication using database, radius, ldap, etc.
+			Can reuse authorization mechanisms provided by SIP server.
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			flexibility - the XCAP server is controlled from config file of
+			SIP server, therefore you can blend the XCAP logic with features
+			provided by core or other modules.
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+		Important: be sure you have global parameter: 'tcp_accept_no_cl=yes'.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1968416"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1925064"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span> - stateless reply module
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>db</em></span> - a database engine module
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>xhttp</em></span> - embedded HTTP server
+				if you want to get XCAP documents via HTTP.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2683968"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>libxml2</em></span> - libxml2 library for runtime and
+				libxml2-dev for compilation.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp190320"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp190992"></a>3.1.¬†<code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Database <acronym class="acronym">URL</acronym>.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 
+			<span class="quote">‚Äú<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp192600"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set the <span class="quote">‚Äú<span class="quote">db_url</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "db_url", "mysql://user:passwd@host.com/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†xcap_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2870928"></a>3.2.¬†<code class="varname">xcap_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of table where to store the xcap documents.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">xcap</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2872368"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set the <span class="quote">‚Äú<span class="quote">xcap_table</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "xcap_table", "xcapdocs")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†xcap_root (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2873480"></a>3.3.¬†<code class="varname">xcap_root</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			XCAP root URL.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is '/xcap-root/'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm16800"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">url_match</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "xcap_root", "/xcap-root/")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†buf_size (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm15624"></a>3.4.¬†<code class="varname">buf_size</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Size of local buffer for handling XCAP documents.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1024</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm14184"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set the <span class="quote">‚Äú<span class="quote">buf_size</span>‚Äù</span> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "buf_size", 2048)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†xml_ns (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13024"></a>3.5.¬†<code class="varname">xml_ns</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Register extra XML namespaces to be used with XPath. You
+			can set the parameter many times to add more namespaces. The
+			format is 'prefix=href'.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 'null'.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm11712"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">xml_ns</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "xml_ns",
+    "rl=urn:ietf:params:xml:ns:resource-lists")
+modparam("xcap_server", "xml_ns",
+    "my=urn:my:prefix")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†directory_scheme (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10448"></a>3.6.¬†<code class="varname">directory_scheme (int)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Allows the scheme used in
+			org.openmobilealliance.xcap-directory listings to be
+			set to a specific value.
+		</p>
+            <p>
+			The URLs in an org.oma.xcap-directory listing must be
+			be paths a client can use to download the listed XCAP
+			documents. In some cases (for example, when the XCAP
+			server is accessed using HTTP from an HTTP proxy the
+			client connectes to using HTTPS) the XCAP server may
+			not be able to automatically determine the correct
+			scheme to use based on the HTTP connection.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>-1 (default)</em></span> - determine scheme
+		automatically.  HTTP for TCP connections and HTTPS for TLS
+		connections.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>0</em></span> - use the HTTP scheme.
+		</p>
+                </li>
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>1</em></span> - use the HTTPS scheme. 
+		</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idm7272"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">directory_scheme</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "directory_scheme", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†directory_hostname (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm6096"></a>3.7.¬†<code class="varname">directory_hostname (str)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Allows the hostname (and port) used in
+			org.openmobilealliance.xcap-directory listings to be
+			set to a specific value.
+		</p>
+            <p>
+			The URLs in an org.oma.xcap-directory listing must be
+			be paths a client can use to download the listed XCAP
+			documents. In some cases (for example, when the XCAP
+			server is accessed through a proxy that re-writes
+			headers, or a client is non-conformant and does not
+			include a Host: header) the XCAP server may not be able
+			to automatically determine the correct hostname to use.
+		</p>
+            <p>
+			When this parameter is not set the XCAP server will
+			attempt to use the contents of the (mandatory) Host:
+			header. If the Host: header is not present the XCAP
+			server will use the IP address and port the XCAP
+			request was received on.
+		</p>
+            <div class="example">
+              <a id="idm4256"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">directory_hostname</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xcap_server", "directory_hostname", "xcap.example.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm2984"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† xcaps_put(uri, path, doc)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm2616"></a>4.1.¬†
+		<code class="function">xcaps_put(uri, path, doc)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handle XCAP PUT command.
+	    </p>
+            <div class="example">
+              <a id="idm1696"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">xcaps_put</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route[xhttp:request] {
+	if($hu=~"^/xcap-root/")
+	{
+		# xcap ops
+		switch($rm) {
+			case "PUT":
+				xcaps_put("sip:101@$Ri", "$hu", "$rb");
+				exit;
+				break;
+		}
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† xcaps_get(uri, path)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp69336"></a>4.2.¬†
+		<code class="function">xcaps_get(uri, path)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handle XCAP GET command.
+	    </p>
+            <div class="example">
+              <a id="idp70256"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="function">xcaps_get</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route[xhttp:request] {
+	if($hu=~"^/xcap-root/")
+	{
+		# xcap ops
+		switch($rm) {
+			case "GETT":
+				xcaps_get("sip:101@$Ri", "$hu");
+				exit;
+				break;
+		}
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬† xcaps_del(uri, path)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp71600"></a>4.3.¬†
+		<code class="function">xcaps_del(uri, path)</code>
+	    </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Handle XCAP DELETE command.
+	    </p>
+            <div class="example">
+              <a id="idp72520"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†<code class="function">xcaps_del</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route[xhttp:request] {
+	if($hu=~"^/xcap-root/")
+	{
+		# xcap ops
+		switch($rm) {
+			case "DELETE":
+				xcaps_del("sip:101@$Ri", "$hu");
+				exit;
+				break;
+		}
+	}
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Exported pseudo-variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp73952"></a>5.¬†Exported pseudo-variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>$xcapuri(name=&gt;key)</em></span> - name can be any
+				to idenitfy the XCAP uri; key can be: data, uri, root, auid,
+				type, tree, xuid, file, node, target, domain, uri_adoc.
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		Exported pseudo-variables are documented at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/wiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/wiki/'" tppabs="http://www.kamailio.org/wiki/">http://www.kamailio.org/wiki/</a>.
+		</p>
+          <div class="example">
+            <a id="idp75776"></a>
+            <p class="title">
+              <strong>Example¬†1.11.¬†$xcapuri(...) PV</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+    $xcapuri(u=&gt;data) = $hu;
+    xdbg("SCRIPT: xcap service $xcapuri(u=&gt;auid) for $xcapuri(u=&gt;xuid)\n");
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="6.¬†Simple XCAP Server Config">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp76784"></a>6.¬†Simple XCAP Server Config</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp77136"></a>
+            <p class="title">
+              <strong>Example¬†1.12.¬†sample xcap server</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+tcp_accept_no_cl=yes
+...
+loadmodule "xhttp.so"
+loadmodule "xcap_server.so"
+
+...
+
+# ----- xcap_server params -----
+modparam("xcap_server", "db_url",
+	"mysql://kamailio:kamailiorw@localhost/kamailio")
+
+...
+
+event_route[xhttp:request] {
+    if (!www_authorize("xcap", "subscriber"))
+    {
+        www_challenge("xcap", "0");
+        exit;
+    }
+    if($hu=~"^/xcap-root/")
+    {
+        set_reply_close();
+        set_reply_no_connect();
+        # xcap ops - break down http uri to get xcap user id
+        $xcapuri(u=&gt;data) = $hu;
+        if($xcapuri(u=&gt;xuid)=~"^sip:.+@.+")
+            $var(uri) = $xcapuri(u=&gt;xuid);
+        else
+            $var(uri) = "sip:"+ $xcapuri(u=&gt;xuid) + "@" + $Ri;
+
+        # handle XCAP capability request
+        if($xcapuri(u=&gt;auid)=="xcap-caps")
+        {
+            if ($rm == "GET")
+            {
+                $var(xbody) =
+"&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;xcap-caps xmlns='urn:ietf:params:xml:ns:xcap-caps'&gt;
+  &lt;auids&gt;
+    &lt;auid&gt;rls-services&lt;/auid&gt;
+    &lt;auid&gt;pidf-manipulation&lt;/auid&gt;
+    &lt;auid&gt;xcap-caps&lt;/auid&gt;
+    &lt;auid&gt;resource-lists&lt;/auid&gt;
+    &lt;auid&gt;pres-rules&lt;/auid&gt;
+    &lt;auid&gt;org.openmobilealliance.pres-rules&lt;/auid&gt;
+    &lt;auid&gt;org.openmobilealliance.user-profile&lt;/auid&gt;
+    &lt;auid&gt;org.openmobilealliance.pres-content&lt;/auid&gt;
+    &lt;auid&gt;org.openmobilealliance.search&lt;/auid&gt;
+    &lt;auid&gt;org.openmobilealliance.xcap-directory&lt;/auid&gt;
+  &lt;/auids&gt;
+  &lt;extensions&gt;
+  &lt;/extensions&gt;
+  &lt;namespaces&gt;
+    &lt;namespace&gt;urn:ietf:params:xml:ns:rls-services&lt;/namespace&gt;
+    &lt;namespace&gt;urn:ietf:params:xml:ns:pidf&lt;/namespace&gt;
+    &lt;namespace&gt;urn:ietf:params:xml:ns:xcap-caps&lt;/namespace&gt;
+    &lt;namespace&gt;urn:ietf:params:xml:ns:resource-lists&lt;/namespace&gt;
+    &lt;namespace&gt;urn:ietf:params:xml:ns:pres-rules&lt;/namespace&gt;
+    &lt;namespace&gt;urn:oma:xml:xdm:user-profile&lt;/namespace&gt;
+    &lt;namespace&gt;urn:oma:xml:prs:pres-content&lt;/namespace&gt;
+    &lt;namespace&gt;urn:oma:xml:xdm:search&lt;/namespace&gt;
+    &lt;namespace&gt;urn:oma:xml:xdm:xcap-directory&lt;/namespace&gt;
+  &lt;/namespaces&gt;
+&lt;/xcap-caps&gt;";
+                xhttp_reply("200", "ok", "application/xcap-caps+xml",
+                            "$var(xbody)");
+            }
+            else
+            {
+                append_to_reply("Allow: GET\r\n");
+                xhttp_reply("405", "Method Not Allowed", "", "");
+            }
+            exit;
+        }
+        # be sure auth user access only its documents
+        if ($au!=$(var(uri){uri.user})) {
+            xhttp_reply("403", "Forbidden", "text/html",
+                    "operation not allowed");
+            exit;
+        }
+
+        xdbg("SCRIPT: xcap service $xcapuri(u=&gt;auid) for $xcapuri(u=&gt;xuid)\n");
+        switch($rm) {
+            case "PUT":
+                xcaps_put("$var(uri)", "$hu", "$rb");
+                if($xcapuri(u=&gt;auid)=~"pres-rules")
+                {
+                    pres_update_watchers("$var(uri)", "presence");
+                    pres_refresh_watchers("$var(uri)", "presence", 1);
+                }
+                else if($xcapuri(u=&gt;auid)=~"rls-services"
+                        || $xcapuri(u=&gt;auid)=~"resource-lists")
+                {
+                    rls_update_subs("$var(uri)", "presence");
+                }
+                else if($xcapuri(u=&gt;auid)=~"pidf-manipulation")
+                {
+                    pres_refresh_watchers("$var(uri)", "presence", 2,
+                                            "$xcapuri(u=&gt;uri_adoc)",
+                                            "$xcapuri(u=&gt;file)");
+                }
+                exit;
+            break;
+            case "GET":
+                xcaps_get("$var(uri)", "$hu");
+                exit;
+            break;
+            case "DELETE":
+                xcaps_del("$var(uri)", "$hu");
+                if($xcapuri(u=&gt;auid)=~"pres-rules")
+                {
+                    pres_update_watchers("$var(uri)", "presence");
+                    pres_refresh_watchers("$var(uri)", "presence", 1);
+                }
+                else if($xcapuri(u=&gt;auid)=~"rls-services"
+                        || $xcapuri(u=&gt;auid)=~"resource-lists")
+                {
+                    rls_update_subs("$var(uri)", "presence");
+                }
+                else if($xcapuri(u=&gt;auid)=~"pidf-manipulation")
+                {
+                    pres_refresh_watchers("$var(uri)", "presence", 2,
+                                            "$xcapuri(u=&gt;uri_adoc)",
+                                            "$xcapuri(u=&gt;file)");
+                }
+                exit;
+            break;
+            case "POST":
+                if($xcapuri(u=&gt;auid)=~"search")
+                {
+                    xhttp_reply("501", "Not Implemented", "", "");
+                }
+                else
+                {
+                    if($xcapuri(u=&gt;auid)=~"xcap-directory")
+                    {
+                        append_to_reply("Allow: GET\r\n");
+                    }
+                    else
+                    {
+                        append_to_reply("Allow: DELETE, GET, PUT\r\n");
+                    }
+                    xhttp_reply("405", "Method Not Allowed", "", "");
+                }
+                exit;
+            break;
+        }
+    }
+
+    # other http requests
+    xhttp_reply("404", "Not Found", "", "");
+    exit;
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		The URL for XCAP has to be:
+	</p>
+          <p>
+		http://_your_sip_server_ip_:_your_sip_server_port_/xcap-root/...
+	</p>
+          <p>
+		For example, if your SIP server IP is 10.1.1.10 and it is listening
+		on TCP port 5060 and TLS port 5061, following XCAP URLs can be used:
+	</p>
+          <p>
+		http://10.1.1.10:5060/xcap-root/...
+	</p>
+          <p>
+		https://10.1.1.10:5061/xcap-root/...
+	</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

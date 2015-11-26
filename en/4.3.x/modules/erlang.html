@@ -1,0 +1,1884 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ERLANG Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15551872" title="ERLANG Module" />
+    <link rel="next" href="#idp18554432" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="ERLANG Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15551872"></a>ERLANG Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Seudin</span> <span class="surname">Kasumovic</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:seudin.kasumovic@gmail.com">seudin.kasumovic@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Seudin</span> <span class="surname">Kasumovic</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:seudin.kasumovic@gmail.com">seudin.kasumovic@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2015 <a class="ulink" href="javascript:if(confirm('http://www.bicomsystems.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.bicomsystems.com/'" tppabs="http://www.bicomsystems.com/">Bicom Systems Ltd.</a></p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18554432">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18889528">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17889952">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18434896">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17122880">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18039224">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.no_cnodes">3.1. <code class="varname">no_cnodes</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.cnode_alivename">3.2. <code class="varname">cnode_alivename</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.cnode_host">3.3. <code class="varname">cnode_host</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.erlang_nodename">3.4. <code class="varname">erlang_nodename</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.cookie">3.5. <code class="varname">cookie</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.p.trace_level">3.6. <code class="varname">trace_level</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15529792">3.7. <code class="varname">rpc_reply_with_struct</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15531120">4. Exported pseudo variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15531472">4.1. Overview</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15604768">4.2. Attributes</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_atom">4.3. <code class="varname">$erl_atom(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_list">4.4. <code class="varname">$erl_list(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_tuple">4.5. <code class="varname">$erl_tuple(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_pid">4.6. <code class="varname">$erl_pid(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_ref">4.7. <code class="varname">$erl_ref(name)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.v.erl_xbuff">4.8. <code class="varname">$erl_xbuff(name)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15555544">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.f.erl_rpc">5.1. 
+				<code class="function">erl_rpc(mod,fun,args,reply)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.f.erl_reg_send">5.2. <code class="function">erl_reg_send(server,msg)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.f.erl_send">5.3. <code class="function">erl_send(pid,msg)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.f.erl_reply">5.4. <code class="function">erl_reply(msg)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15570272">6. Event routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15571976">6.1. Registered pseudo process</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#erlang.e.self">6.2. <code class="varname">event_route[erlang:self]</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17705392">2. Using Kamailio from Erlang</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16125432">1. RPC calls from Erlang</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17056968">3. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp16938872">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18565760">1.1. 
+				<code class="function">erl_load_api(erl_api)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18036384">1.2. 
+				<code class="function">rpc(reply,module,function,args)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18050616">1.3. 
+				<code class="function">reg_send(server,msg)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18914152">1.4. 
+				<code class="function">send(pid,msg)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17679832">1.5. 
+				<code class="function">reply(msg)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17557256">1.6. 
+				<code class="function">xavp2xbuff(xbuff,xavp)</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18255584">1.7. 
+				<code class="function">xbuff2xavp(xavp,xbuff)</code>
+			</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18239904">Set <code class="varname">no_cnodes</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15681696">Set <code class="varname">cnode_alivename</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15518600">Set <code class="varname">cnode_host</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15521016">Set <code class="varname">erlang_nodename</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15523320">Set <code class="varname">cookie</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp15528632">Set <code class="varname">trace_level</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15608880">Example of using attribute <span class="emphasis"><em>length</em></span></a></dt>
+          <dt>1.8. <a href="#idp15610104">Example of using attributes <span class="emphasis"><em>type</em></span> and <span class="emphasis"><em>format</em></span></a></dt>
+          <dt>1.9. <a href="#idp15613456">Example set and print to log $erl_atom</a></dt>
+          <dt>1.10. <a href="#idp15616192">Example of using $erl_list</a></dt>
+          <dt>1.11. <a href="#idp15618536">Example of using erl_tuple</a></dt>
+          <dt>1.12. <a href="#idp15621136">Example of using $erl_pid</a></dt>
+          <dt>1.13. <a href="#idp15623312">Example of using erl_ref</a></dt>
+          <dt>1.14. <a href="#idp15554264">Example of using $erl_xbuff</a></dt>
+          <dt>1.15. <a href="#idp15560112">Example of using erl_rpc</a></dt>
+          <dt>1.16. <a href="#idp15563360">Example of using erl_reg_send</a></dt>
+          <dt>1.17. <a href="#idp15566216">Example of using erl_send</a></dt>
+          <dt>1.18. <a href="#idp15568752">Example of use erl_reply</a></dt>
+          <dt>1.19. <a href="#idp15573376">Example of registered process</a></dt>
+          <dt>1.20. <a href="#idp15575640">Example of using default event route</a></dt>
+          <dt>2.1. <a href="#idp16664360">Example of RPC call from erlang shell with no response</a></dt>
+          <dt>2.2. <a href="#idp18756712">Example, check is line registered</a></dt>
+          <dt>2.3. <a href="#idp16785760">Example get config variable</a></dt>
+          <dt>2.4. <a href="#idp16181400">Example get dialog statistics</a></dt>
+          <dt>3.1. <a href="#idp18479104">Example of using API</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18554432"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18889528">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17889952">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18434896">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17122880">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18039224">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.no_cnodes">3.1. <code class="varname">no_cnodes</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.cnode_alivename">3.2. <code class="varname">cnode_alivename</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.cnode_host">3.3. <code class="varname">cnode_host</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.erlang_nodename">3.4. <code class="varname">erlang_nodename</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.cookie">3.5. <code class="varname">cookie</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.p.trace_level">3.6. <code class="varname">trace_level</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15529792">3.7. <code class="varname">rpc_reply_with_struct</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15531120">4. Exported pseudo variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15531472">4.1. Overview</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15604768">4.2. Attributes</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_atom">4.3. <code class="varname">$erl_atom(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_list">4.4. <code class="varname">$erl_list(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_tuple">4.5. <code class="varname">$erl_tuple(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_pid">4.6. <code class="varname">$erl_pid(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_ref">4.7. <code class="varname">$erl_ref(name)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.v.erl_xbuff">4.8. <code class="varname">$erl_xbuff(name)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15555544">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.f.erl_rpc">5.1. 
+				<code class="function">erl_rpc(mod,fun,args,reply)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.f.erl_reg_send">5.2. <code class="function">erl_reg_send(server,msg)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.f.erl_send">5.3. <code class="function">erl_send(pid,msg)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.f.erl_reply">5.4. <code class="function">erl_reply(msg)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15570272">6. Event routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15571976">6.1. Registered pseudo process</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#erlang.e.self">6.2. <code class="varname">event_route[erlang:self]</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18889528"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Erlang is a general-purpose programming language and runtime environment.
+			Erlang has built-in support for concurrency, distribution and fault tolerance.
+			This module provides interact with Erlang node. The module allows sending,
+			receiving Erlang messages and RPC calls between each other.
+		</p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17889952"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.聽Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18434896"></a>2.1.聽Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The following modules must be loaded before this module:
+				</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+							<span class="emphasis"><em>None</em></span>
+						</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="2.2.聽External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17122880"></a>2.2.聽External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The following libraries or applications must be installed before running
+			Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>ei</em></span> - Erlang interface C library.
+					</p>
+                  <p>
+						The routines for handling the Erlang binary term format
+						and communicate with with distributed Erlang.
+						For more details see <a class="ulink" href="javascript:if(confirm('http://www.erlang.org/doc/apps/erl_interface/index.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.erlang.org/doc/apps/erl_interface/index.html'" tppabs="http://www.erlang.org/doc/apps/erl_interface/index.html">Erlang Interface Reference Manual</a>
+					</p>
+                  <p>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>epmd</em></span> - Erlang Port Mapper Daemon.
+					</p>
+                  <p>
+						This daemon acts as a name server on all hosts involved in distributed
+						Erlang computations. For more details see <a class="ulink" href="javascript:if(confirm('http://www.erlang.org/doc/man/epmd.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.erlang.org/doc/man/epmd.html'" tppabs="http://www.erlang.org/doc/man/epmd.html">
+						Erlang Port Mapper Daemon Manual</a>.
+					</p>
+                  <p>
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+				<span class="emphasis"><em>epmd</em></span> must running on the same host where Kamailio is running.
+				Erlang does not need to be installed on the same host where Kamailio is running.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18039224"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽no_cnodes (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.no_cnodes"></a>3.1.聽<code class="varname">no_cnodes</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Number of erlang C node processes to be started to handle the communication
+				tasks. A C node is a C program written to act as a hidden node in a distributed Erlang system.
+			</p>
+            <p>
+			<span class="emphasis"><em>
+				Default value is 1.
+			</em></span>
+			</p>
+            <div class="example">
+              <a id="idp18239904"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Set <code class="varname">no_cnodes</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "no_cnodes", 2)	
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.聽cnode_alivename (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.cnode_alivename"></a>3.2.聽<code class="varname">cnode_alivename</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				<span class="emphasis"><em>alivename</em></span> is the registered name of the Kamailio process.
+			</p>
+            <p>
+				<span class="emphasis"><em>Note,</em></span> if the <code class="varname">no_cnodes</code> greater then 1,
+				then <span class="emphasis"><em>alivename</em></span> of Kamailio process will be suffixed with number.
+			</p>
+            <div class="example">
+              <a id="idp15681696"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Set <code class="varname">cnode_alivename</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "cnode_alivename", "proxy")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽cnode_host (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.cnode_host"></a>3.3.聽<code class="varname">cnode_host</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				C node <span class="emphasis"><em>host</em></span> is the name of the machine we're running on.
+				If long names are to be used, it should be fully qualified.
+			</p>
+            <div class="example">
+              <a id="idp15518600"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set <code class="varname">cnode_host</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "cnode_host", "kamailio.lan")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.聽erlang_nodename (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.erlang_nodename"></a>3.4.聽<code class="varname">erlang_nodename</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The format of the node name is an <span class="emphasis"><em>name@host</em></span>
+				where name is the name given by the user and host is the full
+				host name if long names are used, or the first part of the host
+				name if short names are used.
+			</p>
+            <div class="example">
+              <a id="idp15521016"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set <code class="varname">erlang_nodename</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "erlang_nodename", "node1@erlang.lan")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.聽cookie (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.cookie"></a>3.5.聽<code class="varname">cookie</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Each node has its own magic cookie. When a nodes tries to connect
+				to another node, the magic cookies are compared If they do not match,
+				the connected node rejects the connection.
+			</p>
+            <div class="example">
+              <a id="idp15523320"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Set <code class="varname">cookie</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "cookie", "secretcookie")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.聽trace_level (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.p.trace_level"></a>3.6.聽<code class="varname">trace_level</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Used to set tracing on the distribution. The parameter is different
+				verbosity level. A higher level means more information. Useful in
+				development, but in production should be disabled.
+			</p>
+            <p>
+				The different tracelevels has the following messages:
+				</p>
+            <div class="itemizedlist">
+              <div class="orderedlist">
+                <ol class="orderedlist" type="1">
+                  <li class="listitem">
+							Verbose error messages
+						</li>
+                  <li class="listitem">
+							Above messages and verbose warning messages
+						</li>
+                  <li class="listitem">
+							Above messages and progress reports for connection handling
+						</li>
+                  <li class="listitem">
+							Above messages and progress reports for communication
+						</li>
+                  <li class="listitem">
+							Above messages and progress reports for data conversion
+						</li>
+                </ol>
+              </div>
+              <ul class="itemizedlist"></ul>
+            </div>
+            <p>
+			</p>
+            <span class="emphasis">
+              <em>
+				Default value is 0, no verbose is set.
+			</em>
+            </span>
+            <span class="emphasis">
+              <em>
+				To see trace log on stdout, Kamailio must be started with <span class="emphasis"><em>-E</em></span> option.
+			</em>
+            </span>
+            <div class="example">
+              <a id="idp15528632"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Set <code class="varname">trace_level</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("erlang", "trace_level", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.聽rpc_reply_with_struct (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15529792"></a>3.7.聽<code class="varname">rpc_reply_with_struct</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Prepend Erlang atom struct in RPC Kamailio reply where RPC struct is generated.
+				Some libraries for converting erlang term in JSON require atom struct
+				as first element in tuple to convert list of properties into javscript object.
+			</p>
+            <span class="emphasis">
+              <em>
+				Default value is 0 (disabled).
+			</em>
+            </span>
+          </div>
+        </div>
+        <div class="section" title="4.聽Exported pseudo variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15531120"></a>4.聽Exported pseudo variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽Overview">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15531472"></a>4.1.聽Overview</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Erlang provides a number of data types but not all of them are supported by Kamailio.
+				This module provides several of them as pseudo variables. These pseudo variables
+				allow user to create Erlang message or function arguments and receive result from
+				Erlang node. Some Erlang variables can contain other data types, so we introduced several
+				attributes to determine type, length, or get formatted output useful for debug,
+				quick compare or put into the log.
+			</p>
+          </div>
+          <div class="section" title="4.2.聽Attributes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15604768"></a>4.2.聽Attributes</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Exported pseudo variable has several attributes to get type, length and formatted output
+				readable by transformations or user. Pseudo variable by self determine variable type, but
+				we need to know what type on some position is. 
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <code class="varname">type</code>
+                  <p>
+						get variable type. Possible types are: <span class="emphasis"><em>atom, integer,
+						list, string</em></span>, <span class="emphasis"><em>tuple</em></span>,
+						<span class="emphasis"><em>pid</em></span> and <span class="emphasis"><em>ref</em></span>.
+					</p>
+                </li>
+                <li class="listitem">
+                  <code class="varname">length</code>
+                  <p>
+						get length of list or tuple.
+					</p>
+                </li>
+                <li class="listitem">
+                  <code class="varname">format</code>
+                  <p>
+						Prints a term, in clear text. It tries to resemble the
+						term printing in the Erlang shell.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp15608880"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Example of using attribute <span class="emphasis"><em>length</em></span></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlogl("L_DEBUG","The number of elements in list L: $erl_list(L=&gt;length)\n");
+xlogl("L_DEBUG","The number of elements in tuple T: $erl_tuple(T=&gt;length)\n");
+...
+
+&gt; example of log output:
+
+DEBUG: &lt;script&gt;: 120:The number of elements in list L: 4
+DEBUG: &lt;script&gt;: 121:The number of elements in tuple T: 2
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp15610104"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽Example of using attributes <span class="emphasis"><em>type</em></span> and <span class="emphasis"><em>format</em></span></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlogl("L_DEBUG","list L in clear text: $erl_list(L=&gt;format), the type at index 2: $erl_list(L[2]=&gt;type)\n");
+xlogl("L_DEBUG","tuple T in clear text: $erltuple(T=&gt;format), the type at index 1: $erl_tuple[T[1]=&gt;type)\n");
+...
+
+&gt; example of log output:
+
+DEBUG: &lt;script&gt;: 130:list L in clear text: [example, list, 4, "items"], the type at index 2: integer
+DEBUG: &lt;script&gt;: 131:tuple T in clear text: {example, tuple}, the type at index 1: atom
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.聽$erl_atom(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_atom"></a>4.3.聽<code class="varname">$erl_atom(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				<span class="emphasis"><em>erl_atom</em></span> pseudo variable allows create analog to Erlang atom data type.
+				Erlang atom is a literal, a constant with name. Formatted output pseudo
+				variable atom could be enclosed in single quotes (') if it does 
+				not begin with a lower-case letter or if it contains other characters
+				than alphanumeric characters, underscore (_), or @.
+			</p>
+            <p>
+
+			</p>
+            <div class="example">
+              <a id="idp15613456"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽Example set and print to log $erl_atom</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$erl_atom(A) = "badrpc";
+xlogl("L_DEBUG","$$erl_atom(A): $erl_atom(A=&gt;format)\n");
+...
+
+&gt; log output is:
+
+DEBUG: &lt;script&gt;: 123:$erl_atom(A): badrpc
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.聽$erl_list(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_list"></a>4.4.聽<code class="varname">$erl_list(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Compound data type with a variable number of terms. Formally,
+				a list is either the empty list [] or consists of one or more 
+				elements.
+			</p>
+            <p>
+				Behavior of the list is the same as AVP variable. Set value without
+				index prepends element on list. You are able to replace element at
+				given index. List supports [*] index to get whole list or reset all
+				elements in the list. To create empty list set whole list to
+				<span class="emphasis"><em>$null</em></span>.
+			</p>
+            <div class="example">
+              <a id="idp15616192"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽Example of using $erl_list</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$erl_atom(E) = "example";
+$erl_list(L) = "list";
+$erl_list(L) = "of";
+$erl_list(L) = $erl_atom(E);
+
+xlogl("L_DEBUG","length(L): $erl_list(L=&gt;length), format(L): $erl_list(L=&gt;format)\n");
+
+# empty list
+$erl_tuple(E[*]) = $null;
+
+xlogl("L_DEBUG","length(E): $erl_list(E=&gt;length), format(E): $erl_list(L=&gt;format)\n");
+...
+
+&gt; log output is:
+
+DEBUG: &lt;script&gt;: 143:length(L): 3, format(L): [example, "of", "list"]
+DEBUG: &lt;script&gt;: 148:length(E): 0, format(E): []
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.聽$erl_tuple(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_tuple"></a>4.5.聽<code class="varname">$erl_tuple(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				From the Erlang point of view the tuple compound data type with
+				a fixed number of terms. The module implementation of tuple has
+				the same behavior as the list.
+			</p>
+            <div class="example">
+              <a id="idp15618536"></a>
+              <p class="title">
+                <strong>Example聽1.11.聽Example of using erl_tuple</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$erl_atom(line) = "line";
+$erl_atom(id)   = "id";
+$erl_atom(owner)= "owner";
+
+$var(user)  = "Bob";
+
+$erl_tuple(owner) = $var(user);
+$erl_tuple(owner) = $erl_atom(owner);
+
+$erl_tuple(id) = 23;
+$erl_tuple(id) = $erl_atom(id);
+
+$erl_list(L) = $erl_tuple(owner);
+$erl_list(L) = $erl_tuple(id);
+
+$erl_tuple(T) = $erl_list(L);
+$erl_tuple(T) = $erl_atom(line);
+
+xlogl("L_DEBUG","length(T): $erl_tuple(T=&gt;length), format(T): $erl_tuple(T=&gt;format)\n");
+...
+
+&gt; log output is:
+...
+DEBUG: &lt;script&gt;: 153:length(T): 2, format(T): {line, [{id, 23}, {owner, "Bob"}]}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.聽$erl_pid(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_pid"></a>4.6.聽<code class="varname">$erl_pid(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				<span class="emphasis"><em>erl_pid</em></span> holds Eralng process identifier. Provides
+				access to Erlang PID value and could be used in send message.
+			</p>
+            <div class="example">
+              <a id="idp15621136"></a>
+              <p class="title">
+                <strong>Example聽1.12.聽Example of using $erl_pid</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ($erl_xbuff(msg[0]=&gt;type) == "pid") {
+	$erl_pid(pid) = $erl_xbuff(msg[0]);
+	xlogl("L_INFO","Received PID: $erl_pid(pid=&gt;format)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.聽$erl_ref(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_ref"></a>4.7.聽<code class="varname">$erl_ref(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				<span class="emphasis"><em>erl_ref</em></span> holds Erlang reference. Provides
+				access to reference value and could be used in send message.
+			</p>
+            <div class="example">
+              <a id="idp15623312"></a>
+              <p class="title">
+                <strong>Example聽1.13.聽Example of using erl_ref</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if ($erl_xbuff(msg[0]=&gt;type) == "ref") {
+	$erl_ref(ref) = $erl_xbuff(msg[0]);
+	xlogl("L_INFO","Reference: $erl_ref(ref=&gt;format)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.聽$erl_xbuff(name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.v.erl_xbuff"></a>4.8.聽<code class="varname">$erl_xbuff(name)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				<span class="emphasis"><em>erl_xbuff</em></span> is created as generic pseudo variable
+				to acts as other pseudo variables exported from module. It's useful
+				when in advance we don't know what variable type to expect.
+				The behavior of variable depends of initialization. Module
+				functions expect this PV as return value, and PV for incoming
+				Erlang message.
+			</p>
+            <div class="example">
+              <a id="idp15554264"></a>
+              <p class="title">
+                <strong>Example聽1.14.聽Example of using $erl_xbuff</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# Tuple T from previous example
+
+$erl_xbuff(X) = $erl_tuple(T);
+
+xlogl("L_DEBUG","typeof(X): $erl_xbuff(X=&gt;type), length(X): $erl_xbuff(X=&gt;length), format(X): $erl_xbuff(X=&gt;format)\n");
+...
+
+&gt; log output is:
+...
+DEBUG: &lt;script&gt;: 410:typeof(X): tuple, length(X): 2, format(X): {line, [{id, 23}, {owner, "Bob"}]}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15555544"></a>5.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.聽 erl_rpc(mod,fun,args,reply)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.f.erl_rpc"></a>5.1.聽
+				<code class="function">erl_rpc(mod,fun,args,reply)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function supports calling Erlang functions on remote nodes.
+			</p>
+            <p>
+				The parameter <span class="emphasis"><em>mod</em></span> and <span class="emphasis"><em>fun</em></span>
+				are module and function name respectively. It can be a static 
+				string or a dynamic string value with config variables.
+			</p>
+            <p>
+				The parameter <span class="emphasis"><em>args</em></span> is list of arguments passed to
+				function, so it must be <span class="emphasis"><em>list</em></span>, or <span class="emphasis"><em>xbuff</em></span> that contains list.
+			</p>
+            <p>
+				The parameter <span class="emphasis"><em>reply</em></span> is result from RPC call. It must
+				be <span class="emphasis"><em>xbuff</em></span> to accept any result.
+			</p>
+            <p>
+				Function returns false on error to send or wrong arguments passed to function.
+				If executing remote function caused error function still returns
+				true but error is encoded into <span class="emphasis"><em>repl</em></span> parameter.
+			</p>
+            <div class="example">
+              <a id="idp15560112"></a>
+              <p class="title">
+                <strong>Example聽1.15.聽Example of using erl_rpc</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# example of call erlang:list_to_tuple(["one","two"])
+# on remote node
+
+$erl_list(L) = "two";
+$erl_list(L) = "one";
+
+# put list into list
+$erl_list(args) = $erl_list(L);
+
+erl_rpc("erlang", "list_to_tuple", "$erl_list(args)", "$erl_xbuff(repl)");
+
+xlogl("L_DEBUG","type(repl): $erl_xbuff(repl=&gt;type), format(repl): $erl_xbuff(repl=&gt;format)\n");
+
+&gt; log output:
+...
+DEBUG: &lt;script&gt;: 386:type(repl): tuple, format(repl): {"one", "two"}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.聽erl_reg_send(server,msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.f.erl_reg_send"></a>5.2.聽<code class="function">erl_reg_send(server,msg)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function sends an Erlang term to a registered process.
+			</p>
+            <p>
+				The argument <span class="emphasis"><em>server</em></span> is the registered name
+				of the intended recipient process on remote node.
+			</p>
+            <p>
+				The argument <span class="emphasis"><em>msg</em></span> is containing the message to be sent.
+			</p>
+            <div class="example">
+              <a id="idp15563360"></a>
+              <p class="title">
+                <strong>Example聽1.16.聽Example of using erl_reg_send</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# example of send message to registered process
+# {notifier,'node1@erlang.lan'} ! {example,message}
+
+$erl_atom(example) = "example";
+$erl_atom(message) = "message";
+
+$erl_tuple(M) = $erl_atom(message);
+$erl_tuple(M) = $erl_atom(example);
+
+erl_reg_send("notifier","$erl_tuple(M)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.聽erl_send(pid,msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.f.erl_send"></a>5.3.聽<code class="function">erl_send(pid,msg)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function sends an Erlang term to a process. This function
+				can be used from ANY_ROUTE. The argument <span class="emphasis"><em>pid</em></span>
+				is the Erlang process id of the intended recipient process on
+				remote node. The argument <span class="emphasis"><em>msg</em></span> is containing
+				the message to be sent.
+			</p>
+            <div class="example">
+              <a id="idp15566216"></a>
+              <p class="title">
+                <strong>Example聽1.17.聽Example of using erl_send</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# example of send message to process
+# Pid ! {example,message}
+
+$erl_atom(notifier) = "notifier";
+$erl_list(args) = $erl_atom(notifier);
+
+erl_rpc("erlang", "whereis", "$erl_list(args)", "$erl_xbuff(pid)");
+
+$erl_atom(example) = "example";
+$erl_atom(message) = "message";
+
+$erl_tuple(M) = $erl_atom(message);
+$erl_tuple(M) = $erl_atom(example);
+
+erl_send("$erl_xbuff(pid)","$erl_tuple(M)");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.聽erl_reply(msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.f.erl_reply"></a>5.4.聽<code class="function">erl_reply(msg)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function to send message from event route (pseudo process).
+				Function sends reply message <span class="emphasis"><em>msg</em></span> to the sender process.
+			</p>
+            <div class="example">
+              <a id="idp15568752"></a>
+              <p class="title">
+                <strong>Example聽1.18.聽Example of use erl_reply</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# event route acts as registered process
+event_route[erlang:greetings] {
+
+	xlogl("L_INFO","Received message: $erl_xbuff(msg=&gt;format)\n");
+
+	$erl_atom(hello) = "hello";
+	$erl_tuple(reply) = "Erlang";
+	$erl_tuple(reply) = $erl_atom(hello);
+
+	# reply greeting
+	erl_reply("$erl_tuple(reply)");
+}
+...
+
+%% in erlang shell
+
+(node1@erlang.lan)24&gt; {greetings,'proxy@kamailio.lan'} ! {hello,"Kamailio"}.
+{hello,"Kamailio"}
+(node1@erlang.lan)25&gt; flush().
+Shell got {hello,"Erlang"}
+ok
+
+&gt; logged info message:
+INFO: &lt;script&gt;: 951:Received message: {"hello", "Kamailio"}
+&gt;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.聽Event routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15570272"></a>6.聽Event routes</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			To allow Kamailio C node to have similar to erlang registered processes
+			we can use event routes. Event routes executed when asynchronous message received
+			from erlang node.
+		</p>
+          <p>
+			Event route receives message in <code class="varname">$erl_xbuff(msg)</code> and sender
+			process in <code class="varname">$erl_xbuff(pid)</code>. Reply message is optional
+			and can be sent with <span class="emphasis"><em>erl_reply</em></span>.
+		</p>
+          <div class="section" title="6.1.聽Registered pseudo process">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15571976"></a>6.1.聽Registered pseudo process</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				To create pseudo erlang registered process in Kamailio scrip create event route in form of
+				<code class="varname">event_route[erlang:<span class="emphasis"><em>&lt;my_process_name&gt;</em></span>]</code>. Where
+				<span class="emphasis"><em>&lt;my_process_name&gt;</em></span> is the name of pseudo process.
+			</p>
+            <div class="example">
+              <a id="idp15573376"></a>
+              <p class="title">
+                <strong>Example聽1.19.聽Example of registered process</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# event route acts as registered process
+event_route[erlang:handler] {
+
+	xlogl("L_INFO","Received message: $erl_xbuff(msg=&gt;format)\n");
+
+}
+...
+
+%% in erlang shell send message to registered process
+
+(node1@erlang.lan)12&gt; {handler,'proxy@kamailio.lan'} ! {"hello","Kamailio"}.
+{"hello","Kamailio"}
+
+&gt; logged info message:
+INFO: &lt;script&gt;: 951:Received message: {"hello", "Kamailio"}
+&gt;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="6.2.聽event_route[erlang:self]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="erlang.e.self"></a>6.2.聽<code class="varname">event_route[erlang:self]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				The reserved pseudo process name to receive messages sent to Kamailio C node.
+				The message are sent to non registered process.
+			</p>
+            <div class="example">
+              <a id="idp15575640"></a>
+              <p class="title">
+                <strong>Example聽1.20.聽Example of using default event route</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# default event route from erlang
+event_route[erlang:self] {
+
+	xlogl("L_INFO","Received message: $erl_xbuff(msg=&gt;format)\n");
+
+	if(pv_isset("$erl_xbuff(msg[1])") &amp;&amp; $erl_xbuff(msg[1]=&gt;type) == "pid") {
+		xlogl("L_INFO","Echo reply to: $erl_xbuff(msg[1]=&gt;format)\n");
+		erl_send("$erl_xbuff(msg[1])","$erl_xbuff(msg[0])");
+	}
+}
+...
+
+%% in erlang shell send message to registered process
+
+(node1@erlang.lan)12&gt; Pid=rpc:call('proxy@kamailio.lan',erlang,whereis,[self]).
+&lt;14808.9.0&gt;
+(node1@erlang.lan)14&gt; Pid ! ["hello from",self()].
+["hello from",&lt;0.247.0&gt;]
+(node1@erlang.lan)15&gt; flush().
+Shell got "hello from"
+ok
+
+&gt; logged info messages:
+INFO: &lt;script&gt;: 653:Received message: ["hello from", &lt;node1@erlang.lan.247.0&gt;]
+INFO: &lt;script&gt;: 656:Echo reply to: &lt;node1@erlang.lan.247.0&gt;]
+&gt;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter聽2.聽Using Kamailio from Erlang">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17705392"></a>Chapter聽2.聽Using Kamailio from Erlang</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16125432">1. RPC calls from Erlang</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.聽RPC calls from Erlang">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16125432"></a>1.聽RPC calls from Erlang</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This module implements the erlang transport and encoding interface for Kamailio RPCs. It's allow to call any exported RPC in Kamailio
+			from erlang node.
+		</p>
+          <p>
+			The string in RPC response is binary encoded to allow from erlang side conversion into appropriate encoding and further transformations.
+		</p>
+          <p>
+			Here are some examples:
+		</p>
+          <div class="example">
+            <a id="idp16664360"></a>
+            <p class="title">
+              <strong>Example聽2.1.聽Example of RPC call from erlang shell with no response</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">(node1@erlang.lan)26&gt; rpc:call('proxy@kamailio.lan',domain,reload,[]).
+ok</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp18756712"></a>
+            <p class="title">
+              <strong>Example聽2.2.聽Example, check is line registered</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">(node1@erlang.lan)29&gt; rpc:call('proxy@kamailio.lan',ul,lookup,["location","1001@orange.voip"]).
+[{[{&lt;&lt;"Contact"&gt;&gt;,
+    {[{&lt;&lt;"Address"&gt;&gt;,
+       &lt;&lt;"sip:1001@10.1.130.138:5161;transport=udp"&gt;&gt;},
+      {&lt;&lt;"Expires"&gt;&gt;,96},
+      {&lt;&lt;"Q"&gt;&gt;,-1.0},
+      {&lt;&lt;"Call-ID"&gt;&gt;,&lt;&lt;"5c89766276627815@10.1.130.138"&gt;&gt;},
+      {&lt;&lt;"CSeq"&gt;&gt;,10335},
+      {&lt;&lt;"User-Agent"&gt;&gt;,&lt;&lt;"Grandstream GXP2000 1.2.5.3"&gt;&gt;},
+      {&lt;&lt;"Received"&gt;&gt;,&lt;&lt;"sip:198.51.100.137:62770"&gt;&gt;},
+      {&lt;&lt;"Path"&gt;&gt;,
+       &lt;&lt;"&amp;lt;sip:172.16.23.130;lr;received=sip:198.51.100.137:62"...&gt;&gt;},
+      {&lt;&lt;"State"&gt;&gt;,&lt;&lt;"CS_SYNC"&gt;&gt;},
+      {&lt;&lt;"Flags"&gt;&gt;,0},
+      {&lt;&lt;"CFlags"&gt;&gt;,64},
+      {&lt;&lt;"Socket"&gt;&gt;,&lt;&lt;"udp:172.16.23.130:5070"&gt;&gt;},
+      {&lt;&lt;"Methods"&gt;&gt;,8159},
+      {&lt;&lt;"Ruid"&gt;&gt;,&lt;&lt;"uloc-5534a79b-37ea-8"&gt;&gt;},
+      {&lt;&lt;"Instance"&gt;&gt;,&lt;&lt;"[not set]"&gt;&gt;},
+      {&lt;&lt;"Reg-Id"&gt;&gt;,0},
+      {&lt;&lt;"Last-Keepalive"&gt;&gt;,1429543986},
+      {&lt;&lt;"Last-Modified"&gt;&gt;,1429543906}]}}]}]</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp16785760"></a>
+            <p class="title">
+              <strong>Example聽2.3.聽Example get config variable</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">(node1@erlang.lan)26&gt; rpc:call('proxy@kamailio.lan',"cfg","get",["registrar","bindip"]).
+[&lt;&lt;"172.16.23.130"&gt;&gt;]</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp16181400"></a>
+            <p class="title">
+              <strong>Example聽2.4.聽Example get dialog statistics</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">(node1@erlang.lan)26&gt;rpc:call('proxy@kamailio.lan',"stats","get_statistics",["dialog:"]).
+[&lt;&lt;"dialog:active_dialogs = 3"&gt;&gt;,
+ &lt;&lt;"dialog:early_dialogs = 0"&gt;&gt;,
+ &lt;&lt;"dialog:expired_dialogs = 0"&gt;&gt;,
+ &lt;&lt;"dialog:failed_dialogs = 2"&gt;&gt;,
+ &lt;&lt;"dialog:processed_dialogs = 15"&gt;&gt;]</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+      <div class="chapter" title="Chapter聽3.聽Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17056968"></a>Chapter聽3.聽Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp16938872">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18565760">1.1. 
+				<code class="function">erl_load_api(erl_api)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18036384">1.2. 
+				<code class="function">rpc(reply,module,function,args)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18050616">1.3. 
+				<code class="function">reg_send(server,msg)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18914152">1.4. 
+				<code class="function">send(pid,msg)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17679832">1.5. 
+				<code class="function">reply(msg)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17557256">1.6. 
+				<code class="function">xavp2xbuff(xbuff,xavp)</code>
+			</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18255584">1.7. 
+				<code class="function">xbuff2xavp(xavp,xbuff)</code>
+			</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp16938872"></a>1.聽Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.聽 erl_load_api(erl_api)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18565760"></a>1.1.聽
+				<code class="function">erl_load_api(erl_api)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function to be called directly from other modules to load the API.
+				On success return 0, on error 1.
+			</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>erl_api_t* erl_api</em></span> - API bindings structure.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.2.聽 rpc(reply,module,function,args)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18036384"></a>1.2.聽
+				<code class="function">rpc(reply,module,function,args)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function supports calling Erlang functions on remote nodes. On success function returns 0.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff* reply</em></span> - dynamic ei buffer where RPC reply returns.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str *module</em></span> - string containing module name.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str *function</em></span> - string containing function name.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *args</em></span> - dynamic ei buffer with encoded arguments.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.3.聽 reg_send(server,msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18050616"></a>1.3.聽
+				<code class="function">reg_send(server,msg)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function sends an Erlang term to a registered process. On success return 0.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str *server</em></span> - string containing
+					registered name of the intended recipient process on remote node.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *msg</em></span> - dynamic ei buffer
+					with encoded erlang term. The msg must be encoded with version byte.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.4.聽 send(pid,msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18914152"></a>1.4.聽
+				<code class="function">send(pid,msg)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This function sends an Erlang term to a process. On success return 0.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>erlang_pid *pid</em></span> - pid of the intended
+					recipient process on remote node.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *msg</em></span> - dynamic ei buffer
+					with encoded erlang term. The msg must be encoded with version byte.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.5.聽 reply(msg)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17679832"></a>1.5.聽
+				<code class="function">reply(msg)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function to send reply on processed message.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *msg</em></span> - dynamic ei buffer
+					with encoded erlang term.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.6.聽 xavp2xbuff(xbuff,xavp)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17557256"></a>1.6.聽
+				<code class="function">xavp2xbuff(xbuff,xavp)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function encodes XAVP variable into ei dynamic buffer. How to create XAVP variable
+				see source code.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *xbuff</em></span> - dynamic ei buffer
+					where XAVP variable will be encoded.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>sr_xavp_t *xavp</em></span> - XAVP variable to be encoded.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.7.聽 xbuff2xavp(xavp,xbuff)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18255584"></a>1.7.聽
+				<code class="function">xbuff2xavp(xavp,xbuff)</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Function decodes ei dynamic buffer into XAVP variable.
+			</p>
+            <p>Meaning of parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>sr_xavp_t **xavp</em></span> - XAVP variable where ei buffer will be decoded.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ei_x_buff *xbuff</em></span> - dynamic ei buffer.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp18479104"></a>
+            <p class="title">
+              <strong>Example聽3.1.聽Example of using API</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">/* note: new without version byte */
+ei_x_new(&amp;ei_req);
+
+/* ei_x_buff &lt;- XAVP */
+if (erl_api.xavp2xbuff(&amp;ei_req,xreq)) {
+	LM_ERR("failed to encode\n");
+	ei_x_free(&amp;ei_req);
+	return -1;
+}
+
+memset((void*)&amp;ei_rep,0,sizeof(ei_x_buff));
+
+erl_api.rpc(&amp;ei_rep,&amp;module,&amp;function,&amp;ei_req);
+...
+
+/* must be XAVP */
+xrepl-&gt;val.type = SR_XTYPE_XAVP;
+
+/* XAVP &lt;- ei_x_buff */
+if (erl_api.xbuff2xavp(&amp;xrepl-&gt;val.v.xavp,&amp;ei_rep)){
+	LM_ERR("failed to decode\n");
+	ei_x_free(&amp;ei_req);
+	ei_x_free(&amp;ei_rep);
+	return -1;
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1243 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SIP Authenticated Identity Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#auth_identity" title="SIP Authenticated Identity Module" />
+    <link rel="next" href="#idp57064" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SIP Authenticated Identity Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="auth_identity"></a>SIP Authenticated Identity Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Gergely</span> <span class="surname">Kovacs</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Iptel.org<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 Iptel.org</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp57064">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.compilation">3. Compilation</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.install_and_run">4. Installation And Running</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.params">5. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3944">5.1. <code class="varname">privatekey_path</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1899680">5.2. <code class="varname">certificate_path</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp860664">5.3. <code class="varname">certificate_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2740408">5.4. <code class="varname">msg_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_validity_time">5.5. <code class="varname">auth_validity_time</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#callid_cache_limit">5.6. <code class="varname">callid_cache_limit</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#certificate_cache_limit">5.7. <code class="varname">certificate_cache_limit</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#cainfo_path">5.8. <code class="varname">cainfo_path</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#accept_pem_certs">5.9. <code class="varname">accept_pem_certs</code> ([0|1])</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#auth_identity.functions">6. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2474872">6.1. 
+				<code class="function">auth_date_proc()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp1746856">6.1.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2402336">6.2. 
+				<code class="function">auth_add_identity()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp990208">6.2.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#vrfy_check_date">6.3. 
+				<code class="function">vrfy_check_date()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#vrfy_check_date.dep">6.3.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#vrfy_get_certificate">6.4. 
+				<code class="function">vrfy_get_certificate()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#vrfy_get_certificate.dep">6.4.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#vrfy_check_certificate">6.5. 
+				<code class="function">vrfy_check_certificate()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#vrfy_check_certificate.dep">6.5.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#vrfy_check_msgvalidity">6.6. 
+				<code class="function">vrfy_check_msgvalidity()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#vrfy_check_msgvalidity.dep">6.6.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                  <dt>
+                    <span class="section">
+                      <a href="#vrfy_check_callid">6.7. 
+				<code class="function">vrfy_check_callid()</code>
+			</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#vrfy_check_callid.dep">6.7.1. Dependencies</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp66672">7. Authorizer service examples</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp67216">8. Verifier service examples</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1910840">Set <code class="varname">privatekey_path</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp1908296">Set <code class="varname">certificate_path</code> parameter
+				</a></dt>
+          <dt>1.3. <a href="#idp1592208">Set <code class="varname">certificate_url</code> parameter
+				</a></dt>
+          <dt>1.4. <a href="#idp1445360">Set <code class="varname">msg_timeout</code> parameter
+				</a></dt>
+          <dt>1.5. <a href="#idp2115976">Set <code class="varname">auth_validity_time</code> parameter
+				</a></dt>
+          <dt>1.6. <a href="#idp809064">Set <code class="varname">auth_validity_time</code> parameter
+				</a></dt>
+          <dt>1.7. <a href="#idp2150688">Set <code class="varname">certificate_cache_limit</code> parameter
+				</a></dt>
+          <dt>1.8. <a href="#idp26896">Set <code class="varname">cainfo_path</code> parameter
+				</a></dt>
+          <dt>1.9. <a href="#idp2438656">Set <code class="varname">accept_pem_certs</code> parameter
+				</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp57064"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.compilation">3. Compilation</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.install_and_run">4. Installation And Running</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.params">5. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3944">5.1. <code class="varname">privatekey_path</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1899680">5.2. <code class="varname">certificate_path</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp860664">5.3. <code class="varname">certificate_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2740408">5.4. <code class="varname">msg_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_validity_time">5.5. <code class="varname">auth_validity_time</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#callid_cache_limit">5.6. <code class="varname">callid_cache_limit</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#certificate_cache_limit">5.7. <code class="varname">certificate_cache_limit</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#cainfo_path">5.8. <code class="varname">cainfo_path</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#accept_pem_certs">5.9. <code class="varname">accept_pem_certs</code> ([0|1])</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#auth_identity.functions">6. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2474872">6.1. 
+				<code class="function">auth_date_proc()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp1746856">6.1.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2402336">6.2. 
+				<code class="function">auth_add_identity()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp990208">6.2.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#vrfy_check_date">6.3. 
+				<code class="function">vrfy_check_date()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#vrfy_check_date.dep">6.3.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#vrfy_get_certificate">6.4. 
+				<code class="function">vrfy_get_certificate()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#vrfy_get_certificate.dep">6.4.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#vrfy_check_certificate">6.5. 
+				<code class="function">vrfy_check_certificate()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#vrfy_check_certificate.dep">6.5.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#vrfy_check_msgvalidity">6.6. 
+				<code class="function">vrfy_check_msgvalidity()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#vrfy_check_msgvalidity.dep">6.6.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+                <dt>
+                  <span class="section">
+                    <a href="#vrfy_check_callid">6.7. 
+				<code class="function">vrfy_check_callid()</code>
+			</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#vrfy_check_callid.dep">6.7.1. Dependencies</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp66672">7. Authorizer service examples</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp67216">8. Verifier service examples</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Auth Identity module provides functionalities for securely identifying
+		originators of SIP messages. It implements the SIP Identity standard where a
+		SIP proxy signs messages that is sent to other domains.
+		This module has two basic services:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>authorizer</em></span> - authorizes a message and adds Identity and
+				Identity-Info headers
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+				<span class="emphasis"><em>verifier</em></span> - verifies an authorized message
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+	    Known limitations in this version:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			authorizer and verifier support all SIP requests except for
+			<span class="emphasis"><em>CANCEL</em></span> and <span class="emphasis"><em>REGISTER</em></span>
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+			verifier does not support the subjectAltName extension of
+			certificates
+		</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module does not depend any other module.
+	</p>
+        </div>
+        <div class="section" title="3. Compilation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.compilation"></a>3. Compilation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module needs the following headers and libraries:
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+					<span class="emphasis"><em>OpenSSL</em></span> (version 0.9.8 or higher) for cryptographic functions
+				</p>
+              </li>
+              <li class="listitem">
+                <p>
+					<span class="emphasis"><em>libcurl</em></span> for HTTP, HTTPS functions
+				</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		If you'd like to use <span class="emphasis"><em>TLS</em></span> module too then use the
+		corresponding LIB line in auth_identity's Makefile
+		</p>
+        </div>
+        <div class="section" title="4. Installation And Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.install_and_run"></a>4. Installation And Running</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		the <span class="emphasis"><em>Authorizer</em></span> service needs to make the public key,
+		which conveyed in a certificate, available over HTTPS or HTTP for
+		verifiers. The domain the authorizer is responsible for and the
+		domain part of the URL of the certificate must be the same. This
+		service needs access to the private key too.
+	</p>
+        </div>
+        <div class="section" title="5. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.params"></a>5. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. privatekey_path (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3944"></a>5.1. <code class="varname">privatekey_path</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for authorizer service.</p>
+            <p>
+				The path of private key of the authentication service. The key
+				must be in PEM format.
+			</p>
+            <p>
+				This parameter is required by authentication service.
+			</p>
+            <div class="example">
+              <a id="idp1910840"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">privatekey_path</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","privatekey_path","/etc/ssl/private/key.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. certificate_path (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1899680"></a>5.2. <code class="varname">certificate_path</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for authorizer service.</p>
+            <p>
+				The path of certificate of the authentication service. The
+				certificate must be in PEM format.
+			</p>
+            <p>
+				This parameter is required by authentication service.
+			</p>
+            <div class="example">
+              <a id="idp1908296"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">certificate_path</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","certificate_path","/var/www/ssl/mycert.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3. certificate_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp860664"></a>5.3. <code class="varname">certificate_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for authorizer service.</p>
+            <p>
+				The url where certificate is available for other verifier
+				services. (value of Identity-info header) The
+				certificate should be in DER format.
+			</p>
+            <p>
+				This parameter is required by authentication service.
+			</p>
+            <div class="example">
+              <a id="idp1592208"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">certificate_url</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","certificate_url","https://foo.bar/mycert.der")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. msg_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2740408"></a>5.4. <code class="varname">msg_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for authorizer service.</p>
+            <p>
+				If the Date header of message which is needed to be authenticated
+				contains a time different by more than this seconds from the current
+				time noted by the authentication service then it rejects the
+				message.
+			</p>
+            <p>
+				This parameter is optional. The default value is "600".
+			</p>
+            <div class="example">
+              <a id="idp1445360"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">msg_timeout</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","msg_timeout",600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5. auth_validity_time (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_validity_time"></a>5.5. <code class="varname">auth_validity_time</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for verifier service.</p>
+            <p>
+				The validity time of an authenticated message. The message
+				will be refused if it contains a time different by more
+				than this seconds from the current time noted by the verification
+				service.
+			</p>
+            <p>
+				This parameter is optional. The default value is "3600".
+			</p>
+            <div class="example">
+              <a id="idp2115976"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">auth_validity_time</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","auth_validity_time",3600)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6. callid_cache_limit (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="callid_cache_limit"></a>5.6. <code class="varname">callid_cache_limit</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for verifier service.</p>
+            <p>
+				The number of Call-IDs stored in order to recognize call replay
+				attacks. A Call-ID is stored <code class="varname">auth_validity_time</code> long and
+				uses approximately 100 bytes memory.
+			</p>
+            <p>
+				This parameter is optional. The default value is "32768".
+				(you should increase the size of shared memory with -m
+				 command line switch if you liked to store more callid than
+				 10000)
+			</p>
+            <div class="example">
+              <a id="idp809064"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">auth_validity_time</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","callid_cache_limit",32768)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7. certificate_cache_limit (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="certificate_cache_limit"></a>5.7. <code class="varname">certificate_cache_limit</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for verifier service.</p>
+            <p>
+				The number of certificates stored in order to avoid needless
+				download. A certificate is stored until its expiration date and
+				uses approximately 600 bytes memory.
+			</p>
+            <p>
+				This parameter is optional. The default value is "4096".
+			</p>
+            <div class="example">
+              <a id="idp2150688"></a>
+              <p class="title">
+                <strong>Example 1.7. Set <code class="varname">certificate_cache_limit</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","certificate_cache_limit",4096)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8. cainfo_path (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="cainfo_path"></a>5.8. <code class="varname">cainfo_path</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for verifier service.</p>
+            <p>
+				A file of trusted certificates. The file should contain multiple
+				certificates in PEM format concatenated together. It could be useful
+				for verifying a certificate signed by a private CA.
+			</p>
+            <p>
+				This parameter is optional. It has not got default value.
+			</p>
+            <div class="example">
+              <a id="idp26896"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">cainfo_path</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","cainfo_path","/etc/ssl/certs/ca-certificates.crt")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9. accept_pem_certs ([0|1])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="accept_pem_certs"></a>5.9. <code class="varname">accept_pem_certs</code> ([0|1])</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this parameter is for verifier service.</p>
+            <p>
+				Enables the acquired certificate processing if it is in PEM
+				format.
+			</p>
+            <p>
+				This parameter is optional. The default value is "0".
+			</p>
+            <div class="example">
+              <a id="idp2438656"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">accept_pem_certs</code> parameter
+				</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_identity","accept_pem_certs",1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_identity.functions"></a>6. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.  auth_date_proc()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2474872"></a>6.1. 
+				<code class="function">auth_date_proc()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for authorizer service.</p>
+            <p>
+				If a message, the auth service should authorize, contains Date header
+				then this function checks whether it falls in message timeout (set by
+				<span class="emphasis"><em>msg_timeout</em></span> parameter). If there is not any Date
+				header then the module adds one. This function also checks whether the certificate
+				of the authentication service (set by <span class="emphasis"><em>certificate_path</em></span> parameter)
+				has been expired.
+			</p>
+            <div class="section" title="6.1.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp1746856"></a>6.1.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					No dependencies
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.2.  auth_add_identity()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2402336"></a>6.2. 
+				<code class="function">auth_add_identity()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for authorizer service.</p>
+            <p>
+				Assembles digest-string from the message, calculates its SHA1 hash,
+				encrypts it with the private key (set by <span class="emphasis"><em>privatekey_path</em></span>
+				parameter) of the authorizer service, base64 encodes it and adds to the
+				outgoing message as the value of <span class="emphasis"><em>Identity</em></span> header.
+				This function also adds Identity-Info header which contains an URI
+				(set by <span class="emphasis"><em>certificate_url</em></span> parameter) from which
+				the certificate of auth service can be acquired.
+			</p>
+            <p>
+				<span class="emphasis"><em>Note: this function needs the final outgoing
+				message for authorization, so no module may modify any
+				digest string related headers (From, To, Call-ID, CSeq,
+				Date, Contact) and body after auth_add_identity()'s been called</em></span>
+			</p>
+            <div class="section" title="6.2.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp990208"></a>6.2.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					auth_date_proc() must be called before
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.3.  vrfy_check_date()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="vrfy_check_date"></a>6.3. 
+				<code class="function">vrfy_check_date()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for verifier service.</p>
+            <p>
+				Checks Date header of the incoming message whether falls in validity
+				time (set by <span class="emphasis"><em>auth_validity_time</em></span> parameter)
+			</p>
+            <div class="section" title="6.3.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="vrfy_check_date.dep"></a>6.3.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					No dependencies
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.4.  vrfy_get_certificate()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="vrfy_get_certificate"></a>6.4. 
+				<code class="function">vrfy_get_certificate()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for verifier service.</p>
+            <p>
+				Tries to get certificate defined by the value of
+				<span class="emphasis"><em>Identity-info</em></span> header from certificate table
+				(which size is set by <span class="emphasis"><em>certificate_cache_limit</em></span>
+				parameter). If the required certificate is not found there then
+				this function downloads it.
+			</p>
+            <div class="section" title="6.4.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="vrfy_get_certificate.dep"></a>6.4.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					No dependencies
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.5.  vrfy_check_certificate()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="vrfy_check_certificate"></a>6.5. 
+				<code class="function">vrfy_check_certificate()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for verifier service.</p>
+            <p>
+				Checks whether the downloaded certificate is valid (is not expired,
+				its subject and the domain part of the URL are the same) and adds it
+				to certificate table.
+			</p>
+            <div class="section" title="6.5.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="vrfy_check_certificate.dep"></a>6.5.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					vrfy_get_certificate() must be called before
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.6.  vrfy_check_msgvalidity()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="vrfy_check_msgvalidity"></a>6.6. 
+				<code class="function">vrfy_check_msgvalidity()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for verifier service.</p>
+            <p>
+				Assembles digest-string from the message, create SHA1 hash and
+				compares it with the decrypted value of <span class="emphasis"><em>Identity</em></span>
+				header.
+			</p>
+            <div class="section" title="6.6.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="vrfy_check_msgvalidity.dep"></a>6.6.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					vrfy_get_certificate() must be called before and
+					vrfy_check_certificate() should be called before
+				</p>
+            </div>
+          </div>
+          <div class="section" title="6.7.  vrfy_check_callid()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="vrfy_check_callid"></a>6.7. 
+				<code class="function">vrfy_check_callid()</code>
+			</h3>
+                </div>
+              </div>
+            </div>
+            <p>Note: this function is for verifier service.</p>
+            <p>
+				Checks whether the current call's been already processed in validity
+				time (set by <span class="emphasis"><em>auth_validity_time</em></span>) to recognize
+				call replay attacks. If this call (identified by Call-id, Cseq,
+				and tag of From header triple) has not been replayed then adds it to
+				callid table (which size is set by <span class="emphasis"><em>callid_cache_limit</em></span>
+				parameter).
+			</p>
+            <div class="section" title="6.7.1. Dependencies">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="vrfy_check_callid.dep"></a>6.7.1. Dependencies</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+					This function should be called for the last time.
+				</p>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="7. Authorizer service examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp66672"></a>7. Authorizer service examples</h2>
+              </div>
+            </div>
+          </div>
+          <pre class="programlisting">...
+route[INIT]
+{
+	# we process new transactions only
+	if (!t_newtran()) {
+		sl_reply("500", "Internal error newtran");
+		drop;
+	}
+...
+route[OUTBOUND]
+{
+	# If we are responsible for the domain of the sender of this message
+	if ($f.did &amp;&amp; !$t.did) {
+		# Authentication service
+		if (method=="INVITE" || method=="BYE"
+			|| method=="OPTION" || method=="ACK") {
+			# Identity and Identity-info headers must not exist
+			if (@identity) {
+				t_reply("403", "Invalid Identity header");
+				drop;
+			}
+			if (@identity_info) {
+				t_reply("403", "Invalid Identity-info header");
+				drop;
+			}
+
+			if (!auth_date_proc()) {
+				t_reply("403", "Invalid Date value");
+				drop;
+			}
+
+			if (!auth_add_identity()) {
+				t_reply("480", "Authentication error");
+				drop;
+			}
+		}
+		route(FORWARD);
+	}
+}
+...</pre>
+        </div>
+        <div class="section" title="8. Verifier service examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp67216"></a>8. Verifier service examples</h2>
+              </div>
+            </div>
+          </div>
+          <pre class="programlisting">...
+route[INIT]
+{
+	# we process new transactions only
+	if (!t_newtran()) {
+		sl_reply("500", "Internal error newtran");
+		drop;
+	}
+...
+route[VERIFY]
+{
+	# if we've already processed this message then we drop it
+	if (!t_newtran()) {
+		sl_reply("500", "Internal error newtran");
+		drop;
+	}
+
+	if (method=="INVITE" || method=="BYE"
+		|| method=="OPTION" || method=="ACK") {
+		# Identity and Identity-info are required for verification
+		if (!@identity) {
+			t_reply("428", "Use Identity Header");
+			drop;
+		}
+		if (!@identity_info) {
+			t_reply("436", "Bad Identity-Info");
+			drop;
+		}
+
+		if (!vrfy_check_date()) {
+			t_reply("403", "Outdated Date header value");
+			drop;
+		}
+
+		if (!vrfy_get_certificate()) {
+			t_reply("436", "Bad Identity-Info");
+			drop;
+		}
+
+		if (!vrfy_check_certificate()) {
+			t_reply("437", "Unsupported Certificate");
+			drop;
+		}
+
+		if (!vrfy_check_msgvalidity()) {
+			t_reply("438", "Invalid Identity Header");
+			drop;
+		}
+
+		if (!vrfy_check_callid()) {
+			t_reply("403", "Message is replayed");
+			drop;
+		}
+	}
+}
+...</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

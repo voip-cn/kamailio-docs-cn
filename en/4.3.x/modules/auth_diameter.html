@@ -1,0 +1,640 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>AUTH_DIAMETER Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4335512" title="AUTH_DIAMETER Module" />
+    <link rel="next" href="#idp2778664" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="AUTH_DIAMETER Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4335512"></a>AUTH_DIAMETER Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">rosdev.ro<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003, 2004 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2778664">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2449496">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp5256">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2381440">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1192240">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1413936">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2548032">3.1. <code class="varname">diameter_client_host</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp84712">3.2. <code class="varname">diameter_client_port</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp217664">3.3. <code class="varname">use_domain</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp220376">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp220744">4.1. 
+		<code class="function">diameter_www_authorize(realm)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp226384">4.2. 
+		<code class="function">diameter_proxy_authorize(realm)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18424">4.3. 
+		<code class="function">diameter_is_user_in(who, group)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp23720">5. Installation and Running</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1792872">Digest Authentication</a></dt>
+          <dt>1.2. <a href="#idp2566400">Set <code class="varname">diameter_client_host</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp216560">Set <code class="varname">diameter_client_port</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp219128">Set <code class="varname">use_domain</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp225136"><code class="function">diameter_www_authorize</code> usage</a></dt>
+          <dt>1.6. <a href="#idp229248"><code class="function">diameter_proxy_authorize</code> usage</a></dt>
+          <dt>1.7. <a href="#idp22368"><code class="function">diameter_is_user_in</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2778664"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2449496">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp5256">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2381440">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1192240">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1413936">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2548032">3.1. <code class="varname">diameter_client_host</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp84712">3.2. <code class="varname">diameter_client_port</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp217664">3.3. <code class="varname">use_domain</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp220376">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp220744">4.1. 
+		<code class="function">diameter_www_authorize(realm)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp226384">4.2. 
+		<code class="function">diameter_proxy_authorize(realm)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18424">4.3. 
+		<code class="function">diameter_is_user_in(who, group)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp23720">5. Installation and Running</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2449496"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module implements SIP authentication and authorization with
+	DIAMETER server, namely DIameter Server Client (DISC).
+	</p>
+          <p>
+	NOTE: diameter support was developed for DISC (DIameter Server Client 
+	project at http://developer.berlios.de/projects/disc/). This project 
+	seems to be no longer maintained and DIAMETER specifications were updated
+	in the meantime. Thus, the module is obsolete and needs rework to be 
+	usable with opendiameter or other DIAMETER servers.
+	</p>
+          <p>
+	The digest authentication mechanism is presented in next figure.
+	</p>
+          <div class="example">
+            <a id="idp1792872"></a>
+            <p class="title">
+              <strong>Example 1.1. Digest Authentication</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+	a) First phase of Digest Authentication for SIP:
+
+
+     +----+ SIP INVITE   +=====+  DIAMETER      +------+       +------+
+     |    | no Auth hdr  #/////#  AA-Request    |      |       |      |
+     |    |---------1---&gt;#/////#-------2-------&gt;|      |---2--&gt;|      |
+     |UAC |              #UAS//#                |DClnt |       |DSrv  |
+     |    |&lt;-----4-------#(SER)#&lt;------3--------|(DISC)|&lt;--3---|(DISC)|
+     |    |     401      #/////#  DIAMETER      |      |       |      |
+     +----+ Unauthorized +=====+  AA-Answer     +------+       +------+
+                                  Result-Code=4001
+
+
+	b) Second phase of Digest Authentication for SIP:
+
+
+     +----+ SIP INVITE   +=====+  DIAMETER     +------+       +----+
+     |    | Auth hdr     #/////#  AA-Request   |      |       |    |
+     |    |--------1----&gt;#/////#-------2------&gt;|      |---2--&gt;|    |
+     |UAC |              #UAS//#               |DClnt |       |DSrv|
+     |    |&lt;-------4-----#(SER)#&lt;------3-------|      |&lt;--3---|    |
+     |    |      200 OK  #/////#  DIAMETER     |      |       |    |
+     +----+              +=====+  AA-Answer    +------+       +----+
+                                  Result-Code=2001
+
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp5256"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2381440"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl</em></span> - used to send stateless replies.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1192240"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1413936"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. diameter_client_host (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2548032"></a>3.1. <code class="varname">diameter_client_host</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Hostname of the machine where the DIAMETER Client is running.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">localhost</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2566400"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">diameter_client_host</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_diameter", "diameter_client_host", "10.10.10.10")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. diameter_client_port (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp84712"></a>3.2. <code class="varname">diameter_client_port</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Port number where the DIAMETER Client is listening.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">3000</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp216560"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">diameter_client_port</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_diameter", "diameter_client_port", 3000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. use_domain (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp217664"></a>3.3. <code class="varname">use_domain</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Specifies whether the domain name part of URI is used when checking the
+		user's privileges.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">“<span class="quote">0 (0==false and 1==true )</span>”</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp219128"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">use_domain</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_diameter", "use_domain", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp220376"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  diameter_www_authorize(realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp220744"></a>4.1. 
+		<code class="function">diameter_www_authorize(realm)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		SIP Server checks for authorization having a DIAMETER server in backend.
+		If no credentials are provided inside the SIP request then a challenge
+		is sent back to UAC. If the credentials don't match the ones computed by
+		DISC then <span class="quote">“<span class="quote">403 Forbidden</span>”</span> is sent back.
+		</p>
+            <p>Negative codes may be interpreted as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-5 (generic error)</em></span> - some generic error
+			occurred and no reply was sent out;
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-3 (stale nonce)</em></span> - stale nonce;
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - the realm to be use for
+			authentication and authorization. The string may contain 
+			pseudo variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp225136"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">diameter_www_authorize</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!diameter_www_authorize("siphub.net"))
+{ /* user is not authorized */
+	exit;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  diameter_proxy_authorize(realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp226384"></a>4.2. 
+		<code class="function">diameter_proxy_authorize(realm)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		SIP Proxy checks for authorization having a DIAMETER server in backend.
+		If no credentials are provided inside the SIP request then a challenge
+		is sent back to UAC. If the credentials don't match the ones computed by
+		DISC then <span class="quote">“<span class="quote">403 Forbidden</span>”</span> is sent back.  For more about 
+		the negative return codes, see the above function.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - the realm to be use for
+			authentication and authorization. The string may contain 
+			pseudo variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp229248"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">diameter_proxy_authorize</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!diameter_proxy_authorize("siphub.net"))
+{ /* user is not authorized */
+	exit;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  diameter_is_user_in(who, group)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18424"></a>4.3. 
+		<code class="function">diameter_is_user_in(who, group)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The method performs group membership checking with DISC.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>who</em></span> - what header to be used to get the
+			SIP URI that is wanted to be checked being member in a certain group.
+			It can be: <span class="quote">“<span class="quote">Request-URI</span>”</span>, <span class="quote">“<span class="quote">From</span>”</span>,
+			<span class="quote">“<span class="quote">To</span>”</span> or <span class="quote">“<span class="quote">Credentials</span>”</span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>group</em></span> - the group name where to check if
+			the user is part of.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp22368"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">diameter_is_user_in</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(!diameter_is_user_in("From", "voicemail"))
+{ /* user is not authorized */
+	exit;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Installation and Running">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp23720"></a>5. Installation and Running</h2>
+              </div>
+            </div>
+          </div>
+          <p>Notes about installation and running.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1367 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>dialplan Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp3816" title="dialplan Module" />
+    <link rel="next" href="#idp2752024" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="dialplan Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp3816"></a>dialplan Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andreea-Ancuta</span> <span class="surname">Onofrei</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Andreea-Ancuta</span> <span class="surname">Onofrei</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Olle E.</span> <span class="surname">Johansson</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2007-2008 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2008-2010 Juha Heinanen</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2014 Olle E. Johansson, Edvina AB</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2752024">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#dialplan.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#dialplan.introduction">2. How it works</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#dialplan.usecases">3. Dialplan use cases</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp145416">4. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp145792">4.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1333136">4.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1752656">5. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.db_url">5.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.table_name">5.2. <code class="varname">table_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.dpid_col">5.3. <code class="varname">dpid_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.pr_col">5.4. <code class="varname">pr_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.match_op_col">5.5. <code class="varname">match_op_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.match_exp_col">5.6. <code class="varname">match_exp_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.match_len_col">5.7. <code class="varname">match_len_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.subst_exp_col">5.8. <code class="varname">subst_exp_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.repl_exp_col">5.9. <code class="varname">repl_exp_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.attrs_col">5.10. <code class="varname">attrs_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.attrs_pvar">5.11. <code class="varname">attrs_pvar</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.fetch_rows">5.12. <code class="varname">fetch_rows</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.match_dynamic">5.13. <code class="varname">match_dynamic</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp24464">6. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.p.dp_translate">6.1. 
+		<code class="function">dp_translate(id, [src[/dest]])</code>
+	</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp37720">7. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.m.dp_reload">7.1. <code class="varname">dp_reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.m.dp_translate">7.2. <code class="varname">dp_translate</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1763528">8. Exported RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.r.dp.dump">8.1. <code class="varname">dialplan.dump</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#dialplan.r.dp.reload">8.2. <code class="varname">dialplan.reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1768600">8.3. <code class="varname">dialplan.translate</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#dialplan.installation">9. Installation</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1723432">2. Developer's Guide</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2517496">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm10152">Set <code class="varname">table_name</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm7352">Set <code class="varname">dpid_col</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm4536">Set <code class="varname">pr_col</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm1808">Set <code class="varname">match_op_col</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp71992">Set <code class="varname">match_exp_col</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp74776">Set <code class="varname">pr_col</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp77528">Set <code class="varname">pr_col</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp80280">Set <code class="varname">repl_exp_col</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp83272">Set <code class="varname">attrs_col</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp86824">Set <code class="varname">attrs_pvar</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp89568">Set <code class="varname">fetch_rows</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp23208">Set <code class="varname">match_dynamic</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp35144"><code class="function">dp_translate</code> usage</a></dt>
+          <dt>1.15. <a href="#idp36344"><code class="function">dp_translate</code> usage</a></dt>
+          <dt>1.16. <a href="#idp1774160">Example of rules</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2752024"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#dialplan.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#dialplan.introduction">2. How it works</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#dialplan.usecases">3. Dialplan use cases</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp145416">4. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp145792">4.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1333136">4.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1752656">5. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.db_url">5.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.table_name">5.2. <code class="varname">table_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.dpid_col">5.3. <code class="varname">dpid_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.pr_col">5.4. <code class="varname">pr_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.match_op_col">5.5. <code class="varname">match_op_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.match_exp_col">5.6. <code class="varname">match_exp_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.match_len_col">5.7. <code class="varname">match_len_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.subst_exp_col">5.8. <code class="varname">subst_exp_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.repl_exp_col">5.9. <code class="varname">repl_exp_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.attrs_col">5.10. <code class="varname">attrs_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.attrs_pvar">5.11. <code class="varname">attrs_pvar</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.fetch_rows">5.12. <code class="varname">fetch_rows</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.match_dynamic">5.13. <code class="varname">match_dynamic</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp24464">6. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.p.dp_translate">6.1. 
+		<code class="function">dp_translate(id, [src[/dest]])</code>
+	</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp37720">7. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.m.dp_reload">7.1. <code class="varname">dp_reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.m.dp_translate">7.2. <code class="varname">dp_translate</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1763528">8. Exported RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.r.dp.dump">8.1. <code class="varname">dialplan.dump</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#dialplan.r.dp.reload">8.2. <code class="varname">dialplan.reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1768600">8.3. <code class="varname">dialplan.translate</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#dialplan.installation">9. Installation</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dialplan.overview"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module implements generic string translations based on matching and
+	replacement rules. It can be used to manipulate the request URI or a PV and to 
+	translate it to a new format/value. Dialplan can also be used to match
+	a given URI and retrieve a set of attributes based on the match. It is a very
+	flexible module that can be used to handle call routing, prefix rewrites
+	and much more.
+	</p>
+        </div>
+        <div class="section" title="2.¬†How it works">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dialplan.introduction"></a>2.¬†How it works</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	At startup the module will load a set of matching and transformation rules from a 
+	database. Rules are grouped into dialplans. Every database row will be
+	stored in memory as a dialplan rule. Each rule will describe how the 
+	matching will be made, how the input value will be modified and which 
+	attributes that will be set for the matching transformation.
+	</p>
+          <p>
+	The module expects an input value which will be matched against a rule
+	by using regular expressions (see 'man pcresyntax' for syntax), string
+	or fnmatch (see 'man fnmatch') matching. Overlapping matching expressions
+	can be controlled via priorities. One priority can have multiple
+	dialplan entries. Priorities need not be numbered with consecutive
+	numbers. The next higher priority will be used after trying to match all 
+	entries in one priority.
+	</p>
+          <p>
+	Once a rule is matched, the defined transformation (if any) is applied and 
+	the result is returned as output value. Also, if any string attribute is 
+	associated to the rule, this will be returned to the script along with
+	the output value. This can be used to identify the used rule.
+	</p>
+          <p>
+	<span class="emphasis"><em> The first matching rule will be processed.</em></span>
+	</p>
+        </div>
+        <div class="section" title="3.¬†Dialplan use cases">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dialplan.usecases"></a>3.¬†Dialplan use cases</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The module can be used to implement multiple dialplans - to do
+	auto-completion of dialed numbers (like national to international),
+	to convert generic numbers to specific numbers (like for emergency numbers).
+	</p>
+          <p>
+	The module can also be used for detecting a range or sets of numbers mapped 
+	on a service/case - the attribute string can be used to store extra 
+	information about the service/case.
+	</p>
+          <p>
+	Non-SIP string translation can be implemented - like converting country 
+	names from all possible formats to a canonical format:
+	<span class="emphasis"><em>(UK, England, United Kingdom) -&gt; GB.
+	</em></span></p>
+          <p>
+	Any other string-base translation or detection for whatever other purposes.
+	</p>
+        </div>
+        <div class="section" title="4.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp145416"></a>4.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp145792"></a>4.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>A database module</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="4.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1333136"></a>4.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				 <span class="emphasis"><em>libpcre - the libraries of <a class="ulink" href="javascript:if(confirm('http://www.pcre.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.pcre.org/'" tppabs="http://www.pcre.org/">PCRE</a></em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="5.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1752656"></a>5.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.db_url"></a>5.1.¬†<code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The translation rules will be loaded using this database URL.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 
+				<span class="quote">‚Äú<span class="quote">mysql://kamailio:kamailiorw@localhost/kamailio</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp2517496"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "db_url", "mysql://user:passwb@localhost/db")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬†table_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.table_name"></a>5.2.¬†<code class="varname">table_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the database table used to load the translation rules.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">dialplan</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm10152"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">table_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "table_name", "my_table")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬†dpid_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.dpid_col"></a>5.3.¬†<code class="varname">dpid_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name used to store the dialplan group ID.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">dpid</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm7352"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">dpid_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "dpid_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4.¬†pr_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.pr_col"></a>5.4.¬†<code class="varname">pr_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name used to store the priority of the corresponding rule from the database
+		row.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">pr</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm4536"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">pr_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "pr_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5.¬†match_op_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.match_op_col"></a>5.5.¬†<code class="varname">match_op_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name used to store the type of matching of the rule.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">match_op</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm1808"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">match_op_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "match_op_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6.¬†match_exp_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.match_exp_col"></a>5.6.¬†<code class="varname">match_exp_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name to store the rule match expression.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">match_exp</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp71992"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">match_exp_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "match_exp_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7.¬†match_len_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.match_len_col"></a>5.7.¬†<code class="varname">match_len_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name to store the length of a string matching the 
+		match expression.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">match_len</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp74776"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">pr_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "match_len_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8.¬†subst_exp_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.subst_exp_col"></a>5.8.¬†<code class="varname">subst_exp_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name to store the rule's substitution expression.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">subst_exp</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp77528"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">pr_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "subst_exp_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.9.¬†repl_exp_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.repl_exp_col"></a>5.9.¬†<code class="varname">repl_exp_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name to store the rule's replacement expression.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">repl_exp</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp80280"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">repl_exp_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "repl_exp_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.10.¬†attrs_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.attrs_col"></a>5.10.¬†<code class="varname">attrs_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The column name to store the rule's attributes to be set after match (see 
+		<code class="varname">attrs_pvar</code> )
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">attrs</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp83272"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">attrs_col</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "attrs_col", "column_name")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.11.¬†attrs_pvar (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.attrs_pvar"></a>5.11.¬†<code class="varname">attrs_pvar</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The pseudovariable used to store the rule's attributes, 
+		after translation (when <code class="function">dp_translate</code>() succeeds).
+		This parameter can be an <span class="quote">‚Äú<span class="quote">AVP</span>‚Äù</span> or a script variable (<span class="quote">‚Äú<span class="quote">$var()</span>‚Äù</span>)..
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp86824"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Set <code class="varname">attrs_pvar</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "attrs_pvar", "$avp(s:dest)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.12.¬†fetch_rows (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.fetch_rows"></a>5.12.¬†<code class="varname">fetch_rows</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of rows to be fetched at once from database
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">1000</span>‚Äù</span>.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp89568"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†Set <code class="varname">fetch_rows</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "fetch_rows", 4000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.13.¬†match_dynamic (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.match_dynamic"></a>5.13.¬†<code class="varname">match_dynamic</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the match and substitution expressions can
+		include script variables and their values are evaluated at
+		runtime.
+		</p>
+            <p>
+		During the loading process, the values that contain
+		variables are no longer pre-compiled to PCRE structure in
+		memory, because the values change at runtime, thus expect slightly
+		slower performances. Values without script variables are pre-compiled
+		even if this parameter is enabled.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is <span class="quote">‚Äú<span class="quote">0</span>‚Äù</span> (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp23208"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†Set <code class="varname">match_dynamic</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("dialplan", "match_dynamic", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp24464"></a>6.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† dp_translate(id, [src[/dest]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.p.dp_translate"></a>6.1.¬†
+		<code class="function">dp_translate(id, [src[/dest]])</code>
+	</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Will try to translate <span class="quote">‚Äú<span class="quote">src</span>‚Äù</span> into <span class="quote">‚Äú<span class="quote">dest</span>‚Äù</span> according to 
+	the translation rules in the dialplan identified by <span class="quote">‚Äú<span class="quote">id</span>‚Äù</span> .
+	If src/dest is missing the default parameter <span class="quote">‚Äú<span class="quote">ruri.user/ruri.user</span>‚Äù</span> will
+	be used, thus translating the request URI user part. If only <span class="quote">‚Äú<span class="quote">dest</span>‚Äù</span> is
+	missing, only matching and storing of the matching rule's attributes is done.
+
+	</p>
+            <p>
+	  Returns 1, if translation succeeded, -1 in case of some error
+	  occurred, and -2 if dialplan with ID equal to id does not exist.
+	</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+		<span class="emphasis"><em>id</em></span> -the dialplan id of the possible matching rules.
+		This parameter can have the following types:
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>integer</em></span>- the dialplan id is statically 
+			assigned </p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>avp var</em></span> 
+			- the dialplan id is the value of an existing avp variable
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>script var</em></span> 
+			- the dialplan id is the value of an existing script variable.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+ 		<span class="emphasis"><em>src/dest</em></span> - input and output of the function.
+ 		</p>
+                  <p>Input parameter src can be any pseudo variable.
+		Output parameter dest can be:
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+                          <span class="emphasis">
+                            <em>R-URI</em>
+                          </span>
+                        </p>
+                        <p>
+			- the string is the r-uri or r-uri user part
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>avp var</em></span> </p>
+                        <p>
+			- At input the function will get the input string from an existing 
+			avp variable. At output the function will add an avp with the 
+			value of the output string.
+			</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>script var</em></span> </p>
+                        <p>
+			- At input the function will get the input string from an existing 
+			script variable. At output the function will set an script variable
+			with the value of the output string.
+			</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+	This function can be used from ANY_ROUTE.
+	</p>
+            <div class="example">
+              <a id="idp35144"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†<code class="function">dp_translate</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+dp_translate("240", "$ruri.user/$avp(s:dest)");
+xlog("translated to var $avp(s:dest) \n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp36344"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†<code class="function">dp_translate</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+$avp(s:src) = $ruri.user;
+dp_translate("$var(x)", "$avp(s:src)/$var(y)");
+xlog("translated to var $var(y) \n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="7.¬†MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp37720"></a>7.¬†MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬†dp_reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.m.dp_reload"></a>7.1.¬†<code class="varname">dp_reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Forces an update of the translation rules from the database.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>dp_reload</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+			MI DATAGRAM Command Format:
+			</p>
+            <pre class="programlisting">		:dp_reload:
+		_empty_line_</pre>
+          </div>
+          <div class="section" title="7.2.¬†dp_translate">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.m.dp_translate"></a>7.2.¬†<code class="varname">dp_translate</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                	Will apply a translation rule identified by a dialplan
+                	id and an input string.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>dp_translate</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>2</em></span></p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Dial plan ID</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Input String</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			MI DATAGRAM Command Format:
+			</p>
+            <pre class="programlisting">            :dp_translate:
+            dpid
+            input
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="8.¬†Exported RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1763528"></a>8.¬†Exported RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="8.1.¬†dialplan.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.r.dp.dump"></a>8.1.¬†<code class="varname">dialplan.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Dumps the content of one dialplan ID
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>dialplan.dump</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>Dialplan ID</em></span></p>
+            <p>
+			Example:
+			</p>
+            <pre class="programlisting">		kamcmd dialplan.dump 100</pre>
+          </div>
+          <div class="section" title="8.2.¬†dialplan.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="dialplan.r.dp.reload"></a>8.2.¬†<code class="varname">dialplan.reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Forces an update of the translation rules from the database.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>dialplan.reload</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>none</em></span></p>
+            <p>
+			Example:
+			</p>
+            <pre class="programlisting">		kamcmd dialplan.reload</pre>
+          </div>
+          <div class="section" title="8.3.¬†dialplan.translate">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1768600"></a>8.3.¬†<code class="varname">dialplan.translate</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                	Will apply a translation rule identified by a dialplan
+                	id and an input string.
+			</p>
+            <p>
+			Name: <span class="emphasis"><em>dialplan.translate</em></span>
+			</p>
+            <p>Parameters: <span class="emphasis"><em>2</em></span></p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Dial plan ID</em>
+                    </span>
+                  </p>
+                </li>
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>Input String</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			Example:
+			</p>
+            <pre class="programlisting">        # kamcmd dp_translate dpid "input"
+        kamcmd dp_translate 1 "abcdxyz"</pre>
+          </div>
+        </div>
+        <div class="section" title="9.¬†Installation">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="dialplan.installation"></a>9.¬†Installation</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The modules requires one table in Kamailio database: dialplan.
+		The SQL syntax to create them can be found in dialplan-create.sql     
+       		 script in the database directories in the kamailio/scripts folder.
+        	You can also find the complete database documentation on the
+        	project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+        	</p>
+          <p>
+		Some sample records from a dialplan table are presented in the next
+		figure.
+        	</p>
+          <div class="example">
+            <a id="idp1774160"></a>
+            <p class="title">
+              <strong>Example¬†1.16.¬†Example of rules</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+dpid: 1
+pr: 1
+match_op: 1
+match_exp: ^0[1-9][0-9]+$
+match_len: 0
+subst_exp: ^0([1-9][0-9]+)$
+repl_exp: 0049\1
+attrs: de
+...
+dpid: 1
+pr: 2
+match_op: 1
+match_exp: ^0[1-9][0-9]+$
+match_len: 0
+subst_exp: ^0(.+)$
+repl_exp: $var(prefix)\1
+attrs: xyz
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+		Note that you can use config variables in the replacement expression
+		(repl_exp) field. However, not all of config variables are safe to use
+		there - specifically the variables that have in their name other
+		variables (variables with dynamic name). References to SIP message,
+		private variables ($var(...)) and AVPs with static name are among
+		those that are safe to use in replacement expressions.
+		</p>
+          <p>
+		The match_op field specify matching operator, valid values:
+        	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+		0 - string comparison; 
+               	</li>
+              <li class="listitem">
+		1 - regular expression matching (pcre);
+               	</li>
+              <li class="listitem">
+		2 - fnmatch (shell-like pattern) matching.
+               	</li>
+            </ul>
+          </div>
+          <p>
+		</p>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Developer's Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1723432"></a>Chapter¬†2.¬†Developer's Guide</h2>
+            </div>
+          </div>
+        </div>
+        <p>
+	The module does not provide any <acronym class="acronym">API</acronym> to use in other Kamailio modules.
+	</p>
+      </div>
+    </div>
+  </body>
+</html>

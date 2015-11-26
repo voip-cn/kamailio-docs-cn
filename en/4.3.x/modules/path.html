@@ -1,0 +1,732 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>path Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4337032" title="path Module" />
+    <link rel="next" href="#idp2431576" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="path Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4337032"></a>path Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andreas</span> <span class="surname">Granig</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Inode GmbH<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Andreas</span> <span class="surname">Granig</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Richard</span> <span class="surname">Fuchs</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Inode GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2431576">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp1638096">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1408880">1.1. Path insertion for registrations</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2712680">1.2. Outbound routing to NAT'ed UACs</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2634304">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2982056">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp189224">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp190968">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp191336">3.1. <code class="varname">use_received</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp194280">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp194648">4.1. 
+		<code class="function">add_path()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3036272">4.2. 
+		<code class="function">add_path(user)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3040184">4.3. 
+		<code class="function">add_path(user, parameters)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3045104">4.4. 
+		<code class="function">add_path_received()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3048024">4.5. 
+		<code class="function">add_path_received(user)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm16376">4.6. 
+		<code class="function">add_path_received(user, parameters)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp193144">Set <code class="varname">use_received</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3035048"><code class="function">add_path</code> usage</a></dt>
+          <dt>1.3. <a href="#idp3038912"><code class="function">add_path(user)</code> usage</a></dt>
+          <dt>1.4. <a href="#idp3043848"><code class="function">add_path(user, parameters)</code> usage</a></dt>
+          <dt>1.5. <a href="#idp3046760"><code class="function">add_path_received()</code> usage</a></dt>
+          <dt>1.6. <a href="#idp3049696"><code class="function">add_path_received(user)</code> usage</a></dt>
+          <dt>1.7. <a href="#idm14704"><code class="function">add_path_received(user, parameters)</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2431576"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp1638096">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1408880">1.1. Path insertion for registrations</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2712680">1.2. Outbound routing to NAT'ed UACs</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2634304">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2982056">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp189224">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp190968">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp191336">3.1. <code class="varname">use_received</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp194280">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp194648">4.1. 
+		<code class="function">add_path()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3036272">4.2. 
+		<code class="function">add_path(user)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3040184">4.3. 
+		<code class="function">add_path(user, parameters)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3045104">4.4. 
+		<code class="function">add_path_received()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3048024">4.5. 
+		<code class="function">add_path_received(user)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm16376">4.6. 
+		<code class="function">add_path_received(user, parameters)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1638096"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module is designed to be used at intermediate sip proxies like loadbalancers in front of
+		registrars and proxies. It provides functions for inserting a Path header including a parameter for
+		passing forward the received-<acronym class="acronym">URI</acronym> of a registration to the next hop. It also provides a mechanism
+		for evaluating this parameter in subsequent requests and to set the destination <acronym class="acronym">URI</acronym> according to it.
+		</p>
+          <div class="section" title="1.1. Path insertion for registrations">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1408880"></a>1.1. Path insertion for registrations</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For registrations in a scenario like <span class="quote">“<span class="quote">[UAC] -&gt; [P1] -&gt; [REG]</span>”</span>, 
+			the "path" module can be used at the intermediate proxy P1 to insert a Path
+			header into the message before forwarding it to the registrar REG. Two functions
+			can be used to achieve this:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>add_path(...)</em></span> adds a Path header in the form of
+					<span class="quote">“<span class="quote">Path: &lt;sip:1.2.3.4;lr&gt;</span>”</span> to the message using the address
+					of the outgoing interface. A port is only added if it's not the default
+					port 5060.
+					</p>
+                  <p>
+					If a username is passed to the function, it is also included in the Path
+					<acronym class="acronym">URI</acronym>, like <span class="quote">“<span class="quote">Path: &lt;sip:username@1.2.3.4;lr&gt;</span>”</span>.
+					</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>add_path_received(...)</em></span> also add a Path header in the
+					same form as above, but also adds a parameter indicating the received-<acronym class="acronym">URI</acronym>
+					of the message, like 
+					<span class="quote">“<span class="quote">Path: &lt;sip:1.2.3.4;received=sip:2.3.4.5:1234;lr&gt;</span>”</span>. This
+					is especially useful if the proxy does NAT detection and wants to pass
+					the NAT'ed address to the registrar.
+					</p>
+                  <p>
+					If the function is called with a username, it's included in the Path <acronym class="acronym">URI</acronym> too.
+					</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			</p>
+            <p>
+			</p>
+          </div>
+          <div class="section" title="1.2. Outbound routing to NAT'ed UACs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2712680"></a>1.2. Outbound routing to NAT'ed UACs</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			If the NAT'ed address of an UAC is passed to the registrar, the registrar routes back
+			subsequent requests using the Path header of the registration as Route header of the
+			current request. If the intermediate proxy had inserted a Path header including the
+			<span class="quote">“<span class="quote">received</span>”</span> parameter during the registration, this parameter will show up
+			in the Route header of the new request as well, allowing the intermediate proxy to route
+			to this address instead of the one propagated in the Route <acronym class="acronym">URI</acronym> for tunneling through NAT.
+			This behaviour can be activated by setting the module parameter <span class="quote">“<span class="quote">use_received</span>”</span>.
+			</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2634304"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2982056"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				The "rr" module is needed for outbound routing according to the <span class="quote">“<span class="quote">received</span>”</span>
+				parameter.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				The "outbound" module is needed for outbound routing as per RFC 5626.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp189224"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp190968"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. use_received (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp191336"></a>3.1. <code class="varname">use_received</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the <span class="quote">“<span class="quote">received</span>”</span> parameter of the first Route <acronym class="acronym">URI</acronym> is evaluated and
+		used as destination-<acronym class="acronym">URI</acronym> if present.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp193144"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">use_received</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("path", "use_received", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp194280"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  add_path()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp194648"></a>4.1. 
+		<code class="function">add_path()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function is used to insert a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:1.2.3.4;lr&gt;</span>”</span>, where <span class="quote">“<span class="quote">1.2.3.4</span>”</span> is the address
+		of the outgoing interface.
+		</p>
+            <p>
+		If the <span class="quote">“<span class="quote">outbound</span>”</span> module was loaded before this module, and outbound is
+		required for this request, the header will be in the form
+		<span class="quote">“<span class="quote">Path: &lt;sip:flowtoken@1.2.3.4;lr;ob&gt;</span>”</span>, where <span class="quote">“<span class="quote">flowtoken</span>”</span>
+		is the RFC 5636 flow-token that can be used to identify the source and local address and
+		transport the request was received on, and where <span class="quote">“<span class="quote">1.2.3.4</span>”</span> is the address of
+		the outgoing interface.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3035048"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">add_path</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path()) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  add_path(user)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3036272"></a>4.2. 
+		<code class="function">add_path(user)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function adds a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:user@1.2.3.4;lr&gt;</span>”</span>.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>user</em></span> - The username to be inserted as user part.
+			SPVE is supported.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3038912"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="function">add_path(user)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path("loadbalancer")) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  add_path(user, parameters)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3040184"></a>4.3. 
+		<code class="function">add_path(user, parameters)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function adds a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:user@1.2.3.4;lr&gt;</span>”</span> and appends the
+		given <span class="emphasis"><em>parameters</em></span> as additional URI parameters.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>user</em></span> - The username to be inserted as user part.
+			SPVE is supported.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>parameters</em></span> - Additional URI parameters to be
+			appended to the URI. The semicolon separator is added automatically.
+			The script writer is responsible for proper URI escaping.
+			SPVE is supported.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3043848"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="function">add_path(user, parameters)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path("loadbalancer", "ob")) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  add_path_received()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3045104"></a>4.4. 
+		<code class="function">add_path_received()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function adds a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:1.2.3.4;received=sip:2.3.4.5:1234;lr&gt;</span>”</span>, setting its own 
+		outgoing address as domain-part, and the address the request has been received from as
+		received-parameter.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3046760"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="function">add_path_received()</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path_received()) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  add_path_received(user)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3048024"></a>4.5. 
+		<code class="function">add_path_received(user)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function adds a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:user@1.2.3.4;received=sip:2.3.4.5:1234;lr&gt;</span>”</span>, setting
+		'user' as username part of address, its own 
+		outgoing address as domain-part, and the address the request has been received from as
+		received-parameter.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp3049696"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="function">add_path_received(user)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path_received("inbound")) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  add_path_received(user, parameters)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm16376"></a>4.6. 
+		<code class="function">add_path_received(user, parameters)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function adds a Path header in the form 
+		<span class="quote">“<span class="quote">Path: &lt;sip:user@1.2.3.4;received=sip:2.3.4.5:1234;lr&gt;</span>”</span>, setting
+		'user' as username part of address, its own 
+		outgoing address as domain-part, and the address the request has been received from as
+		received-parameter.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idm14704"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="function">add_path_received(user, parameters)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!add_path_received("inbound", "ob")) {
+	sl_send_reply("503", "Internal Path Error");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

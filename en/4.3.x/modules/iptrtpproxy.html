@@ -1,0 +1,1256 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>The Iptrtpproxy module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#iptrtpproxy" title="The Iptrtpproxy module" />
+    <link rel="next" href="#idp2709936" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="The Iptrtpproxy module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="iptrtpproxy"></a>The Iptrtpproxy module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Tomas</span> <span class="surname">Mandys</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Iptel.org<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2007 Tomas Mandys</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2709936">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#iptrtpproxy.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#iptrtpproxy.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#iptrtpproxy.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#config">3.1. <code class="varname">config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#switchboard">3.2. <code class="varname">switchboard</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#rpc_heartbeat_timeout">3.3. <code class="varname">rpc_heartbeat_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#hostname">3.4. <code class="varname">hostname</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#declare_codec">3.5. <code class="varname">declare_codec</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#codec_set">3.6. <code class="varname">codec_set</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#iptrtpproxy.funcs">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_alloc">4.1. 
+			<code class="function">iptrtpproxy_alloc(gate_a_to_b [, existing_sess_ids])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_update">4.2. 
+			<code class="function">iptrtpproxy_update(gate_a_to_b, session_ids)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_adjust_timeout">4.3. 
+			<code class="function">iptrtpproxy_adjust_timeout(gate_a_to_b, session_ids)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_delete">4.4. 
+			<code class="function">iptrtpproxy_delete(session_ids)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_authorize_media">4.5. 
+			<code class="function">iptrtpproxy_authorize_media()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param">4.6. 
+			<code class="function">iptrtpproxy_set_param(param, value)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(by_sip_ip)">4.7. 
+			<code class="function">iptrtpproxy_set_param("(aggregation/switchboard)_by_sip_ip_(a/b)", sip_ip)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(protected_session_ids)">4.8. 
+			<code class="function">iptrtpproxy_set_param("protected_session_ids", sess_ids)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(o_name)">4.9. 
+			<code class="function">iptrtpproxy_set_param("o_name", value)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(o_addr)">4.10. 
+			<code class="function">iptrtpproxy_set_param("o_addr", value)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(codec_set)">4.11. 
+			<code class="function">iptrtpproxy_set_param("codec_set", value)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy_set_param(remove_codec_mask)">4.12. 
+			<code class="function">iptrtpproxy_set_param("remove_codec_mask", value)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp165312">5. Selects</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.session_ids">5.1. 
+			<code class="function">@iptrtpproxy.session_ids</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.sdp_ip">5.2. 
+			<code class="function">@iptrtpproxy.sdp_ip</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.o_name">5.3. 
+			<code class="function">@iptrtpproxy.o_name</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.o_addr">5.4. 
+			<code class="function">@iptrtpproxy.o_addr</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.auth_rights">5.5. 
+			<code class="function">@iptrtpproxy.auth_rights</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#iptrtpproxy.active_media_num">5.6. 
+			<code class="function">@iptrtpproxy.active_media_num</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1651440">Declare <code class="varname">switchboard</code></a></dt>
+          <dt>1.2. <a href="#idp1672896">Declare <code class="varname">codec_set</code></a></dt>
+          <dt>1.3. <a href="#idp2763640"><code class="function">iptrtpproxy_alloc</code> usage</a></dt>
+          <dt>1.4. <a href="#idp1225728"><code class="function">iptrtpproxy_update</code> usage</a></dt>
+          <dt>1.5. <a href="#idp1579392"><code class="function">iptrtpproxy_adjust_timeout</code> usage</a></dt>
+          <dt>1.6. <a href="#idp28008"><code class="function">iptrtpproxy_delete</code> usage</a></dt>
+          <dt>1.7. <a href="#idp1567928"><code class="function">iptrtpproxy_authorize_media</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2709936"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#iptrtpproxy.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#iptrtpproxy.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#iptrtpproxy.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#config">3.1. <code class="varname">config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#switchboard">3.2. <code class="varname">switchboard</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#rpc_heartbeat_timeout">3.3. <code class="varname">rpc_heartbeat_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#hostname">3.4. <code class="varname">hostname</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#declare_codec">3.5. <code class="varname">declare_codec</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#codec_set">3.6. <code class="varname">codec_set</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#iptrtpproxy.funcs">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_alloc">4.1. 
+			<code class="function">iptrtpproxy_alloc(gate_a_to_b [, existing_sess_ids])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_update">4.2. 
+			<code class="function">iptrtpproxy_update(gate_a_to_b, session_ids)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_adjust_timeout">4.3. 
+			<code class="function">iptrtpproxy_adjust_timeout(gate_a_to_b, session_ids)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_delete">4.4. 
+			<code class="function">iptrtpproxy_delete(session_ids)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_authorize_media">4.5. 
+			<code class="function">iptrtpproxy_authorize_media()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param">4.6. 
+			<code class="function">iptrtpproxy_set_param(param, value)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(by_sip_ip)">4.7. 
+			<code class="function">iptrtpproxy_set_param("(aggregation/switchboard)_by_sip_ip_(a/b)", sip_ip)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(protected_session_ids)">4.8. 
+			<code class="function">iptrtpproxy_set_param("protected_session_ids", sess_ids)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(o_name)">4.9. 
+			<code class="function">iptrtpproxy_set_param("o_name", value)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(o_addr)">4.10. 
+			<code class="function">iptrtpproxy_set_param("o_addr", value)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(codec_set)">4.11. 
+			<code class="function">iptrtpproxy_set_param("codec_set", value)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy_set_param(remove_codec_mask)">4.12. 
+			<code class="function">iptrtpproxy_set_param("remove_codec_mask", value)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp165312">5. Selects</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.session_ids">5.1. 
+			<code class="function">@iptrtpproxy.session_ids</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.sdp_ip">5.2. 
+			<code class="function">@iptrtpproxy.sdp_ip</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.o_name">5.3. 
+			<code class="function">@iptrtpproxy.o_name</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.o_addr">5.4. 
+			<code class="function">@iptrtpproxy.o_addr</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.auth_rights">5.5. 
+			<code class="function">@iptrtpproxy.auth_rights</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#iptrtpproxy.active_media_num">5.6. 
+			<code class="function">@iptrtpproxy.active_media_num</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="iptrtpproxy.overview"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module provides similar functionality as <span class="emphasis"><em>nathelper</em></span> but
+	communicates with <span class="emphasis"><em>netfilter</em></span> kernel 
+	<span class="emphasis"><em>xt_RTPPROXY</em></span> module using
+	the <span class="emphasis"><em>libipt_RTPPROXY</em></span> userspace library. 
+	All RTP streams are manipulated directly in kernel space, no data is copied from 
+	kernel to userspace and back, it reduces load and delay. 
+	See <a class="ulink" href="javascript:if(confirm('http://www.2p.cz/en/netfilter_rtp_proxy  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.2p.cz/en/netfilter_rtp_proxy'" tppabs="http://www.2p.cz/en/netfilter_rtp_proxy">
+	http://www.2p.cz/en/netfilter_rtp_proxy</a> for more details.
+	</p>
+          <p>
+	This Kamailio module is written as a light-weight module, there is no 
+	dialog management as in <span class="emphasis"><em>Nathelper</em></span>. The reason is that such an API
+	should be provided by core or a specialized dialog manager module.
+	Because such module is not in git, session information may be stored 
+	in extra attributes of the <span class="emphasis"><em>avp_db</em></span> module and
+	the session id itself in record route as cookie, see the <span class="emphasis"><em>rr</em></span> module.
+	</p>
+          <p>
+	It should be able to support all cases as re-invites when SIP client offers media change in SDP and
+	when number of medias in offer/answer are different. 
+	</p>
+          <p>
+	<span class="emphasis"><em>Nathelper</em></span> may be still used for testing if client is behind the NAT.
+	</p>
+          <p>
+	There is also support for media authorization. Number of codec sets may be defined.
+	When a message containing SDP offer/answer is being processed then current codecs
+	and streams may be inspected, removed or signallized according a codec set.
+	</p>
+          <p>
+	Limitations:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		 Only IPv4 addresses are supported.
+			</p>
+              </li>
+              <li class="listitem">
+                <p>
+		 More media streams per session supported
+			</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="2.聽Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="iptrtpproxy.dep"></a>2.聽Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	The following libraries or applications must be installed before
+	running Kamailio with this module loaded:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		netfilter xt_RTPPROXY &amp; libipt_RTPPROXY,
+	    see <a class="ulink" href="javascript:if(confirm('http://www.2p.cz/en/netfilter_rtp_proxy  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.2p.cz/en/netfilter_rtp_proxy'" tppabs="http://www.2p.cz/en/netfilter_rtp_proxy">http://www.2p.cz/en/netfilter_rtp_proxy</a>
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+            <h3 class="title">Note</h3>
+            <p>
+	The modules Makefile must be edited and iptdir setup to the directory with
+	the iptable sources (if different from ~/iptables). Alternatively
+	compile the module using: 
+	</p>
+            <pre class="programlisting">		make -C modules/iptrtpproxy iptdir=path_to_iptables_src</pre>
+            <p>
+	</p>
+          </div>
+        </div>
+        <div class="section" title="3.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="iptrtpproxy.parameters"></a>3.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.聽config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="config"></a>3.1.聽<code class="varname">config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+  References <span class="emphasis"><em>iptrtpproxy.cfg</em></span>, see <span class="emphasis"><em>iptrtpproxy_helper</em></span>. Default value
+		is <span class="emphasis"><em>/etc/iptrtpproxy.cfg</em></span>. If only codec authorization is to be used then 
+		<span class="emphasis"><em>/dev/null</em></span> may be used.
+		</p>
+          </div>
+          <div class="section" title="3.2.聽switchboard (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="switchboard"></a>3.2.聽<code class="varname">switchboard</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+  References <span class="emphasis"><em>xt_RTPPROXY</em></span> switchboard for usage by ser module. 
+		</p>
+            <p>
+		The format is:
+		</p>
+            <pre class="programlisting">  "name=" value * ( ";" name "=" value )
+
+  name =  "aggregation" | "sip-addr-"</pre>
+            <p>
+  The <span class="emphasis"><em>name</em></span> is the switchboard name as declared in config and will be used by script functions and references switchboard. 
+  It's mandatory parameter. The special name <span class="emphasis"><em>*</em></span> set values for all switchboards. 
+		</p>
+            <p>
+  The <span class="emphasis"><em>sip-addr</em></span> is address used by <code class="function">iptrtpproxy_ser_param(by_sip_ip)</code> to find a switchboard for particular
+  connection. If not explicitly configured then RTP switchboard gate address are used for this feature. 
+		</p>
+            <p>
+The <span class="emphasis"><em>aggregation</em></span> enables to aggregate more switchboards in cluster and to widden bandwidth.
+Aggregation will take <span class="emphasis"><em>sip-addr</em></span> from the first switchboard of its. 
+		</p>
+            <div class="example">
+              <a id="idp1651440"></a>
+              <p class="title">
+                <strong>Example聽1.1.聽Declare <code class="varname">switchboard</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	modparam("iptrtpproxy", "config", "/etc/iptrtpproxy.cfg");
+	modparam("iptrtpproxy", "switchboard", "name=my1;sip-addr-a=1.2.3.4;sip-addr-b=5.6.7.8");
+	modparam("iptrtpproxy", "switchboard", "name=my2;sip-addr-a=2.3.4.5;sip-addr-b=3.4.5.6;aggregation=my23");
+	modparam("iptrtpproxy", "switchboard", "name=my3;aggregation=my23");
+	modparam("iptrtpproxy", "switchboard", "name=*;aggregation=my123");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.聽rpc_heartbeat_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="rpc_heartbeat_timeout"></a>3.3.聽<code class="varname">rpc_heartbeat_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Timeout in seconds used for rerequest remote RTP proxy via RPC command after preceeding error.
+		In other words if a RPC server is unresponsive at the moment then next attempt will be forced
+		after this timeout. Default value is <span class="emphasis"><em>30</em></span>.
+		</p>
+          </div>
+          <div class="section" title="3.4.聽hostname (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="hostname"></a>3.4.聽<code class="varname">hostname</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The hostname used by RPC to identify machine where Ser is running to communicate which RTP proxy
+		via local interface. Default value is taken from system hostname.
+		</p>
+          </div>
+          <div class="section" title="3.5.聽declare_codec (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="declare_codec"></a>3.5.聽<code class="varname">declare_codec</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		There are basic implicit codecs compiled in module, more codecs may be added by this parameter (one codec per modparam).
+		</p>
+          </div>
+          <div class="section" title="3.6.聽codec_set (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="codec_set"></a>3.6.聽<code class="varname">codec_set</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Declares new codec set. Codecs are declared for each media type independently. 
+		</p>
+            <p>
+		The format is:
+		</p>
+            <pre class="programlisting">  "name=" value * ( ";" name "=" value )
+
+  name =  "media_type" | "rights" | "codecs" | "max_streams" | ( "rtp" | "rtcp" ) "_" ( "bytes" | "packets" )
+
+  media_types = "audio" | "video" | "application" | "text" | "message" | "data" | "control" | "?" | "*"</pre>
+            <p>
+  The <span class="emphasis"><em>name</em></span> is the codec set name to be defined.
+		</p>
+            <p>
+  The <span class="emphasis"><em>media_type</em></span> belongs to type at <span class="emphasis"><em>m=</em></span> SDP line. Question mark means
+  "unknown media" type and asterisk "all media types".
+		</p>
+            <p>
+  The <span class="emphasis"><em>max_streams</em></span> defines how many streams (m= lines) is allowed per media type.
+		</p>
+            <p>
+  The <span class="emphasis"><em>rights</em></span> defines if particular codec is allowed <span class="emphasis"><em>0</em></span>, disallowed, i.e. will be removed
+  if bit AND operation with <code class="function">remove_codec_mask</code> is non-zero or its presence will be signallized by <code class="function">@iptrtpproxy.auth_rights</code> (any other value).
+		</p>
+            <p>
+  The <span class="emphasis"><em>codecs</em></span> comma separated list of codecs. Previous <span class="emphasis"><em>media_type&amp;rights</em></span> will be applied.
+		</p>
+            <p>
+  The <span class="emphasis"><em>rtp/rtcp_bytes/packets</em></span> limits bandwidth per <span class="emphasis"><em>media_type</em></span> (0 is unlimited). It will override
+  bandwidth limited by <code class="function">iptrtpproxy_set_param("throttle_*")</code>.
+		</p>
+            <div class="example">
+              <a id="idp1672896"></a>
+              <p class="title">
+                <strong>Example聽1.2.聽Declare <code class="varname">codec_set</code></strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	# enable all codecs, default state when codec is declared
+	modparam("iptrtpproxy", "codec_set", "name=cs1;media_type=*;max_streams=9999;rights=0;codecs=*");
+	# allow only 2 audio and 1 video stream
+	modparam("iptrtpproxy", "codec_set", "name=cs2;media_type=*;max_streams=0;media_type=audio;max_streams=2;media_type=video;max_streams=1");
+	# dtto, allow only a few audio and video codecs, GSM codec is allowed but signallized
+	modparam("iptrtpproxy", "codec_set", "name=cs3;media_type=*;max_streams=0;rights=1;codecs=*;media_type=audio;max_streams=2;rights=0;codecs=PCMU,G729,G728,parityfec,telephone-events;rights=2;codecs=GSM;media_type=video;max_streams=1;rights=0;codecs=jpeg,parityfec");
+	# limit max. bandwidth for video篓	
+	modparam("iptrtpproxy", "codec_set", "name=cs4;media_type=video;rtp_bytes=10000;rtcp_bytes=1000");
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="iptrtpproxy.funcs"></a>4.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.聽 iptrtpproxy_alloc(gate_a_to_b [, existing_sess_ids])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_alloc"></a>4.1.聽
+			<code class="function">iptrtpproxy_alloc(gate_a_to_b [, existing_sess_ids])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Parses SDP content and allocates for each RTP media stream one RTP proxy session.
+			SDP is updates to reflect allocated sessions. Switchboard/aggregation is set using
+			<code class="function">iptrtpproxy_set_param(by_sip_ip)</code> or <code class="function">iptrtpproxy_set_param("switchboard/aggregation")</code>.
+		</p>
+            <p>
+			Aggregation supports load balancing among more RTP proxies controlled by RPC.
+			The module try to allocate at machines/switchboards in following order (priorities)
+			not yet asked (or being heartbeated) machines, responsive machines, switchboards
+			having percentualy more free slots, non responsive machines.
+		</p>
+            <p>
+			Proxy may hide caller identity provided at <span class="emphasis"><em>o=</em></span> line using
+			<code class="function">@iptrtpproxy.o_name/addr</code> and <code class="function">iptrtpproxy_set_param(o_name/addr)</code>
+			functions. But the script is responsible for rewritting to original values in
+			a response or a callee initiated re-INVITE. Therefore original value need to be stored
+			in-dialog.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				if <span class="emphasis"><em>gate_a_to_b</em></span> bit 0 is set 
+				then SDP regards to gate-a to gate-b direction.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>protected_session_ids</em></span> list of existing sessions
+				enables reusing already allocated sessions in re-INVITE without 
+				allocating new sessions for each stream in SDP regardless a IP/port
+				is required. It's mostly undesirable, typically "hold-on" is
+				done via re-INVITE without any change. There is drawback because
+				callee cannot change IP:port in 200OK which is legal case in RFC3264. 
+				But because some non-RFC3264 compliant phones dislike proactively 
+				changed IP:port at RTP proxy it seems it's less evil.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				function returns true is a session was created, identifier is available
+				via select <code class="function">@iptrtpproxy.session_ids</code>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp2763640"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽<code class="function">iptrtpproxy_alloc</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	if (!iptrtpproxy_set_param("aggregation_by_sip_ip_a", "@received.ip")) {
+		if (!iptrtpproxy_set_param("switchboard_by_sip_ip_a", "@received.ip")) {
+			t_reply("500", "RTP proxy error");
+			drop;
+		}
+	}
+	eval_push("x:%@next_hop.src_ip");
+	if (@eval.get[-1] == @received.ip) {
+		if (@iptrtpproxy.aggregation_a) {
+			iptrtpproxy_set_param("aggregation_b", "@iptrtpproxy.aggregation_a");
+		}
+		else {
+			iptrtpproxy_set_param("switchboard_b", "@iptrtpproxy.switchboard_a");
+		}
+	}
+	else {
+		if (!iptrtpproxy_set_param("aggregation_by_sip_ip_b", "@eval.get[-1]")) {
+			if (!iptrtpproxy_set_param("switchboard_by_sip_ip_b", "@eval.get[-1]")) {
+				t_reply("500", "RTP proxy error");
+				drop;
+			}
+		}
+	}
+	eval_remove(-1, 1);
+	
+	if (!iptrtpproxy_alloc("1")) {
+		t_reply("500", "RTP proxy error");
+		drop;
+	}
+	$sess_ids = @iptrtpproxy.session_ids;
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.聽 iptrtpproxy_update(gate_a_to_b, session_ids)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_update"></a>4.2.聽
+			<code class="function">iptrtpproxy_update(gate_a_to_b, session_ids)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Parses SDP content and updates sessions provided by <span class="emphasis"><em>session_ids</em></span> and
+		updates SDP. If succesfull then session_ids may be changed (in case e.g. media 
+		stream has port zero particular session is released), the
+		result of <code class="function">@iptrtpproxy.session_ids</code> should be stored for future in-dialog usage.
+		</p>
+            <p>
+			The SDP contect is also affected by <code class="function">iptrtpproxy_set_param(o_name/addr)</code>
+			functions. If a stream is deactivated in SDP then Sessions may be deleted unless 
+			mentioned in <span class="emphasis"><em>protected_session_ids</em></span>.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				if <span class="emphasis"><em>gate_a_to_b</em></span> bit 0 is set 
+				then SDP regards to gate-a to gate-b direction.
+			</p>
+                  <p>
+				if <span class="emphasis"><em>gate_a_to_b</em></span> bit 1 is set 
+				then SDP is updated only, no RTP session are affected.
+				Should be used when handling retransmission in onreply route,
+				retransmission replies are not eaten be tm module!
+			</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1225728"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽<code class="function">iptrtpproxy_update</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	# load $sess_ids from dialog
+	if (iptrtpproxy_update("0", $sess_ids)) {
+	  $sess_ids = @iptrtpproxy.session_ids;
+	  # save sess_ids in dialog
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.聽 iptrtpproxy_adjust_timeout(gate_a_to_b, session_ids)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_adjust_timeout"></a>4.3.聽
+			<code class="function">iptrtpproxy_adjust_timeout(gate_a_to_b, session_ids)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adjust timeout for particular gate. It's useful in "200 OK"
+		decrease timeout to learning timeout if INVITE has set (long) <span class="emphasis"><em>ringing timeout</em></span>.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				if <span class="emphasis"><em>gate_a_to_b</em></span> bit 0 is set 
+				then it regards to gate-a to gate-b direction.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp1579392"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽<code class="function">iptrtpproxy_adjust_timeout</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	# load $sess_ids from dialog
+	if (status=~"18[0-9]") {
+		iptrtpproxy_set_param("learning_timeout", "60");
+	}
+	else {
+		iptrtpproxy_set_param("learning_timeout", "5");
+	}
+	if (iptrtpproxy_adjust_timeout("0", $sess_ids)) {
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.聽 iptrtpproxy_delete(session_ids)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_delete"></a>4.4.聽
+			<code class="function">iptrtpproxy_delete(session_ids)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Delete sessions identified by <span class="emphasis"><em>session_ids</em></span>. May be used when dialog is being
+		destroyed (BYE) or when INVITE failed in failure route. If <span class="emphasis"><em>protected_session_ids</em></span>
+		list is provided then this set is excluded from sessions to be deleted.
+		</p>
+            <div class="example">
+              <a id="idp28008"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽<code class="function">iptrtpproxy_delete</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	# load $sess_ids from dialog
+	iptrtpproxy_delete($sess_ids);
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.聽 iptrtpproxy_authorize_media()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_authorize_media"></a>4.5.聽
+			<code class="function">iptrtpproxy_authorize_media()</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Authorizes SDP media according currect <span class="emphasis"><em>codec_set</em></span>. If bit AND operation 
+		between rights in codec set and <code class="function">remove_codec_mask</code> is non zero then
+		such a codec are to be removed. The result may be obtained from
+		<code class="function">@iptrtpproxy.auth_rights</code> which returns max. right which has been applied when
+		processing all codecs of enabled streams.
+		</p>
+            <p>
+		The function MUST NOT be called after <code class="function">iptrtpproxy_alloc/update</code>! 
+		But the function may be called several times to authorize using more codec sets.
+		</p>
+            <div class="example">
+              <a id="idp1567928"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽<code class="function">iptrtpproxy_authorize_media</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	...
+	if (@iptrtpproxy.active_media_num == "0") break;
+	iptrtpproxy_set_param("codec_set", "cs2");
+	iptrtpproxy_set_param("remove_codec_mask", "1");
+	if (!iptrtpproxy_authorize_media()) {
+		t_reply("415", "Cannot authorize media");
+		drop;
+	}
+	iptrtpproxy_set_param("codec_set", "cs3");
+	if (!iptrtpproxy_authorize_media()) {
+		t_reply("415", "Cannot authorize media");
+		drop;
+	}
+	if (@iptrtpproxy.active_media_num == "0") {
+		t_reply("488", "Not acceptable here");
+		drop;
+	}
+	if (@iptrtpproxy.auth_rights == "2") {
+		append_hf_value("Contact: &lt;sip:1.2.3.4&gt;");
+		t_reply("301", "Redirect to transcoder");
+		drop;
+
+	}
+	...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.聽 iptrtpproxy_set_param(param, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param"></a>4.6.聽
+			<code class="function">iptrtpproxy_set_param(param, value)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Set particular parameter needed mainly by <code class="function">iptrtpproxy_alloc/update/adjust_timeout</code>.
+			The paramter value is availble via <code class="function">@iptrtpproxy.&lt;param&gt;</code>.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				Supported parameters: <span class="emphasis"><em>expiration_timeout</em></span>, <span class="emphasis"><em>ttl</em></span>, <span class="emphasis"><em>learning_timeout</em></span>, 
+				<span class="emphasis"><em>always_learn</em></span>,
+				<span class="emphasis"><em>aggregation_a</em></span>, <span class="emphasis"><em>aggregation_b</em></span>, 
+				<span class="emphasis"><em>switchboard_a</em></span>, <span class="emphasis"><em>switchboard_b</em></span>,
+				<span class="emphasis"><em>throttle_mark</em></span>,
+				<span class="emphasis"><em>throttle_rtp_max_bytes</em></span>, <span class="emphasis"><em>throttle_rtp_max_packets</em></span>, 
+				<span class="emphasis"><em>throttle_rtcp_max_bytes</em></span>, <span class="emphasis"><em>throttle_rtcp_max_packets</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="4.7.聽 iptrtpproxy_set_param(&quot;(aggregation/switchboard)_by_sip_ip_(a/b)&quot;, sip_ip)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(by_sip_ip)"></a>4.7.聽
+			<code class="function">iptrtpproxy_set_param("(aggregation/switchboard)_by_sip_ip_(a/b)", sip_ip)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Find corresponding aggregation or switchboard and set 
+			<code class="function">@iptrtpproxy.aggregation_a/b</code> or <code class="function">@iptrtpproxy.switchboard_a/b</code>.
+			Switchboards/aggregations are compared against <span class="emphasis"><em>sip-addr</em></span>, 
+			it allow separate SIP and RTP traffic and RTP aggregation.
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sip_ip</em></span> IP to be compared, typically <code class="function">@received.ip</code>
+				or <code class="function">@next_hop.src_ip</code>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				function returns true if switchboard/aggregation was found
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="4.8.聽 iptrtpproxy_set_param(&quot;protected_session_ids&quot;, sess_ids)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(protected_session_ids)"></a>4.8.聽
+			<code class="function">iptrtpproxy_set_param("protected_session_ids", sess_ids)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Used for reusing sessions in <code class="function">iptrtpproxy_alloc</code>,  <code class="function">iptrtpproxy_update</code>
+			and <code class="function">iptrtpproxy_delete</code>.
+		</p>
+          </div>
+          <div class="section" title="4.9.聽 iptrtpproxy_set_param(&quot;o_name&quot;, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(o_name)"></a>4.9.聽
+			<code class="function">iptrtpproxy_set_param("o_name", value)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Username to be rewritten at <span class="emphasis"><em>o=</em></span> line by <code class="function">iptrtpproxy_alloc/update</code> 
+		to hide caller identity. If value is blank then username is left unchanged.
+		</p>
+          </div>
+          <div class="section" title="4.10.聽 iptrtpproxy_set_param(&quot;o_addr&quot;, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(o_addr)"></a>4.10.聽
+			<code class="function">iptrtpproxy_set_param("o_addr", value)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Address to be rewritten at <span class="emphasis"><em>o=</em></span> line by <code class="function">iptrtpproxy_alloc/update</code> 
+		to hide caller identity. If value is blank then address is left unchanged.
+		</p>
+          </div>
+          <div class="section" title="4.11.聽 iptrtpproxy_set_param(&quot;codec_set&quot;, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(codec_set)"></a>4.11.聽
+			<code class="function">iptrtpproxy_set_param("codec_set", value)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Codec set for <code class="function">iptrtpproxy_authorize_media</code>. Current codec set
+		may be obtained by <code class="function">@iptrtpproxy.codec_set</code>.
+		</p>
+          </div>
+          <div class="section" title="4.12.聽 iptrtpproxy_set_param(&quot;remove_codec_mask&quot;, value)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy_set_param(remove_codec_mask)"></a>4.12.聽
+			<code class="function">iptrtpproxy_set_param("remove_codec_mask", value)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Mask used in <code class="function">iptrtpproxy_authorize_media</code>. Current mask 
+		may be obtained by <code class="function">@iptrtpproxy.remove_codec_mask</code>.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="5.聽Selects">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp165312"></a>5.聽Selects</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.聽 @iptrtpproxy.session_ids">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.session_ids"></a>5.1.聽
+			<code class="function">@iptrtpproxy.session_ids</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns sessions allocated/updated in <code class="function">iptrtpproxy_alloc/update</code>.
+		</p>
+            <p>
+		The format is:
+		</p>
+            <pre class="programlisting">switchboard_name [ ":" [ session_id "/" created ] * ( "," session_id "/" created ) ] ]
+session_id = * ( [0-9] )   ; empty when no session allocated
+created = timestamp</pre>
+          </div>
+          <div class="section" title="5.2.聽 @iptrtpproxy.sdp_ip">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.sdp_ip"></a>5.2.聽
+			<code class="function">@iptrtpproxy.sdp_ip</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return first rewritten IP provided at SDP <span class="emphasis"><em>c=</em></span> line.
+		</p>
+          </div>
+          <div class="section" title="5.3.聽 @iptrtpproxy.o_name">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.o_name"></a>5.3.聽
+			<code class="function">@iptrtpproxy.o_name</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return username from original <span class="emphasis"><em>o=</em></span> line.
+		</p>
+          </div>
+          <div class="section" title="5.4.聽 @iptrtpproxy.o_addr">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.o_addr"></a>5.4.聽
+			<code class="function">@iptrtpproxy.o_addr</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Return address from original <span class="emphasis"><em>o=</em></span> line.
+		</p>
+          </div>
+          <div class="section" title="5.5.聽 @iptrtpproxy.auth_rights">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.auth_rights"></a>5.5.聽
+			<code class="function">@iptrtpproxy.auth_rights</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Result of <code class="function">iptrtpproxy_authorize_media</code>.
+		</p>
+          </div>
+          <div class="section" title="5.6.聽 @iptrtpproxy.active_media_num">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="iptrtpproxy.active_media_num"></a>5.6.聽
+			<code class="function">@iptrtpproxy.active_media_num</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Returns number of active media streams in SDP. <code class="function">iptrtpproxy_authorize_media</code>
+		may disable some streams, i.e. returned value may change after authorization.
+		</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

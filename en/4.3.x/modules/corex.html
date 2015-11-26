@@ -1,0 +1,1045 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>COREX Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4252080" title="COREX Module" />
+    <link rel="next" href="#idp2555272" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="COREX Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4252080"></a>COREX Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Muhammad Shahzad</span> <span class="surname">Shafi</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:shahzad@voip-demos.com">shahzad@voip-demos.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2012 asipto.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2555272">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2416536">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2015752">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2129264">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1590896">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1997072">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1988496">3.1. <code class="varname">alias_subdomains</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2569304">3.2. <code class="varname">network_io_intercept</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm15536">3.3. <code class="varname">min_msg_len</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm13040">3.4. <code class="varname">msg_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm10312">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm9944">4.1. 
+		<code class="function">append_branch([ uri, [ q ] ])</code>
+	    </a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm5032">4.2. 
+			<code class="function">send([ host [ :port ] ])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp69136">4.3. 
+			<code class="function">send_tcp([ host [ :port ] ])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp70440">4.4. 
+			<code class="function">send_data(uri, data)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp73072">4.5. 
+			<code class="function">is_incoming()</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#corex.f.msg_iflag_set">4.6. 
+			<code class="function">msg_iflag_set(flagname)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#corex.f.msg_iflag_reset">4.7. 
+			<code class="function">msg_iflag_reset(flagname)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#corex.f.msg_iflag_is_set">4.8. 
+			<code class="function">msg_iflag_is_set(flagname)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp127936">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp128312">5.1. 
+		<code class="function">corex.list_sockets</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp129992">5.2. 
+		<code class="function">corex.list_aliases</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp131688">5.3. 
+		<code class="function">corex.shm_status</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp133296">5.4. 
+		<code class="function">corex.shm_summary</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp134984">6. Event Routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#async.evr.network_io">6.1. 
+        <code class="function">event_route[network:msg]</code>
+        </a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp138584">7. Examples of Usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1449464">Set <code class="varname">alias_subdomains</code> parameter</a></dt>
+          <dt>1.2. <a href="#idm16632">Set <code class="varname">network_io_intercept</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm14200">Set <code class="varname">min_msg_len</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm11552">Set <code class="varname">msg_avp</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm6280"><code class="function">append_branch</code> usage</a></dt>
+          <dt>1.6. <a href="#idm2272"><code class="function">send</code> usage</a></dt>
+          <dt>1.7. <a href="#idp71824"><code class="function">send_data</code> usage</a></dt>
+          <dt>1.8. <a href="#idp74624"><code class="function">is_incoming</code> usage</a></dt>
+          <dt>1.9. <a href="#idp84104"><code class="function">msg_iflag_set</code> usage</a></dt>
+          <dt>1.10. <a href="#idp86632"><code class="function">msg_iflag_reset</code> usage</a></dt>
+          <dt>1.11. <a href="#idp126640"><code class="function">msg_iflag_is_set</code> usage</a></dt>
+          <dt>1.12. <a href="#idp143344"><code class="function">event_route[network:msg]</code> use cases</a></dt>
+          <dt>1.13. <a href="#idp145200">Sample PERL code for do_compress and do_uncompress</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2555272"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2416536">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2015752">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2129264">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1590896">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1997072">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1988496">3.1. <code class="varname">alias_subdomains</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2569304">3.2. <code class="varname">network_io_intercept</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm15536">3.3. <code class="varname">min_msg_len</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm13040">3.4. <code class="varname">msg_avp</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm10312">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm9944">4.1. 
+		<code class="function">append_branch([ uri, [ q ] ])</code>
+	    </a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm5032">4.2. 
+			<code class="function">send([ host [ :port ] ])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp69136">4.3. 
+			<code class="function">send_tcp([ host [ :port ] ])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp70440">4.4. 
+			<code class="function">send_data(uri, data)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp73072">4.5. 
+			<code class="function">is_incoming()</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#corex.f.msg_iflag_set">4.6. 
+			<code class="function">msg_iflag_set(flagname)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#corex.f.msg_iflag_reset">4.7. 
+			<code class="function">msg_iflag_reset(flagname)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#corex.f.msg_iflag_is_set">4.8. 
+			<code class="function">msg_iflag_is_set(flagname)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp127936">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp128312">5.1. 
+		<code class="function">corex.list_sockets</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp129992">5.2. 
+		<code class="function">corex.list_aliases</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp131688">5.3. 
+		<code class="function">corex.shm_status</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp133296">5.4. 
+		<code class="function">corex.shm_summary</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp134984">6. Event Routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#async.evr.network_io">6.1. 
+        <code class="function">event_route[network:msg]</code>
+        </a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp138584">7. Examples of Usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2416536"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides reimplementation of a few very old functions that
+		used to be in the core and supported only static string or integer parameters.
+		The new versions bring support for dynamic parameters (allowing
+		variables inside the parameters).
+	</p>
+          <p>
+		There are also brand new features, related to core internals, but
+		controlled from configuration file or via control interfaces.
+	</p>
+          <p>
+		Contributions to this module must be done under the BSD license, to
+		follow the requirements of the core contributions.
+	</p>
+          <p>
+		This module now also provides access to network input / output data through
+		event_route[network:msg]. The raw data received from a remote host or about to
+		be sent to a remote host is available in variable $mb. The script writer may
+		manipulate this data and save the final result in an AVP defined by msg_avp
+		module parameter. The content of this AVP will then be processed by SIP worker
+		as normal, i.e. a received message will be parsed and sent to appropriate
+		route block while a sent message is forwarded to remote host.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2015752"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2129264"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1590896"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1997072"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†alias_subdomains (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1988496"></a>3.1.¬†<code class="varname">alias_subdomains</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Register a domain and all its sub-domains to match the <span class="quote">‚Äú<span class="quote">myself</span>‚Äù</span>
+		condition. It can be set many times. Its full format is:
+		'proto:domain:port', allowing to set restrictions on protocol
+		and port as well. Protocol and port are optional.
+	    </p>
+            <p>
+		<span class="emphasis"><em>
+		    Default value is <span class="quote">‚Äú<span class="quote">NULL</span>‚Äù</span>.
+		</em></span>
+	    </p>
+            <div class="example">
+              <a id="idp1449464"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">alias_subdomains</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("corex", "alias_subdomains", "kamailio.org")
+modparam("corex", "alias_subdomains", "udp:sip-router.org:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†network_io_intercept (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2569304"></a>3.2.¬†<code class="varname">network_io_intercept</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            If set to non-zero then raw data received from a remote host or about to
+			be sent to a remote host is made available in event_route[network:msg].
+			The script writer may modify this and save to msg_avp, which will then
+			be processed by SIP worker as normal.
+        </p>
+            <p>
+        <span class="emphasis"><em>
+            Default value is 0, i.e. do not allow access to network io data.
+        </em></span>
+        </p>
+            <div class="example">
+              <a id="idm16632"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">network_io_intercept</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("corex", "network_io_intercept", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†min_msg_len (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm15536"></a>3.3.¬†<code class="varname">min_msg_len</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Minimum content length of the packet to execute the event_route[network:msg].
+			This only works if network_io_intercept parameter is set to non-zero.
+        </p>
+            <p>
+        <span class="emphasis"><em>
+            Default value is 0.
+        </em></span>
+        </p>
+            <div class="example">
+              <a id="idm14200"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">min_msg_len</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("corex", "min_msg_len", 32)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†msg_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm13040"></a>3.4.¬†<code class="varname">msg_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            AVP name to store modified content to be set in the packet. If not set in
+            event_route[network:msg], then all changes are lost and original contents
+            are used. This only works if network_io_intercept parameter is to set non-zero.
+        </p>
+            <p>
+        <span class="emphasis"><em>
+            Default value is empty.
+        </em></span>
+        </p>
+            <div class="example">
+              <a id="idm11552"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">msg_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("corex", "msg_avp", "$avp(msg)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions"><div class="titlepage"><div><div><h2 class="title"><a id="idm10312"></a>4.¬†Functions</h2></div></div></div><div class="section" title="4.1.¬† append_branch([ uri, [ q ] ])"><div class="titlepage"><div><div><h3 class="title"><a id="idm9944"></a>4.1.¬†
+		<code class="function">append_branch([ uri, [ q ] ])</code>
+	    </h3></div></div></div><p>
+			Append a new branch to the destination set, useful to build the
+			set of destination addresses for parallel forking or redirect replies.
+		</p><p>
+			Both parameters are optional, If no uri parameter is provided,
+			then the address from request URI (r-uri) is used to build the
+			new branch.
+		</p><p>Meaning of the parameters is as follows:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+				<span class="emphasis"><em>uri</em></span> - SIP address of the branch to be
+				used as R-URI in the outgoing request.
+			</p></li><li class="listitem"><p>
+				<span class="emphasis"><em>q</em></span> - the Q value to set the priority
+				of the branch based on Contact address specifications
+			</p></li></ul></div><p>
+		This function can be used from REQUEST_ROUTE or FAILURE_ROUTE.
+		</p><div class="example"><a id="idm6280"></a><p class="title"><strong>Example¬†1.5.¬†<code class="function">append_branch</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+    append_branch();
+    append_branch("$avp(uri)", "0.5");
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.2.¬† send([ host [ :port ] ])"><div class="titlepage"><div><div><h3 class="title"><a id="idm5032"></a>4.2.¬†
+			<code class="function">send([ host [ :port ] ])</code>
+		</h3></div></div></div><p>
+			Send the original SIP message to a specific destination in stateless
+			mode. No changes are applied to received message, no Via header is
+			added. Host can be an IP address or hostname. Port is optional and
+			defaults to 5060. Used protocol: UDP.
+		</p><p>
+			The parameter is optional and defaults to the destination URI from
+			the SIP message if left out. Otherwise it's a string parameter
+			(supporting pseudo-variables) in format
+			"<span class="emphasis"><em>hostname</em></span>" or
+			"<span class="emphasis"><em>hostname</em></span>:<span class="emphasis"><em>port</em></span>",
+			where <span class="emphasis"><em>hostname</em></span>" can also be a numeric IP
+			address.
+		</p><p>
+			This function can be used from REQUEST_ROUTE or FAILURE_ROUTE.
+		</p><div class="example"><a id="idm2272"></a><p class="title"><strong>Example¬†1.6.¬†<code class="function">send</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+	send();
+	send("10.20.15.10");
+	send("sip.example.com:5070");
+	send("$var(res)");
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.3.¬† send_tcp([ host [ :port ] ])"><div class="titlepage"><div><div><h3 class="title"><a id="idp69136"></a>4.3.¬†
+			<code class="function">send_tcp([ host [ :port ] ])</code>
+		</h3></div></div></div><p>
+			This function is identical to <span class="emphasis"><em>send()</em></span>
+			described above, except that it sends the SIP message using the
+			TCP protocol instead of UDP.
+		</p></div><div class="section" title="4.4.¬† send_data(uri, data)"><div class="titlepage"><div><div><h3 class="title"><a id="idp70440"></a>4.4.¬†
+			<code class="function">send_data(uri, data)</code>
+		</h3></div></div></div><p>
+			Send the data to address specified by uri. Both parameters can
+			contain pseudo-variables. The uri parameter has to be a valid
+			SIP URI. The data parameter can by any arbitrary content.
+		</p><p>
+			This function can be used from ANY_ROUTE.
+		</p><div class="example"><a id="idp71824"></a><p class="title"><strong>Example¬†1.7.¬†<code class="function">send_data</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+	send_data("sip:example.com:5070;transport=sctp", "Message at $Ts");
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.5.¬† is_incoming()"><div class="titlepage"><div><div><h3 class="title"><a id="idp73072"></a>4.5.¬†
+			<code class="function">is_incoming()</code>
+		</h3></div></div></div><p>
+            Returns true if contents of message buffer $mb are the data received from
+            remote host, otherwise false indicating that the contents of $mb are data
+            that is about to be sent out to remote host. This only works if 
+			network_io_intercept parameter is set to non-zero.
+        </p><p>
+        This function can be used from event_route[network:msg].
+        </p><div class="example"><a id="idp74624"></a><p class="title"><strong>Example¬†1.8.¬†<code class="function">is_incoming</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+event_route[network:msg] {
+    if (is_incoming()) {
+        xlog("L_INFO", "Received message '$mb' \n");
+        $avp(msg) = $mb;
+    } else {
+        xlog("L_INFO", "Sending message '$mb' \n");
+        $avp(msg) = $mb;
+    };
+}
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.6.¬† msg_iflag_set(flagname)"><div class="titlepage"><div><div><h3 class="title"><a id="corex.f.msg_iflag_set"></a>4.6.¬†
+			<code class="function">msg_iflag_set(flagname)</code>
+		</h3></div></div></div><p>
+			Set internal SIP message flag. The parameter flagname can be:
+			USE_UAC_FROM, USE_UAC_TO or UAC_AUTH.
+		</p><p>
+			This functions should not be used in configuration file for
+			(re)setting the internal flags, those are done by various
+			functions internally, however, in very particular cases they
+			might be useful (e.g., changing From/To via textops functions).
+		</p><p>
+			This function can be used from ANY_ROUTE.
+		</p><div class="example"><a id="idp84104"></a><p class="title"><strong>Example¬†1.9.¬†<code class="function">msg_iflag_set</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+    msg_iflag_set("UAC_AUTH");
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.7.¬† msg_iflag_reset(flagname)"><div class="titlepage"><div><div><h3 class="title"><a id="corex.f.msg_iflag_reset"></a>4.7.¬†
+			<code class="function">msg_iflag_reset(flagname)</code>
+		</h3></div></div></div><p>
+			Reset the internal flag given as parameter.
+		</p><p>
+			This function can be used from ANY_ROUTE.
+		</p><div class="example"><a id="idp86632"></a><p class="title"><strong>Example¬†1.10.¬†<code class="function">msg_iflag_reset</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+    msg_iflag_reset("UAC_AUTH");
+...</pre></div></div><br class="example-break" /></div><div class="section" title="4.8.¬† msg_iflag_is_set(flagname)"><div class="titlepage"><div><div><h3 class="title"><a id="corex.f.msg_iflag_is_set"></a>4.8.¬†
+			<code class="function">msg_iflag_is_set(flagname)</code>
+		</h3></div></div></div><p>
+			Test if the internal flag given as parameter is set.
+		</p><p>
+			This function can be used from ANY_ROUTE.
+		</p><div class="example"><a id="idp126640"></a><p class="title"><strong>Example¬†1.11.¬†<code class="function">msg_iflag_is_set</code> usage</strong></p><div class="example-contents"><pre class="programlisting">...
+    if(msg_iflag_is_set("UAC_AUTH")) { ... }
+...</pre></div></div><br class="example-break" /></div>
+
+
+    - ("flagname")
+	- ("flagname")
+
+	</div>
+        <div class="section" title="5.¬†RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp127936"></a>5.¬†RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† corex.list_sockets">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp128312"></a>5.1.¬†
+		<code class="function">corex.list_sockets</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Print the list of sockets the application is listening on.
+		</p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd corex.list_sockets</pre>
+          </div>
+          <div class="section" title="5.2.¬† corex.list_aliases">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp129992"></a>5.2.¬†
+		<code class="function">corex.list_aliases</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Print the list of hostname aliases used to match the myself
+			condition.
+		</p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd corex.list_aliases</pre>
+          </div>
+          <div class="section" title="5.3.¬† corex.shm_status">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp131688"></a>5.3.¬†
+		<code class="function">corex.shm_status</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Trigger shm status dump to syslog.
+		</p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd corex.shm_status</pre>
+          </div>
+          <div class="section" title="5.4.¬† corex.shm_summary">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp133296"></a>5.4.¬†
+		<code class="function">corex.shm_summary</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Trigger shm summary dump to syslog.
+		</p>
+            <p>
+		Example:
+		</p>
+            <pre class="programlisting">		kamcmd corex.shm_summary</pre>
+          </div>
+        </div>
+        <div class="section" title="6.¬†Event Routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp134984"></a>6.¬†Event Routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬† event_route[network:msg]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="async.evr.network_io"></a>6.1.¬†
+        <code class="function">event_route[network:msg]</code>
+        </h3>
+                </div>
+              </div>
+            </div>
+            <p>
+            Event route block to be executed when new data is received from network
+            or the data that is about to be sent to a remote host by a SIP worker
+            process.
+        </p>
+            <p>
+            The kamailio script writer can check which type of data triggered this
+            event route using is_incoming method.
+        </p>
+            <p>
+            After executing of this event route, if msg_avp was defined and set then
+            its value is used for further processing, otherwise, original value of
+            $mb is used. If message was received from remote host, then it is parsed
+            and proceeds to appropriate route. Oterhwise if message set to send out,
+            then is sent to remote host per configured SIP timers in config script.
+        </p>
+            <p>
+            Please note this event route is meant to <span class="emphasis"><em>prepare</em></span>
+            the message for on-wire communication, e.g. to do custom encryption or
+            decryption, compression/decompression etc. of the message sent to or 
+			received from remote host. Therefore, except text operations,
+			no module fucntions or pseudo variables are available in this event route.
+        </p>
+          </div>
+        </div>
+        <div class="section" title="7.¬†Examples of Usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp138584"></a>7.¬†Examples of Usage</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			To use network event_route[network:msg] the remote SIP UA must also implement and 
+			understand the encoding / decoding done in this event route. It is up to  Kamailio
+			config script writer to define and implement how encoding and decoding is done. 
+			Any language module such as app_perl or app_lua can be called in
+			in event_route[network:msg] to implement desired logic.
+        </p>
+          <p>
+			The most simple use case is to compress the SIP packet on-wire. As SIP is a
+			text based protocol, so it is highly compressable. Using this module, one can
+			compress entire SIP message, including headers and message body before sending
+			it to remote host using any compression algorithm of choice, thus saving
+			significant bandwidth on mobile data networks.
+        </p>
+          <p>
+			A useful case is to use this function between SIP edge proxy and SIP application
+			server. The SIP messages received from end-user at SIP edge proxy may be decrypted
+			and sent to SIP application server at remote location unencrypted, where they are
+			processed as normal. One the way back, the messages received from SIP application
+			server at edge proxy can be encrpyted before being sent to actual destination.
+			The edge proxy can check whether received message came from end-user or SIP 
+			application server by using simple regular expressions.
+        </p>
+          <p>
+			Another use case is to implement a virtual HTTP tunnel for SIP messages. The SIP
+			client app can convert SIP message to binary e.g. by doing XOR, Base64 etc., then
+			prepend some fake HTTP headers to make it look like an HTTP request before sending
+			it to kamailio over SIP TCP socket. At kamailio, the fake headers are removed and data
+			is decoded back to normal SIP and processed per config script logic. For the data that
+			is to be sent to SIP client app, one can prepend fake HTTP reply headers to encoded
+			data before sending it to client app.
+        </p>
+          <p>
+			More advance use cases may involve custom encryption algorithms such as
+			ITV encryption algorithm,
+			<a class="ulink" href="javascript:if(confirm('https://github.com/mshary/itv  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/mshary/itv'" tppabs="https://github.com/mshary/itv">https://github.com/mshary/itv</a>
+        </p>
+          <p>
+			For example, the client app running on Android or iPhone, may send device UUID along
+			with ITV key, encrypted using RSA or AES256 with pre-shared secret, as first packet,
+			which is set as cookie by server in e.g. memcache. This cookie is referred by client
+			app in each next packet, so server can retrive encyption key from cache and use that
+			for decryption. Same can be done for server at client app side, so messages encrypted
+			by server can be decrypted at client app.
+        </p>
+          <p>
+			Next is a basic usage example where encoding and decoding is done using PERL,
+        </p>
+          <div class="example">
+            <a id="idp143344"></a>
+            <p class="title">
+              <strong>Example¬†1.12.¬†<code class="function">event_route[network:msg]</code> use cases</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+loadmodule "app_perl.so"
+loadmodule "corex.so"
+...
+# ----- app_perl params -----
+modparam("app_perl", "filename", "/usr/local/etc/kamailio/custom_compress.pl")
+modparam("app_perl", "modpath", "/usr/local/lib64/kamailio/perl")
+
+# ----- corex params -----
+modparam("corex", "network_io_intercept", 32)
+modparam("corex", "min_msg_len", 32)
+modparam("corex", "msg_avp", "$avp(msg)")
+...
+event_route[network:msg] {
+	if (is_incoming()) {
+		if (perl_exec_simple("do_uncompress", "" + $mb + "")) {
+			xlog("L_INFO", "Received message '$avp(msg)' \n");
+		} else {
+			xlog("L_INFO", "Received message '$mb' \n");
+			$avp(msg) = $mb;
+		};
+	} else {
+		xlog("L_INFO", "Sending message '$mb' \n");
+		if (!perl_exec_simple("do_compress", "" + $mb + "")) {
+			$avp(msg) = $mb;
+		};
+	};
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <div class="example">
+            <a id="idp145200"></a>
+            <p class="title">
+              <strong>Example¬†1.13.¬†Sample PERL code for do_compress and do_uncompress</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+use strict;
+use warnings;
+use IO::Compress::Gzip qw(gzip $GzipError) ;
+use IO::Uncompress::Gunzip qw(gunzip $GunzipError) ;
+
+sub do_compress() {
+	my $input = shift;
+	my $output;
+
+	gzip \$input =&gt; \$output
+		or eval {
+			Kamailio::log(L_WARN, "GZIP failed: $GzipError\n");
+			$output = $input;
+		};
+
+	Kamailio::AVP::add("msg", $output);
+}
+
+sub do_uncompress() {
+	my $input = shift;
+	my $output;
+
+	gunzip \$input =&gt; \$output
+		or eval {
+			Kamailio::log(L_WARN, "GUNZIP failed: $GzipError\n");
+			$output = $input;
+		};
+
+	Kamailio::AVP::add("msg", $output);
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

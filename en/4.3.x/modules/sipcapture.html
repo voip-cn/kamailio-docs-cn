@@ -1,0 +1,1237 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SipCapture Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11111896" title="SipCapture Module" />
+    <link rel="next" href="#idp18064600" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="SipCapture Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11111896"></a>SipCapture Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Alexandr</span> <span class="surname">Dubovikov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:alexandr.dubovikov@gmail.com">alexandr.dubovikov@gmail.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Alexandr</span> <span class="surname">Dubovikov</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:alexandr.dubovikov@gmail.com">alexandr.dubovikov@gmail.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 QSC AG</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 http://www.qsc.de</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18064600">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17566400">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17908888">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16455824">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17008440">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18030672">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.db_url">3.1. <code class="varname">db_url</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.table_name">3.2. <code class="varname">table_name</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.mt_mode">3.3. <code class="varname">mt_mode</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.hash_source">3.4. <code class="varname">hash_source</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.db_insert_mode">3.5. <code class="varname">db_insert_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.capture_on">3.6. <code class="varname">capture_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.capture_mode">3.7. <code class="varname">capture_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.hep_capture_on">3.8. <code class="varname">hep_capture_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_ipip_capture_on">3.9. <code class="varname">raw_ipip_capture_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_moni_capture_on">3.10. <code class="varname">raw_moni_capture_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_socket_listen">3.11. <code class="varname">raw_socket_listen</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_interface">3.12. <code class="varname">raw_interface</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_sock_children">3.13. <code class="varname">raw_sock_children</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.promiscuous_on">3.14. <code class="varname">promiscuous_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.raw_moni_bpf_on">3.15. <code class="varname">raw_moni_bpf_on</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.capture_node">3.16. <code class="varname">capture_node</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.insert_retries">3.17. <code class="varname">insert_retries</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.p.insert_retry_timeout">3.18. <code class="varname">insert_retry_timeout</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15480768">4. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.m.sip_capture">4.1. 
+		<code class="function">sip_capture</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15486072">5. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#sipcapture.r.sipcapture.status">5.1. 
+		<code class="function">sipcapture.status param</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15490592">6. Database setup</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp15492392">7. Limitations</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp15609280">Set <code class="varname">db_url</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp15600408">Set <code class="varname">sip_capture</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp15603400">Set <code class="varname">mt_mode</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp15605832">Set <code class="varname">mt_mode</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp15442120">db_insert_mode example</a></dt>
+          <dt>1.6. <a href="#idp15444408">Set <code class="varname">capture_on</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp15446944">capture_mode example</a></dt>
+          <dt>1.8. <a href="#idp15449648">Set <code class="varname">hep_capture_on</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp15452464">Set <code class="varname">raw_ipip_capture_on</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp15455376">Set <code class="varname">raw_moni_capture_on</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp15531296">Set <code class="varname">raw_socket_listen</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp15534056">Set <code class="varname">raw_interface</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp15536848">Set <code class="varname">raw_sock_children</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp15539568">Set <code class="varname">promiscous_on</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp15542552">Set <code class="varname">raw_moni_bpf_on</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp15545072">Set <code class="varname">capture_node</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp15547760">Set <code class="varname">insert_retries</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp15479528">Set <code class="varname">insert_retry_timeout</code> parameter</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18064600"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17566400">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17908888">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16455824">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17008440">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18030672">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.db_url">3.1. <code class="varname">db_url</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.table_name">3.2. <code class="varname">table_name</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.mt_mode">3.3. <code class="varname">mt_mode</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.hash_source">3.4. <code class="varname">hash_source</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.db_insert_mode">3.5. <code class="varname">db_insert_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.capture_on">3.6. <code class="varname">capture_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.capture_mode">3.7. <code class="varname">capture_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.hep_capture_on">3.8. <code class="varname">hep_capture_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_ipip_capture_on">3.9. <code class="varname">raw_ipip_capture_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_moni_capture_on">3.10. <code class="varname">raw_moni_capture_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_socket_listen">3.11. <code class="varname">raw_socket_listen</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_interface">3.12. <code class="varname">raw_interface</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_sock_children">3.13. <code class="varname">raw_sock_children</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.promiscuous_on">3.14. <code class="varname">promiscuous_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.raw_moni_bpf_on">3.15. <code class="varname">raw_moni_bpf_on</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.capture_node">3.16. <code class="varname">capture_node</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.insert_retries">3.17. <code class="varname">insert_retries</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.p.insert_retry_timeout">3.18. <code class="varname">insert_retry_timeout</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15480768">4. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.m.sip_capture">4.1. 
+		<code class="function">sip_capture</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15486072">5. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#sipcapture.r.sipcapture.status">5.1. 
+		<code class="function">sipcapture.status param</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15490592">6. Database setup</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp15492392">7. Limitations</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17566400"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		The sipcapture module stores incoming/outgoing SIP messages in database.
+	</p>
+          <p>
+		Kamailio can capture SIP messages in three modes
+		</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		IPIP encapsulation. (ETHHDR+IPHDR+IPHDR+UDPHDR).
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+                Monitoring/mirroring port.
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+		Homer encapsulation protocol mode (HEP v1, v2, v3). 
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	</p>
+          <p>
+	The capturing can be turned on/off using mi or rpc commands. Example:
+	</p>
+          <p>
+	kamctl fifo sip_capture on
+	</p>
+          <p>
+	kamctl fifo sip_capture off
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17908888"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16455824"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>database module</em></span> - mysql, postrgress,
+				dbtext, unixodbc...
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17008440"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18030672"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.db_url"></a>3.1. <code class="varname">db_url</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Database URL.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15609280"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">db_url</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "db_url", "mysql://user:passwd@host/dbname")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. table_name (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.table_name"></a>3.2. <code class="varname">table_name</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the table's name used to store the SIP messages. Can contain multiple tables, separated by "|".
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "sip_capture".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15600408"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">sip_capture</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "table_name", "homer_capture")
+...
+modparam("sipcapture", "table_name", "homer_capture1|homer_capture2");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. mt_mode (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.mt_mode"></a>3.3. <code class="varname">mt_mode</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the mode used for storing data in multiple tables. Modes can be "rand" (random), "round_robin" (use a round_robin algorithm) or "hash" (use hashing to determine the table to store). These modes are only triggered if there is more than one table specified in table_name parameter, separated by "|". 
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "rand".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15603400"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">mt_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "mt_mode", "hash")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. hash_source (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.hash_source"></a>3.4. <code class="varname">hash_source</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The field of the SIP message used for hashing, when mt_mode is set to "hash". The value can be "call_id", "to_user" or "from_user".
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "call_id".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15605832"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">mt_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "hash_source", "to_user")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. db_insert_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.db_insert_mode"></a>3.5. <code class="varname">db_insert_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                If set to 1, use INSERT DELAYED to store sip message into capture table
+                when the DB driver has support for it. If no INSERT DELAYED support
+                is offered by DB driver, then standard INSERT is used.
+                </p>
+            <p>
+                Default value is 0 (no INSERT DELAYED).
+                </p>
+            <div class="example">
+              <a id="idp15442120"></a>
+              <p class="title">
+                <strong>Example 1.5. db_insert_mode example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("sipcapture", "db_insert_mode", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. capture_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.capture_on"></a>3.6. <code class="varname">capture_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Parameter to enable/disable capture globaly (on(1)/off(0))
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "0".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15444408"></a>
+              <p class="title">
+                <strong>Example 1.6. Set <code class="varname">capture_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "capture_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. capture_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.capture_mode"></a>3.7. <code class="varname">capture_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				This parameter can be used for defining a capture mode which can be used in
+				the sip_capture calls as a parameter. A capture mode has a name and some parameters.
+				It must be defined in the format: name=&gt;param1=val1;param2=val2;...
+				The parameters are db_url, table_name, mt_mode and hash_source (optional).
+				Multiple capture modes can be defined by using this parameter multiple times.
+				After this, the capture modes can be used like:
+				sip_capture ("", "CAPTURE_MODE");
+				</p>
+            <div class="example">
+              <a id="idp15446944"></a>
+              <p class="title">
+                <strong>Example 1.7. capture_mode example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("sipcapture", "capture_mode", "mode1=&gt;db_url=mysql://user:passwd@host/dbname1;table_name=homer_capture1|homer_capture2;mt_mode=hash;hash_source=call_id;")
+modparam("sipcapture", "capture_mode", "mode2=&gt;db_url=mysql://user:passwd@host/dbname2;table_name=homer_capture3|homer_capture4;mt_mode=rand;")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8. hep_capture_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.hep_capture_on"></a>3.8. <code class="varname">hep_capture_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Parameter to enable/disable capture of HEP (on(1)/off(0))
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "0".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15449648"></a>
+              <p class="title">
+                <strong>Example 1.8. Set <code class="varname">hep_capture_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "hep_capture_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9. raw_ipip_capture_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_ipip_capture_on"></a>3.9. <code class="varname">raw_ipip_capture_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Parameter to enable/disable IPIP capturing (on(1)/off(0))
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "0".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15452464"></a>
+              <p class="title">
+                <strong>Example 1.9. Set <code class="varname">raw_ipip_capture_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_ipip_capture_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.10. raw_moni_capture_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_moni_capture_on"></a>3.10. <code class="varname">raw_moni_capture_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Parameter to enable/disable monitoring/mirroring port capturing (on(1)/off(0))
+		Only one mode on raw socket can be enabled! Monitoring port capturing currently 
+		supported only on Linux.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "0".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15455376"></a>
+              <p class="title">
+                <strong>Example 1.10. Set <code class="varname">raw_moni_capture_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_moni_capture_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11. raw_socket_listen (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_socket_listen"></a>3.11. <code class="varname">raw_socket_listen</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Parameter indicate an listen IP address of RAW socket for IPIP capturing. 
+                You can also define a port/portrange for IPIP/Mirroring mode, to capture 
+                SIP messages in specific ports:
+		</p>
+            <p>
+		"10.0.0.1:5060" - the source/destination port of the SIP message must be equal 5060
+		</p>
+            <p>
+		</p>
+            <p>
+		"10.0.0.1:5060-5090" - the source/destination port of the SIP message must be 
+		equal or be between 5060 and 5090.
+		</p>
+            <p>
+		</p>
+            <p>
+		The port/portrange must be defined if you are planning to
+		use mirroring capture! In this case, the part with IP address will be
+                ignored, but to make parser happy, use i.e. 10.0.0.0
+		</p>
+            <p>
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15531296"></a>
+              <p class="title">
+                <strong>Example 1.11. Set <code class="varname">raw_socket_listen</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_socket_listen", "10.0.0.1:5060-5090")
+...
+modparam("sipcapture", "raw_socket_listen", "10.0.0.1:5060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12. raw_interface (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_interface"></a>3.12. <code class="varname">raw_interface</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the interface to bind on the raw socket.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15534056"></a>
+              <p class="title">
+                <strong>Example 1.12. Set <code class="varname">raw_interface</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_interface", "eth0")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13. raw_sock_children (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_sock_children"></a>3.13. <code class="varname">raw_sock_children</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Parameter define how many children that must be created to listen the raw socket.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "1".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15536848"></a>
+              <p class="title">
+                <strong>Example 1.13. Set <code class="varname">raw_sock_children</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_sock_children", 6)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14. promiscuous_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.promiscuous_on"></a>3.14. <code class="varname">promiscuous_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Parameter to enable/disable promiscuous mode on the raw socket.
+		Linux only.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "0".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15539568"></a>
+              <p class="title">
+                <strong>Example 1.14. Set <code class="varname">promiscous_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "promiscuous_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15. raw_moni_bpf_on (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.raw_moni_bpf_on"></a>3.15. <code class="varname">raw_moni_bpf_on</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+                Activate Linux Socket Filter (LSF based on BPF) on the mirroring interface. 
+                The structure is defined in linux/filter.h. The default LSF accept a port/portrange
+                from the raw_socket_listen param. Currently LSF supported only on Linux.
+                </p>
+            <p>
+                <span class="emphasis"><em>
+                        Default value is "0".
+                </em></span>
+                </p>
+            <div class="example">
+              <a id="idp15542552"></a>
+              <p class="title">
+                <strong>Example 1.15. Set <code class="varname">raw_moni_bpf_on</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "raw_moni_bpf_on", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16. capture_node (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.capture_node"></a>3.16. <code class="varname">capture_node</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the capture node.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "homer01".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15545072"></a>
+              <p class="title">
+                <strong>Example 1.16. Set <code class="varname">capture_node</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "capture_node", "homer03")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17. insert_retries (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.insert_retries"></a>3.17. <code class="varname">insert_retries</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The number of times Kamailio should retry to write to the Homer database in case
+		the first attempt failed. The retry is also limited timewise by the
+		insert_retry_timeout parameter. Values allowed range from 0 to 500.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (no retries).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15547760"></a>
+              <p class="title">
+                <strong>Example 1.17. Set <code class="varname">insert_retries</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "insert_retries", 5)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18. insert_retry_timeout (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.p.insert_retry_timeout"></a>3.18. <code class="varname">insert_retry_timeout</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The time limit in seconds Kamailio retries to write to the Homer database in case
+		the first attempt failed. This parameter is only used together with the insert_retries
+		parameter. Values allowed range from 0 to 300.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 60 seconds.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp15479528"></a>
+              <p class="title">
+                <strong>Example 1.18. Set <code class="varname">insert_retry_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("sipcapture", "insert_retry_timeout", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15480768"></a>4. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  sip_capture">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.m.sip_capture"></a>4.1. 
+		<code class="function">sip_capture</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>sip_capture</em></span>
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>capture_mode : turns on/off SIP message capturing.
+			Possible values are:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p> on </p>
+                      </li>
+                      <li class="listitem">
+                        <p> off </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>The parameter is optional - if missing, the command will
+			return the status of the SIP message capturing (as string 
+			<span class="quote">“<span class="quote">on</span>”</span> or <span class="quote">“<span class="quote">off</span>”</span> ) without changing
+			anything.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		MI FIFO Command Format:
+		</p>
+            <pre class="programlisting">		:sip_capture:_reply_fifo_file_
+		capture_mode
+		_empty_line_</pre>
+          </div>
+        </div>
+        <div class="section" title="5. RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15486072"></a>5. RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.  sipcapture.status param">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="sipcapture.r.sipcapture.status"></a>5.1. 
+		<code class="function">sipcapture.status param</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+
+		</p>
+            <p>
+		Name: <span class="emphasis"><em>sipcapture.status</em></span>
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>on or off: turns on/off SIP message capturing.
+			Possible values are:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>on</p>
+                      </li>
+                      <li class="listitem">
+                        <p>off</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p><span class="quote">“<span class="quote">check</span>”</span> does not change 
+			sipcapture status, just reports the current status.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="6. Database setup">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15490592"></a>6. Database setup</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		Before running Kamailio with the sipcapture module, you have to setup the database 
+		tables where the module will store the data. For that, if the table were not 
+		created by the installation script or you choose to install everything by 
+		yourself you can use the sipcapture_create.sql, <acronym class="acronym">SQL</acronym> script 
+		in the sql folder of sipcapture module as template. You can also find the 
+		complete database documentation on the project webpage, <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html'" tppabs="http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html">http://www.kamailio.org/docs/db-tables/kamailio-db-devel.html</a>.
+		</p>
+        </div>
+        <div class="section" title="7. Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15492392"></a>7. Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+		1. Only one capturing mode on RAW socket is supported: IPIP or monitoring/mirroring port. 
+		   Don't activate both at the same time.
+		</li>
+              <li class="listitem">
+		2. By default MySQL doesn't support INSERT DELAYED for partitioning table. You can patch MySQL 
+		  (http://bugs.mysql.com/bug.php?id=50393)
+		</li>
+              <li class="listitem">
+		3. Mirroring port capturing works only on Linux.
+		</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

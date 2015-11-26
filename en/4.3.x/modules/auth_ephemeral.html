@@ -1,0 +1,1164 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Auth_ephemeral Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4298792" title="Auth_ephemeral Module" />
+    <link rel="next" href="#idp2596416" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="Auth_ephemeral Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4298792"></a>Auth_ephemeral Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Peter</span> <span class="surname">Dunkley</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Crocodile RCS Ltd<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:peter.dunkley@crocodile-rcs.com">peter.dunkley@crocodile-rcs.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2013 Crocodile RCS Ltd</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2596416">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp2903280">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3706296">1.1. How ephemeral credentials work</a>
+                    </span>
+                  </dt>
+                  <dd>
+                    <dl>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2786336">1.1.1. Request</a>
+                        </span>
+                      </dt>
+                      <dt>
+                        <span class="section">
+                          <a href="#idp2459432">1.1.2. Response</a>
+                        </span>
+                      </dt>
+                    </dl>
+                  </dd>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp162024">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp162400">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp163944">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#auth_eph.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.p.secret">3.1. <code class="varname">secret</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.p.username_format">3.2. <code class="varname">username_format</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#auth_eph.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_proxy">4.1. 
+			<code class="function">autheph_proxy(realm)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_www">4.2. 
+			<code class="function">autheph_www(realm[, method])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_check">4.3. 
+			<code class="function">autheph_check(realm)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_authenticate">4.4. 
+			<code class="function">autheph_authenticate(username, password)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_check_from">4.5. 
+			<code class="function">autheph_check_from([username])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_check_to">4.6. 
+			<code class="function">autheph_check_to([username])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.f.autheph_check_timestamp">4.7. 
+			<code class="function">autheph_check_timestamp(username)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp60912">5. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.m.autheph.add_secret">5.1. <code class="function">autheph.add_secret</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.m.autheph.dump_secrets">5.2. <code class="function">autheph.dump_secrets</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auth_eph.m.autheph.rm_secret">5.3. <code class="function">autheph.rm_secret</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp2003192">Request example</a></dt>
+          <dt>1.2. <a href="#idp160792">Response example</a></dt>
+          <dt>1.3. <a href="#idp17808"><code class="varname">secret</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp21320"><code class="varname">username_format</code> parameter
+		usage</a></dt>
+          <dt>1.5. <a href="#idp26880">autheph_proxy usage</a></dt>
+          <dt>1.6. <a href="#idp32376">autheph_www usage</a></dt>
+          <dt>1.7. <a href="#idp103288">autheph_check usage</a></dt>
+          <dt>1.8. <a href="#idp108288">autheph_authenticate usage</a></dt>
+          <dt>1.9. <a href="#idp114064">autheph_check_from usage</a></dt>
+          <dt>1.10. <a href="#idp54840">autheph_check_to usage</a></dt>
+          <dt>1.11. <a href="#idp59808">autheph_check_timestamp usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2596416"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp2903280">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3706296">1.1. How ephemeral credentials work</a>
+                  </span>
+                </dt>
+                <dd>
+                  <dl>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2786336">1.1.1. Request</a>
+                      </span>
+                    </dt>
+                    <dt>
+                      <span class="section">
+                        <a href="#idp2459432">1.1.2. Response</a>
+                      </span>
+                    </dt>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp162024">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp162400">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp163944">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#auth_eph.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.p.secret">3.1. <code class="varname">secret</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.p.username_format">3.2. <code class="varname">username_format</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#auth_eph.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_proxy">4.1. 
+			<code class="function">autheph_proxy(realm)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_www">4.2. 
+			<code class="function">autheph_www(realm[, method])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_check">4.3. 
+			<code class="function">autheph_check(realm)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_authenticate">4.4. 
+			<code class="function">autheph_authenticate(username, password)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_check_from">4.5. 
+			<code class="function">autheph_check_from([username])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_check_to">4.6. 
+			<code class="function">autheph_check_to([username])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.f.autheph_check_timestamp">4.7. 
+			<code class="function">autheph_check_timestamp(username)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp60912">5. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.m.autheph.add_secret">5.1. <code class="function">autheph.add_secret</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.m.autheph.dump_secrets">5.2. <code class="function">autheph.dump_secrets</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auth_eph.m.autheph.rm_secret">5.3. <code class="function">autheph.rm_secret</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2903280"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	This module contains all authentication related functions that can work
+	with ephemeral credentials. This module can be used together with the
+	<span class="emphasis"><em>auth</em></span> module for digest authentication. Use this
+	module if you want to use ephemeral credentials instead of ordinary
+	usernames and passwords.
+	</p>
+          <div class="section" title="1.1. How ephemeral credentials work">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3706296"></a>1.1. How ephemeral credentials work</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	Ephemeral credentials are generated by a web-service and enforced on
+	Kamailio. This use of ephemeral credentials ensures that access to
+	Kamailio is controlled even if the credentials cannot be kept secret,
+	as can be the case in WebRTC where the credentials may be specified in
+	Javascript.
+	</p>
+            <p>
+	The only interaction needed between the web-service and Kamailio is to
+	share a secret key.
+	</p>
+            <p>
+	Credentials will typically be requested from the web-service using an
+	HTTP POST and provided in a HTTP response with a content-type of
+	"application/json". To prevent unauthorised use the HTTP
+	requests can be ACLd by various means.
+	</p>
+            <p>
+	This mechanism is based on draft-uberti-rtcweb-turn-rest.
+	</p>
+            <div class="section" title="1.1.1. Request">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2786336"></a>1.1.1. Request</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	The request to the web-service should contain the following parameters:
+	</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>service</em></span> - specifies the desired service
+	(msrp, sip, etc)</p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>username</em></span> - an optional user identifier for
+	the service (as would normally be found in the username parameter of an
+	Authorization: or Proxy-Authorization: header)</p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>key</em></span> - an optional API key used for
+	authentication</p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+	</p>
+              <div class="example">
+                <a id="idp2003192"></a>
+                <p class="title">
+                  <strong>Example 1.1. Request example</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">POST /?service=sip&amp;username=foo@bar.com</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+            <div class="section" title="1.1.2. Response">
+              <div class="titlepage">
+                <div>
+                  <div>
+                    <h4 class="title"><a id="idp2459432"></a>1.1.2. Response</h4>
+                  </div>
+                </div>
+              </div>
+              <p>
+	The response should include the following parameters:
+	</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist">
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>username</em></span> - the username to use, which is a
+	colon-delimited combination of the expiration timestamp and the username
+	parameter from the request (if specified). When used with this module
+	the timestamp must be a UNIX timestamp.</p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>password</em></span> - the password to use; this value is
+	computed from the secret key and the returned username value, by
+	performing base64(hmac-sha1(secret key, returned username)).</p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>ttl</em></span> - the duration for which the username and
+	password are valid, in seconds.</p>
+                  </li>
+                  <li class="listitem">
+                    <p><span class="emphasis"><em>uris</em></span> - an array of URIs indicating servers
+	that the username and password are valid for.</p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+	</p>
+              <div class="example">
+                <a id="idp160792"></a>
+                <p class="title">
+                  <strong>Example 1.2. Response example</strong>
+                </p>
+                <div class="example-contents">
+                  <pre class="programlisting">{
+  "username" : "1234567890:foo@bar.com",
+  "password" : "asdfghjklauio=",
+  "ttl" : 86400,
+  "uris" : [
+    "sip:1.2.3.4;transport=ws",
+    "sip:5.6.7.8;transport=ws"
+  ]
+}</pre>
+                </div>
+              </div>
+              <br class="example-break" />
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp162024"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp162400"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The module must be loaded before this module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>auth</em></span> (optional).</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp163944"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries must be installed before running
+		Kamailio with this module loaded:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>OpenSSL</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_eph.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. secret (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.p.secret"></a>3.1. <code class="varname">secret</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The shared secret to use for generating credentials. This
+		parameter can be set multiple times - this enables the secret
+		used for new credentials to be changed without causing existing
+		credentials to stop working. The last secret set is the first
+		that will be tried.
+		</p>
+            <div class="example">
+              <a id="idp17808"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">secret</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_ephemeral", "secret", "kamailio_rules")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. username_format (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.p.username_format"></a>3.2. <code class="varname">username_format</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The format of the username in the web-service response.
+		</p>
+            <p>
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>0 (deprecated - pre IETF draft format) -
+		&lt;username parameter from the request&gt;:&lt;timestamp&gt;
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>1 (default - IETF draft format) -
+		&lt;timestamp&gt;:&lt;username parameter from the request&gt;
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+            <div class="example">
+              <a id="idp21320"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">username_format</code> parameter
+		usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("auth_ephemeral", "username_format", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="auth_eph.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  autheph_proxy(realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_proxy"></a>4.1. 
+			<code class="function">autheph_proxy(realm)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function performs proxy authentication.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function can only be used when the
+		<span class="emphasis"><em>auth</em></span> module is loaded before this module.
+		</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - realm is an opaque
+			string that the user agent should present to the user so
+			that he can decide what username and password to use.
+			Usually this is domain of the host the server is running
+			on.
+			</p>
+                  <p>
+			It must not be an empty string <span class="quote">“<span class="quote"></span>”</span>. Apart
+			from a static string, a typical value is the From-URI
+			domain (i.e., $fd).
+			</p>
+                  <p>
+			The string may contain pseudo variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp26880"></a>
+              <p class="title">
+                <strong>Example 1.5. autheph_proxy usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_proxy("$fd")) {
+    auth_challenge("$fd", "1");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  autheph_www(realm[, method])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_www"></a>4.2. 
+			<code class="function">autheph_www(realm[, method])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function performs WWW digest authentication.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function can only be used when the
+		<span class="emphasis"><em>auth</em></span> module is loaded before this module.
+		</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - realm is an opaque
+			string that the user agent should present to the user so
+			that he can decide what username and password to use.
+			Usually this is domain of the host the server is running
+			on.
+			</p>
+                  <p>
+			It must not be an empty string <span class="quote">“<span class="quote"></span>”</span>. Apart
+			from a static string, a typical value is the From-URI
+			domain (i.e., $fd).
+			</p>
+                  <p>
+			The string may contain pseudo variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>method</em></span> - the method to be
+			used for authentication. This parameter is optional and
+			if not set the first "word" on the request-line is used.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp32376"></a>
+              <p class="title">
+                <strong>Example 1.6. autheph_www usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_www("$fd")) {
+    auth_challenge("$fd", "1");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.  autheph_check(realm)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_check"></a>4.3. 
+			<code class="function">autheph_check(realm)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function combines the functionalities of
+		<code class="function">autheph_www</code> and
+		<code class="function">autheph_proxy</code>, the first
+		being exectuted if the SIP request is a REGISTER, the second for
+		the rest.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function can only be used when the
+		<span class="emphasis"><em>auth</em></span> module is loaded before this module.
+		</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>realm</em></span> - realm is an opaque
+			string that the user agent should present to the user so
+			that he can decide what username and password to use.
+			Usually this is domain of the host the server is running
+			on.
+			</p>
+                  <p>
+			It must not be an empty string <span class="quote">“<span class="quote"></span>”</span>. Apart
+			from a static string, a typical value is the From-URI
+			domain (i.e., $fd).
+			</p>
+                  <p>
+			The string may contain pseudo variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp103288"></a>
+              <p class="title">
+                <strong>Example 1.7. autheph_check usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_check("$fd")) {
+    auth_challenge("$fd", "1");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.  autheph_authenticate(username, password)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_authenticate"></a>4.4. 
+			<code class="function">autheph_authenticate(username, password)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function performs non-digest ephemeral
+		authentication. This may be used when digest authentication
+		cannot. For example, during WebSocket handshake the username
+		may be part of the requested URI and the password presented in
+		a Cookie: header.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function may be used without loading the
+		<span class="emphasis"><em>auth</em></span> module.</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>username</em></span> - the username
+			returned in the response from the web-service.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>password</em></span> - the password
+			returned in the response from the web-service.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp108288"></a>
+              <p class="title">
+                <strong>Example 1.8. autheph_authenticate usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_authenticate("$var(username)", "$var(password)")) {
+    sl_send_reply("403", "Forbidden");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.  autheph_check_from([username])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_check_from"></a>4.5. 
+			<code class="function">autheph_check_from([username])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks that the username (or username and
+		domain) in the From: URI matches the credentials.</p>
+            <p>When used without the <span class="emphasis"><em>username</em></span>
+		parameter it compares the From: URI with the credentials used
+		to authenticate the request (in the Authorization: or
+		Proxy-Authorization: headers).</p>
+            <p>The <span class="emphasis"><em>username</em></span> parameter can be used
+		to check the From: when individual SIP requests are not
+		authenticated (for example, when they are over WebSockets and
+		the connection was authenticated during the handshake). In this
+		scenario the username should be cached (perhaps in a hash-table)
+		at the point the authentication occurs.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function must have the optional
+		<span class="emphasis"><em>username</em></span> parameter specified to use it
+		without loading the <span class="emphasis"><em>auth</em></span> module before this
+		module.</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>username</em></span> (optional) - the
+			username returned in the response from the
+			web-service.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp114064"></a>
+              <p class="title">
+                <strong>Example 1.9. autheph_check_from usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_check_from()) {
+    sl_send_reply("403", "Forbidden");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.  autheph_check_to([username])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_check_to"></a>4.6. 
+			<code class="function">autheph_check_to([username])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks that the username (or username and
+		domain) in the To: URI matches the credentials.</p>
+            <p>When used without the <span class="emphasis"><em>username</em></span>
+		parameter it compares the To: URI with the credentials used
+		to authenticate the request (in the Authorization: or
+		Proxy-Authorization: headers).</p>
+            <p>The <span class="emphasis"><em>username</em></span> parameter can be used
+		to check the From: when individual SIP requests are not
+		authenticated (for example, when they are over WebSockets and
+		the connection was authenticated during the handshake). In this
+		scenario the username should be cached (perhaps in a hash-table)
+		at the point the authentication occurs.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function must have the optional
+		<span class="emphasis"><em>username</em></span> parameter specified to use it
+		without loading the <span class="emphasis"><em>auth</em></span> module before this
+		module.</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>username</em></span> (optional) - the
+			username returned in the response from the
+			web-service.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp54840"></a>
+              <p class="title">
+                <strong>Example 1.10. autheph_check_to usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_check_to()) {
+    sl_send_reply("403", "Forbidden");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.  autheph_check_timestamp(username)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.f.autheph_check_timestamp"></a>4.7. 
+			<code class="function">autheph_check_timestamp(username)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>This function checks that the timestamp in the
+		<span class="emphasis"><em>username</em></span> parameter has not expired. The
+		<span class="emphasis"><em>autheph_(check|proxy|www)</em></span> functions all do
+		this automatically, but in a scenario when individual SIP
+		requests are not authenticated (for example, when they are over
+		WebSockets and the connection was authenticated during the
+		handshake) you may want to re-check for each new out-of-dialog
+		request. In this scenario the username should be cached (perhaps
+		in a hash-table) at the point authentication occurs.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>This function may be used without loading the
+		<span class="emphasis"><em>auth</em></span> module.</p>
+            </div>
+            <p>The meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>username</em></span> - the username
+			returned in the response from the web-service.</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp59808"></a>
+              <p class="title">
+                <strong>Example 1.11. autheph_check_timestamp usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (!autheph_check_timestamp("$var(username)")) {
+    sl_send_reply("403", "Forbidden");
+    exit;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp60912"></a>5. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. autheph.add_secret">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.m.autheph.add_secret"></a>5.1. <code class="function">autheph.add_secret</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Add a secret to the head of the shared secret list. The
+		secret will be the first one tried during future authentication
+		attempts. This MI command allows you to update the shared secret
+		list without having to restart Kamailio.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>If you want your new shared secret list to persist
+		across restarts you must add it to your Kamailio configuration
+		file.</p>
+            </div>
+            <p>Name: <span class="emphasis"><em>autheph.add_secret</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>secret</p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:autheph.add_secret:fifo_reply
+			kamailio_rules
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="5.2. autheph.dump_secrets">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.m.autheph.dump_secrets"></a>5.2. <code class="function">autheph.dump_secrets</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Dump the set of shared secrets.</p>
+            <p>Name: <span class="emphasis"><em>autheph.dump_secrets</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                    <span class="emphasis">
+                      <em>none</em>
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:autheph.dump_secrets:fifo_reply
+			_empty_line_</pre>
+          </div>
+          <div class="section" title="5.3. autheph.rm_secret">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auth_eph.m.autheph.rm_secret"></a>5.3. <code class="function">autheph.rm_secret</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Remove the secret with the specified integer ID.  This MI
+		command allows you to update the shared secret list without
+		having to restart Kamailio.</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>If you want your new shared secret list to persist
+		across restarts you must add it to your Kamailio configuration
+		file.</p>
+            </div>
+            <p>Name: <span class="emphasis"><em>autheph.rm_secret</em></span></p>
+            <p>Parameters:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>ID - the ID of the secret to remove</p>
+                </li>
+              </ul>
+            </div>
+            <p>MI FIFO Command Format:</p>
+            <pre class="programlisting">			:autheph.rm_secret:fifo_reply
+			0
+			_empty_line_</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

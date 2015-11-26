@@ -1,0 +1,878 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>xlog Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4235568" title="xlog Module" />
+    <link rel="next" href="#idp2760688" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="xlog Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4235568"></a>xlog Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">rosdev.ro<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Elena-Ramona</span> <span class="surname">Modroiu</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:ramona@rosdev.ro">ramona@rosdev.ro</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2008-2010 Elena-Ramona Modroiu</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2760688">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#xlog.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#sec-implemented-specifiers">2. Implemented Specifiers</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2529184">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2639416">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2585384">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1150784">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.buf_size">4.1. <code class="varname">buf_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.force_color">4.2. <code class="varname">force_color</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.long_format">4.3. <code class="varname">long_format</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.varname">4.4. <code class="varname">prefix</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.log_facility">4.5. <code class="varname">log_facility</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.log_colors">4.6. <code class="varname">log_colors</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.p.methods_filter">4.7. <code class="varname">methods_filter</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm5560">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.f.xlog">5.1. 
+		<code class="function">xlog([ [facility,] level,] format)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.f.xdbg">5.2. 
+		<code class="function">xdbg(format)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.f.xlogl">5.3. 
+		<code class="function">xlogl([ [facility,] level,] format)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.f.xdbgl">5.4. 
+		<code class="function">xdbgl(format)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#xlog.f.xlogm">5.5. 
+		<code class="function">xlogm(level, format)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp3019008">Set <code class="varname">buf_size</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp3021720">Set <code class="varname">force_color</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm17744">Set <code class="varname">long_format</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm15224">Set <code class="varname">prefix</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm12672">log_facility example</a></dt>
+          <dt>1.6. <a href="#idm10040">log_colors example</a></dt>
+          <dt>1.7. <a href="#idm6808">Set <code class="varname">methods_filter</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp74824"><code class="function">xlog</code> usage</a></dt>
+          <dt>1.9. <a href="#idp78736"><code class="function">xdbg</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2760688"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#xlog.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#sec-implemented-specifiers">2. Implemented Specifiers</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2529184">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2639416">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2585384">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1150784">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.buf_size">4.1. <code class="varname">buf_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.force_color">4.2. <code class="varname">force_color</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.long_format">4.3. <code class="varname">long_format</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.varname">4.4. <code class="varname">prefix</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.log_facility">4.5. <code class="varname">log_facility</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.log_colors">4.6. <code class="varname">log_colors</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.p.methods_filter">4.7. <code class="varname">methods_filter</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm5560">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.f.xlog">5.1. 
+		<code class="function">xlog([ [facility,] level,] format)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.f.xdbg">5.2. 
+		<code class="function">xdbg(format)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.f.xlogl">5.3. 
+		<code class="function">xlogl([ [facility,] level,] format)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.f.xdbgl">5.4. 
+		<code class="function">xdbgl(format)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#xlog.f.xlogm">5.5. 
+		<code class="function">xlogm(level, format)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="xlog.overview"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		This module provides the possibility to print user formatted log or
+		debug messages from Kamailio scripts, similar to the printf function. 
+		A C-style printf specifier is replaced with a part of the <acronym class="acronym">SIP</acronym> request or other
+		variables from system.
+	</p>
+        </div>
+        <div class="section" title="2.¬†Implemented Specifiers">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="sec-implemented-specifiers"></a>2.¬†Implemented Specifiers</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	In the xlog function, you use pseudo-variables, that are a part
+	of Kamailio core and are used by other modules as well (e.g., <span class="emphasis"><em>avpops</em></span>
+	in the function <code class="function">avp_printf()</code>)
+	</p>
+          <p>
+	The most important changes from earlier versions of Kamailio are:
+	</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+		- '%' has been replaced by '$'
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		- to print a header, use $hdr(header_name[index]) instead of
+		%{header_name[index]}
+		</p>
+              </li>
+              <li class="listitem">
+                <p>
+		- to print an AVP, use now $avp([si]:avp_id[index]) instead of
+		%{[si]:avp_id[index]} or $avp([$avp_alias[index]) instead of
+		%{[$avp_alias[index]}
+		</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+	The full list of available pseudo-variables in Kamailio is
+	available at:
+	<a class="ulink" href="javascript:if(confirm('http://kamailio.org/wiki/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÎÀ¸µƒ∆Ù ºµÿ÷∑∫‹‘∂µƒ¡¥Ω”°£»Áπ˚ƒ„‘ˆ¥Û∆Ù ºµÿ÷∑”Úƒ⁄…Ó∂»…Ë÷√, ∏√Œƒº˛Ω´±ªº”»Îœ¬‘ÿ∂”¡–°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://kamailio.org/wiki/'" tppabs="http://kamailio.org/wiki/">
+	http://kamailio.org/wiki/</a>
+	</p>
+        </div>
+        <div class="section" title="3.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2529184"></a>3.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2639416"></a>3.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>No dependencies on other Kamailio modules</em></span>.
+				Note that many modules publish pseudovariables that you can use
+				in this module. The core module for this is the <span class="emphasis"><em>pv</em></span> module.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="3.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2585384"></a>3.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="4.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1150784"></a>4.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬†buf_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.buf_size"></a>4.1.¬†<code class="varname">buf_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Maximum size of the log message.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 4096.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3019008"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">buf_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xlog", "buf_size", 8192)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬†force_color (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.force_color"></a>4.2.¬†<code class="varname">force_color</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When set to 1, forces color codes in log messages even if <code class="varname">log_stderror</code> is set to 0.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp3021720"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">force_color</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xlog", "force_color", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬†long_format (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.long_format"></a>4.3.¬†<code class="varname">long_format</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When set to 1, outputs the configuration file name in xlogl() and xdbgl()
+		before the line number.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm17744"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">long_format</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xlog", "long_format", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬†prefix (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.varname"></a>4.4.¬†<code class="varname">prefix</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Prefix to be output before the log message.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "&lt;script&gt;: ".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm15224"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xlog", "prefix", "-xlog: ")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬†log_facility (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.log_facility"></a>4.5.¬†<code class="varname">log_facility</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Syslog facility to be used for the xlog output.
+		By setting this, and configuring syslog, you can get the xlog messages 
+		in a separate syslog file than the debug messages issued from the source code.
+		</p>
+            <p>
+		Default value is NULL (unset - use same facility as source code debug
+		messages).
+		</p>
+            <div class="example">
+              <a id="idm12672"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†log_facility example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xlog", "log_facility", "LOG_DAEMON")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬†log_colors (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.log_colors"></a>4.6.¬†<code class="varname">log_colors</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Update terminal colors used by the Kamailio core for log levels (when log_stderr=1
+		and log_color=1). The value has to be 'logname=colors', where colors
+		is two characters specifying foreground and background in the same
+		format as $C(xy) variable.
+		</p>
+            <p>
+		The parameter can be set many times. The value can also be a
+		';'-separated list of color specifications.
+		</p>
+            <p>
+		Default value is NULL.
+		</p>
+            <div class="example">
+              <a id="idm10040"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†log_colors example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("xlog", "log_colors", "L_ERR=cr")
+modparam("xlog", "log_colors", "L_ERR=cr;L_WARN=px")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬†methods_filter (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.p.methods_filter"></a>4.7.¬†<code class="varname">methods_filter</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The bitmask with internal SIP method ids to be ignored by
+		xlogm() function. The value can be changed at runtime via
+		cfg reload framework:
+		</p>
+            <pre class="programlisting">...
+kamcmd cfg.set_now_int xlog methods_filter 15
+...</pre>
+            <p>
+		To see the associated internal ids for SIP requests, look
+		in source tree inside parser/msg_parser.h for enum request_method.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is -1 (all SIP methods are ignored).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idm6808"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">methods_filter</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("xlog", "long_format", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm5560"></a>5.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬† xlog([ [facility,] level,] format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.f.xlog"></a>5.1.¬†
+		<code class="function">xlog([ [facility,] level,] format)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Output a formated log message.
+		</p>
+            <p>Meaning of the parameters are as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>facility</em></span> - The syslog facility that will be used for this single log message.
+			</p>
+                  <p>
+			If this parameter is missing, the implicit facility is either the facility set with
+			the 'log_facility' module parameter or the core's log facility.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>level</em></span> - The level that will be used in LOG function. It can be:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>
+				L_ALERT - log level -5
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_BUG - log level -4
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_CRIT - log level -3
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_ERR - log level -1
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_WARN - log level 0
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_NOTICE - log level 1
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_INFO - log level 2
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				L_DBG - log level 3
+				</p>
+                      </li>
+                      <li class="listitem">
+                        <p>
+				$pv - any valid pseudo-variable, that has an integer value.
+				See above options for valid log levels.
+				</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			If it is not a pseudo-variable, then what really matters is the
+			third letter of the value. If the log level is higher than the
+			<span class="quote">‚Äú<span class="quote">debug</span>‚Äù</span> global parameter, the message is not printed
+			to syslog.
+			</p>
+                  <p>
+			If this parameter is missing, the implicit log level is 'L_ERR'.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>format</em></span> - The formatted string to be printed. 
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp74824"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†<code class="function">xlog</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xlog("L_ERR", "time [$Tf] method ($rm) r-uri ($ru) 2nd via ($hdr(via[1]))\n");
+...
+xlog("time [$Tf] method ($rm) r-uri ($ru) 2nd via ($hdr(via[1]))\n");
+...
+$var(loglevel) = 2;
+xlog("$var(loglevel)", "time [$Tf] method ($rm) r-uri ($ru)\n");
+...
+xlog("LOG_LOCAL3", "L_ERR", "this message will be sent to syslog facility LOG_LOCAL3\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2.¬† xdbg(format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.f.xdbg"></a>5.2.¬†
+		<code class="function">xdbg(format)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Print a formatted message using DBG function.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>format</em></span> - The formatted string to be printed.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from ANY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp78736"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†<code class="function">xdbg</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+xdbg("time $Cbx[$Tf]$Cxx method ($rm) r-uri ($ru)\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3.¬† xlogl([ [facility,] level,] format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.f.xlogl"></a>5.3.¬†
+		<code class="function">xlogl([ [facility,] level,] format)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Similar to xlog(), in addition prints configuration file line number
+		at the beginning of message.
+		</p>
+          </div>
+          <div class="section" title="5.4.¬† xdbgl(format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.f.xdbgl"></a>5.4.¬†
+		<code class="function">xdbgl(format)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Similar to xdbg(), in addition prints configuration file line number
+		at the beginning of message.
+		</p>
+          </div>
+          <div class="section" title="5.5.¬† xlogm(level, format)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="xlog.f.xlogm"></a>5.5.¬†
+		<code class="function">xlogm(level, format)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Similar to xlog(level, format), but skips writing the log messages
+			for SIP requests and responses that match the SIP method id with
+			methods_filter parameter value.
+		</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

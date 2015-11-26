@@ -1,0 +1,1567 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>rr Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4364160" title="rr Module" />
+    <link rel="next" href="#idp2364280" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="rr Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4364160"></a>rr Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice.com<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andrei</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2003 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2005 Voice Sistem SRL</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2011 Carsten Bock, carsten@ng-voice.com</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2364280">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3364328">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#RR-dialog-id">2. Dialog support</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp2551096">3. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1517048">3.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1966776">3.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idm17640">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm20528">4.1. <code class="varname">enable_full_lr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#append-fromtag-id">4.2. <code class="varname">append_fromtag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm10608">4.3. <code class="varname">enable_double_rr</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm7816">4.4. <code class="varname">add_username</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm5032">4.5. <code class="varname">enable_socket_mismatch_warning</code>
+      (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm2560">4.6. <code class="varname">custom_user_avp</code> (avp string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp75064">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#loose-route-id">5.1. <code class="function">loose_route()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#record-route-id">5.2. <code class="function">record_route()</code> and <code class="function">record_route(string)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#remove-record-route-id">5.3. <code class="function">remove_record_route()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp91256">5.4. <code class="function">record_route_preset(string
+      [,string2])</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#record-route-adv-addr-id">5.5. <code class="function">record_route_advertised_address(address)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#add-rr-param-id">5.6. <code class="function">add_rr_param(param)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#check-route-param-id">5.7. <code class="function">check_route_param(re)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp36112">5.8. <code class="function">is_direction(dir)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp42216">6. Exported Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp42568">6.1. <code class="function">$route_uri</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp1025440">2. Developer Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp3293808">1. Available Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#record-route-id-dev">1.1. 
+		<code class="function">record_route(string)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm19496">1.2. 
+		<code class="function">record_route_advertised_address(string)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2811584">1.3. 
+		<code class="function">add_rr_param( msg, param)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp3353888">1.4. 
+		<code class="function">check_route_param( msg, re)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1433680">1.5. 
+		<code class="function">is_direction( msg, dir)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1538288">1.6. 
+		<code class="function">get_route_param( msg, name, val)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1542800">1.7. 
+		<code class="function">register_rrcb( callback, param)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp161928">2. Examples</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp1249472">Dialog support in RR module</a></dt>
+          <dt>1.2. <a href="#idm14200">Set <code class="varname">enable_full_lr</code> parameter</a></dt>
+          <dt>1.3. <a href="#idm11776">Set <code class="varname">append_fromtag</code> parameter</a></dt>
+          <dt>1.4. <a href="#idm8984">Set <code class="varname">enable_double_rr</code> parameter</a></dt>
+          <dt>1.5. <a href="#idm6144">Set <code class="varname">add_username</code> parameter</a></dt>
+          <dt>1.6. <a href="#idm3640"><code class="varname">enable_socket_mismatch_warning</code> usage</a></dt>
+          <dt>1.7. <a href="#idm1176"><code class="varname">custom_user_avp</code> usage</a></dt>
+          <dt>1.8. <a href="#idp83200"><code class="function">loose_route</code> usage</a></dt>
+          <dt>1.9. <a href="#idp87392"><code class="function">record_route</code> usage</a></dt>
+          <dt>1.10. <a href="#idp90088"><code class="function">remove_record_route</code> usage</a></dt>
+          <dt>1.11. <a href="#idp21456"><code class="function">record_route_preset</code> usage</a></dt>
+          <dt>1.12. <a href="#idp26184"><code class="function">record_route_advertised_address</code>
+        usage</a></dt>
+          <dt>1.13. <a href="#idp30984"><code class="function">add_rr_param</code> usage</a></dt>
+          <dt>1.14. <a href="#idp34872"><code class="function">check_route_param</code> usage</a></dt>
+          <dt>1.15. <a href="#idp40760"><code class="function">is_direction</code> usage</a></dt>
+          <dt>1.16. <a href="#idp43344">$route_uri</a></dt>
+          <dt>2.1. <a href="#idp1529592"><code class="function">record_route</code> usage</a></dt>
+          <dt>2.2. <a href="#idp2892280"><code class="function">record_route_advertised_address</code> usage</a></dt>
+          <dt>2.3. <a href="#idp162296">Loading RR module's API from another module</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2364280"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3364328">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#RR-dialog-id">2. Dialog support</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp2551096">3. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1517048">3.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1966776">3.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idm17640">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idm20528">4.1. <code class="varname">enable_full_lr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#append-fromtag-id">4.2. <code class="varname">append_fromtag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm10608">4.3. <code class="varname">enable_double_rr</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm7816">4.4. <code class="varname">add_username</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm5032">4.5. <code class="varname">enable_socket_mismatch_warning</code>
+      (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm2560">4.6. <code class="varname">custom_user_avp</code> (avp string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp75064">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#loose-route-id">5.1. <code class="function">loose_route()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#record-route-id">5.2. <code class="function">record_route()</code> and <code class="function">record_route(string)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#remove-record-route-id">5.3. <code class="function">remove_record_route()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp91256">5.4. <code class="function">record_route_preset(string
+      [,string2])</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#record-route-adv-addr-id">5.5. <code class="function">record_route_advertised_address(address)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#add-rr-param-id">5.6. <code class="function">add_rr_param(param)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#check-route-param-id">5.7. <code class="function">check_route_param(re)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp36112">5.8. <code class="function">is_direction(dir)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp42216">6. Exported Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp42568">6.1. <code class="function">$route_uri</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3364328"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The module contains record routing logic</p>
+        </div>
+        <div class="section" title="2. Dialog support">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="RR-dialog-id"></a>2. Dialog support</h2>
+              </div>
+            </div>
+          </div>
+          <p>Kamailio is basically <span class="emphasis"><em>only</em></span> a transaction
+    statefull proxy, without any dialog support build in. There are many
+    features/services which actually requires a dialog awareness, like storing
+    the information in the dialog creation stage, information which will be
+    used during the whole dialog existence.</p>
+          <p>The most urging example is NAT traversal, in dealing with the within
+    the dialog INVITEs (re-INVITEs). When processing the initial INVITE, the
+    proxy detects if the caller or callee is behind some NAT and fixes the
+    signalling and media parts - since not all the detection mechanism are
+    available for within the dialog requests (like usrloc), to be able to fix
+    correspondingly the sequential requests, the proxy must remember that the
+    original request was NAT processed. There are many other cases where
+    dialog awareness fixes or helps.</p>
+          <p>The solution is to store additional dialog-related information in
+    the routing set (Record-Route/Route headers), headers which show up in all
+    sequential requests. So any information added to the Record-Route header
+    will be found (with no direction dependencies) in Route header
+    (corresponding to the proxy address).</p>
+          <p>As storage container, the parameters of the Record-Route / Route
+    header will be used - Record-Route parameters mirroring are reinforced by
+    RFC 3261 (see 12.1.1 UAS behavior).</p>
+          <p>For this purpose, the modules offers the following functions:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>add_rr_param() - see <a class="xref" href="#add-rr-param-id" title="5.6. add_rr_param(param)">Section 5.6, “<code class="function">add_rr_param(param)</code>”</a></p>
+              </li>
+              <li class="listitem">
+                <p>check_route_param() - see <a class="xref" href="#check-route-param-id" title="5.7. check_route_param(re)">Section 5.7, “<code class="function">check_route_param(re)</code>”</a></p>
+              </li>
+            </ul>
+          </div>
+          <div class="example">
+            <a id="idp1249472"></a>
+            <p class="title">
+              <strong>Example 1.1. Dialog support in RR module</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">  
+UAC                       Kamailio PROXY                          UAS
+
+---- INVITE ------&gt;       record_route()          ----- INVITE ----&gt;
+                     add_rr_param(";foo=true")
+
+--- reINVITE -----&gt;        loose_route()          ---- reINVITE ---&gt;
+                    check_route_param(";foo=true")
+
+&lt;-- reINVITE ------        loose_route()          &lt;--- reINVITE ----
+                    check_route_param(";foo=true")
+
+&lt;------ BYE -------        loose_route()          &lt;----- BYE -------
+                    check_route_param(";foo=true")</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="3. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2551096"></a>3. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1517048"></a>3.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following modules must be loaded before this module:
+      </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>(optional) The "outbound" module is needed for outbound
+            routing as per RFC 5626.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="3.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1966776"></a>3.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>The following libraries or applications must be installed before
+      running Kamailio with this module loaded: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>None</em></span>.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idm17640"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. enable_full_lr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm20528"></a>4.1. <code class="varname">enable_full_lr</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If set to 1 then <span class="quote">“<span class="quote">;lr=on</span>”</span> instead of just
+      <span class="quote">“<span class="quote">;lr</span>”</span> will be used. This is to overcome problems with
+      broken <acronym class="acronym">UA</acronym>s which strip <span class="quote">“<span class="quote">;lr</span>”</span> parameter when generating
+      Route header fields from Record-Route (<span class="quote">“<span class="quote">;lr=on</span>”</span> seems to
+      help).</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (no). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm14200"></a>
+              <p class="title">
+                <strong>Example 1.2. Set <code class="varname">enable_full_lr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "enable_full_lr", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. append_fromtag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="append-fromtag-id"></a>4.2. <code class="varname">append_fromtag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If turned on, request's from-tag is appended to record-route;
+      that's useful for understanding whether subsequent requests (such as
+      BYE) come from caller (route's from-tag==BYE's from-tag) or callee
+      (route's from-tag==BYE's to-tag)</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 1 (yes). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm11776"></a>
+              <p class="title">
+                <strong>Example 1.3. Set <code class="varname">append_fromtag</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "append_fromtag", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. enable_double_rr (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm10608"></a>4.3. <code class="varname">enable_double_rr</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>There are some situations when the server needs to insert two
+      Record-Route header fields instead of one. For example when using two
+      disconnected networks or doing cross-protocol forwarding from
+      UDP-&gt;TCP. This parameter enables inserting of 2 Record-Routes. The
+      server will later remove both of them.</p>
+            <p>Double record-routing does not occur when outbound is used for a
+      request.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 1 (yes). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm8984"></a>
+              <p class="title">
+                <strong>Example 1.4. Set <code class="varname">enable_double_rr</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "enable_double_rr", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. add_username (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm7816"></a>4.4. <code class="varname">add_username</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If set to a non 0 value (which means yes), the username part will
+      be also added in the Record-Route URI.</p>
+            <p>This option cannot be set when the <span class="quote">“<span class="quote">outbound</span>”</span> module
+      is loaded before this module as outbound uses the username part of
+      Record-Route URIs to store flow-tokens.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0 (no). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm6144"></a>
+              <p class="title">
+                <strong>Example 1.5. Set <code class="varname">add_username</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "add_username", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. enable_socket_mismatch_warning (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm5032"></a>4.5. <code class="varname">enable_socket_mismatch_warning</code>
+      (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>When a preset record-route header is forced in Kamailio config
+      and the host from the record-route header is not the same as the host
+      server, a warning will be printed out in the logs. The
+      'enable_socket_mismatch_warning' parameter enables or disables the
+      warning. When Kamailio is behind a NATed firewall, we don't want this
+      warning to be printed for every bridged call.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 1 (yes). </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm3640"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="varname">enable_socket_mismatch_warning</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "enable_socket_mismatch_warning", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. custom_user_avp (avp string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm2560"></a>4.6. <code class="varname">custom_user_avp</code> (avp string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>When enable_username is enabled, a call to record_route will add
+      the username of the RequestURI to the Record-Route URI. This parameter
+      allows you to setup an AVP with which you can customise the username to
+      be added in the Record-Route URI.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value: if not set, the std add_username
+      behaviour is used - i.e. Request URI username. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idm1176"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="varname">custom_user_avp</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("rr", "custom_user_avp", "$avp(RR_CUSTOMER_USER_AVP)")
+
+#usage in cfg file
+$avp(RR_CUSTOM_USER_AVP)="mo";
+record_route();
+
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp75064"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. loose_route()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="loose-route-id"></a>5.1. <code class="function">loose_route()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function performs routing of SIP requests which contain a
+      route set. The name is a little bit confusing, as this function also
+      routes requests which are in the <span class="quote">“<span class="quote">strict router</span>”</span>
+      format.</p>
+            <p>This function is usually used to route in-dialog requests (like
+      ACK, BYE, reINVITE). Nevertheless also out-of-dialog requests can have a
+      <span class="quote">“<span class="quote">pre-loaded route set</span>”</span> and my be routed with loose_route.
+      It also takes care of translating between strict-routers and
+      loose-router.</p>
+            <p>The loose_route function analyzes the Route: headers in the
+      requests. If there is no Route: header, the function returns FALSE and
+      routing should be done with normal lookup functions. If a Route: header
+      is found, the function returns 1 and behaves as described in section
+      16.12 of RFC 3261. There is only one exception: If the request is
+      out-of-dialog (no to-tag) and there is only one Route: header indicating
+      the local proxy, then the Route: header is removed and the function
+      returns FALSE.</p>
+            <p>When the <span class="quote">“<span class="quote">outbound</span>”</span> module was loaded before this
+      module and the Route: header contains a username part this function will
+      attempt to use the username part as a flow-token for routing.  If route
+      calculation based on flow-token succeeds, function returns TRUE even
+      if there is only one Route: header indicating the local proxy.</p>
+            <p>Make sure your loose_routing function can't be used by attackers
+      to bypass proxy authorization.</p>
+            <p>The loose_routing topic is very complex. See the RFC3261 for more
+      details (grep for <span class="quote">“<span class="quote">route set</span>”</span> is a good starting point in
+      this comprehensive RFC).</p>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>1</em></span> - route calculation has been
+          successful</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>2</em></span> - route calculation based on
+	  flow-token has been successful</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-1</em></span> - route calculation has been
+          unsuccessful</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>-2</em></span> - outbound flow-token shows evidence
+          of tampering</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp83200"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">loose_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+loose_route();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. record_route() and record_route(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="record-route-id"></a>5.2. <code class="function">record_route()</code> and <code class="function">record_route(string)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function adds a new Record-Route header field. The header
+      field will be inserted in the message before any other Record-Route
+      header fields.</p>
+            <p>If any string is passed as parameter, it will be appended as URI
+      parameter to the Record-Route header. The string must follow the
+      <span class="quote">“<span class="quote">;name=value</span>”</span> scheme and it may contain
+      pseudo-variables.</p>
+            <p>When the <span class="quote">“<span class="quote">outbound</span>”</span> module was loaded before this
+      module this function will determine whether outbound is required for the
+      request and generate and add a flow-token as the username part of the
+      Record-Route-URI.</p>
+            <p>This function can be used from REQUEST_ROUTE, BRANCH_ROUTE and
+      FAILURE_ROUTE.</p>
+            <div class="example">
+              <a id="idp87392"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">record_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+record_route();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.3. remove_record_route()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="remove-record-route-id"></a>5.3. <code class="function">remove_record_route()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function removes the internal lumps added by
+			record_route() functions.
+		</p>
+            <p>
+			Can be used to revert adding Record-Route header(s).
+		</p>
+            <p>
+			This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp90088"></a>
+              <p class="title">
+                <strong>Example 1.10. <code class="function">remove_record_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+remove_record_route();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.4. record_route_preset(string [,string2])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp91256"></a>5.4. <code class="function">record_route_preset(string
+      [,string2])</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function will put the string into Record-Route, don't use
+      unless you know what you are doing.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>string</em></span> - String to be inserted into the
+          first header field; it may contain pseudo-variables.</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>string2</em></span> - String to be inserted into the
+          second header field; it may contain pseudo-variables.</p>
+                </li>
+              </ul>
+            </div>
+            <p>Note: If 'string2' is present, then the 'string' param is pointing
+      to the outbound interface and the 'string2' param is pointing to the
+      inbound interface.</p>
+            <p>When the <span class="quote">“<span class="quote">outbound</span>”</span> module was loaded before this
+      module this function will determine whether outbound is required for the
+      request and generate and add a flow-token as the username part of the
+      Record-Route-URI.</p>
+            <p>This function can be used from REQUEST_ROUTE, BRANCH_ROUTE and
+      FAILURE_ROUTE.</p>
+            <div class="example">
+              <a id="idp21456"></a>
+              <p class="title">
+                <strong>Example 1.11. <code class="function">record_route_preset</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+record_route_preset("1.2.3.4:5090");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.5. record_route_advertised_address(address)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="record-route-adv-addr-id"></a>5.5. <code class="function">record_route_advertised_address(address)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function adds a new Record-Route header field using the
+      address given. The header field will be inserted in the message before
+      any other Record-Route header fields.</p>
+            <p>When the <span class="quote">“<span class="quote">outbound</span>”</span> module was loaded before this
+      module this function will determine whether outbound is required for the
+      request and generate and add a flow-token as the username part of the
+      Record-Route-URI.</p>
+            <p>Meaning of the parameter is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>address</em></span> - Advertised address to use in
+          the header; it may contain pseudo-variables.</p>
+                </li>
+              </ul>
+            </div>
+            <p>If double record-routing is enabled two Record-Route headers will
+      be inserted with the same given address with different transports if the
+      transport changes.</p>
+            <p>This function can be used from REQUEST_ROUTE, BRANCH_ROUTE and
+      FAILURE_ROUTE.</p>
+            <div class="example">
+              <a id="idp26184"></a>
+              <p class="title">
+                <strong>Example 1.12. <code class="function">record_route_advertised_address</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+record_route_advertised_address("1.2.3.4:5080");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.6. add_rr_param(param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="add-rr-param-id"></a>5.6. <code class="function">add_rr_param(param)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Adds a parameter to the Record-Route URI (param must be in
+      <span class="quote">“<span class="quote">;name=value</span>”</span> format. The function may be called also
+      before or after the record_route() or record_route_advertised_address()
+      calls (see <a class="xref" href="#record-route-id" title="5.2. record_route() and record_route(string)">Section 5.2, “<code class="function">record_route()</code> and <code class="function">record_route(string)</code>”</a> or <a class="xref" href="#record-route-adv-addr-id" title="5.5. record_route_advertised_address(address)">Section 5.5, “<code class="function">record_route_advertised_address(address)</code>”</a>)).</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>param</em></span> - String containing the URI
+          parameter to be added. It must follow the <span class="quote">“<span class="quote">;name=value</span>”</span>
+          scheme; it may contain pseudo-variables.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE, BRANCH_ROUTE and
+      FAILURE_ROUTE.</p>
+            <div class="example">
+              <a id="idp30984"></a>
+              <p class="title">
+                <strong>Example 1.13. <code class="function">add_rr_param</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+add_rr_param(";nat=yes");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.7. check_route_param(re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="check-route-param-id"></a>5.7. <code class="function">check_route_param(re)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function checks if the URI parameters of the local Route
+      header (corresponding to the local server) matches the given regular
+      expression. It must be call after loose_route() (see <a class="xref" href="#loose-route-id" title="5.1. loose_route()">Section 5.1, “<code class="function">loose_route()</code>”</a>).</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>re</em></span> - regular expression to check against
+          the Route URI parameters.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp34872"></a>
+              <p class="title">
+                <strong>Example 1.14. <code class="function">check_route_param</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (check_route_param("nat=yes")) {
+    setflag(6);
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.8. is_direction(dir)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp36112"></a>5.8. <code class="function">is_direction(dir)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>The function checks the flow direction of in-dialog requests. This
+      function uses the <span class="quote">“<span class="quote">ftag</span>”</span> prameter from the Route header,
+      therefore the append_fromtag (see <a class="xref" href="#append-fromtag-id" title="4.2. append_fromtag (integer)">Section 4.2, “<code class="varname">append_fromtag</code> (integer)”</a>
+      module parameter must be enabled. Also this must be called only after
+      loose_route() (see <a class="xref" href="#loose-route-id" title="5.1. loose_route()">Section 5.1, “<code class="function">loose_route()</code>”</a>).</p>
+            <p>The function returns true if the <span class="quote">“<span class="quote">dir</span>”</span> is the same
+      with the request's flow direction.</p>
+            <p>The <span class="quote">“<span class="quote">downstream</span>”</span> direction means that the request is
+      in the same direction as the initial request that created the
+      dialog.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>dir</em></span> - string containing the direction to
+          be checked. It may be <span class="quote">“<span class="quote">upstream</span>”</span> (from callee to
+          caller) or <span class="quote">“<span class="quote">downstream</span>”</span> (caller to callee).</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <div class="example">
+              <a id="idp40760"></a>
+              <p class="title">
+                <strong>Example 1.15. <code class="function">is_direction</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_direction("downstream")) {
+    xdbg("in-dialog request from caller to callee (downstream) ($rm)\n");
+} else {
+    xdbg("in-dialog request from callee to caller (upstream) ($rm)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. Exported Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp42216"></a>6. Exported Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. $route_uri">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp42568"></a>6.1. <code class="function">$route_uri</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Returns the URI of the top route-header.</p>
+            <div class="example">
+              <a id="idp43344"></a>
+              <p class="title">
+                <strong>Example 1.16. $route_uri</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+    xdbg("Route-URI is: $route_uri\n");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter 2. Developer Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp1025440"></a>Chapter 2. Developer Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp3293808">1. Available Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#record-route-id-dev">1.1. 
+		<code class="function">record_route(string)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm19496">1.2. 
+		<code class="function">record_route_advertised_address(string)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2811584">1.3. 
+		<code class="function">add_rr_param( msg, param)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp3353888">1.4. 
+		<code class="function">check_route_param( msg, re)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1433680">1.5. 
+		<code class="function">is_direction( msg, dir)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1538288">1.6. 
+		<code class="function">get_route_param( msg, name, val)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1542800">1.7. 
+		<code class="function">register_rrcb( callback, param)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp161928">2. Examples</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <p>
+	The RR module provides an internal <acronym class="acronym">API</acronym> to be used by 
+	other Kamailio modules. The <acronym class="acronym">API</acronym> offers support for
+	SIP dialog based functionalities - for more about the dialog support
+	offered by RR module, see <a class="xref" href="#RR-dialog-id" title="2. Dialog support">Section 2, “Dialog support”</a>.
+	</p>
+        <p>
+	For internal(non-script) usage, the RR module offers to other module the
+	possibility to register callback functions to be executed each time a
+	local Route header is processed. The callback function will receive as
+	parameter the register parameter and the Route header parameter string.
+	</p>
+        <div class="section" title="1. Available Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp3293808"></a>1. Available Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="1.1.  record_route(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="record-route-id-dev"></a>1.1. 
+		<code class="function">record_route(string)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function adds a new Record-Route header field. The header field 
+		will be inserted in the message before any other Record-Route header 
+		fields.
+		</p>
+            <p>
+		If any string is passed as parameter, it will be appended as URI
+		parameter to the Record-Route header. The string must follow the 
+		<span class="quote">“<span class="quote">;name=value</span>”</span> scheme and it may contain pseudo-variables.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, BRANCH_ROUTE and 
+		FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1529592"></a>
+              <p class="title">
+                <strong>Example 2.1. <code class="function">record_route</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+record_route();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="1.2.  record_route_advertised_address(string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm19496"></a>1.2. 
+		<code class="function">record_route_advertised_address(string)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This function will add the string into a new Record-Route header field. Don't use 
+		unless you know what you are doing.
+		The header field will be inserted in the message before any other Record-Route
+		header fields.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>string</em></span> - String to be inserted into the 
+				header field.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		Calls to add_rr_param() will add parameters to the Record-Route header.
+		Note: A second Record-Route will be inserted if the transport used on the inbound
+		and outbound interfaces changes.
+		</p>
+            <div class="example">
+              <a id="idp2892280"></a>
+              <p class="title">
+                <strong>Example 2.2. <code class="function">record_route_advertised_address</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+record_route_advertised_address("1.2.3.4:5090");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="1.3.  add_rr_param( msg, param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2811584"></a>1.3. 
+		<code class="function">add_rr_param( msg, param)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds a parameter to the requests's Record-Route URI (param must be in 
+		<span class="quote">“<span class="quote">;name=value</span>”</span> format).
+		</p>
+            <p>
+		The function returns 0 on success. Otherwise, -1 is returned.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct sip_msg* msg</em></span> - request that
+				will has the parameter <span class="quote">“<span class="quote">param</span>”</span> added to its 
+				Record-Route header.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str* param</em></span> - parameter to be added 
+				to the Record-Route header - it must be in 
+				<span class="quote">“<span class="quote">;name=value</span>”</span> format.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.4.  check_route_param( msg, re)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp3353888"></a>1.4. 
+		<code class="function">check_route_param( msg, re)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function checks for the request <span class="quote">“<span class="quote">msg</span>”</span> if the URI 
+		parameters of the local Route header (corresponding to the local 
+		server) matches the given regular expression <span class="quote">“<span class="quote">re</span>”</span>. 
+		It must be call after the loose_route was done.
+		</p>
+            <p>
+		The function returns 0 on success. Otherwise, -1 is returned.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct sip_msg* msg</em></span> - request that
+				will has the Route header parameters checked.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>regex_t* param</em></span> - compiled regular
+				expression to be checked against the Route header parameters.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.5.  is_direction( msg, dir)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1433680"></a>1.5. 
+		<code class="function">is_direction( msg, dir)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function checks the flow direction of the request 
+		<span class="quote">“<span class="quote">msg</span>”</span>. As for checking it's used the <span class="quote">“<span class="quote">ftag</span>”</span> 
+		Route header parameter, the append_fromtag (see 
+		<a class="xref" href="#append-fromtag-id" title="4.2. append_fromtag (integer)">Section 4.2, “<code class="varname">append_fromtag</code> (integer)”</a> module parameter 
+		must be enables. Also this must be call only after the loose_route is 
+		done.
+		</p>
+            <p>
+		The function returns 0 if the <span class="quote">“<span class="quote">dir</span>”</span> is the same with
+		the request's flow direction. Otherwise, -1 is returned.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct sip_msg* msg</em></span> - request that
+				will have the direction checked.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>int dir</em></span> - direction to be checked
+				against. It may be <span class="quote">“<span class="quote">RR_FLOW_UPSTREAM</span>”</span> or 
+				<span class="quote">“<span class="quote">RR_FLOW_DOWNSTREAM</span>”</span>.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.6.  get_route_param( msg, name, val)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1538288"></a>1.6. 
+		<code class="function">get_route_param( msg, name, val)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function search in to the <span class="quote">“<span class="quote">msg</span>”</span>'s Route header 
+		parameters the parameter called <span class="quote">“<span class="quote">name</span>”</span> and returns its
+		value into <span class="quote">“<span class="quote">val</span>”</span>. It must be call only after the 
+		loose_route is done.
+		</p>
+            <p>
+		The function returns 0 if parameter was found (even if it has no value).
+		Otherwise, -1 is returned.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>struct sip_msg* msg</em></span> - request that
+				will have the Route header parameter searched.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str *name</em></span> - contains the Route header
+				parameter to be serached.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>str *val</em></span> - returns the value of the 
+				searched Route header parameter if found. It might be empty 
+				string if the parameter had no value.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="1.7.  register_rrcb( callback, param)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1542800"></a>1.7. 
+		<code class="function">register_rrcb( callback, param)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function register a new callback (along with its parameter). The
+		callback will be called when a loose route will be performed for the
+		local address.
+		</p>
+            <p>
+		The function returns 0 on success. Otherwise, -1 is returned.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>rr_cb_t callback</em></span> - callback
+				function to be registered.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>void *param</em></span> - parameter to be passed
+				to the callback function.
+				</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="2. Examples">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp161928"></a>2. Examples</h2>
+              </div>
+            </div>
+          </div>
+          <div class="example">
+            <a id="idp162296"></a>
+            <p class="title">
+              <strong>Example 2.3. Loading RR module's API from another module</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">...
+#include "../rr/api.h"
+...
+struct rr_binds my_rrb;
+...
+...
+/* load the RR API */
+if (load_rr_api( &amp;my_rrb )!=0) {
+    LM_ERR("can't load RR API\n");
+    goto error;
+}
+...
+...
+/* register a RR callback */
+if (my_rrb.register_rrcb(my_callback,0))!=0) {
+    LM_ERR("can't register RR callback\n");
+    goto error;
+}
+...</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

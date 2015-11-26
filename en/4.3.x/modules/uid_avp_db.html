@@ -1,0 +1,1271 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UID AVP DB Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#uid_avp_db" title="UID AVP DB Module" />
+    <link rel="next" href="#idp664" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UID AVP DB Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="uid_avp_db"></a>UID AVP DB Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jiri</span> <span class="surname">Kuthan</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jiri@iptel.org">jiri@iptel.org</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2004, 2005 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp664">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#uid_avp_db.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#uid_avp_db.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#avp_db.parameters">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#avp_db.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1194464">3.2. <code class="varname">user_attrs_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1582808">3.3. <code class="varname">uri_attrs_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1645304">3.4. <code class="varname">uid_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2154536">3.5. <code class="varname">username_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1656376">3.6. <code class="varname">did_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm64184">3.7. <code class="varname">name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm17768">3.8. <code class="varname">value_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idm16648">3.9. <code class="varname">type_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp175256">3.10. <code class="varname">flags_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp176376">3.11. <code class="varname">scheme_column</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#extra_attr_group">3.12. <code class="varname">attr_group</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#auto_unlock_extra_attrs">3.13. <code class="varname">auto_unlock_extra_attrs</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#avp_db.functions">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2060304">4.1. load_attrs (track, id)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2816984">4.2. load_extra_attrs (group_id, id)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp216128">4.3. save_extra_attrs (group_id, id)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp218792">4.4. remove_extra_attrs (group_id, id)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1575016">4.5. lock_extra_attrs (group_id, id)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1577760">4.6. unlock_extra_attrs (group_id, id)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp4504">5. Example extra attributes usage</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp186784">attribute group definition</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp664"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#uid_avp_db.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#uid_avp_db.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#avp_db.parameters">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#avp_db.db_url">3.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1194464">3.2. <code class="varname">user_attrs_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1582808">3.3. <code class="varname">uri_attrs_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1645304">3.4. <code class="varname">uid_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2154536">3.5. <code class="varname">username_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1656376">3.6. <code class="varname">did_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm64184">3.7. <code class="varname">name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm17768">3.8. <code class="varname">value_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idm16648">3.9. <code class="varname">type_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp175256">3.10. <code class="varname">flags_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp176376">3.11. <code class="varname">scheme_column</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#extra_attr_group">3.12. <code class="varname">attr_group</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#auto_unlock_extra_attrs">3.13. <code class="varname">auto_unlock_extra_attrs</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#avp_db.functions">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2060304">4.1. load_attrs (track, id)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2816984">4.2. load_extra_attrs (group_id, id)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp216128">4.3. save_extra_attrs (group_id, id)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp218792">4.4. remove_extra_attrs (group_id, id)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1575016">4.5. lock_extra_attrs (group_id, id)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1577760">4.6. unlock_extra_attrs (group_id, id)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp4504">5. Example extra attributes usage</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_avp_db.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    This module contains several functions that can be used to
+	    manipulate the contents of AVPs (Attribute-Value pairs). The AVPs
+	    are variables attached to the SIP message being processed. Each
+	    variable has its name and value. AVPs can be used to store
+	    arbitrary data or as a means of inter-module comminication.
+	</p>
+          <p>
+	    You may also want to check the avpops module which is more flexible
+	    and contains more functions. In future SER releases the avp module
+	    will be probably deprecated in favor of avpops module.
+	</p>
+          <p>
+	    Domain module operates in caching mode. Domain module reads the
+	    default values of AVPs into cache memory when the module is
+	    loaded. After that default values is re-read only when module is
+	    given avp_list_reload fifo command. Any changes in
+	    usr_preferences_types table must thus be followed by
+	    avp_list_reload command in order to reflect them in module
+	    behavior.
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_avp_db.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+	    A database module, such as mysql, postgres, or dbtext.
+	</p>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="avp_db.parameters"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="avp_db.db_url"></a>3.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The URL of the database to be used.
+	</p>
+            <p>
+	    Default value is "mysql://ser:heslo@localhost/ser".
+	</p>
+          </div>
+          <div class="section" title="3.2. user_attrs_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1194464"></a>3.2. <code class="varname">user_attrs_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Name of the table with user attributes.
+	</p>
+            <p>
+	    Default value is "user_attrs".
+	</p>
+          </div>
+          <div class="section" title="3.3. uri_attrs_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1582808"></a>3.3. <code class="varname">uri_attrs_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Name of the table with uri attributes.
+	</p>
+            <p>
+	    Default value is "uri_attrs".
+	</p>
+          </div>
+          <div class="section" title="3.4. uid_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1645304"></a>3.4. <code class="varname">uid_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Name of the column that stores UID in the user attributes table.
+	</p>
+            <p>
+	    Default value is "uid".
+	</p>
+          </div>
+          <div class="section" title="3.5. username_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2154536"></a>3.5. <code class="varname">username_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Name of the column containing the username of the subscriber in uri
+		attributes table.
+	</p>
+            <p>
+	    Default value is "username".
+	</p>
+          </div>
+          <div class="section" title="3.6. did_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1656376"></a>3.6. <code class="varname">did_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Name of the column in uri attributes table containing the ID of domain
+		that the subscriber belongs to.
+	</p>
+            <p>
+	    Default value is "did".
+	</p>
+          </div>
+          <div class="section" title="3.7. name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm64184"></a>3.7. <code class="varname">name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The name of the column containing attribute names.
+	</p>
+            <p>
+	    Default value is "name".
+	</p>
+          </div>
+          <div class="section" title="3.8. value_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm17768"></a>3.8. <code class="varname">value_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The name of the column containing attribute values.
+	</p>
+            <p>
+	    Default value is "value".
+	</p>
+          </div>
+          <div class="section" title="3.9. type_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idm16648"></a>3.9. <code class="varname">type_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The name of the column containing attribute value type.
+	</p>
+            <p>
+	    Default value is "type".
+	</p>
+          </div>
+          <div class="section" title="3.10. flags_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp175256"></a>3.10. <code class="varname">flags_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    The name of the column containing attribute flags.
+	</p>
+            <p>
+	    Default value is "flags".
+	</p>
+          </div>
+          <div class="section" title="3.11. scheme_column (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp176376"></a>3.11. <code class="varname">scheme_column</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the column containing subscriber's scheme in uri attributes.
+	</p>
+            <p>
+	    Default value is "scheme".
+	</p>
+          </div>
+          <div class="section" title="3.12. attr_group (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="extra_attr_group"></a>3.12. <code class="varname">attr_group</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		'Extra attribute' group definition. It can be repeated to define more
+		attribute groups.
+	</p>
+            <p>
+		The group definition contains one or more assignments in the form
+		key=value. Possible keys are:
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Attribute group identifier. Must be set.
+			</p>
+                </dd>
+                <dt>
+                  <span class="term">table</span>
+                </dt>
+                <dd>
+                  <p>Table name used for storing attributes from this
+			attribute group. Must be set.
+			</p>
+                </dd>
+                <dt>
+                  <span class="term">flag</span>
+                </dt>
+                <dd>
+                  <p>Attribute flag name used to mark attributes in this
+			group. Must be set.</p>
+                </dd>
+                <dt>
+                  <span class="term">key_column</span>
+                </dt>
+                <dd>
+                  <p>Column name holding key. Default value is
+			<span class="quote">“<span class="quote">id</span>”</span>.</p>
+                </dd>
+                <dt>
+                  <span class="term">name_column</span>
+                </dt>
+                <dd>
+                  <p>Column name used for storing attribute name. Default
+			value is <span class="quote">“<span class="quote">name</span>”</span>.</p>
+                </dd>
+                <dt>
+                  <span class="term">value_column</span>
+                </dt>
+                <dd>
+                  <p>Column name used for storing attribute
+			value. Default value is <span class="quote">“<span class="quote">value</span>”</span>.</p>
+                </dd>
+                <dt>
+                  <span class="term">type_column</span>
+                </dt>
+                <dd>
+                  <p>Column name used for storing attribute type. Default
+			value is <span class="quote">“<span class="quote">type</span>”</span>.</p>
+                </dd>
+                <dt>
+                  <span class="term">flags_column</span>
+                </dt>
+                <dd>
+                  <p>Column name used for storing attribute
+			flags. Default value is <span class="quote">“<span class="quote">flags</span>”</span>.</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+            <p>
+	    None defined by default.
+	</p>
+            <div class="example">
+              <a id="idp186784"></a>
+              <p class="title">
+                <strong>Example 1.1. attribute group definition</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("avp_db", "attr_group", "id=dlg,flag=dialog_flag,table=dlg_attrs,key_column=dlg_id");</pre>
+                <p>Table used for these attributes:
+	</p>
+                <pre class="programlisting">mysql&gt; describe dlg_attrs;  
++--------+------------------+------+-----+---------+-------+
+| Field  | Type             | Null | Key | Default | Extra |
++--------+------------------+------+-----+---------+-------+
+| dlg_id | varchar(256)     | NO   | MUL |         |       | 
+| name   | varchar(32)      | NO   |     |         |       | 
+| value  | varchar(255)     | YES  |     | NULL    |       | 
+| type   | int(11)          | NO   |     | 0       |       | 
+| flags  | int(10) unsigned | NO   |     | 0       |       | 
++--------+------------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</pre>
+                <p>
+	</p>
+                <p>Setting flags from code (all attrs beginning with <span class="quote">“<span class="quote">dlg_</span>”</span>):
+	</p>
+                <pre class="programlisting">avpflags dialog_flag;
+...
+route {
+	...
+	setavpflag("$f./^dlg_/", "dialog_flag");
+	...
+}</pre>
+                <p>
+	</p>
+              </div>
+            </div>
+            <p><br class="example-break" />
+	</p>
+          </div>
+          <div class="section" title="3.13. auto_unlock_extra_attrs (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="auto_unlock_extra_attrs"></a>3.13. <code class="varname">auto_unlock_extra_attrs</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Determines the action when any of the 'extra attributes' lock is detected when
+		routing script execution was finished.
+
+		When the value of this parameter is zero (default) BUG level message is logged, 
+		but the lock is kept, so another process trying to obtain the lock might get stuck.
+
+		If the value is nonzero, DEBUG level message is sent to the log and all the locks are released.
+	</p>
+            <p>
+		Default value is 0.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="avp_db.functions"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. load_attrs (track, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2060304"></a>4.1. load_attrs (track, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Loads attributes from the database.
+
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">track</span>
+                </dt>
+                <dd>
+                  <p>
+			</p>
+                  <div class="variablelist">
+                    <dl>
+                      <dt>
+                        <span class="term">$fu</span>
+                      </dt>
+                      <dd>
+                        <p>Load user attributes into from track. In this case
+				the second parameter is UID used to search attributes.
+				</p>
+                      </dd>
+                      <dt>
+                        <span class="term">$tu</span>
+                      </dt>
+                      <dd>
+                        <p>Load user attributes into to track. In this case
+				the second parameter is UID used to search attributes.
+				</p>
+                      </dd>
+                      <dt>
+                        <span class="term">$fr</span>
+                      </dt>
+                      <dd>
+                        <p>Load uri attributes into from track. In this case
+				the second parameter is URI used to search attributes.
+				</p>
+                      </dd>
+                      <dt>
+                        <span class="term">$tr</span>
+                      </dt>
+                      <dd>
+                        <p>Load uri attributes into to track. In this case
+				the second parameter is URI used to search attributes.
+				</p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <p>
+			</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifier used for searching attributes. When
+			searching for user attributes it is UID, when searchnig uri
+			attributes it is URI.
+			</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="4.2. load_extra_attrs (group_id, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2816984"></a>4.2. load_extra_attrs (group_id, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Loads 'extra attributes' stored by previous call to save_extra_attrs. 
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">group_id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attribute group,	see <a class="xref" href="#extra_attr_group" title="3.12. attr_group (string)">Section 3.12, “<code class="varname">attr_group</code> (string)”</a>.
+				</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attributes which should be loaded.
+				</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="4.3. save_extra_attrs (group_id, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp216128"></a>4.3. save_extra_attrs (group_id, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Saves 'extra attributes' flagged by group flag under given id. 
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">group_id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attribute group,	see <a class="xref" href="#extra_attr_group" title="3.12. attr_group (string)">Section 3.12, “<code class="varname">attr_group</code> (string)”</a>.
+				</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifier stored with flagged attributes.
+				</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="4.4. remove_extra_attrs (group_id, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp218792"></a>4.4. remove_extra_attrs (group_id, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Removes all extra attributes with given id.
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">group_id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attribute group,	see <a class="xref" href="#extra_attr_group" title="3.12. attr_group (string)">Section 3.12, “<code class="varname">attr_group</code> (string)”</a>.
+				</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attributes which should be removed.
+				</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="4.5. lock_extra_attrs (group_id, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1575016"></a>4.5. lock_extra_attrs (group_id, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Locks extra attributes. Currently locks whole attribute group (not only
+		id).
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">group_id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attribute group,	see <a class="xref" href="#extra_attr_group" title="3.12. attr_group (string)">Section 3.12, “<code class="varname">attr_group</code> (string)”</a>.
+				</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attributes which should be locked.
+				</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+          <div class="section" title="4.6. unlock_extra_attrs (group_id, id)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1577760"></a>4.6. unlock_extra_attrs (group_id, id)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Unlocks extra attributes. Currently unlocks whole attribute group (not only
+		id).
+		</p>
+            <div class="variablelist">
+              <dl>
+                <dt>
+                  <span class="term">group_id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attribute group,	see <a class="xref" href="#extra_attr_group" title="3.12. attr_group (string)">Section 3.12, “<code class="varname">attr_group</code> (string)”</a>.
+				</p>
+                </dd>
+                <dt>
+                  <span class="term">id</span>
+                </dt>
+                <dd>
+                  <p>Identifies attributes which should be unlocked.
+				</p>
+                </dd>
+              </dl>
+            </div>
+            <p>
+	</p>
+          </div>
+        </div>
+        <div class="section" title="5. Example extra attributes usage">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp4504"></a>5. Example extra attributes usage</h2>
+              </div>
+            </div>
+          </div>
+          <pre class="programlisting">debug=3
+memdbg=5
+server_signature=0
+sip_warning=0
+check_via=yes;
+dns=no;
+rev_dns=no;
+
+children=4;
+tcp_children=4;
+tcp_max_connections=2048;
+port=5060
+
+loadmodule "/home/kubartv/SER/lib/ser/modules/sl.so";
+#loadmodule "/home/kubartv/SER/lib/ser/modules/maxfwd.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/tm.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/rr.so";
+#loadmodule "/home/kubartv/SER/lib/ser/modules/xmlrpc.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/mysql.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/domain.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/uri_db.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/avp.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/avp_db.so";
+
+loadmodule "/home/kubartv/SER/lib/ser/modules/usrloc.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/registrar.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/xprint.so";
+loadmodule "/home/kubartv/SER/lib/ser/modules/eval.so";
+
+loadmodule "/home/kubartv/SER/lib/ser/modules/gflags.so"
+
+#modparam("maxfwd", "max_limit", 70);
+
+modparam("usrloc", "db_mode", 1);
+modparam("usrloc|avp_db", "db_url", "mysql://ser:heslo@127.0.0.1/ser")
+
+modparam("avp_db", "attr_group", "id=dlg,flag=dialog_flag,table=dlg_attrs,key_column=dlg_id");
+
+modparam("gflags", "load_global_attrs", 1);
+
+avpflags dialog_flag;
+
+route["create_dialog"] {
+	# sets attributes needed by dialog (stored when processing reply)
+	$dlg_caller = @contact;
+	$dlg_caller_cseq = @cseq.num;
+	$dlg_status = "new";
+	$dlg_init_method = @cseq.method;
+	$dir = "caller2callee";
+
+	t_on_reply("dialog_creation_reply");
+	return 1;
+}
+
+onreply_route["dialog_creation_reply"] {
+	xplog("L_ERR", "dialog creation reply (%rs, %@cseq.method) [%@from.tag, %@to.tag]\n");
+
+	$res = @msg.response.code;
+	xplog("L_ERR", " ... response: %$res\n");
+	if ((!@to.tag) || (@to.tag=="")) {
+		# don't create dialog from response without to tag
+		break;
+	}
+	if ($res &lt; 101) {
+		xplog("L_ERR", " ... I won't create dialog from 100 response.\n");
+		break;
+	}
+	
+	del_attr("$id"); # xlset_attr works strange when the attribute already exists
+	xlset_attr("$id", "call-id:%@call_id caller_tag:%@from.tag callee_tag:%@to.tag");
+	if ($res &gt; 299) {
+		xplog("L_ERR", " ... dialog terminated\n");
+		remove_extra_attrs("dlg", "$id");
+		break;
+	}
+
+	xplog("L_ERR", " ... creating dialog '%$id'\n");
+	# generate dialog id
+
+	lock_extra_attrs("dlg", "$id");
+
+	# TODO: try to load the dialog (early dialog may exist)?
+
+	# update dialog data
+
+	if (($dlg_status == "new") &amp;&amp; ($res &lt; 200)) {
+		# early response may arrive after final one
+		$dlg_callee = @contact;
+		$dlg_status = "early";
+		xplog("L_ERR", " ... creating early dialog\n");
+	}
+	if ($res &gt;= 200) {
+		$dlg_callee = @contact;
+		$dlg_status = "confirmed";
+		$dlg_confirmed_at = @sys.now.local;
+		xplog("L_ERR", " ... confirming dialog\n");
+	}
+
+	route("save_dialog");
+}
+
+route["save_dialog"] {
+	if ($dlg_status == "destroyed") {
+		xplog("L_ERR", " ... destroying dialog %$id\n");
+		
+		# use this if you want to delete destroyed dialogs:
+		# remove_extra_attrs("dlg", "$id");
+
+		# else if you want leave them in DB (with the time of termination)
+		$dlg_destroyed_at = @sys.now.local;
+		
+		# set flag for attributes with name beggining with dlg_
+		setavpflag("$f./^dlg_/", "dialog_flag");
+		save_extra_attrs("dlg", "$id");
+	}
+	else {
+		# set flag for attributes with name beggining with dlg_
+		setavpflag("$f./^dlg_/", "dialog_flag");
+
+		save_extra_attrs("dlg", "$id");
+	}
+	unlock_extra_attrs("dlg", "$id");
+}
+
+route["load_dialog_data"] {
+	lock_extra_attrs("dlg", "$id");
+
+	del_attr("$dlg_init_method"); # used as flag of succesful read of data
+
+	# delete all used dlg attrs (because load_extra_attrs doesn't delete them itself before adding)
+	del_attr("$dlg_init_method");
+	del_attr("$dlg_caller");
+	del_attr("$dlg_callee");
+	del_attr("$dlg_caller_cseq");
+	del_attr("$dlg_callee_cseq");
+	del_attr("$dlg_status");
+
+	load_extra_attrs("dlg", "$id");
+	if (!$dlg_init_method) {
+		# dialog was not loaded
+		unlock_extra_attrs("dlg", "$id");
+		return -1;
+	}
+	return 1;
+}
+
+route["load_dialog"] {
+	# tries to load dialog according tags and callid
+	
+	# try to load dialog
+	del_attr("$id"); # xlset_attr works strange when the attribute already exists
+	xlset_attr("$id", "call-id:%@call_id caller_tag:%@from.tag callee_tag:%@to.tag");
+	if (route("load_dialog_data")) { 
+		$dir = "caller2callee";
+		return 1; 
+	}
+
+	# try to load dialog in other direction
+	del_attr("$id"); # xlset_attr works strange when the attribute already exists
+	xlset_attr("$id", "call-id:%@call_id caller_tag:%@to.tag callee_tag:%@from.tag");
+	if (route("load_dialog_data")) { 
+		$dir = "callee2caller";
+		return 1; 
+	}
+	
+	$id = "error";
+
+	return -1;
+}
+
+route["update_dialog_reply"] {
+	if ((@cseq.method == "INVITE") || (@cseq.method == "UPDATE")) {
+		# target refresh for INVITE dialogs
+
+		if ($dir == "caller2calle") { # if request from caller
+			$dlg_callee = @contact; # update callee's contact (response!)
+		}
+		else {
+			$dlg_caller = @contact;
+		}
+	}
+	if (@cseq.method=="BYE") {
+		$dlg_status = "destroyed"; # will be removed in save_dialog
+	}
+}
+
+route["update_dialog"] {
+	if ((@cseq.method == "INVITE") || (@cseq.method == "UPDATE")) {
+		# target refresh for INVITE dialogs
+
+		if ($dir == "caller2calle") { # if request from caller
+			$dlg_caller = @contact; # update caller's contact (request!)
+		}
+		else {
+			$dlg_callee = @contact;
+		}
+	}
+
+	if ($dir == "caller2callee") { # if request from caller
+		# TODO: verify CSeq before modifying and return 500 if lower than last one
+		$dlg_caller_cseq = @cseq.num;
+	}
+	else {
+		# TODO: verify CSeq before modifying and return 500 if lower than last one
+		$dlg_callee_cseq = @cseq.num;
+	}
+
+	if (method=="BYE") {
+		$dlg_status = "pre-destroyed"; # to see that BYE already went through
+	}
+	return 1;
+}
+
+route["trace_dialog"] {
+	xplog("L_ERR", " ... dialog '%$id'\n");
+	xplog("L_ERR", "       -&gt; initial method: %$dlg_init_method\n");
+	xplog("L_ERR", "       -&gt; request dir: %$dir\n");
+	xplog("L_ERR", "       -&gt; caller: %$dlg_caller\n");
+	xplog("L_ERR", "       -&gt; caller's CSeq: %$dlg_caller_cseq\n");
+	xplog("L_ERR", "       -&gt; callee: %$dlg_callee\n");
+	xplog("L_ERR", "       -&gt; callee's CSeq: %$dlg_callee_cseq\n");
+	xplog("L_ERR", "       -&gt; status: %$dlg_status\n");
+	return 1;
+}
+
+onreply_route["dialog_reply"] {
+	if ($id) {
+		xplog("L_ERR", "In-dialog reply (%rs, %@cseq.method) [%@to.tag, %@from.tag]\n");
+		if (!route("load_dialog")) {
+			xplog("L_ERR", "Can't load dialog data\n");
+		}
+		else {
+			route("update_dialog_reply");
+			route("trace_dialog");
+			route("save_dialog");
+		}
+	}
+}
+
+route {
+	if (method=="SUBSCRIBE") {
+		# here we support only INVITE/BYE dialogs
+		sl_reply("400", "Unsupported");
+		break;
+	}
+	
+	if (!lookup_domain("$td", "@to.uri.host")) {
+		sl_send_reply("404", "Domain Not Found");
+		break;
+	}
+	
+	if (!lookup_user("To")) {
+		sl_send_reply("404", "Unknown user");
+		break;
+	}
+
+	if (method=="REGISTER") {
+		save("location");
+		break;
+	};
+		
+	xplog("L_ERR", "----&gt; processing request %@cseq.method\n");
+		
+	if (!lookup_domain("$fd", "@from.uri.host")) {
+		sl_send_reply("404", "From domain Not Found");
+		break;
+	}
+
+	if (!lookup_user("From")) {
+		sl_send_reply("404", "Unknown user in From");
+		break;
+	}
+
+	if (method != "REGISTER") record_route();
+
+	# dialog needs transactions
+	if (!t_newtran()) {
+		sl_send_reply("500", "Can not start transaction");
+		drop;
+	}
+
+	# dialog creation/loading
+	if (!@to.tag || (@to.tag == "")) {
+		# initial request or non-dialog message
+		if (method=="INVITE") {
+			route("create_dialog");
+			# we don't save the dialog here because AVPs will be set
+			# when reply comes and the dialog will be stored then
+		}
+		else {
+			xplog("L_ERR", "Non-dialog message: %@cseq\n");
+		}
+	}
+	else {
+		# message within dialog
+		if (route("load_dialog")) {
+			route("update_dialog");
+			route("trace_dialog");
+			route("save_dialog");
+			t_on_reply("dialog_reply");
+		}
+		else {	
+			xplog("L_ERR", "Message within unknown dialog: %@cseq, to_tag=%@to.tag from_tag=%@from.tag\n");
+		}
+	}
+
+	if (loose_route()) {
+		route(1);
+		break;
+	}
+
+	if (!lookup("location")) {
+		t_reply("404", "Not Found");
+		break;
+	};
+	route(1);
+}
+
+route[1] 
+{
+	xplog("L_ERR", "&lt;---- request %@cseq.method processed\n");
+	# send it out now; use stateful forwarding as it works reliably
+	# even for UDP2TCP
+	if (!t_relay()) {
+		sl_reply_error();
+	};
+}</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

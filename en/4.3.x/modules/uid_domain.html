@@ -1,0 +1,1244 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UID Domain Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#uid_domain" title="UID Domain Module" />
+    <link rel="next" href="#idm4346224" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="UID Domain Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="uid_domain"></a>UID Domain Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2002-2010 Juha Heinanen</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idm4346224">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#uid_domain.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1712">1.1. Virtual Domains</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp8800">1.2. Domain-level Configuration Attributes</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp14344">1.3. Caching</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#uid_domain.dep">2. Dependencies</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#uid_domain.known_limitations">3. Known Limitations</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#domain.parameters">4. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain.db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#db_mode">4.2. <code class="varname">db_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain_table">4.3. <code class="varname">domain_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain.did_column">4.4. <code class="varname">did_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain.domain_col">4.5. <code class="varname">domain_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain.flags_col">4.6. <code class="varname">flags_col</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_table">4.7. <code class="varname">domattr_table</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_did">4.8. <code class="varname">domattr_did</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_name">4.9. <code class="varname">domattr_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_type">4.10. <code class="varname">domattr_type</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_value">4.11. <code class="varname">domattr_value</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domattr_flags">4.12. <code class="varname">domattr_flags</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#load_domain_attrs">4.13. <code class="varname">load_domain_attrs</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#domain.functions">5. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#is_local">5.1. <code class="function">is_local(domain)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#lookup_domain">5.2. <code class="function">lookup_domain(attr_group, domain)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#domain.fifo">6. FIFO Interface</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain_reload">6.1. <code class="function">domain.reload</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#domain_dump">6.2. <code class="function">domain.dump</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#domain.api">7. Internal API</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp4720">Virtual Domain iptel.org</a></dt>
+          <dt>1.2. <a href="#idp7112">Database Representation of Virtual Domain</a></dt>
+          <dt>1.3. <a href="#idp11336">Table domain_attrs</a></dt>
+          <dt>1.4. <a href="#idp1605544">Setting db_url parameter</a></dt>
+          <dt>1.5. <a href="#idp2212984">Setting db_mode parameter</a></dt>
+          <dt>1.6. <a href="#idp2181352">Setting domain_table parameter</a></dt>
+          <dt>1.7. <a href="#idm17480">Setting did_col parameter</a></dt>
+          <dt>1.8. <a href="#idp185880">Setting domain_col parameter</a></dt>
+          <dt>1.9. <a href="#idp188312">Setting flags_col parameter</a></dt>
+          <dt>1.10. <a href="#idp190664">Setting domattrs_table parameter</a></dt>
+          <dt>1.11. <a href="#idp193056">Setting domattrs_did parameter</a></dt>
+          <dt>1.12. <a href="#idm59240">Setting domattrs_name parameter</a></dt>
+          <dt>1.13. <a href="#idm56864">Setting domattrs_type parameter</a></dt>
+          <dt>1.14. <a href="#idm54488">Setting domattrs_value parameter</a></dt>
+          <dt>1.15. <a href="#idm51976">Setting domattrs_flags parameter</a></dt>
+          <dt>1.16. <a href="#idm48856">Setting load_domain_attrs parameter</a></dt>
+          <dt>1.17. <a href="#idp2847472">is_uri_host_local_local usage</a></dt>
+          <dt>1.18. <a href="#idp1968440">lookup_domain usage</a></dt>
+          <dt>1.19. <a href="#idp2876360">Calling <code class="function">load_domain_api</code></a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idm4346224"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#uid_domain.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1712">1.1. Virtual Domains</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp8800">1.2. Domain-level Configuration Attributes</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp14344">1.3. Caching</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#uid_domain.dep">2. Dependencies</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#uid_domain.known_limitations">3. Known Limitations</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#domain.parameters">4. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#domain.db_url">4.1. <code class="varname">db_url</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#db_mode">4.2. <code class="varname">db_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain_table">4.3. <code class="varname">domain_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain.did_column">4.4. <code class="varname">did_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain.domain_col">4.5. <code class="varname">domain_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain.flags_col">4.6. <code class="varname">flags_col</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_table">4.7. <code class="varname">domattr_table</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_did">4.8. <code class="varname">domattr_did</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_name">4.9. <code class="varname">domattr_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_type">4.10. <code class="varname">domattr_type</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_value">4.11. <code class="varname">domattr_value</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domattr_flags">4.12. <code class="varname">domattr_flags</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#load_domain_attrs">4.13. <code class="varname">load_domain_attrs</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#domain.functions">5. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#is_local">5.1. <code class="function">is_local(domain)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#lookup_domain">5.2. <code class="function">lookup_domain(attr_group, domain)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#domain.fifo">6. FIFO Interface</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#domain_reload">6.1. <code class="function">domain.reload</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#domain_dump">6.2. <code class="function">domain.dump</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#domain.api">7. Internal API</a>
+              </span>
+            </dt>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_domain.overview"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>Domain modules, as the name suggests, implements support for
+		multiple independent virtual domains hosted on one SIP server. This is
+		often useful if you have multiple domain names and you want to make
+		them all work and appear as one. Alternatively you might find the
+		module useful if you want to run a shared SIP service for multiple
+		independent customers. The module stores all supported domains and
+		associated configuration in a database table. Most of the information
+		can be cached in memory for performance reasons.</p>
+          <div class="section" title="1.1. Virtual Domains">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1712"></a>1.1. Virtual Domains</h3>
+                </div>
+              </div>
+            </div>
+            <p>The domain module adds support for so-called virtual
+			domains. A virtual domain is just a collection of domain names and
+			associated configuration information identified by a unique
+			identifier. We refer to the domain identifier as DID elsewhere in
+			the documentation. DID stands for "Domain IDentifier". In
+			traditional POST world the term DID has a different meaning
+			though. Please be aware that this is just pure coincidence.</p>
+            <p>All domain names that belong to one virtual domain are
+			interchangeable. From SIP server's perspective there is no
+			difference between them. They can be used in SIP URIs
+			interchangeably and the behavior of the SIP server will not be
+			affected. This is called "domain name normalization" and it is one
+			of the steps performed early during SIP message processing.</p>
+            <p>The DID identifier can be anything. To the SIP server DIDs
+			are just opaque strings and what format you choose depends on your
+			requirements and the type of the setup. You can use numbers in
+			smaller setups if the size of the data is a concern. You can set
+			the DID to the canonical domain name of the domain. You can use
+			RFC 4122 style UUIDs if your setup is large and distributed. You
+			can use anything as long as it can be represented as string. The
+			only requirement is that the identifier of each virtual domain
+			must be unique.</p>
+            <p>The following example illustrates how one virtual domain can
+			be represented. The iptel.org domain runs a public SIP
+			service. The users of the service can use SIP URIs of form
+			sip:username@iptel.org. The SIP service is distributed, there is a
+			number of SIP servers. The SIP servers are also available through
+			a number of other domain names, such as sip.iptel.org,
+			proxy.iptel.org and so on. We created one virtual domain in the
+			domain module and added all such domain names to the virtual
+			domain:</p>
+            <div class="example">
+              <a id="idp4720"></a>
+              <p class="title">
+                <strong>Example 1.1. Virtual Domain iptel.org</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">iptel
+  |
+  +---iptel.org
+  +---sip.iptel.org
+  +---proxy.iptel.org
+  +---213.192.59.75</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>In the example above, we chose "iptel" as the unique
+			identifier for the virtual domain. This identifier is
+			permanent. It never changes. Over time we may change domain names
+			assigned to this virtual domain, but this identifier never
+			changes. The main reason why virtual domain identifiers must never
+			change is that because they are referenced from other tables, for
+			example the accounting table. The data in the accounting table is
+			long-lived, usually archived, and this ensures that the data will
+			still reference correct virtual domain, no matter what domain
+			names are assigned to it.</p>
+            <p>The virtual domain described above will be stored in the
+			domain table in the database:</p>
+            <div class="example">
+              <a id="idp7112"></a>
+              <p class="title">
+                <strong>Example 1.2. Database Representation of Virtual Domain</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">+-------+-----------------+-------+
+| did   | domain          | flags |
++-------+-----------------+-------+
+| iptel | iptel.org       |    33 | 
+| iptel | sip.iptel.org   |    33 | 
+| iptel | proxy.iptel.org |    33 | 
+| iptel | 213.192.59.75   |    33 | 
++-------+-----------------+-------+</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>Because all domain names that belong to one particular
+			virtual domain are equal, it does not matter which domain name is
+			used in the host part of the SIP URI. Thus an imaginary user joe
+			with SIP URI sip:joe@iptel.org will also be reachable as
+			sip:joe@sip.iptel.org, sip:joe@proxy.iptel.org, and
+			sip:joe@213.192.59.75. If we add a new domain name to this virtual
+			domain then joe will also be able to use the new domain name in
+			his SIP URI, without the need to change anything.</p>
+          </div>
+          <div class="section" title="1.2. Domain-level Configuration Attributes">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp8800"></a>1.2. Domain-level Configuration Attributes</h3>
+                </div>
+              </div>
+            </div>
+            <p>In addition to a number of domain names, each virtual domain
+			can also have extra configuration information associated with
+			it. The possibility to configure the SIP server sightly
+			differently in each virtual domain is, in fact, the main reason
+			why we introduced the concept of virtual domains. We wanted to
+			have one SIP server which will provide SIP service to multiple
+			different customers and each of the customers may have slightly
+			different configuration requirements. That's how domain-level
+			configuration attributes were born.</p>
+            <p>Because the administrator of the SIP server seldom knows
+			configuration requirements in advance, we decided to implement a
+			generic solution and store all configuration options in named
+			attributes. Named attributes are just like variables, they have a
+			name and they have a value. Attributes are accessible from the
+			configuration script of the SIP server. Domain-level attributes
+			are attributes that are associated with a particular virtual
+			domain. They can be used to store additional configuration for the
+			entire virtual domain, that is all users that belong (or have SIP
+			URI) in that particular virtual domain. Domain-level attributes
+			can be overridden be user-level attributes with the same name
+			configured for a particular user. In other words a domain level
+			attribute will only be effective if no user-level attribute with
+			the same name exists.</p>
+            <p>Domain-level attributes are stored in a separate table. The
+			name of the table is domain_attrs and it is defined as follows:
+			</p>
+            <div class="example">
+              <a id="idp11336"></a>
+              <p class="title">
+                <strong>Example 1.3. Table domain_attrs</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">+-------+------------------+------+-----+---------+-------+
+| Field | Type             | Null | Key | Default | Extra |
++-------+------------------+------+-----+---------+-------+
+| did   | varchar(64)      | YES  | MUL | NULL    |       | 
+| name  | varchar(32)      | NO   |     | NULL    |       | 
+| type  | int(11)          | NO   |     | 0       |       | 
+| value | varchar(255)     | YES  |     | NULL    |       | 
+| flags | int(10) unsigned | NO   |     | 0       |       | 
++-------+------------------+------+-----+---------+-------+</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>Each attribute has name, type and value. A single attribute
+			can have multiple values and in that case it will occupy more rows
+			in the table. Each attribute is associated with a particular
+			virtual domain using the DID identifier. Domain-level attributes
+			can contain just about anything. It is a generic configuration
+			mechanism and it is up to you to define a list of attribute that
+			are meaningful in your setup and use those attributes in the
+			routing part of the configuration file.
+			</p>
+            <p>Attributes for a particular virtual-domain are made
+			available to script function by the lookup_domain function. This
+			is the function that is used to map domain names to DIDs. One of
+			the side-effects of the function is that it makes domain-level
+			attributes available to script function if a matching virtual
+			domain is found.
+			</p>
+            <p>When caching is enabled, all attributes from domain_attrs
+			table are cached in memory, just like virtual domain
+			themselves. If you disable caching then the domain module will
+			attempt to load attributes from the database each time you call
+			lookup_domain. Attributes cached in memory can be realoaded with
+			the domain.reload management function.</p>
+          </div>
+          <div class="section" title="1.3. Caching">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp14344"></a>1.3. Caching</h3>
+                </div>
+              </div>
+            </div>
+            <p>Domain module operates in caching or non-caching mode
+			depending on value of module parameter
+			<em class="parameter"><code>db_mode</code></em>. In caching mode domain module
+			reads the contents of domain table into cache memory when the
+			module is loaded.  After that domain table is re-read only when
+			module is given domain_reload fifo command.  Any changes in domain
+			table must thus be followed by domain_reload command in order to
+			reflect them in module behavior. In non-caching mode domain module
+			always queries domain table in the database.</p>
+            <p>Caching is implemented using a hash table. The size of the
+			hash table is given by HASH_SIZE constant defined in
+			domain_mod.h. Its "factory default" value is 128. Caching mode is
+			highly recommended if you want to use domain-level
+			attributes.</p>
+          </div>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_domain.dep"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The module depends on the following modules (in the other words
+			the listed modules must be loaded before this module):
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p><span class="emphasis"><em>database</em></span> - Any database module</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="3. Known Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="uid_domain.known_limitations"></a>3. Known Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			There is an unlikely race condition on domain list update.  If a process uses a table,
+			which is reloaded at the same time twice through <acronym class="acronym">FIFO</acronym>, the second
+			reload will delete the original table still in use by the process.
+		</p>
+        </div>
+        <div class="section" title="4. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="domain.parameters"></a>4. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. db_url (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain.db_url"></a>4.1. <code class="varname">db_url</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is <acronym class="acronym">URL</acronym> of the database to be used.
+		</p>
+            <p>
+			Default value is "mysql://serro:47serro11@localhost/ser"
+		</p>
+            <div class="example">
+              <a id="idp1605544"></a>
+              <p class="title">
+                <strong>Example 1.4. Setting db_url parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "db_url", "mysql://ser:pass@db_host/ser")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. db_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="db_mode"></a>4.2. <code class="varname">db_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Database mode. Value 0 means non-caching, 1
+		means caching is enabled. It 
+			is highly recommended to enable caching if you
+		want to use 
+			domain-level attributes.
+		</p>
+            <p>
+			Default value is 1 (caching).
+		</p>
+            <div class="example">
+              <a id="idp2212984"></a>
+              <p class="title">
+                <strong>Example 1.5. Setting db_mode parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "db_mode", 0)   # Do	not use caching</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3. domain_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain_table"></a>4.3. <code class="varname">domain_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of table containing names of local domains that the proxy is
+			responsible for.  Local users must have in their SIP URI a host
+			part that is equal to one of the domains stored in this table.
+		</p>
+            <p>
+			Default value is "domain".
+		</p>
+            <div class="example">
+              <a id="idp2181352"></a>
+              <p class="title">
+                <strong>Example 1.6. Setting domain_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domain_table", "new_name")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. did_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain.did_column"></a>4.4. <code class="varname">did_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is the name of the column in domain table that contains the
+			unique identifiers of virtual domains. Domains names found in this
+			table are arranged into virtual domains. Each virtual domain must
+			have a unique identifier and it can contain one or more domain
+			names.
+		</p>
+            <p>
+			Default value is "did".
+		</p>
+            <div class="example">
+              <a id="idm17480"></a>
+              <p class="title">
+                <strong>Example 1.7. Setting did_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "did_col", "did")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5. domain_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain.domain_col"></a>4.5. <code class="varname">domain_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Name of column containing domain names in the domain table.
+		</p>
+            <p>
+			Default value is "domain".
+		</p>
+            <div class="example">
+              <a id="idp185880"></a>
+              <p class="title">
+                <strong>Example 1.8. Setting domain_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domain_col", "domain")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6. flags_col (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain.flags_col"></a>4.6. <code class="varname">flags_col</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is the name of the column in domain table which stores
+			various flags. Each row in the table has a bunch of generic flags
+			that can be used mark the row disabled, deleted, etc. The flags
+			allow for more flexible administration of the data in the database
+			and they are present in several other tables too.
+		</p>
+            <p>
+			Default value is "flags".
+		</p>
+            <div class="example">
+              <a id="idp188312"></a>
+              <p class="title">
+                <strong>Example 1.9. Setting flags_col parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "flags_col", "domain")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7. domattr_table (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_table"></a>4.7. <code class="varname">domattr_table</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This parameter can be used to configure the name of the table that
+			is used to store domain-level attributes. Domain level attributes
+			are attributes that are associated with a particular virtual
+			domain. They are typically used to store additional domain-wide
+			settings that should apply to all users who belong to the domain.
+		</p>
+            <p>
+			Default value is "domain_attrs".
+		</p>
+            <div class="example">
+              <a id="idp190664"></a>
+              <p class="title">
+                <strong>Example 1.10. Setting domattrs_table parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_table", "domain_attrs")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8. domattr_did (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_did"></a>4.8. <code class="varname">domattr_did</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Use this parameter to configure the name of the column in
+			domain_attrs table that is used to store the did of the virtual
+			domain the attribute belongs to. Normally there is no need to
+			configure this parameter, unless you want adapt to module to a
+			different database schema.
+		</p>
+            <p>
+			Default value is "did".
+		</p>
+            <div class="example">
+              <a id="idp193056"></a>
+              <p class="title">
+                <strong>Example 1.11. Setting domattrs_did parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_did", "did")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.9. domattr_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_name"></a>4.9. <code class="varname">domattr_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Use this parameter to configure the name of the column in
+			domain_attrs table that is used to store the name of the
+			attribute. Normally there is no need to configure this parameter,
+			unless you want adapt to module to a different database schema.
+		</p>
+            <p>
+			Default value is "name".
+		</p>
+            <div class="example">
+              <a id="idm59240"></a>
+              <p class="title">
+                <strong>Example 1.12. Setting domattrs_name parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_name", "name")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.10. domattr_type (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_type"></a>4.10. <code class="varname">domattr_type</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Use this parameter to configure the name of the column in
+			domain_attrs table that is used to store the type of the
+			attribute. Normally there is no need to configure this parameter,
+			unless you want adapt to module to a different database schema.
+		</p>
+            <p>
+			Default value is "type".
+		</p>
+            <div class="example">
+              <a id="idm56864"></a>
+              <p class="title">
+                <strong>Example 1.13. Setting domattrs_type parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_type", "type")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.11. domattr_value (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_value"></a>4.11. <code class="varname">domattr_value</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Use this parameter to configure the name of the column in
+			domain_attrs table that is used to store the value of the
+			attribute. Normally there is no need to configure this parameter,
+			unless you want adapt to module to a different database schema.
+		</p>
+            <p>
+			Default value is "value".
+		</p>
+            <div class="example">
+              <a id="idm54488"></a>
+              <p class="title">
+                <strong>Example 1.14. Setting domattrs_value parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_value", "value")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.12. domattr_flags (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domattr_flags"></a>4.12. <code class="varname">domattr_flags</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is the name of the column in domain_attrs table which stores
+			various flags. Each row in the table has a bunch of generic flags
+			that can be used mark the row disabled, deleted, etc. The flags
+			allow for more flexible administration of the data in the database
+			and they are present in several other tables too. You do not have
+			to touch this parameter under normal circumstances.
+		</p>
+            <p>
+			Default value is "flags".
+		</p>
+            <div class="example">
+              <a id="idm51976"></a>
+              <p class="title">
+                <strong>Example 1.15. Setting domattrs_flags parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "domattr_flags", "flags")</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.13. load_domain_attrs (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="load_domain_attrs"></a>4.13. <code class="varname">load_domain_attrs</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This parameter can be used to enable/disable user of domain-level
+			attributes. Domain-level attributes are variables that can be used
+			to store additional configuration that applies to the whole
+			virtual domain and all users within the virtual
+			domain. Domain-level attributes are stored in domain_attrs. If you
+			set this parameter to a non-zero value then the server will make
+			domain-level attributes available to the script every time you
+			call function <code class="function">lookup_domain</code>. If you set the
+			parameter to 0 then domain-level attributes will be ignored, the
+			domain module will not load them from the database and the lookup
+			function will not make them available to the script.
+		</p>
+            <p>
+			Default value is 0.
+		</p>
+            <div class="example">
+              <a id="idm48856"></a>
+              <p class="title">
+                <strong>Example 1.16. Setting load_domain_attrs parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("domain", "load_domain_attrs", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="domain.functions"></a>5. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. is_local(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="is_local"></a>5.1. <code class="function">is_local(domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This function can be used to test whether a given domain name in
+			parameter belongs to one of the virtual domains defined in the
+			domain table. Such domain name is said to be local. The function
+			returns 1 if the domain name is found in the domain table and -1
+			otherwise.
+		</p>
+            <p>
+			The first parameter of the function can be anything that returns a
+			string with domain name. In its simplest form it can be a string
+			with domain name: is_local("iptel.org"). You can also test a
+			domain name stored in an attribute: is_local("$my_domain"). And
+			finally you can test a domain name present in the SIP message with
+			selects: is_local("@ruri.host").
+		</p>
+            <p>
+			Note: Unlike function <code class="function">lookup_domain</code>, this
+			function does not make domain attributes of the virtual domain
+			available to the script. Domain attributes are simply ignored by
+			this function.
+		</p>
+            <div class="example">
+              <a id="idp2847472"></a>
+              <p class="title">
+                <strong>Example 1.17. is_uri_host_local_local usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (is_local("@ruri.host")) {
+    /* Domain part of Request-URI is local */
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="5.2. lookup_domain(attr_group, domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="lookup_domain"></a>5.2. <code class="function">lookup_domain(attr_group, domain)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			This is the main function of the domain module. It can be used to
+			implement support for virtual domains in the SIP server. Each
+			virtual domain is identified by a unique identifier (opaque
+			string) and it can have one or more associated domain names. Given
+			a domain name in the second parameter, this function finds the
+			associated virtual domain identifier (known as DID) and stores it
+			in an attribute for later user. In addition to that the function
+			also loads all domain-level attributes for the virtual domain and
+			makes them available to the configuration script.
+		</p>
+            <p>
+			The first parameter of the function identifies the group of
+			attributes where the DID and domain-level attributes shall be
+			stored. The value of the first parameter can be either "$fd" for
+			the domain-level attribute group that belongs to the calling party
+			(From), or "$td" for the domain-level attribute group that belongs
+			to the called party (Request-URI).
+		</p>
+            <p>
+			The value of the second parameter can be a simple string, an
+			attribute name, or a select. See the documentation of function
+			<code class="function">is_local</code> for more details.
+		</p>
+            <p>
+			If a match is found then the DID of the virtual domain will be
+			stored either in $fd.did or in $td.did, depending on the value of
+			the first parameter. In addition to that domain-level attributes,
+			if any, will be available as either $fd.<span style="color: red">&lt;name&gt; or $td.&lt;/name&gt;</span>.
+		</p>
+            <p>
+			The function returns 1 when a matching virtual domain for the
+			given domain name was found and -1 otherwise.
+		</p>
+            <p>
+			The following example shows a typical use of the function. In a
+			multi domain setup, one has to typically figure out where the both
+			the calling and the called domains are local (i.e. configured on
+			the server as the domains the server is responsible for). This is
+			typically done by calling function
+			<code class="function">lookup_domain</code> twice, once with the hostname
+			part of the From header as parameter and secondly with the
+			hostname part of the Request-URI as parameter.
+		</p>
+            <p>
+			The type of the situation can be then determined from the value of
+			corresponding attributes ($td.did and $fd.did). A non-existing
+			attribute value indicates that the domain name is not local (it
+			does not belong to any virtual domain configured in the domain
+			table).
+		</p>
+            <div class="example">
+              <a id="idp1968440"></a>
+              <p class="title">
+                <strong>Example 1.18. lookup_domain usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">lookup_domain("$fd", "@from.uri.host");
+lookup_domain("$td", "@ruri.host");
+
+if (strempty($fd.did) &amp;&amp; strempty($td.did)) {
+    # Neither the calling nor the called domain is local
+    # This is a relaying attempt which should be forbidden
+    sl_reply("403", "Relaying Forbidden");
+    drop;
+}
+if (strempty($fd.did) &amp;&amp; $td.did) {
+    # The calling domain is not local and the called domain
+    # is local, this is an inbound call from a 3rd party
+    # user to one of local users
+}
+if ($fd.did &amp;&amp; strempty($td.did)) {
+    # The calling domain is local and the called domain
+    # is not local, this is an outbound call from one of
+    # our users to a 3rd party user
+}
+if ($fd.did &amp;&amp; $td.did) {
+    # Both the calling and the called domains are local,
+    # one of our local users calls another local user,
+    # either in the same virtual domain or in another
+    # virtual domain hosted on the same server
+}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6. FIFO Interface">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="domain.fifo"></a>6. FIFO Interface</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1. domain.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain_reload"></a>6.1. <code class="function">domain.reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Causes domain module to re-read the contents of domain table into
+	    cache memory. If domain-level attributes are used then it will also
+	    re-load the contents of the domain_attrs table in the memory cache.
+	</p>
+          </div>
+          <div class="section" title="6.2. domain.dump">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="domain_dump"></a>6.2. <code class="function">domain.dump</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+	    Causes domain module to dump hash indexes and domain names in its
+	    cache memory.
+	</p>
+          </div>
+        </div>
+        <div class="section" title="7. Internal API">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="domain.api"></a>7. Internal API</h2>
+              </div>
+            </div>
+          </div>
+          <p>The domain module has an internal API which can be used to access
+	additional functions of the module (i.e. functions that are normally not
+	available from the routing script). Currently the API exports only the
+	function <code class="function">is_domain_local</code>. That function can be used
+	to determine whether a given domain name is on the list of locally
+	configured domain names.</p>
+          <p>If you want to use the internal API of domain module from your
+	module then you need to include the header file
+	<code class="filename">domain_api.h</code> and call
+	<code class="function">load_domain_api</code> first.</p>
+          <div class="example">
+            <a id="idp2876360"></a>
+            <p class="title">
+              <strong>Example 1.19. Calling <code class="function">load_domain_api</code></strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">#include "../domain/domain_api.h"
+
+domain_api_t dom_api;
+
+if (load_domain_api(&amp;dom_api) != 0) {
+    /* error */
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>After that you can call function
+	<code class="function">is_domain_local</code> whose pointer is stored in the
+	initialized data structure:</p>
+          <pre class="programlisting">str tmp = STR_STATIC_INIT("mydomain.com");
+
+if (dom_api.is_domain_local(&amp;tmp) == 1) {
+    /* Domain is local */
+} else {
+    /* Domain is not local or an error was encountered */
+}</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

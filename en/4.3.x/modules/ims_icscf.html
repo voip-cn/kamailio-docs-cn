@@ -1,0 +1,881 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>IMS ICSCF Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp15973424" title="IMS ICSCF Module" />
+    <link rel="next" href="#idp18861064" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="IMS ICSCF Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp15973424"></a>IMS ICSCF Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Dragos Vingarzan</span> <span class="surname"></span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG Fokus<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:Dragos.Vingarzan@fokus.fraunhofer.de">Dragos.Vingarzan@fokus.fraunhofer.de</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jason</span> <span class="surname">Penton</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:jason.penton@smilecoms.com">jason.penton@smilecoms.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Richard</span> <span class="surname">Good</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Smile Communications<br /></span>
+                </div>
+                <code class="email">&lt;<a class="email" href="mailto:richard.good@smilecoms.com">richard.good@smilecoms.com</a>&gt;</code>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2007 FhG FOKUS</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2012 Smile Communications</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp18861064">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp18607840">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp18022632">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp19291696">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17665352">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18512152">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18667736">3.1. <code class="varname">route_lir_user_unknown</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18558168">3.2. <code class="varname">route_uar_user_unknown</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16121432">3.3. <code class="varname">scscf_entry_expiry</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16159808">3.4. <code class="varname">cxdx_forced_peer</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16162144">3.5. <code class="varname">cxdx_dest_realm</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16164272">3.6. <code class="varname">use_preferred_scscf_uri</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16166528">3.7. <code class="varname">preferred_scscf_uri</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp15956120">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15956488">4.1. <code class="function">I_scscf_select(initial)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15960400">4.2. <code class="function">I_scscf_drop()</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15962936">4.3. <code class="function">I_perform_user_authorization_request(route_block,
+      capabalities)</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp15968240">4.4. <code class="function">I_perform_location_information_request(route_block)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18982872">5. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18983240">5.1. Average UAR Response Time (uar_avg_response_time)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18984016">5.2. UAR Timeouts (uar_timeouts)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18984656">5.3. Average LIR Response Time (lir_avg_response_time)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18985432">5.4. LIR Timeouts (lir_timeouts)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp18467424"><code class="varname">route_lir_user_unknown</code> parameter
+        usage</a></dt>
+          <dt>1.2. <a href="#idp18539536"><code class="varname">route_uar_user_unknown</code> parameter
+        usage</a></dt>
+          <dt>1.3. <a href="#idp15951264"><code class="varname">scscf_entry_expiry</code> parameter usage</a></dt>
+          <dt>1.4. <a href="#idp16161072"><code class="varname">cxdx_forced_peer</code> parameter usage</a></dt>
+          <dt>1.5. <a href="#idp16163208"><code class="varname">cxdx_dest_realm</code> parameter usage</a></dt>
+          <dt>1.6. <a href="#idp16165440"><code class="varname">use_preferred_scscf_uri</code> parameter usage</a></dt>
+          <dt>1.7. <a href="#idp15954888"><code class="varname">preferred_scscf_uri</code> parameter usage</a></dt>
+          <dt>1.8. <a href="#idp15959032"><code class="function">I_scscf_select</code>
+        usage</a></dt>
+          <dt>1.9. <a href="#idp15961544"><code class="function">I_scscf_drop</code> usage</a></dt>
+          <dt>1.10. <a href="#idp15965904">I_perform_user_authorization_request usage</a></dt>
+          <dt>1.11. <a href="#idp18981008">I_perform_location_information_request</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp18861064"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp18607840">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp18022632">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp19291696">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17665352">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18512152">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18667736">3.1. <code class="varname">route_lir_user_unknown</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18558168">3.2. <code class="varname">route_uar_user_unknown</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16121432">3.3. <code class="varname">scscf_entry_expiry</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16159808">3.4. <code class="varname">cxdx_forced_peer</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16162144">3.5. <code class="varname">cxdx_dest_realm</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16164272">3.6. <code class="varname">use_preferred_scscf_uri</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16166528">3.7. <code class="varname">preferred_scscf_uri</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp15956120">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15956488">4.1. <code class="function">I_scscf_select(initial)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15960400">4.2. <code class="function">I_scscf_drop()</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15962936">4.3. <code class="function">I_perform_user_authorization_request(route_block,
+      capabalities)</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp15968240">4.4. <code class="function">I_perform_location_information_request(route_block)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18982872">5. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18983240">5.1. Average UAR Response Time (uar_avg_response_time)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18984016">5.2. UAR Timeouts (uar_timeouts)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18984656">5.3. Average LIR Response Time (lir_avg_response_time)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18985432">5.4. LIR Timeouts (lir_timeouts)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18607840"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>This module provides all functionality to build an IMS ICSCF.</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18022632"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp19291696"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>The Following modules must be loaded before this module:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>TM - Transaction Manager</p>
+                </li>
+                <li class="listitem">
+                  <p>SL - Stateless Reply</p>
+                </li>
+                <li class="listitem">
+                  <p>CDP - C Diameter Peer</p>
+                </li>
+                <li class="listitem">
+                  <p>CDP_AVP - CDP AVP Applications</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17665352"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>This modules requires the Kamailio internal IMS library.</p>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18512152"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. route_lir_user_unknown (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18667736"></a>3.1. <code class="varname">route_lir_user_unknown</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the route which is executed if HSS returns "user unknown"
+      in LIR</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is ''. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp18467424"></a>
+              <p class="title">
+                <strong>Example 1.1. <code class="varname">route_lir_user_unknown</code> parameter
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf","route_lir_user_unknown", "lir_term_user_unknown")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2. route_uar_user_unknown (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18558168"></a>3.2. <code class="varname">route_uar_user_unknown</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the route which is executed if HSS returns "user unknown"
+      in UAR.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is ''. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp18539536"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="varname">route_uar_user_unknown</code> parameter
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf","route_uar_user_unknown", "uar_term_user_unknown")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3. scscf_entry_expiry (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16121432"></a>3.3. <code class="varname">scscf_entry_expiry</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>This is the time in s after which S-CSCF entries in the I-CSCF's
+      SCSCF list will expire.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 300. </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15951264"></a>
+              <p class="title">
+                <strong>Example 1.3. <code class="varname">scscf_entry_expiry</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf","scscf_entry_expiry", 300)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4. cxdx_forced_peer (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16159808"></a>3.4. <code class="varname">cxdx_forced_peer</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>FQDN of Diameter Peer (HSS) to use for communication (UAR, LIR).
+      If you use this, the routing defined in your diameter xml configuration
+      file (CDP) will be ignored and as a result you will lose the benefits of
+      load balancing and failover. </p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is "". </em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp16161072"></a>
+              <p class="title">
+                <strong>Example 1.4. <code class="varname">cxdx_forced_peer</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf", "cxdx_forced_peer", "hss.ims.smilecoms.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5. cxdx_dest_realm (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16162144"></a>3.5. <code class="varname">cxdx_dest_realm</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Destination realm to be used in Diameter messags to HSS</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is "ims.smilecoms.com".</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp16163208"></a>
+              <p class="title">
+                <strong>Example 1.5. <code class="varname">cxdx_dest_realm</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf", "cxdx_dest_realm", "ims.smilecoms.com")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6. use_preferred_scscf_uri (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16164272"></a>3.6. <code class="varname">use_preferred_scscf_uri</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>Whether or not this ICSCF has a preferred S-CSCF to use when the
+      HSS returns a list of SCSCFs.  0 means this I-CSCF has no preferred
+      SCSCF.  1 means it has a preferred S-CSCF.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is 0.</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp16165440"></a>
+              <p class="title">
+                <strong>Example 1.6. <code class="varname">use_preferred_scscf_uri</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf", "use_preferred_scscf_uri", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7. preferred_scscf_uri (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16166528"></a>3.7. <code class="varname">preferred_scscf_uri</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>If use_preferred_scscf_uri is set then this is the URI of the preferred
+	  SCSCF.</p>
+            <p>
+              <span class="emphasis">
+                <em> Default value is "".</em>
+              </span>
+            </p>
+            <div class="example">
+              <a id="idp15954888"></a>
+              <p class="title">
+                <strong>Example 1.7. <code class="varname">preferred_scscf_uri</code> parameter usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("ims_icscf", "preferred_scscf_uri", "sip:scscf.ims.smilecoms.com:6060")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp15956120"></a>4. Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1. I_scscf_select(initial)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15956488"></a>4.1. <code class="function">I_scscf_select(initial)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>This function is used to retrieve the next unused SCSCF from
+      thelist for this request (based on callid).</p>
+            <p>A positive return code (1) means an SCSCF was found and is armed
+      for routing.</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>initial</em></span> - Signal whether or not this is
+          an original or subsequent.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE |
+      FAILURE_ROUTE.</p>
+            <div class="example">
+              <a id="idp15959032"></a>
+              <p class="title">
+                <strong>Example 1.8. <code class="function">I_scscf_select</code>
+        usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (I_scscf_select("0")) {
+     #there is an S-CSCF list - no need to do a UAR
+     t_on_reply("register_reply");
+     t_on_failure("register_failure");
+     t_relay();
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2. I_scscf_drop()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15960400"></a>4.2. <code class="function">I_scscf_drop()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Drop the list of SCSCFs for this request (based on callid).</p>
+            <p>This function can be used from REQUEST_ROUTE | FAILURE_ROUTE |
+      REPLY_ROUTE</p>
+            <div class="example">
+              <a id="idp15961544"></a>
+              <p class="title">
+                <strong>Example 1.9. <code class="function">I_scscf_drop</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+I_scscf_drop();
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>.</p>
+          </div>
+          <div class="section" title="4.3. I_perform_user_authorization_request(route_block, capabalities)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15962936"></a>4.3. <code class="function">I_perform_user_authorization_request(route_block,
+      capabalities)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Perform a UAR on Diameter CXDX interface. This function will build
+      a list of SCSCFs to be used and populate the SCSCF list for the request.
+      On a succesful return of this message you can get the next available
+      SCSCF by using the I_scscf_select functoin in 4.1.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>Route block to resume after async UAR Diameter reply.</p>
+                </li>
+                <li class="listitem">
+                  <p>capabilities - whether to request capabilities or not "1" -
+          with capabilities, "0" - no capabilities.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <p>p.s. this is executed asynchronously. See example on how to
+      retrieve return value</p>
+            <div class="example">
+              <a id="idp15965904"></a>
+              <p class="title">
+                <strong>Example 1.10. I_perform_user_authorization_request usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+I_perform_user_authorization_request("REG_UAR_REPLY","0"); #0=REG/DEREG; 1=REG+Capabilities
+exit;
+...
+route[REG_UAR_REPLY]
+{
+    #this is async so to know status we have to check the reply avp
+    switch ($avp(s:uaa_return_code)){
+            case 1: #success
+                    if (I_scscf_select("0")){
+                            t_on_failure("register_failure");
+                            t_on_reply("register_reply");
+                            #now relay to appropriate SCSCF
+                            if (!t_relay()) {
+                                    t_reply("500", "Error forwarding to SCSCF");
+                            }
+                    } else {#select failed
+                            I_scscf_drop();
+                            t_reply("500", "Server error on SCSCF Select (UAR)");
+                    }       
+                    break;          
+            case -1: #failure
+                    xlog("L_ERR", "UAR failure - error response sent from module\n");
+                    break;
+            case -2: #error
+                    xlog("L_ERR", "UAR error - sending error response now\n");
+                    t_reply("500", "UAR failed");
+                    break;
+            default:
+                    xlog("L_ERR", "Unknown return code from UAR, value is [$avp(s:uaa_return_code)]\n");
+                    t_reply("500", "Unknown response code from UAR");
+                    break;
+    }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4. I_perform_location_information_request(route_block)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp15968240"></a>4.4. <code class="function">I_perform_location_information_request(route_block)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>Perform a LIR on Diameter CXDX interface.</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>Route block to resume after async LIR Diameter reply.</p>
+                </li>
+              </ul>
+            </div>
+            <p>This function can be used from REQUEST_ROUTE.</p>
+            <p>p.s. this is executed asynchronously. See example on how to
+      retrieve return value</p>
+            <div class="example">
+              <a id="idp18981008"></a>
+              <p class="title">
+                <strong>Example 1.11. I_perform_location_information_request</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+I_perform_location_information_request("SESSION_LIR_REPLY","0");
+exit;
+...
+route[SESSION_LIR_REPLY]
+{
+    if ($avp(lia_return_code) == 1) {
+            if (I_scscf_select("0")) {
+                    append_branch();
+                    t_on_reply("initial_request_reply");
+                    t_on_failure("initial_request_failure");
+                    if (!t_relay()) {
+                            t_reply("500","Error forwarding towards S-CSCF");
+                            break;
+                    }
+                    break;
+            } else {
+                    xlog("L_DBG", "dropping scscf list on initial request\n");
+                    I_scscf_drop();
+                    t_reply("500", "Server error on LIR select S-CSCF");
+                    break;
+            }
+    } else {
+            t_reply("500", "Server error on LIR");
+            break;
+    }
+    break;
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5. Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18982872"></a>5. Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1. Average UAR Response Time (uar_avg_response_time)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18983240"></a>5.1. Average UAR Response Time (uar_avg_response_time)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The average response time in milliseconds for UAR-UAA
+      transaction.</p>
+          </div>
+          <div class="section" title="5.2. UAR Timeouts (uar_timeouts)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18984016"></a>5.2. UAR Timeouts (uar_timeouts)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of UAR timeouts.</p>
+          </div>
+          <div class="section" title="5.3. Average LIR Response Time (lir_avg_response_time)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18984656"></a>5.3. Average LIR Response Time (lir_avg_response_time)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The average response time in milliseconds for LIR-LIA
+      transaction.</p>
+          </div>
+          <div class="section" title="5.4. LIR Timeouts (lir_timeouts)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18985432"></a>5.4. LIR Timeouts (lir_timeouts)</h3>
+                </div>
+              </div>
+            </div>
+            <p>The number of LIR timeouts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

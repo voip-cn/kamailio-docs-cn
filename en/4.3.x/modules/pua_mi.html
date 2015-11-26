@@ -1,0 +1,479 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>PUA MI</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idp11211368" title="PUA MI" />
+    <link rel="next" href="#idp17648136" title="Chapter 1. Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="PUA MI">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idp11211368"></a>PUA MI</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">Voice Sistem SRL<br /></span>
+                </div>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Anca-Maria</span> <span class="surname">Vamanu</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright © 2006 Voice Sistem SRL</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp17648136">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#idp17895600">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#idp17090760">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp16750008">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18512728">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18170480">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp17956456">3.1. <code class="varname">publish_with_ob_proxy</code> (int)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp18393184">4. MI Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18228200">4.1. 
+				<code class="function">pua_publish</code>
+				</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18864576">4.2. 
+			<code class="function">pua_subscribe</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp17923584">Set <code class="varname">publish_with_ob_proxy</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp18953376"><code class="function">pua_publish</code> FIFO example</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter 1. Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp17648136"></a>Chapter 1. Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#idp17895600">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#idp17090760">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp16750008">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18512728">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18170480">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp17956456">3.1. <code class="varname">publish_with_ob_proxy</code> (int)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp18393184">4. MI Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18228200">4.1. 
+				<code class="function">pua_publish</code>
+				</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18864576">4.2. 
+			<code class="function">pua_subscribe</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1. Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17895600"></a>1. Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+		 The pua_mi offers the possibility to publish presence
+	         information and subscribe to presence information via MI
+ 	         transports.
+	</p>
+          <p>
+		Using this module you can create independent applications/scripts to
+		publish not sip-related information (e.g., system resources like
+		CPU-usage, memory, number of active subscribers ...).
+	        Also, this module allows non-SIP speaking applications
+		to subscribe presence information kept in a SIP presence
+	        server.
+	</p>
+          <p>
+	</p>
+        </div>
+        <div class="section" title="2. Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp17090760"></a>2. Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1. Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp16750008"></a>2.1. Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>pua</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="2.2. External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18512728"></a>2.2. External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before running
+		Kamailio with this module loaded:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>none</em></span>
+			</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="3. Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18170480"></a>3. Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1. publish_with_ob_proxy (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp17956456"></a>3.1. <code class="varname">publish_with_ob_proxy</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If 1, pua_publish MI command has outbound proxy parameter.
+        	</p>
+            <p>
+		<span class="emphasis"><em>Default value is <span class="quote">“<span class="quote">0</span>”</span>.	
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp17923584"></a>
+              <p class="title">
+                <strong>Example 1.1. Set <code class="varname">publish_with_ob_proxy</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("pua_mi", "publish_with_ob_proxy", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4. MI Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp18393184"></a>4. MI Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.  pua_publish">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18228200"></a>4.1. 
+				<code class="function">pua_publish</code>
+				</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Command parameters:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>presentity_uri</em></span>
+					- e.g. sip:system@kamailio.org
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>expires</em></span>
+					- Relative expires time in
+					seconds (e.g. 3600).
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>event package</em></span>
+					- Event package that is
+		target of published information (e.g. presence).
+				    </p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>content type</em></span>
+					- Content type of published
+		information (e.g. application/pidf+xml) or . if no
+		information is enclosed.
+			       </p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>id</em></span>
+					- id for a series of related PUBLISHes to the same 
+		presentity-uri or . to always use the same series.
+		For example dialog-info must reuse the same id for the
+		same call otherwise status will be lost when multiple
+		parallel calls to/from the same user take place. The
+		dialog-id from the dialog-info body qualifies as a suitable
+		id here.
+		                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>ETag</em></span>
+					- ETag that publish should
+		match or . if no ETag is given.
+		                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+				  <span class="emphasis"><em>outbound proxy</em></span>
+				  - SIP URI of outbound proxy to be used when
+       sending PUBLISH request or . if no outbound proxy is given.  This
+       parameter is present only when publish_with_ob_proxy module
+       parameter has value 1. 
+		                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>extra_headers</em></span>
+					- Extra headers added to PUBLISH
+		request or . if no extra headers.
+		                </p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>body</em></span>
+					- The body of the publish
+		request containing published information or missing if
+		no published information.
+		It has to be a single line for FIFO transport.
+				 </p>
+                </li>
+              </ul>
+            </div>
+            <div class="example">
+              <a id="idp18953376"></a>
+              <p class="title">
+                <strong>Example 1.2. <code class="function">pua_publish</code> FIFO example</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+
+:pua_publish:fifo_test_reply
+sip:system@kamailio.org
+3600
+presence
+application/pidf+xml
+.
+.
+.
+&lt;?xml version='1.0'?&gt;&lt;presence xmlns='urn:ietf:params:xml:ns:pidf' xmlns:dm='urn:ietf:params:xml:ns:pidf:data-model' xmlns:rpid='urn:ietf:params:xml:ns:pidf:rpid' xmlns:c='urn:ietf:params:xml:ns:pidf:cipid' entity='system@kamailio.org'&gt;&lt;tuple id='0x81475a0'&gt;&lt;status&gt;&lt;basic&gt;open&lt;/basic&gt;&lt;/status&gt;&lt;/tuple&gt;&lt;dm:person id='pdd748945'&gt;&lt;rpid:activities&gt;&lt;rpid:away/&gt;away&lt;/rpid:activities&gt;&lt;dm:note&gt;CPU:16 MEM:476&lt;/dm:note&gt;&lt;/dm:person&gt;&lt;/presence&gt;</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.  pua_subscribe">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18864576"></a>4.2. 
+			<code class="function">pua_subscribe</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Command parameters:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>presentity_uri</em></span>
+					- e.g. sip:presentity@kamailio.org
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>watcher_uri</em></span>
+					- e.g. sip:watcher@kamailio.org
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>event package</em></span>
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					<span class="emphasis"><em>expires</em></span>
+					- Relative time in seconds for the desired validity of the subscription.
+				    </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2954 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>registrar Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#idm4250480" title="registrar Module" />
+    <link rel="next" href="#idp2974712" title="Chapter¬†1.¬†Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="registrar Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="idm4250480"></a>registrar Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">FhG FOKUS<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Daniel-Constantin</span> <span class="surname">Mierla</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:miconda@gmail.com">miconda@gmail.com</a>&gt;</code>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Juha</span> <span class="surname">Heinanen</span></h3>
+                <code class="email">&lt;<a class="email" href="mailto:jh@tutpro.com">jh@tutpro.com</a>&gt;</code>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Jan</span> <span class="surname">Janak</span></h3>
+              </div>
+              <div class="editor">
+                <h4 class="editedby">Edited by</h4>
+                <h3 class="editor"><span class="firstname">Bogdan-Andre</span> <span class="surname">Iancu</span></h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright ¬© 2003 FhG FOKUS</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp2974712">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#rergistrar.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2175488">1.1. PATH support</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp2484136">1.2. GRUU Support</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp2811176">2. Dependencies</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp28488">2.1. Kamailio Modules</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp18984">2.2. External Libraries or Applications</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp20728">3. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.default_expires">3.1. <code class="varname">default_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.default_expires_range">3.2. <code class="varname">default_expires_range</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.expires_range">3.3. <code class="varname">expires_range</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.min_expires">3.4. <code class="varname">min_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.max_expires">3.5. <code class="varname">max_expires</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.default_q">3.6. <code class="varname">default_q</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.realm_prefix">3.7. <code class="varname">realm_prefix</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp114632">3.8. <code class="varname">append_branches</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.aor_avp">3.9. <code class="varname">aor_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.case_sensitive">3.10. <code class="varname">case_sensitive</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.received_avp">3.11. <code class="varname">received_avp</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.received_param">3.12. <code class="varname">received_param</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.max_contacts">3.13. <code class="varname">max_contacts</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.retry_after">3.14. <code class="varname">retry_after</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.sock_flag">3.15. <code class="varname">sock_flag</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.sock_hdr_name">3.16. <code class="varname">sock_hdr_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.method_filtering">3.17. <code class="varname">method_filtering</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.use_path">3.18. <code class="varname">use_path</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.path_mode">3.19. <code class="varname">path_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.path_use_received">3.20. <code class="varname">path_use_received</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.path_check_local">3.21. <code class="varname">path_check_local</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.reg_callid_avp">3.22. <code class="varname">reg_callid_avp</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.xavp_cfg">3.23. <code class="varname">xavp_cfg</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.xavp_rcd">3.24. <code class="varname">xavp_rcd</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.gruu_enabled">3.25. <code class="varname">gruu_enabled</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.outbound_mode">3.26. <code class="varname">outbound_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.regid_mode">3.27. <code class="varname">regid_mode</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.p.flow_timer">3.28. <code class="varname">flow_timer</code> (integer)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1777120">4. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.save">4.1. 
+		<code class="function">save(domain, [, flags [, uri]])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.lookup">4.2. 
+		<code class="function">lookup(domain [, uri])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.lookup_branches">4.3. 
+		<code class="function">lookup_branches(domain)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.registered">4.4. 
+		<code class="function">registered(domain [, uri [, match_option [, match_action]]])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.add_sock_hdr">4.5. 
+		<code class="function">add_sock_hdr(hdr_name)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.unregister">4.6. 
+		<code class="function">unregister(domain, uri[, ruid])</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.reg_fetch_contacts">4.7. 
+		<code class="function">reg_fetch_contacts(domain, uri, profile)</code>
+		</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#registrar.f.reg_free_contacts">4.8. 
+		<code class="function">reg_free_contacts(profile)</code>
+		</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1832280">5. Event Routes</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1832656">5.1. <code class="varname">event_route[usrloc:contact-expired]</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1834800">6. Statistics</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1835168">6.1. <code class="varname">max_expires</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1835936">6.2. <code class="varname">max_contacts</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1836712">6.3. <code class="varname">defaults_expires</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1837496">6.4. <code class="varname">accepted_regs</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1838272">6.5. <code class="varname">rejected_regs</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#idp1839128">7. Pseudo Variables</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#idp1839504">7.1. <code class="varname">$ulc(profile=&gt;attr)</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <span class="chapter">
+              <a href="#idp851328">2. Frequently Asked Questions</a>
+            </span>
+          </dt>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp23280">Set <code class="varname">default_expires</code> parameter</a></dt>
+          <dt>1.2. <a href="#idp26392">Set <code class="varname">default_expires_range</code> parameter</a></dt>
+          <dt>1.3. <a href="#idp101864">Set <code class="varname">expires_range</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp104752">Set <code class="varname">min_expires</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp107584">Set <code class="varname">max_expires</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp110528">Set <code class="varname">default_q</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp113456">Set <code class="varname">realm_prefix</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp116352">Set <code class="varname">append_branches</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp120544">Set <code class="varname">case_sensitive</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp52088">Set <code class="varname">received_avp</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp55024">Set <code class="varname">received_param</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp58272">Set <code class="varname">max_contacts</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp61776">Set <code class="varname">retry_after</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp64744">Set <code class="varname">sock_flag</code> parameter</a></dt>
+          <dt>1.15. <a href="#idp67688">Set <code class="varname">sock_hdr_name</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp70752">Set <code class="varname">method_filtering</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp1732728">Set <code class="varname">use_path</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp1738984">Set <code class="varname">path_mode</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp1742168">Set <code class="varname">path_use_received</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp1745504">Set <code class="varname">path_check_local</code> parameter</a></dt>
+          <dt>1.21. <a href="#idp1748984">Set <code class="varname">reg_callid_avp</code> parameter</a></dt>
+          <dt>1.22. <a href="#idp1754608">Set <code class="varname">xavp_cfg</code> parameter</a></dt>
+          <dt>1.23. <a href="#idp1758504">Set <code class="varname">xavp_rcd</code> parameter</a></dt>
+          <dt>1.24. <a href="#idp1761680">Set <code class="varname">gruu_enabled</code> parameter</a></dt>
+          <dt>1.25. <a href="#idp1767208">Set <code class="varname">outbound_mode</code> parameter</a></dt>
+          <dt>1.26. <a href="#idp1770624">Set <code class="varname">regid_mode</code> parameter</a></dt>
+          <dt>1.27. <a href="#idp1775880">Set <code class="varname">flow_timer</code> parameter</a></dt>
+          <dt>1.28. <a href="#idp1788096"><code class="function">save</code> usage</a></dt>
+          <dt>1.29. <a href="#idp1796576"><code class="function">lookup</code> usage</a></dt>
+          <dt>1.30. <a href="#idp1801256"><code class="function">lookup_branches</code> usage</a></dt>
+          <dt>1.31. <a href="#idp1810352"><code class="function">registered</code> usage</a></dt>
+          <dt>1.32. <a href="#idp1814856"><code class="function">add_sock_hdr</code> usage</a></dt>
+          <dt>1.33. <a href="#idp1821032"><code class="function">unregister</code> usage</a></dt>
+          <dt>1.34. <a href="#idp1826784"><code class="function">reg_fetch_contacts</code> usage</a></dt>
+          <dt>1.35. <a href="#idp1830984"><code class="function">reg_free_contacts</code> usage</a></dt>
+          <dt>1.36. <a href="#idp1833432"><code class="function">event_route[usrloc:contact-expired]</code> usage</a></dt>
+          <dt>1.37. <a href="#idp3617904"><code class="function">$ulc(name)</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter¬†1.¬†Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp2974712"></a>Chapter¬†1.¬†Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#rergistrar.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2175488">1.1. PATH support</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp2484136">1.2. GRUU Support</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp2811176">2. Dependencies</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp28488">2.1. Kamailio Modules</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp18984">2.2. External Libraries or Applications</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp20728">3. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.default_expires">3.1. <code class="varname">default_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.default_expires_range">3.2. <code class="varname">default_expires_range</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.expires_range">3.3. <code class="varname">expires_range</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.min_expires">3.4. <code class="varname">min_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.max_expires">3.5. <code class="varname">max_expires</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.default_q">3.6. <code class="varname">default_q</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.realm_prefix">3.7. <code class="varname">realm_prefix</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp114632">3.8. <code class="varname">append_branches</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.aor_avp">3.9. <code class="varname">aor_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.case_sensitive">3.10. <code class="varname">case_sensitive</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.received_avp">3.11. <code class="varname">received_avp</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.received_param">3.12. <code class="varname">received_param</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.max_contacts">3.13. <code class="varname">max_contacts</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.retry_after">3.14. <code class="varname">retry_after</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.sock_flag">3.15. <code class="varname">sock_flag</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.sock_hdr_name">3.16. <code class="varname">sock_hdr_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.method_filtering">3.17. <code class="varname">method_filtering</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.use_path">3.18. <code class="varname">use_path</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.path_mode">3.19. <code class="varname">path_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.path_use_received">3.20. <code class="varname">path_use_received</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.path_check_local">3.21. <code class="varname">path_check_local</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.reg_callid_avp">3.22. <code class="varname">reg_callid_avp</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.xavp_cfg">3.23. <code class="varname">xavp_cfg</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.xavp_rcd">3.24. <code class="varname">xavp_rcd</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.gruu_enabled">3.25. <code class="varname">gruu_enabled</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.outbound_mode">3.26. <code class="varname">outbound_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.regid_mode">3.27. <code class="varname">regid_mode</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.p.flow_timer">3.28. <code class="varname">flow_timer</code> (integer)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1777120">4. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.save">4.1. 
+		<code class="function">save(domain, [, flags [, uri]])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.lookup">4.2. 
+		<code class="function">lookup(domain [, uri])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.lookup_branches">4.3. 
+		<code class="function">lookup_branches(domain)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.registered">4.4. 
+		<code class="function">registered(domain [, uri [, match_option [, match_action]]])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.add_sock_hdr">4.5. 
+		<code class="function">add_sock_hdr(hdr_name)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.unregister">4.6. 
+		<code class="function">unregister(domain, uri[, ruid])</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.reg_fetch_contacts">4.7. 
+		<code class="function">reg_fetch_contacts(domain, uri, profile)</code>
+		</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#registrar.f.reg_free_contacts">4.8. 
+		<code class="function">reg_free_contacts(profile)</code>
+		</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1832280">5. Event Routes</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1832656">5.1. <code class="varname">event_route[usrloc:contact-expired]</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1834800">6. Statistics</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1835168">6.1. <code class="varname">max_expires</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1835936">6.2. <code class="varname">max_contacts</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1836712">6.3. <code class="varname">defaults_expires</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1837496">6.4. <code class="varname">accepted_regs</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1838272">6.5. <code class="varname">rejected_regs</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#idp1839128">7. Pseudo Variables</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#idp1839504">7.1. <code class="varname">$ulc(profile=&gt;attr)</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.¬†Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="rergistrar.overview"></a>1.¬†Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>The module contains REGISTER processing logic. The actual location
+		database is managed by the USRLOC module.
+	</p>
+          <div class="section" title="1.1.¬†PATH support">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2175488"></a>1.1.¬†PATH support</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The Register module includes Path support (according to RFC 3327) 
+		for usage in registrars and home-proxies.
+		</p>
+            <p>
+		If path support is enabled in the registrar module, a call to save(...)
+		stores the values of the Path Header(s) along with the contact into usrloc. 
+		There are three modes regarding the reply to a REGISTER including
+		one or more Path HFs:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>off</em></span> - stores the value of the 
+				Path headers into usrloc without passing it back to 
+				the UAC in the reply.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>lazy</em></span> - stores the Path header and 
+				passes it back to the UAC if Path-support is indicated 
+				by the <span class="quote">‚Äú<span class="quote">path</span>‚Äù</span> param in the Supported HF.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>strict</em></span> - rejects the registration 
+				with <span class="quote">‚Äú<span class="quote">420 Bad Extension</span>‚Äù</span> if there's a Path 
+				header but no support for it is indicated by the UAC. 
+				Otherwise it's stored and passed back to the UAC.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		A call to lookup(...) always uses the path header if
+		found, and inserts it as Route HF either in front of
+		the first Route HF, or after the last Via HF if no
+		Route is present. It also sets the destination uri to
+		the first Path uri, thus overwriting the received-uri,
+		because NAT has to be handled at the outbound-proxy of
+		the UAC (the first hop after client's NAT).
+		</p>
+            <p>
+		The whole process is transparent to the user, so no
+		config changes are required beside setting the
+		registrar-parameters <span class="quote">‚Äú<span class="quote">use_path</span>‚Äù</span> and 
+		<span class="quote">‚Äú<span class="quote">path_mode</span>‚Äù</span>.
+		</p>
+          </div>
+          <div class="section" title="1.2.¬†GRUU Support">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp2484136"></a>1.2.¬†GRUU Support</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			GRUU (RFC5627) is supported with both public and temporary
+			addresses.
+		</p>
+            <p>
+			The public GRUU is build based on the '+sip.instance'
+			UUID parameter as recommended by RFC.
+		</p>
+            <p>
+			The temporary GRUU is built based on internal SRUID (unique
+			id generator) and it is kept the same for the duration of
+			contact validity.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="2.¬†Dependencies">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp2811176"></a>2.¬†Dependencies</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="2.1.¬†Kamailio Modules">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp28488"></a>2.1.¬†Kamailio Modules</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following modules must be loaded before this module:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>usrloc - User Location Module</em></span>.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>sl - Stateless Replies</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+          <div class="section" title="2.2.¬†External Libraries or Applications">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp18984"></a>2.2.¬†External Libraries or Applications</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The following libraries or applications must be installed before 
+		running Kamailio with this module loaded:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>None</em></span>.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		</p>
+          </div>
+        </div>
+        <div class="section" title="3.¬†Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp20728"></a>3.¬†Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="3.1.¬†default_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.default_expires"></a>3.1.¬†<code class="varname">default_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If the processed message contains neither Expires 
+		<acronym class="acronym">HFs</acronym> nor expires contact parameters, this value 
+		will be used for newly created usrloc records. The parameter contains 
+		number of second to expire (for example use 3600 for one hour). If it
+		is set to a lower value than the <span class="quote">‚Äú<span class="quote">min_expires</span>‚Äù</span> parameter
+		then it will be ignored. This parameter can be modified via ser config framework.
+		A random value in a specific interval can be selected by using the default_expires_range
+		parameter
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 3600.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp23280"></a>
+              <p class="title">
+                <strong>Example¬†1.1.¬†Set <code class="varname">default_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "default_expires", 1800)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.2.¬†default_expires_range (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.default_expires_range"></a>3.2.¬†<code class="varname">default_expires_range</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter specifies that the expiry used for newly created usrloc records
+		are not fixed, but a random value in the interval <span class="quote">‚Äú<span class="quote">[default_expires-default_expires_range%, default_expires]</span>‚Äù</span>.
+		The value is between 0 and 100 and represent the maximim percentage from expires that
+		will be substracted when computing the value. Default is 0, meaning default_expires
+		is left unmodified. This parameter can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp26392"></a>
+              <p class="title">
+                <strong>Example¬†1.2.¬†Set <code class="varname">default_expires_range</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "default_expires_range", 30) # +- 30% from default_expires
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.3.¬†expires_range (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.expires_range"></a>3.3.¬†<code class="varname">expires_range</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Similar to default_expires_range, but it applies to the incoming expires
+		value. Default in 0, meaning the expires is left unmodified. 
+		This parameter can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp101864"></a>
+              <p class="title">
+                <strong>Example¬†1.3.¬†Set <code class="varname">expires_range</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "expires_range", 30) # expires within [0.7*expires .. expires]
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.4.¬†min_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.min_expires"></a>3.4.¬†<code class="varname">min_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The minimum expires value of a <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span>. Values lower than this 
+		minimum will be automatically set to the minimum. Value 0 disables 
+		the checking. This parameter can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 60.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp104752"></a>
+              <p class="title">
+                <strong>Example¬†1.4.¬†Set <code class="varname">min_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "min_expires", 60)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.5.¬†max_expires (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.max_expires"></a>3.5.¬†<code class="varname">max_expires</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The maximum accepted expires value of a <span class="quote">‚Äú<span class="quote">Contact</span>‚Äù</span>, values higher than this 
+		maximum will be automatically set to the maximum. Value 0 disables 
+		the checking. This parameter can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp107584"></a>
+              <p class="title">
+                <strong>Example¬†1.5.¬†Set <code class="varname">max_expires</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "max_expires", 120)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.6.¬†default_q (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.default_q"></a>3.6.¬†<code class="varname">default_q</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter represents default <span class="quote">‚Äú<span class="quote">q</span>‚Äù</span> value for new contacts. Because 
+		Kamailio doesn't support float parameter types, the value in the parameter 
+		is divided by 1000 and stored as float. For example, if you want 
+		default_q to be 0.38, use value 380 here. This parameter can be modified via 
+		the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp110528"></a>
+              <p class="title">
+                <strong>Example¬†1.6.¬†Set <code class="varname">default_q</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "default_q", 1000)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.7.¬†realm_prefix (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.realm_prefix"></a>3.7.¬†<code class="varname">realm_prefix</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		 Prefix to be automatically stripped from realm. As an alternative to 
+		 SRV records (not all SIP clients support SRV lookup), a subdomain of 
+		 the master domain can be defined for SIP purposes (like 
+		 sip.mydomain.net pointing to same IP address as the SRV record for 
+		 mydomain.net). By ignoring the realm_prefix "sip.", at registration,
+		 sip.mydomain.net will be equivalent to mydomain.net. This parameter 
+		 can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL (none).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp113456"></a>
+              <p class="title">
+                <strong>Example¬†1.7.¬†Set <code class="varname">realm_prefix</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "realm_prefix", "sip.")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.8.¬†append_branches (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp114632"></a>3.8.¬†<code class="varname">append_branches</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter controls how lookup function processes multiple 
+		contacts.  If there are multiple contacts for the given username in 
+		usrloc and this parameter is set to 1, Request-URI will be 
+		overwritten with the highest-q rated contact and the rest will be 
+		appended to sip_msg structure and can be later used by tm for forking.
+		If the parameter is set to 0, only Request-URI will be overwritten 
+		with the highest-q rated contact and the rest will be left unprocessed.
+		This parameter can be modified via Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp116352"></a>
+              <p class="title">
+                <strong>Example¬†1.8.¬†Set <code class="varname">append_branches</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "append_branches", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.9.¬†aor_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.aor_avp"></a>3.9.¬†<code class="varname">aor_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This module parameter has been removed. Use the 'uri' parameter from
+		functions (e.g., save, lookup, registered).
+		</p>
+          </div>
+          <div class="section" title="3.10.¬†case_sensitive (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.case_sensitive"></a>3.10.¬†<code class="varname">case_sensitive</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1 then <acronym class="acronym">AOR</acronym> comparison and also
+		storing will be case sensitive, if set to 0 then <acronym class="acronym">AOR</acronym>
+		comparison and storing will be case insensitive. This is recommended.
+		This parameter can be modified via Kamailio config framework.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp120544"></a>
+              <p class="title">
+                <strong>Example¬†1.9.¬†Set <code class="varname">case_sensitive</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "case_sensitive", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.11.¬†received_avp (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.received_avp"></a>3.11.¬†<code class="varname">received_avp</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Registrar will store the value of the AVP configured by this 
+		parameter in the received column in the user location database. 
+		It will leave the column empty if the AVP is empty. The AVP should 
+		contain a SIP URI consisting of the source IP, port,
+		and transport protocol of the REGISTER message being processed.
+		</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			The value of this parameter should be the same as the value of 
+			corresponding parameter of nathelper module.
+		</p>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "NULL" (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp52088"></a>
+              <p class="title">
+                <strong>Example¬†1.10.¬†Set <code class="varname">received_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "received_avp", "$avp(s:rcv)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.12.¬†received_param (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.received_param"></a>3.12.¬†<code class="varname">received_param</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The name of the parameter that will be appended to Contact URI's of 
+		200 OK when the received URI was set by the <span class="quote">‚Äú<span class="quote">nathelper</span>‚Äù</span> module. If the
+		value is an empty string, then the parameter is not appended anymore.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is "received".
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp55024"></a>
+              <p class="title">
+                <strong>Example¬†1.11.¬†Set <code class="varname">received_param</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "received_param", "rcv")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.13.¬†max_contacts (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.max_contacts"></a>3.13.¬†<code class="varname">max_contacts</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The parameter can be used to limit the number of contacts per 
+		AOR (Address of Record) in the user location database.
+		If the maximum number of contacts is exceeded, Kamailio will not
+		accept the registration and send an error response. 
+		Value 0 disables the check. This parameter can be modified via 
+		the Kamailio config framework.
+		(Please also check the flag for <code class="function">save()</code> if you only want
+		only one active registration).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp58272"></a>
+              <p class="title">
+                <strong>Example¬†1.12.¬†Set <code class="varname">max_contacts</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# Allow no more than 10 contacts per AOR
+modparam("registrar", "max_contacts", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.14.¬†retry_after (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.retry_after"></a>3.14.¬†<code class="varname">retry_after</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The registrar can generate a 5xx reply to REGISTER requests in various 
+		situations. It can, for example, happen when the 
+		<code class="varname">max_contacts</code> parameter is set and the
+		processing of REGISTER request would exceed the limit. In this case 
+		the registrar would generate "503 Service Unavailable" response.
+		This parameter can be modified via the Kamailio config framework.
+		</p>
+            <p>
+		If you want to add the Retry-After header field in 5xx replies, set 
+		this parameter to a value grater than zero (0 means do not add the 
+		header field). See section 20.33 of RFC3261 for more details.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp61776"></a>
+              <p class="title">
+                <strong>Example¬†1.13.¬†Set <code class="varname">retry_after</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "retry_after", 30)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.15.¬†sock_flag (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.sock_flag"></a>3.15.¬†<code class="varname">sock_flag</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Message flag to signal to the registrar module to look into REGISTER 
+		request for a header which contains a socket description (IP:port). 
+		This socket info will be stored by registrar instead of the received 
+		socket info.
+		</p>
+            <p>
+		This makes sense only in multiple replicated servers scenarios.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is -1 (no flag).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp64744"></a>
+              <p class="title">
+                <strong>Example¬†1.14.¬†Set <code class="varname">sock_flag</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "sock_flag", 18)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.16.¬†sock_hdr_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.sock_hdr_name"></a>3.16.¬†<code class="varname">sock_hdr_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Header which contains a socket description (proto:IP:port) to override
+		the received socket info. The header will be read only if the
+		flag sock_flag is set.
+		</p>
+            <p>
+		This makes sense only in multiple replicated servers scenarios.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp67688"></a>
+              <p class="title">
+                <strong>Example¬†1.15.¬†Set <code class="varname">sock_hdr_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "sock_hdr_name", "Sock-Info")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.17.¬†method_filtering (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.method_filtering"></a>3.17.¬†<code class="varname">method_filtering</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Tells if the contact filtering based on supported methods should be
+		performed during lookup. It's enabled only if it has a non zero 
+		value. Supported methods are listed in the <span class="quote">‚Äú<span class="quote">Allow:</span>‚Äù</span> 
+		header in the REGISTER message and stored in the location database.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp70752"></a>
+              <p class="title">
+                <strong>Example¬†1.16.¬†Set <code class="varname">method_filtering</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "method_filtering", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.18.¬†use_path (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.use_path"></a>3.18.¬†<code class="varname">use_path</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the <span class="quote">‚Äú<span class="quote">Path:</span>‚Äù</span> header is handled according to the parameter 
+		This parameter can be modified via Kamailio config framework.
+		<span class="quote">‚Äú<span class="quote">path_mode</span>‚Äù</span>.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1732728"></a>
+              <p class="title">
+                <strong>Example¬†1.17.¬†Set <code class="varname">use_path</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "use_path", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.19.¬†path_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.path_mode"></a>3.19.¬†<code class="varname">path_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The registrar module implements three different modes regarding the 
+		response to a registration which includes one or more Path headers:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			0 - The Path header is saved into usrloc, but is not included in 
+			the reply.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			1 - The Path header is saved into usrloc, but is only included in 
+			the reply if path support is indicated in the registration request 
+			by the <span class="quote">‚Äú<span class="quote">path</span>‚Äù</span> option in the 
+			<span class="quote">‚Äú<span class="quote">Supported:</span>‚Äù</span> header.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			2 - The path header is only saved into usrloc, if path support is 
+			indicated in the registration request by the <span class="quote">‚Äú<span class="quote">path</span>‚Äù</span> 
+			option of the <span class="quote">‚Äú<span class="quote">Supported</span>‚Äù</span> header. If no path support 
+			is indicated, the request is rejected with 
+			<span class="quote">‚Äú<span class="quote">420 - Bad Extension</span>‚Äù</span> and the header 
+			<span class="quote">‚Äú<span class="quote">Unsupported: path</span>‚Äù</span> is included in the reply along 
+			with the received <span class="quote">‚Äú<span class="quote">Path</span>‚Äù</span> header. This mode is the 
+			one recommended by RFC-3327.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 2.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1738984"></a>
+              <p class="title">
+                <strong>Example¬†1.18.¬†Set <code class="varname">path_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "path_mode", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.20.¬†path_use_received (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.path_use_received"></a>3.20.¬†<code class="varname">path_use_received</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, the <span class="quote">‚Äú<span class="quote">received</span>‚Äù</span> parameter of the first Path 
+		URI of a registration is set as received-uri and the NAT branch flag is
+		set for this contact. This is useful if the registrar is placed
+		behind a SIP loadbalancer, which passes the nat'ed UAC address as 
+		<span class="quote">‚Äú<span class="quote">received</span>‚Äù</span> parameter
+		in it's Path uri.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1742168"></a>
+              <p class="title">
+                <strong>Example¬†1.19.¬†Set <code class="varname">path_use_received</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "path_use_received", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.21.¬†path_check_local (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.path_check_local"></a>3.21.¬†<code class="varname">path_check_local</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1, when performing a lookup the Path (if present) is evaluated
+		and if the first hop is local (according to <span class="quote">‚Äú<span class="quote">myself</span>‚Äù</span> test), we
+		skip it	to avoid unnecessary looping.
+		</p>
+            <p>
+		This is useful if multiple servers are sharing a common location database,
+		each saving contacts with their local address as the Path.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+		Default value is 0 (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1745504"></a>
+              <p class="title">
+                <strong>Example¬†1.20.¬†Set <code class="varname">path_check_local</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "path_check_local", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.22.¬†reg_callid_avp (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.reg_callid_avp"></a>3.22.¬†<code class="varname">reg_callid_avp</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			<span class="emphasis"><em>
+				obsolete. use match_option in registered function
+			</em></span>
+		</p>
+            <p>
+		If reg_callid_avp is defined and populated when the
+		<code class="function">registered()</code> is invoked, the result is 
+		TRUE only if an active registration with
+		the specified callID is found.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1748984"></a>
+              <p class="title">
+                <strong>Example¬†1.21.¬†Set <code class="varname">reg_callid_avp</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "reg_callid_avp", "$avp(s:avp)")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.23.¬†xavp_cfg (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.xavp_cfg"></a>3.23.¬†<code class="varname">xavp_cfg</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Defines the name of XAVP class to store runtime module config
+			values. The values are stored as inner XAVPs, like
+			$xavp(class=&gt;attribute). Valid inner XAVP names:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>max_contacts</em></span> - the number of maximum
+				contacts to be stored for the current registration AoR. It
+				overwrites the 'max_contacts' module parameter value.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>socket</em></span> - the string representing the
+				socket on which the register rquest was received, as alternative
+				to using the sock_hdr.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>q</em></span> - q value of contact
+				(integer 0-1000). It
+				overrides q value given in contact header and
+				default_q parameter.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			For example. if this parameter is set to 'reg', then the number
+			of maximum contacts can be set in $xavp(reg=&gt;max_contacts).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1754608"></a>
+              <p class="title">
+                <strong>Example¬†1.22.¬†Set <code class="varname">xavp_cfg</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "xavp_cfg", "reg")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.24.¬†xavp_rcd (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.xavp_rcd"></a>3.24.¬†<code class="varname">xavp_rcd</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Defines the name of XAVP class to store details from the
+			location records. The values are stored as inner XAVPs, like
+			$xavp(class=&gt;attribute). Valid inner XAVP names:
+		</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>ruid</em></span> - the record's internal unique
+				id.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+			For example. if this parameter is set to 'ulrcd', then the ruid
+			for contact records are set in $xavp(ulrcd=&gt;ruid).
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is NULL (disabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1758504"></a>
+              <p class="title">
+                <strong>Example¬†1.23.¬†Set <code class="varname">xavp_rcd</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "xavp_rcd", "ulrcd")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.25.¬†gruu_enabled (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.gruu_enabled"></a>3.25.¬†<code class="varname">gruu_enabled</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 1 and the <span class="quote">‚Äú<span class="quote">+sip.instance</span>‚Äù</span> parameter to
+		Contact header of REGISTER is present, then the value of the
+		parameter is saved to location and pub-gruu and temp-gruu addresses
+		are generated.
+		</p>
+            <p>
+		Set it to 0 if you want to ignore GRUU extensions in REGISTER.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 1 (enabled).
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1761680"></a>
+              <p class="title">
+                <strong>Example¬†1.24.¬†Set <code class="varname">gruu_enabled</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "gruu_enabled", 0)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.26.¬†outbound_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.outbound_mode"></a>3.26.¬†<code class="varname">outbound_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 0 this module will accept REGISTER requests that do
+		not contain a <span class="quote">‚Äú<span class="quote">Supported:</span>‚Äù</span> header with the outbound options-tag.
+		The 200 OK response to REGISTER requests that this module
+		generates will not contain <span class="quote">‚Äú<span class="quote">Require:</span>‚Äù</span> or 
+		<span class="quote">‚Äú<span class="quote">Supported:</span>‚Äù</span> headers with
+		the outbound options-tag. If the client has a <span class="quote">‚Äú<span class="quote">Require:</span>‚Äù</span> header
+		with the outbound options tag the REGISTER will be rejected
+		with a <span class="quote">‚Äú<span class="quote">420 Bad Extension</span>‚Äù</span> response.
+		</p>
+            <p>
+		If set to 1 this module will accept REGISTER requests that
+		do not contain a <span class="quote">‚Äú<span class="quote">Supported:</span>‚Äù</span> header with the outbound
+		options-tag and REGISTER requests that do contain a Supported:
+		or Requires: header with the outbound options-tag. When the
+		client supports <span class="emphasis"><em>outbound</em></span> the appropriate
+		RFC5626 procedures will be followed.
+		</p>
+            <p>
+		If set to 2 this module will reject REGISTER requests that
+		do not contain a <span class="quote">‚Äú<span class="quote">Supported:</span>‚Äù</span> header with the outbound
+		options-tag. When the client supports outbound the appropriate
+		RFC5626 procedures will be followed.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1767208"></a>
+              <p class="title">
+                <strong>Example¬†1.25.¬†Set <code class="varname">outbound_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "outbound_mode", 2)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.27.¬†regid_mode (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.regid_mode"></a>3.27.¬†<code class="varname">regid_mode</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 0 this module will ignore the <span class="quote">‚Äú<span class="quote">regid</span>‚Äù</span> contact param
+		when saving REGISTER request if the request does not
+		indicate support for outbound.
+		</p>
+            <p>
+		If set to 1 this module will use <span class="quote">‚Äú<span class="quote">regid</span>‚Äù</span> contact param
+		(if present) when saving REGISTER request even if 
+		REGISTER request does not indicate support for outbound.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1770624"></a>
+              <p class="title">
+                <strong>Example¬†1.26.¬†Set <code class="varname">regid_mode</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "regid_mode", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="3.28.¬†flow_timer (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.p.flow_timer"></a>3.28.¬†<code class="varname">flow_timer</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set to 0 then this module will not add a <span class="quote">‚Äú<span class="quote">Flow-Timer:</span>‚Äù</span> header
+		to 200 OK responses to REGISTER requests.
+		</p>
+            <p>
+		If set to &gt; 0 then this module will add a <span class="quote">‚Äú<span class="quote">Flow-Timer:</span>‚Äù</span> header
+		containing this value to 200 OK responses to REGISTER requests.
+		This parameter may only be set to a value &gt; 0 when
+		<span class="emphasis"><em>outbound_mode</em></span> is set to 1 or 2.
+		</p>
+            <p>
+		When set to a value greater than 0 this parameter should be set to slightly
+		less than the connection timeout value between the UAC and the
+		network (this corresponds to the core
+		<span class="emphasis"><em>tcp_connection_lifetime</em></span> option and
+		<span class="emphasis"><em>websocket</em></span>
+		<span class="emphasis"><em>keepalive_timeout</em></span> modparam). This
+		parameter is most useful when you have a single edge
+		proxy/registrar or if you have an edge proxy that cannot modify
+		responses. If you are using a separate edge proxy you should
+		consider leaving this parameter set to 0 and adding the
+		<span class="quote">‚Äú<span class="quote">Flow-Timer:</span>‚Äù</span> header on the edge proxy as this allows you to
+		keep all of the timer values for a specific flow in one
+		configuration.
+		</p>
+            <p>
+		<span class="emphasis"><em>
+			Default value is 0.
+		</em></span>
+		</p>
+            <div class="example">
+              <a id="idp1775880"></a>
+              <p class="title">
+                <strong>Example¬†1.27.¬†Set <code class="varname">flow_timer</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("registrar", "flow_timer", 25)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="4.¬†Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1777120"></a>4.¬†Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="4.1.¬† save(domain, [, flags [, uri]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.save"></a>4.1.¬†
+		<code class="function">save(domain, [, flags [, uri]])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function processes a <span class="emphasis"><em>REGISTER</em></span> message. It can add, remove or 
+		modify location records (in usrloc) depending on Contact and Expires HFs in the 
+		REGISTER message. On success and when called from the REQUEST_ROUTE, 
+		<span class="quote">‚Äú<span class="quote">200 OK</span>‚Äù</span> will be returned listing all contacts that are currently in 
+		the location database. On an error, an error message will be sent with a short
+		description in reason phrase.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Logical domain within the registrar. 
+			If a database is used then this must be name of the table which 
+			stores the contacts.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>flags</em></span> (optional) - the value may be a bitwise
+			OR of the following flags:
+			</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x01</em></span> - save the contacts only
+					in memory cache without no DB operation;
+					</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x02</em></span> - do not generate a SIP 
+						reply to the current REGISTER request. When used in
+						ONREPLY_ROUTE, this parameter is obsolete.</p>
+                      </li>
+                      <li class="listitem">
+                        <p><span class="emphasis"><em>0x04</em></span> - store and maintain one
+					contact per AoR. If there are other contact addresses for
+					AoR not matching current registration, remove them.
+					This mode ensures one contact per AoR (user).</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>The flags may be given in decimal or hexa format.</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>uri</em></span> (optional - flags param has to be set and
+			can be 0 for default behavior) - SIP URI to do be used instead of To
+			header URI. It can be a dynamic string with pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>-1</em></span> - error.
+			</p>
+                  <p>
+			<span class="emphasis"><em>1</em></span> - contacts inserted.
+			</p>
+                  <p>
+			<span class="emphasis"><em>2</em></span> - contacts updated.
+			</p>
+                  <p>
+			<span class="emphasis"><em>3</em></span> - contacts deleted.
+			</p>
+                  <p>
+			<span class="emphasis"><em>4</em></span> - contacts returned.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE and REPLY_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1788096"></a>
+              <p class="title">
+                <strong>Example¬†1.28.¬†<code class="function">save</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+save("location");
+save("location", "0x01");
+save("location", "0x00", "sip:test@kamailio.org");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.2.¬† lookup(domain [, uri])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.lookup"></a>4.2.¬†
+		<code class="function">lookup(domain [, uri])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The lookup function extracts username and/or domain from Request-URI and tries to find 
+		all contacts for the username in usrloc. If there are no such 
+		contacts, -1 will be returned.  If there are such contacts, 
+		Request-URI will be overwritten with the contact that has
+		the highest q value and optionally the rest will be appended to 
+		the message (depending on append_branches parameter value).
+		</p>
+            <p>
+		If the <code class="varname">method_filtering</code> option is enabled,
+		the <code class="function">lookup</code> function
+		will return only the contacts that support the method of the
+		processed request.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be used 
+			for the lookup.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>uri</em></span> (optional) - SIP URI to do be used instead
+			of R-URI. It can be a dynamic string with pseudo-variables.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>1</em></span> - contacts found and returned.
+			</p>
+                  <p>
+			<span class="emphasis"><em>-1</em></span> - no contact found.
+			</p>
+                  <p>
+			<span class="emphasis"><em>-2</em></span> - contacts found, but method not supported.
+			</p>
+                  <p>
+			<span class="emphasis"><em>-3</em></span> - internal error during processing.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1796576"></a>
+              <p class="title">
+                <strong>Example¬†1.29.¬†<code class="function">lookup</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lookup("location");
+switch ($retcode) {
+    case -1:
+    case -3:
+        sl_send_reply("404", "Not Found");
+        exit;
+    case -2:
+        sl_send_reply("405", "Not Found");
+        exit;
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.3.¬† lookup_branches(domain)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.lookup_branches"></a>4.3.¬†
+		<code class="function">lookup_branches(domain)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function performs lookup(domain) on r-uri and additional
+		branches (only branches that have no other attributes set than uri).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be used 
+			for the lookup.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>Return codes are propagated from the <code class="function">lookup(domain)</code> function.
+		</p>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1801256"></a>
+              <p class="title">
+                <strong>Example¬†1.30.¬†<code class="function">lookup_branches</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+lookup_branches("location");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.4.¬† registered(domain [, uri [, match_option [, match_action]]])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.registered"></a>4.4.¬†
+		<code class="function">registered(domain [, uri [, match_option [, match_action]]])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function returns true if the AOR in the Request-URI is 
+		registered, false otherwise.  The function does not modify the 
+		message being process, it neither rewrites the Request-URI if a 
+		contact is found nor append branches.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be 
+			used for the lookup.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>uri</em></span> (optional) - SIP URI to do be used instead
+			of R-URI. It can be a dynamic string with pseudo-variables.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>match_option</em></span> (optional) - flag parameter to restrict
+			contact search. use reg_xavp_cfg to set the values to compare to.
+			</p>
+                  <p>flag values is as follows:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>1 - match_callid</p>
+                      </li>
+                      <li class="listitem">
+                        <p>2 - match_received</p>
+                      </li>
+                      <li class="listitem">
+                        <p>4 - match_contact</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>match_action</em></span> (optional) - actions to perform when match is positive.
+			</p>
+                  <p>flag values is as follows:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>1 - set xavp_rcd with value from matched contact</p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1810352"></a>
+              <p class="title">
+                <strong>Example¬†1.31.¬†<code class="function">registered</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if (registered("location")) {
+	sl_send_reply("100", "Trying");
+	...
+};
+...
+$xavp(regcfg=&gt;match_received) = $su;
+if (registered("location","$rz:$Au", 2)) {
+	sl_send_reply("100", "Trying");
+	...
+};
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.5.¬† add_sock_hdr(hdr_name)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.add_sock_hdr"></a>4.5.¬†
+		<code class="function">add_sock_hdr(hdr_name)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Adds a new header to the current REGISTER request with 
+		<span class="quote">‚Äú<span class="quote">hdr_name</span>‚Äù</span> which contains the description of the
+		received socket (proto:ip:port)
+		</p>
+            <p>
+		This makes sense only in multiple replicated servers scenarios.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>hdr_name</em></span> - header name to be used.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1814856"></a>
+              <p class="title">
+                <strong>Example¬†1.32.¬†<code class="function">add_sock_hdr</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+add_sock_hdr("Sock-Info");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.6.¬† unregister(domain, uri[, ruid])">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.unregister"></a>4.6.¬†
+		<code class="function">unregister(domain, uri[, ruid])</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The function removes contacts associated with 'uri' from the location
+		database. If 'ruid' is provided a specific contact is removed,
+		if 'ruid' is not provided all the current contacts are removed. 
+		If 'ruid' is provided and the <span class="quote">‚Äú<span class="quote">usrloc</span>‚Äù</span> module is
+		using <span class="quote">‚Äú<span class="quote">db_mode=3</span>‚Äù</span>, 'uri' does not need to be given and can be
+		empty string.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be 
+			used for the lookup or contact addresses.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>uri</em></span> - The SIP URI address of the user
+			which to remove the contact addresses for. It can contain
+			pseudo-variables that are evaluated at runtime.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>ruid</em></span> - The record unique ID for a
+			a specific contact to be removed. It can contain
+			pseudo-variables that are evaluated at runtime.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1821032"></a>
+              <p class="title">
+                <strong>Example¬†1.33.¬†<code class="function">unregister</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+unregister("location", "$ru");
+unregister("location", "sip:user@kamailio.org");
+unregister("location", "$ru", "$ulc(caller=&gt;ruid)");
+unregister("location", "", "$ruid");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.7.¬† reg_fetch_contacts(domain, uri, profile)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.reg_fetch_contacts"></a>4.7.¬†
+		<code class="function">reg_fetch_contacts(domain, uri, profile)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The function fetches the contacts for 'uri' from table 'domain'
+			to pseudo-variable $ulc(profile).
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>domain</em></span> - Name of table that should be 
+			used for the lookup of contact addresses.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>uri</em></span> - The SIP URI address of the user
+			which to fetch the contact addresses for. It can contain
+			pseudo-variables that are evaluated at runtime.
+			</p>
+                </li>
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>profile</em></span> - Name of $ulc pseudo-variable profile
+			that will store the fetched contacts. It is a static string.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1826784"></a>
+              <p class="title">
+                <strong>Example¬†1.34.¬†<code class="function">reg_fetch_contacts</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reg_fetch_contacts("location", "$ru", "callee");
+reg_fetch_contacts("location", "sip:user@kamailio.org", "caller");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="4.8.¬† reg_free_contacts(profile)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="registrar.f.reg_free_contacts"></a>4.8.¬†
+		<code class="function">reg_free_contacts(profile)</code>
+		</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			The function frees the contacts from pseudo-variable $ulc(profile).
+			Should be called to release the content of a profile. Anyhow,
+			fetching a new contact addresses set over a profile will release
+			any existing data in that profile.
+		</p>
+            <p>Meaning of the parameters is as follows:</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+			<span class="emphasis"><em>profile</em></span> - Name of $ulc pseudo-variable profile
+			that stores fetched contacts. It is a static string.
+			</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
+		</p>
+            <div class="example">
+              <a id="idp1830984"></a>
+              <p class="title">
+                <strong>Example¬†1.35.¬†<code class="function">reg_free_contacts</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+reg_free_contacts("callee");
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="5.¬†Event Routes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1832280"></a>5.¬†Event Routes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="5.1.¬†event_route[usrloc:contact-expired]">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1832656"></a>5.1.¬†<code class="varname">event_route[usrloc:contact-expired]</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Executed when a contact in location table has expired. The variable
+		$ulc(exp=&gt;...) is filled with the attributes of the expired contact.
+		</p>
+            <div class="example">
+              <a id="idp1833432"></a>
+              <p class="title">
+                <strong>Example¬†1.36.¬†<code class="function">event_route[usrloc:contact-expired]</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+event_route[usrloc:contact-expired] {
+    xlog("expired contact for $ulc(exp=&gt;aor)\n");
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="6.¬†Statistics">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1834800"></a>6.¬†Statistics</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="6.1.¬†max_expires">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1835168"></a>6.1.¬†<code class="varname">max_expires</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Value of max_expires parameter.
+		</p>
+          </div>
+          <div class="section" title="6.2.¬†max_contacts">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1835936"></a>6.2.¬†<code class="varname">max_contacts</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value of max_contacts parameter.
+		</p>
+          </div>
+          <div class="section" title="6.3.¬†defaults_expires">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1836712"></a>6.3.¬†<code class="varname">defaults_expires</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value of default_expires parameter.
+		</p>
+          </div>
+          <div class="section" title="6.4.¬†accepted_regs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1837496"></a>6.4.¬†<code class="varname">accepted_regs</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of accepted registrations.
+		</p>
+          </div>
+          <div class="section" title="6.5.¬†rejected_regs">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1838272"></a>6.5.¬†<code class="varname">rejected_regs</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Number of rejected registrations.
+		</p>
+          </div>
+        </div>
+        <div class="section" title="7.¬†Pseudo Variables">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="idp1839128"></a>7.¬†Pseudo Variables</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="7.1.¬†$ulc(profile=&gt;attr)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="idp1839504"></a>7.1.¬†<code class="varname">$ulc(profile=&gt;attr)</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+				Access the attributes of contact addresses stored in
+				'profile'. It must be used after a call of
+				<span class="quote">‚Äú<span class="quote">reg_fetch_contacts()</span>‚Äù</span>.
+			</p>
+            <p>
+				The <span class="quote">‚Äú<span class="quote">profile</span>‚Äù</span> has to be one of the values used
+				with <span class="quote">‚Äú<span class="quote">reg_fetch_contacts()</span>‚Äù</span>.
+			</p>
+            <p>
+			The <span class="quote">‚Äú<span class="quote">attr</span>‚Äù</span> can be:
+			</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p><span class="emphasis"><em>aor</em></span> - address of record
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>domain</em></span> - use location domain name
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>aorhash</em></span> - hash id for the record
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>addr</em></span> - contact address
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>path</em></span> - path vector
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>received</em></span> - received address
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>expires</em></span> - expires value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>callid</em></span> - call-id header value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>q</em></span> - the q value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>cseq</em></span> - the cseq value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>flags</em></span> - flags value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>cflags</em></span> - cflags value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>user_agent</em></span> - user agent
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>socket</em></span> - local socket
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>modified</em></span> - last modified time
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>methods</em></span> - methods value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>count</em></span> - number of contacts
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>ruid</em></span> - record unique ID
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>reg-id</em></span> - reg-id value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>instance</em></span> - instance value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p><span class="emphasis"><em>conid</em></span> - TCP socket internal connection ID ($null if UDP)
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+				The pseudo-variable accepts positive index value to access
+				a specific contact record.
+			</p>
+            <div class="example">
+              <a id="idp3617904"></a>
+              <p class="title">
+                <strong>Example¬†1.37.¬†<code class="function">$ulc(name)</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+if(reg_fetch_contacts("location", "$fu", "caller"))
+{
+  xlog("caller=&gt;aor: $(ulc(caller=&gt;aor))\n");
+  xlog("caller=&gt;domain: $(ulc(caller=&gt;domain))\n");
+  xlog("caller=&gt;aorhash $(ulc(caller=&gt;aorhash))\n");
+  xlog("caller=&gt;count $(ulc(caller=&gt;count))\n");
+  $var(i) = 0;
+  while($var(i) &lt; $(ulc(caller=&gt;count)))
+  {
+    xlog("--- contact [$var(i)]\n");
+    xlog("caller=&gt;addr:       $(ulc(caller=&gt;addr)[$var(i)])\n");
+    xlog("caller=&gt;path:       $(ulc(caller=&gt;path)[$var(i)])\n");
+    xlog("caller=&gt;received:   $(ulc(caller=&gt;received)[$var(i)])\n");
+    xlog("caller=&gt;expires:    $(ulc(caller=&gt;expires)[$var(i)])\n");
+    xlog("caller=&gt;callid:     $(ulc(caller=&gt;callid)[$var(i)])\n");
+    xlog("caller=&gt;q:          $(ulc(caller=&gt;q)[$var(i)])\n");
+    xlog("caller=&gt;cseq:       $(ulc(caller=&gt;cseq)[$var(i)])\n");
+    xlog("caller=&gt;flags:      $(ulc(caller=&gt;flags)[$var(i)])\n");
+    xlog("caller=&gt;cflags:     $(ulc(caller=&gt;cflags)[$var(i)])\n");
+    xlog("caller=&gt;user_agent: $(ulc(caller=&gt;user_agent)[$var(i)])\n");
+    xlog("caller=&gt;socket:     $(ulc(caller=&gt;socket)[$var(i)])\n");
+    xlog("caller=&gt;modified:   $(ulc(caller=&gt;modified)[$var(i)])\n");
+    xlog("caller=&gt;methods:    $(ulc(caller=&gt;methods)[$var(i)])\n");
+    $var(i) = $var(i) + 1;
+  }
+}
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+      </div>
+      <div class="chapter" title="Chapter¬†2.¬†Frequently Asked Questions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp851328"></a>Chapter¬†2.¬†Frequently Asked Questions</h2>
+            </div>
+          </div>
+        </div>
+        <div class="qandaset" title="Frequently Asked Questions">
+          <a id="idp1697232"></a>
+          <dl>
+            <dt>2.1. <a href="#idp2888816">What happend with the old ‚Äúnat_flag‚Äù module parameter?</a></dt>
+            <dt>2.2. <a href="#idp296096">What happend with the old ‚Äúuse_domain‚Äù module parameter?</a></dt>
+            <dt>2.3. <a href="#idp2941152">What happened with the old ‚Äúsave_noreply‚Äù and ‚Äúsave_memory‚Äù functions?</a></dt>
+            <dt>2.4. <a href="#idp1620688">Where can I find more about Kamailio?</a></dt>
+            <dt>2.5. <a href="#idp3338176">Where can I post a question about this module?</a></dt>
+            <dt>2.6. <a href="#idp1608136">How can I report a bug?</a></dt>
+            <dt>2.7. <a href="#idp1609552">What happened to the desc_time_order parameter?</a></dt>
+          </dl>
+          <table border="0" width="100%" summary="Q and A Set">
+            <col align="left" width="1%" />
+            <col />
+            <tbody>
+              <tr class="question" title="2.1.">
+                <td align="left" valign="top">
+                  <a id="idp2888816"></a>
+                  <a id="idp3195424"></a>
+                  <p>
+                    <strong>2.1.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with the old <span class="quote">‚Äú<span class="quote">nat_flag</span>‚Äù</span> module parameter?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			In was removed, as the module internally loads this value from the
+			<span class="quote">‚Äú<span class="quote">USRLOC</span>‚Äù</span> module (see the <span class="quote">‚Äú<span class="quote">nat_bflag</span>‚Äù</span>
+			USRLOC parameter).
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.2.">
+                <td align="left" valign="top">
+                  <a id="idp296096"></a>
+                  <a id="idp1059896"></a>
+                  <p>
+                    <strong>2.2.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happend with the old <span class="quote">‚Äú<span class="quote">use_domain</span>‚Äù</span> module parameter?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			In was removed, as the module internally loads this option from the
+			<span class="quote">‚Äú<span class="quote">USRLOC</span>‚Äù</span> module. This was done in order to simplify the
+			configuration.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.3.">
+                <td align="left" valign="top">
+                  <a id="idp2941152"></a>
+                  <a id="idp3315488"></a>
+                  <p>
+                    <strong>2.3.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happened with the old <span class="quote">‚Äú<span class="quote">save_noreply</span>‚Äù</span> and <span class="quote">‚Äú<span class="quote">save_memory</span>‚Äù</span> functions?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			There functions were merged into the new 
+			<span class="quote">‚Äú<span class="quote">save(domain,flags)</span>‚Äù</span> functions. If a reply should be
+			sent or if the DB should be updated also is controlled via the
+			flags.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.4.">
+                <td align="left" valign="top">
+                  <a id="idp1620688"></a>
+                  <a id="idp3302080"></a>
+                  <p>
+                    <strong>2.4.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I find more about Kamailio?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Take a look at <a class="ulink" href="javascript:if(confirm('http://www.kamailio.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.kamailio.org/'" tppabs="http://www.kamailio.org/">http://www.kamailio.org/</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.5.">
+                <td align="left" valign="top">
+                  <a id="idp3338176"></a>
+                  <a id="idp1547808"></a>
+                  <p>
+                    <strong>2.5.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>Where can I post a question about this module?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			First at all check if your question was already answered on one of
+			our mailing lists: 
+		</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist">
+                      <li class="listitem">
+                        <p>User Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-users</a></p>
+                      </li>
+                      <li class="listitem">
+                        <p>Developer Mailing List - <a class="ulink" href="javascript:if(confirm('http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev'" tppabs="http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev">http://lists.sip-router.org/cgi-bin/mailman/listinfo/sr-dev</a></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+			E-mails regarding any stable Kamailio release should be sent to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code> and e-mails regarding development versions
+			should be sent to <code class="email">&lt;<a class="email" href="mailto:sr-dev@lists.sip-router.org">sr-dev@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                  <p>
+			If you want to keep the mail private, send it to 
+			<code class="email">&lt;<a class="email" href="mailto:sr-users@lists.sip-router.org">sr-users@lists.sip-router.org</a>&gt;</code>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.6.">
+                <td align="left" valign="top">
+                  <a id="idp1608136"></a>
+                  <a id="idp1608280"></a>
+                  <p>
+                    <strong>2.6.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>How can I report a bug?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			Please follow the guidelines provided at:
+			<a class="ulink" href="javascript:if(confirm('http://sip-router.org/tracker  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sip-router.org/tracker'" tppabs="http://sip-router.org/tracker">http://sip-router.org/tracker</a>.
+		</p>
+                </td>
+              </tr>
+              <tr class="question" title="2.7.">
+                <td align="left" valign="top">
+                  <a id="idp1609552"></a>
+                  <a id="idp1609696"></a>
+                  <p>
+                    <strong>2.7.</strong>
+                  </p>
+                </td>
+                <td align="left" valign="top">
+                  <p>What happened to the desc_time_order parameter?</p>
+                </td>
+              </tr>
+              <tr class="answer">
+                <td align="left" valign="top"></td>
+                <td align="left" valign="top">
+                  <p>
+			It was removed, as its functionality was migrated into usrloc
+			module, were there is a parameter with the same name.
+		</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

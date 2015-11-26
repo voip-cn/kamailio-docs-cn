@@ -1,0 +1,2716 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>TLS Module</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/sr-doc.css" tppabs="http://kamailio.org/css/sr-doc.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1" />
+    <link rel="home" href="#tls" title="TLS Module" />
+    <link rel="next" href="#idp58840" title="Chapter聽1.聽Admin Guide" />
+  </head>
+  <body>
+    <div class="book" title="TLS Module">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title"><a id="tls"></a>TLS Module</h1>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <div class="author">
+                <h3 class="author"><span class="firstname">Andrei</span> <span class="surname">Pelinescu-Onciul</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">iptelorg GmbH<br /></span>
+                </div>
+              </div>
+              <div class="author">
+                <h3 class="author"><span class="firstname">Carsten</span> <span class="surname">Bock</span></h3>
+                <div class="affiliation">
+                  <span class="orgname">ng-voice GmbH<br /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2007 iptelorg GmbH</p>
+          </div>
+          <div>
+            <p class="copyright">Copyright 漏 2014 ng-voice GmbH</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl>
+          <dt>
+            <span class="chapter">
+              <a href="#idp58840">1. Admin Guide</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="section">
+                  <a href="#tls.overview">1. Overview</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.quick_start">2. Quick Start</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.notes">3. Important Notes</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.compile">4. Compiling the TLS Module</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.low_memory">5. TLS and Low Memory</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.debugging">6. TLS Debugging</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.known_limitations">7. Known Limitations</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.certs_howto">8. Quick Certificate Howto</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="section">
+                  <a href="#tls.parameters">9. Parameters</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.tls_method">9.1. <code class="varname">tls_method</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.certificate">9.2. <code class="varname">certificate</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.private_key">9.3. <code class="varname">private_key</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ca_list">9.4. <code class="varname">ca_list</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.crl">9.5. <code class="varname">crl</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.verify_certificate">9.6. <code class="varname">verify_certificate</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.verify_depth">9.7. <code class="varname">verify_depth</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.require_certificate">9.8. <code class="varname">require_certificate</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.cipher_list">9.9. <code class="varname">cipher_list</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.server_name">9.10. <code class="varname">server_name</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.send_timeout">9.11. <code class="varname">send_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.handshake_timeout">9.12. <code class="varname">handshake_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.connection_timeout">9.13. <code class="varname">connection_timeout</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.tls_disable_compression">9.14. <code class="varname">tls_disable_compression</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ssl_release_buffers">9.15. <code class="varname">ssl_release_buffers</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ssl_freelist_max_len">9.16. <code class="varname">ssl_free_list_max_len</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ssl_max_send_fragment">9.17. <code class="varname">ssl_max_send_fragment</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ssl_read_ahead">9.18. <code class="varname">ssl_read_ahead</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.send_close_notify">9.19. <code class="varname">send_close_notify</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.con_ct_wq_max">9.20. <code class="varname">con_ct_wq_max</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ct_wq_max">9.21. <code class="varname">ct_wq_max</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.ct_wq_blk_size">9.22. <code class="varname">ct_wq_blk_size</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.tls_log">9.23. <code class="varname">tls_log</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.tls_debug">9.24. <code class="varname">tls_debug</code> (int)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.low_mem_threshold1">9.25. <code class="varname">low_mem_threshold1</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.low_mem_threshold2">9.26. <code class="varname">low_mem_threshold2</code> (integer)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.tls_force_run">9.27. <code class="varname">tls_force_run</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.session_cache">9.28. <code class="varname">session_cache</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.session_id">9.29. <code class="varname">session_id</code> (str)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.renegotiation">9.30. <code class="varname">renegotiation</code> (boolean)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.config">9.31. <code class="varname">config</code> (string)</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.p.xavp_cfg">9.32. <code class="varname">xavp_cfg</code> (string)</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#tls.functions">10. Functions</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.f.is_peer_verfied">10.1. <code class="function">is_peer_verified()</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#tls.rpc">11. RPC Commands</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.r.tls.info">11.1. <code class="function">tls.info</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.r.tls.list">11.2. <code class="function">tls.list</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.r.tls.options">11.3. <code class="function">tls.options</code></a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.r.tls.reload">11.4. <code class="function">tls.reload</code></a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+              <dt>
+                <span class="section">
+                  <a href="#tls.status">12. Status</a>
+                </span>
+              </dt>
+              <dd>
+                <dl>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.license">12.1. License</a>
+                    </span>
+                  </dt>
+                  <dt>
+                    <span class="section">
+                      <a href="#tls.history">12.2. History</a>
+                    </span>
+                  </dt>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <div class="list-of-examples">
+        <p>
+          <strong>List of Examples</strong>
+        </p>
+        <dl>
+          <dt>1.1. <a href="#idp62496">Quick start config</a></dt>
+          <dt>1.2. <a href="#idp77968">Compiling TLS with Debug Messages</a></dt>
+          <dt>1.3. <a href="#idp39560">Set <code class="varname">tls_method</code> parameter</a></dt>
+          <dt>1.4. <a href="#idp43312">Set <code class="varname">certificate</code> parameter</a></dt>
+          <dt>1.5. <a href="#idp185464">Set <code class="varname">private_key</code> parameter</a></dt>
+          <dt>1.6. <a href="#idp2639072">Set <code class="varname">ca_list</code> parameter</a></dt>
+          <dt>1.7. <a href="#idp2887672">Set <code class="varname">crl</code> parameter</a></dt>
+          <dt>1.8. <a href="#idp2891664">Set <code class="varname">verify_certificate</code> parameter</a></dt>
+          <dt>1.9. <a href="#idp2894984">Set <code class="varname">verify_depth</code> parameter</a></dt>
+          <dt>1.10. <a href="#idp1313608">Set <code class="varname">require_certificate</code> parameter</a></dt>
+          <dt>1.11. <a href="#idp1316536">Set <code class="varname">cipher_list</code> parameter</a></dt>
+          <dt>1.12. <a href="#idp1319160">Set <code class="varname">server_name</code> parameter</a></dt>
+          <dt>1.13. <a href="#idp1325264">Set <code class="varname">connection_timeout</code> parameter</a></dt>
+          <dt>1.14. <a href="#idp1775992">Set <code class="varname">tls.connection_timeout</code> at runtime</a></dt>
+          <dt>1.15. <a href="#idp1778408">Set <code class="varname">tls_disable_compression</code> parameter</a></dt>
+          <dt>1.16. <a href="#idp1782520">Set <code class="varname">ssl_release_buffers</code> parameter</a></dt>
+          <dt>1.17. <a href="#idp1786688">Set <code class="varname">ssl_freelist_max_len</code> parameter</a></dt>
+          <dt>1.18. <a href="#idp1791664">Set <code class="varname">ssl_max_send_fragment</code> parameter</a></dt>
+          <dt>1.19. <a href="#idp139896">Set <code class="varname">ssl_read_ahead</code> parameter</a></dt>
+          <dt>1.20. <a href="#idp142768">Set <code class="varname">send_close_notify</code> parameter</a></dt>
+          <dt>1.21. <a href="#idp143864">Set <code class="varname">tls.send_close_notify</code> at runtime</a></dt>
+          <dt>1.22. <a href="#idp146736">Set <code class="varname">con_ct_wq_max</code> parameter</a></dt>
+          <dt>1.23. <a href="#idp147832">Set <code class="varname">tls.con_ct_wq_max</code> at runtime</a></dt>
+          <dt>1.24. <a href="#idp150744">Set <code class="varname">ct_wq_max</code> parameter</a></dt>
+          <dt>1.25. <a href="#idp151808">Set <code class="varname">tls.ct_wq_max</code> at runtime</a></dt>
+          <dt>1.26. <a href="#idp759960">Set <code class="varname">ct_wq_blk_size</code> parameter</a></dt>
+          <dt>1.27. <a href="#idp761056">Set <code class="varname">tls.ct_wq_max</code> at runtime</a></dt>
+          <dt>1.28. <a href="#idp763768">Set <code class="varname">tls_log</code> parameter</a></dt>
+          <dt>1.29. <a href="#idp764888">Set <code class="varname">tls.log</code> at runtime</a></dt>
+          <dt>1.30. <a href="#idp767792">Set <code class="varname">tls_debug</code> parameter</a></dt>
+          <dt>1.31. <a href="#idp768920">Set <code class="varname">tls.debug</code> at runtime</a></dt>
+          <dt>1.32. <a href="#idp774200">Set <code class="varname">low_mem_threshold1</code> parameter</a></dt>
+          <dt>1.33. <a href="#idp775296">Set <code class="varname">tls.low_mem_threshold1</code> at runtime</a></dt>
+          <dt>1.34. <a href="#idp780592">Set <code class="varname">low_mem_threshold2</code> parameter</a></dt>
+          <dt>1.35. <a href="#idp781688">Set <code class="varname">tls.low_mem_threshold2</code> at runtime</a></dt>
+          <dt>1.36. <a href="#idp785888">Set <code class="varname">tls_force_run</code> parameter</a></dt>
+          <dt>1.37. <a href="#idp788352">Set <code class="varname">session_cache</code> parameter</a></dt>
+          <dt>1.38. <a href="#idp790800">Set <code class="varname">session_id</code> parameter</a></dt>
+          <dt>1.39. <a href="#idp793352">Set <code class="varname">renegotiation</code> parameter</a></dt>
+          <dt>1.40. <a href="#idp801360">Short config file</a></dt>
+          <dt>1.41. <a href="#idp803256">Set <code class="varname">config</code> parameter</a></dt>
+          <dt>1.42. <a href="#idp804624">Change and reload tls config at runtime</a></dt>
+          <dt>1.43. <a href="#idp807800">Set <code class="varname">xavp_cfg</code> parameter</a></dt>
+          <dt>1.44. <a href="#idp322912"><code class="function">is_peer_verified</code> usage</a></dt>
+        </dl>
+      </div>
+      <div class="chapter" title="Chapter聽1.聽Admin Guide">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title"><a id="idp58840"></a>Chapter聽1.聽Admin Guide</h2>
+            </div>
+          </div>
+        </div>
+        <div class="toc">
+          <p>
+            <strong>Table of Contents</strong>
+          </p>
+          <dl>
+            <dt>
+              <span class="section">
+                <a href="#tls.overview">1. Overview</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.quick_start">2. Quick Start</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.notes">3. Important Notes</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.compile">4. Compiling the TLS Module</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.low_memory">5. TLS and Low Memory</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.debugging">6. TLS Debugging</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.known_limitations">7. Known Limitations</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.certs_howto">8. Quick Certificate Howto</a>
+              </span>
+            </dt>
+            <dt>
+              <span class="section">
+                <a href="#tls.parameters">9. Parameters</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.tls_method">9.1. <code class="varname">tls_method</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.certificate">9.2. <code class="varname">certificate</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.private_key">9.3. <code class="varname">private_key</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ca_list">9.4. <code class="varname">ca_list</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.crl">9.5. <code class="varname">crl</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.verify_certificate">9.6. <code class="varname">verify_certificate</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.verify_depth">9.7. <code class="varname">verify_depth</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.require_certificate">9.8. <code class="varname">require_certificate</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.cipher_list">9.9. <code class="varname">cipher_list</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.server_name">9.10. <code class="varname">server_name</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.send_timeout">9.11. <code class="varname">send_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.handshake_timeout">9.12. <code class="varname">handshake_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.connection_timeout">9.13. <code class="varname">connection_timeout</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.tls_disable_compression">9.14. <code class="varname">tls_disable_compression</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ssl_release_buffers">9.15. <code class="varname">ssl_release_buffers</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ssl_freelist_max_len">9.16. <code class="varname">ssl_free_list_max_len</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ssl_max_send_fragment">9.17. <code class="varname">ssl_max_send_fragment</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ssl_read_ahead">9.18. <code class="varname">ssl_read_ahead</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.send_close_notify">9.19. <code class="varname">send_close_notify</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.con_ct_wq_max">9.20. <code class="varname">con_ct_wq_max</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ct_wq_max">9.21. <code class="varname">ct_wq_max</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.ct_wq_blk_size">9.22. <code class="varname">ct_wq_blk_size</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.tls_log">9.23. <code class="varname">tls_log</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.tls_debug">9.24. <code class="varname">tls_debug</code> (int)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.low_mem_threshold1">9.25. <code class="varname">low_mem_threshold1</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.low_mem_threshold2">9.26. <code class="varname">low_mem_threshold2</code> (integer)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.tls_force_run">9.27. <code class="varname">tls_force_run</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.session_cache">9.28. <code class="varname">session_cache</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.session_id">9.29. <code class="varname">session_id</code> (str)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.renegotiation">9.30. <code class="varname">renegotiation</code> (boolean)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.config">9.31. <code class="varname">config</code> (string)</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.p.xavp_cfg">9.32. <code class="varname">xavp_cfg</code> (string)</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#tls.functions">10. Functions</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.f.is_peer_verfied">10.1. <code class="function">is_peer_verified()</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#tls.rpc">11. RPC Commands</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.r.tls.info">11.1. <code class="function">tls.info</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.r.tls.list">11.2. <code class="function">tls.list</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.r.tls.options">11.3. <code class="function">tls.options</code></a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.r.tls.reload">11.4. <code class="function">tls.reload</code></a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+            <dt>
+              <span class="section">
+                <a href="#tls.status">12. Status</a>
+              </span>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.license">12.1. License</a>
+                  </span>
+                </dt>
+                <dt>
+                  <span class="section">
+                    <a href="#tls.history">12.2. History</a>
+                  </span>
+                </dt>
+              </dl>
+            </dd>
+          </dl>
+        </div>
+        <div class="section" title="1.聽Overview">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.overview"></a>1.聽Overview</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			This module implements the TLS transport for Kamailio
+			using the <a class="ulink" href="javascript:if(confirm('http://www.openssl.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.openssl.org/'" tppabs="http://www.openssl.org/">OpenSSL library</a>
+			(http://www.openssl.org). To enable the Kamailio TLS support this
+			module must be loaded and <span class="emphasis"><em>enable_tls=yes</em></span> core setting 
+			must be added to the Kamailio config file 
+		</p>
+        </div>
+        <div class="section" title="2.聽Quick Start">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.quick_start"></a>2.聽Quick Start</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Make sure you have a proper certificate and private key and either
+			use the <code class="varname">certificate</code> and <code class="varname">private_key</code>
+			module parameters, or make sure the certificate and key are in the same PEM file,
+			named <span class="emphasis"><em>cert.pem</em></span> an placed in [your-cfg-install-prefix]/etc/kamailio/.
+			Don't forget to load the tls module and to enable TLS
+			(add <span class="emphasis"><em>enable_tls=yes</em></span> to your config).
+		</p>
+          <div class="example">
+            <a id="idp62496"></a>
+            <p class="title">
+              <strong>Example聽1.1.聽Quick start config</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">#...
+loadmodule "modules/tls/tls.so"
+
+modparam("tls", "private_key", "./andrei-test.pem")
+modparam("tls", "certificate", "./andrei-test.pem")
+modparam("tls", "ca_list", "./calist.pem")
+
+enable_tls=yes
+
+route{
+	# ....
+}</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+        </div>
+        <div class="section" title="3.聽Important Notes">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.notes"></a>3.聽Important Notes</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The TLS module needs some special options enabled when compiling
+			Kamailio. These options are enabled by default, however in case
+			you're using a modified Kamailio version or Makefile, make sure
+			that you enable -DUSE_TLS and -DTLS_HOOKS (or compile with make
+			TLS_HOOKS=1 which will take care of both options).
+		</p>
+          <p>
+			To quickly check if your Kamailio version was compiled with these
+			options, run kamailio -V and look for USE_TLS and TLS_HOOKS among the flags.
+		</p>
+          <p>
+			This module includes several workarounds for various Openssl bugs
+			(like compression and Kerberos using the wrong memory allocations
+			functions, low memory problems a.s.o). On startup it will try to enable 
+			the needed workarounds based on the Openssl library version. Each time
+			a known problem is detected and a workaround is enabled, a message will
+			be logged. In general it is recommended to compile this module on the
+			same machine or a similar machine to where kamailio will be run or to
+			link it statically with <span class="emphasis"><em>libssl</em></span>. For example if on
+			the compile machine Openssl does not have the Kerberos support enabled,
+			but on the target machine a Kerberos enabled Openssl library is installed,
+			Kamailio cannot apply the needed workarounds and will refuse to start.
+			The same thing will happen if the Openssl versions are too different
+			(to force Kamailio startup anyway, see the <code class="varname">tls_force_run</code>
+			module parameter).
+		</p>
+          <p>
+			Compression is fully supported if you have a new enough Openssl version
+			(starting with 0.9.8). Although there are some problems with zlib compression
+			in currently deployed Openssl versions (up to and including 0.9.8d, see
+			openssl bug #1468), the TLS module will automatically switch to its own fixed version.
+			Note however that starting with Kamailio 3.1 compression is not enabled by
+			default, due to the huge extra memory consumption that it causes (about 10x
+			more memory). To enable it use
+			<span class="emphasis"><em>modparam("tls", "tls_disable_compression", 0)</em></span>
+ 			(see <code class="varname">tls_disable_compression</code>).
+		</p>
+          <p>
+			The TLS module includes workarounds for the following known openssl bugs: 
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+			openssl #1204 (disable SS_OP_TLS_BLOCK_PADDING_BUG if compression is enabled,
+			for versions between 0.9.8 and 0.9.8c),
+                        </p>
+              </li>
+              <li class="listitem">
+                <p>
+			openssl #1468 (fix zlib compression memory allocation),
+                        </p>
+              </li>
+              <li class="listitem">
+                <p>
+			openssl #1467 (kerberos support will be disabled if the openssl version is less than 0.9.8e-beta1) 
+                        </p>
+              </li>
+              <li class="listitem">
+                <p>
+			openssl #1491 (stop using tls in low memory situations due to the very high risk of openssl crashing or leaking memory).
+                        </p>
+              </li>
+            </ul>
+          </div>
+          <p>
+			The bug reports can be viewed at <a class="ulink" href="javascript:if(confirm('http://rt.openssl.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://rt.openssl.org/'" tppabs="http://rt.openssl.org/">http://rt.openssl.org/</a>.
+		</p>
+        </div>
+        <div class="section" title="4.聽Compiling the TLS Module">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.compile"></a>4.聽Compiling the TLS Module</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			In most case compiling the TLS module is as simple as:
+			</p>
+          <pre class="programlisting">make -C modules/tls</pre>
+          <p>
+			or
+			</p>
+          <pre class="programlisting">make modules modules=modules/tls</pre>
+          <p>
+			or (compiling whole Kamailio and the tls module)
+			</p>
+          <pre class="programlisting">make all include_modules=tls</pre>
+          <p>
+			.
+		</p>
+          <p>
+			However in some cases the Openssl library requires linking with other libraries.
+			For example compiling the Openssl library with Kerberos and zlib-shared support
+			will require linking the TLS module with libkrb5 and libz. In this case just add
+			<span class="emphasis"><em>TLS_EXTRA_LIBS</em></span>="library list" to make's command line. E.g.:
+			</p>
+          <pre class="programlisting">make TLS_EXTRA_LIBS="-lkrb5 -lz" all include_modules=tls</pre>
+          <p>
+		</p>
+          <p>
+			In general, if Kamailio fails to start with a symbol not found error when trying
+			to load the TLS module (check the log), it means some needed library was not
+			linked and it must be added to <span class="emphasis"><em>TLS_EXTRA_LIBS</em></span>
+		</p>
+          <p>
+<a class="ulink" href="javascript:if(confirm('http://wiki.openssl.org/index.php/Elliptic_Curve_Diffie_Hellman  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://wiki.openssl.org/index.php/Elliptic_Curve_Diffie_Hellman'" tppabs="http://wiki.openssl.org/index.php/Elliptic_Curve_Diffie_Hellman">Elliptic Curve Diffie-Hellman (EDCH)</a>-Ciphers are only supported in OpenSSL 1.0.0e and later.
+		</p>
+        </div>
+        <div class="section" title="5.聽TLS and Low Memory">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.low_memory"></a>5.聽TLS and Low Memory</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The Openssl library doesn't handle low memory situations very well. If memory
+			allocations start to fail (due to memory shortage), Openssl can crash or cause memory
+			leaks (making the memory shortage even worse). As of this writing all Openssl versions
+			were affected (including 0.9.8e), see Openssl bug #1491. The TLS module has some
+			workarounds for preventing this problem (see <code class="varname">low_mem_treshold1</code>
+			and <code class="varname">low_mem_threshold2</code>), however starting Kamailio with enough shared
+			memory is higly recommended. When this is not possible a quick way to significantly
+			reduce Openssl memory usage it to  disable compression (see <code class="varname">tls_disable_compression</code>).
+		</p>
+        </div>
+        <div class="section" title="6.聽TLS Debugging">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.debugging"></a>6.聽TLS Debugging</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			Debugging messages can be selectively enabled by recompiling
+			the TLS module with a combination of the following defines:
+			</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist">
+              <li class="listitem">
+                <p>
+						TLS_WR_DEBUG - debug messages for the write/send part.
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						TLS_RD_DEBUG - debug messages for the read/receive
+						part.
+					</p>
+              </li>
+              <li class="listitem">
+                <p>
+						TLS_BIO_DEBUG - debug messages for the custom BIO.
+					</p>
+              </li>
+            </ul>
+          </div>
+          <p>
+		</p>
+          <div class="example">
+            <a id="idp77968"></a>
+            <p class="title">
+              <strong>Example聽1.2.聽Compiling TLS with Debug Messages</strong>
+            </p>
+            <div class="example-contents">
+              <pre class="programlisting">make -C modules/tls extra_defs="-DTLS_WR_DEBUG -DTLS_RD_DEBUG"</pre>
+            </div>
+          </div>
+          <br class="example-break" />
+          <p>
+			To change the level at which the debug messages are logged,
+			change the <code class="varname">tls_debug</code> module parameter.
+		</p>
+        </div>
+        <div class="section" title="7.聽Known Limitations">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.known_limitations"></a>7.聽Known Limitations</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			The private key must not be encrypted (Kamailio cannot ask you for a password on startup).
+		</p>
+          <p>
+			The TLS certificate verifications ignores the certificate name, subject altname
+			and ip extensions, it just checks if the certificate is signed by a recognized CA.
+			One can use the select framework to try to overcome this limitation (check in the
+			script for the contents of various certificate fields), but this is not only slow,
+			but also not exactly standard conforming (the verification should happen during TLS
+			connection establishment and not after).
+		</p>
+          <p>
+			TLS specific config reloading is not safe, so for now better don't use it,
+			especially under heavy traffic.
+		</p>
+          <p>
+			This documentation is incomplete.
+			The provided selects are not documented. A list with all the
+			ones implemented by the TLS module can be seen under
+			doc/select_list/select_tls.txt or
+			or <a class="ulink" href="javascript:if(confirm('http://sip-router.org/docbook/sip-router/branch/master/select_list/select_list.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sip-router.org/docbook/sip-router/branch/master/select_list/select_list.html#select_list.tls'" tppabs="http://sip-router.org/docbook/sip-router/branch/master/select_list/select_list.html#select_list.tls">
+			http://sip-router.org/docbook/sip-router/branch/master/select_list/select_list.html#select_list.tls</a>.
+		</p>
+        </div>
+        <div class="section" title="8.聽Quick Certificate Howto">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.certs_howto"></a>8.聽Quick Certificate Howto</h2>
+              </div>
+            </div>
+          </div>
+          <p>
+			There are various ways to create, sign certificates and manage small CAs (Certificate Authorities). If you want a GUI, try <a class="ulink" href="javascript:if(confirm('http://tinyca.sm-zone.net/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://tinyca.sm-zone.net/'" tppabs="http://tinyca.sm-zone.net/">tinyca (http://tinyca.sm-zone.net/)</a>, a very nice and small CA management application. If you are in a hurry and everything you have are the installed openssl libraries and utilities, read on.
+		</p>
+          <p>
+			Assumptions: we run our own CA.
+		</p>
+          <p>
+			Warning: in this example no key is encrypted. The client and server private keys must not be encrypted (Kamailio doesn't support encrypted keys),
+			so make sure the corresponding files are readable only by trusted people. You should use a password for your CA private key.
+		</p>
+          <p>
+		</p>
+          <pre class="programlisting">Assumptions
+------------
+
+The default openssl configuration (usually /etc/ssl/openssl.cnf)
+default_ca section is the one distributed with openssl and uses the default
+directories:
+
+...
+
+default_ca      = CA_default            # The default ca section
+
+[ CA_default ]
+
+dir             = ./demoCA              # Where everything is kept
+certs           = $dir/certs            # Where the issued certs are kept
+crl_dir         = $dir/crl              # Where the issued crl are kept
+database        = $dir/index.txt        # database index file.
+#unique_subject = no                    # Set to 'no' to allow creation of
+                                        # several ctificates with same subject.
+new_certs_dir   = $dir/newcerts         # default place for new certs.
+
+certificate     = $dir/cacert.pem       # The CA certificate
+serial          = $dir/serial           # The current serial number
+crlnumber       = $dir/crlnumber        # the current crl number
+crl             = $dir/crl.pem          # The current CRL
+private_key     = $dir/private/cakey.pem# The private key
+RANDFILE        = $dir/private/.rand    # private random number file
+
+...
+
+If this is not the case create a new openssl config file that uses the above
+paths for the default CA and add to all the openssl commands:
+ -config filename. E.g.:
+	openssl ca -config my_openssl.cnf -in kamailio1_cert_req.pem -out kamailio1_cert.pem
+
+
+Creating CA certificate
+-----------------------
+1. create CA directory
+	mkdir ca
+	cd ca
+	
+2. create ca directory structure and files  (see ca(1))
+	mkdir demoCA #default CA name, edit /etc/ssl/openssl.cnf
+	mkdir  demoCA/private
+	mkdir demoCA/newcerts
+	touch demoCA/index.txt
+	echo 01 &gt;demoCA/serial
+	echo 01 &gt;demoCA/crlnumber
+	
+2. create CA private key
+	openssl genrsa -out demoCA/private/cakey.pem 2048
+	chmod 600 demoCA/private/cakey.pem
+	
+3. create CA self-signed certificate
+	openssl req -out demoCA/cacert.pem   -x509 -new -key demoCA/private/cakey.pem
+
+
+Creating a server/client certificate
+------------------------------------
+1. create a certificate request (and its private key in privkey.pem)
+	openssl req -out kamailio1_cert_req.pem -new -nodes
+	WARNING: the organization name should be the same as in the CA certificate.
+	
+2. sign it with the ca certificate
+	openssl ca -in kamailio1_cert_req.pem -out kamailio1_cert.pem
+	
+3. copy kamailio1_cert.pem to your Kamailio config. dir
+
+
+Setting Kamailio to use the certificate
+-----------------------------------------
+1. Create the ca list file:
+	for each of your ca certificates that you intend to use do:
+		cat cacert.pem &gt;&gt;calist.pem
+	
+2. Copy your Kamailio certificate, private key and ca list file to your 
+	intended machine (preferably in your Kamailio configuration directory,
+	 this is the default place Kamailio searches for).
+	
+3. set up Kamailio.cfg to use the certificate
+	if your Kamailio certificate name is different from cert.pem or it is not
+	placed in Kamailio cfg. directory, add to your kamailio.cfg:
+		modparam("tls", "certificate", "/path/cert_file_name")
+	
+4. set up Kamailio to use the private key
+	if your private key is not contained in the same file as the certificate
+	(or the certificate name is not the default cert.pem), add to your
+	 Kamailio.cfg:
+		modparam("tls", "private_key", "/path/private_key_file")
+	
+5. set up Kamailio to use the ca list (optional)
+	add to your Kamailio.cfg:
+		modparam("tls", "ca_list", "/path/ca_list_file")
+	
+6. set up tls authentication options:
+		modparam("tls", "verify_certificate", 1)
+		modparam("tls", "require_certificate", 1) 
+	(for more information see the module parameters documentation)
+
+
+Revoking a certificate and using a CRL
+--------------------------------------
+1. revoking a certificate:
+	openssl ca -revoke bad_cert.pem
+	
+2. generate/update the certificate revocation list:
+	openssl ca -gencrl -out my_crl.pem
+	
+3. copy my_crl.pem to your Kamailio config. dir
+	
+4. set up Kamailio to use the CRL:
+		modparam("tls", "crl", "path/my_crl.pem")</pre>
+          <p>
+		</p>
+        </div>
+        <div class="section" title="9.聽Parameters">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.parameters"></a>9.聽Parameters</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="9.1.聽tls_method (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.tls_method"></a>9.1.聽<code class="varname">tls_method</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the SSL/TLS protocol method. Possible values are:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TLSv1.2</em></span> - only TLSv1.2 connections are accepted
+				(available starting with openssl/libssl v1.0.1e)
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TLSv1.1+</em></span> - TLSv1.1 or newer (TLSv1.2, ...)
+				connections are accepted (available starting with openssl/libssl v1.0.1)
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TLSv1.1</em></span> - only TLSv1.1 connections are accepted
+				(available starting with openssl/libssl v1.0.1)
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TLSv1+</em></span> - TLSv1.0 or newer (TLSv1.1, TLSv1.2, ...)
+				connections are accepted.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>TLSv1</em></span> - only TLSv1 (TLSv1.0) connections are
+				accepted. This is the default value.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SSLv3</em></span> - only SSLv3 connections are accepted.
+				Note: you shouldn't use SSLv3 for anything which should be highly secure.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SSLv2</em></span> - only SSLv2 connections, for old clients.
+				Note: you shouldn't use SSLv2 for anything which should be highly secure.
+				Newer versions of libssl don't include support for it anymore.
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+				<span class="emphasis"><em>SSLv23</em></span> - any of the SSLv2, SSLv3 and TLSv1 or
+				newer methods will be accepted.
+				</p>
+                  <p>
+				From OpenSSL manual: "A TLS/SSL connection established with these
+				methods may understand the SSLv3, TLSv1, TLSv1.1 and TLSv1.2 protocols.
+				If extensions are required (for example server name) a client will
+				send out TLSv1 client hello messages including extensions and will
+				indicate that it also understands TLSv1.1, TLSv1.2 and permits a
+				fallback to SSLv3. A server will support SSLv3, TLSv1, TLSv1.1
+				and TLSv1.2 protocols. This is the best choice when compatibility
+				is a concern."
+				</p>
+                  <p>
+				Note: For older libssl version, this option allows SSLv2, with hello
+				messages done over SSLv2. You shouldn't use SSLv2 or SSLv3 for anything
+				which should be highly secure.
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		If rfc3261 conformance is desired, at least TLSv1 must be used. For
+		compatibility with older clients SSLv23 is the option, but again, be aware
+		of security concerns, SSLv2/3 being considered very insecure by 2014.
+	</p>
+            <div class="example">
+              <a id="idp39560"></a>
+              <p class="title">
+                <strong>Example聽1.3.聽Set <code class="varname">tls_method</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "tls_method", "TLSv1")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.2.聽certificate (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.certificate"></a>9.2.聽<code class="varname">certificate</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the certificate file name. The certificate file can also contain
+		the private key in PEM format.
+	</p>
+            <p>
+		If the file name starts with a '.' the path will be relative to the
+		working directory (<span class="emphasis"><em>at runtime</em></span>). If it starts
+		with a '/' it will be an absolute path and if it starts with anything
+		else the path will be relative to the main config file directory
+		(e.g.: for kamailio -f /etc/kamailio/kamailio.cfg it will be relative to /etc/kamailio/).
+	</p>
+            <p>
+		<span class="emphasis"><em>Warning:</em></span> try not to use certificate with keys
+		longer then 1024 bytes. Longer keys will severely impact performance,
+		in particular the TLS connection rate.
+	</p>
+            <p>
+		The default value is [SER_CFG_DIR]/cert.pem.
+	</p>
+            <div class="example">
+              <a id="idp43312"></a>
+              <p class="title">
+                <strong>Example聽1.4.聽Set <code class="varname">certificate</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "certificate", "/usr/local/etc/kamailio/my_certificate.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.3.聽private_key (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.private_key"></a>9.3.聽<code class="varname">private_key</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the private key file name.
+	</p>
+            <p>
+		If the file name starts with a '.' the path will be relative to the
+		working directory (<span class="emphasis"><em>at runtime</em></span>). If it starts
+		with a '/' it will be an absolute path and if it starts with anything
+		else the path will be relative to the main config file directory
+		(e.g.: for kamailio -f /etc/kamailio/kamailio.cfg it will be relative to /etc/kamailio/).
+	</p>
+            <p>
+		Note: the private key can be contained in the same file as the
+		certificate (just append it to the certificate file, e.g.:
+		cat pkey.pem &gt;&gt; cert.pem)
+	</p>
+            <p>
+		The default value is [SER_CFG_DIR]/cert.pem.
+	</p>
+            <div class="example">
+              <a id="idp185464"></a>
+              <p class="title">
+                <strong>Example聽1.5.聽Set <code class="varname">private_key</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "private", "/usr/local/etc/kamailio/my_pkey.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.4.聽ca_list (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ca_list"></a>9.4.聽<code class="varname">ca_list</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the CA list file name. This file contains a list of all the
+		trusted CAs certificates. If a signature in a certificate chain belongs
+		to one of the listed CAs, the authentication will succeed.
+	</p>
+            <p>
+		If the file name starts with a '.' the path will be relative to the
+		working directory (<span class="emphasis"><em>at runtime</em></span>). If it starts
+		with a '/' it will be an absolute path and if it starts with anything
+		else the path will be relative to the main config file directory
+		(e.g.: for kamailio -f /etc/kamailio/kamailio.cfg it will be relative to /etc/kamailio/).
+	</p>
+            <p>
+		By default the CA file is not set.
+	</p>
+            <p>
+		An easy way to create the CA list is to append each trusted trusted CA
+		certificate in the PEM format to one file, e.g.: for f in
+		trusted_cas/*.pem ; do cat "$f" &gt;&gt; ca_list.pem ; done .
+	</p>
+            <p>
+		See also
+		<span class="emphasis"><em>verify_certificate</em></span>,
+		<span class="emphasis"><em>verify_depth</em></span>,
+		<span class="emphasis"><em>require_certificate</em></span> and
+		<span class="emphasis"><em>crl</em></span>.
+	</p>
+            <div class="example">
+              <a id="idp2639072"></a>
+              <p class="title">
+                <strong>Example聽1.6.聽Set <code class="varname">ca_list</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "ca_list", "/usr/local/etc/kamailio/ca_list.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.5.聽crl (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.crl"></a>9.5.聽<code class="varname">crl</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the certificate revocation list file name. This file contains a
+		list of revoked certificates. Any attempt to verify a revoked
+		certificate will fail.
+	</p>
+            <p>
+		If not set, no crl list will be used.
+	</p>
+            <p>
+		If the file name starts with a '.' the path will be relative to the
+		working directory (<span class="emphasis"><em>at runtime</em></span>). If it starts
+		with a '/' it will be an absolute path and if it starts with anything
+		else the path will be relative to the main config file directory
+		(e.g.: for kamailio -f /etc/kamailio/kamailio.cfg it will be relative to /etc/kamailio/).
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+		If set, <code class="varname">require_certificate</code> should also be set
+		or it will not have any effect.
+	</p>
+            </div>
+            <p>
+		By default the crl file is not set.
+	</p>
+            <p>
+		To update the crl in a running Kamailio, make sure you configure tls
+		via a separate tls config file
+		(the <code class="varname">config</code> modparam) and issue a tls.reload
+		RPC call, e.g.:
+		</p>
+            <pre class="programlisting"> $ kamcmd tls.reload</pre>
+            <p>
+	</p>
+            <p>
+		A quick way to create the CRL in PEM format, using openssl is:
+		</p>
+            <pre class="programlisting"> $ openssl ca -gencrl -keyfile cacert.key -cert cacert.pem -out my_crl.pem</pre>
+            <p>
+		 my_crl.pem will contain the signed list of the revoked certificates.
+	</p>
+            <p>
+		To revoke a certificate use something like:
+		</p>
+            <pre class="programlisting"> $ openssl ca -revoke bad_cert.pem -keyfile cacert.key -cert cacert.pem</pre>
+            <p>
+		and then refresh the crl file using the command above.
+	</p>
+            <p>
+		To display the CRL contents use:
+		</p>
+            <pre class="programlisting"> $ openssl crl -in crl.pem -noout -text</pre>
+            <p>
+	</p>
+            <p>
+		See also
+		<span class="emphasis"><em>ca_list</em></span>,
+		<span class="emphasis"><em>verify_certificate</em></span>,
+		<span class="emphasis"><em>verify_depth</em></span> and
+		<span class="emphasis"><em>require_certificate</em></span>.
+	</p>
+            <div class="example">
+              <a id="idp2887672"></a>
+              <p class="title">
+                <strong>Example聽1.7.聽Set <code class="varname">crl</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "crl", "/usr/local/etc/kamailio/crl.pem")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.6.聽verify_certificate (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.verify_certificate"></a>9.6.聽<code class="varname">verify_certificate</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled it will force certificate verification. For more information see the <a class="ulink" href="javascript:if(confirm('http://www.openssl.org/docs/apps/verify.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.openssl.org/docs/apps/verify.html'" tppabs="http://www.openssl.org/docs/apps/verify.html">verify(1)</a> openssl man page.
+	</p>
+            <p>
+		Note: the certificate verification will always fail if the ca_list is empty.
+	</p>
+            <p>
+		See also: <code class="varname">ca_list</code>, <code class="varname">require_certificate</code>, <code class="varname">verify_depth</code>.
+	</p>
+            <p>
+		By default the certificate verification is off.
+	</p>
+            <div class="example">
+              <a id="idp2891664"></a>
+              <p class="title">
+                <strong>Example聽1.8.聽Set <code class="varname">verify_certificate</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "verify_certificate", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.7.聽verify_depth (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.verify_depth"></a>9.7.聽<code class="varname">verify_depth</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets how far up the certificate chain will the certificate verification go in the search for a trusted CA.
+	</p>
+            <p>
+		See also: <code class="varname">ca_list</code>, <code class="varname">require_certificate</code>, <code class="varname">verify_certificate</code>,
+	</p>
+            <p>
+		The default value is 9.
+	</p>
+            <div class="example">
+              <a id="idp2894984"></a>
+              <p class="title">
+                <strong>Example聽1.9.聽Set <code class="varname">verify_depth</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "verify_depth", 9)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.8.聽require_certificate (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.require_certificate"></a>9.8.聽<code class="varname">require_certificate</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		When enabled it will require a certificate from a client. If the client does not offer a certificate and <code class="varname">verify_certificate</code> is on, the certificate verification will fail.
+	</p>
+            <p>
+		The default value is off.
+	</p>
+            <div class="example">
+              <a id="idp1313608"></a>
+              <p class="title">
+                <strong>Example聽1.10.聽Set <code class="varname">require_certificate</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "require_certificate", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.9.聽cipher_list (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.cipher_list"></a>9.9.聽<code class="varname">cipher_list</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the list of accepted ciphers. The list consists of cipher strings separated by colons. For more information on the cipher list format see the <a class="ulink" href="javascript:if(confirm('http://www.openssl.org/docs/apps/ciphers.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.openssl.org/docs/apps/ciphers.html'" tppabs="http://www.openssl.org/docs/apps/ciphers.html">cipher(1)</a> openssl man page.
+	</p>
+            <p>
+		The default value is not set (all the Openssl supported ciphers are enabled).
+	</p>
+            <div class="example">
+              <a id="idp1316536"></a>
+              <p class="title">
+                <strong>Example聽1.11.聽Set <code class="varname">cipher_list</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "cipher_list", "HIGH")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.10.聽server_name (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.server_name"></a>9.10.聽<code class="varname">server_name</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the Server Name Indication (SNI) value.
+	</p>
+            <p>
+		This is a TLS extension and is not working for old and obsoleted
+		SSL versions.
+	</p>
+            <p>
+		The default value is empty (not set).
+	</p>
+            <div class="example">
+              <a id="idp1319160"></a>
+              <p class="title">
+                <strong>Example聽1.12.聽Set <code class="varname">server_name</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "server_name", "kamailio.org")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.11.聽send_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.send_timeout"></a>9.11.聽<code class="varname">send_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is <span class="emphasis"><em>obsolete</em></span> and cannot be used
+		in newer TLS versions (&gt; Kamailio 3.0). In these versions the
+		send_timeout is replaced by <code class="varname">tcp_send_timeout</code>
+		(common with all the tcp connections).
+	</p>
+          </div>
+          <div class="section" title="9.12.聽handshake_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.handshake_timeout"></a>9.12.聽<code class="varname">handshake_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		This parameter is <span class="emphasis"><em>obsolete</em></span> and cannot be used
+		in newer TLS versions (&gt; Kamailio 3.0). In these versions the
+		handshake_timeout is replaced by <code class="varname">tcp_connect_timeout</code>
+		(common with all the tcp connections).
+	</p>
+          </div>
+          <div class="section" title="9.13.聽connection_timeout (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.connection_timeout"></a>9.13.聽<code class="varname">connection_timeout</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the amount of time after which an idle TLS connection will be
+		closed, if no I/O ever occured after the initial open. If an I/O event
+		occurs, the timeout will be extended with tcp_connection_lifetime.
+		The value is expressed in seconds.
+	</p>
+            <p>
+		The default value is 10 min.
+	</p>
+            <p>
+		If the value set is -1, the connection will never be close on idle.
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.connection_timeout.
+	</p>
+            <div class="example">
+              <a id="idp1325264"></a>
+              <p class="title">
+                <strong>Example聽1.13.聽Set <code class="varname">connection_timeout</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "connection_timeout", 60)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp1775992"></a>
+              <p class="title">
+                <strong>Example聽1.14.聽Set <code class="varname">tls.connection_timeout</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls connection_timeout 180</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.14.聽tls_disable_compression (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.tls_disable_compression"></a>9.14.聽<code class="varname">tls_disable_compression</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If set compression over SSL/TLS will be disabled.
+		Note that compression uses a lot of memory (about 10x more then with
+		the compression disabled), so if you want to minimize
+		memory usage is a good idea to disable it.
+	</p>
+            <p>
+		By default compression is disabled.
+	</p>
+            <div class="example">
+              <a id="idp1778408"></a>
+              <p class="title">
+                <strong>Example聽1.15.聽Set <code class="varname">tls_disable_compression</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "tls_disable_compression", 0) # enable
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.15.聽ssl_release_buffers (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ssl_release_buffers"></a>9.15.聽<code class="varname">ssl_release_buffers</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Release internal OpenSSL read or write buffers as soon as they are
+		no longer needed. Combined with
+		<code class="varname">ssl_free_list_max_len</code> has the potential of saving
+		a lot of memory ( ~ 32k per connection in the default configuration,
+		or 16k + <code class="varname">ssl_max_send_fragment</code>).
+		For sr versions &gt; 3.0 it makes little sense to disable it (0)
+		since the tls module already has its own internal buffering.
+	</p>
+            <p>
+		A value of -1 would not change this option from its openssl default.
+		Use 0 or 1 for enable/disable.
+	</p>
+            <p>
+		By default the value is 1 (enabled).
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			This option is supported only for
+			OpenSSL versions &gt;= <span class="emphasis"><em>1.0.0</em></span>.
+			On all the other versions attempting
+			to change the default will trigger an error.
+		</p>
+            </div>
+            <div class="example">
+              <a id="idp1782520"></a>
+              <p class="title">
+                <strong>Example聽1.16.聽Set <code class="varname">ssl_release_buffers</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("tls", "ssl_release_buffers", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.16.聽ssl_free_list_max_len (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ssl_freelist_max_len"></a>9.16.聽<code class="varname">ssl_free_list_max_len</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the maximum number of free memory chunks, that OpenSSL will keep
+		per connection. Setting it to 0 would cause any unused memory chunk
+		to be immediately freed, reducing the memory footprint. A too large
+		value would result in extra memory consumption.
+	</p>
+            <p>
+		Should be combined with <code class="varname">ssl_release_buffers</code>.
+	</p>
+            <p>
+		A value of -1 has a special meaning: the OpenSSL default will be used
+		(no attempt on changing the value will be made). For OpenSSL 1.0
+		the internal default is 32.
+	</p>
+            <p>
+		By default the value is 0 (no freelist).
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			This option is supported only for
+			OpenSSL versions &gt;= <span class="emphasis"><em>1.0.0</em></span>.
+			On all the other versions attempting
+			to change the default will trigger an error.
+		</p>
+            </div>
+            <div class="example">
+              <a id="idp1786688"></a>
+              <p class="title">
+                <strong>Example聽1.17.聽Set <code class="varname">ssl_freelist_max_len</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("tls", "ssl_freelist_max_len", 0)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.17.聽ssl_max_send_fragment (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ssl_max_send_fragment"></a>9.17.聽<code class="varname">ssl_max_send_fragment</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the maximum number of bytes (from the clear text) sent into
+		one TLS or SSL record. Valid values are between 512 and 16384.
+		Note however that even valid low values might not be big enough to
+		allow a succesfull handshake (try minimum 1024).
+	</p>
+            <p>
+		Lower values would lead to less memory usage, but values lower then
+		the typical Kamailio write size would incur a slight performance
+		penalty. Good values are bigger then the  size of the biggest
+		SIP packet one normally expects to forward. For example in most
+		setups 2048 would be a good value.
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			Values on the lower side, even if valid (&gt; 512), might not allow
+			for a succesfull initial handshake. This happens if the
+			certificate does not fit inside one send fragment.
+			Values lower then 1024 should not be used.
+			Even with higher values, if the handshake fails,
+			try increasing the value.
+		</p>
+            </div>
+            <p>
+		A value of -1 has a special meaning: the OpenSSL default will be used
+		(no attempt on changing the value will be made).
+	</p>
+            <p>
+		By default the value is -1 (the OpenSSL default, which at least in
+		OpenSSL 1.0.0 is ~ 16k).
+	</p>
+            <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+              <h3 class="title">Note</h3>
+              <p>
+			This option is supported only for
+			OpenSSL versions &gt;= <span class="emphasis"><em>0.9.9</em></span>.
+			On all the other versions attempting
+			to change the default will trigger an error.
+		</p>
+            </div>
+            <div class="example">
+              <a id="idp1791664"></a>
+              <p class="title">
+                <strong>Example聽1.18.聽Set <code class="varname">ssl_max_send_fragment</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("tls", "ssl_max_send_fragment", 4096)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.18.聽ssl_read_ahead (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ssl_read_ahead"></a>9.18.聽<code class="varname">ssl_read_ahead</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enables read ahead, reducing the number of internal OpenSSL BIO read()
+		calls. This option has only debugging value, in normal circumstances
+		it should not be changed from the default.
+	</p>
+            <p>
+		When disabled OpenSSL will make at least 2 BIO read() calls per
+		received record: one to get the record header and one to get the
+		rest of the record.
+	</p>
+            <p>
+		The TLS module buffers internally all read()s and defines its own fast
+		BIO so enabling this option would only cause more memory consumption
+		and a minor slow-down (extra memcpy).
+	</p>
+            <p>
+		A value of -1 has a special meaning: the OpenSSL default will be used
+		(no attempt on changing the value will be made).
+	</p>
+            <p>
+		By default the value is 0 (disabled).
+	</p>
+            <div class="example">
+              <a id="idp139896"></a>
+              <p class="title">
+                <strong>Example聽1.19.聽Set <code class="varname">ssl_read_ahead</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">modparam("tls", "ssl_read_ahead", 1)</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.19.聽send_close_notify (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.send_close_notify"></a>9.19.聽<code class="varname">send_close_notify</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Enables/disables sending close notify alerts prior to closing the
+		corresponding TCP connection.  Sending the close notify prior to tcp
+		shutdown is "nicer" from a TLS point of view, but it has a measurable
+		performance impact. Default: off. Can be set at runtime
+		(tls.send_close_notify).
+	</p>
+            <p>
+		The default value is 0 (off).
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.send_close_notify.
+	</p>
+            <div class="example">
+              <a id="idp142768"></a>
+              <p class="title">
+                <strong>Example聽1.20.聽Set <code class="varname">send_close_notify</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "send_close_notify", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp143864"></a>
+              <p class="title">
+                <strong>Example聽1.21.聽Set <code class="varname">tls.send_close_notify</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls send_close_notify 1</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.20.聽con_ct_wq_max (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.con_ct_wq_max"></a>9.20.聽<code class="varname">con_ct_wq_max</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the maximum allowed per connection clear-text send queue size in
+		bytes. This queue is used when data cannot be encrypted and sent
+		immediately because of an ongoing TLS/SSL level renegotiation.
+	</p>
+            <p>
+		The default value is 65536 (64 Kb).
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.con_ct_wq_max.
+	</p>
+            <div class="example">
+              <a id="idp146736"></a>
+              <p class="title">
+                <strong>Example聽1.22.聽Set <code class="varname">con_ct_wq_max</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "con_ct_wq_max", 1048576)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp147832"></a>
+              <p class="title">
+                <strong>Example聽1.23.聽Set <code class="varname">tls.con_ct_wq_max</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls con_ct_wq_max 1048576</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.21.聽ct_wq_max (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ct_wq_max"></a>9.21.聽<code class="varname">ct_wq_max</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the maximum total number of bytes queued in all the clear-text
+		send queues.  These queues are used when data cannot be encrypted and
+		sent immediately because of an ongoing TLS/SSL level renegotiation.
+	</p>
+            <p>
+		The default value is 10485760 (10 Mb).
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.ct_wq_max.
+	</p>
+            <div class="example">
+              <a id="idp150744"></a>
+              <p class="title">
+                <strong>Example聽1.24.聽Set <code class="varname">ct_wq_max</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "ct_wq_max", 4194304)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp151808"></a>
+              <p class="title">
+                <strong>Example聽1.25.聽Set <code class="varname">tls.ct_wq_max</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls ct_wq_max 4194304</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.22.聽ct_wq_blk_size (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.ct_wq_blk_size"></a>9.22.聽<code class="varname">ct_wq_blk_size</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Minimum block size for the internal clear-text send queues
+		(debugging / advanced tunning).
+		Good values are multiple of typical datagram sizes.
+	</p>
+            <p>
+		The default value is 4096.
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.ct_wq_blk_size.
+	</p>
+            <div class="example">
+              <a id="idp759960"></a>
+              <p class="title">
+                <strong>Example聽1.26.聽Set <code class="varname">ct_wq_blk_size</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "ct_wq_blk_size", 2048)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp761056"></a>
+              <p class="title">
+                <strong>Example聽1.27.聽Set <code class="varname">tls.ct_wq_max</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls ct_wq_blk_size 2048</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.23.聽tls_log (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.tls_log"></a>9.23.聽<code class="varname">tls_log</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the log level at which TLS related messages will be logged.
+	</p>
+            <p>
+		The default value is 3 (L_DBG).
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.log.
+	</p>
+            <div class="example">
+              <a id="idp763768"></a>
+              <p class="title">
+                <strong>Example聽1.28.聽Set <code class="varname">tls_log</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# ignore TLS messages if Kamailio is started with debug less than 10
+modparam("tls", "tls_log", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp764888"></a>
+              <p class="title">
+                <strong>Example聽1.29.聽Set <code class="varname">tls.log</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls log 10</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.24.聽tls_debug (int)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.tls_debug"></a>9.24.聽<code class="varname">tls_debug</code> (int)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the log level at which TLS debug messages will be logged.
+		Note that TLS debug messages are enabled only if the TLS module
+		is compiled with debugging enabled (e.g. -DTLS_WR_DEBUG,
+		-DTLS_RD_DEBUG or -DTLS_BIO_DEBUG).
+	</p>
+            <p>
+		The default value is 3 (L_DBG).
+	</p>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.debug.
+	</p>
+            <div class="example">
+              <a id="idp767792"></a>
+              <p class="title">
+                <strong>Example聽1.30.聽Set <code class="varname">tls_debug</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+# ignore TLS debug messages if Kamailio is started with debug less than 10
+modparam("tls", "tls_debug", 10)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp768920"></a>
+              <p class="title">
+                <strong>Example聽1.31.聽Set <code class="varname">tls.debug</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls debug 10</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.25.聽low_mem_threshold1 (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.low_mem_threshold1"></a>9.25.聽<code class="varname">low_mem_threshold1</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the minimal free memory from which attempts to open or accept
+		new TLS connections will start to fail. The value is expressed in KB.
+	</p>
+            <p>
+		The default value depends on whether the openssl library used handles well low memory situations (openssl bug #1491). As of this writing this is not true for any openssl version (including 0.9.8e).
+	</p>
+            <p>
+		If an ill-behaved openssl version is detected, a very conservative value is choosed, which depends on the maximum possible number of simultaneously created TLS connections (and hence on the process number).
+	</p>
+            <p>
+		The following values have a special meaning:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					-1 - use the default value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					0 - disable (TLS connections will not fail preemptively)
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.low_mem_threshold1.
+	</p>
+            <p>
+		See also <code class="varname">low_mem_threshold2</code>.
+	</p>
+            <div class="example">
+              <a id="idp774200"></a>
+              <p class="title">
+                <strong>Example聽1.32.聽Set <code class="varname">low_mem_threshold1</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "low_mem_threshold1", -1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp775296"></a>
+              <p class="title">
+                <strong>Example聽1.33.聽Set <code class="varname">tls.low_mem_threshold1</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls low_mem_threshold1 2048</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.26.聽low_mem_threshold2 (integer)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.low_mem_threshold2"></a>9.26.聽<code class="varname">low_mem_threshold2</code> (integer)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the minimal free memory from which TLS operations on already established TLS connections will start to fail preemptively.  The value is expressed in KB.
+	</p>
+            <p>
+		The default value depends on whether the openssl library used handles well low memory situations (openssl bug #1491). As of this writing this is not true for any openssl version (including 0.9.8e).
+	</p>
+            <p>
+		If an ill-behaved openssl version is detected, a very conservative value is choosed, which depends on the maximum possible number of simultaneously created TLS connections (and hence on the process number).
+	</p>
+            <p>
+		The following values have a special meaning:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					-1 - use the default value
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					0 - disable (TLS operations will not fail preemptively)
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		It can be changed also at runtime, via the RPC interface and config
+		framework. The config variable name is tls.low_mem_threshold2.
+	</p>
+            <p>
+		See also <code class="varname">low_mem_threshold1</code>.
+	</p>
+            <div class="example">
+              <a id="idp780592"></a>
+              <p class="title">
+                <strong>Example聽1.34.聽Set <code class="varname">low_mem_threshold2</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "low_mem_threshold2", -1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <div class="example">
+              <a id="idp781688"></a>
+              <p class="title">
+                <strong>Example聽1.35.聽Set <code class="varname">tls.low_mem_threshold2</code> at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_int tls low_mem_threshold2 1024</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.27.聽tls_force_run (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.tls_force_run"></a>9.27.聽<code class="varname">tls_force_run</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled Kamailio  will start even if some of the openssl sanity checks fail (turn it on at your own risk).
+	</p>
+            <p>
+		Currently failing any of the following sanity checks will not allow Kamailio  to start:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+					the version of the library the TLS module was compiled with is "too different" from the library used at runtime. The versions should have the same major, minor and fix level (e.g.: 0.9.8a and 0.9.8c are ok, but 0.9.8 and 0.9.9 are not)
+				</p>
+                </li>
+                <li class="listitem">
+                  <p>
+					the openssl library used at compile time and the one used at runtime have different kerberos options 
+				</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		By default tls_force_run is disabled.
+	</p>
+            <div class="example">
+              <a id="idp785888"></a>
+              <p class="title">
+                <strong>Example聽1.36.聽Set <code class="varname">tls_force_run</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "tls_force_run", 11)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.28.聽session_cache (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.session_cache"></a>9.28.聽<code class="varname">session_cache</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled Kamailio will do caching of the TLS sessions data, generation a session_id and sending
+		it back to client.
+	</p>
+            <p>
+		By default TLS session caching is disabled (0).
+	</p>
+            <div class="example">
+              <a id="idp788352"></a>
+              <p class="title">
+                <strong>Example聽1.37.聽Set <code class="varname">session_cache</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "session_cache", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.29.聽session_id (str)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.session_id"></a>9.29.聽<code class="varname">session_id</code> (str)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		The value for session ID context, making sense when session caching is enabled.
+	</p>
+            <p>
+		By default TLS session_id is "sip-router-tls-3.1".
+	</p>
+            <div class="example">
+              <a id="idp790800"></a>
+              <p class="title">
+                <strong>Example聽1.38.聽Set <code class="varname">session_id</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "session_id", "my-session-id-context")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.30.聽renegotiation (boolean)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.renegotiation"></a>9.30.聽<code class="varname">renegotiation</code> (boolean)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		If enabled Kamailio  will allow renegotiations of TLS connection initiated by the client. This may
+		expose to a security risk if the client is not a trusted peer and keeps renegotiating, consuming CPU
+		and bandwidth resources.
+	</p>
+            <p>
+		By default TLS renegotiation is disabled (0).
+	</p>
+            <div class="example">
+              <a id="idp793352"></a>
+              <p class="title">
+                <strong>Example聽1.39.聽Set <code class="varname">renegotiation</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "renegotiation", 1)
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+          <div class="section" title="9.31.聽config (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.config"></a>9.31.聽<code class="varname">config</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the name of the TLS specific config file or config directory.
+	</p>
+            <p>
+		If set the TLS module will load a special config file or config files from config directory, in which
+		different TLS parameters can be specified on a per role (server or
+		client) and domain basis (for now only IPs). The corresponding module
+		parameters will be ignored.
+	</p>
+            <p>
+		If the file or directory name starts with a '.' the path will be relative to the
+		working directory (<span class="emphasis"><em>at runtime</em></span>). If it starts
+		with a '/' it will be an absolute path and if it starts with anything
+		else the path will be relative to the main config file directory
+		(e.g.: for kamailio -f /etc/kamailio/kamailio.cfg it will be relative to /etc/kamailio/).
+	</p>
+            <p>
+		By default no config file is specified.
+	</p>
+            <p>
+		The following parameters can be set in the config file, for each
+		domain:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>tls_method</p>
+                </li>
+                <li class="listitem">
+                  <p>verify_certificate</p>
+                </li>
+                <li class="listitem">
+                  <p>require_certificate</p>
+                </li>
+                <li class="listitem">
+                  <p>private_key</p>
+                </li>
+                <li class="listitem">
+                  <p>certificate</p>
+                </li>
+                <li class="listitem">
+                  <p>verify_depth</p>
+                </li>
+                <li class="listitem">
+                  <p>ca_list</p>
+                </li>
+                <li class="listitem">
+                  <p>crl</p>
+                </li>
+                <li class="listitem">
+                  <p>cipher_list</p>
+                </li>
+                <li class="listitem">
+                  <p>server_name</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		All the parameters that take filenames as values will be resolved
+		using the same rules as for the tls config filename itself: starting
+		with a '.' means relative to the working directory, a '/' means an
+		absolute path and  anything else a path relative to the directory of
+		the current Kamailio main config file.
+	</p>
+            <p>
+		Kamailio acts as a server when it accepts a connection and as a
+		client when it initiates a new connection by itself (it connects to
+		something).
+	</p>
+            <div class="example">
+              <a id="idp801360"></a>
+              <p class="title">
+                <strong>Example聽1.40.聽Short config file</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">[server:default]
+method = TLSv1
+verify_certificate = yes
+require_certificate = yes
+private_key = default_key.pem
+certificate = default_cert.pem
+ca_list = default_ca.pem
+crl = default_crl.pem
+
+[client:default]
+verify_certificate = yes
+require_certificate = yes
+
+#more relaxed for connection on the loopback interface
+[server:127.0.0.1:5061]
+method = SSLv23
+verify_certificate = yes
+require_certificate = no
+private_key = local_key.pem
+certificate = local_cert.pem
+verify_depth = 3
+ca_list = local_ca.pem
+server_name = kamailio.org</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		For a more complete example check the <span class="emphasis"><em>tls.cfg</em></span> distributed with the Kamailio source (kamailio/modules/tls/tls.cfg).
+	</p>
+            <div class="example">
+              <a id="idp803256"></a>
+              <p class="title">
+                <strong>Example聽1.41.聽Set <code class="varname">config</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+modparam("tls", "config", "/usr/local/etc/kamailio/tls.cfg")
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+            <p>
+		It can be changed also at runtime. The new config will not be loaded
+		immediately, but after the first tls.reload RPC call.
+		</p>
+            <div class="example">
+              <a id="idp804624"></a>
+              <p class="title">
+                <strong>Example聽1.42.聽Change and reload tls config at runtime</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting"> $ kamcmd cfg.set_now_string tls config "/usr/local/etc/kamailio/new_tls.cfg"
+ $ kamcmd tls.reload</pre>
+              </div>
+            </div>
+            <p><br class="example-break" />
+	</p>
+          </div>
+          <div class="section" title="9.32.聽xavp_cfg (string)">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.p.xavp_cfg"></a>9.32.聽<code class="varname">xavp_cfg</code> (string)</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+		Sets the name of XAVP that stored attributes for TLS connections.
+	</p>
+            <p>
+		The following (inner) attributes can be set:
+	</p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>server_name - SNI to be used for outbound connections</p>
+                </li>
+              </ul>
+            </div>
+            <p>
+		The default value is empty (not set).
+	</p>
+            <div class="example">
+              <a id="idp807800"></a>
+              <p class="title">
+                <strong>Example聽1.43.聽Set <code class="varname">xavp_cfg</code> parameter</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">...
+  modparam("tls", "xavp_cfg", "tls")
+ ...
+  $xavp(tls=&gt;server_name) = "kamailio.org";
+  $du = "sip:kamailio.org:5061;transport=tls";
+  route(RELAY);
+...</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="10.聽Functions">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.functions"></a>10.聽Functions</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="10.1.聽is_peer_verified()">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.f.is_peer_verfied"></a>10.1.聽<code class="function">is_peer_verified()</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Returns true if the connection on which the message was received
+			is TLS , the peer presented an X509 certificate and the
+			certificate chain verified ok.
+			It can be used only in a request route.
+		</p>
+            <div class="example">
+              <a id="idp322912"></a>
+              <p class="title">
+                <strong>Example聽1.44.聽<code class="function">is_peer_verified</code> usage</strong>
+              </p>
+              <div class="example-contents">
+                <pre class="programlisting">	if (proto==TLS &amp;&amp; !is_peer_verified()){
+		sl_send_reply("400", "No certificate or verification failed");
+		drop;
+	}</pre>
+              </div>
+            </div>
+            <br class="example-break" />
+          </div>
+        </div>
+        <div class="section" title="11.聽RPC Commands">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.rpc"></a>11.聽RPC Commands</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="11.1.聽tls.info">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.r.tls.info"></a>11.1.聽<code class="function">tls.info</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			List internal information related to the TLS module in 
+			a short list - max connections, opened connections and the 
+			write queue size.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                                None.
+                        </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="11.2.聽tls.list">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.r.tls.list"></a>11.2.聽<code class="function">tls.list</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			List details about all active TLS connections.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                                None.
+                        </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="11.3.聽tls.options">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.r.tls.options"></a>11.3.聽<code class="function">tls.options</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			List the current TLS configuration.
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                                None.
+                        </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="section" title="11.4.聽tls.reload">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.r.tls.reload"></a>11.4.聽<code class="function">tls.reload</code></h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Reload the external TLS configuration file. (Does not reload 
+			modparam() parameters)
+		</p>
+            <p>Parameters: </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist">
+                <li class="listitem">
+                  <p>
+                                None.
+                        </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section" title="12.聽Status">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h2 class="title"><a id="tls.status"></a>12.聽Status</h2>
+              </div>
+            </div>
+          </div>
+          <div class="section" title="12.1.聽License">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.license"></a>12.1.聽License</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			Most of the code for this module has been released under BSD by
+			iptelorg. The GPL parts are released with an exception to link
+			with OpenSSL toolkit software components.
+		</p>
+          </div>
+          <div class="section" title="12.2.聽History">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h3 class="title"><a id="tls.history"></a>12.2.聽History</h3>
+                </div>
+              </div>
+            </div>
+            <p>
+			For version 3.1 most of the TLS specific code was completely
+			re-written to add support for asynchronous TLS and fix several
+			long standing bugs.
+		</p>
+            <p>
+			The code is currently maintained by Andrei Pelinescu-Onciul
+			<code class="email">&lt;<a class="email" href="mailto:andrei@iptel.org">andrei@iptel.org</a>&gt;</code>.
+		</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
